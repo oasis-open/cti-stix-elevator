@@ -84,7 +84,7 @@ def convert_file_to_pattern(file):
         hash_expression = ""
         for hash in file.hashes:
             hash_expression = (" OR " if not first_hash else "") + \
-                              create_term("file-object.hashes" + "." + str(hash.type_).lower(),
+                              create_term("file-object:hashes" + ":" + str(hash.type_).lower(),
                                           hash.simple_hash_value.condition,
                                           hash.simple_hash_value.value)
             first_hash = False
