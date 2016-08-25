@@ -88,18 +88,6 @@ def generateSTIX20Id(stix20SOName, stix12ID = None):
 
 # identities
 
-# NOBODY_IDENTITY_UUID = "identity--ea99d4d4-1ae7-4120-9ebe-67ed4783fb36"
-
-#NOBODY_IDENTITY = {
-#    "type": "identity",
-#    "name": "Nobody",
-#    "id": NOBODY_IDENTITY_UUID,
-#    "entity_class": "individual"
-#    # TODO:  more required properties need to be populated
-#}
-
-#NOBODY_IDENTITY_USED = False
-
 def get_simple_name_from_identity(identity, bundleInstance, sdoInstance):
     if isinstance(identity, CIQIdentity3_0Instance):
         handle_relationship_to_refs([ identity ], sdoInstance["id"], bundleInstance, "attributed-to")
@@ -108,14 +96,18 @@ def get_simple_name_from_identity(identity, bundleInstance, sdoInstance):
 
 def get_identity_ref(identity, bundleInstance):
     if identity.idref is not None:
-        # fix later
+        # fix reference later
         return identity.idref
-    elif identity.id_ is not None:
-        return handle_embedded_object(identity, bundleInstance)
+    else:
+        ident20 = convert_identity(identity)
+        bundleInstance["identities"].append(ident20)
+        return ident20["id"]
 
-def process_information_source(information_source, so):
+def process_information_source(information_source, so, bundleInstance, parent_created_by_ref):
     if information_source is not None and information_source.identity is not None:
-        so["created_by_ref"] = get_identity_ref(information_source.identity, so)
+        so["created_by_ref"] = get_identity_ref(information_source.identity, bundleInstance)
+    else:
+        so["created_by_ref"] = parent_created_by_ref
     # TODO: add to description
 
 def convert_timestamp(entity, parent_timestamp=None):
@@ -168,11 +160,11 @@ def process_description_and_short_description(so, entity):
     elif entity.short_description is not None:
         so["description"] = process_structured_text_list(entity.short_descriptions).encode('unicode_escape')
 
-def create_basic_object(stix20_type, stix1x_obj, ttp_timestamp=None):
+def create_basic_object(stix20_type, stix1x_obj, parent_timestamp=None, parent_id=None):
     instance = {"type": stix20_type}
-    instance["id"] = generateSTIX20Id(stix20_type, stix1x_obj.id_ if hasattr(stix1x_obj, "id_") else None)
+    instance["id"] = generateSTIX20Id(stix20_type, stix1x_obj.id_ if hasattr(stix1x_obj, "id_") and stix1x_obj.id_ else parent_id)
     instance["version"] = 1  # need to see about versioning
-    timestamp = convert_timestamp(stix1x_obj, ttp_timestamp)
+    timestamp = convert_timestamp(stix1x_obj, parent_timestamp)
     instance["created"] = timestamp
     # may need to revisit if we handle 1.x versioning.
     instance["modified"] = timestamp
@@ -185,6 +177,8 @@ def remove_empty_common_values(instance):
         del instance["description"]
     if instance["external_references"] == []:
         del instance["external_references"]
+    if "created_by_ref" in instance and instance["created_by_ref"] is None:
+        del instance["created_by_ref"]
 
 def finish_basic_object(old_id, instance, stix1x_obj):
     record_ids(old_id, instance["id"])
@@ -195,21 +189,34 @@ def finish_basic_object(old_id, instance, stix1x_obj):
         for p in stix1x_obj.related_packages:
             warn("Related_Packages property no longer supported in STIX")
 
+# handle gaps
+
 def add_string_property_to_description(sdoInstance, property_name, property_value, isList=False):
     if SQUIRREL_GAPS_IN_DESCRIPTIONS and property_value is not None:
         if isList:
-            sdoInstance["description"] += "\n" + str.upper(property_name) + ":\n\n"
+            sdoInstance["description"] += "\n\n" + str.upper(property_name) + ":\n"
+            property_values = []
             for v in property_value:
-                sdoInstance["description"] += ",\n".join(v.encode('unicode_escape'))
+                property_values.append(str(v).encode('unicode_escape'))
+            sdoInstance["description"] += ",\n".join(property_values)
         else:
-            sdoInstance["description"] += "\n" + str.upper(property_name) + ":\n\n" + str(property_value).encode('unicode_escape')
+            sdoInstance["description"] += "\n\n" + str.upper(property_name) + ":\n" + str(property_value).encode('unicode_escape')
+
+def add_confidence_property_to_description(sdoInstance, confidence):
+    if SQUIRREL_GAPS_IN_DESCRIPTIONS:
+        if confidence is not None:
+            sdoInstance["description"] += "\n\n" + "CONFIDENCE:"
+            if confidence.value is not None:
+                sdoInstance["description"] += str(confidence.value)
+            if confidence.description is not None:
+                sdoInstance["description"] += "\n\tDESCRIPTION: " + str(confidence.description)
 
 # Relationships
 
 IDS_TO_NEW_IDS = {}
 
 def record_ids(id, new_id):
-    if id in IDS_TO_NEW_IDS.keys():
+    if id in IDS_TO_NEW_IDS:
         error(id + " is already associated with a new id " + IDS_TO_NEW_IDS[id])
     else:
         # info("associating " + new_id + " with " + id)
@@ -245,7 +252,7 @@ def handle_relationship_to_refs(refs, source_id, bundleInstance, verb, parent_ti
                                                                        verb,
                                                                        ref,
                                                                        parent_timestamp))
-        elif ref.item.idref in IDS_TO_NEW_IDS.keys():
+        elif ref.item.idref in IDS_TO_NEW_IDS:
             to_ref = IDS_TO_NEW_IDS[ref.item.idref]
             bundleInstance["relationships"].append(create_relationship(source_id,
                                                                        to_ref,
@@ -270,7 +277,7 @@ def handle_relationship_from_refs(refs, target_id, bundleInstance, verb, parent_
                                                                        verb,
                                                                        ref,
                                                                        parent_timestamp))
-        elif ref.item.idref in IDS_TO_NEW_IDS.keys():
+        elif ref.item.idref in IDS_TO_NEW_IDS:
             from_ref = IDS_TO_NEW_IDS[ref.item.idref]
             bundleInstance["relationships"].append(create_relationship(from_ref,
                                                                        target_id,
@@ -292,14 +299,14 @@ def fix_relationships(relationships):
     # TODO:  warn if ref not available??
     for ref in relationships:
         if reference_needs_fixing(ref["source_ref"]):
-            if not ref["source_ref"] in IDS_TO_NEW_IDS.keys():
+            if not ref["source_ref"] in IDS_TO_NEW_IDS:
                 new_id = generateSTIX20Id(None, str.lower(ref["source_ref"]))
                 if new_id is None:
                     warn("Dangling source reference " +  ref["source_ref"] + " in " + ref["id"])
                 IDS_TO_NEW_IDS[ref["source_ref"]] = new_id
             ref["source_ref"] = IDS_TO_NEW_IDS[ref["source_ref"]]
         if reference_needs_fixing(ref["target_ref"]):
-            if not ref["target_ref"] in IDS_TO_NEW_IDS.keys():
+            if not ref["target_ref"] in IDS_TO_NEW_IDS:
                 new_id = generateSTIX20Id(None, str.lower(ref["target_ref"]))
                 if new_id is None:
                     warn("Dangling target reference " + ref["target_ref"] + " in " + ref["id"])
@@ -320,12 +327,14 @@ def convert_campaign(camp, bundleInstance):
             del campaignInstance["aliases"]
     # TODO: add intended effect to description
     add_string_property_to_description(campaignInstance, "status", camp.status)
-    # TODO: add confidence to description
+    if hasattr(camp, "confidence"):
+        add_confidence_property_to_description(campaignInstance, camp.confidence)
     # TODO: add attribution to description
     if camp.activity is not None:
         for a in camp.activity:
             warn("Campaign/Activity not supported in STIX 2.0")
     if camp.related_ttps is not None:
+        # victims use targets, not uses
         handle_relationship_to_refs(camp.related_ttps, campaignInstance["id"], bundleInstance, "uses")
     if camp.related_incidents is not None:
         handle_relationship_from_refs(camp.related_incidents, campaignInstance["id"], bundleInstance, "attributed-to")
@@ -335,7 +344,10 @@ def convert_campaign(camp, bundleInstance):
         for att in camp.attribution:
             handle_relationship_from_refs(att, campaignInstance["id"], bundleInstance, "attributed-to")
     # associated campaigns
-    process_information_source(camp.information_source, campaignInstance)
+    process_information_source(camp.information_source,
+                               campaignInstance,
+                               bundleInstance,
+                               bundleInstance["created_by_ref"] if "created_by_ref" in bundleInstance else None)
     finish_basic_object(camp.id_, campaignInstance, camp)
     return campaignInstance
 
@@ -354,7 +366,8 @@ def convert_course_of_action(coa, bundleInstance):
     # TODO: add impact into description
     # TODO: add cost into description
     # TODO: add efficacy into description
-    process_information_source(coa.information_source, coaInstance)
+    process_information_source(coa.information_source, coaInstance, bundleInstance,
+                               bundleInstance["created_by_ref"] if "created_by_ref" in bundleInstance else None)
     # TODO: related coas
     finish_basic_object(coa.id_, coaInstance, coa)
     return coaInstance
@@ -362,20 +375,20 @@ def convert_course_of_action(coa, bundleInstance):
 # exploit target
 
 def process_et_properties(sdoInstance, et, bundleInstance):
-    # TODO: handle description and short description
+    process_description_and_short_description(sdoInstance, et)
     if "name" in sdoInstance:
         info("title from " + sdoInstance["type"] + " used for name, put exploit_target title in description")
         # TODO: add title to description
     elif et.title is not None:
         sdoInstance["name"] = et.title
-    process_information_source(et.information_source, sdoInstance)
+    process_information_source(et.information_source, sdoInstance, bundleInstance,
+                               bundleInstance["created_by_ref"] if "created_by_ref" in bundleInstance else None)
     if et.potential_coas is not None:
         handle_relationship_from_refs(et.potential_coas, sdoInstance["id"], bundleInstance, "mitigates",
                                       et.timestamp)
 
 def convert_vulnerability(v, et, bundleInstance):
-    et_timestamp = et.timestamp
-    vulnerabilityInstance = create_basic_object("vulnerability", v, et_timestamp)
+    vulnerabilityInstance = create_basic_object("vulnerability", v, et.timestamp, et.id_)
     if v.title is not None:
         vulnerabilityInstance["name"] = v.title
     process_description_and_short_description(vulnerabilityInstance, v)
@@ -470,8 +483,8 @@ def convert_identity(identity, finish=True):
         if ciq_info.addresses is not None:
             convert_ciq_addresses(ciq_info.addresses, identityInstance)
         # add other properties to contact_information
-        if finish:
-            finish_basic_object(identity.id_, identityInstance, identity)
+    if finish:
+        finish_basic_object(identity.id_, identityInstance, identity)
     return identityInstance
 
 # incident
@@ -500,7 +513,8 @@ def convert_incident(incident, bundleInstance):
     # TODO: add affected_assets to description
     # TODO: add impact_assessment to description
     # TODO: add status to description
-    process_information_source(incident.information_source, incidentInstance)
+    process_information_source(incident.information_source, incidentInstance, bundleInstance,
+                               bundleInstance["created_by_ref"] if "created_by_ref" in bundleInstance else None)
     finish_basic_object(incident.id_, incidentInstance, incident)
     return incidentInstance
 
@@ -552,26 +566,28 @@ def convert_indicator(indicator, bundleInstance):
             indicatorInstance["external_references"].append({"source_name": "alternative_id", "external_id": id})
     if indicator.valid_time_positions is not None:
         for window in indicator.valid_time_positions:
-            if not "valid_from" in indicatorInstance.keys():
+            if not "valid_from" in indicatorInstance:
                 indicatorInstance["valid_from"] = window.start_time.value
                 indicatorInstance["valid_from_precision"] = window.start_time.precision
                 indicatorInstance["valid_until"] = window.end_time.value
                 indicatorInstance["valid_until_precision"] = window.end_time.precision
             else:
                 warn("Only one valid time window allowed for " + indicatorInstance["id"] + " in STIX 2.0 - used first one")
-        if not "valid_from" in indicatorInstance.keys():
+        if not "valid_from" in indicatorInstance:
             warn("No valid time position information available in " + indicator.id_ + ", using timestamp")
             indicatorInstance["valid_from"] = convert_timestamp(indicator)
     convert_kill_chains(indicator.kill_chain_phases, indicatorInstance)
     # TODO: add likely impact to description
-    # TODO: add confidence to description
+    if hasattr(indicator, "confidence"):
+        add_confidence_property_to_description(indicatorInstance, indicator.confidence)
     # TODO: sightings
     if indicator.observable is not None:
         indicatorInstance["pattern"] = convert_observable_to_pattern(indicator.observable)
         indicatorInstance["pattern_lang"] = "cybox"
     # composite_indicator_expression?
     convert_test_mechanism(indicator, indicatorInstance)
-    process_information_source(indicator.producer, indicatorInstance)
+    process_information_source(indicator.producer, indicatorInstance, bundleInstance,
+                               bundleInstance["created_by_ref"] if "created_by_ref" in bundleInstance else None)
     if indicator.suggested_coas is not None:
         warn("Using related-to")
         handle_relationship_to_refs(indicator.suggested_coas, indicatorInstance["id"], bundleInstance, "related-to")
@@ -670,8 +686,9 @@ def process_report_contents(report, bundleInstance, reportInstance):
 def convert_report(report, bundleInstance):
     reportInstance = create_basic_object("report", report)
     process_description_and_short_description(reportInstance, report.header)
-    process_information_source(report.header.information_source, reportInstance)
-    add_string_property_to_description(reportInstance, "intent", report.header.intents)
+    process_information_source(report.header.information_source, reportInstance, bundleInstance,
+                               bundleInstance["created_by_ref"] if "created_by_ref" in bundleInstance else None)
+    add_string_property_to_description(reportInstance, "intent", report.header.intents, True)
     if report.header.title is not None:
         reportInstance["name"] = report.header.title
     process_report_contents(report, bundleInstance, reportInstance)
@@ -687,12 +704,13 @@ def convert_threat_actor(threat_actor, bundleInstance):
         info("Threat actor identity " + threat_actor.identity.id_ + " being used as basis of attributed-to relationship")
         handle_relationship_to_objs([threat_actor.identity ], threat_actor.id_, bundleInstance, "attributed-to")
     if threat_actor.title is not None:
-        info("Threat actor " + threat_actor.id_ + "'s title is used as name")
+        info("Threat actor " + threat_actor.id_ + "'s title is used for name property")
         threat_actorInstance["name"] = threat_actor.title
     convert_controlled_vocabs_to_open_vocabs(threat_actorInstance, "labels", threat_actor.types, THREAT_ACTOR_LABEL_MAP, False)
     # TODO: add intended effect to description
     # TODO: add planning_and_operational_support to description
-    # TODO: add confidence to description
+    if hasattr(threat_actor, "confidence"):
+        add_confidence_property_to_description(threat_actorInstance, threat_actor.confidence)
     # TODO: motivation is complicated
     convert_controlled_vocabs_to_open_vocabs(threat_actorInstance, "sophistication", threat_actor.sophistications, THREAT_ACTOR_SOPHISTICATION_MAP, True)
     # handle relationships
@@ -701,7 +719,8 @@ def convert_threat_actor(threat_actor, bundleInstance):
     if threat_actor.associated_campaigns is not None:
         handle_relationship_from_refs(threat_actor.associated_campaigns, threat_actorInstance["id"], bundleInstance, "attributed_to")
     # TODO: associated_actors
-    process_information_source(threat_actor.information_source, threat_actorInstance)
+    process_information_source(threat_actor.information_source, threat_actorInstance, bundleInstance,
+                               bundleInstance["created_by_ref"] if "created_by_ref" in bundleInstance else None)
     finish_basic_object(threat_actor.id_, threat_actorInstance, threat_actor)
     return threat_actorInstance
 
@@ -715,11 +734,14 @@ def process_ttp_properties(sdoInstance, ttp, bundleInstance, kill_chains_availab
         handle_relationship_to_refs(ttp.exploit_targets, sdoInstance["id"], bundleInstance, "targets")
     if kill_chains_available:
         convert_kill_chains(ttp.kill_chain_phases, sdoInstance)
-    process_information_source(ttp.information_source, sdoInstance)
+    if ttp.related_packages is not None:
+        for p in ttp.related_packages:
+            warn("TTP/Related_Packages on " + ttp.id_ + " not supported in STIX 2.0")
+    process_information_source(ttp.information_source, sdoInstance, bundleInstance,
+                               bundleInstance["created_by_ref"] if "created_by_ref" in bundleInstance else None)
 
 def convert_attack_pattern(ap, ttp, bundleInstance):
-    ttp_timestamp = ttp.timestamp
-    attack_PatternInstance = create_basic_object("attack-pattern", ap, ttp_timestamp)
+    attack_PatternInstance = create_basic_object("attack-pattern", ap, ttp.timestamp, ttp.id_)
     if ap.title is not None:
         attack_PatternInstance["name"] = ap.title
     process_description_and_short_description(attack_PatternInstance, ap)
@@ -730,8 +752,7 @@ def convert_attack_pattern(ap, ttp, bundleInstance):
     return attack_PatternInstance
 
 def convert_malware_instance(mal, ttp, bundleInstance):
-    ttp_timestamp = ttp.timestamp
-    malware_instanceInstance = create_basic_object("malware", mal, ttp_timestamp)
+    malware_instanceInstance = create_basic_object("malware", mal, ttp.timestamp, ttp.id_)
     # TODO: names?
     if mal.title is not None:
         malware_instanceInstance["name"] = mal.title
@@ -739,7 +760,7 @@ def convert_malware_instance(mal, ttp, bundleInstance):
     convert_controlled_vocabs_to_open_vocabs(malware_instanceInstance, "labels", mal.types, MALWARE_LABELS_MAP, False)
     if mal.names is not None:
         for n in mal.names:
-            if not "name" in malware_instanceInstance.keys():
+            if not "name" in malware_instanceInstance:
                 malware_instanceInstance["name"] = str(n)
             else:
                 warn("Only one name for malware is allowed for " + malware_instanceInstance["id"] + " in STIX 2.0 - used first one")
@@ -764,8 +785,7 @@ def convert_behavior(behavior, ttp, bundleInstance):
     return behavior_generated
 
 def convert_tool(tool, ttp, bundleInstance):
-    ttp_timestamp = ttp.timestamp
-    toolInstance = create_basic_object("tool", tool, ttp_timestamp)
+    toolInstance = create_basic_object("tool", tool, ttp.timestamp, ttp.id_)
     if tool.name is not None:
         toolInstance["name"] = tool.name
     process_description_and_short_description(toolInstance, tool)
@@ -846,10 +866,7 @@ def convert_ttp(ttp, bundleInstance):
     if ttp.behavior is not None:
         ttp_generated = convert_behavior(ttp.behavior, ttp, bundleInstance)
     if ttp.resources is not None:
-        ttp_generated = convert_resources(ttp.resources, ttp, bundleInstance)
-    if ttp.related_packages is not None:
-        for p in ttp.related_packages:
-            warn("TTP/Related_Packages on " + ttp.id_ + " not supported in STIX 2.0")
+        ttp_generated = ttp_generated or convert_resources(ttp.resources, ttp, bundleInstance)
     if ttp.kill_chain_phases is not None:
         for phase in ttp.kill_chain_phases:
             warn("Kill chains in TTP on " + ttp.id_ + " are not handled yet")
@@ -920,7 +937,7 @@ def initialize_bundle_lists(bundleInstance):
 def finalize_bundle(bundleInstance):
     if KILL_CHAINS_PHASES != {}:
         for ind20 in bundleInstance["indicators"]:
-            if "kill_chain_phases" in ind20.keys():
+            if "kill_chain_phases" in ind20:
                 fixed_kill_chain_phases = []
                 for kcp in ind20["kill_chain_phases"]:
                     if isinstance(kcp, str):
@@ -934,12 +951,13 @@ def finalize_bundle(bundleInstance):
                 ind20["kill_chain_phases"] = fixed_kill_chain_phases
     # ttps
 
-
+    # TODO: fix created-by_ref
+    # TODO: fix other embedded relationships
     for r in bundleInstance["reports"]:
         fixed_refs = []
         for ref in r["report_refs"]:
             if reference_needs_fixing(ref):
-                if ref in IDS_TO_NEW_IDS.keys():
+                if ref in IDS_TO_NEW_IDS:
                     fixed_refs.append(IDS_TO_NEW_IDS[ref])
                 else:
                     fixed_refs.append(ref)
@@ -979,12 +997,20 @@ def finalize_bundle(bundleInstance):
     else:
         fix_relationships(bundleInstance["relationships"])
 
+    del bundleInstance["created_by_ref"]
+
 def convert_package(stixPackage):
     bundleInstance = {"type": "bundle"}
     bundleInstance["id"] = generateSTIX20Id("bundle", stixPackage.id_)
     bundleInstance["spec_version"] = "2.0"
-    # header
     initialize_bundle_lists(bundleInstance)
+    if hasattr(stixPackage.stix_header, "information_source") and stixPackage.stix_header.information_source is not None:
+        process_information_source(stixPackage.stix_header.information_source, bundleInstance, bundleInstance, None)
+    else:
+        bundleInstance["created_by_ref"] = None
+
+    # TODO: other header stuff
+
     # campaigns
     for camp in stixPackage.campaigns:
         camp20 = convert_campaign(camp, bundleInstance)
