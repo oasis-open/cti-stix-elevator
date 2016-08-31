@@ -3,13 +3,16 @@
 
 import sys
 
+
 def info(fmt, *args):
     msg = fmt % args
-    print "[INFO]", msg
+    sys.stdout.write("[INFO] %s\n" % msg)
+
 
 def warn(fmt, *args):
     msg = fmt % args
     sys.stderr.write("[WARN] %s\n" % msg)
+
 
 def error(fmt, *args):
     msg = fmt % args

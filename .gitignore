@@ -1,0 +1,23 @@
+# vim swap files
+*.swp
+
+# compiled python modules
+*.py[co]
+
+# eclipse project files
+*.project
+*.pydevproject
+*.settings
+
+# pycharm
+.idea/
+
+# python setuptools
+build/
+dist/
+*.egg-info
+
+.tox
+
+docs/_build
+
