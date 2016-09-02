@@ -40,23 +40,121 @@ INCIDENT_IN_20 = True
 
 # TODO: specify controlled vocab mappings
 
-COA_LABEL_MAP = {}
 
-INCIDENT_LABEL_MAP = {}
+# Limited in STIX 2.0, no labels available.
+COA_LABEL_MAP = \
+    {
 
-INDICATOR_LABEL_MAP = {}
+    }
 
-MALWARE_LABELS_MAP = {}
+# Not in STIX 2.0
+INCIDENT_LABEL_MAP = \
+    {
+
+    }
+
+INDICATOR_LABEL_MAP = \
+    {
+        "Anonymization": "anonymization",
+        "Compromised PKI Certificate": "compromised",
+        "Login Name": "compromised",
+        "Malware Artifacts": "malicious-activity",
+        "Malicious E-mail": "malicious-activity",
+        "Exfiltration": "malicious-activity",
+        "C2": "malicious-activity",
+        "IP Watchlist": "benign",
+        "Domain Watchlist": "benign",
+        "URL Watchlist": "benign",
+        "File Hash Watchlist": "benign",
+        "IMEI Watchlist": "benign",
+        "IMSI Watchlist": "benign",
+        "Host Characteristics": "benign",
+    }
+
+MALWARE_LABELS_MAP = \
+    {
+        "Automated Transfer Scripts": "",
+        "Adware": "adware",
+        "Dialer": "spyware",  # Verify
+        "Bot": "bot",
+        "Bot - Credential Theft": "bot",
+        "Bot - DDoS": "bot",
+        "Bot - Loader": "bot",
+        "Bot - Spam": "bot",
+        "DoS / DDoS": "ddos",
+        "DoS / DDoS - Participatory": "ddos",
+        "DoS / DDoS - Script": "ddos",
+        "DoS / DDoS - Stress Test Tools": "ddos",
+        "Exploit Kits": "exploit-kit",
+        "POS / ATM Malware": "",  # Need to determined
+        "Ransomware": "ransomware",
+        "Remote Access Trojan": "remote-access-trojan",
+        "Rogue Antivirus": "rogue-security-software",
+        "Rootkit": "rootkit",
+    }
 
 ROLES_MAP = {}
 
 SECTORS_MAP = {}
 
-THREAT_ACTOR_LABEL_MAP = {}
+THREAT_ACTOR_LABEL_MAP = \
+    {
+        "Cyber Espionage Operations": "spy",
+        "Hacker": "hacker",
+        "Hacker - White hat": "hacker",
+        "Hacker - Gray hat": "hacker",
+        "Hacker - Black hat": "hacker",
+        "Hacktivist": "activist",
+        "State Actor / Agency": "nation-state",
+        "eCrime Actor - Credential Theft Botnet Operator": "criminal",
+        "eCrime Actor - Credential Theft Botnet Service": "criminal",
+        "eCrime Actor - Malware Developer": "criminal",
+        "eCrime Actor - Money Laundering Network": "criminal",
+        "eCrime Actor - Organized Crime Actor": "criminal",
+        "eCrime Actor - Spam Service": "criminal",
+        "eCrime Actor - Traffic Service": "criminal",
+        "eCrime Actor - Underground Call Service": "criminal",
+        "Insider Threat": "",  # conflict insider-accidental, insider-disgruntled
+        "Disgruntled Customer / User": "insider-disgruntled",
+    }
 
-THREAT_ACTOR_SOPHISTICATION_MAP = {}
+ATTACK_MOTIVATION_MAP = \
+    {
+        "Ideological": "ideology",
+        "Ideological - Anti-Corruption": "ideology",
+        "Ideological - Anti-Establishment": "ideology",
+        "Ideological - Environmental": "ideology",
+        "Ideological - Ethnic / Nationalist": "ideology",
+        "Ideological - Information Freedom": "ideology",
+        "Ideological - Religious": "ideology",
+        "Ideological - Security Awareness": "ideology",
+        "Ideological - Human Rights": "ideology",
+        "Ego": "personal-satisfaction",
+        "Financial or Economic": "",  # conflicting organizational-gain, personal-gain
+        "Military": "",         # Need to determine
+        "Opportunistic": "",    # Need to determine
+        "Political": "",        # Need to determine
+    }
 
-TOOL_LABELS_MAP = {}
+THREAT_ACTOR_SOPHISTICATION_MAP = \
+    {
+        "Innovator": "innovator",
+        "Expert": "expert",
+        "Practitioner": "intermediate",
+        "Novice": "minimal",
+        "Aspirant": "none",
+    }
+
+TOOL_LABELS_MAP = \
+    {
+        "Malware": "exploitation",
+        "Penetration Testing": "",  # Need to determine
+        "Port Scanner": "information-gathering",
+        "Traffic Scanner": "information-gathering",
+        "Vulnerability Scanner": "vulnerability-scanning",
+        "Application Scanner": "",
+        "Password Cracking": "credential-exploitation",
+    }
 
 IDENTITIES = {}
 
@@ -67,7 +165,7 @@ KILL_CHAINS_PHASES = {}
 
 def process_kill_chain(kc):
     for kcp in kc.kill_chain_phases:
-        KILL_CHAINS_PHASES[kcp.phase_id] = { "kill_chain_name" : kc.name, "phase_name": kcp.name}
+        KILL_CHAINS_PHASES[kcp.phase_id] = {"kill_chain_name": kc.name, "phase_name": kcp.name}
 
 
 def map_1x_type_to_20(stix1xType):
@@ -96,7 +194,7 @@ def generateSTIX20Id(stix20SOName, stix12ID = None):
 
 def get_simple_name_from_identity(identity, bundleInstance, sdoInstance):
     if isinstance(identity, CIQIdentity3_0Instance):
-        handle_relationship_to_refs([ identity ], sdoInstance["id"], bundleInstance, "attributed-to")
+        handle_relationship_to_refs([identity], sdoInstance["id"], bundleInstance, "attributed-to")
     else:
         return identity.name
 
@@ -512,7 +610,7 @@ def convert_identity(identity, finish=True):
         if ciq_info.party_name is not None:
             warn("ciq name found in " + identityInstance["id"] + ", possibly overriding other name")
             convert_party_name(ciq_info.party_name, identityInstance)
-        if not "name" in identityInstance:
+        if "name" not in identityInstance:
             error(identityInstance["id"] + " must have a name, using 'none'")
             identityInstance["name"] = "None"
         if ciq_info.organisation_info is not None:
@@ -607,14 +705,14 @@ def convert_indicator(indicator, bundleInstance):
             indicatorInstance["external_references"].append({"source_name": "alternative_id", "external_id": id})
     if indicator.valid_time_positions is not None:
         for window in indicator.valid_time_positions:
-            if not "valid_from" in indicatorInstance:
+            if "valid_from" not in indicatorInstance:
                 indicatorInstance["valid_from"] = window.start_time.value
                 indicatorInstance["valid_from_precision"] = window.start_time.precision
                 indicatorInstance["valid_until"] = window.end_time.value
                 indicatorInstance["valid_until_precision"] = window.end_time.precision
             else:
                 warn("Only one valid time window allowed for " + indicatorInstance["id"] + " in STIX 2.0 - used first one")
-        if not "valid_from" in indicatorInstance:
+        if "valid_from" not in indicatorInstance:
             warn("No valid time position information available in " + indicator.id_ + ", using timestamp")
             indicatorInstance["valid_from"] = convert_timestamp(indicator)
     convert_kill_chains(indicator.kill_chain_phases, indicatorInstance)
@@ -815,7 +913,7 @@ def convert_malware_instance(mal, ttp, bundleInstance):
     convert_controlled_vocabs_to_open_vocabs(malware_instanceInstance, "labels", mal.types, MALWARE_LABELS_MAP, False)
     if mal.names is not None:
         for n in mal.names:
-            if not "name" in malware_instanceInstance:
+            if "name" not in malware_instanceInstance:
                 malware_instanceInstance["name"] = str(n)
             else:
                 warn("Only one name for malware is allowed for " + malware_instanceInstance["id"] + " in STIX 2.0 - used first one")
@@ -912,10 +1010,7 @@ def convert_victim_targeting(victim_targeting, ttp, bundleInstance, ttp_generate
         identityInstance = convert_identity_for_victim_target(victim_targeting.identity, ttp, bundleInstance)
         bundleInstance["identities"].append(identityInstance)
         if ttp_generated:
-            bundleInstance["relationships"].append(create_relationship(ttp.id_,
-                                                                       identityInstance["id"],
-                                                                       "targets",
-                                                                       None))
+            bundleInstance["relationships"].append(create_relationship(ttp.id_, identityInstance["id"], "targets", None))
             handle_relationship_to_objs([ttp], identityInstance.id_, bundleInstance, "targets")
         warn(ttp.id_ + " generated an identity associated with a victim")
         return True
@@ -924,7 +1019,7 @@ def convert_victim_targeting(victim_targeting, ttp, bundleInstance, ttp_generate
 
 
 def convert_ttp(ttp, bundleInstance):
-    ttp_generated = False;
+    ttp_generated = False
     if ttp.behavior is not None:
         ttp_generated = convert_behavior(ttp.behavior, ttp, bundleInstance)
     if ttp.resources is not None:
@@ -1028,36 +1123,36 @@ def finalize_bundle(bundleInstance):
                     fixed_refs.append(ref)
         r["report_refs"] = fixed_refs
 
-    if bundleInstance["campaigns"] == []:
+    if not bundleInstance["campaigns"]:
         del bundleInstance["campaigns"]
-    if bundleInstance["courses_of_action"] == []:
+    if not bundleInstance["courses_of_action"]:
         del bundleInstance["courses_of_action"]
-    if bundleInstance["vulnerabilities"] == []:
+    if not bundleInstance["vulnerabilities"]:
         del bundleInstance["vulnerabilities"]
-    if bundleInstance["identities"] == []:
+    if not bundleInstance["identities"]:
         del bundleInstance["identities"]
-    if bundleInstance["incidents"] == []:
+    if not bundleInstance["incidents"]:
         del bundleInstance["incidents"]
-    if bundleInstance["indicators"] == []:
+    if not bundleInstance["indicators"]:
         del bundleInstance["indicators"]
-    if bundleInstance["observed_data"] == []:
+    if not bundleInstance["observed_data"]:
         del bundleInstance["observed_data"]
-    if bundleInstance["reports"] == []:
+    if not bundleInstance["reports"]:
         del bundleInstance["reports"]
-    if bundleInstance["threat-actors"] == []:
+    if not bundleInstance["threat-actors"]:
         del bundleInstance["threat-actors"]
-    if bundleInstance["attack_patterns"] == []:
+    if not bundleInstance["attack_patterns"]:
         del bundleInstance["attack_patterns"]
-    if bundleInstance["malware"] == []:
+    if not bundleInstance["malware"]:
         del bundleInstance["malware"]
-    if bundleInstance["tools"] == []:
+    if not bundleInstance["tools"]:
         del bundleInstance["tools"]
-    if bundleInstance["infrastructure"] == []:
+    if not bundleInstance["infrastructure"]:
         del bundleInstance["infrastructure"]
-    if bundleInstance["victim_targets"] == []:
+    if not bundleInstance["victim_targets"]:
         del bundleInstance["victim_targets"]
 
-    if bundleInstance["relationships"] == []:
+    if not bundleInstance["relationships"]:
         del bundleInstance["relationships"]
     else:
         fix_relationships(bundleInstance["relationships"])
@@ -1146,7 +1241,7 @@ def convert_package(stixPackage):
 def convert_file(inFileName):
     stixPackage = EntityParser().parse_xml(inFileName)
     if isinstance(stixPackage, STIXPackage):
-        print json.dumps(convert_package(stixPackage), indent=4, separators=(',', ': '))
+        sys.stdout.write(json.dumps(convert_package(stixPackage), indent=4, separators=(',', ': ')) + "\n")
 
 
 if __name__ == '__main__':

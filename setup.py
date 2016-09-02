@@ -31,7 +31,7 @@ setup(
     long_description=readme,
     url="http://stixproject.github.io/",
     packages=find_packages(),
-    install_requires=['stix>=1.2.0.0,<1.2.1.0', 'mixbox>=0.0.11'],
+    install_requires=['stix>=1.2.0.0,<1.2.1.0'],
     classifiers=[
         "Programming Language :: Python",
         "Development Status :: 2 - Pre-Alpha",
