@@ -24,12 +24,13 @@ from stix.extensions.identity.ciq_identity_3_0 import CIQIdentity3_0Instance
 import sys
 import python_jsonschema_objects as pjs
 import json
-from datetime import datetime
+from datetime import *
 import uuid
-import base64
+import pycountry
+from dateutil.parser import *
 
 from convert_cybox import convert_cybox_object
-from convert_pattern import convert_observable_to_pattern
+from convert_pattern import convert_observable_to_pattern, fix_pattern
 from utils import info, warn, error
 
 SQUIRREL_GAPS_IN_DESCRIPTIONS = True
@@ -162,6 +163,7 @@ IDENTITIES = {}
 
 KILL_CHAINS_PHASES = {}
 
+OBSERVABLE_MAPPING = {}
 
 def process_kill_chain(kc):
     for kcp in kc.kill_chain_phases:
@@ -169,6 +171,7 @@ def process_kill_chain(kc):
 
 
 def map_1x_type_to_20(stix1xType):
+    # TODO: stub
     return stix1xType
 
 
@@ -221,34 +224,35 @@ def convert_timestamp(entity, parent_timestamp=None):
     if hasattr(entity, "timestamp"):
         if entity.timestamp is not None:
             # TODO: make sure its in the correct format
-            return str(entity.timestamp)
+            return entity.timestamp.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
         else:
             warn("Timestamp not available, using current time")
-            return str(datetime.now().isoformat())
+            return str(datetime.now().isoformat()) + "Z"
     elif parent_timestamp is not None:
         info("Using enclosing object timestamp")
         # TODO: make sure its in the correct format
-        return str(parent_timestamp)
+        return parent_timestamp.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
     else:
         warn("Timestamp not available, using current time")
-        return str(datetime.now().isoformat())
+        return str(datetime.now().isoformat()) + "Z"
 
+def cannonicalize_label(t):
+    # TODO: stub
+    return t
 
 def map_vocabs_to_label(t, vocab_map):
     try:
         return vocab_map[t]
     except KeyError:
-        return t
-
+        return cannonicalize_label(t)
 
 def convert_controlled_vocabs_to_open_vocabs(stix20_obj, stix20_property_name, stix1x_vocabs, vocab_mapping, only_one):
     stix20_obj[stix20_property_name] = []
-    if stix1x_vocabs:
-        for t in stix1x_vocabs:
-            if stix20_obj[stix20_property_name] is None or not only_one:
-                stix20_obj[stix20_property_name].append(map_vocabs_to_label(t.value, vocab_mapping))
-            else:
-                warn("Only one " +  stix20_property_name + " allowed in STIX 2.0 - used first one")
+    for t in stix1x_vocabs:
+        if stix20_obj[stix20_property_name] is None or not only_one:
+            stix20_obj[stix20_property_name].append(map_vocabs_to_label(t.value, vocab_mapping))
+        else:
+            warn("Only one " +  stix20_property_name + " allowed in STIX 2.0 - used first one")
     if stix20_obj[stix20_property_name] == []:
         del stix20_obj[stix20_property_name]
 
@@ -297,7 +301,8 @@ def remove_empty_common_values(instance):
 
 
 def finish_basic_object(old_id, instance, stix1x_obj):
-    record_ids(old_id, instance["id"])
+    if old_id is not None:
+        record_ids(old_id, instance["id"])
     remove_empty_common_values(instance)
     if hasattr(stix1x_obj, "handling") and stix1x_obj.handling is not None:
         warn("Handling not implemented, yet")
@@ -320,7 +325,7 @@ def add_string_property_to_description(sdoInstance, property_name, property_valu
             sdoInstance["description"] += ",\n".join(property_values)
         else:
             sdoInstance["description"] += "\n\n" + str.upper(property_name) + ":\n" + str(property_value).encode('unicode_escape')
-
+        warn("Added " + property_name + " to description of " + sdoInstance["id"])
 
 def add_confidence_property_to_description(sdoInstance, confidence):
     if SQUIRREL_GAPS_IN_DESCRIPTIONS:
@@ -338,9 +343,11 @@ IDS_TO_NEW_IDS = {}
 
 def record_ids(id, new_id):
     if id in IDS_TO_NEW_IDS:
-        error(id + " is already associated with a new id " + IDS_TO_NEW_IDS[id])
+        warn(id + " is already associated with a new id " + IDS_TO_NEW_IDS[id])
     else:
         # info("associating " + new_id + " with " + id)
+        if new_id is None:
+            error("Could not associate " + id + " with None")
         IDS_TO_NEW_IDS[id] = new_id
 
 
@@ -439,6 +446,7 @@ def fix_relationships(relationships):
                     warn("Dangling target reference " + ref["target_ref"] + " in " + ref["id"])
                 IDS_TO_NEW_IDS[ref["target_ref"]] = new_id
             ref["target_ref"] = IDS_TO_NEW_IDS[ref["target_ref"]]
+        # TODO: add error messages for missing required properties
 
 # campaign
 
@@ -477,6 +485,7 @@ def convert_campaign(camp, bundleInstance):
                                bundleInstance,
                                bundleInstance["created_by_ref"] if "created_by_ref" in bundleInstance else None)
     finish_basic_object(camp.id_, campaignInstance, camp)
+    # TODO: add error messages for missing required properties
     return campaignInstance
 
 # course of action
@@ -499,6 +508,7 @@ def convert_course_of_action(coa, bundleInstance):
                                bundleInstance["created_by_ref"] if "created_by_ref" in bundleInstance else None)
     # TODO: related coas
     finish_basic_object(coa.id_, coaInstance, coa)
+    # TODO: add error messages for missing required properties
     return coaInstance
 
 # exploit target
@@ -537,6 +547,7 @@ def convert_vulnerability(v, et, bundleInstance):
             vulnerabilityInstance["external_references"].append({"url": ref.reference})
     process_et_properties(vulnerabilityInstance, et, bundleInstance)
     finish_basic_object(et.id_, vulnerabilityInstance, v)
+    # TODO: add error messages for missing required properties
     return vulnerabilityInstance
 
 
@@ -560,12 +571,20 @@ def convert_ciq_addresses(addresses, identityInstance):
     for add in addresses:
         if hasattr(add, "country"):
             for name in add.country.name_elements:
-                # TODO: convert to iso
-                identityInstance["country"].append(name.value)
+                iso = pycountry.countries.get(name=name.value)
+                if iso is not None:
+                    identityInstance["country"].append(iso.alpha2)
+                else:
+                    warn("No ISO code for " + name.value)
+                    identityInstance["country"].append(name.value)
         if hasattr(add, "administrative_area"):
             for name in add.administrative_area.name_elements:
-                # TODO: convert to iso
-                identityInstance["regions"].append(name.value)
+                # bug in pycountry - need to make sure that subdivisions are indexed using "name"
+                iso = pycountry.subdivisions.get(name=name.value)
+                if iso is not None:
+                    identityInstance["regions"].append(iso.code)
+                else:
+                    identityInstance["regions"].append(name.value)
 
 
 def get_name(name):
@@ -620,6 +639,7 @@ def convert_identity(identity, finish=True):
         # add other properties to contact_information
     if finish:
         finish_basic_object(identity.id_, identityInstance, identity)
+    # TODO: add error messages for missing required properties
     return identityInstance
 
 # incident
@@ -652,6 +672,7 @@ def convert_incident(incident, bundleInstance):
     process_information_source(incident.information_source, incidentInstance, bundleInstance,
                                bundleInstance["created_by_ref"] if "created_by_ref" in bundleInstance else None)
     finish_basic_object(incident.id_, incidentInstance, incident)
+    # TODO: add error messages for missing required properties
     return incidentInstance
 
 # indicator
@@ -721,9 +742,10 @@ def convert_indicator(indicator, bundleInstance):
         add_confidence_property_to_description(indicatorInstance, indicator.confidence)
     # TODO: sightings
     if indicator.observable is not None:
-        indicatorInstance["pattern"] = convert_observable_to_pattern(indicator.observable)
+        indicatorInstance["pattern"] = convert_observable_to_pattern(indicator.observable, bundleInstance, OBSERVABLE_MAPPING)
         indicatorInstance["pattern_lang"] = "cybox"
-    # composite_indicator_expression?
+    if indicator.composite_indicator_expression is not None:
+        warn("composite indicator expressions are not handled - " + indicator.id_)
     convert_test_mechanism(indicator, indicatorInstance)
     process_information_source(indicator.producer, indicatorInstance, bundleInstance,
                                bundleInstance["created_by_ref"] if "created_by_ref" in bundleInstance else None)
@@ -736,12 +758,14 @@ def convert_indicator(indicator, bundleInstance):
     if indicator.indicated_ttps is not None:
         handle_relationship_to_refs(indicator.indicated_ttps, indicatorInstance["id"], bundleInstance, "indicates")
     finish_basic_object(indicator.id_, indicatorInstance, indicator)
+    # TODO: add error messages for missing required properties
     return indicatorInstance
 
 # observables
 
 
 def convert_observable_data(obs, bundleInstance):
+    global OBSERVABLE_MAPPING
     observed_data_instance = create_basic_object("observable-data", obs)
     cyboxContainer = { "type": "cybox-container", "spec_version": "3.0"}
     observed_data_instance["cybox"] = convert_cybox_object(obs.object_, cyboxContainer)
@@ -753,6 +777,9 @@ def convert_observable_data(obs, bundleInstance):
     observed_data_instance["number_observed"] = 1 if obs.sighting_count is None else obs.sighting_count
     # created_by
     finish_basic_object(obs.id_, observed_data_instance, obs)
+    # remember the original 1.x observable, in case it has to be turned into a pattern later
+    OBSERVABLE_MAPPING[obs.id_] = obs
+    # TODO: add error messages for missing required properties
     return observed_data_instance
 
 # report
@@ -842,6 +869,7 @@ def convert_report(report, bundleInstance):
         reportInstance["name"] = report.header.title
     process_report_contents(report, bundleInstance, reportInstance)
     finish_basic_object(report.id_, reportInstance, report.header)
+    # TODO: add error messages for missing required properties
     return reportInstance
 
 # threat actor
@@ -872,6 +900,7 @@ def convert_threat_actor(threat_actor, bundleInstance):
     process_information_source(threat_actor.information_source, threat_actorInstance, bundleInstance,
                                bundleInstance["created_by_ref"] if "created_by_ref" in bundleInstance else None)
     finish_basic_object(threat_actor.id_, threat_actorInstance, threat_actor)
+    # TODO: add error messages for missing required properties
     return threat_actorInstance
 
 # TTPs
@@ -901,6 +930,7 @@ def convert_attack_pattern(ap, ttp, bundleInstance):
         attack_PatternInstance["external_references"] = [ {"source_name": "capec", "external_id": ap.capec_id}]
     process_ttp_properties(attack_PatternInstance, ttp, bundleInstance)
     finish_basic_object(ttp.id_, attack_PatternInstance, ap)
+    # TODO: add error messages for missing required properties
     return attack_PatternInstance
 
 
@@ -920,6 +950,7 @@ def convert_malware_instance(mal, ttp, bundleInstance):
     # TODO: warning for MAEC content
     process_ttp_properties(malware_instanceInstance, ttp, bundleInstance)
     finish_basic_object(ttp.id_, malware_instanceInstance, mal)
+    # TODO: add error messages for missing required properties
     return malware_instanceInstance
 
 
@@ -957,6 +988,7 @@ def convert_tool(tool, ttp, bundleInstance):
     toolInstance["tool_version"] = tool.version
     process_ttp_properties(toolInstance, ttp, bundleInstance)
     finish_basic_object(ttp.id_, toolInstance, tool)
+    # TODO: add error messages for missing required properties
     return toolInstance
 
 
@@ -972,6 +1004,7 @@ def convert_infrastructure(infra, ttp, bundleInstance):
     # TODO: observable_characterizations?
     process_ttp_properties(infrastructureInstance, ttp, bundleInstance)
     finish_basic_object(ttp.id_, infrastructureInstance, infra)
+    # TODO: add error messages for missing required properties
     return infrastructureInstance
 
 
@@ -982,9 +1015,13 @@ def convert_resources(resources, ttp, bundleInstance):
         for t in resources.tools:
             bundleInstance["tools"].append(convert_tool(t, ttp, bundleInstance))
             resource_generated = True
-    if INFRASTRUCTURE_IN_20 and resources.infrastructure is not None:
-        bundleInstance["infrastructure"].append(convert_infrastructure(resources.infrastructure, ttp, bundleInstance))
-        infrastructure_generated = True
+    if resources.infrastructure is not None:
+        if INFRASTRUCTURE_IN_20:
+            bundleInstance["infrastructure"].append(convert_infrastructure(resources.infrastructure, ttp, bundleInstance))
+            infrastructure_generated = True
+        else:
+            warn("Infrastructure is not part of of STIX 2.0 - " + ttp.id_)
+
     return resource_generated or infrastructure_generated
 
 
@@ -1003,14 +1040,17 @@ def convert_victim_targeting(victim_targeting, ttp, bundleInstance, ttp_generate
     if victim_targeting.targeted_information:
         for v in victim_targeting.targeted_information:
             warn("targeted information on " + ttp.id_ + " is not a victim target in STIX 2.0")
-    if hasattr(victim_targeting, "targeted_technical_details") and victim_targeting.targeted_technical_details:
+    if victim_targeting.targeted_technical_details is not None:
         for v in victim_targeting.targeted_technical_details:
             warn("targeted technical details on " + ttp.id_ + " are not a victim target in STIX 2.0")
     if victim_targeting.identity:
         identityInstance = convert_identity_for_victim_target(victim_targeting.identity, ttp, bundleInstance)
         bundleInstance["identities"].append(identityInstance)
         if ttp_generated:
-            bundleInstance["relationships"].append(create_relationship(ttp.id_, identityInstance["id"], "targets", None))
+            bundleInstance["relationships"].append(create_relationship(ttp.id_,
+                                                                       identityInstance["id"],
+                                                                       "targets",
+                                                                       None))
             handle_relationship_to_objs([ttp], identityInstance.id_, bundleInstance, "targets")
         warn(ttp.id_ + " generated an identity associated with a victim")
         return True
@@ -1026,7 +1066,7 @@ def convert_ttp(ttp, bundleInstance):
         ttp_generated = ttp_generated or convert_resources(ttp.resources, ttp, bundleInstance)
     if ttp.kill_chain_phases is not None:
         for phase in ttp.kill_chain_phases:
-            warn("Kill chains in TTP on " + ttp.id_ + " are not handled yet")
+            warn("Kill chains in TTP on " + ttp.id_ + " are not in STIX 2.0")
     if ttp.victim_targeting is not None:
         ttp_generated = convert_victim_targeting(ttp.victim_targeting, ttp, bundleInstance, ttp_generated)
     if not ttp_generated and ttp.id_ is not None:
@@ -1111,7 +1151,7 @@ def finalize_bundle(bundleInstance):
                 ind20["kill_chain_phases"] = fixed_kill_chain_phases
     # ttps
 
-    # TODO: fix created-by_ref
+    # TODO: fix created_by_ref
     # TODO: fix other embedded relationships
     for r in bundleInstance["reports"]:
         fixed_refs = []
@@ -1171,6 +1211,14 @@ def convert_package(stixPackage):
         bundleInstance["created_by_ref"] = None
 
     # TODO: other header stuff
+
+    # do observables first, especially before indicators!
+
+    # observables
+    if stixPackage.observables is not None:
+        for o_d in stixPackage.observables:
+            o_d20 = convert_observable_data(o_d, bundleInstance)
+            bundleInstance["observed_data"].append(o_d20)
 
     # campaigns
     if stixPackage.campaigns:
@@ -1241,8 +1289,9 @@ def convert_package(stixPackage):
 def convert_file(inFileName):
     stixPackage = EntityParser().parse_xml(inFileName)
     if isinstance(stixPackage, STIXPackage):
-        sys.stdout.write(json.dumps(convert_package(stixPackage), indent=4, separators=(',', ': ')) + "\n")
-
+        print json.dumps(convert_package(stixPackage), indent=4, separators=(',', ': '))
 
 if __name__ == '__main__':
     convert_file(sys.argv[1])
+
+
