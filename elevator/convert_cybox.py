@@ -20,7 +20,11 @@ def convert_file(file):
     first_one = True
     cybox = { "type": "file-object", "file_name": str(file.file_name) }
     if file.size is not None:
-        cybox["size"] = int(file.size)
+        if isinstance(file.size.value, list):
+            error("file size window not allowed in top level observable, using first value")
+            cybox["size"] = int(file.size.value[0])
+        else:
+            cybox["size"] = int(file.size)
     if file.hashes is not None:
         hashes = {}
         for hash in file.hashes:

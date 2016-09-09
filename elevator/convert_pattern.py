@@ -55,7 +55,7 @@ def create_term(lhs, condition, rhs):
         return create_term_with_regex(lhs, condition, rhs)
     elif condition is None:
         warn("No condition given - assume EQ")
-        return lhs + " EQ '" + rhs + "'"
+        return lhs + " EQ '" + str(rhs) + "'"
     else:
         try:
             if need_not(condition):
@@ -101,21 +101,66 @@ def convert_file_to_pattern(file):
         first_hash = True
         hash_expression = ""
         for hash in file.hashes:
-            hash_expression = (" OR " if not first_hash else "") + \
+            hash_expression += (" OR " if not first_hash else "") + \
                               create_term("file-object:hashes" + ":" + str(hash.type_).lower(),
                                           hash.simple_hash_value.condition,
                                           hash.simple_hash_value.value)
             first_hash = False
         if not first_hash:
-         expression += (" AND " if not first_one else "") + hash_expression
+            expression += hash_expression
     if file.file_name is not None:
-        return create_term("file-object:file_name",
-                            file.file_name.condition,
-                            file.file_name.value)
+        name_expression = create_term("file-object:file_name",
+                                      file.file_name.condition,
+                                      file.file_name.value)
+        expression += (" AND " if expression != "" else "") + name_expression
     return expression
 
-def convert_registry_to_pattern(prop):
-    pass
+def convert_registry_key_value_property(prop, property_name):
+    property_expression = ""
+    if hasattr(prop, "condition"):
+        cond = prop.condition
+    else:
+        warn("No condition given - assume EQ")
+        cond = None
+    return create_term("win-registry-key-object:values[*]" + ":" + property_name, cond, prop)
+
+
+def convert_registry_key_to_pattern(reg_key):
+    first_one = True
+    expression = ""
+    if reg_key.key:
+        key_value_term = ""
+        if reg_key.hive:
+            if reg_key.hive.condition is None:
+                key_value_term += reg_key.hive.value + "\\"
+            else:
+                warn("Condition on a hive property not handled")
+            key_value_term += reg_key.key.value
+            expression += create_term("win-registry-key-object:key", reg_key.key.condition,  key_value_term)
+    if reg_key.values:
+        values_expression = ""
+        data_expression = ""
+        name_expression = ""
+        type_expression = ""
+        first_value = True
+        for v in reg_key.values:
+            value_expression = ""
+            if hasattr(v, "data") and v.data:
+                data_expression = convert_registry_key_value_property(v.data, "data")
+            if data_expression:
+                value_expression += (" AND " if value_expression != "" else "") + data_expression
+            if hasattr(v, "name") and v.name:
+                name_expression = convert_registry_key_value_property(v.name, "name")
+            if name_expression:
+                value_expression += (" AND " if value_expression != "" else "") + name_expression
+            if hasattr(v, "datatype") and v.datatype:
+                type_expression = convert_registry_key_value_property(v.datatype, "data_type")
+            if type_expression:
+                value_expression += (" AND " if value_expression != "" else "") + type_expression
+            values_expression += (" OR " if value_expression else "") + value_expression
+        expression += (" AND " if expression != "" else "") + values_expression
+    return expression
+
 
 ####################################################################################################################
 
@@ -125,6 +170,7 @@ def convert_observable_composition_to_pattern(obs_comp, bundleInstance, observab
         expression.append(convert_observable_to_pattern(obs, bundleInstance, observable_mapping))
     operator_as_string = " " + obs_comp.operator + " "
     return "(" + operator_as_string.join(expression) + ")"
+
 
 def convert_object_to_pattern(obj):
     prop = obj.properties
@@ -137,13 +183,15 @@ def convert_object_to_pattern(obj):
     elif isinstance(prop, File):
         return convert_file_to_pattern(prop)
     elif isinstance(prop, WinRegistryKey):
-        return convert_registry_to_pattern(prop)
+        return convert_registry_key_to_pattern(prop)
     else:
         warn(str(obj.properties) + " cannot be converted to a pattern, yet.  Using 'true'")
         return "true"
 
+
 def match_1x_id_with_20_id(id_1x, id_20):
     return True
+
 
 def find_observable_data(idref, obserableData):
     for obs in obserableData:

@@ -223,14 +223,12 @@ def process_information_source(information_source, so, bundleInstance, parent_cr
 def convert_timestamp(entity, parent_timestamp=None):
     if hasattr(entity, "timestamp"):
         if entity.timestamp is not None:
-            # TODO: make sure its in the correct format
             return entity.timestamp.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
         else:
             warn("Timestamp not available, using current time")
             return str(datetime.now().isoformat()) + "Z"
     elif parent_timestamp is not None:
         info("Using enclosing object timestamp")
-        # TODO: make sure its in the correct format
         return parent_timestamp.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
     else:
         warn("Timestamp not available, using current time")
@@ -1040,7 +1038,7 @@ def convert_victim_targeting(victim_targeting, ttp, bundleInstance, ttp_generate
     if victim_targeting.targeted_information:
         for v in victim_targeting.targeted_information:
             warn("targeted information on " + ttp.id_ + " is not a victim target in STIX 2.0")
-    if victim_targeting.targeted_technical_details is not None:
+    if hasattr(victim_targeting, "technical_details") and victim_targeting.targeted_technical_details is not None:
         for v in victim_targeting.targeted_technical_details:
             warn("targeted technical details on " + ttp.id_ + " are not a victim target in STIX 2.0")
     if victim_targeting.identity:
