@@ -12,6 +12,8 @@ from utils import info, warn, error
 
 OBSERVABLE_TO_PATTERN_MAPPING = {}
 
+KEEP_OBSERVABLE_DATA = True
+
 def need_not(condition):
     return condition == "DoesNotContain"
 
@@ -32,11 +34,10 @@ def convert_condition(condition):
         return "LT"
     elif condition == "LessThanOrEqual":
         return "LE"
-    # DoesNotContain
-    # StartsWith
-    # EndsWith
-    # InclusiveBetween
-    # ExclusiveBetween
+    # StartsWith - handled in create_term_with_regex
+    # EndsWith  - handled in create_term_with_regex
+    # InclusiveBetween - handled in create_term_with_range
+    # ExclusiveBetween - handled in create_term_with_range
     # FitsPattern
     # BitwiseAnd
     # BitwiseOr
@@ -50,9 +51,22 @@ def create_term_with_regex(lhs, condition, rhs):
     elif condition == "EndsWith":
         return lhs + " MATCHES " + " /" + rhs + "$/"
 
+def create_term_with_range(lhs, condition, rhs):
+    if not isinstance(rhs, list) or len(rhs) != 2:
+        error(condition + " was used, but two values were not provided, 'true' used")
+        return "true"
+    else:
+        if condition == "InclusiveBetween":
+            return "(" + lhs + " GE " + str(rhs[0]) + " AND " + lhs + " LE " + str(rhs[1]) + ")"
+        else:
+            return "(" + lhs + " GT " + str(rhs[0]) + " AND " + lhs + " LT " + str(rhs[1]) + ")"
+
+
 def create_term(lhs, condition, rhs):
     if condition == "StartsWith" or condition == "EndsWith":
         return create_term_with_regex(lhs, condition, rhs)
+    elif condition == "InclusiveBetween" or condition == "ExclusiveBetween":
+        return create_term_with_range(lhs, condition, rhs)
     elif condition is None:
         warn("No condition given - assume EQ")
         return lhs + " EQ '" + str(rhs) + "'"
@@ -69,8 +83,10 @@ def convert_address_to_pattern(add):
     if add.category == add.CAT_IPV4:
         return create_term("ipv4addr-object:value",  add.address_value.condition, add.address_value.value)
 
+
 def convert_uri_to_pattern(uri):
     return create_term("url-object:value", uri.value.condition, uri.value.value)
+
 
 def convert_email_message_to_pattern(mess):
     first_one = True
@@ -94,6 +110,7 @@ def convert_email_message_to_pattern(mess):
         warn("email attachments not handled yet")
     return expression
 
+
 def convert_file_to_pattern(file):
     first_one = True
     expression = ""
@@ -113,7 +130,13 @@ def convert_file_to_pattern(file):
                                       file.file_name.condition,
                                       file.file_name.value)
         expression += (" AND " if expression != "" else "") + name_expression
+    if file.size_in_bytes:
+        size_expression = create_term("file-object:size",
+                                      file.size_in_bytes.condition,
+                                      file.size_in_bytes.value)
+        expression += (" AND " if expression != "" else "") + size_expression
     return expression
+
 
 def convert_registry_key_value_property(prop, property_name):
     property_expression = ""
@@ -200,6 +223,7 @@ def find_observable_data(idref, obserableData):
     warn (idref + " cannot be resolved")
     return None
 
+
 def convert_observable_to_pattern(obs, bundleInstance, observable_mapping):
     global OBSERVABLE_TO_PATTERN_MAPPING
     if obs.observable_composition is not None:
@@ -215,7 +239,8 @@ def convert_observable_to_pattern(obs, bundleInstance, observable_mapping):
             # resolve now, and remove from observed_data
             observableDataInstance = find_observable_data(obs.idref, bundleInstance["observed_data"])
             if observableDataInstance is not None:
-                bundleInstance["observed_data"].remove(observableDataInstance)
+                if not KEEP_OBSERVABLE_DATA:
+                    bundleInstance["observed_data"].remove(observableDataInstance)
                 if obs.idref in observable_mapping:
                     return convert_observable_to_pattern(observable_mapping[obs.idref], bundleInstance, observable_mapping)
             return obs.idref
