@@ -9,6 +9,8 @@ from cybox.objects.uri_object import URI
 from cybox.objects.file_object import File
 from cybox.objects.win_registry_key_object import WinRegistryKey
 
+WINDOWS_PEBINARY = {}
+
 from utils import info, warn, error
 
 def convert_address(add):

@@ -26,7 +26,7 @@ import pycountry
 
 from convert_cybox import convert_cybox_object
 from convert_pattern import convert_observable_to_pattern, fix_pattern
-from utils import info, warn, error
+from utils import info, warn, error, convert_controlled_vocabs_to_open_vocabs, map_vocabs_to_label
 
 SQUIRREL_GAPS_IN_DESCRIPTIONS = True
 
@@ -229,27 +229,6 @@ def convert_timestamp(entity, parent_timestamp=None):
     else:
         warn("Timestamp not available, using current time")
         return str(datetime.now().isoformat()) + "Z"
-
-def cannonicalize_label(t):
-    # TODO: stub
-    return t
-
-def map_vocabs_to_label(t, vocab_map):
-    try:
-        return vocab_map[t]
-    except KeyError:
-        return cannonicalize_label(t)
-
-
-def convert_controlled_vocabs_to_open_vocabs(stix20_obj, stix20_property_name, stix1x_vocabs, vocab_mapping, only_one):
-    stix20_obj[stix20_property_name] = []
-    for t in stix1x_vocabs:
-        if stix20_obj[stix20_property_name] is None or not only_one:
-            stix20_obj[stix20_property_name].append(map_vocabs_to_label(t.value, vocab_mapping))
-        else:
-            warn("Only one " + stix20_property_name + " allowed in STIX 2.0 - used first one")
-    if stix20_obj[stix20_property_name]:
-        del stix20_obj[stix20_property_name]
 
 
 def convert_to_open_vocabs(stix20_obj, stix20_property_name, value, vocab_mapping):
@@ -712,6 +691,10 @@ def convert_test_mechanism(indicator, indicator_instance):
                         indicator_instance["pattern_lang"] = "snort"
 
 
+def negate_indicator(indicator):
+    return hasattr(indicator, "negate") and indicator.negate
+
+
 def convert_indicator(indicator, bundle_instance):
     indicator_instance = create_basic_object("indicator", indicator)
     process_description_and_short_description(indicator_instance, indicator)
@@ -739,7 +722,10 @@ def convert_indicator(indicator, bundle_instance):
         add_confidence_property_to_description(indicator_instance, indicator.confidence)
     # TODO: sightings
     if indicator.observable is not None:
-        indicator_instance["pattern"] = convert_observable_to_pattern(indicator.observable, bundle_instance, OBSERVABLE_MAPPING)
+        indicator_instance["pattern"] = \
+            ("NOT (" if negate_indicator(indicator) else "") + \
+            convert_observable_to_pattern(indicator.observable, bundle_instance, OBSERVABLE_MAPPING) + \
+            (")" if negate_indicator(indicator) else "")
         indicator_instance["pattern_lang"] = "cybox"
     if indicator.composite_indicator_expression is not None:
         warn("composite indicator expressions are not handled - " + indicator.id_)
