@@ -54,3 +54,13 @@ def convert_timestamp(entity, parent_timestamp=None):
     else:
         warn("Timestamp not available, using current time")
         return str(datetime.now().isoformat()) + "Z"
+
+
+def convert_to_str(value):
+    escaped = value.encode('unicode_escape')
+    escaped_ascii = escaped.decode('ascii')
+
+    if isinstance(escaped, str):
+        return escaped
+    else:
+        return escaped_ascii

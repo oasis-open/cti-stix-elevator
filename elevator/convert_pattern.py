@@ -24,11 +24,13 @@ KEEP_OBSERVABLE_DATA = True
 def need_not(condition):
     return condition == "DoesNotContain"
 
+
 def add_parens_if_needed(expr):
     if expr.find("AND") != -1 or expr.find("OR") != -1:
         return "(" + expr + ")"
     else:
         return expr
+
 
 def convert_condition(condition):
     if condition == "Equals":
@@ -56,11 +58,13 @@ def convert_condition(condition):
         warn("No condition given - assume EQ")
         return "EQ"
 
+
 def create_term_with_regex(lhs, condition, rhs):
     if condition == "StartsWith":
         return lhs + " MATCHES " + " /^" + rhs + "/"
     elif condition == "EndsWith":
         return lhs + " MATCHES " + " /" + rhs + "$/"
+
 
 def create_term_with_range(lhs, condition, rhs):
     if not isinstance(rhs, list) or len(rhs) != 2:
@@ -89,6 +93,7 @@ def create_term(lhs, condition, rhs):
                 return lhs + " " + convert_condition(condition) + " '" + str(rhs) + "'"
         except TypeError:
             pass
+
 
 def convert_address_to_pattern(add):
     if add.category == add.CAT_IPV4:
@@ -310,6 +315,7 @@ def convert_registry_key_to_pattern(reg_key):
         expression += (" AND " if expression != "" else "") + add_parens_if_needed(values_expression)
     return expression
 
+
 def convert_process_to_pattern(process):
     expression = ""
     if process.name:
@@ -476,7 +482,7 @@ def interatively_resolve_placeholder_refs():
 
 def fix_pattern(pattern):
     if not OBSERVABLE_TO_PATTERN_MAPPING == {}:
-#        interatively_resolve_placeholder_refs()
+        # interatively_resolve_placeholder_refs()
         for idref in OBSERVABLE_TO_PATTERN_MAPPING.keys():
             # TODO: this can probably be done in place
             pattern = pattern.replace(idref, OBSERVABLE_TO_PATTERN_MAPPING[idref])
