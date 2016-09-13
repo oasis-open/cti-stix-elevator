@@ -27,7 +27,7 @@ import pycountry
 
 from elevator.convert_cybox import convert_cybox_object
 from elevator.convert_pattern import convert_observable_to_pattern, fix_pattern
-from elevator.utils import info, warn, error, convert_controlled_vocabs_to_open_vocabs, map_vocabs_to_label
+from elevator.utils import info, warn, error, convert_controlled_vocabs_to_open_vocabs, map_vocabs_to_label, convert_to_str
 
 
 SQUIRREL_GAPS_IN_DESCRIPTIONS = True
