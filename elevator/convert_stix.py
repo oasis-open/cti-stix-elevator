@@ -19,14 +19,16 @@ from stix.extensions.test_mechanism.yara_test_mechanism import YaraTestMechanism
 from stix.extensions.test_mechanism.snort_test_mechanism import SnortTestMechanism
 from stix.extensions.identity.ciq_identity_3_0 import CIQIdentity3_0Instance
 
+import sys
 import json
 from datetime import *
 import uuid
 import pycountry
 
-from convert_cybox import convert_cybox_object
-from convert_pattern import convert_observable_to_pattern, fix_pattern
-from utils import info, warn, error, convert_controlled_vocabs_to_open_vocabs, map_vocabs_to_label
+from elevator.convert_cybox import convert_cybox_object
+from elevator.convert_pattern import convert_observable_to_pattern, fix_pattern
+from elevator.utils import info, warn, error, convert_controlled_vocabs_to_open_vocabs, map_vocabs_to_label
+
 
 SQUIRREL_GAPS_IN_DESCRIPTIONS = True
 
@@ -58,20 +60,20 @@ INDICATOR_LABEL_MAP = \
         "Malicious E-mail": "malicious-activity",
         "Exfiltration": "malicious-activity",
         "C2": "malicious-activity",
-        "IP Watchlist": "benign",
-        "Domain Watchlist": "benign",
-        "URL Watchlist": "benign",
-        "File Hash Watchlist": "benign",
-        "IMEI Watchlist": "benign",
-        "IMSI Watchlist": "benign",
-        "Host Characteristics": "benign",
+        "IP Watchlist": "",
+        "Domain Watchlist": "",
+        "URL Watchlist": "",
+        "File Hash Watchlist": "",
+        "IMEI Watchlist": "",
+        "IMSI Watchlist": "",
+        "Host Characteristics": "",
     }
 
 MALWARE_LABELS_MAP = \
     {
         "Automated Transfer Scripts": "",
         "Adware": "adware",
-        "Dialer": "spyware",  # Verify
+        "Dialer": "",  # Need to determine
         "Bot": "bot",
         "Bot - Credential Theft": "bot",
         "Bot - DDoS": "bot",
@@ -82,7 +84,7 @@ MALWARE_LABELS_MAP = \
         "DoS / DDoS - Script": "ddos",
         "DoS / DDoS - Stress Test Tools": "ddos",
         "Exploit Kits": "exploit-kit",
-        "POS / ATM Malware": "",  # Need to determined
+        "POS / ATM Malware": "",  # Need to determine
         "Ransomware": "ransomware",
         "Remote Access Trojan": "remote-access-trojan",
         "Rogue Antivirus": "rogue-security-software",
@@ -91,6 +93,7 @@ MALWARE_LABELS_MAP = \
 
 ROLES_MAP = {}
 
+# No enumeration for STIX 1.x
 SECTORS_MAP = {}
 
 THREAT_ACTOR_LABEL_MAP = \
@@ -126,7 +129,7 @@ ATTACK_MOTIVATION_MAP = \
         "Ideological - Security Awareness": "ideology",
         "Ideological - Human Rights": "ideology",
         "Ego": "personal-satisfaction",
-        "Financial or Economic": "",  # conflicting organizational-gain, personal-gain
+        "Financial or Economic": "",  # conflict organizational-gain, personal-gain
         "Military": "",         # Need to determine
         "Opportunistic": "",    # Need to determine
         "Political": "",        # Need to determine
@@ -162,8 +165,13 @@ OBSERVABLE_MAPPING = {}
 
 
 def process_kill_chain(kc):
+
     for kcp in kc.kill_chain_phases:
-        KILL_CHAINS_PHASES[kcp.phase_id] = {"kill_chain_name": kc.name, "phase_name": kcp.name}
+        # Use object itself as key.
+        if kcp.phase_id:
+            KILL_CHAINS_PHASES[kcp.phase_id] = {"kill_chain_name": kc.name, "phase_name": kcp.name}
+        else:
+            KILL_CHAINS_PHASES[kcp] = {"kill_chain_name": kc.name, "phase_name": kcp.name}
 
 
 def map_1x_type_to_20(stix1x_type):
@@ -178,7 +186,7 @@ def generateSTIX20Id(stix20SOName, stix12ID=None):
         namespace_type_uuid = stix12ID.split("-", 1)
         if stix20SOName is None:
             stx1x_type = namespace_type_uuid[0].split(":", 1)
-            if str.lower(stx1x_type[1]) == "ttp" or str.lower(stx1x_type[1]) == "et":
+            if stx1x_type[1].lower() == "ttp" or stx1x_type[1].lower() == "et":
                 error("Unable to determine the STIX 2.0 type for " + stix12ID)
                 return None
             else:
@@ -244,12 +252,12 @@ def process_structured_text_list(text_list):
 
 def process_description_and_short_description(so, entity):
     if entity.descriptions is not None:
-        so["description"] += process_structured_text_list(entity.descriptions).encode('unicode_escape')
+        so["description"] += convert_to_str(process_structured_text_list(entity.descriptions))
         if SQUIRREL_GAPS_IN_DESCRIPTIONS and entity.short_description is not None:
             warn("The Short_Description property is no longer supported in STIX.  Added the text to the description property")
-            so["description"] += "\nShort Description: \n" + process_structured_text_list(entity.short_descriptions).encode('unicode_escape')
+            so["description"] += "\nShort Description: \n" + convert_to_str(process_structured_text_list(entity.short_descriptions))
     elif entity.short_description is not None:
-        so["description"] = process_structured_text_list(entity.short_descriptions).encode('unicode_escape')
+        so["description"] = convert_to_str(process_structured_text_list(entity.short_descriptions))
 
 
 def create_basic_object(stix20_type, stix1x_obj, parent_timestamp=None, parent_id=None):
@@ -266,11 +274,11 @@ def create_basic_object(stix20_type, stix1x_obj, parent_timestamp=None, parent_i
 
 
 def remove_empty_common_values(instance):
-    if "description" in instance and instance["description"] == "":
+    if "description" in instance and not instance["description"]:
         del instance["description"]
-    if instance["external_references"]:
+    if "external_references" in instance and not instance["external_references"]:
         del instance["external_references"]
-    if "created_by_ref" in instance and instance["created_by_ref"] is None:
+    if "created_by_ref" in instance and not instance["created_by_ref"]:
         del instance["created_by_ref"]
 
 
@@ -292,13 +300,13 @@ def finish_basic_object(old_id, instance, stix1x_obj):
 def add_string_property_to_description(sdo_instance, property_name, property_value, isList=False):
     if SQUIRREL_GAPS_IN_DESCRIPTIONS and property_value is not None:
         if isList:
-            sdo_instance["description"] += "\n\n" + str.upper(property_name) + ":\n"
+            sdo_instance["description"] += "\n\n" + property_name.upper() + ":\n"
             property_values = []
             for v in property_value:
-                property_values.append(str(v).encode('unicode_escape'))
+                property_values.append(convert_to_str(str(v)))
             sdo_instance["description"] += ",\n".join(property_values)
         else:
-            sdo_instance["description"] += "\n\n" + str.upper(property_name) + ":\n" + str(property_value).encode('unicode_escape')
+            sdo_instance["description"] += "\n\n" + property_name.upper() + ":\n" + convert_to_str(str(property_value))
         warn("Added " + property_name + " to description of " + sdo_instance["id"])
 
 
@@ -630,7 +638,8 @@ def convert_incident(incident, bundle_instance):
         for id in incident.external_ids:
             incident_instance["external_references"].append({"source_name": id.external_id.source, "external_id": id.external_id.value })
     # time
-    convert_controlled_vocabs_to_open_vocabs(incident_instance, "labels", incident.categories, INCIDENT_LABEL_MAP, False)
+    if incident.categories is not None:
+        convert_controlled_vocabs_to_open_vocabs(incident_instance, "labels", incident.categories, INCIDENT_LABEL_MAP, False)
     if incident.related_indicators is not None:
         handle_relationship_from_refs(incident.related_indicators, incident_instance["id"], bundle_instance, "indicates", incident.timestamp)
     if incident.related_observables is not None:
@@ -660,14 +669,21 @@ def convert_kill_chains(kill_chain_phases, sdo_instance):
         for phase in kill_chain_phases:
             if isinstance(phase, KillChainPhaseReference):
                 try:
-                    kill_chain_info = KILL_CHAINS_PHASES[phase.phase_id]
-                    kill_chain_phases_20.append({"kill_chain_name": kill_chain_info.kill_chain_name, "phase_name": kill_chain_info.name})
+                    if phase.phase_id:
+                        kill_chain_info = KILL_CHAINS_PHASES[phase.phase_id]
+                    else:
+                        kill_chain_info = KILL_CHAINS_PHASES[phase]
+                    kill_chain_phases_20.append({"kill_chain_name": kill_chain_info["kill_chain_name"], "phase_name": kill_chain_info["phase_name"]})
                 except:
-                    kill_chain_phases_20.append(phase.phase_id)
+                    # Perhaps an error message here?
+                    continue
             elif isinstance(phase, KillChainPhase):
                 kill_chain_phases_20.append({"kill_chain_name": phase.kill_chain_name, "phase_name": phase.name})
-        if not kill_chain_phases_20:
-            sdo_instance["kill_chain_phases"] = kill_chain_phases_20
+        if kill_chain_phases_20:
+            if "kill_chain_phases" in sdo_instance:
+                sdo_instance["kill_chain_phases"].extend(kill_chain_phases_20)
+            else:
+                sdo_instance["kill_chain_phases"] = kill_chain_phases_20
 
 
 def convert_test_mechanism(indicator, indicator_instance):
@@ -681,12 +697,12 @@ def convert_test_mechanism(indicator, indicator_instance):
                          indicator_instance["pattern_lang"])
                 else:
                     if isinstance(tm, YaraTestMechanism):
-                        indicator_instance["pattern"] = tm.rule.value.encode('unicode_escape')
+                        indicator_instance["pattern"] = convert_to_str(tm.rule.value)
                         indicator_instance["pattern_lang"] = "yara"
                     elif isinstance(tm, SnortTestMechanism):
                         list_of_strings = []
                         for rule in tm.rules:
-                            list_of_strings.append(rule.value.encode('unicode_escape'))
+                            list_of_strings.append(convert_to_str(rule.value))
                         indicator_instance["pattern"] = ", ".join(list_of_strings)
                         indicator_instance["pattern_lang"] = "snort"
 
@@ -1029,10 +1045,7 @@ def convert_victim_targeting(victim_targeting, ttp, bundle_instance, ttp_generat
         identity_instance = convert_identity_for_victim_target(victim_targeting.identity, ttp, bundle_instance)
         bundle_instance["identities"].append(identity_instance)
         if ttp_generated:
-            bundle_instance["relationships"].append(create_relationship(ttp.id_,
-                                                                        identity_instance["id"],
-                                                                        "targets",
-                                                                        None))
+            bundle_instance["relationships"].append(create_relationship(ttp.id_, identity_instance["id"], "targets", None))
             handle_relationship_to_objs([ttp], identity_instance.id_, bundle_instance, "targets")
         warn(ttp.id_ + " generated an identity associated with a victim")
         return True
@@ -1196,6 +1209,11 @@ def convert_package(stixPackage):
 
     # do observables first, especially before indicators!
 
+    # kill chains
+    if stixPackage.ttps and stixPackage.ttps.kill_chains:
+        for kc in stixPackage.ttps.kill_chains:
+            process_kill_chain(kc)
+
     # observables
     if stixPackage.observables is not None:
         for o_d in stixPackage.observables:
@@ -1257,11 +1275,6 @@ def convert_package(stixPackage):
         for ttp in stixPackage.ttps:
             convert_ttp(ttp, bundle_instance)
 
-    # kill chains
-        if stixPackage.ttps.kill_chains:
-            for kc in stixPackage.ttps.kill_chains:
-                process_kill_chain(kc)
-
     # identities
 
     finalize_bundle(bundle_instance)
@@ -1271,9 +1284,7 @@ def convert_package(stixPackage):
 def convert_file(inFileName):
     stixPackage = EntityParser().parse_xml(inFileName)
     if isinstance(stixPackage, STIXPackage):
-        print json.dumps(convert_package(stixPackage), indent=4, separators=(',', ': '))
+        print(json.dumps(convert_package(stixPackage), indent=4, separators=(',', ': '), sort_keys=True) + "\n")
 
 if __name__ == '__main__':
     convert_file(sys.argv[1])
-
-

@@ -9,20 +9,24 @@ from cybox.objects.uri_object import URI
 from cybox.objects.file_object import File
 from cybox.objects.win_registry_key_object import WinRegistryKey
 
+
 WINDOWS_PEBINARY = {}
 
-from utils import info, warn, error
+from elevator.utils import info, warn, error
+
 
 def convert_address(add):
     if add.category == add.CAT_IPV4:
-       return { "type": "ipv4-address-object", "value": add.address_value.value}
+        return {"type": "ipv4-address-object", "value": add.address_value.value}
+
 
 def convert_uri(uri):
-    return { "type": "url-object", "value": + uri.value.value }
+    return {"type": "url-object", "value": + uri.value.value}
+
 
 def convert_file(file):
     first_one = True
-    cybox = { "type": "file-object" }
+    cybox = {"type": "file-object"}
     if file.size is not None:
         if isinstance(file.size.value, list):
             error("file size window not allowed in top level observable, using first value")
@@ -38,6 +42,7 @@ def convert_file(file):
         cybox["file_name"] = str(file.file_name)
     # TODO: handle path properties be generating a directory object?
     return cybox
+
 
 def convert_registry_key(reg_key):
     cybox = {"type": "windows-registry-key"}
@@ -63,6 +68,7 @@ def convert_registry_key(reg_key):
             cybox["values"].append(reg_value)
     return cybox
 
+
 def convert_cybox_object(obj, cyboxContainer):
     prop = obj.properties
     if isinstance(prop, Address):
@@ -76,5 +82,3 @@ def convert_cybox_object(obj, cyboxContainer):
     else:
         warn(str(type(obj)) + " not handled yet")
     return cyboxContainer
-
-

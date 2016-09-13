@@ -34,8 +34,20 @@ def convert_controlled_vocabs_to_open_vocabs(new_obj, new_property_name, old_voc
     new_obj[new_property_name] = []
     for t in old_vocabs:
         if new_obj[new_property_name] is None or not only_one:
-            new_obj[new_property_name].append(map_vocabs_to_label(t.value, vocab_mapping))
+            stix20_label = map_vocabs_to_label(t.value, vocab_mapping)
+            if stix20_label:
+                new_obj[new_property_name].append(map_vocabs_to_label(t.value, vocab_mapping))
         else:
             warn("Only one " + new_property_name + " allowed in STIX 2.0 - used first one")
-    if new_obj[new_property_name]:
+    if not new_obj[new_property_name]:
         del new_obj[new_property_name]
+
+
+def convert_to_str(value):
+    escaped = value.encode('unicode_escape')
+    escaped_ascii = escaped.decode('ascii')
+
+    if isinstance(escaped, str):
+        return escaped
+    else:
+        return escaped_ascii

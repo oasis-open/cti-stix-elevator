@@ -12,9 +12,9 @@ from cybox.objects.win_service_object import WinService
 from cybox.objects.process_object import Process
 from cybox.objects.win_executable_file_object import WinExecutableFile
 
-from utils import info, warn, error, map_vocabs_to_label
+from elevator.utils import info, warn, error, map_vocabs_to_label
+from elevator.convert_cybox import WINDOWS_PEBINARY
 
-from convert_cybox import WINDOWS_PEBINARY
 
 OBSERVABLE_TO_PATTERN_MAPPING = {}
 
@@ -23,11 +23,13 @@ KEEP_OBSERVABLE_DATA = True
 def need_not(condition):
     return condition == "DoesNotContain"
 
+
 def add_parens_if_needed(expr):
     if expr.find("AND") != -1 or expr.find("OR") != -1:
         return "(" + expr + ")"
     else:
         return expr
+
 
 def convert_condition(condition):
     if condition == "Equals":
@@ -55,11 +57,13 @@ def convert_condition(condition):
         warn("No condition given - assume EQ")
         return "EQ"
 
+
 def create_term_with_regex(lhs, condition, rhs):
     if condition == "StartsWith":
         return lhs + " MATCHES " + " /^" + rhs + "/"
     elif condition == "EndsWith":
         return lhs + " MATCHES " + " /" + rhs + "$/"
+
 
 def create_term_with_range(lhs, condition, rhs):
     if not isinstance(rhs, list) or len(rhs) != 2:
@@ -88,6 +92,7 @@ def create_term(lhs, condition, rhs):
                 return lhs + " " + convert_condition(condition) + " '" + str(rhs) + "'"
         except TypeError:
             pass
+
 
 def convert_address_to_pattern(add):
     if add.category == add.CAT_IPV4:
@@ -213,6 +218,7 @@ def convert_windows_executable_file_to_pattern(file):
         warn("The imports property of WinExecutableFileObj is not part of Cybox 3.0")
     return expression
 
+
 def convert_hashes_to_pattern(hashes):
     hash_expression = ""
     for hash in hashes:
@@ -221,6 +227,7 @@ def convert_hashes_to_pattern(hashes):
                                        hash.simple_hash_value.condition,
                                        hash.simple_hash_value.value)
     return hash_expression
+
 
 def convert_file_to_pattern(file):
     first_one = True
@@ -290,6 +297,7 @@ def convert_registry_key_to_pattern(reg_key):
         expression += (" AND " if expression != "" else "") + add_parens_if_needed(values_expression)
     return expression
 
+
 def convert_process_to_pattern(process):
     expression = ""
     if process.name:
@@ -319,6 +327,7 @@ def convert_windows_service_to_pattern(service):
 
 
 ####################################################################################################################
+
 
 def convert_observable_composition_to_pattern(obs_comp, bundleInstance, observable_mapping):
     expression = []
@@ -418,7 +427,7 @@ def interatively_resolve_placeholder_refs():
 
 def fix_pattern(pattern):
     if not OBSERVABLE_TO_PATTERN_MAPPING == {}:
-#        interatively_resolve_placeholder_refs()
+        # interatively_resolve_placeholder_refs()
         for idref in OBSERVABLE_TO_PATTERN_MAPPING.keys():
             # TODO: this can probably be done in place
             pattern = pattern.replace(idref, OBSERVABLE_TO_PATTERN_MAPPING[idref])
