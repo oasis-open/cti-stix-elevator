@@ -16,16 +16,18 @@ from vocab_mappings import *
 
 from utils import *
 
+
 def convert_address(add):
     if add.category == add.CAT_IPV4:
-       return { "type": "ipv4-address-object", "value": add.address_value.value}
+       return {"type": "ipv4-address-object", "value": add.address_value.value}
 
 def convert_uri(uri):
-    return { "type": "url-object", "value": + uri.value.value }
+    return {"type": "url-object", "value": + uri.value.value}
+
 
 def convert_file(file):
     first_one = True
-    cybox = { "type": "file-object" }
+    cybox = {"type": "file-object"}
     if file.size is not None:
         if isinstance(file.size.value, list):
             error("file size window not allowed in top level observable, using first value")
@@ -34,13 +36,14 @@ def convert_file(file):
             cybox["size"] = int(file.size)
     if file.hashes is not None:
         hashes = {}
-        for hash in file.hashes:
-            hashes[str(hash.type_).lower()] = hash.simple_hash_value.value
+        for h in file.hashes:
+            hashes[str(h.type_).lower()] = h.simple_hash_value.value
         cybox["hashes"] = hashes
     if file.file_name:
         cybox["file_name"] = str(file.file_name)
     # TODO: handle path properties be generating a directory object?
     return cybox
+
 
 def convert_registry_key(reg_key):
     cybox = {"type": "windows-registry-key"}
@@ -66,6 +69,7 @@ def convert_registry_key(reg_key):
             cybox["values"].append(reg_value)
     return cybox
 
+
 def convert_process(process):
     cybox = {}
     if process.name:
@@ -88,6 +92,7 @@ def convert_process(process):
     if cybox:
         cybox["type"] = "process"
     return cybox
+
 
 def convert_windows_process(process):
     ext = {}
@@ -133,7 +138,7 @@ def convert_windows_service(service):
     return cybox
 
 
-def convert_cybox_object(obj, cyboxContainer):
+def convert_cybox_object(obj, cybox_container):
     prop = obj.properties
     if isinstance(prop, Address):
         cybox_obj = convert_address(prop)
@@ -149,10 +154,8 @@ def convert_cybox_object(obj, cyboxContainer):
         warn(str(type(obj)) + " not handled yet")
         return None
     if cybox_obj:
-        cyboxContainer["objects"] = { "0": cybox_obj }
-        return cyboxContainer
+        cybox_container["objects"] = { "0": cybox_obj }
+        return cybox_container
     else:
         warn(str(prop) + " didn't yield any STIX 2.0 object")
         return None
-
-
