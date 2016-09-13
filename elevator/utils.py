@@ -2,7 +2,7 @@
 # See LICENSE.txt for complete terms.
 
 import sys
-
+from datetime import *
 
 def info(fmt, *args):
     msg = fmt % args
@@ -37,5 +37,20 @@ def convert_controlled_vocabs_to_open_vocabs(new_obj, new_property_name, old_voc
             new_obj[new_property_name].append(map_vocabs_to_label(t.value, vocab_mapping))
         else:
             warn("Only one " + new_property_name + " allowed in STIX 2.0 - used first one")
-    if new_obj[new_property_name]:
+    if not new_obj[new_property_name]:
         del new_obj[new_property_name]
+
+
+def convert_timestamp(entity, parent_timestamp=None):
+    if hasattr(entity, "timestamp"):
+        if entity.timestamp is not None:
+            return entity.timestamp.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
+        else:
+            warn("Timestamp not available, using current time")
+            return str(datetime.now().isoformat()) + "Z"
+    elif parent_timestamp is not None:
+        info("Using enclosing object timestamp")
+        return parent_timestamp.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
+    else:
+        warn("Timestamp not available, using current time")
+        return str(datetime.now().isoformat()) + "Z"

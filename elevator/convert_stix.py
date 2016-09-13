@@ -17,16 +17,19 @@ from stix.common.identity import Identity
 from cybox.core import Observable
 from stix.extensions.test_mechanism.yara_test_mechanism import YaraTestMechanism
 from stix.extensions.test_mechanism.snort_test_mechanism import SnortTestMechanism
+from stix.extensions.test_mechanism.open_ioc_2010_test_mechanism import OpenIOCTestMechanism
 from stix.extensions.identity.ciq_identity_3_0 import CIQIdentity3_0Instance
 
 import json
 from datetime import *
 import uuid
 import pycountry
+from lxml import etree
 
 from convert_cybox import convert_cybox_object
 from convert_pattern import convert_observable_to_pattern, fix_pattern
-from utils import info, warn, error, convert_controlled_vocabs_to_open_vocabs, map_vocabs_to_label
+from vocab_mappings import *
+from utils import *
 
 SQUIRREL_GAPS_IN_DESCRIPTIONS = True
 
@@ -37,120 +40,6 @@ INCIDENT_IN_20 = True
 # TODO: specify controlled vocab mappings
 
 
-# Limited in STIX 2.0, no labels available.
-COA_LABEL_MAP = \
-    {
-
-    }
-
-# Not in STIX 2.0
-INCIDENT_LABEL_MAP = \
-    {
-
-    }
-
-INDICATOR_LABEL_MAP = \
-    {
-        "Anonymization": "anonymization",
-        "Compromised PKI Certificate": "compromised",
-        "Login Name": "compromised",
-        "Malware Artifacts": "malicious-activity",
-        "Malicious E-mail": "malicious-activity",
-        "Exfiltration": "malicious-activity",
-        "C2": "malicious-activity",
-        "IP Watchlist": "benign",
-        "Domain Watchlist": "benign",
-        "URL Watchlist": "benign",
-        "File Hash Watchlist": "benign",
-        "IMEI Watchlist": "benign",
-        "IMSI Watchlist": "benign",
-        "Host Characteristics": "benign",
-    }
-
-MALWARE_LABELS_MAP = \
-    {
-        "Automated Transfer Scripts": "",
-        "Adware": "adware",
-        "Dialer": "spyware",  # Verify
-        "Bot": "bot",
-        "Bot - Credential Theft": "bot",
-        "Bot - DDoS": "bot",
-        "Bot - Loader": "bot",
-        "Bot - Spam": "bot",
-        "DoS / DDoS": "ddos",
-        "DoS / DDoS - Participatory": "ddos",
-        "DoS / DDoS - Script": "ddos",
-        "DoS / DDoS - Stress Test Tools": "ddos",
-        "Exploit Kits": "exploit-kit",
-        "POS / ATM Malware": "",  # Need to determined
-        "Ransomware": "ransomware",
-        "Remote Access Trojan": "remote-access-trojan",
-        "Rogue Antivirus": "rogue-security-software",
-        "Rootkit": "rootkit",
-    }
-
-ROLES_MAP = {}
-
-SECTORS_MAP = {}
-
-THREAT_ACTOR_LABEL_MAP = \
-    {
-        "Cyber Espionage Operations": "spy",
-        "Hacker": "hacker",
-        "Hacker - White hat": "hacker",
-        "Hacker - Gray hat": "hacker",
-        "Hacker - Black hat": "hacker",
-        "Hacktivist": "activist",
-        "State Actor / Agency": "nation-state",
-        "eCrime Actor - Credential Theft Botnet Operator": "criminal",
-        "eCrime Actor - Credential Theft Botnet Service": "criminal",
-        "eCrime Actor - Malware Developer": "criminal",
-        "eCrime Actor - Money Laundering Network": "criminal",
-        "eCrime Actor - Organized Crime Actor": "criminal",
-        "eCrime Actor - Spam Service": "criminal",
-        "eCrime Actor - Traffic Service": "criminal",
-        "eCrime Actor - Underground Call Service": "criminal",
-        "Insider Threat": "",  # conflict insider-accidental, insider-disgruntled
-        "Disgruntled Customer / User": "insider-disgruntled",
-    }
-
-ATTACK_MOTIVATION_MAP = \
-    {
-        "Ideological": "ideology",
-        "Ideological - Anti-Corruption": "ideology",
-        "Ideological - Anti-Establishment": "ideology",
-        "Ideological - Environmental": "ideology",
-        "Ideological - Ethnic / Nationalist": "ideology",
-        "Ideological - Information Freedom": "ideology",
-        "Ideological - Religious": "ideology",
-        "Ideological - Security Awareness": "ideology",
-        "Ideological - Human Rights": "ideology",
-        "Ego": "personal-satisfaction",
-        "Financial or Economic": "",  # conflicting organizational-gain, personal-gain
-        "Military": "",         # Need to determine
-        "Opportunistic": "",    # Need to determine
-        "Political": "",        # Need to determine
-    }
-
-THREAT_ACTOR_SOPHISTICATION_MAP = \
-    {
-        "Innovator": "innovator",
-        "Expert": "expert",
-        "Practitioner": "intermediate",
-        "Novice": "minimal",
-        "Aspirant": "none",
-    }
-
-TOOL_LABELS_MAP = \
-    {
-        "Malware": "exploitation",
-        "Penetration Testing": "",  # Need to determine
-        "Port Scanner": "information-gathering",
-        "Traffic Scanner": "information-gathering",
-        "Vulnerability Scanner": "vulnerability-scanning",
-        "Application Scanner": "",
-        "Password Cracking": "credential-exploitation",
-    }
 
 IDENTITIES = {}
 
@@ -216,19 +105,6 @@ def process_information_source(information_source, so, bundle_instance, parent_c
     # TODO: add to description
 
 
-def convert_timestamp(entity, parent_timestamp=None):
-    if hasattr(entity, "timestamp"):
-        if entity.timestamp is not None:
-            return entity.timestamp.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
-        else:
-            warn("Timestamp not available, using current time")
-            return str(datetime.now().isoformat()) + "Z"
-    elif parent_timestamp is not None:
-        info("Using enclosing object timestamp")
-        return parent_timestamp.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
-    else:
-        warn("Timestamp not available, using current time")
-        return str(datetime.now().isoformat()) + "Z"
 
 
 def convert_to_open_vocabs(stix20_obj, stix20_property_name, value, vocab_mapping):
@@ -268,7 +144,7 @@ def create_basic_object(stix20_type, stix1x_obj, parent_timestamp=None, parent_i
 def remove_empty_common_values(instance):
     if "description" in instance and instance["description"] == "":
         del instance["description"]
-    if instance["external_references"]:
+    if not instance["external_references"]:
         del instance["external_references"]
     if "created_by_ref" in instance and instance["created_by_ref"] is None:
         del instance["created_by_ref"]
@@ -666,7 +542,7 @@ def convert_kill_chains(kill_chain_phases, sdo_instance):
                     kill_chain_phases_20.append(phase.phase_id)
             elif isinstance(phase, KillChainPhase):
                 kill_chain_phases_20.append({"kill_chain_name": phase.kill_chain_name, "phase_name": phase.name})
-        if not kill_chain_phases_20:
+        if kill_chain_phases_20:
             sdo_instance["kill_chain_phases"] = kill_chain_phases_20
 
 
@@ -689,6 +565,9 @@ def convert_test_mechanism(indicator, indicator_instance):
                             list_of_strings.append(rule.value.encode('unicode_escape'))
                         indicator_instance["pattern"] = ", ".join(list_of_strings)
                         indicator_instance["pattern_lang"] = "snort"
+                    elif isinstance(tm, OpenIOCTestMechanism):
+                        indicator_instance["pattern"] = etree.tostring(tm.ioc)
+                        indicator_instance["pattern_lang"] = "openioc"
 
 
 def negate_indicator(indicator):
@@ -729,7 +608,9 @@ def convert_indicator(indicator, bundle_instance):
         indicator_instance["pattern_lang"] = "cybox"
     if indicator.composite_indicator_expression is not None:
         warn("composite indicator expressions are not handled - " + indicator.id_)
-    convert_test_mechanism(indicator, indicator_instance)
+    if "pattern" not in indicator_instance:
+        # STIX doesn't handle multiple patterns for indicators
+        convert_test_mechanism(indicator, indicator_instance)
     process_information_source(indicator.producer, indicator_instance, bundle_instance,
                                bundle_instance["created_by_ref"] if "created_by_ref" in bundle_instance else None)
     if indicator.suggested_coas is not None:

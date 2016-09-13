@@ -11,10 +11,11 @@ from cybox.objects.win_process_object import WinProcess
 from cybox.objects.win_service_object import WinService
 from cybox.objects.process_object import Process
 from cybox.objects.win_executable_file_object import WinExecutableFile
+from cybox.objects.archive_file_object import ArchiveFile
 
-from utils import info, warn, error, map_vocabs_to_label
+from utils import *
 
-from convert_cybox import WINDOWS_PEBINARY
+from vocab_mappings import *
 
 OBSERVABLE_TO_PATTERN_MAPPING = {}
 
@@ -213,6 +214,22 @@ def convert_windows_executable_file_to_pattern(file):
         warn("The imports property of WinExecutableFileObj is not part of Cybox 3.0")
     return expression
 
+
+def convert_archive_file_to_pattern(file):
+    expression = ""
+    if file.comment:
+        expression += (" AND " if expression != "" else "") + \
+                        create_term("file.extended-properties:archive_file:comment",
+                                    file.comment.condition,
+                                    file.comment.value)
+    if file.version:
+        expression += (" AND " if expression != "" else "") + \
+                      create_term("file.extended-properties:archive_file:version",
+                                  file.version.condition,
+                                  file.version.value)
+    return expression
+
+
 def convert_hashes_to_pattern(hashes):
     hash_expression = ""
     for hash in hashes:
@@ -221,6 +238,7 @@ def convert_hashes_to_pattern(hashes):
                                        hash.simple_hash_value.condition,
                                        hash.simple_hash_value.value)
     return hash_expression
+
 
 def convert_file_to_pattern(file):
     first_one = True
@@ -241,6 +259,8 @@ def convert_file_to_pattern(file):
         expression += (" AND " if expression != "" else "") + size_expression
     if isinstance(file, WinExecutableFile):
         expression += (" AND " if expression != "" else "") + add_parens_if_needed(convert_windows_executable_file_to_pattern(file))
+    if isinstance(file, ArchiveFile):
+        expression += (" AND " if expression != "" else "") + add_parens_if_needed(convert_archive_file_to_pattern(file))
     return expression
 
 
@@ -300,7 +320,7 @@ def convert_process_to_pattern(process):
         if win_process_expression:
             expression += (" AND " if expression != "" else "") + add_parens_if_needed(win_process_expression)
         if isinstance(process, WinService):
-            service_expression = convert_windows_process_to_pattern(process)
+            service_expression = convert_windows_service_to_pattern(process)
             if service_expression:
                 expression += (" AND " if expression != "" else "") + add_parens_if_needed(service_expression)
     return expression
@@ -315,10 +335,48 @@ def convert_windows_process_to_pattern(process):
 
 
 def convert_windows_service_to_pattern(service):
-    pass
+    expression = ""
+    if hasattr(service, "service_name") and service.service_name:
+        expression += (" AND " if expression != "" else "") + \
+                      create_term("process:extension_data:windows-service-ext:service_name", service.service_name.condition, service.service_name.value)
+    if hasattr(service, "description_list") and service.description_list:
+        description_expression = ""
+        for d in service.description_list:
+            description_expression += (" OR " if not description_expression == "" else "") + \
+                           create_term("process:extension_data:windows-service-ext:descriptions[*]",
+                                       d.condition,
+                                       d.value)
+        expression += (" AND " if expression != "" else "") + description_expression
+    if hasattr(service, "display_name") and service.display_name:
+        expression += (" AND " if expression != "" else "") + \
+                      create_term("process:extension_data:windows-service-ext:display_name",
+                                  service.display_name.condition, service.display_name.value)
+    if hasattr(service, "startup_command_line") and service.startup_command_line:
+        expression += (" AND " if expression != "" else "") + \
+                      create_term("process:extension_data:windows-service-ext:startup_command_line",
+                                  service.startup_command_line.condition, service.startup_command_line.value)
 
+    if hasattr(service, "start_type") and service.start_type:
+        expression += (" AND " if expression != "" else "") + \
+                      create_term("process:extension_data:windows-service-ext:start_type",
+                                  service.start_type.condition,
+                                  map_vocabs_to_label(service.start_type, SERVICE_START_TYPE))
+    if hasattr(service, "service_type") and service.service_type:
+        expression += (" AND " if expression != "" else "") + \
+                      create_term("process:extension_data:windows-service-ext:service_type",
+                                  service.service_type.condition,
+                                  map_vocabs_to_label(service.service_type, SERVICE_TYPE))
+    if hasattr(service, "service_status") and service.service_status:
+        expression += (" AND " if expression != "" else "") + \
+                      create_term("process:extension_data:windows-service-ext:service_status",
+                                  service.service_status.condition,
+                                  map_vocabs_to_label(service.service_status, SERVICE_STATUS))
+    if hasattr(service, "service_dll") and service.service_dll:
+        warn("WinServiceObject.service_dll cannot be converted to a pattern, yet.")
+    return expression
 
 ####################################################################################################################
+
 
 def convert_observable_composition_to_pattern(obs_comp, bundleInstance, observable_mapping):
     expression = []
