@@ -4,6 +4,7 @@
 import sys
 from datetime import *
 
+
 def info(fmt, *args):
     msg = fmt % args
     sys.stdout.write("[INFO] %s\n" % msg)
@@ -17,6 +18,7 @@ def warn(fmt, *args):
 def error(fmt, *args):
     msg = fmt % args
     sys.stderr.write("[ERROR] %s\n" % msg)
+
 
 def cannonicalize_label(t):
     # TODO: stub

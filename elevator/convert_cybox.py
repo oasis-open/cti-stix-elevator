@@ -12,14 +12,15 @@ from cybox.objects.process_object import Process
 from cybox.objects.win_process_object import WinProcess
 from cybox.objects.win_service_object import WinService
 
-from vocab_mappings import *
-
-from utils import *
+from elevator.utils import *
+from elevator.convert_pattern import *
+from elevator.vocab_mappings import *
 
 
 def convert_address(add):
     if add.category == add.CAT_IPV4:
        return {"type": "ipv4-address-object", "value": add.address_value.value}
+
 
 def convert_uri(uri):
     return {"type": "url-object", "value": + uri.value.value}
@@ -27,22 +28,22 @@ def convert_uri(uri):
 
 def convert_file(file):
     first_one = True
-    cybox = {"type": "file-object"}
+    cybox_dict = {"type": "file-object"}
     if file.size is not None:
         if isinstance(file.size.value, list):
             error("file size window not allowed in top level observable, using first value")
-            cybox["size"] = int(file.size.value[0])
+            cybox_dict["size"] = int(file.size.value[0])
         else:
-            cybox["size"] = int(file.size)
+            cybox_dict["size"] = int(file.size)
     if file.hashes is not None:
         hashes = {}
         for h in file.hashes:
             hashes[str(h.type_).lower()] = h.simple_hash_value.value
-        cybox["hashes"] = hashes
+        cybox_dict["hashes"] = hashes
     if file.file_name:
-        cybox["file_name"] = str(file.file_name)
+        cybox_dict["file_name"] = str(file.file_name)
     # TODO: handle path properties be generating a directory object?
-    return cybox
+    return cybox_dict
 
 
 def convert_registry_key(reg_key):

@@ -26,10 +26,10 @@ import uuid
 import pycountry
 from lxml import etree
 
-from convert_cybox import convert_cybox_object
-from convert_pattern import convert_observable_to_pattern, fix_pattern
-from vocab_mappings import *
-from utils import *
+from elevator.convert_cybox import convert_cybox_object
+from elevator.convert_pattern import convert_observable_to_pattern, fix_pattern
+from elevator.vocab_mappings import *
+from elevator.utils import *
 
 SQUIRREL_GAPS_IN_DESCRIPTIONS = True
 

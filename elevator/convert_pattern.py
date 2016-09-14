@@ -13,9 +13,8 @@ from cybox.objects.process_object import Process
 from cybox.objects.win_executable_file_object import WinExecutableFile
 from cybox.objects.archive_file_object import ArchiveFile
 
-from utils import *
-
-from vocab_mappings import *
+from elevator.utils import *
+from elevator.vocab_mappings import *
 
 OBSERVABLE_TO_PATTERN_MAPPING = {}
 
