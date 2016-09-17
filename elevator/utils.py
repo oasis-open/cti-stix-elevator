@@ -44,7 +44,7 @@ def convert_controlled_vocabs_to_open_vocabs(new_obj, new_property_name, old_voc
 
 
 def convert_timestamp(entity, parent_timestamp=None):
-    if hasattr(entity, "timestamp"):
+    if entity and hasattr(entity, "timestamp"):
         if entity.timestamp is not None:
             return entity.timestamp.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
         else:
@@ -66,3 +66,7 @@ def convert_to_str(value):
         return escaped
     else:
         return escaped_ascii
+
+def map_1x_type_to_20(stix1x_type):
+    # TODO: stub
+    return stix1x_type
