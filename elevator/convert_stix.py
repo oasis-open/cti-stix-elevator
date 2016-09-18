@@ -118,8 +118,8 @@ def create_basic_object(stix20_type, stix1x_obj, parent_timestamp=None, parent_i
     return instance
 
 
-def remove_empty_common_values(instance):
-    if "description" in instance and not instance["description"]:
+def remove_empty_common_values(instance, clear_description=True):
+    if "description" in instance and not instance["description"] and clear_description:
         del instance["description"]
     if "external_references" in instance and not instance["external_references"]:
         del instance["external_references"]
@@ -127,10 +127,10 @@ def remove_empty_common_values(instance):
         del instance["created_by_ref"]
 
 
-def finish_basic_object(old_id, instance, stix1x_obj):
+def finish_basic_object(old_id, instance, stix1x_obj, clear_description=True):
     if old_id is not None:
         record_ids(old_id, instance["id"])
-    remove_empty_common_values(instance)
+    remove_empty_common_values(instance, clear_description)
     if hasattr(stix1x_obj, "handling") and stix1x_obj.handling is not None:
         warn("Handling not implemented, yet")
     if hasattr(stix1x_obj, "related_packages") and stix1x_obj.related_packages is not None:
@@ -151,18 +151,40 @@ def add_string_property_to_description(sdo_instance, property_name, property_val
                 property_values.append(convert_to_str(str(v)))
             sdo_instance["description"] += ",\n".join(property_values)
         else:
-            sdo_instance["description"] += "\n\n" + property_name.upper() + ":\n" + convert_to_str(str(property_value))
+            sdo_instance["description"] += "\n\n" + property_name.upper() + ":\n\t" + convert_to_str(str(property_value))
         warn("Added " + property_name + " to description of " + sdo_instance["id"])
 
 
 def add_confidence_property_to_description(sdo_instance, confidence):
     if SQUIRREL_GAPS_IN_DESCRIPTIONS:
         if confidence is not None:
-            sdo_instance["description"] += "\n\n" + "CONFIDENCE:"
+            sdo_instance["description"] += "\n\n" + "CONFIDENCE: "
             if confidence.value is not None:
                 sdo_instance["description"] += str(confidence.value)
             if confidence.description is not None:
                 sdo_instance["description"] += "\n\tDESCRIPTION: " + str(confidence.description)
+
+
+def add_statement_type_to_description(sdo_instance, statement, property_name):
+    if SQUIRREL_GAPS_IN_DESCRIPTIONS:
+        sdo_instance["description"] += "\n\n" + property_name.upper() + ":"
+        if statement.value:
+            sdo_instance["description"] += str(statement.value)
+        if statement.descriptions:
+            descriptions = []
+            for d in statement.descriptions:
+                descriptions.append(str(d))
+            sdo_instance["description"] += "\n\n\t".join(descriptions)
+        # TODO: handle source
+        if statement.confidence:
+            add_confidence_property_to_description(sdo_instance, statement.confidence)
+
+
+def add_multiple_statement_types_to_description(sdo_instance, statements, property_name):
+    if SQUIRREL_GAPS_IN_DESCRIPTIONS:
+        for s in statements:
+            add_statement_type_to_description(sdo_instance, s, property_name)
+
 
 # Relationships
 
@@ -175,9 +197,13 @@ def create_relationship(source_ref, target_ref, verb, rel_obj, parent_timestamp)
     if rel_obj is not None and hasattr(rel_obj, "relationship") and rel_obj.relationship is not None:
         relationship_instance["description"] = rel_obj.relationship.value
     # handle description
-    remove_empty_common_values(relationship_instance)
+    remove_empty_common_values(relationship_instance, True)
     return relationship_instance
 
+# Creating and Linking up relationships  (three cases)
+# 1.  The object is embedded - create the object, add it to the bundle, return to id so the relationship is complete
+# 2.  an idref is given, and it has a corresponding 2.0 id, use it
+# 3.  an idref is given, but it has NO corresponding 2.0 id, add 1.x id, and fix at the end in fix_relationships
 
 def handle_relationship_to_objs(items, source_id, bundle_instance, verb, parent_timestamp=None):
     for item in items:
@@ -244,7 +270,7 @@ def handle_relationship_from_refs(refs, target_id, bundle_instance, verb, parent
 def reference_needs_fixing(ref):
     return ref and ref.find("--") == -1
 
-
+# for ids in source and target refs that are still 1.x ids,
 def fix_relationships(relationships, bundle_instance):
     # TODO:  warn if ref not available??
     for ref in relationships:
@@ -272,7 +298,14 @@ def fix_relationships(relationships, bundle_instance):
                     ref["target_ref"] = m_id
                 else:
                     bundle_instance["relationships"].append(create_relationship(ref["source_ref"], m_id, ref["verb"]))
-        # TODO: add error messages for missing required properties
+
+# Relationships are not in 1.x, so they must be added explicitly to reports.
+# This is done after the package has been processed, and the relationships are "fixed", so all relationships are known
+#
+# For each report:
+#   if the source and target are part of the report, add the relationship
+#   if the source is part of the report, add the relationship AND then the target, UNLESS the target ref is "dangling"
+#   if the target is part of the report, add the relationship AND then the source, UNLESS the source ref is "dangling"
 
 
 def add_relationships_to_reports(bundle_instance):
@@ -322,11 +355,12 @@ def convert_campaign(camp, bundle_instance):
             campaign_instance["aliases"].append(name)
         if campaign_instance["aliases"] == []:
             del campaign_instance["aliases"]
-    # TODO: add intended effect to description
+    add_multiple_statement_types_to_description(campaign_instance, camp.intended_effects, "intended_effect")
     add_string_property_to_description(campaign_instance, "status", camp.status)
     if hasattr(camp, "confidence"):
         add_confidence_property_to_description(campaign_instance, camp.confidence)
-    # TODO: add attribution to description
+    if camp.attribution:
+        handle_relationship_to_refs(camp.related_ttps, campaign_instance["id"], bundle_instance, "attributed-to")
     if camp.activity is not None:
         for a in camp.activity:
             warn("Campaign/Activity not supported in STIX 2.0")
@@ -340,16 +374,25 @@ def convert_campaign(camp, bundle_instance):
     if camp.attribution is not None:
         for att in camp.attribution:
             handle_relationship_from_refs(att, campaign_instance["id"], bundle_instance, "attributed-to")
-    # associated campaigns
+    # TODO: associated campaigns
     process_information_source(camp.information_source,
                                campaign_instance,
                                bundle_instance,
                                bundle_instance["created_by_ref"] if "created_by_ref" in bundle_instance else None)
     finish_basic_object(camp.id_, campaign_instance, camp)
-    # TODO: add error messages for missing required properties
     return campaign_instance
 
 # course of action
+
+
+def add_objective_property_to_description(sdo_instance, objective):
+    if SQUIRREL_GAPS_IN_DESCRIPTIONS:
+        if objective is not None:
+            sdo_instance["description"] += "\n\n" + "OBJECTIVE: "
+            descriptions = []
+            for d in objective.descriptions:
+                descriptions.append(str(d))
+            sdo_instance["description"] += "\n\n\t".join(descriptions)
 
 
 def convert_course_of_action(coa, bundle_instance):
@@ -358,18 +401,17 @@ def convert_course_of_action(coa, bundle_instance):
     coa_instance["name"] = coa.title
     add_string_property_to_description(coa_instance, "stage", coa.stage)
     convert_controlled_vocabs_to_open_vocabs(coa_instance, "labels", [ coa.type_ ], COA_LABEL_MAP, False)
-    # TODO: add objective into description
+    add_objective_property_to_description(coa_instance, coa.objective)
     # TODO: parameter observables, maybe turn into pattern expressions and put in description???
     if coa.structured_coa:
         warn("Structured COAs are not supported in STIX 2.0")
-    # TODO: add impact into description
-    # TODO: add cost into description
-    # TODO: add efficacy into description
+    add_statement_type_to_description(coa_instance, coa.impact, "impact")
+    add_statement_type_to_description(coa_instance, coa.cost, "cost")
+    add_statement_type_to_description(coa_instance, coa.efficacy, "efficacy")
     process_information_source(coa.information_source, coa_instance, bundle_instance,
                                bundle_instance["created_by_ref"] if "created_by_ref" in bundle_instance else None)
     # TODO: related coas
     finish_basic_object(coa.id_, coa_instance, coa)
-    # TODO: add error messages for missing required properties
     return coa_instance
 
 # exploit target
@@ -379,7 +421,7 @@ def process_et_properties(sdo_instance, et, bundle_instance):
     process_description_and_short_description(sdo_instance, et)
     if "name" in sdo_instance:
         info("title from " + sdo_instance["type"] + " used for name, put exploit_target title in description")
-        # TODO: add title to description
+        add_string_property_to_description(sdo_instance, "title", et.title, False)
     elif et.title is not None:
         sdo_instance["name"] = et.title
     process_information_source(et.information_source, sdo_instance, bundle_instance,
@@ -408,7 +450,6 @@ def convert_vulnerability(v, et, bundle_instance):
             vulnerability_instance["external_references"].append({"url": ref.reference})
     process_et_properties(vulnerability_instance, et, bundle_instance)
     finish_basic_object(et.id_, vulnerability_instance, v)
-    # TODO: add error messages for missing required properties
     return vulnerability_instance
 
 
@@ -499,7 +540,7 @@ def convert_identity(identity):
         if ciq_info.addresses is not None:
             convert_ciq_addresses(ciq_info.addresses, identity_instance)
         # add other properties to contact_information
-    finish_basic_object(identity.id_, identity_instance, identity)
+    finish_basic_object(identity.id_, identity_instance, identity, False)
     if not identity_instance["sectors"]:
         del identity_instance["sectors"]
     return identity_instance
@@ -531,11 +572,10 @@ def convert_incident(incident, bundle_instance):
     # TODO: add victim to description
     # TODO: add affected_assets to description
     # TODO: add impact_assessment to description
-    # TODO: add status to description
+    add_string_property_to_description(incident_instance, "status", incident.status)
     process_information_source(incident.information_source, incident_instance, bundle_instance,
                                bundle_instance["created_by_ref"] if "created_by_ref" in bundle_instance else None)
     finish_basic_object(incident.id_, incident_instance, incident)
-    # TODO: add error messages for missing required properties
     return incident_instance
 
 # indicator
@@ -610,7 +650,8 @@ def convert_indicator(indicator, bundle_instance):
             warn("No valid time position information available in " + indicator.id_ + ", using timestamp")
             indicator_instance["valid_from"] = convert_timestamp(indicator)
     convert_kill_chains(indicator.kill_chain_phases, indicator_instance)
-    # TODO: add likely impact to description
+    if indicator.likely_impact:
+        add_statement_type_to_description(indicator_instance, indicator.likely_impact, "likely_impact")
     if hasattr(indicator, "confidence"):
         add_confidence_property_to_description(indicator_instance, indicator.confidence)
     # TODO: sightings
@@ -636,7 +677,6 @@ def convert_indicator(indicator, bundle_instance):
     if indicator.indicated_ttps is not None:
         handle_relationship_to_refs(indicator.indicated_ttps, indicator_instance["id"], bundle_instance, "indicates")
     finish_basic_object(indicator.id_, indicator_instance, indicator)
-    # TODO: add error messages for missing required properties
     return indicator_instance
 
 # observables
@@ -657,7 +697,6 @@ def convert_observable_data(obs, bundle_instance):
     finish_basic_object(obs.id_, observed_data_instance, obs)
     # remember the original 1.x observable, in case it has to be turned into a pattern later
     OBSERVABLE_MAPPING[obs.id_] = obs
-    # TODO: add error messages for missing required properties
     return observed_data_instance
 
 # report
@@ -757,7 +796,6 @@ def convert_report(report, bundle_instance):
         report_instance["name"] = report.header.title
     process_report_contents(report, bundle_instance, report_instance)
     finish_basic_object(report.id_, report_instance, report.header)
-    # TODO: add error messages for missing required properties
     return report_instance
 
 # threat actor
@@ -774,8 +812,8 @@ def convert_threat_actor(threat_actor, bundle_instance):
         info("Threat actor " + threat_actor.id_ + "'s title is used for name property")
         threat_actor_instance["name"] = threat_actor.title
     convert_controlled_vocabs_to_open_vocabs(threat_actor_instance, "labels", threat_actor.types, THREAT_ACTOR_LABEL_MAP, False)
-    # TODO: add intended effect to description
-    # TODO: add planning_and_operational_support to description
+    add_multiple_statement_types_to_description(threat_actor_instance, threat_actor.intended_effects, "intended_effect")
+    add_multiple_statement_types_to_description(threat_actor_instance, threat_actor.planning_and_operational_supports, "planning_and_operational_support")
     if hasattr(threat_actor, "confidence"):
         add_confidence_property_to_description(threat_actor_instance, threat_actor.confidence)
     # TODO: motivation is complicated
@@ -789,7 +827,6 @@ def convert_threat_actor(threat_actor, bundle_instance):
     process_information_source(threat_actor.information_source, threat_actor_instance, bundle_instance,
                                bundle_instance["created_by_ref"] if "created_by_ref" in bundle_instance else None)
     finish_basic_object(threat_actor.id_, threat_actor_instance, threat_actor)
-    # TODO: add error messages for missing required properties
     return threat_actor_instance
 
 # TTPs
@@ -797,8 +834,8 @@ def convert_threat_actor(threat_actor, bundle_instance):
 
 def process_ttp_properties(sdo_instance, ttp, bundle_instance, kill_chains_available=True):
     # TODO: handle description and short description
-    # TODO: handle intended_effect
-    # TODO: title
+    add_multiple_statement_types_to_description(sdo_instance, ttp.intended_effects, "intended_effect")
+    add_string_property_to_description(sdo_instance, "title", ttp.title, False)
     if ttp.exploit_targets is not None:
         handle_relationship_to_refs(ttp.exploit_targets, sdo_instance["id"], bundle_instance, "targets")
     if kill_chains_available:
@@ -819,7 +856,6 @@ def convert_attack_pattern(ap, ttp, bundle_instance, ttp_id_used):
         attack_Pattern_instance["external_references"] = [ {"source_name": "capec", "external_id": ap.capec_id}]
     process_ttp_properties(attack_Pattern_instance, ttp, bundle_instance)
     finish_basic_object(ttp.id_, attack_Pattern_instance, ap)
-    # TODO: add error messages for missing required properties
     return attack_Pattern_instance
 
 
@@ -839,7 +875,6 @@ def convert_malware_instance(mal, ttp, bundle_instance, ttp_id_used):
     # TODO: warning for MAEC content
     process_ttp_properties(malware_instance_instance, ttp, bundle_instance)
     finish_basic_object(ttp.id_, malware_instance_instance, mal)
-    # TODO: add error messages for missing required properties
     return malware_instance_instance
 
 
