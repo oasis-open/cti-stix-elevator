@@ -520,8 +520,8 @@ def convert_party_name(party_name, identity):
                 # add to description
 
 
-def convert_identity(identity):
-    identity_instance = create_basic_object("identity", identity)
+def convert_identity(identity, parent_timestamp=None, parent_id=None, clear_description=True):
+    identity_instance = create_basic_object("identity", identity, parent_timestamp, parent_id)
     identity_instance["sectors"] = []
     if identity.name is not None:
         identity_instance["name"] = identity.name
@@ -540,7 +540,7 @@ def convert_identity(identity):
         if ciq_info.addresses is not None:
             convert_ciq_addresses(ciq_info.addresses, identity_instance)
         # add other properties to contact_information
-    finish_basic_object(identity.id_, identity_instance, identity, False)
+    finish_basic_object(identity.id_, identity_instance, identity, clear_description)
     if not identity_instance["sectors"]:
         del identity_instance["sectors"]
     return identity_instance
@@ -955,9 +955,8 @@ def convert_resources(resources, ttp, bundle_instance):
     return resources_generated
 
 
-def convert_identity_for_victim_target(identity, ttp, bundle_instance):
-    ttp_timestamp = ttp.timestamp
-    identity_instance = convert_identity(identity)
+def convert_identity_for_victim_target(identity, ttp, bundle_instance, ttp_generated):
+    identity_instance = convert_identity(identity, ttp.timestamp, ttp.id_ if not ttp_generated else None, False)
     bundle_instance["identities"].append(identity_instance)
     process_ttp_properties(identity_instance, ttp, bundle_instance, False)
     finish_basic_object(ttp.id_, identity_instance, identity)
@@ -975,9 +974,8 @@ def convert_victim_targeting(victim_targeting, ttp, bundle_instance, ttp_generat
         for v in victim_targeting.targeted_technical_details:
             warn("targeted technical details on " + ttp.id_ + " are not a victim target in STIX 2.0")
     if victim_targeting.identity:
-        identity_instance = convert_identity_for_victim_target(victim_targeting.identity, ttp, bundle_instance)
+        identity_instance = convert_identity_for_victim_target(victim_targeting.identity, ttp, bundle_instance, ttp_generated)
         if identity_instance:
-            bundle_instance["identities"].append(identity_instance)
             warn(ttp.id_ + " generated an identity associated with a victim")
             if ttp_generated:
                 bundle_instance["relationships"].append(create_relationship(ttp.id_, identity_instance["id"], "targets", None, ttp.timestamp))
