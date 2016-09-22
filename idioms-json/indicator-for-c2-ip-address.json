@@ -1,0 +1,33 @@
+{
+    "id": "bundle--33fe3b22-0201-47cf-85d0-97c02164528d",
+    "indicators": [
+        {
+            "created": "2014-05-08T09:00:00.000000Z",
+            "id": "indicator--33fe3b22-0201-47cf-85d0-97c02164528d",
+            "labels": [
+                "benign"
+            ],
+            "modified": "2014-05-08T09:00:00.000000Z",
+            "name": "IP Address for known C2 channel",
+            "pattern": "ipv4addr-object:value EQ '10.0.0.0'",
+            "pattern_lang": "cybox",
+            "type": "indicator",
+            "valid_from": "2014-05-08T09:00:00.000000Z",
+            "version": 1
+        }
+    ],
+    "relationships": [
+        {
+            "created": "2016-09-22T08:59:27.549905Z",
+            "id": "relationship--11ac7dc2-adbc-4107-83f7-940e77b4490c",
+            "modified": "2016-09-22T08:59:27.549905Z",
+            "name": "indicates",
+            "source_ref": "indicator--33fe3b22-0201-47cf-85d0-97c02164528d",
+            "target_ref": null,
+            "type": "relationship",
+            "version": 1
+        }
+    ],
+    "spec_version": "2.0",
+    "type": "bundle"
+}

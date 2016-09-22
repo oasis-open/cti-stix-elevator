@@ -1,0 +1,84 @@
+{
+    "id": "bundle--8b8ed1c1-f01d-4393-ac65-97017ed15876",
+    "indicators": [
+        {
+            "created": "2014-10-31T15:52:13.127931Z",
+            "description": "\n\nCONFIDENCE: High",
+            "id": "indicator--8cf9236f-1b96-493d-98be-0c1c1e8b62d7",
+            "labels": [
+                "malicious-activity"
+            ],
+            "modified": "2014-10-31T15:52:13.127931Z",
+            "name": "Malicious E-mail",
+            "pattern": "email-message-object:header:subject MATCHES  /^[IMPORTANT] Please Review Before/",
+            "pattern_lang": "cybox",
+            "type": "indicator",
+            "valid_from": "2014-10-31T15:52:13.127931Z",
+            "version": 1
+        },
+        {
+            "created": "2014-10-31T15:52:13.126999Z",
+            "description": "\n\nCONFIDENCE: Low",
+            "id": "indicator--b06b0eb7-61dd-4338-a094-0290c380fbd8",
+            "labels": [
+                "malicious-activity"
+            ],
+            "modified": "2014-10-31T15:52:13.126999Z",
+            "name": "Malicious E-mail Subject Line",
+            "pattern": "email-message-object:header:subject MATCHES  /^[IMPORTANT] Please Review Before/",
+            "pattern_lang": "cybox",
+            "type": "indicator",
+            "valid_from": "2014-10-31T15:52:13.126999Z",
+            "version": 1
+        },
+        {
+            "created": "2014-10-31T15:52:13.127668Z",
+            "description": "\n\nCONFIDENCE: Low",
+            "id": "indicator--2e17f6fe-3a4d-438a-911a-e509ba1b9933",
+            "labels": [
+                "malicious-activity"
+            ],
+            "modified": "2014-10-31T15:52:13.127668Z",
+            "name": "Malicious E-mail Attachment",
+            "pattern": "",
+            "pattern_lang": "cybox",
+            "type": "indicator",
+            "valid_from": "2014-10-31T15:52:13.127668Z",
+            "version": 1
+        }
+    ],
+    "relationships": [
+        {
+            "created": "2016-09-22T08:59:27.565545Z",
+            "id": "relationship--7f2a1a56-c0ec-440e-93bb-2c9b4d285cbc",
+            "modified": "2016-09-22T08:59:27.565545Z",
+            "name": "indicates",
+            "source_ref": "indicator--8cf9236f-1b96-493d-98be-0c1c1e8b62d7",
+            "target_ref": null,
+            "type": "relationship",
+            "version": 1
+        },
+        {
+            "created": "2016-09-22T08:59:27.565545Z",
+            "id": "relationship--b2f789e0-7226-4be5-a861-c88c8874b9b3",
+            "modified": "2016-09-22T08:59:27.565545Z",
+            "name": "indicates",
+            "source_ref": "indicator--b06b0eb7-61dd-4338-a094-0290c380fbd8",
+            "target_ref": null,
+            "type": "relationship",
+            "version": 1
+        },
+        {
+            "created": "2016-09-22T08:59:27.565545Z",
+            "id": "relationship--099ac29f-3934-4c3b-81c8-bde8dd4217e0",
+            "modified": "2016-09-22T08:59:27.565545Z",
+            "name": "indicates",
+            "source_ref": "indicator--2e17f6fe-3a4d-438a-911a-e509ba1b9933",
+            "target_ref": null,
+            "type": "relationship",
+            "version": 1
+        }
+    ],
+    "spec_version": "2.0",
+    "type": "bundle"
+}

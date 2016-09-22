@@ -1,0 +1,51 @@
+<stix:STIX_Package
+	xmlns:campaign="http://stix.mitre.org/Campaign-1"
+	xmlns:cybox="http://cybox.mitre.org/cybox-2"
+	xmlns:cyboxCommon="http://cybox.mitre.org/common-2"
+	xmlns:cyboxVocabs="http://cybox.mitre.org/default_vocabularies-2"
+	xmlns:example="http://example.com"
+	xmlns:report="http://stix.mitre.org/Report-1"
+	xmlns:stix="http://stix.mitre.org/stix-1"
+	xmlns:stixCommon="http://stix.mitre.org/common-1"
+	xmlns:stixVocabs="http://stix.mitre.org/default_vocabularies-1"
+	xmlns:ttp="http://stix.mitre.org/TTP-1"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="example:Package-50578bc7-bb17-4f31-abf2-d5827d131368" version="1.2" timestamp="2015-05-07T14:22:14.761012+00:00">
+    <stix:STIX_Header>
+        <stix:Information_Source>
+            <stixCommon:Identity>
+                <stixCommon:Name>Government Sharing Program - GSP</stixCommon:Name>
+            </stixCommon:Identity>
+        </stix:Information_Source>
+    </stix:STIX_Header>
+    <stix:TTPs>
+        <stix:TTP id="example:ttp-66647c79-5766-4ca7-ab8a-a579056e3c83" timestamp="2015-05-07T14:22:14.760302+00:00" xsi:type='ttp:TTPType'>
+            <ttp:Title>DrownedRat</ttp:Title>
+        </stix:TTP>
+    </stix:TTPs>
+    <stix:Campaigns>
+        <stix:Campaign id="example:campaign-1855cb8a-d96c-4859-a450-abb1e7c061f2" timestamp="2015-05-07T14:22:14.760144+00:00" xsi:type='campaign:CampaignType'>
+            <campaign:Title>Campaign against ICS</campaign:Title>
+        </stix:Campaign>
+    </stix:Campaigns>
+    <stix:Reports>
+        <stix:Report timestamp="2015-05-07T14:22:14.760467+00:00" id="example:Report-ab11f431-4b3b-457c-835f-59920625fe65" xsi:type='report:ReportType' version="1.0">
+            <report:Header>
+                <report:Title>Report on Adversary Alpha's Campaign against the Industrial Control Sector</report:Title>
+                <report:Intent xsi:type="stixVocabs:ReportIntentVocab-1.0">Campaign Characterization</report:Intent>
+                <report:Description>Adversary Alpha has a campaign against the ICS sector!</report:Description>
+            </report:Header>
+            <report:Campaigns>
+                <report:Campaign idref="example:campaign-1855cb8a-d96c-4859-a450-abb1e7c061f2" xsi:type='campaign:CampaignType'/>
+            </report:Campaigns>
+        </stix:Report>
+        <stix:Report timestamp="2015-05-07T14:22:14.760756+00:00" id="example:Report-f14804d5-3ee1-4a0e-b0f3-f9a643855ba5" xsi:type='report:ReportType' version="1.0">
+            <report:Header>
+                <report:Title>Indicators for Malware DrownedRat</report:Title>
+                <report:Intent xsi:type="stixVocabs:ReportIntentVocab-1.0">Indicators - Malware Artifacts</report:Intent>
+            </report:Header>
+            <report:TTPs>
+                <report:TTP idref="example:ttp-66647c79-5766-4ca7-ab8a-a579056e3c83" xsi:type='ttp:TTPType'/>
+            </report:TTPs>
+        </stix:Report>
+    </stix:Reports>
+</stix:STIX_Package>

@@ -205,6 +205,7 @@ def create_relationship(source_ref, target_ref, verb, rel_obj, parent_timestamp)
 # 2.  an idref is given, and it has a corresponding 2.0 id, use it
 # 3.  an idref is given, but it has NO corresponding 2.0 id, add 1.x id, and fix at the end in fix_relationships
 
+
 def handle_relationship_to_objs(items, source_id, bundle_instance, verb, parent_timestamp=None):
     for item in items:
         new20 = handle_embedded_object(item, bundle_instance)
@@ -269,6 +270,7 @@ def handle_relationship_from_refs(refs, target_id, bundle_instance, verb, parent
 
 def reference_needs_fixing(ref):
     return ref and ref.find("--") == -1
+
 
 # for ids in source and target refs that are still 1.x ids,
 def fix_relationships(relationships, bundle_instance):
@@ -671,7 +673,8 @@ def convert_indicator(indicator, bundle_instance):
     if indicator.suggested_coas is not None:
         warn("Using related-to")
         handle_relationship_to_refs(indicator.suggested_coas, indicator_instance["id"], bundle_instance, "related-to")
-    # TODO: related indicators
+    if indicator.related_indicators is not None:
+        handle_relationship_to_refs(indicator.related_indicators, indicator_instance["id"], bundle_instance, "related-to")
     if indicator.related_campaigns is not None:
         handle_relationship_to_refs(indicator.related_campaigns, indicator_instance["id"], bundle_instance, "attributed-to")
     if indicator.indicated_ttps is not None:
@@ -685,7 +688,7 @@ def convert_indicator(indicator, bundle_instance):
 def convert_observable_data(obs, bundle_instance):
     global OBSERVABLE_MAPPING
     observed_data_instance = create_basic_object("observable-data", obs)
-    cybox_container = { "type": "cybox-container", "spec_version": "3.0"}
+    cybox_container = {"type": "cybox-container", "spec_version": "3.0"}
     observed_data_instance["cybox"] = convert_cybox_object(obs.object_, cybox_container)
     observed_time = convert_timestamp(obs)
     info("No 'first_observed' data on " + obs.id_ + " - using timestamp")
@@ -794,6 +797,7 @@ def convert_report(report, bundle_instance):
     add_string_property_to_description(report_instance, "intent", report.header.intents, True)
     if report.header.title is not None:
         report_instance["name"] = report.header.title
+    convert_controlled_vocabs_to_open_vocabs(report_instance, "labels", report.header.intents, REPORT_LABELS_MAP, False)
     process_report_contents(report, bundle_instance, report_instance)
     finish_basic_object(report.id_, report_instance, report.header)
     return report_instance
@@ -1236,7 +1240,7 @@ def convert_file(inFileName):
     clear_id_mapping()
     stixPackage = EntityParser().parse_xml(inFileName)
     if isinstance(stixPackage, STIXPackage):
-        print(json.dumps(convert_package(stixPackage), indent=4, separators=(',', ': '), sort_keys=True) + "\n")
+        return json.dumps(convert_package(stixPackage), indent=4, separators=(',', ': '), sort_keys=True)
 
 if __name__ == '__main__':
-    convert_file(sys.argv[1])
+    print(convert_file(sys.argv[1]))
