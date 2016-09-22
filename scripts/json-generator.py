@@ -22,7 +22,7 @@ def main():
         file_and_ext = filename.split(".")
         xml_path = os.path.join(sys.argv[1], filename)
 
-        destination = os.path.join(directory, str(file_and_ext[0]), ".json")
+        destination = os.path.join(directory, str(file_and_ext[0]) + ".json")
         destination = os.path.abspath(destination)
 
         if file_and_ext[1] == "xml":
