@@ -12,8 +12,7 @@ def main():
         path = os.path.join(sys.argv[1], filename)
 
         if path.endswith(".xml"):
-            sys.stdout.write(path + "\n")
-            convert_file(path)
+            print(convert_file(path) + "\n")
 
 
 if __name__ == '__main__':

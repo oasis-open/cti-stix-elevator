@@ -1,0 +1,47 @@
+{
+    "id": "bundle--ea99d4d4-1ae7-4120-9ebe-67ed4783fb36",
+    "indicators": [
+        {
+            "created": "2014-06-20T15:16:56.987616Z",
+            "description": "\n\nCONFIDENCE: High",
+            "id": "indicator--567b201c-4fd5-4bde-a5db-42abc340807b",
+            "modified": "2014-06-20T15:16:56.987616Z",
+            "name": "Snort Signature for Heartbleed",
+            "pattern": "alert tcp any any -> any any (msg:\"FOX-SRT - Flowbit - TLS-SSL Client Hello\"; flow:established; dsize:< 500; content:\"|16 03|\"; depth:2; byte_test:1, <=, 2, 3; byte_test:1, !=, 2, 1; content:\"|01|\"; offset:5; depth:1; content:\"|03|\"; offset:9; byte_test:1, <=, 3, 10; byte_test:1, !=, 2, 9; content:\"|00 0f 00|\"; flowbits:set,foxsslsession; flowbits:noalert; threshold:type limit, track by_src, count 1, seconds 60; reference:cve,2014-0160; classtype:bad-unknown; sid: 21001130; rev:9;), alert tcp any any -> any any (msg:\"FOX-SRT - Suspicious - TLS-SSL Large Heartbeat Response\"; flow:established; flowbits:isset,foxsslsession; content:\"|18 03|\"; depth: 2; byte_test:1, <=, 3, 2; byte_test:1, !=, 2, 1; byte_test:2, >, 200, 3; threshold:type limit, track by_src, count 1, seconds 600; reference:cve,2014-0160; classtype:bad-unknown; sid: 21001131; rev:5;)",
+            "pattern_lang": "snort",
+            "type": "indicator",
+            "valid_from": "2014-06-20T15:16:56.987616Z",
+            "version": 1
+        }
+    ],
+    "relationships": [
+        {
+            "created": "2016-09-22T08:59:27.674918Z",
+            "id": "relationship--24946ab2-6f3c-47d5-a00e-4e9c3c40c919",
+            "modified": "2016-09-22T08:59:27.674918Z",
+            "name": "indicates",
+            "source_ref": "indicator--567b201c-4fd5-4bde-a5db-42abc340807b",
+            "target_ref": null,
+            "type": "relationship",
+            "version": 1
+        }
+    ],
+    "spec_version": "2.0",
+    "type": "bundle",
+    "vulnerabilities": [
+        {
+            "created": "2014-06-20T15:16:56.986650Z",
+            "external_references": [
+                {
+                    "external_id": "CVE-2013-3893",
+                    "source_name": "cve"
+                }
+            ],
+            "id": "vulnerability--e77c1e36-5b43-4c5c-b8cb-7b36035f2b90",
+            "modified": "2014-06-20T15:16:56.986650Z",
+            "name": "Heartbleed",
+            "type": "vulnerability",
+            "version": 1
+        }
+    ]
+}

@@ -1,0 +1,89 @@
+{
+    "id": "bundle--035391ea-ef0d-48c9-ae9b-d50452fcb296",
+    "incidents": [
+        {
+            "created": "2014-09-15T14:37:54.297669Z",
+            "id": "incident--84d86106-d801-489b-87b6-d56bac58e6c1",
+            "modified": "2014-09-15T14:37:54.297669Z",
+            "name": "Malicious files detected",
+            "type": "incident",
+            "version": 1
+        }
+    ],
+    "observed_data": [
+        {
+            "created": "2016-09-22T08:59:27.549905Z",
+            "cybox": {
+                "objects": {
+                    "0": {
+                        "file_name": "readme.doc.exe",
+                        "hashes": {
+                            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                        },
+                        "size": 40891,
+                        "type": "file-object"
+                    }
+                },
+                "spec_version": "3.0",
+                "type": "cybox-container"
+            },
+            "first_observed": "2016-09-22T08:59:27.549905Z",
+            "id": "observable-data--0fd77202-c962-41c7-b90f-a906ab3b5392",
+            "last_observed": "2016-09-22T08:59:27.549905Z",
+            "modified": "2016-09-22T08:59:27.549905Z",
+            "number_observed": 1,
+            "type": "observable-data",
+            "version": 1
+        },
+        {
+            "created": "2016-09-22T08:59:27.549905Z",
+            "cybox": {
+                "objects": {
+                    "0": {
+                        "file_name": "readme.doc.exe",
+                        "hashes": {
+                            "sha256": "d7a8fbb307d7809469ca9abcb0082e4f8d5651e46d3cdb762d02d0bf37c9e592"
+                        },
+                        "size": 40891,
+                        "type": "file-object"
+                    }
+                },
+                "spec_version": "3.0",
+                "type": "cybox-container"
+            },
+            "first_observed": "2016-09-22T08:59:27.549905Z",
+            "id": "observable-data--b74949f0-cf41-4094-9b80-240201a96b60",
+            "last_observed": "2016-09-22T08:59:27.549905Z",
+            "modified": "2016-09-22T08:59:27.549905Z",
+            "number_observed": 1,
+            "type": "observable-data",
+            "version": 1
+        }
+    ],
+    "relationships": [
+        {
+            "created": "2014-09-15T14:37:54.297669Z",
+            "description": "Malicious Artifact Detected",
+            "id": "relationship--19347ad5-48e9-47fa-a366-c7d06da75d0c",
+            "modified": "2014-09-15T14:37:54.297669Z",
+            "name": "part-of",
+            "source_ref": "observable-data--0fd77202-c962-41c7-b90f-a906ab3b5392",
+            "target_ref": "incident--84d86106-d801-489b-87b6-d56bac58e6c1",
+            "type": "relationship",
+            "version": 1
+        },
+        {
+            "created": "2014-09-15T14:37:54.297669Z",
+            "description": "Malicious Artifact Detected",
+            "id": "relationship--7d9dfe84-db65-40cd-b1eb-92ed2a4d747d",
+            "modified": "2014-09-15T14:37:54.297669Z",
+            "name": "part-of",
+            "source_ref": "observable-data--b74949f0-cf41-4094-9b80-240201a96b60",
+            "target_ref": "incident--84d86106-d801-489b-87b6-d56bac58e6c1",
+            "type": "relationship",
+            "version": 1
+        }
+    ],
+    "spec_version": "2.0",
+    "type": "bundle"
+}

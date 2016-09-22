@@ -119,6 +119,30 @@ TOOL_LABELS_MAP = \
     }
 
 
+REPORT_LABELS_MAP = \
+    {
+        "Collective Threat Intelligence": "",
+        "Threat Report": "threat-report",
+        "Indicators": "indicator",
+        "Indicators - Phishing": "indicator",
+        "Indicators - Watchlist": "indicator",
+        "Indicators - Malware Artifacts": "indicator",
+        "Indicators - Network Activity": "indicator",
+        "Indicators - Endpoint Characteristics": "indicator",
+        "Campaign Characterization": "campaign",
+        "Threat Actor Characterization": "threat-actor",
+        "Exploit Characterization": "",
+        "Attack Pattern Characterization": "attack-pattern",
+        "Malware Characterization": "malware",
+        "TTP - Infrastructure": "",
+        "TTP - Tools": "",
+        "Courses of Action": "",
+        "Incident": "",
+        "Observations": "",
+        "Observations - Email": "",
+        "Malware Samples": ""
+    }
+
 #CybOX
 
 WINDOWS_PEBINARY = {}
