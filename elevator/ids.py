@@ -55,4 +55,6 @@ def add_id_value(key, value):
     if exists_id_key(key):
         IDS_TO_NEW_IDS[key].append(value)
     else:
-        IDS_TO_NEW_IDS[key] = [ value ]
+        IDS_TO_NEW_IDS[key] = [value]
+    if not value:
+        warn("trying to associate " + key + " will None")
