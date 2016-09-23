@@ -12,7 +12,7 @@
     ],
     "observed_data": [
         {
-            "created": "2016-09-22T08:59:27.549905Z",
+            "created": "2016-09-23T10:33:23.365626Z",
             "cybox": {
                 "objects": {
                     "0": {
@@ -27,16 +27,16 @@
                 "spec_version": "3.0",
                 "type": "cybox-container"
             },
-            "first_observed": "2016-09-22T08:59:27.549905Z",
+            "first_observed": "2016-09-23T10:33:23.365626Z",
             "id": "observable-data--0fd77202-c962-41c7-b90f-a906ab3b5392",
-            "last_observed": "2016-09-22T08:59:27.549905Z",
-            "modified": "2016-09-22T08:59:27.549905Z",
+            "last_observed": "2016-09-23T10:33:23.365626Z",
+            "modified": "2016-09-23T10:33:23.365626Z",
             "number_observed": 1,
             "type": "observable-data",
             "version": 1
         },
         {
-            "created": "2016-09-22T08:59:27.549905Z",
+            "created": "2016-09-23T10:33:23.365626Z",
             "cybox": {
                 "objects": {
                     "0": {
@@ -51,10 +51,10 @@
                 "spec_version": "3.0",
                 "type": "cybox-container"
             },
-            "first_observed": "2016-09-22T08:59:27.549905Z",
+            "first_observed": "2016-09-23T10:33:23.365626Z",
             "id": "observable-data--b74949f0-cf41-4094-9b80-240201a96b60",
-            "last_observed": "2016-09-22T08:59:27.549905Z",
-            "modified": "2016-09-22T08:59:27.549905Z",
+            "last_observed": "2016-09-23T10:33:23.365626Z",
+            "modified": "2016-09-23T10:33:23.365626Z",
             "number_observed": 1,
             "type": "observable-data",
             "version": 1
@@ -64,7 +64,7 @@
         {
             "created": "2014-09-15T14:37:54.297669Z",
             "description": "Malicious Artifact Detected",
-            "id": "relationship--19347ad5-48e9-47fa-a366-c7d06da75d0c",
+            "id": "relationship--d10ded4c-eb6b-49b1-a9a9-9fd1870ccd30",
             "modified": "2014-09-15T14:37:54.297669Z",
             "name": "part-of",
             "source_ref": "observable-data--0fd77202-c962-41c7-b90f-a906ab3b5392",
@@ -75,7 +75,7 @@
         {
             "created": "2014-09-15T14:37:54.297669Z",
             "description": "Malicious Artifact Detected",
-            "id": "relationship--7d9dfe84-db65-40cd-b1eb-92ed2a4d747d",
+            "id": "relationship--6c588a6c-f4ec-481f-86d2-4bf6d68c9cb1",
             "modified": "2014-09-15T14:37:54.297669Z",
             "name": "part-of",
             "source_ref": "observable-data--b74949f0-cf41-4094-9b80-240201a96b60",

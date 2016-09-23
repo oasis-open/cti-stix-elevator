@@ -49,9 +49,9 @@
     ],
     "relationships": [
         {
-            "created": "2016-09-22T08:59:27.565545Z",
-            "id": "relationship--7f2a1a56-c0ec-440e-93bb-2c9b4d285cbc",
-            "modified": "2016-09-22T08:59:27.565545Z",
+            "created": "2016-09-23T10:33:23.393145Z",
+            "id": "relationship--ced325d5-9827-4a9d-b73c-a555f670e63e",
+            "modified": "2016-09-23T10:33:23.393145Z",
             "name": "indicates",
             "source_ref": "indicator--8cf9236f-1b96-493d-98be-0c1c1e8b62d7",
             "target_ref": null,
@@ -59,9 +59,9 @@
             "version": 1
         },
         {
-            "created": "2016-09-22T08:59:27.565545Z",
-            "id": "relationship--b2f789e0-7226-4be5-a861-c88c8874b9b3",
-            "modified": "2016-09-22T08:59:27.565545Z",
+            "created": "2016-09-23T10:33:23.393645Z",
+            "id": "relationship--e1f7fbb3-5801-4765-a7ad-2a69519e5492",
+            "modified": "2016-09-23T10:33:23.393645Z",
             "name": "indicates",
             "source_ref": "indicator--b06b0eb7-61dd-4338-a094-0290c380fbd8",
             "target_ref": null,
@@ -69,9 +69,9 @@
             "version": 1
         },
         {
-            "created": "2016-09-22T08:59:27.565545Z",
-            "id": "relationship--099ac29f-3934-4c3b-81c8-bde8dd4217e0",
-            "modified": "2016-09-22T08:59:27.565545Z",
+            "created": "2016-09-23T10:33:23.393645Z",
+            "id": "relationship--1397855f-1042-4536-aee4-69643ddd8267",
+            "modified": "2016-09-23T10:33:23.393645Z",
             "name": "indicates",
             "source_ref": "indicator--2e17f6fe-3a4d-438a-911a-e509ba1b9933",
             "target_ref": null,
