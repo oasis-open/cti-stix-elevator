@@ -216,24 +216,26 @@ def create_relationship(source_ref, target_ref, verb, rel_obj, parent_timestamp)
 
 def handle_relationship_to_objs(items, source_id, bundle_instance, verb, parent_timestamp=None):
     for item in items:
-        new20 = handle_embedded_object(item, bundle_instance)
-        bundle_instance["relationships"].append(create_relationship(source_id,
-                                                                    new20["id"] if new20 else None,
-                                                                    verb,
-                                                                    item,
-                                                                    parent_timestamp))
+        new20s = handle_embedded_object(item, bundle_instance)
+        for new20 in new20s:
+            bundle_instance["relationships"].append(create_relationship(source_id,
+                                                                        new20["id"] if new20 else None,
+                                                                        verb,
+                                                                        item,
+                                                                        parent_timestamp))
 
 
 def handle_relationship_to_refs(refs, source_id, bundle_instance, verb, parent_timestamp=None):
     for ref in refs:
         if ref.item.idref is None:
             # embedded
-            new20 = handle_embedded_object(ref.item, bundle_instance)
-            bundle_instance["relationships"].append(create_relationship(source_id,
-                                                                        new20["id"] if new20 else None,
-                                                                        verb,
-                                                                        ref,
-                                                                        parent_timestamp))
+            new20s = handle_embedded_object(ref.item, bundle_instance)
+            for new20 in new20s:
+                bundle_instance["relationships"].append(create_relationship(source_id,
+                                                                            new20["id"] if new20 else None,
+                                                                            verb,
+                                                                            ref,
+                                                                            parent_timestamp))
         elif exists_id_key(ref.item.idref):
             for to_ref in get_id_value(ref.item.idref):
                 bundle_instance["relationships"].append(create_relationship(source_id,
@@ -254,12 +256,13 @@ def handle_relationship_from_refs(refs, target_id, bundle_instance, verb, parent
     for ref in refs:
         if ref.item.idref is None:
             # embedded
-            new20 = handle_embedded_object(ref.item, bundle_instance)
-            bundle_instance["relationships"].append(create_relationship(new20["id"] if new20 else None,
-                                                                        target_id,
-                                                                        verb,
-                                                                        ref,
-                                                                        parent_timestamp))
+            new20s = handle_embedded_object(ref.item, bundle_instance)
+            for new20 in new20s:
+                bundle_instance["relationships"].append(create_relationship(new20["id"] if new20 else None,
+                                                                            target_id,
+                                                                            verb,
+                                                                            ref,
+                                                                            parent_timestamp))
         elif exists_id_key(ref.item.idref):
             for from_ref in get_id_value(ref.item.idref):
                 bundle_instance["relationships"].append(create_relationship(from_ref,
@@ -864,8 +867,7 @@ def convert_threat_actor(threat_actor, bundle_instance):
     process_description_and_short_description(threat_actor_instance, threat_actor)
     if threat_actor.identity is not None:
         if threat_actor.identity.id_:
-            info(
-                "Threat actor identity " + threat_actor.identity.id_ + " being used as basis of attributed-to relationship")
+            info("Threat actor identity " + threat_actor.identity.id_ + " being used as basis of attributed-to relationship")
         handle_relationship_to_objs([threat_actor.identity], threat_actor.id_, bundle_instance, "attributed-to")
     if threat_actor.title is not None:
         info("Threat actor " + threat_actor.id_ + "'s title is used for name property")
@@ -1087,6 +1089,8 @@ def convert_ttp(ttp, bundle_instance):
 
 
 def handle_embedded_object(obj, bundle_instance):
+    new20 = None
+    new20s = None
     # campaigns
     if isinstance(obj, Campaign):
         new20 = convert_campaign(obj, bundle_instance)
@@ -1097,11 +1101,7 @@ def handle_embedded_object(obj, bundle_instance):
         bundle_instance["courses_of_action"].append(new20)
     # exploit-targets
     elif isinstance(obj, ExploitTarget):
-        new20 = convert_exploit_target(obj, bundle_instance)
-        if len(new20) > 1:
-            warn("More than one objects created from " + obj.id_ + " using first")
-        if len(new20) >= 1:
-            new20 = new20[0]
+        new20s = convert_exploit_target(obj, bundle_instance)
     # identities
     elif isinstance(obj, Identity) or isinstance(obj, CIQIdentity3_0Instance):
         new20 = convert_identity(obj, bundle_instance)
@@ -1128,12 +1128,14 @@ def handle_embedded_object(obj, bundle_instance):
         bundle_instance["threat-actors"].append(new20)
     # ttps
     elif isinstance(obj, TTP):
-        new20 = convert_ttp(obj, bundle_instance)
-        if len(new20) > 1:
-            warn("More than one objects created from " + obj.id_ + " using first")
-        if len(new20) >= 1:
-            new20 = new20[0]
-    return new20
+        new20s = convert_ttp(obj, bundle_instance)
+    if new20:
+        return [ new20 ]
+    elif new20s:
+        return new20s
+    else:
+        warn("No STIX 2.0 object generated from embedded object")
+        return []
 
 
 def initialize_bundle_lists(bundle_instance):
@@ -1176,12 +1178,12 @@ def finalize_bundle(bundle_instance):
     # TODO: fix created_by_ref
     # TODO: fix other embedded relationships
 
+    add_relationships_to_reports(bundle_instance)
+
     _TO_MAP = ("id", "idref", "created_by_ref", "external_references",
                "marking_ref", "object_marking_refs", "object_refs",
                "target_ref", "source_ref", "sighting_of_ref",
                "observed_data_refs", "where_sighted_refs")
-
-    add_relationships_to_reports(bundle_instance)
 
     for entry in iterpath(bundle_instance):
         path, value = entry
