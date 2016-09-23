@@ -323,7 +323,7 @@ def add_relationships_to_reports(bundle_instance):
     rels_to_include = []
     new_ids = get_id_values()
     for rep in bundle_instance["reports"]:
-        refs_in_this_report = rep["report_refs"]
+        refs_in_this_report = rep["object_refs"]
         for rel in bundle_instance["relationships"]:
             if ("source_ref" in rel and rel["source_ref"] in refs_in_this_report) and \
                     ("target_ref" in rel and rel["target_ref"] in refs_in_this_report):
@@ -354,10 +354,10 @@ def add_relationships_to_reports(bundle_instance):
                 elif not (rel["source_ref"] in new_ids or rel["source_ref"] in SDO_WITH_NO_1X_OBJECT):
                     warn("Not including " + rel["id"] + " in " + rep[
                         "id"] + " because there is no corresponding SDO for " + rel["source_ref"])
-        if "report_refs" in rep:
-            rep["report_refs"].extend(rels_to_include)
+        if "object_refs" in rep:
+            rep["object_refs"].extend(rels_to_include)
         else:
-            rep["report_refs"] = rels_to_include
+            rep["object_refs"] = rels_to_include
 
 
 # campaign
@@ -758,15 +758,15 @@ def convert_observable_data(obs, bundle_instance):
 
 
 def process_report_contents(report, bundle_instance, report_instance):
-    report_instance["report_refs"] = []
+    report_instance["object_refs"] = []
     if report.campaigns:
         for camp in report.campaigns:
             if camp.id_ is not None:
                 camp20 = convert_campaign(camp, bundle_instance)
                 bundle_instance["campaigns"].append(camp20)
-                report_instance["report_refs"].append(camp20["id"])
+                report_instance["object_refs"].append(camp20["id"])
             else:
-                report_instance["report_refs"].append(camp.idref)
+                report_instance["object_refs"].append(camp.idref)
 
     # coas
     if report.courses_of_action:
@@ -774,9 +774,9 @@ def process_report_contents(report, bundle_instance, report_instance):
             if coa.id_ is not None:
                 coa20 = convert_course_of_action(coa, bundle_instance)
                 bundle_instance["courses_of_action"].append(coa20)
-                report_instance["report_refs"].append(coa20["id"])
+                report_instance["object_refs"].append(coa20["id"])
             else:
-                report_instance["report_refs"].append(coa.idref)
+                report_instance["object_refs"].append(coa.idref)
 
     # exploit-targets
     if report.exploit_targets:
@@ -790,9 +790,9 @@ def process_report_contents(report, bundle_instance, report_instance):
                 if i.id_ is not None:
                     i20 = convert_incident(i, bundle_instance)
                     bundle_instance["incidents"].append(i20)
-                    report_instance["report_refs"].append(i20["id"])
+                    report_instance["object_refs"].append(i20["id"])
                 else:
-                    report_instance["report_refs"].append(i.idref)
+                    report_instance["object_refs"].append(i.idref)
 
     # indicators
     if report.indicators:
@@ -800,9 +800,9 @@ def process_report_contents(report, bundle_instance, report_instance):
             if i.id_ is not None:
                 i20 = convert_indicator(i, bundle_instance)
                 bundle_instance["indicators"].append(i20)
-                report_instance["report_refs"].append(i20["id"])
+                report_instance["object_refs"].append(i20["id"])
             else:
-                report_instance["report_refs"].append(i.idref)
+                report_instance["object_refs"].append(i.idref)
 
     # observables
     if report.observables:
@@ -810,9 +810,9 @@ def process_report_contents(report, bundle_instance, report_instance):
             if o_d.id_ is not None:
                 o_d20 = convert_observable_data(o_d, bundle_instance)
                 bundle_instance["observed_data"].append(o_d20)
-                report_instance["report_refs"].append(o_d20["id"])
+                report_instance["object_refs"].append(o_d20["id"])
             else:
-                report_instance["report_refs"].append(o_d.idref)
+                report_instance["object_refs"].append(o_d.idref)
 
     # threat actors
     if report.threat_actors:
@@ -820,9 +820,9 @@ def process_report_contents(report, bundle_instance, report_instance):
             if ta.id_ is not None:
                 ta20 = convert_threat_actor(ta, bundle_instance)
                 bundle_instance["threat-actors"].append(ta20)
-                report_instance["report_refs"].append(ta20["id"])
+                report_instance["object_refs"].append(ta20["id"])
             else:
-                report_instance["report_refs"].append(ta.idref)
+                report_instance["object_refs"].append(ta.idref)
 
     # ttps
     if report.ttps:
@@ -836,9 +836,9 @@ def process_report_contents(report, bundle_instance, report_instance):
                         bundle_instance["tools"].append(ttp)
                     elif ttp["type"] == "attack_pattern":
                         bundle_instance["attack_patterns"].append(ttp)
-                    report_instance["report_refs"].append(ttp["id"])
+                    report_instance["object_refs"].append(ttp["id"])
             else:
-                report_instance["report_refs"].append(ttp.idref)
+                report_instance["object_refs"].append(ttp.idref)
 
 
 def convert_report(report, bundle_instance):
@@ -1176,22 +1176,24 @@ def finalize_bundle(bundle_instance):
     # TODO: fix created_by_ref
     # TODO: fix other embedded relationships
 
-    for r in bundle_instance["reports"]:
-        fixed_refs = []
-        for ref in r["report_refs"]:
-            if reference_needs_fixing(ref):
-                v = exists_id_key(ref)
-                if v:
-                    for f_r in get_id_value(ref):
-                        if f_r:
-                            fixed_refs.append(f_r)
-            else:
-                fixed_refs.append(ref)
-        r["report_refs"] = fixed_refs
-
+    _TO_MAP = ("id", "idref", "created_by_ref", "external_references",
+               "marking_ref", "object_marking_refs", "object_refs",
+               "target_ref", "source_ref", "sighting_of_ref",
+               "observed_data_refs", "where_sighted_refs")
 
     add_relationships_to_reports(bundle_instance)
-    # TODO: add refs to reports found in embedded relationships
+
+    for entry in iterpath(bundle_instance):
+        path, value = entry
+        last_field = path[-1]
+
+        if isinstance(value, (list, dict)):
+            continue
+
+        if last_field in _TO_MAP and reference_needs_fixing(value) and exists_id_key(value):
+            stix20_id = get_id_value(value)
+            set_value_path(bundle_instance, path, stix20_id[0])
+            info("Found " + value + " replaced by " + stix20_id[0])
 
     if not bundle_instance["relationships"]:
         del bundle_instance["relationships"]

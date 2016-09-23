@@ -9,8 +9,10 @@ IDS_TO_NEW_IDS = {}
 
 SDO_WITH_NO_1X_OBJECT = []
 
+
 def clear_id_mapping():
     IDS_TO_NEW_IDS = {}
+
 
 def record_ids(id, new_id):
     if id in IDS_TO_NEW_IDS:

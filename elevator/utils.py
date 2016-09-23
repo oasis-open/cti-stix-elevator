@@ -4,6 +4,8 @@
 import sys
 from datetime import *
 
+import six
+
 
 def info(fmt, *args):
     msg = fmt % args
@@ -67,6 +69,73 @@ def convert_to_str(value):
     else:
         return escaped_ascii
 
+
 def map_1x_type_to_20(stix1x_type):
     # TODO: stub
     return stix1x_type
+
+
+def iterpath(obj, path=None):
+    """
+    Generator which walks the input ``obj`` model. Each iteration yields a
+    tuple containing a list of ancestors and the property value.
+
+    Args:
+        obj: A TLO object.
+        path: None, used recursively to store ancestors.
+
+    Example:
+        >>> for item in iterpath(tlo):
+        >>>     print(item)
+        (['type'], 'campaign')
+        ...
+        (['cybox', 'objects', '[0]', 'hashes', 'sha1'], 'cac35ec206d868b7d7cb0b55f31d9425b075082b')
+
+    Returns:
+        tuple: Containing two items: a list of ancestors and the property value.
+
+    """
+    if path is None:
+        path = []
+
+    for varname, varobj in iter(sorted(six.iteritems(obj))):
+        path.append(varname)
+        yield (path, varobj)
+
+        if isinstance(varobj, dict):
+
+            for item in iterpath(varobj, path):
+                yield item
+
+        elif isinstance(varobj, list):
+
+            for item in varobj:
+                index = "[{0}]".format(varobj.index(item))
+                path.append(index)
+
+                yield (path, item)
+
+                if isinstance(item, dict):
+                    for descendant in iterpath(item, path):
+                        yield descendant
+
+                path.pop()
+
+        path.pop()
+
+
+def set_value_path(obj, path, value):
+    current = path[0]
+    path = path[1:]
+
+    if "[" in current and "]" in current:
+        current = int(current.strip("[]"))
+        current_obj = obj[current]
+    else:
+        current_obj = obj[current]
+
+    if not path:
+        obj[current] = value
+        return
+
+    set_value_path(current_obj, path, value)
