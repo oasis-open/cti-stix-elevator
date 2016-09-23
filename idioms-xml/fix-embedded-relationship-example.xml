@@ -1,0 +1,66 @@
+<stix:STIX_Package 
+	xmlns:example="http://example.com"
+	xmlns:ttp="http://stix.mitre.org/TTP-1"
+	xmlns:ta="http://stix.mitre.org/ThreatActor-1"
+	xmlns:stixCommon="http://stix.mitre.org/common-1"
+	xmlns:stixVocabs="http://stix.mitre.org/default_vocabularies-1"
+	xmlns:stix="http://stix.mitre.org/stix-1"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+	http://stix.mitre.org/TTP-1 http://stix.mitre.org/XMLSchema/ttp/1.2/ttp.xsd
+	http://stix.mitre.org/ThreatActor-1 http://stix.mitre.org/XMLSchema/threat_actor/1.2/threat_actor.xsd
+	http://stix.mitre.org/common-1 http://stix.mitre.org/XMLSchema/common/1.2/stix_common.xsd
+	http://stix.mitre.org/default_vocabularies-1 http://stix.mitre.org/XMLSchema/default_vocabularies/1.2.0/stix_default_vocabularies.xsd
+	http://stix.mitre.org/stix-1 http://stix.mitre.org/XMLSchema/core/1.2/stix_core.xsd" 
+	id="example:Package-161f8ade-b67d-11e3-b8af-f01faf20d111" version="1.2">
+    <stix:TTPs>
+        <stix:TTP id="example:ttp-8ac90ff3-ecf8-4835-95b8-6aea6a623df5" xsi:type='ttp:TTPType'>
+            <ttp:Title>Phishing</ttp:Title>
+            <ttp:Behavior>
+                <ttp:Attack_Patterns>
+                    <ttp:Attack_Pattern capec_id="CAPEC-98">
+                        <ttp:Description>Phishing</ttp:Description>
+                    </ttp:Attack_Pattern>
+                </ttp:Attack_Patterns>
+            </ttp:Behavior>
+            <ttp:Information_Source>
+                <stixCommon:Identity idref="example:identity-4ec4d0a2-80e3-11e6-ae22-56b6b6499611"/>
+            </ttp:Information_Source>
+        </stix:TTP>
+        <stix:TTP id="example:ttp-d1c612bc-146f-4b65-b7b0-9a54a14150a4" xsi:type='ttp:TTPType'>
+            <ttp:Title>Poison Ivy Variant d1c6</ttp:Title>
+            <ttp:Behavior>
+                <ttp:Malware>
+                    <ttp:Malware_Instance id="example:malware-1621d4d2-b67d-11e3-ba9e-f01faf20d111">
+                        <ttp:Type xsi:type="stixVocabs:MalwareTypeVocab-1.0">Remote Access Trojan</ttp:Type>
+                        <ttp:Name>Poison Ivy Variant d1c6</ttp:Name>
+                    </ttp:Malware_Instance>
+                </ttp:Malware>
+            </ttp:Behavior>
+        </stix:TTP>
+    </stix:TTPs>
+    <stix:Threat_Actors>
+        <stix:Threat_Actor id="example:threatactor-9a8a0d25-7636-429b-a99e-b2a73cd0f11f" xsi:type='ta:ThreatActorType'>
+            <ta:Title>Adversary Bravo</ta:Title>
+            <ta:Identity id="example:Identity-1621d4d4-b67d-11e3-9670-f01faf20d111">
+                <stixCommon:Name>Adversary Bravo</stixCommon:Name>
+            </ta:Identity>
+            <ta:Observed_TTPs>
+                <ta:Observed_TTP>
+                    <stixCommon:Relationship>Leverages Attack Pattern</stixCommon:Relationship>
+                    <stixCommon:TTP idref="example:ttp-8ac90ff3-ecf8-4835-95b8-6aea6a623df5"/>
+                </ta:Observed_TTP>
+                <ta:Observed_TTP>
+                    <stixCommon:Relationship>Leverages Malware</stixCommon:Relationship>
+                    <stixCommon:TTP idref="example:ttp-d1c612bc-146f-4b65-b7b0-9a54a14150a4"/>
+                </ta:Observed_TTP>
+            </ta:Observed_TTPs>
+            <ta:Information_Source>
+                <stixCommon:Identity id="example:identity-4ec4d0a2-80e3-11e6-ae22-56b6b6499611">
+				    <stixCommon:Name>Emmanuelle</stixCommon:Name>
+			    </stixCommon:Identity>
+            </ta:Information_Source>
+        </stix:Threat_Actor>
+    </stix:Threat_Actors>
+</stix:STIX_Package>
+
