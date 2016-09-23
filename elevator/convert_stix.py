@@ -216,24 +216,26 @@ def create_relationship(source_ref, target_ref, verb, rel_obj, parent_timestamp)
 
 def handle_relationship_to_objs(items, source_id, bundle_instance, verb, parent_timestamp=None):
     for item in items:
-        new20 = handle_embedded_object(item, bundle_instance)
-        bundle_instance["relationships"].append(create_relationship(source_id,
-                                                                    new20["id"] if new20 else None,
-                                                                    verb,
-                                                                    item,
-                                                                    parent_timestamp))
+        new20s = handle_embedded_object(item, bundle_instance)
+        for new20 in new20s:
+            bundle_instance["relationships"].append(create_relationship(source_id,
+                                                                        new20["id"] if new20 else None,
+                                                                        verb,
+                                                                        item,
+                                                                        parent_timestamp))
 
 
 def handle_relationship_to_refs(refs, source_id, bundle_instance, verb, parent_timestamp=None):
     for ref in refs:
         if ref.item.idref is None:
             # embedded
-            new20 = handle_embedded_object(ref.item, bundle_instance)
-            bundle_instance["relationships"].append(create_relationship(source_id,
-                                                                        new20["id"] if new20 else None,
-                                                                        verb,
-                                                                        ref,
-                                                                        parent_timestamp))
+            new20s = handle_embedded_object(ref.item, bundle_instance)
+            for new20 in new20s:
+                bundle_instance["relationships"].append(create_relationship(source_id,
+                                                                            new20["id"] if new20 else None,
+                                                                            verb,
+                                                                            ref,
+                                                                            parent_timestamp))
         elif exists_id_key(ref.item.idref):
             for to_ref in get_id_value(ref.item.idref):
                 bundle_instance["relationships"].append(create_relationship(source_id,
@@ -254,12 +256,13 @@ def handle_relationship_from_refs(refs, target_id, bundle_instance, verb, parent
     for ref in refs:
         if ref.item.idref is None:
             # embedded
-            new20 = handle_embedded_object(ref.item, bundle_instance)
-            bundle_instance["relationships"].append(create_relationship(new20["id"] if new20 else None,
-                                                                        target_id,
-                                                                        verb,
-                                                                        ref,
-                                                                        parent_timestamp))
+            new20s = handle_embedded_object(ref.item, bundle_instance)
+            for new20 in new20s:
+                bundle_instance["relationships"].append(create_relationship(new20["id"] if new20 else None,
+                                                                            target_id,
+                                                                            verb,
+                                                                            ref,
+                                                                            parent_timestamp))
         elif exists_id_key(ref.item.idref):
             for from_ref in get_id_value(ref.item.idref):
                 bundle_instance["relationships"].append(create_relationship(from_ref,
@@ -323,7 +326,7 @@ def add_relationships_to_reports(bundle_instance):
     rels_to_include = []
     new_ids = get_id_values()
     for rep in bundle_instance["reports"]:
-        refs_in_this_report = rep["report_refs"]
+        refs_in_this_report = rep["object_refs"]
         for rel in bundle_instance["relationships"]:
             if ("source_ref" in rel and rel["source_ref"] in refs_in_this_report) and \
                     ("target_ref" in rel and rel["target_ref"] in refs_in_this_report):
@@ -354,10 +357,10 @@ def add_relationships_to_reports(bundle_instance):
                 elif not (rel["source_ref"] in new_ids or rel["source_ref"] in SDO_WITH_NO_1X_OBJECT):
                     warn("Not including " + rel["id"] + " in " + rep[
                         "id"] + " because there is no corresponding SDO for " + rel["source_ref"])
-        if "report_refs" in rep:
-            rep["report_refs"].extend(rels_to_include)
+        if "object_refs" in rep:
+            rep["object_refs"].extend(rels_to_include)
         else:
-            rep["report_refs"] = rels_to_include
+            rep["object_refs"] = rels_to_include
 
 
 # campaign
@@ -758,15 +761,15 @@ def convert_observable_data(obs, bundle_instance):
 
 
 def process_report_contents(report, bundle_instance, report_instance):
-    report_instance["report_refs"] = []
+    report_instance["object_refs"] = []
     if report.campaigns:
         for camp in report.campaigns:
             if camp.id_ is not None:
                 camp20 = convert_campaign(camp, bundle_instance)
                 bundle_instance["campaigns"].append(camp20)
-                report_instance["report_refs"].append(camp20["id"])
+                report_instance["object_refs"].append(camp20["id"])
             else:
-                report_instance["report_refs"].append(camp.idref)
+                report_instance["object_refs"].append(camp.idref)
 
     # coas
     if report.courses_of_action:
@@ -774,9 +777,9 @@ def process_report_contents(report, bundle_instance, report_instance):
             if coa.id_ is not None:
                 coa20 = convert_course_of_action(coa, bundle_instance)
                 bundle_instance["courses_of_action"].append(coa20)
-                report_instance["report_refs"].append(coa20["id"])
+                report_instance["object_refs"].append(coa20["id"])
             else:
-                report_instance["report_refs"].append(coa.idref)
+                report_instance["object_refs"].append(coa.idref)
 
     # exploit-targets
     if report.exploit_targets:
@@ -790,9 +793,9 @@ def process_report_contents(report, bundle_instance, report_instance):
                 if i.id_ is not None:
                     i20 = convert_incident(i, bundle_instance)
                     bundle_instance["incidents"].append(i20)
-                    report_instance["report_refs"].append(i20["id"])
+                    report_instance["object_refs"].append(i20["id"])
                 else:
-                    report_instance["report_refs"].append(i.idref)
+                    report_instance["object_refs"].append(i.idref)
 
     # indicators
     if report.indicators:
@@ -800,9 +803,9 @@ def process_report_contents(report, bundle_instance, report_instance):
             if i.id_ is not None:
                 i20 = convert_indicator(i, bundle_instance)
                 bundle_instance["indicators"].append(i20)
-                report_instance["report_refs"].append(i20["id"])
+                report_instance["object_refs"].append(i20["id"])
             else:
-                report_instance["report_refs"].append(i.idref)
+                report_instance["object_refs"].append(i.idref)
 
     # observables
     if report.observables:
@@ -810,9 +813,9 @@ def process_report_contents(report, bundle_instance, report_instance):
             if o_d.id_ is not None:
                 o_d20 = convert_observable_data(o_d, bundle_instance)
                 bundle_instance["observed_data"].append(o_d20)
-                report_instance["report_refs"].append(o_d20["id"])
+                report_instance["object_refs"].append(o_d20["id"])
             else:
-                report_instance["report_refs"].append(o_d.idref)
+                report_instance["object_refs"].append(o_d.idref)
 
     # threat actors
     if report.threat_actors:
@@ -820,9 +823,9 @@ def process_report_contents(report, bundle_instance, report_instance):
             if ta.id_ is not None:
                 ta20 = convert_threat_actor(ta, bundle_instance)
                 bundle_instance["threat-actors"].append(ta20)
-                report_instance["report_refs"].append(ta20["id"])
+                report_instance["object_refs"].append(ta20["id"])
             else:
-                report_instance["report_refs"].append(ta.idref)
+                report_instance["object_refs"].append(ta.idref)
 
     # ttps
     if report.ttps:
@@ -836,9 +839,9 @@ def process_report_contents(report, bundle_instance, report_instance):
                         bundle_instance["tools"].append(ttp)
                     elif ttp["type"] == "attack_pattern":
                         bundle_instance["attack_patterns"].append(ttp)
-                    report_instance["report_refs"].append(ttp["id"])
+                    report_instance["object_refs"].append(ttp["id"])
             else:
-                report_instance["report_refs"].append(ttp.idref)
+                report_instance["object_refs"].append(ttp.idref)
 
 
 def convert_report(report, bundle_instance):
@@ -864,8 +867,7 @@ def convert_threat_actor(threat_actor, bundle_instance):
     process_description_and_short_description(threat_actor_instance, threat_actor)
     if threat_actor.identity is not None:
         if threat_actor.identity.id_:
-            info(
-                "Threat actor identity " + threat_actor.identity.id_ + " being used as basis of attributed-to relationship")
+            info("Threat actor identity " + threat_actor.identity.id_ + " being used as basis of attributed-to relationship")
         handle_relationship_to_objs([threat_actor.identity], threat_actor.id_, bundle_instance, "attributed-to")
     if threat_actor.title is not None:
         info("Threat actor " + threat_actor.id_ + "'s title is used for name property")
@@ -1087,6 +1089,8 @@ def convert_ttp(ttp, bundle_instance):
 
 
 def handle_embedded_object(obj, bundle_instance):
+    new20 = None
+    new20s = None
     # campaigns
     if isinstance(obj, Campaign):
         new20 = convert_campaign(obj, bundle_instance)
@@ -1097,11 +1101,7 @@ def handle_embedded_object(obj, bundle_instance):
         bundle_instance["courses_of_action"].append(new20)
     # exploit-targets
     elif isinstance(obj, ExploitTarget):
-        new20 = convert_exploit_target(obj, bundle_instance)
-        if len(new20) > 1:
-            warn("More than one objects created from " + obj.id_ + " using first")
-        if len(new20) >= 1:
-            new20 = new20[0]
+        new20s = convert_exploit_target(obj, bundle_instance)
     # identities
     elif isinstance(obj, Identity) or isinstance(obj, CIQIdentity3_0Instance):
         new20 = convert_identity(obj, bundle_instance)
@@ -1128,12 +1128,14 @@ def handle_embedded_object(obj, bundle_instance):
         bundle_instance["threat-actors"].append(new20)
     # ttps
     elif isinstance(obj, TTP):
-        new20 = convert_ttp(obj, bundle_instance)
-        if len(new20) > 1:
-            warn("More than one objects created from " + obj.id_ + " using first")
-        if len(new20) >= 1:
-            new20 = new20[0]
-    return new20
+        new20s = convert_ttp(obj, bundle_instance)
+    if new20:
+        return [ new20 ]
+    elif new20s:
+        return new20s
+    else:
+        warn("No STIX 2.0 object generated from embedded object")
+        return []
 
 
 def initialize_bundle_lists(bundle_instance):
@@ -1178,7 +1180,7 @@ def finalize_bundle(bundle_instance):
 
     for r in bundle_instance["reports"]:
         fixed_refs = []
-        for ref in r["report_refs"]:
+        for ref in r["object_refs"]:
             if reference_needs_fixing(ref):
                 v = exists_id_key(ref)
                 if v:
@@ -1187,7 +1189,7 @@ def finalize_bundle(bundle_instance):
                             fixed_refs.append(f_r)
             else:
                 fixed_refs.append(ref)
-        r["report_refs"] = fixed_refs
+        r["object_refs"] = fixed_refs
 
 
     add_relationships_to_reports(bundle_instance)
