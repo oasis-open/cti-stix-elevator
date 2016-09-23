@@ -2,18 +2,18 @@
     "id": "bundle--c9567f73-3803-415c-b06e-2b0622830e5d",
     "identities": [
         {
-            "created": "2016-09-23T10:33:23.353117Z",
+            "created": "2016-09-23T13:11:23.399603Z",
             "id": "identity--733c5838-34d9-4fbf-949c-62aba761184c",
-            "modified": "2016-09-23T10:33:23.353117Z",
+            "modified": "2016-09-23T13:11:23.399603Z",
             "type": "identity",
             "version": 1
         }
     ],
     "relationships": [
         {
-            "created": "2016-09-23T10:33:23.353117Z",
+            "created": "2016-09-23T13:11:23.399603Z",
             "id": "relationship--733c5838-34d9-4fbf-949c-62aba761184c",
-            "modified": "2016-09-23T10:33:23.353117Z",
+            "modified": "2016-09-23T13:11:23.399603Z",
             "name": "attributed-to",
             "source_ref": "threat-actor--dfaa8d77-07e2-4e28-b2c8-92e9f7b04428",
             "target_ref": "identity--733c5838-34d9-4fbf-949c-62aba761184c",
