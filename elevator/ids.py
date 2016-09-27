@@ -11,6 +11,7 @@ SDO_WITH_NO_1X_OBJECT = []
 
 
 def clear_id_mapping():
+    global IDS_TO_NEW_IDS
     IDS_TO_NEW_IDS = {}
 
 

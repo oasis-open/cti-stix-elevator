@@ -26,7 +26,7 @@ import pycountry
 from lxml import etree
 
 from elevator.convert_cybox import convert_cybox_object
-from elevator.convert_pattern import convert_observable_to_pattern, fix_pattern
+from elevator.convert_pattern import convert_observable_to_pattern, fix_pattern, clear_pattern_mapping, interatively_resolve_placeholder_refs
 from elevator.ids import *
 from elevator.vocab_mappings import *
 from elevator.utils import *
@@ -1212,6 +1212,11 @@ def finalize_bundle(bundle_instance):
         del bundle_instance["incidents"]
     if not bundle_instance["indicators"]:
         del bundle_instance["indicators"]
+    else:
+        interatively_resolve_placeholder_refs()
+        for ind in bundle_instance["indicators"]:
+            if "pattern" in ind:
+                ind["pattern"] = fix_pattern(ind["pattern"])
     if not bundle_instance["observed_data"]:
         del bundle_instance["observed_data"]
     if not bundle_instance["reports"]:
@@ -1316,6 +1321,7 @@ def convert_package(stixPackage):
 
 def convert_file(inFileName):
     clear_id_mapping()
+    clear_pattern_mapping()
     stixPackage = EntityParser().parse_xml(inFileName)
     if isinstance(stixPackage, STIXPackage):
         return json.dumps(convert_package(stixPackage), indent=4, separators=(',', ': '), sort_keys=True)

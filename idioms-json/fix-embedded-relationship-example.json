@@ -1,7 +1,7 @@
 {
     "attack_patterns": [
         {
-            "created": "2016-09-23T13:11:23.383978Z",
+            "created": "2016-09-27T16:00:45.794268Z",
             "created_by_ref": "identity--4ec4d0a2-80e3-11e6-ae22-56b6b6499611",
             "description": "Phishing\n\nTITLE:\n\tPhishing",
             "external_references": [
@@ -11,7 +11,7 @@
                 }
             ],
             "id": "attack-pattern--8ac90ff3-ecf8-4835-95b8-6aea6a623df5",
-            "modified": "2016-09-23T13:11:23.383978Z",
+            "modified": "2016-09-27T16:00:45.794268Z",
             "type": "attack-pattern",
             "version": 1
         }
@@ -19,17 +19,17 @@
     "id": "bundle--161f8ade-b67d-11e3-b8af-f01faf20d111",
     "identities": [
         {
-            "created": "2016-09-23T13:11:23.383978Z",
+            "created": "2016-09-27T16:00:45.794088Z",
             "id": "identity--1621d4d4-b67d-11e3-9670-f01faf20d111",
-            "modified": "2016-09-23T13:11:23.383978Z",
+            "modified": "2016-09-27T16:00:45.794088Z",
             "name": "Adversary Bravo",
             "type": "identity",
             "version": 1
         },
         {
-            "created": "2016-09-23T13:11:23.383978Z",
+            "created": "2016-09-27T16:00:45.794228Z",
             "id": "identity--4ec4d0a2-80e3-11e6-ae22-56b6b6499611",
-            "modified": "2016-09-23T13:11:23.383978Z",
+            "modified": "2016-09-27T16:00:45.794228Z",
             "name": "Emmanuelle",
             "type": "identity",
             "version": 1
@@ -37,13 +37,13 @@
     ],
     "malware": [
         {
-            "created": "2016-09-23T13:11:23.383978Z",
+            "created": "2016-09-27T16:00:45.794336Z",
             "description": "\n\nTITLE:\n\tPoison Ivy Variant d1c6",
             "id": "malware--1621d4d2-b67d-11e3-ba9e-f01faf20d111",
             "labels": [
                 "remote-access-trojan"
             ],
-            "modified": "2016-09-23T13:11:23.383978Z",
+            "modified": "2016-09-27T16:00:45.794336Z",
             "name": "Poison Ivy Variant d1c6",
             "type": "malware",
             "version": 1
@@ -51,9 +51,9 @@
     ],
     "relationships": [
         {
-            "created": "2016-09-23T13:11:23.383978Z",
+            "created": "2016-09-27T16:00:45.794110Z",
             "id": "relationship--1621d4d4-b67d-11e3-9670-f01faf20d111",
-            "modified": "2016-09-23T13:11:23.383978Z",
+            "modified": "2016-09-27T16:00:45.794110Z",
             "name": "attributed-to",
             "source_ref": "threat-actor--9a8a0d25-7636-429b-a99e-b2a73cd0f11f",
             "target_ref": "identity--1621d4d4-b67d-11e3-9670-f01faf20d111",
@@ -61,10 +61,10 @@
             "version": 1
         },
         {
-            "created": "2016-09-23T13:11:23.383978Z",
+            "created": "2016-09-27T16:00:45.794171Z",
             "description": "Leverages Attack Pattern",
-            "id": "relationship--be42a97a-de87-4453-9597-7c8f9059eddf",
-            "modified": "2016-09-23T13:11:23.383978Z",
+            "id": "relationship--869a8058-ecfe-434d-9f52-840b1442422c",
+            "modified": "2016-09-27T16:00:45.794171Z",
             "name": "uses",
             "source_ref": "threat-actor--9a8a0d25-7636-429b-a99e-b2a73cd0f11f",
             "target_ref": "attack-pattern--8ac90ff3-ecf8-4835-95b8-6aea6a623df5",
@@ -72,10 +72,10 @@
             "version": 1
         },
         {
-            "created": "2016-09-23T13:11:23.383978Z",
+            "created": "2016-09-27T16:00:45.794205Z",
             "description": "Leverages Malware",
-            "id": "relationship--d541f098-1018-4556-b7e6-3bd48c3b58c2",
-            "modified": "2016-09-23T13:11:23.383978Z",
+            "id": "relationship--ef451f36-7189-45b4-9927-12c3d7020313",
+            "modified": "2016-09-27T16:00:45.794205Z",
             "name": "uses",
             "source_ref": "threat-actor--9a8a0d25-7636-429b-a99e-b2a73cd0f11f",
             "target_ref": "malware--1621d4d2-b67d-11e3-ba9e-f01faf20d111",
@@ -86,10 +86,10 @@
     "spec_version": "2.0",
     "threat-actors": [
         {
-            "created": "2016-09-23T13:11:23.383978Z",
+            "created": "2016-09-27T16:00:45.794045Z",
             "created_by_ref": "identity--4ec4d0a2-80e3-11e6-ae22-56b6b6499611",
             "id": "threat-actor--9a8a0d25-7636-429b-a99e-b2a73cd0f11f",
-            "modified": "2016-09-23T13:11:23.383978Z",
+            "modified": "2016-09-27T16:00:45.794045Z",
             "name": "Adversary Bravo",
             "type": "threat-actor",
             "version": 1

@@ -14,12 +14,12 @@
     http://stix.mitre.org/TTP-2 http://stix.mitre.org/XMLSchema/ttp/1.2/ttp.xsd
     http://stix.mitre.org/default_vocabularies-1 http://stix.mitre.org/XMLSchema/default_vocabularies/1.2.0/stix_default_vocabularies.xsd
     http://cybox.mitre.org/objects#AddressObject-2 http://cybox.mitre.org/XMLSchema/objects/Address/2.1/Address_Object.xsd"
-    id="example:STIXPackage-33fe3b22-0201-47cf-85d0-97c02164528d"
+    id="example:STIXPackage-63fe3b22-0201-47cf-85d0-97c02164528d"
 
     version="1.2"
     >
     <stix:Indicators>
-        <stix:Indicator xsi:type="indicator:IndicatorType" id="example:Indicator-33fe3b22-0201-47cf-85d0-97c02164528d" timestamp="2014-05-08T09:00:00.000000Z">
+        <stix:Indicator xsi:type="indicator:IndicatorType" id="example:Indicator-53fe3b22-0201-47cf-85d0-97c02164528d" timestamp="2014-05-08T09:00:00.000000Z">
             <indicator:Title>IP Address for known C2 channel</indicator:Title>
             <indicator:Type xsi:type="stixVocabs:IndicatorTypeVocab-1.1">IP Watchlist</indicator:Type>
             <indicator:Observable  id="example:Observable-1c798262-a4cd-434d-a958-884d6980c459">

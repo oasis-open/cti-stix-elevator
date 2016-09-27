@@ -2,7 +2,7 @@
     "id": "bundle--cc0ca596-70e6-4dac-9bef-603166d17db8",
     "observed_data": [
         {
-            "created": "2016-09-23T13:11:23.368392Z",
+            "created": "2016-09-27T16:00:45.783307Z",
             "cybox": {
                 "objects": {
                     "0": {
@@ -13,16 +13,16 @@
                 "spec_version": "3.0",
                 "type": "cybox-container"
             },
-            "first_observed": "2016-09-23T13:11:23.368392Z",
+            "first_observed": "2016-09-27T16:00:45.783327Z",
             "id": "observable-data--c8c32b6e-2ea8-51c4-6446-7f5218072f27",
-            "last_observed": "2016-09-23T13:11:23.368392Z",
-            "modified": "2016-09-23T13:11:23.368392Z",
+            "last_observed": "2016-09-27T16:00:45.783327Z",
+            "modified": "2016-09-27T16:00:45.783307Z",
             "number_observed": 1,
             "type": "observable-data",
             "version": 1
         },
         {
-            "created": "2016-09-23T13:11:23.368392Z",
+            "created": "2016-09-27T16:00:45.783359Z",
             "cybox": {
                 "objects": {
                     "0": {
@@ -33,16 +33,16 @@
                 "spec_version": "3.0",
                 "type": "cybox-container"
             },
-            "first_observed": "2016-09-23T13:11:23.368392Z",
+            "first_observed": "2016-09-27T16:00:45.783370Z",
             "id": "observable-data--b57aa65f-9598-04fb-a9d1-5094c36d5dc4",
-            "last_observed": "2016-09-23T13:11:23.368392Z",
-            "modified": "2016-09-23T13:11:23.368392Z",
+            "last_observed": "2016-09-27T16:00:45.783370Z",
+            "modified": "2016-09-27T16:00:45.783359Z",
             "number_observed": 1,
             "type": "observable-data",
             "version": 1
         },
         {
-            "created": "2016-09-23T13:11:23.368392Z",
+            "created": "2016-09-27T16:00:45.783394Z",
             "cybox": {
                 "objects": {
                     "0": {
@@ -53,16 +53,16 @@
                 "spec_version": "3.0",
                 "type": "cybox-container"
             },
-            "first_observed": "2016-09-23T13:11:23.368392Z",
+            "first_observed": "2016-09-27T16:00:45.783405Z",
             "id": "observable-data--19c16346-0eb4-99e2-00bb-4ec3ed174cac",
-            "last_observed": "2016-09-23T13:11:23.368392Z",
-            "modified": "2016-09-23T13:11:23.368392Z",
+            "last_observed": "2016-09-27T16:00:45.783405Z",
+            "modified": "2016-09-27T16:00:45.783394Z",
             "number_observed": 1,
             "type": "observable-data",
             "version": 1
         },
         {
-            "created": "2016-09-23T13:11:23.368392Z",
+            "created": "2016-09-27T16:00:45.783439Z",
             "cybox": {
                 "objects": {
                     "0": {
@@ -73,16 +73,16 @@
                 "spec_version": "3.0",
                 "type": "cybox-container"
             },
-            "first_observed": "2016-09-23T13:11:23.368392Z",
+            "first_observed": "2016-09-27T16:00:45.783450Z",
             "id": "observable-data--c8c32b6e-2ea8-51c4-6446-7f5218072f27",
-            "last_observed": "2016-09-23T13:11:23.368392Z",
-            "modified": "2016-09-23T13:11:23.368392Z",
+            "last_observed": "2016-09-27T16:00:45.783450Z",
+            "modified": "2016-09-27T16:00:45.783439Z",
             "number_observed": 1,
             "type": "observable-data",
             "version": 1
         },
         {
-            "created": "2016-09-23T13:11:23.368392Z",
+            "created": "2016-09-27T16:00:45.783480Z",
             "cybox": {
                 "objects": {
                     "0": {
@@ -93,16 +93,16 @@
                 "spec_version": "3.0",
                 "type": "cybox-container"
             },
-            "first_observed": "2016-09-23T13:11:23.368392Z",
+            "first_observed": "2016-09-27T16:00:45.783492Z",
             "id": "observable-data--b57aa65f-9598-04fb-a9d1-5094c36d5dc4",
-            "last_observed": "2016-09-23T13:11:23.368392Z",
-            "modified": "2016-09-23T13:11:23.368392Z",
+            "last_observed": "2016-09-27T16:00:45.783492Z",
+            "modified": "2016-09-27T16:00:45.783480Z",
             "number_observed": 1,
             "type": "observable-data",
             "version": 1
         },
         {
-            "created": "2016-09-23T13:11:23.368392Z",
+            "created": "2016-09-27T16:00:45.783519Z",
             "cybox": {
                 "objects": {
                     "0": {
@@ -113,10 +113,10 @@
                 "spec_version": "3.0",
                 "type": "cybox-container"
             },
-            "first_observed": "2016-09-23T13:11:23.368392Z",
+            "first_observed": "2016-09-27T16:00:45.783530Z",
             "id": "observable-data--19c16346-0eb4-99e2-00bb-4ec3ed174cac",
-            "last_observed": "2016-09-23T13:11:23.368392Z",
-            "modified": "2016-09-23T13:11:23.368392Z",
+            "last_observed": "2016-09-27T16:00:45.783530Z",
+            "modified": "2016-09-27T16:00:45.783519Z",
             "number_observed": 1,
             "type": "observable-data",
             "version": 1

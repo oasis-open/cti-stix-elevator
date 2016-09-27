@@ -17,18 +17,6 @@
             "version": 1
         }
     ],
-    "relationships": [
-        {
-            "created": "2016-09-23T13:11:23.383978Z",
-            "id": "relationship--846c9eda-13dc-4856-a404-9423cd917895",
-            "modified": "2016-09-23T13:11:23.383978Z",
-            "name": "indicates",
-            "source_ref": "indicator--14975dea-86cd-4211-a5f8-9c2e4daab69a",
-            "target_ref": null,
-            "type": "relationship",
-            "version": 1
-        }
-    ],
     "spec_version": "2.0",
     "type": "bundle"
 }

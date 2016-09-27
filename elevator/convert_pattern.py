@@ -18,6 +18,10 @@ from elevator.vocab_mappings import *
 
 OBSERVABLE_TO_PATTERN_MAPPING = {}
 
+def clear_pattern_mapping():
+    global OBSERVABLE_TO_PATTERN_MAPPING
+    OBSERVABLE_TO_PATTERN_MAPPING = {}
+
 KEEP_OBSERVABLE_DATA = True
 
 def need_not(condition):
@@ -439,12 +443,15 @@ def convert_observable_to_pattern(obs, bundleInstance, observable_mapping):
            (")" if negate_expression(obs) else "")
 
 
-def convert_observable_to_pattern_without_negate(obs, bundleInstance, observable_mapping):
+def convert_observable_to_pattern_without_negate(obs, bundleInstance, id_to_observable_mapping):
     global OBSERVABLE_TO_PATTERN_MAPPING
     if obs.observable_composition is not None:
-        return convert_observable_composition_to_pattern(obs.observable_composition,
-                                                         bundleInstance,
-                                                         observable_mapping)
+        pattern = convert_observable_composition_to_pattern(obs.observable_composition,
+                                                            bundleInstance,
+                                                            id_to_observable_mapping)
+        if pattern and obs.id_:
+            OBSERVABLE_TO_PATTERN_MAPPING[obs.id_] = pattern
+        return pattern
     elif obs.object_ is not None:
         pattern = convert_object_to_pattern(obs.object_)
         OBSERVABLE_TO_PATTERN_MAPPING[obs.id_] = pattern
@@ -453,36 +460,45 @@ def convert_observable_to_pattern_without_negate(obs, bundleInstance, observable
         if obs.idref in OBSERVABLE_TO_PATTERN_MAPPING:
             return OBSERVABLE_TO_PATTERN_MAPPING[obs.idref]
         else:
-            # resolve now, and remove from observed_data
+            # resolve now if possible, and remove from observed_data
             observableDataInstance = find_observable_data(obs.idref, bundleInstance["observed_data"])
             if observableDataInstance is not None:
                 if not KEEP_OBSERVABLE_DATA:
                     bundleInstance["observed_data"].remove(observableDataInstance)
-                if obs.idref in observable_mapping:
-                    return convert_observable_to_pattern(observable_mapping[obs.idref], bundleInstance, observable_mapping)
-            return obs.idref
+                if obs.idref in id_to_observable_mapping:
+                    return convert_observable_to_pattern(id_to_observable_mapping[obs.idref], bundleInstance, id_to_observable_mapping)
+            return "PLACEHOLDER:" + obs.idref
 
 
+# patterns can contain idrefs which might need to be resolved because the order in which the ids and idrefs appear
 def interatively_resolve_placeholder_refs():
     global OBSERVABLE_TO_PATTERN_MAPPING
-    done = True
-    while done:
+    if not OBSERVABLE_TO_PATTERN_MAPPING:
+        return
+    done = False
+    while not done:
         # collect all of the fully resolved idrefs
         fully_resolved_idrefs = []
-        for idref, expr in OBSERVABLE_TO_PATTERN_MAPPING.iteritems():
-            if expr.find(idref) != -1:
+        for idref, expr in OBSERVABLE_TO_PATTERN_MAPPING.items():
+            if expr.find("PLACEHOLDER:") == -1:
+                # no PLACEHOLDER idrefs found in the expr, means this idref is fully resolved
                 fully_resolved_idrefs.append(idref)
-                done = False
         # replace only fully resolved idrefs
+        change_made = False
         for fr_idref in fully_resolved_idrefs:
-            for idref, expr in OBSERVABLE_TO_PATTERN_MAPPING.iteritems():
-                OBSERVABLE_TO_PATTERN_MAPPING[idref] = expr.replace(idref, OBSERVABLE_TO_PATTERN_MAPPING[fr_idref])
+            for idref, expr in OBSERVABLE_TO_PATTERN_MAPPING.items():
+                if expr.find("PLACEHOLDER:" + fr_idref) != -1:
+                    # a change will be made, which could introduce a new placeholder id into the expr
+                    change_made = True
+                    OBSERVABLE_TO_PATTERN_MAPPING[idref] = expr.replace("PLACEHOLDER:" + fr_idref, OBSERVABLE_TO_PATTERN_MAPPING[fr_idref])
+        done = not change_made
 
 
 def fix_pattern(pattern):
     if not OBSERVABLE_TO_PATTERN_MAPPING == {}:
-        # interatively_resolve_placeholder_refs()
+        #info(str(OBSERVABLE_TO_PATTERN_MAPPING))
+        #info("pattern is: " +  pattern)
         for idref in OBSERVABLE_TO_PATTERN_MAPPING.keys():
             # TODO: this can probably be done in place
-            pattern = pattern.replace(idref, OBSERVABLE_TO_PATTERN_MAPPING[idref])
+            pattern = pattern.replace("PLACEHOLDER:" + idref, OBSERVABLE_TO_PATTERN_MAPPING[idref])
     return pattern

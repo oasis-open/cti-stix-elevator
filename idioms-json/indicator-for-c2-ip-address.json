@@ -1,9 +1,9 @@
 {
-    "id": "bundle--33fe3b22-0201-47cf-85d0-97c02164528d",
+    "id": "bundle--63fe3b22-0201-47cf-85d0-97c02164528d",
     "indicators": [
         {
             "created": "2014-05-08T09:00:00.000000Z",
-            "id": "indicator--33fe3b22-0201-47cf-85d0-97c02164528d",
+            "id": "indicator--53fe3b22-0201-47cf-85d0-97c02164528d",
             "labels": [
                 "benign"
             ],
@@ -18,11 +18,11 @@
     ],
     "relationships": [
         {
-            "created": "2016-09-23T13:11:23.415228Z",
-            "id": "relationship--dcb421e5-778f-484f-9d3e-fcba67b3458a",
-            "modified": "2016-09-23T13:11:23.415228Z",
+            "created": "2016-09-27T16:00:45.806939Z",
+            "id": "relationship--2e66d3c7-7acf-4a61-8d66-f08e75ee6ffe",
+            "modified": "2016-09-27T16:00:45.806939Z",
             "name": "indicates",
-            "source_ref": "indicator--33fe3b22-0201-47cf-85d0-97c02164528d",
+            "source_ref": "indicator--53fe3b22-0201-47cf-85d0-97c02164528d",
             "target_ref": null,
             "type": "relationship",
             "version": 1
