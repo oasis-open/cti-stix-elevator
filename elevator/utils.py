@@ -124,7 +124,8 @@ def iterpath(obj, path=None):
         path.pop()
 
 
-def set_value_path(obj, path, value):
+def operation_on_path(obj, path, value, op=1):
+    """operations: (1 = set_value, 2 = delete_entry)"""
     current = path[0]
     path = path[1:]
 
@@ -135,7 +136,11 @@ def set_value_path(obj, path, value):
         current_obj = obj[current]
 
     if not path:
-        obj[current] = value
+        if op == 1:
+            obj[current] = value
+        elif op == 2:
+            del obj[current]
+
         return
 
-    set_value_path(current_obj, path, value)
+    operation_on_path(current_obj, path, value)

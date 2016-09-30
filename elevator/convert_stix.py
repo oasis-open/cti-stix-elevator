@@ -123,19 +123,9 @@ def create_basic_object(stix20_type, stix1x_obj, parent_timestamp=None, parent_i
     return instance
 
 
-def remove_empty_common_values(instance, clear_description=True):
-    if "description" in instance and not instance["description"] and clear_description:
-        del instance["description"]
-    if "external_references" in instance and not instance["external_references"]:
-        del instance["external_references"]
-    if "created_by_ref" in instance and not instance["created_by_ref"]:
-        del instance["created_by_ref"]
-
-
 def finish_basic_object(old_id, instance, stix1x_obj, clear_description=True):
     if old_id is not None:
         record_ids(old_id, instance["id"])
-    remove_empty_common_values(instance, clear_description)
     if hasattr(stix1x_obj, "handling") and stix1x_obj.handling is not None:
         warn("Handling not implemented, yet")
     if hasattr(stix1x_obj, "related_packages") and stix1x_obj.related_packages is not None:
@@ -203,8 +193,6 @@ def create_relationship(source_ref, target_ref, verb, rel_obj, parent_timestamp)
     relationship_instance["name"] = verb
     if rel_obj is not None and hasattr(rel_obj, "relationship") and rel_obj.relationship is not None:
         relationship_instance["description"] = rel_obj.relationship.value
-    # handle description
-    remove_empty_common_values(relationship_instance, True)
     return relationship_instance
 
 
@@ -397,8 +385,7 @@ def convert_campaign(camp, bundle_instance):
             handle_relationship_from_refs(att, campaign_instance["id"], bundle_instance, "attributed-to")
     if camp.associated_campaigns:
         warn("All associated campaigns relationships of " + camp.id_ + " are assumed to not represent STIX 1.2 versioning")
-        handle_relationship_to_refs(camp.related_coas, camp_instance["id"], bundle_instance,
-                                    "related-to")
+        handle_relationship_to_refs(camp.related_coas, campaign_instance["id"], bundle_instance, "related-to")
     process_information_source(camp.information_source,
                                campaign_instance,
                                bundle_instance,
@@ -1185,55 +1172,37 @@ def finalize_bundle(bundle_instance):
                "target_ref", "source_ref", "sighting_of_ref",
                "observed_data_refs", "where_sighted_refs")
 
-    for entry in iterpath(bundle_instance):
-        path, value = entry
-        last_field = path[-1]
+    _LOOK_UP = ("", u"", [], None, dict())
 
-        if isinstance(value, (list, dict)):
-            continue
+    to_remove = []
 
-        if last_field in _TO_MAP and reference_needs_fixing(value) and exists_id_key(value):
-            stix20_id = get_id_value(value)
-            set_value_path(bundle_instance, path, stix20_id[0])
-            info("Found " + value + " replaced by " + stix20_id[0])
-
-    if not bundle_instance["relationships"]:
-        del bundle_instance["relationships"]
-
-    if not bundle_instance["campaigns"]:
-        del bundle_instance["campaigns"]
-    if not bundle_instance["courses_of_action"]:
-        del bundle_instance["courses_of_action"]
-    if not bundle_instance["vulnerabilities"]:
-        del bundle_instance["vulnerabilities"]
-    if not bundle_instance["identities"]:
-        del bundle_instance["identities"]
-    if not bundle_instance["incidents"]:
-        del bundle_instance["incidents"]
-    if not bundle_instance["indicators"]:
-        del bundle_instance["indicators"]
-    else:
+    if "indicators" in bundle_instance:
         interatively_resolve_placeholder_refs()
         for ind in bundle_instance["indicators"]:
             if "pattern" in ind:
                 ind["pattern"] = fix_pattern(ind["pattern"])
-    if not bundle_instance["observed_data"]:
-        del bundle_instance["observed_data"]
-    if not bundle_instance["reports"]:
-        del bundle_instance["reports"]
-    if not bundle_instance["threat-actors"]:
-        del bundle_instance["threat-actors"]
-    if not bundle_instance["attack_patterns"]:
-        del bundle_instance["attack_patterns"]
-    if not bundle_instance["malware"]:
-        del bundle_instance["malware"]
-    if not bundle_instance["tools"]:
-        del bundle_instance["tools"]
-    if not bundle_instance["infrastructure"]:
-        del bundle_instance["infrastructure"]
-    if not bundle_instance["victim_targets"]:
-        del bundle_instance["victim_targets"]
-    del bundle_instance["created_by_ref"]
+
+    for entry in iterpath(bundle_instance):
+        path, value = entry
+        last_field = path[-1]
+        iter_field = path[-2] if len(path) >= 2 else ""
+
+        if value in _LOOK_UP:
+            to_remove.append(list(path))
+
+        if isinstance(value, (list, dict)):
+            continue
+
+        if last_field in _TO_MAP or iter_field in _TO_MAP:
+            if reference_needs_fixing(value) and exists_id_key(value):
+                stix20_id = get_id_value(value)
+                operation_on_path(bundle_instance, path, stix20_id[0])
+                info("Found " + value + " replaced by " + stix20_id[0])
+            elif reference_needs_fixing(value) and not exists_id_key(value):
+                warn("1.X ID: " + value + " was not mapped to 2.0 ID.")
+
+    for item in to_remove:
+        operation_on_path(bundle_instance, item, "", op=2)
 
 
 def convert_package(stixPackage):
