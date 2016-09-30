@@ -1196,14 +1196,20 @@ def finalize_bundle(bundle_instance):
         if last_field in _TO_MAP or iter_field in _TO_MAP:
             if reference_needs_fixing(value) and exists_id_key(value):
                 stix20_id = get_id_value(value)
+
+                if stix20_id[0] is None:
+                    warn("1.X ID: " + value + " was not mapped to 2.0 ID.")
+                    continue
+
                 operation_on_path(bundle_instance, path, stix20_id[0])
-                info("Found " + value + " replaced by " + stix20_id[0])
+                info("Found {0} replaced by {1}.".format(value, stix20_id[0]))
             elif reference_needs_fixing(value) and not exists_id_key(value):
                 warn("1.X ID: " + value + " was not mapped to 2.0 ID.")
 
     for item in to_remove:
         operation_on_path(bundle_instance, item, "", op=2)
 
+    pass
 
 def convert_package(stixPackage):
     bundle_instance = {"type": "bundle"}

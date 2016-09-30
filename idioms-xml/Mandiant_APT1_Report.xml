@@ -182,33 +182,33 @@
 				</ttp:Identity>
 			</ttp:Victim_Targeting>
 			<ttp:Related_TTPs>
-				<ttp:Related_TTP><stixCommon:TTP idref="mandiant:ttp-0f01c5a3-f516-4450-9381-4dd9f2279411"></stixCommon:TTP></ttp:Related_TTP>
+				<ttp:Related_TTP><stixCommon:TTP idref="mandiant:ttp-0f01c5a3-f516-4450-9381-4dd9f2279411"/></ttp:Related_TTP>
 				<!-- Leveraged Malware C2 (WEBC2)-->
-				<ttp:Related_TTP><stixCommon:TTP idref="mandiant:ttp-33159b98-3264-4e10-a968-d67975b6272f"></stixCommon:TTP></ttp:Related_TTP>
+				<ttp:Related_TTP><stixCommon:TTP idref="mandiant:ttp-33159b98-3264-4e10-a968-d67975b6272f"/></ttp:Related_TTP>
 				<!-- Leveraged Malware C2 (HTRAN)-->
-				<ttp:Related_TTP><stixCommon:TTP idref="mandiant:ttp-a35bc05a-247d-49a9-b954-c5c7344c55cc"></stixCommon:TTP></ttp:Related_TTP>
+				<ttp:Related_TTP><stixCommon:TTP idref="mandiant:ttp-a35bc05a-247d-49a9-b954-c5c7344c55cc"/></ttp:Related_TTP>
 				<!-- Leveraged Infrastructure -->
-				<ttp:Related_TTP><stixCommon:TTP  idref="mandiant:ttp-36fa6965-c7b9-4ca4-bc3c-6f9c40bc29c4"></stixCommon:TTP></ttp:Related_TTP>
+				<ttp:Related_TTP><stixCommon:TTP  idref="mandiant:ttp-36fa6965-c7b9-4ca4-bc3c-6f9c40bc29c4"/></ttp:Related_TTP>
 				<!-- Leveraged Infrastructure -->
-				<ttp:Related_TTP><stixCommon:TTP  idref="mandiant:ttp-1d04a399-dd12-49f8-aac9-fa781eb4beef"></stixCommon:TTP></ttp:Related_TTP>
+				<ttp:Related_TTP><stixCommon:TTP  idref="mandiant:ttp-1d04a399-dd12-49f8-aac9-fa781eb4beef"/></ttp:Related_TTP>
 				<!-- Leveraged Infrastructure -->
-				<ttp:Related_TTP><stixCommon:TTP  idref="mandiant:ttp-5c446bed-3bf6-4344-a4d2-5560d550fc82"></stixCommon:TTP></ttp:Related_TTP>
+				<ttp:Related_TTP><stixCommon:TTP  idref="mandiant:ttp-5c446bed-3bf6-4344-a4d2-5560d550fc82"/></ttp:Related_TTP>
 				<!-- Leveraged Infrastructure -->
-				<ttp:Related_TTP><stixCommon:TTP  idref="mandiant:ttp-3756130b-9a5f-47d4-8ed4-4350c9921696"></stixCommon:TTP></ttp:Related_TTP>
+				<ttp:Related_TTP><stixCommon:TTP  idref="mandiant:ttp-3756130b-9a5f-47d4-8ed4-4350c9921696"/></ttp:Related_TTP>
 				<!-- Leveraged Infrastructure -->
-				<ttp:Related_TTP><stixCommon:TTP  idref="mandiant:ttp-3098c57b-d623-4c11-92f4-5905da66658b"></stixCommon:TTP></ttp:Related_TTP>
+				<ttp:Related_TTP><stixCommon:TTP  idref="mandiant:ttp-3098c57b-d623-4c11-92f4-5905da66658b"/></ttp:Related_TTP>
 				<!-- Killchain phase behavior -->
-				<ttp:Related_TTP><stixCommon:TTP  idref="mandiant:ttp-1e2c4237-d469-4144-9c0b-9e5c0c513c49"></stixCommon:TTP></ttp:Related_TTP>
+				<ttp:Related_TTP><stixCommon:TTP  idref="mandiant:ttp-1e2c4237-d469-4144-9c0b-9e5c0c513c49"/></ttp:Related_TTP>
 				<!-- Killchain phase behavior -->
-				<ttp:Related_TTP><stixCommon:TTP  idref="mandiant:ttp-e13f3e6d-4f9c-4265-b1cf-f997a1bf7827"></stixCommon:TTP></ttp:Related_TTP>
+				<ttp:Related_TTP><stixCommon:TTP  idref="mandiant:ttp-e13f3e6d-4f9c-4265-b1cf-f997a1bf7827"/></ttp:Related_TTP>
 				<!-- Killchain phase behavior -->
-				<ttp:Related_TTP><stixCommon:TTP  idref="mandiant:ttp-5728f45b-2eca-4942-a7f6-bc4267c1ab8d"></stixCommon:TTP></ttp:Related_TTP>
+				<ttp:Related_TTP><stixCommon:TTP  idref="mandiant:ttp-5728f45b-2eca-4942-a7f6-bc4267c1ab8d"/></ttp:Related_TTP>
 				<!-- Killchain phase behavior -->
-				<ttp:Related_TTP><stixCommon:TTP  idref="mandiant:ttp-0bea2358-c244-4905-a664-a5cdce7bb767"></stixCommon:TTP></ttp:Related_TTP>
+				<ttp:Related_TTP><stixCommon:TTP  idref="mandiant:ttp-0bea2358-c244-4905-a664-a5cdce7bb767"/></ttp:Related_TTP>
 				<!-- Killchain phase behavior -->
-				<ttp:Related_TTP><stixCommon:TTP  idref="mandiant:ttp-7151c6d0-7e97-47ce-9290-087315ea3db7"></stixCommon:TTP></ttp:Related_TTP>
+				<ttp:Related_TTP><stixCommon:TTP  idref="mandiant:ttp-7151c6d0-7e97-47ce-9290-087315ea3db7"/></ttp:Related_TTP>
 				<!-- Killchain phase behavior -->
-				<ttp:Related_TTP><stixCommon:TTP  idref="mandiant:ttp-0781fe70-4c94-4300-8865-4b08b98611b4"></stixCommon:TTP></ttp:Related_TTP>
+				<ttp:Related_TTP><stixCommon:TTP  idref="mandiant:ttp-0781fe70-4c94-4300-8865-4b08b98611b4"/></ttp:Related_TTP>
 				<!-- Killchain phase behavior -->
 			</ttp:Related_TTPs>
 		</stix:TTP>

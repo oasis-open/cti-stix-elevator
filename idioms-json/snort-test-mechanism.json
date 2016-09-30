@@ -16,12 +16,11 @@
     ],
     "relationships": [
         {
-            "created": "2016-09-27T16:00:45.889143Z",
-            "id": "relationship--aa6691d9-41d6-4ee1-abb7-d343717020b1",
-            "modified": "2016-09-27T16:00:45.889143Z",
+            "created": "2016-09-30T12:31:31.992199Z",
+            "id": "relationship--abea51f0-fb51-4f6c-9bc1-86d093bcb1f0",
+            "modified": "2016-09-30T12:31:31.992199Z",
             "name": "indicates",
             "source_ref": "indicator--567b201c-4fd5-4bde-a5db-42abc340807b",
-            "target_ref": null,
             "type": "relationship",
             "version": 1
         }

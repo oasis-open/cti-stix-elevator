@@ -143,4 +143,4 @@ def operation_on_path(obj, path, value, op=1):
 
         return
 
-    operation_on_path(current_obj, path, value)
+    operation_on_path(current_obj, path, value, op)

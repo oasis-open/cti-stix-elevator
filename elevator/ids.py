@@ -21,6 +21,7 @@ def record_ids(id, new_id):
     # info("associating " + new_id + " with " + id)
     if new_id is None:
         error("Could not associate " + id + " with None")
+        return
     add_id_value(id, new_id)
 
 # arguments:
@@ -77,4 +78,4 @@ def add_id_value(key, value):
     else:
         IDS_TO_NEW_IDS[key] = [value]
     if not value:
-        warn("trying to associate " + key + " will None")
+        warn("Trying to associate " + key + " with None")
