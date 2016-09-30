@@ -1261,12 +1261,6 @@ def convert_package(stixPackage):
             i20 = convert_indicator(i, bundle_instance)
             bundle_instance["indicators"].append(i20)
 
-    # observables
-    if stixPackage.observables:
-        for o_d in stixPackage.observables:
-            o_d20 = convert_observable_data(o_d, bundle_instance)
-            bundle_instance["observed_data"].append(o_d20)
-
     # reports
     if stixPackage.reports:
         for report in stixPackage.reports:

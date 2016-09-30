@@ -22,7 +22,7 @@ def clear_pattern_mapping():
     global OBSERVABLE_TO_PATTERN_MAPPING
     OBSERVABLE_TO_PATTERN_MAPPING = {}
 
-KEEP_OBSERVABLE_DATA = True
+KEEP_OBSERVABLE_DATA = False
 
 def need_not(condition):
     return condition == "DoesNotContain"
@@ -422,14 +422,17 @@ def convert_object_to_pattern(obj):
 
 
 def match_1x_id_with_20_id(id_1x, id_20):
-    return True
+    id_1x_split = id_1x.split("-",1)
+    id_20_split = id_20.split("--")
+    return id_1x_split[1] == id_20_split[1]
 
 
 def find_observable_data(idref, obserableData):
     for obs in obserableData:
         if match_1x_id_with_20_id(idref, obs["id"]):
+            info("Found observed_data for " + idref)
             return obs
-    warn (idref + " cannot be resolved")
+    # warn (idref + " cannot be resolved")
     return None
 
 
@@ -465,6 +468,7 @@ def convert_observable_to_pattern_without_negate(obs, bundleInstance, id_to_obse
             if observableDataInstance is not None:
                 if not KEEP_OBSERVABLE_DATA:
                     bundleInstance["observed_data"].remove(observableDataInstance)
+                    # TODO: remove from the report's object_refs
                 if obs.idref in id_to_observable_mapping:
                     return convert_observable_to_pattern(id_to_observable_mapping[obs.idref], bundleInstance, id_to_observable_mapping)
             return "PLACEHOLDER:" + obs.idref
