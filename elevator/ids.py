@@ -17,10 +17,10 @@ def clear_id_mapping():
 
 def record_ids(id, new_id):
     if id in IDS_TO_NEW_IDS:
-        info(str(id) + " is already associated other ids: " + str(IDS_TO_NEW_IDS[id]))
+        info("{0} is already associated other ids: {1}".format(str(id), tuple(IDS_TO_NEW_IDS[id])))
     # info("associating " + new_id + " with " + id)
     if new_id is None:
-        error("Could not associate " + id + " with None")
+        error("Could not associate {id} with None".format(id=id))
         return
     add_id_value(id, new_id)
 
@@ -52,7 +52,7 @@ def generateSTIX20Id(stix20SOName, stix12ID=None, id_used=False):
         if stix20SOName is None:
             stx1x_type = namespace_type_uuid[0].split(":", 1)
             if stx1x_type[1].lower() == "ttp" or stx1x_type[1].lower() == "et":
-                error("Unable to determine the STIX 2.0 type for " + stix12ID)
+                error("Unable to determine the STIX 2.0 type for {id}".format(id=stix12ID))
                 return None
             else:
                 return map_1x_type_to_20(stx1x_type[1]) + "--" + namespace_type_uuid[1]
@@ -78,4 +78,4 @@ def add_id_value(key, value):
     else:
         IDS_TO_NEW_IDS[key] = [value]
     if not value:
-        warn("Trying to associate " + key + " with None")
+        warn("Trying to associate {k} with None".format(k=key))
