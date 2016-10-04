@@ -18,11 +18,13 @@ from elevator.vocab_mappings import *
 
 OBSERVABLE_TO_PATTERN_MAPPING = {}
 
+
 def clear_pattern_mapping():
     global OBSERVABLE_TO_PATTERN_MAPPING
     OBSERVABLE_TO_PATTERN_MAPPING = {}
 
 KEEP_OBSERVABLE_DATA = False
+
 
 def need_not(condition):
     return condition == "DoesNotContain"
@@ -71,7 +73,7 @@ def create_term_with_regex(lhs, condition, rhs):
 
 def create_term_with_range(lhs, condition, rhs):
     if not isinstance(rhs, list) or len(rhs) != 2:
-        error(condition + " was used, but two values were not provided.")
+        error("{0} was used, but two values were not provided.".format(condition))
         return "'range term underspecified'"
     else:
         if condition == "InclusiveBetween":
@@ -383,7 +385,7 @@ def convert_observable_composition_to_pattern(obs_comp, bundleInstance, observab
         if term:
             expression.append(term)
         else:
-            warn("No term was yielded for " + (obs.id_ if obs.id_ else obs.idref))
+            warn("No term was yielded for {0}".format((obs.id_ if obs.id_ else obs.idref)))
     if expression:
         operator_as_string = " " + obs_comp.operator + " "
         return "(" + operator_as_string.join(expression) + ")"
@@ -406,12 +408,12 @@ def convert_object_to_pattern(obj):
     elif isinstance(prop, Process):
         return convert_process_to_pattern(prop)
     else:
-        warn(str(obj.properties) + " cannot be converted to a pattern, yet.")
+        warn("{0} cannot be converted to a pattern, yet.".format(str(obj.properties)))
         return "'term not converted'"
 
 
 def match_1x_id_with_20_id(id_1x, id_20):
-    id_1x_split = id_1x.split("-",1)
+    id_1x_split = id_1x.split("-", 1)
     id_20_split = id_20.split("--")
     return id_1x_split[1] == id_20_split[1]
 
@@ -419,7 +421,7 @@ def match_1x_id_with_20_id(id_1x, id_20):
 def find_observable_data(idref, obserableData):
     for obs in obserableData:
         if match_1x_id_with_20_id(idref, obs["id"]):
-            info("Found observed_data for " + idref)
+            info("Found observed_data for {0}".format(idref))
             return obs
     # warn (idref + " cannot be resolved")
     return None

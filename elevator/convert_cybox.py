@@ -152,11 +152,11 @@ def convert_cybox_object(obj, cybox_container):
     elif isinstance(prop, Process):
         cybox_obj = convert_process(prop)
     else:
-        warn(str(type(obj)) + " not handled yet")
+        warn("{obj} not handled yet".format(obj=str(type(obj))))
         return None
     if cybox_obj:
-        cybox_container["objects"] = { "0": cybox_obj }
+        cybox_container["objects"] = {"0": cybox_obj}
         return cybox_container
     else:
-        warn(str(prop) + " didn't yield any STIX 2.0 object")
+        warn("{obj} didn't yield any STIX 2.0 object".format(obj=str(prop)))
         return None
