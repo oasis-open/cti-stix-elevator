@@ -12,10 +12,10 @@
     "id": "bundle--bf35a4b5-e102-463d-9105-4d7a6e2d78bc",
     "relationships": [
         {
-            "created": "2016-09-30T12:31:32.009711Z",
+            "created": "2016-10-04T14:03:15.486826Z",
             "description": "Targets",
-            "id": "relationship--d818e486-c9d9-4fae-a11e-095a8af7209e",
-            "modified": "2016-09-30T12:31:32.009711Z",
+            "id": "relationship--129da796-6ec5-4e44-8ad7-b8363be4c382",
+            "modified": "2016-10-04T14:03:15.486826Z",
             "name": "uses",
             "source_ref": "campaign--c831ab93-ff84-9cda-2bd8-b094004da969",
             "type": "relationship",
