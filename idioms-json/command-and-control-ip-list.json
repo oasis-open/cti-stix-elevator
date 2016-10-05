@@ -2,7 +2,7 @@
     "id": "bundle--cc0ca596-70e6-4dac-9bef-603166d17db8",
     "observed_data": [
         {
-            "created": "2016-10-04T14:03:15.361543Z",
+            "created": "2016-10-05T15:22:32.644970Z",
             "cybox": {
                 "objects": {
                     "0": {
@@ -13,16 +13,16 @@
                 "spec_version": "3.0",
                 "type": "cybox-container"
             },
-            "first_observed": "2016-10-04T14:03:15.361566Z",
+            "first_observed": "2016-10-05T15:22:32.644995Z",
             "id": "observable-data--c8c32b6e-2ea8-51c4-6446-7f5218072f27",
-            "last_observed": "2016-10-04T14:03:15.361566Z",
-            "modified": "2016-10-04T14:03:15.361543Z",
+            "last_observed": "2016-10-05T15:22:32.644995Z",
+            "modified": "2016-10-05T15:22:32.644970Z",
             "number_observed": 1,
             "type": "observable-data",
             "version": 1
         },
         {
-            "created": "2016-10-04T14:03:15.361602Z",
+            "created": "2016-10-05T15:22:32.645034Z",
             "cybox": {
                 "objects": {
                     "0": {
@@ -33,16 +33,16 @@
                 "spec_version": "3.0",
                 "type": "cybox-container"
             },
-            "first_observed": "2016-10-04T14:03:15.361616Z",
+            "first_observed": "2016-10-05T15:22:32.645047Z",
             "id": "observable-data--b57aa65f-9598-04fb-a9d1-5094c36d5dc4",
-            "last_observed": "2016-10-04T14:03:15.361616Z",
-            "modified": "2016-10-04T14:03:15.361602Z",
+            "last_observed": "2016-10-05T15:22:32.645047Z",
+            "modified": "2016-10-05T15:22:32.645034Z",
             "number_observed": 1,
             "type": "observable-data",
             "version": 1
         },
         {
-            "created": "2016-10-04T14:03:15.361654Z",
+            "created": "2016-10-05T15:22:32.645074Z",
             "cybox": {
                 "objects": {
                     "0": {
@@ -53,10 +53,10 @@
                 "spec_version": "3.0",
                 "type": "cybox-container"
             },
-            "first_observed": "2016-10-04T14:03:15.361666Z",
+            "first_observed": "2016-10-05T15:22:32.645086Z",
             "id": "observable-data--19c16346-0eb4-99e2-00bb-4ec3ed174cac",
-            "last_observed": "2016-10-04T14:03:15.361666Z",
-            "modified": "2016-10-04T14:03:15.361654Z",
+            "last_observed": "2016-10-05T15:22:32.645086Z",
+            "modified": "2016-10-05T15:22:32.645074Z",
             "number_observed": 1,
             "type": "observable-data",
             "version": 1
