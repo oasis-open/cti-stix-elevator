@@ -42,6 +42,7 @@ def convert_condition(condition):
         return "EQ"
     elif condition == "DoesNotEqual":
         return "NEQ"
+    # TODO: CONTAINS is defined to work only with ip addresses
     elif condition == "Contains" or condition == "DoesNotContain":
         return "CONTAINS"
     elif condition == "GreaterThan":
@@ -99,6 +100,16 @@ def create_term(lhs, condition, rhs):
         except TypeError:
             pass
 
+def add_comparison_expression(prop, object_path, first):
+    if prop is not None:
+        if hasattr(prop, "condition"):
+            cond = prop.condition
+        else:
+            warn("No condition given - assume EQ")
+            cond = None
+        comparison_expression = create_term(object_path, cond, prop.value)
+        return (" AND " if first else "") + comparison_expression
+    return ""
 
 def convert_address_to_pattern(add):
     if add.category == add.CAT_IPV4:
@@ -117,19 +128,33 @@ def convert_email_message_to_pattern(mess):
         if header.to is not None:
             # is to a list???
             expression += (" AND " if not first_one else "") + \
-                          create_term("email-message-object:header:to",
+                          create_term("email-message-object:header.to",
                                       header.to.condition,
                                       header.to.value)
             first_one = False
         elif header.subject is not None:
             expression += (" AND " if not first_one else "") + \
-                         create_term("email-message-object:header:subject",
+                         create_term("email-message-object:header.subject",
                                      header.subject.condition,
                                      header.subject.value)
             first_one = False
     if mess.attachments is not None:
         warn("email attachments not handled yet")
     return expression
+
+_PE_FILE_HEADER_PROPERTIES = { "machine": "file:extended-properties.windows-pebinary-ext.file-header:machine",
+                               "time_date_stamp": "file:extended-properties.windows-pebinary-ext.file-header.time_date_stamp",
+                               "number_of_sections": "file:extended-properties.windows-pebinary-ext.file-header.number_of_sections",
+                               "pointer_to_symbol_table": "file:extended-properties.windows-pebinary-ext.file-header.pointer_to_symbol_table",
+                               "number_of_symbols": "file:extended-properties.windows-pebinary-ext.file-header.number_of_symbols",
+                               "size_of_optional_header": "file:extended-properties.windows-pebinary-ext.file-header.size_of_optional_header",
+                               "characteristics": "file:extended-properties.windows-pebinary-ext.file-header.characteristics" }
+
+_PE_SECTION_HEADER_PROPERTIES = { "name": "file:extended-properties.windows-pebinary-ext.section[*].name",
+                                  "virtual_size": "file:extended-properties.windows-pebinary-ext.section[*].size" }
+
+_ARCHIVE_FILE_PROPERTIES = { "comment": "file:extended-properties.archive_file.comment",
+                             "version": "file:extended-properties.archive_file.version" }
 
 
 def convert_windows_executable_file_to_pattern(file):
@@ -138,42 +163,9 @@ def convert_windows_executable_file_to_pattern(file):
         file_header = file.headers.file_header
         if file_header:
             file_header_expression = ""
-            if file_header.machine:
-                file_header_expression += (" AND " if file_header_expression != "" else "") + \
-                                create_term("file:extended-properties:windows-pebinary-ext:file-header:machine",
-                                            file_header.machine.condition,
-                                            file_header.machine.value)
-            if file_header.time_date_stamp:
-                file_header_expression += (" AND " if file_header_expression != "" else "") + \
-                                create_term("file:extended-properties:windows-pebinary-ext:file-header:time_date_stamp",
-                                            file_header.time_date_stamp.condition,
-                                            file_header.time_date_stamp.value)
-            if file_header.number_of_sections:
-                file_header_expression += (" AND " if file_header_expression != "" else "") + \
-                                create_term("file:extended-properties:windows-pebinary-ext:file-header:number_of_sections",
-                                            file_header.number_of_sections.condition,
-                                            file_header.number_of_sections.value)
-            if file_header.pointer_to_symbol_table:
-                file_header_expression += (" AND " if file_header_expression != "" else "") + \
-                                create_term("file:extended-properties:windows-pebinary-ext:file-header:pointer_to_symbol_table",
-                                            file_header.pointer_to_symbol_table.condition,
-                                            file_header.pointer_to_symbol_table.value)
-            if file_header.number_of_symbols:
-                file_header_expression += (" AND " if file_header_expression != "" else "") + \
-                                create_term("file:extended-properties:windows-pebinary-ext:file-header:number_of_symbols",
-                                            file_header.number_of_symbols.condition,
-                                            file_header.number_of_symbols.value)
-            if file_header.size_of_optional_header:
-                file_header_expression += (" AND " if file_header_expression != "" else "") + \
-                                create_term("file:extended-properties:windows-pebinary-ext:file-header:size_of_optional_header",
-                                            file_header.size_of_optional_header.condition,
-                                            file_header.size_of_optional_header.value)
-            if file_header.characteristics:
-                file_header_expression += (" AND " if file_header_expression != "" else "") + \
-                                          create_term(
-                                              "file:extended-properties:windows-pebinary-ext:file-header:characteristics",
-                                              file_header.characteristics.condition,
-                                              file_header.characteristics.value)
+            for prop_1x, object_path in _PE_FILE_HEADER_PROPERTIES.items():
+                if hasattr(file_header, prop_1x):
+                    file_header_expression += add_comparison_expression(getattr(file_header, prop_1x), object_path, (file_header_expression != ""))
             if file_header.hashes is not None:
                 hash_expression = convert_hashes_to_pattern(file_header.hashes)
                 if hash_expression:
@@ -184,7 +176,7 @@ def convert_windows_executable_file_to_pattern(file):
 
     if file.type_:
         expression += (" AND " if expression != "" else "") + \
-                      create_term("file:extended-properties:windows-pebinary-ext:pe_type",
+                      create_term("file:extended-properties.windows-pebinary-ext.pe_type",
                                   file.type_.condition,
                                   map_vocabs_to_label(file.type_.value, WINDOWS_PEBINARY))
     sections = file.sections
@@ -194,19 +186,12 @@ def convert_windows_executable_file_to_pattern(file):
         for s in sections:
             section_expression = ""
             if s.section_header:
-                if s.section_header.name:
-                    section_expression += (" AND " if section_expression != "" else "") + \
-                                            create_term("file:extended-properties:windows-pebinary-ext:section[*]:name",
-                                                        s.section_header.name.condition,
-                                                        s.section_header.name.value)
-                if s.section_header.virtual_size:
-                    section_expression += (" AND " if section_expression != "" else "") + \
-                                            create_term("file:extended-properties:windows-pebinary-ext:size[*]:size",
-                                                        s.section_header.virtual_size.condition,
-                                                        s.section_header.virtual_size.value)
+                for prop_1x, object_path in _PE_SECTION_HEADER_PROPERTIES.items():
+                    if hasattr(s.section_header, prop_1x):
+                        section_expression += add_comparison_expression(getattr(s.section_header, prop_1x), object_path, (section_expression != ""))
             if s.entropy:
                 section_expression += (" AND " if section_expression != "" else "") + \
-                                      create_term("file:extended-properties:windows-pebinary-ext:size[*]:entropy",
+                                      create_term("file:extended-properties.windows-pebinary-ext.section[*].entropy",
                                                     s.entropy.condition,
                                                     s.entropy.value)
             if s.data_hashes:
@@ -227,62 +212,50 @@ def convert_windows_executable_file_to_pattern(file):
 
 def convert_archive_file_to_pattern(file):
     expression = ""
-    if file.comment:
-        expression += (" AND " if expression != "" else "") + \
-                        create_term("file.extended-properties:archive_file:comment",
-                                    file.comment.condition,
-                                    file.comment.value)
-    if file.version:
-        expression += (" AND " if expression != "" else "") + \
-                      create_term("file.extended-properties:archive_file:version",
-                                  file.version.condition,
-                                  file.version.value)
+    for prop_1x, object_path in _ARCHIVE_FILE_PROPERTIES.items():
+        if hasattr(file, prop_1x):
+            expression += add_comparison_expression(getattr(file, prop_1x), object_path, (expression != ""))
     return expression
-
 
 def convert_hashes_to_pattern(hashes):
     hash_expression = ""
     for hash in hashes:
         hash_expression += (" OR " if not hash_expression == "" else "") + \
-                           create_term("file-object:hashes" + ":" + str(hash.type_).lower(),
+                           create_term("file:hashes" + ":" + str(hash.type_).lower(),
                                        hash.simple_hash_value.condition,
                                        hash.simple_hash_value.value)
     return hash_expression
 
 
+
+_FILE_PROPERTIES = { "file_name": "file:file_name",
+                     "size_in_bytes": "file:size",
+                     "magic_number": "file:magic_number_hex",
+                     "created_time": "file:created",
+                     "modified_time": "file:modified",
+                     "accessed_time": "file:accessed",
+                     "encyption_algorithm": "file:encyption_algorithm",
+                     "decryption_key": "file:decryption_key" }
+
+
 def convert_file_to_pattern(file):
-    first_one = True
     expression = ""
     if file.hashes is not None:
         hash_expression = convert_hashes_to_pattern(file.hashes)
         if hash_expression:
             expression += hash_expression
-    if file.file_name is not None:
-        name_expression = create_term("file-object:file_name",
-                                      file.file_name.condition,
-                                      file.file_name.value)
-        expression += (" AND " if expression != "" else "") + name_expression
-    if file.size_in_bytes:
-        size_expression = create_term("file-object:size",
-                                      file.size_in_bytes.condition,
-                                      file.size_in_bytes.value)
-        expression += (" AND " if expression != "" else "") + size_expression
+    for prop_1x, object_path in _FILE_PROPERTIES.items():
+        if hasattr(file, prop_1x):
+            expression += add_comparison_expression(getattr(file, prop_1x), object_path, (expression != ""))
     if isinstance(file, WinExecutableFile):
         expression += (" AND " if expression != "" else "") + add_parens_if_needed(convert_windows_executable_file_to_pattern(file))
     if isinstance(file, ArchiveFile):
         expression += (" AND " if expression != "" else "") + add_parens_if_needed(convert_archive_file_to_pattern(file))
     return expression
 
-
-def convert_registry_key_value_property(prop, property_name):
-    property_expression = ""
-    if hasattr(prop, "condition"):
-        cond = prop.condition
-    else:
-        warn("No condition given - assume EQ")
-        cond = None
-    return create_term("win-registry-key-object:values[*]" + ":" + property_name, cond, prop)
-
+_REGISTRY_KEY_VALUES_PROPERTIES = { "data": "win-registry-key-object.values[*].data",
+                                    "name": "win-registry-key-object.values[*].name",
+                                    "datatype": "win-registry-key-object.values[*].data_type" }
 
 def convert_registry_key_to_pattern(reg_key):
     first_one = True
@@ -298,25 +271,12 @@ def convert_registry_key_to_pattern(reg_key):
             expression += create_term("win-registry-key-object:key", reg_key.key.condition,  key_value_term)
     if reg_key.values:
         values_expression = ""
-        data_expression = ""
-        name_expression = ""
-        type_expression = ""
-        first_value = True
         for v in reg_key.values:
             value_expression = ""
-            if hasattr(v, "data") and v.data:
-                data_expression = convert_registry_key_value_property(v.data, "data")
-            if data_expression:
-                value_expression += (" AND " if value_expression != "" else "") + data_expression
-            if hasattr(v, "name") and v.name:
-                name_expression = convert_registry_key_value_property(v.name, "name")
-            if name_expression:
-                value_expression += (" AND " if value_expression != "" else "") + name_expression
-            if hasattr(v, "datatype") and v.datatype:
-                type_expression = convert_registry_key_value_property(v.datatype, "data_type")
-            if type_expression:
-                value_expression += (" AND " if value_expression != "" else "") + type_expression
-            values_expression += (" OR " if value_expression else "") + value_expression
+            for prop_1x, object_path in _REGISTRY_KEY_VALUES_PROPERTIES.items():
+                if hasattr(v, prop_1x):
+                    value_expression += add_comparison_expression(getattr(v, prop_1x), object_path, (value_expression != ""))
+            values_expression += (" OR " if values_expression != "" else "") + value_expression
         expression += (" AND " if expression != "" else "") + add_parens_if_needed(values_expression)
     return expression
 
@@ -344,44 +304,28 @@ def convert_windows_process_to_pattern(process):
             warn("Window handles are not a part of CybOX 3.0")
     return expression
 
+_WINDOWS_PROCESS_PROPERTIES = { "service_name": "process:extension_data.windows-service-ext.service_name",
+                                "display_name": "process:extension_data.windows-service-ext.display_name",
+                                "startup_command_line": "process:extension_data.windows-service-ext.startup_command_line",
+                                "start_type": "process:extension_data.windows-service-ext.start_type",
+                                "service_type": "process:extension_data.windows-service-ext.service_type",
+                                "service_status": "process:extension_data.windows-service-ext.service_status" }
+
 
 def convert_windows_service_to_pattern(service):
     expression = ""
-    if hasattr(service, "service_name") and service.service_name:
-        expression += (" AND " if expression != "" else "") + \
-                      create_term("process:extension_data:windows-service-ext:service_name", service.service_name.condition, service.service_name.value)
+
+    for prop1_x, object_path in _WINDOWS_PROCESS_PROPERTIES.items():
+        if hasattr(service, prop1_x):
+            expression += add_comparison_expression(getattr(service, prop1_x), object_path, (expression != ""))
     if hasattr(service, "description_list") and service.description_list:
         description_expression = ""
         for d in service.description_list:
             description_expression += (" OR " if not description_expression == "" else "") + \
-                           create_term("process:extension_data:windows-service-ext:descriptions[*]",
+                           create_term("process:extension_data.windows-service-ext.descriptions[*]",
                                        d.condition,
                                        d.value)
         expression += (" AND " if expression != "" else "") + description_expression
-    if hasattr(service, "display_name") and service.display_name:
-        expression += (" AND " if expression != "" else "") + \
-                      create_term("process:extension_data:windows-service-ext:display_name",
-                                  service.display_name.condition, service.display_name.value)
-    if hasattr(service, "startup_command_line") and service.startup_command_line:
-        expression += (" AND " if expression != "" else "") + \
-                      create_term("process:extension_data:windows-service-ext:startup_command_line",
-                                  service.startup_command_line.condition, service.startup_command_line.value)
-
-    if hasattr(service, "start_type") and service.start_type:
-        expression += (" AND " if expression != "" else "") + \
-                      create_term("process:extension_data:windows-service-ext:start_type",
-                                  service.start_type.condition,
-                                  map_vocabs_to_label(service.start_type, SERVICE_START_TYPE))
-    if hasattr(service, "service_type") and service.service_type:
-        expression += (" AND " if expression != "" else "") + \
-                      create_term("process:extension_data:windows-service-ext:service_type",
-                                  service.service_type.condition,
-                                  map_vocabs_to_label(service.service_type, SERVICE_TYPE))
-    if hasattr(service, "service_status") and service.service_status:
-        expression += (" AND " if expression != "" else "") + \
-                      create_term("process:extension_data:windows-service-ext:service_status",
-                                  service.service_status.condition,
-                                  map_vocabs_to_label(service.service_status, SERVICE_STATUS))
     if hasattr(service, "service_dll") and service.service_dll:
         warn("WinServiceObject.service_dll cannot be converted to a pattern, yet.")
     return expression

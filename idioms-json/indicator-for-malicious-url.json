@@ -2,17 +2,17 @@
     "id": "bundle--8fab937e-b694-11e3-b71c-0800271e87d2",
     "indicators": [
         {
-            "created": "2016-09-30T12:31:31.332177Z",
+            "created": "2016-10-05T15:22:32.673126Z",
             "id": "indicator--d81f86b9-975b-bc0b-775e-810c5ad45a4f",
             "labels": [
                 "benign"
             ],
-            "modified": "2016-09-30T12:31:31.332177Z",
+            "modified": "2016-10-05T15:22:32.673126Z",
             "name": "Malicious site hosting downloader",
             "pattern": "url-object:value EQ 'http://x4z9arb.cn/4712'",
             "pattern_lang": "cybox",
             "type": "indicator",
-            "valid_from": "2016-09-30T12:31:31.332678Z",
+            "valid_from": "2016-10-05T15:22:32.673172Z",
             "version": 1
         }
     ],
