@@ -12,9 +12,9 @@
     "id": "bundle--81810123-b298-40f6-a4e7-186efcd07670",
     "relationships": [
         {
-            "created": "2016-10-05T15:22:32.640817Z",
-            "id": "relationship--83708661-d0dc-4d7b-b9ae-4d1247a0cd47",
-            "modified": "2016-10-05T15:22:32.640817Z",
+            "created": "2016-10-06T15:12:12.121934Z",
+            "id": "relationship--d21ceaf5-2dad-411b-9dfc-023835be99c6",
+            "modified": "2016-10-06T15:12:12.121934Z",
             "name": "attributed-to",
             "source_ref": "incident--229ab6ba-0eb2-415b-bdf2-079e6b42f51e",
             "target_ref": "campaign--e5268b6e-4931-42f1-b379-87f48eb41b1e",
@@ -22,9 +22,9 @@
             "version": 1
         },
         {
-            "created": "2016-10-05T15:22:32.640853Z",
-            "id": "relationship--3fdc2d9b-d298-49ff-adcd-aa7457e68881",
-            "modified": "2016-10-05T15:22:32.640853Z",
+            "created": "2016-10-06T15:12:12.121934Z",
+            "id": "relationship--0dfd9f45-59ad-4dd9-95c1-e67c441d622d",
+            "modified": "2016-10-06T15:12:12.121934Z",
             "name": "attributed-to",
             "source_ref": "incident--517cf274-038d-4ed4-a3ec-3ac18ad9db8a",
             "target_ref": "campaign--e5268b6e-4931-42f1-b379-87f48eb41b1e",
@@ -32,9 +32,9 @@
             "version": 1
         },
         {
-            "created": "2016-10-05T15:22:32.640885Z",
-            "id": "relationship--117c54cf-02ba-477f-9755-8cc9e543866a",
-            "modified": "2016-10-05T15:22:32.640885Z",
+            "created": "2016-10-06T15:12:12.121934Z",
+            "id": "relationship--2aaa2b60-ee88-4d3a-a2c3-a76492c42f88",
+            "modified": "2016-10-06T15:12:12.121934Z",
             "name": "attributed-to",
             "source_ref": "incident--7d8cf96f-91cb-42d0-a1e0-bfa38ea08621",
             "target_ref": "campaign--e5268b6e-4931-42f1-b379-87f48eb41b1e",
@@ -42,9 +42,9 @@
             "version": 1
         },
         {
-            "created": "2016-10-05T15:22:32.640995Z",
-            "id": "relationship--2dbcbf2d-d88c-41a3-b497-87c80d566eff",
-            "modified": "2016-10-05T15:22:32.640995Z",
+            "created": "2016-10-06T15:12:12.121934Z",
+            "id": "relationship--397fbbdb-d5d9-4490-bef6-ab44867e9bbe",
+            "modified": "2016-10-06T15:12:12.121934Z",
             "name": "attributed-to",
             "source_ref": "threat-actor--56f3f0db-b5d5-431c-ae56-c18f02caf500",
             "target_ref": "campaign--e5268b6e-4931-42f1-b379-87f48eb41b1e",
