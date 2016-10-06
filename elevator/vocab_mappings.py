@@ -37,7 +37,7 @@ MALWARE_LABELS_MAP = \
     {
         "Automated Transfer Scripts": "",
         "Adware": "adware",
-        "Dialer": "spyware",  # Verify
+        "Dialer": "",
         "Bot": "bot",
         "Bot - Credential Theft": "bot",
         "Bot - DDoS": "bot",
@@ -48,7 +48,7 @@ MALWARE_LABELS_MAP = \
         "DoS / DDoS - Script": "ddos",
         "DoS / DDoS - Stress Test Tools": "ddos",
         "Exploit Kits": "exploit-kit",
-        "POS / ATM Malware": "",  # Need to determined
+        "POS / ATM Malware": "",
         "Ransomware": "ransomware",
         "Remote Access Trojan": "remote-access-trojan",
         "Rogue Antivirus": "rogue-security-software",
@@ -93,9 +93,9 @@ ATTACK_MOTIVATION_MAP = \
         "Ideological - Human Rights": "ideology",
         "Ego": "personal-satisfaction",
         "Financial or Economic": "",  # conflicting organizational-gain, personal-gain
-        "Military": "",         # Need to determine
-        "Opportunistic": "",    # Need to determine
-        "Political": "",        # Need to determine
+        "Military": "",
+        "Opportunistic": "",
+        "Political": "",
     }
 
 THREAT_ACTOR_SOPHISTICATION_MAP = \
