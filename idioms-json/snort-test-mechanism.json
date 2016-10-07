@@ -16,9 +16,9 @@
     ],
     "relationships": [
         {
-            "created": "2016-10-05T15:22:32.764537Z",
-            "id": "relationship--b9858d4c-92dd-4621-9459-42ddbbe86079",
-            "modified": "2016-10-05T15:22:32.764537Z",
+            "created": "2016-10-06T15:12:12.274006Z",
+            "id": "relationship--e6a7ba73-0bb1-40ec-a56f-897e90ef5364",
+            "modified": "2016-10-06T15:12:12.274006Z",
             "name": "indicates",
             "source_ref": "indicator--567b201c-4fd5-4bde-a5db-42abc340807b",
             "type": "relationship",

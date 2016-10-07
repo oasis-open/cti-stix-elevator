@@ -11,6 +11,9 @@ from cybox.objects.win_registry_key_object import WinRegistryKey
 from cybox.objects.process_object import Process
 from cybox.objects.win_process_object import WinProcess
 from cybox.objects.win_service_object import WinService
+from cybox.objects.domain_name_object import DomainName
+from cybox.objects.mutex_object import Mutex
+from cybox.objects.network_connection_object import NetworkConnection
 
 from elevator.utils import *
 from elevator.convert_pattern import *
@@ -61,18 +64,18 @@ def convert_file(file, directory_ref):
 
 
 def convert_registry_key(reg_key):
-    cybox = {"type": "windows-registry-key"}
+    cybox_reg = {"type": "windows-registry-key"}
     if reg_key.key or reg_key.hive:
         full_key = ""
         if reg_key.hive:
             full_key += reg_key.hive.value + "\\"
         if reg_key.key:
             full_key += reg_key.key.value
-        cybox["key"] = full_key
+        cybox_reg["key"] = full_key
     else:
         error("windows-registry-key is required to have a key property")
     if reg_key.values:
-        cybox["values"] = []
+        cybox_reg["values"] = []
         for v in reg_key.values:
             reg_value = {}
             if hasattr(v, "data") and v.data:
@@ -81,18 +84,18 @@ def convert_registry_key(reg_key):
                 reg_value["name"] = str(v.name)
             if hasattr(v, "datatype") and v.datatype:
                 reg_value["data_type"] = str(v.datatype)
-            cybox["values"].append(reg_value)
-    return cybox
+            cybox_reg["values"].append(reg_value)
+    return cybox_reg
 
 
 def convert_process(process):
-    cybox = {}
+    cybox_p = {}
     if process.name:
-        cybox["name"] = str(process.name)
+        cybox_p["name"] = str(process.name)
     if process.pid:
-        cybox["pid"] = str(process.pid)
+        cybox_p["pid"] = str(process.pid)
     if process.creation_time:
-        cybox["created"] = convert_timestamp(process.creation_time)
+        cybox_p["created"] = convert_timestamp(process.creation_time)
     if isinstance(process, WinProcess):
         extended_properties = {}
         process_properties = convert_windows_process(process)
@@ -103,10 +106,10 @@ def convert_process(process):
             if service_properties:
                 extended_properties["windows-service-ext"] = service_properties
         if extended_properties:
-            cybox["extended_properties"] = extended_properties
+            cybox_p["extended_properties"] = extended_properties
     if cybox:
-        cybox["type"] = "process"
-    return cybox
+        cybox_p["type"] = "process"
+    return cybox_p
 
 
 def convert_windows_process(process):
@@ -130,27 +133,53 @@ def convert_windows_process(process):
 
 
 def convert_windows_service(service):
-    cybox = {}
+    cybox_ws = {}
     if hasattr(service, "service_name") and service.service_name:
-        cybox["service_name"] = service.service_name.value
+        cybox_ws["service_name"] = service.service_name.value
     if hasattr(service, "description_list") and service.description_list:
         descriptions = []
         for d in service.description_list:
             descriptions.append(d.value)
-        cybox["descriptions"] = descriptions
+        cybox_ws["descriptions"] = descriptions
     if hasattr(service, "display_name") and service.display_name:
-        cybox["display_name"] = service.display_name.value
+        cybox_ws["display_name"] = service.display_name.value
     if hasattr(service, "startup_command_line") and service.startup_command_line:
-        cybox["startup_command_line"] = service.startup_command_line.value
+        cybox_ws["startup_command_line"] = service.startup_command_line.value
     if hasattr(service, "start_type") and service.start_type:
-        cybox["start_type"] = map_vocabs_to_label(service.start_type, SERVICE_START_TYPE)
+        cybox_ws["start_type"] = map_vocabs_to_label(service.start_type, SERVICE_START_TYPE)
     if hasattr(service, "service_type") and service.service_type:
-        cybox["service_type"] = map_vocabs_to_label(service.service_type, SERVICE_TYPE)
+        cybox_ws["service_type"] = map_vocabs_to_label(service.service_type, SERVICE_TYPE)
     if hasattr(service, "service_status") and service.service_status:
-        cybox["service_status"] = map_vocabs_to_label(service.service_status, SERVICE_STATUS)
+        cybox_ws["service_status"] = map_vocabs_to_label(service.service_status, SERVICE_STATUS)
     if hasattr(service, "service_dll") and service.service_dll:
         warn("WinServiceObject.service_dll is not handled, yet.")
-    return cybox
+    return cybox_ws
+
+
+def convert_domain_name(domain_name):
+    cybox_dm = {"type": "domain-name"}
+    if domain_name.value:
+        cybox_dm["value"] = domain_name.value
+
+    # TODO: belongs_to_refs
+    # TODO: description
+    # TODO: extended_properties
+    return cybox_dm
+
+
+def convert_mutex(mutex):
+    cybox_mutex = {"type": "mutex"}
+    if mutex.name:
+        cybox_mutex["name"] = mutex.name
+
+    # TODO: description
+    # TODO: extended_properties
+    return cybox_mutex
+
+
+def convert_network_connection(conn):
+    # TODO: Implement when consensus on object is achieved.
+    return {}
 
 
 def convert_cybox_object(obj):
@@ -172,6 +201,13 @@ def convert_cybox_object(obj):
         objs[obj_index] = convert_registry_key(prop)
     elif isinstance(prop, Process):
         objs[obj_index] = convert_process(prop)
+        cybox_obj = convert_process(prop)
+    elif isinstance(prop, DomainName):
+        cybox_obj = convert_domain_name(prop)
+    elif isinstance(prop, Mutex):
+        cybox_obj = convert_mutex(prop)
+    elif isinstance(prop, NetworkConnection):
+        cybox_obj = convert_network_connection(prop)
     else:
         warn("{obj} not handled yet".format(obj=str(type(obj))))
         return None

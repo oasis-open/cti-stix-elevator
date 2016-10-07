@@ -1,0 +1,28 @@
+{
+    "id": "bundle--cc0ca596-70e6-4dac-9bef-603166d17db8",
+    "observed_data": [
+        {
+            "created": "2016-10-07T14:29:55.340339Z",
+            "first_observed": "2016-10-07T14:29:55.340404Z",
+            "id": "observable-data--c8c32b6e-2ea8-51c4-6446-7f5218072f27",
+            "last_observed": "2016-10-07T14:29:55.340404Z",
+            "modified": "2016-10-07T14:29:55.340339Z",
+            "number_observed": 1,
+            "objects": {
+                "0": {
+                    "path": "/usr/local",
+                    "type": "directory"
+                },
+                "1": {
+                    "file_name": "iprip32.dll",
+                    "parent_directory_ref": 0,
+                    "type": "file"
+                }
+            },
+            "type": "observable-data",
+            "version": 1
+        }
+    ],
+    "spec_version": "2.0",
+    "type": "bundle"
+}
