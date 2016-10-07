@@ -723,8 +723,8 @@ def convert_indicator(indicator, bundle_instance):
 def convert_observable_data(obs, bundle_instance):
     global OBSERVABLE_MAPPING
     observed_data_instance = create_basic_object("observable-data", obs)
-    cybox_container = {"type": "cybox-container", "spec_version": "3.0"}
-    observed_data_instance["cybox"] = convert_cybox_object(obs.object_, cybox_container)
+    # cybox_container = {"type": "cybox-container", "spec_version": "3.0"}
+    observed_data_instance["objects"] = convert_cybox_object(obs.object_)
     observed_time = convert_timestamp(obs)
     info("No 'first_observed' data on {id} - using timestamp".format(id=obs.id_))
     observed_data_instance["first_observed"] = observed_time

@@ -19,16 +19,27 @@ from elevator.vocab_mappings import *
 
 def convert_address(add):
     if add.category == add.CAT_IPV4:
-       return {"type": "ipv4-address-object", "value": add.address_value.value}
+       return {"type": "ipv4-addr", "value": add.address_value.value}
+    elif add.category == add.CAT_IPV6:
+        return {"type": "ipv6-addr","value": add.address_value.value}
+    elif add.category == add.CAT_MAC:
+        return {"type": "mac-addr","value": add.address_value.value}
+    elif add.category == add.CAT_EMAIL:
+        return {"type": "email-addr","value": add.address_value.value}
+    else:
+        warn("The address type " + add.category + " is not part of Cybox 3.0")
 
 
 def convert_uri(uri):
     return {"type": "url-object", "value": + uri.value.value}
 
 
-def convert_file(file):
+def create_directory(file):
+    return {"type": "directory", "path": file.file_path.value}
+
+def convert_file(file, directory_ref):
     first_one = True
-    cybox_dict = {"type": "file-object"}
+    cybox_dict = {"type": "file"}
     if file.size is not None:
         if isinstance(file.size.value, list):
             error("file size window not allowed in top level observable, using first value")
@@ -42,7 +53,10 @@ def convert_file(file):
         cybox_dict["hashes"] = hashes
     if file.file_name:
         cybox_dict["file_name"] = str(file.file_name)
-    # TODO: handle path properties be generating a directory object?
+    if directory_ref != -1:
+        cybox_dict["parent_directory_ref"] = directory_ref
+    if file.full_path:
+        warn("1.x full file paths are not processed, yet")
     return cybox_dict
 
 
@@ -139,24 +153,30 @@ def convert_windows_service(service):
     return cybox
 
 
-def convert_cybox_object(obj, cybox_container):
+def convert_cybox_object(obj):
     prop = obj.properties
+    objs = {}
+    obj_index = 0;
     if isinstance(prop, Address):
-        cybox_obj = convert_address(prop)
+        objs[obj_index] = convert_address(prop)
     elif isinstance(prop, URI):
-        cybox_obj = convert_uri(prop)
+        objs[obj_index] = convert_uri(prop)
     elif isinstance(prop, File):
-        cybox_obj = convert_file(prop)
+        directory_obj_index = -1
+        if prop.file_path:
+            objs[obj_index] = create_directory(prop)
+            directory_obj_index = obj_index
+            obj_index += 1
+        objs[obj_index] = convert_file(prop, directory_obj_index)
     elif isinstance(prop, WinRegistryKey):
-        cybox_obj = convert_registry_key(prop)
+        objs[obj_index] = convert_registry_key(prop)
     elif isinstance(prop, Process):
-        cybox_obj = convert_process(prop)
+        objs[obj_index] = convert_process(prop)
     else:
         warn("{obj} not handled yet".format(obj=str(type(obj))))
         return None
-    if cybox_obj:
-        cybox_container["objects"] = {"0": cybox_obj}
-        return cybox_container
-    else:
+    if not objs:
         warn("{obj} didn't yield any STIX 2.0 object".format(obj=str(prop)))
         return None
+    else:
+        return objs

@@ -113,11 +113,19 @@ def add_comparison_expression(prop, object_path, first):
 
 def convert_address_to_pattern(add):
     if add.category == add.CAT_IPV4:
-        return create_term("ipv4addr-object:value",  add.address_value.condition, add.address_value.value)
+        return create_term("ipv4-addr:value", add.address_value.condition, add.address_value.value)
+    elif add.category == add.CAT_IPV6:
+        return create_term("ipv6-addr:value", add.address_value.condition, add.address_value.value)
+    elif add.category == add.CAT_MAC:
+        return create_term("mac-addr:value", add.address_value.condition, add.address_value.value)
+    elif add.category == add.CAT_EMAIL:
+        return create_term("email-addr:value", add.address_value.condition, add.address_value.value)
+    else:
+        warn("The address type " + add.category + " is not part of Cybox 3.0")
 
 
 def convert_uri_to_pattern(uri):
-    return create_term("url-object:value", uri.value.condition, uri.value.value)
+    return create_term("url:value", uri.value.condition, uri.value.value)
 
 
 def convert_email_message_to_pattern(mess):
@@ -128,13 +136,13 @@ def convert_email_message_to_pattern(mess):
         if header.to is not None:
             # is to a list???
             expression += (" AND " if not first_one else "") + \
-                          create_term("email-message-object:header.to",
+                          create_term("email-message:header.to",
                                       header.to.condition,
                                       header.to.value)
             first_one = False
         elif header.subject is not None:
             expression += (" AND " if not first_one else "") + \
-                         create_term("email-message-object:header.subject",
+                         create_term("email-message:header.subject",
                                      header.subject.condition,
                                      header.subject.value)
             first_one = False
@@ -227,9 +235,23 @@ def convert_hashes_to_pattern(hashes):
     return hash_expression
 
 
+def convert_file_name_and_path_to_pattern(file):
+    file_name_path_expression = ""
+    if file.file_name:
+        file_name_path_expression += create_term("file:file_name", file.file_name.condition, file.file_name.value)
+    if file.file_path:
+        if file.device_path:
+            file_name_path_expression += (" AND " if file_name_path_expression != "" else "") + \
+                                            create_term("file:parent_directory_ref.name",
+                                                        file.file_path.condition,
+                                                        file.device_path.value + file.file_path.value)
+    if file.full_path:
+        warn("1.x full file paths are not processed, yet")
+    return file_name_path_expression
 
-_FILE_PROPERTIES = { "file_name": "file:file_name",
-                     "size_in_bytes": "file:size",
+
+
+_FILE_PROPERTIES = { "size_in_bytes": "file:size",
                      "magic_number": "file:magic_number_hex",
                      "created_time": "file:created",
                      "modified_time": "file:modified",
@@ -244,6 +266,7 @@ def convert_file_to_pattern(file):
         hash_expression = convert_hashes_to_pattern(file.hashes)
         if hash_expression:
             expression += hash_expression
+    expression += convert_file_name_and_path_to_pattern(file)
     for prop_1x, object_path in _FILE_PROPERTIES.items():
         if hasattr(file, prop_1x):
             expression += add_comparison_expression(getattr(file, prop_1x), object_path, (expression != ""))
@@ -253,9 +276,9 @@ def convert_file_to_pattern(file):
         expression += (" AND " if expression != "" else "") + add_parens_if_needed(convert_archive_file_to_pattern(file))
     return expression
 
-_REGISTRY_KEY_VALUES_PROPERTIES = { "data": "win-registry-key-object.values[*].data",
-                                    "name": "win-registry-key-object.values[*].name",
-                                    "datatype": "win-registry-key-object.values[*].data_type" }
+_REGISTRY_KEY_VALUES_PROPERTIES = { "data": "win-registry-key:values[*].data",
+                                    "name": "win-registry-key:values[*].name",
+                                    "datatype": "win-registry-key:values[*].data_type" }
 
 def convert_registry_key_to_pattern(reg_key):
     first_one = True
@@ -268,7 +291,7 @@ def convert_registry_key_to_pattern(reg_key):
             else:
                 warn("Condition on a hive property not handled")
             key_value_term += reg_key.key.value
-            expression += create_term("win-registry-key-object:key", reg_key.key.condition,  key_value_term)
+            expression += create_term("win-registry-key:key", reg_key.key.condition,  key_value_term)
     if reg_key.values:
         values_expression = ""
         for v in reg_key.values:
