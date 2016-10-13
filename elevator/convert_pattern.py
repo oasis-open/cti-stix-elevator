@@ -39,20 +39,20 @@ def add_parens_if_needed(expr):
 
 def convert_condition(condition):
     if condition == "Equals":
-        return "EQ"
+        return "="
     elif condition == "DoesNotEqual":
-        return "NEQ"
+        return "!="
     # TODO: CONTAINS is defined to work only with ip addresses
     elif condition == "Contains" or condition == "DoesNotContain":
         return "CONTAINS"
     elif condition == "GreaterThan":
-        return "GT"
+        return ">"
     elif condition == "GreaterThanOrEqual":
-        return "GE"
+        return ">="
     elif condition == "LessThan":
-        return "LT"
+        return "<"
     elif condition == "LessThanOrEqual":
-        return "LE"
+        return "<="
     # StartsWith - handled in create_term_with_regex
     # EndsWith  - handled in create_term_with_regex
     # InclusiveBetween - handled in create_term_with_range
@@ -62,7 +62,7 @@ def convert_condition(condition):
     # BitwiseOr
     elif condition is None:
         warn("No condition given - assume EQ")
-        return "EQ"
+        return "="
 
 
 def create_term_with_regex(lhs, condition, rhs):
@@ -150,19 +150,19 @@ def convert_email_message_to_pattern(mess):
         warn("email attachments not handled yet")
     return expression
 
-_PE_FILE_HEADER_PROPERTIES = { "machine": "file:extended-properties.windows-pebinary-ext.file-header:machine",
-                               "time_date_stamp": "file:extended-properties.windows-pebinary-ext.file-header.time_date_stamp",
-                               "number_of_sections": "file:extended-properties.windows-pebinary-ext.file-header.number_of_sections",
-                               "pointer_to_symbol_table": "file:extended-properties.windows-pebinary-ext.file-header.pointer_to_symbol_table",
-                               "number_of_symbols": "file:extended-properties.windows-pebinary-ext.file-header.number_of_symbols",
-                               "size_of_optional_header": "file:extended-properties.windows-pebinary-ext.file-header.size_of_optional_header",
-                               "characteristics": "file:extended-properties.windows-pebinary-ext.file-header.characteristics" }
+_PE_FILE_HEADER_PROPERTIES = { "machine": "file:extended_properties.windows_pebinary_ext.file_header:machine",
+                               "time_date_stamp": "file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp",
+                               "number_of_sections": "file:extended_properties.windows_pebinary_ext.file_header.number_of_sections",
+                               "pointer_to_symbol_table": "file:extended_properties.windows_pebinary_ext.file_header.pointer_to_symbol_table",
+                               "number_of_symbols": "file:extended_properties.windows_pebinary_ext.file_header.number_of_symbols",
+                               "size_of_optional_header": "file:extended_properties.windows_pebinary_ext.file_header.size_of_optional_header",
+                               "characteristics": "file:extended_properties.windows_pebinary_ext.file_header.characteristics" }
 
-_PE_SECTION_HEADER_PROPERTIES = { "name": "file:extended-properties.windows-pebinary-ext.section[*].name",
-                                  "virtual_size": "file:extended-properties.windows-pebinary-ext.section[*].size" }
+_PE_SECTION_HEADER_PROPERTIES = { "name": "file:extended_properties.windows_pebinary_ext.section[*].name",
+                                  "virtual_size": "file:extended_properties.windows_pebinary_ext.section[*].size" }
 
-_ARCHIVE_FILE_PROPERTIES = { "comment": "file:extended-properties.archive_file.comment",
-                             "version": "file:extended-properties.archive_file.version" }
+_ARCHIVE_FILE_PROPERTIES = { "comment": "file:extended_properties.archive_file.comment",
+                             "version": "file:extended_properties.archive_file.version" }
 
 
 def convert_windows_executable_file_to_pattern(file):
@@ -180,11 +180,11 @@ def convert_windows_executable_file_to_pattern(file):
                     file_header_expression += (" AND " if file_header_expression != "" else "") + hash_expression
         expression += (" AND " if expression != "" else "") + add_parens_if_needed(file_header_expression)
         if file.headers.optional_header:
-            warn("file:extended-properties:windows-pebinary-ext:optional_header is not implemented yet")
+            warn("file:extended_properties:windows_pebinary_ext:optional_header is not implemented yet")
 
     if file.type_:
         expression += (" AND " if expression != "" else "") + \
-                      create_term("file:extended-properties.windows-pebinary-ext.pe_type",
+                      create_term("file:extended_properties.windows_pebinary_ext.pe_type",
                                   file.type_.condition,
                                   map_vocabs_to_label(file.type_.value, WINDOWS_PEBINARY))
     sections = file.sections
@@ -199,7 +199,7 @@ def convert_windows_executable_file_to_pattern(file):
                         section_expression += add_comparison_expression(getattr(s.section_header, prop_1x), object_path, (section_expression != ""))
             if s.entropy:
                 section_expression += (" AND " if section_expression != "" else "") + \
-                                      create_term("file:extended-properties.windows-pebinary-ext.section[*].entropy",
+                                      create_term("file:extended_properties.windows_pebinary_ext.section[*].entropy",
                                                     s.entropy.condition,
                                                     s.entropy.value)
             if s.data_hashes:
@@ -327,12 +327,12 @@ def convert_windows_process_to_pattern(process):
             warn("Window handles are not a part of CybOX 3.0")
     return expression
 
-_WINDOWS_PROCESS_PROPERTIES = { "service_name": "process:extension_data.windows-service-ext.service_name",
-                                "display_name": "process:extension_data.windows-service-ext.display_name",
-                                "startup_command_line": "process:extension_data.windows-service-ext.startup_command_line",
-                                "start_type": "process:extension_data.windows-service-ext.start_type",
-                                "service_type": "process:extension_data.windows-service-ext.service_type",
-                                "service_status": "process:extension_data.windows-service-ext.service_status" }
+_WINDOWS_PROCESS_PROPERTIES = { "service_name": "process:extension_data.windows_service_ext.service_name",
+                                "display_name": "process:extension_data.windows_service_ext.display_name",
+                                "startup_command_line": "process:extension_data.windows_service_ext.startup_command_line",
+                                "start_type": "process:extension_data.windows_service_ext.start_type",
+                                "service_type": "process:extension_data.windows_service_ext.service_type",
+                                "service_status": "process:extension_data.windows_service_ext.service_status" }
 
 
 def convert_windows_service_to_pattern(service):
@@ -345,7 +345,7 @@ def convert_windows_service_to_pattern(service):
         description_expression = ""
         for d in service.description_list:
             description_expression += (" OR " if not description_expression == "" else "") + \
-                           create_term("process:extension_data.windows-service-ext.descriptions[*]",
+                           create_term("process:extension_data.windows_service_ext.descriptions[*]",
                                        d.condition,
                                        d.value)
         expression += (" AND " if expression != "" else "") + description_expression
