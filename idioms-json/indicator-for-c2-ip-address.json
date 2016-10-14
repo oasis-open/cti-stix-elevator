@@ -9,7 +9,7 @@
             ],
             "modified": "2014-05-08T09:00:00.000000Z",
             "name": "IP Address for known C2 channel",
-            "pattern": "ipv4addr-object:value EQ '10.0.0.0'",
+            "pattern": "ipv4-addr:value = '10.0.0.0'",
             "pattern_lang": "cybox",
             "type": "indicator",
             "valid_from": "2014-05-08T09:00:00.000000Z",
@@ -18,9 +18,9 @@
     ],
     "relationships": [
         {
-            "created": "2016-10-06T15:12:12.178976Z",
-            "id": "relationship--37802b7e-3da7-4a3c-bbe6-3e6b7f3fabc2",
-            "modified": "2016-10-06T15:12:12.178976Z",
+            "created": "2014-05-08T09:00:00.000000Z",
+            "id": "relationship--22e071a6-600f-4d5c-ad8e-87ef2800e463",
+            "modified": "2014-05-08T09:00:00.000000Z",
             "name": "indicates",
             "source_ref": "indicator--53fe3b22-0201-47cf-85d0-97c02164528d",
             "type": "relationship",

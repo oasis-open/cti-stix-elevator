@@ -12,50 +12,42 @@
     ],
     "observed_data": [
         {
-            "created": "2016-10-06T15:12:12.174488Z",
-            "cybox": {
-                "objects": {
-                    "0": {
-                        "file_name": "readme.doc.exe",
-                        "hashes": {
-                            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-                        },
-                        "size": 40891,
-                        "type": "file-object"
-                    }
-                },
-                "spec_version": "3.0",
-                "type": "cybox-container"
-            },
-            "first_observed": "2016-10-06T15:12:12.174488Z",
+            "created": "2016-10-14T12:27:58.141570Z",
+            "first_observed": "2016-10-14T12:27:58.141570Z",
             "id": "observable-data--0fd77202-c962-41c7-b90f-a906ab3b5392",
-            "last_observed": "2016-10-06T15:12:12.174488Z",
-            "modified": "2016-10-06T15:12:12.174488Z",
+            "last_observed": "2016-10-14T12:27:58.141570Z",
+            "modified": "2016-10-14T12:27:58.141570Z",
             "number_observed": 1,
+            "objects": {
+                "0": {
+                    "file_name": "readme.doc.exe",
+                    "hashes": {
+                        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                    },
+                    "size": 40891,
+                    "type": "file"
+                }
+            },
             "type": "observable-data",
             "version": 1
         },
         {
-            "created": "2016-10-06T15:12:12.174488Z",
-            "cybox": {
-                "objects": {
-                    "0": {
-                        "file_name": "readme.doc.exe",
-                        "hashes": {
-                            "sha256": "d7a8fbb307d7809469ca9abcb0082e4f8d5651e46d3cdb762d02d0bf37c9e592"
-                        },
-                        "size": 40891,
-                        "type": "file-object"
-                    }
-                },
-                "spec_version": "3.0",
-                "type": "cybox-container"
-            },
-            "first_observed": "2016-10-06T15:12:12.174488Z",
+            "created": "2016-10-14T12:27:58.141700Z",
+            "first_observed": "2016-10-14T12:27:58.141700Z",
             "id": "observable-data--b74949f0-cf41-4094-9b80-240201a96b60",
-            "last_observed": "2016-10-06T15:12:12.174488Z",
-            "modified": "2016-10-06T15:12:12.174488Z",
+            "last_observed": "2016-10-14T12:27:58.141700Z",
+            "modified": "2016-10-14T12:27:58.141700Z",
             "number_observed": 1,
+            "objects": {
+                "0": {
+                    "file_name": "readme.doc.exe",
+                    "hashes": {
+                        "sha256": "d7a8fbb307d7809469ca9abcb0082e4f8d5651e46d3cdb762d02d0bf37c9e592"
+                    },
+                    "size": 40891,
+                    "type": "file"
+                }
+            },
             "type": "observable-data",
             "version": 1
         }
@@ -64,7 +56,7 @@
         {
             "created": "2014-09-15T14:37:54.297669Z",
             "description": "Malicious Artifact Detected",
-            "id": "relationship--9013514b-3875-43a6-8b22-ebeb8cda4525",
+            "id": "relationship--3870090f-94e6-4b7a-a5cf-400c305cfae2",
             "modified": "2014-09-15T14:37:54.297669Z",
             "name": "part-of",
             "source_ref": "observable-data--0fd77202-c962-41c7-b90f-a906ab3b5392",
@@ -75,7 +67,7 @@
         {
             "created": "2014-09-15T14:37:54.297669Z",
             "description": "Malicious Artifact Detected",
-            "id": "relationship--2f3ac0ae-c85e-48e8-a24a-2a4fd59c81d2",
+            "id": "relationship--58e973b1-98dc-4888-a3c4-b642b0af0360",
             "modified": "2014-09-15T14:37:54.297669Z",
             "name": "part-of",
             "source_ref": "observable-data--b74949f0-cf41-4094-9b80-240201a96b60",
