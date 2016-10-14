@@ -22,6 +22,17 @@ def error(fmt, *args):
     sys.stderr.write("[ERROR] {message}\n".format(message=msg))
 
 
+def identifying_info(stix1x_obj):
+    if stix1x_obj:
+        if hasattr(stix1x_obj, "id_") and stix1x_obj.id_:
+            return str(stix1x_obj.id_)
+        elif hasattr(stix1x_obj, "title") and stix1x_obj.title:
+            return "'" + str(stix1x_obj.title) + "'"
+        elif hasattr(stix1x_obj, "name") and stix1x_obj.name:
+            return "'" + str(stix1x_obj.name) + "'"
+    return "- no identifying information"
+
+
 def canonicalize_label(t):
     t = convert_to_str(t)
     t = t.lower()
@@ -52,13 +63,13 @@ def convert_timestamp(entity, parent_timestamp=None):
         if entity.timestamp is not None:
             return entity.timestamp.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
         else:
-            warn("Timestamp not available, using current time")
+            warn("Timestamp not available for " + identifying_info(entity)+ ", using current time")
             return str(datetime.now().isoformat()) + "Z"
     elif parent_timestamp is not None:
         info("Using enclosing object timestamp")
         return parent_timestamp.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
     else:
-        warn("Timestamp not available, using current time")
+        warn("Timestamp not available for " + identifying_info(entity)+ ", using current time")
         return str(datetime.now().isoformat()) + "Z"
 
 
