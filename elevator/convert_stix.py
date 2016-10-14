@@ -80,7 +80,7 @@ def process_information_source(information_source, so, bundle_instance, parent_c
         so["created_by_ref"] = get_identity_ref(information_source.identity, bundle_instance)
     else:
         so["created_by_ref"] = parent_created_by_ref
-        # TODO: add to description
+    # TODO: add to description
 
 
 def convert_to_open_vocabs(stix20_obj, stix20_property_name, value, vocab_mapping):
@@ -368,23 +368,23 @@ def convert_campaign(camp, bundle_instance):
     if hasattr(camp, "confidence"):
         add_confidence_property_to_description(campaign_instance, camp.confidence)
     if camp.attribution:
-        handle_relationship_to_refs(camp.related_ttps, campaign_instance["id"], bundle_instance, "attributed-to")
+        handle_relationship_to_refs(camp.related_ttps, campaign_instance["id"], bundle_instance, "attributed-to", camp.timestamp)
     if camp.activity is not None:
         for a in camp.activity:
             warn("Campaign/Activity not supported in STIX 2.0")
     if camp.related_ttps is not None:
         # victims use targets, not uses
-        handle_relationship_to_refs(camp.related_ttps, campaign_instance["id"], bundle_instance, "uses")
+        handle_relationship_to_refs(camp.related_ttps, campaign_instance["id"], bundle_instance, "uses", camp.timestamp)
     if camp.related_incidents is not None:
-        handle_relationship_from_refs(camp.related_incidents, campaign_instance["id"], bundle_instance, "attributed-to")
+        handle_relationship_from_refs(camp.related_incidents, campaign_instance["id"], bundle_instance, "attributed-to", camp.timestamp)
     if camp.related_indicators is not None:
-        handle_relationship_from_refs(camp.related_indicators, campaign_instance["id"], bundle_instance, "indicates")
+        handle_relationship_from_refs(camp.related_indicators, campaign_instance["id"], bundle_instance, "indicates", camp.timestamp)
     if camp.attribution is not None:
         for att in camp.attribution:
-            handle_relationship_from_refs(att, campaign_instance["id"], bundle_instance, "attributed-to")
+            handle_relationship_from_refs(att, campaign_instance["id"], bundle_instance, "attributed-to", camp.timestamp)
     if camp.associated_campaigns:
         warn("All associated campaigns relationships of " + camp.id_ + " are assumed to not represent STIX 1.2 versioning")
-        handle_relationship_to_refs(camp.related_coas, campaign_instance["id"], bundle_instance, "related-to")
+        handle_relationship_to_refs(camp.related_coas, campaign_instance["id"], bundle_instance, "related-to", camp.timestamp)
     process_information_source(camp.information_source,
                                campaign_instance,
                                bundle_instance,
@@ -424,7 +424,7 @@ def convert_course_of_action(coa, bundle_instance):
     if coa.related_coas:
         warn("All related coas relationships of " + coa.id_ + " are assumed to not represent STIX 1.2 versioning")
         handle_relationship_to_refs(coa.related_coas, coa_instance["id"], bundle_instance,
-                                    "related-to")
+                                    "related-to", coa.timestamp)
     finish_basic_object(coa.id_, coa_instance, coa)
     return coa_instance
 
@@ -557,7 +557,7 @@ def convert_identity(identity, bundle_instance, parent_timestamp=None, parent_id
             # add other properties to contact_information
     if identity.related_identities:
         warn("All related identitiies relationships {id} are assumed to not represent STIX 1.2 versioning".format(id=((" of " + identity.id_) if identity.id_ else "")))
-        handle_relationship_to_refs(identity.related_identities, identity_instance["id"], bundle_instance, "related-to")
+        handle_relationship_to_refs(identity.related_identities, identity_instance["id"], bundle_instance, "related-to", parent_timestamp)
     finish_basic_object(identity.id_, identity_instance, identity, clear_description)
     if not identity_instance["sectors"]:
         del identity_instance["sectors"]
@@ -602,7 +602,7 @@ def convert_incident(incident, bundle_instance):
     if incident.related_incidents:
         warn("All related ncidents relationships of {id} are assumed to not represent STIX 1.2 versioning".format(id=incident.id_))
         handle_relationship_to_refs(incident.related_incidents, incident_instance["id"], bundle_instance,
-                                    "related-to")
+                                    "related-to", incident.timestamp)
     finish_basic_object(incident.id_, incident_instance, incident)
     return incident_instance
 
@@ -700,19 +700,19 @@ def convert_indicator(indicator, bundle_instance):
                                bundle_instance["created_by_ref"] if "created_by_ref" in bundle_instance else None)
     if indicator.suggested_coas is not None:
         warn("Using related-to")
-        handle_relationship_to_refs(indicator.suggested_coas, indicator_instance["id"], bundle_instance, "related-to")
+        handle_relationship_to_refs(indicator.suggested_coas, indicator_instance["id"], bundle_instance, "related-to", indicator.timestamp)
     if indicator.related_indicators is not None:
         handle_relationship_to_refs(indicator.related_indicators, indicator_instance["id"], bundle_instance,
-                                    "related-to")
+                                    "related-to", indicator.timestamp)
     if indicator.related_campaigns is not None:
         handle_relationship_to_refs(indicator.related_campaigns, indicator_instance["id"], bundle_instance,
-                                    "attributed-to")
+                                    "attributed-to", indicator.timestamp)
     if indicator.indicated_ttps is not None:
-        handle_relationship_to_refs(indicator.indicated_ttps, indicator_instance["id"], bundle_instance, "indicates")
+        handle_relationship_to_refs(indicator.indicated_ttps, indicator_instance["id"], bundle_instance, "indicates", indicator.timestamp)
     if indicator.related_indicators:
         warn("All related indicators relationships of {id} are assumed to not represent STIX 1.2 versioning".format(id=indicator.id_))
         handle_relationship_to_refs(indicator.related_indicators, indicator_instance["id"], bundle_instance,
-                                    "related-to")
+                                    "related-to", indicator.timestamp)
     finish_basic_object(indicator.id_, indicator_instance, indicator)
     return indicator_instance
 
@@ -725,11 +725,9 @@ def convert_observable_data(obs, bundle_instance):
     observed_data_instance = create_basic_object("observable-data", obs)
     # cybox_container = {"type": "cybox-container", "spec_version": "3.0"}
     observed_data_instance["objects"] = convert_cybox_object(obs.object_)
-    observed_time = convert_timestamp(obs)
-    info("No 'first_observed' data on {id} - using timestamp".format(id=obs.id_))
-    observed_data_instance["first_observed"] = observed_time
-    info("No 'last_observed' data on {id} - using timestamp".format(id=obs.id_))
-    observed_data_instance["last_observed"] = observed_time
+    info("'first_observed' and 'last_observed' data not available directly on {id} - using timestamp".format(id=obs.id_))
+    observed_data_instance["first_observed"] = observed_data_instance["created"]
+    observed_data_instance["last_observed"] = observed_data_instance["created"]
     observed_data_instance["number_observed"] = 1 if obs.sighting_count is None else obs.sighting_count
     # created_by
     finish_basic_object(obs.id_, observed_data_instance, obs)
@@ -865,14 +863,14 @@ def convert_threat_actor(threat_actor, bundle_instance):
                                              THREAT_ACTOR_SOPHISTICATION_MAP, True)
     # handle relationships
     if threat_actor.observed_ttps is not None:
-        handle_relationship_to_refs(threat_actor.observed_ttps, threat_actor_instance["id"], bundle_instance, "uses")
+        handle_relationship_to_refs(threat_actor.observed_ttps, threat_actor_instance["id"], bundle_instance, "uses", threat_actor.timestamp)
     if threat_actor.associated_campaigns is not None:
         handle_relationship_from_refs(threat_actor.associated_campaigns, threat_actor_instance["id"], bundle_instance,
-                                      "attributed_to")
+                                      "attributed_to", threat_actor.timestamp)
     if threat_actor.associated_actors:
         warn("All associated actors relationships of {id} are assumed to not represent STIX 1.2 versioning".format(id=threat_actor.id_))
         handle_relationship_to_refs(threat_actor.associated_actors, threat_actor_instance["id"], bundle_instance,
-                                    "related-to")
+                                    "related-to", threat_actor.timestamp)
     process_information_source(threat_actor.information_source, threat_actor_instance, bundle_instance,
                                bundle_instance["created_by_ref"] if "created_by_ref" in bundle_instance else None)
     finish_basic_object(threat_actor.id_, threat_actor_instance, threat_actor)
@@ -887,13 +885,13 @@ def process_ttp_properties(sdo_instance, ttp, bundle_instance, kill_chains_avail
     add_multiple_statement_types_to_description(sdo_instance, ttp.intended_effects, "intended_effect")
     add_string_property_to_description(sdo_instance, "title", ttp.title, False)
     if ttp.exploit_targets is not None:
-        handle_relationship_to_refs(ttp.exploit_targets, sdo_instance["id"], bundle_instance, "targets")
+        handle_relationship_to_refs(ttp.exploit_targets, sdo_instance["id"], bundle_instance, "targets", ttp.timestamp)
     if kill_chains_available:
         convert_kill_chains(ttp.kill_chain_phases, sdo_instance)
     if ttp.related_ttps:
         warn("All related indicators relationships of {id} are assumed to not represent STIX 1.2 versioning".format(id=ttp.id_))
         handle_relationship_to_refs(ttp.related_ttps, sdo_instance["id"], bundle_instance,
-                                    "related-to")
+                                    "related-to", ttp.timestamp)
     if ttp.related_packages is not None:
         for p in ttp.related_packages:
             warn("TTP/Related_Packages on {id} not supported in STIX 2.0".format(id=ttp.id_))
@@ -1113,7 +1111,7 @@ def handle_embedded_object(obj, bundle_instance):
     elif new20s:
         return new20s
     else:
-        warn("No STIX 2.0 object generated from embedded object")
+        warn("No STIX 2.0 object generated from embedded object " + identifying_info(obj))
         return []
 
 
