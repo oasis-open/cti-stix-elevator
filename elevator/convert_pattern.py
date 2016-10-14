@@ -25,6 +25,38 @@ def clear_pattern_mapping():
 
 KEEP_OBSERVABLE_DATA = False
 
+# simulate dynamic variable environment
+
+_DYNAMIC_SCOPING_ENV= {}
+
+def intialize_dynamic_variable(var):
+    global _DYNAMIC_SCOPING_ENV
+    if var in  _DYNAMIC_SCOPING_ENV:
+        raise Exception
+    else:
+        _DYNAMIC_SCOPING_ENV[var] = []
+
+
+def set_dynamic_variable(var, value):
+    global _DYNAMIC_SCOPING_ENV
+    if var not in _DYNAMIC_SCOPING_ENV:
+        intialize_dynamic_variable(var)
+    _DYNAMIC_SCOPING_ENV[var].append(value)
+
+
+def get_dynamic_variable(var):
+    if var not in _DYNAMIC_SCOPING_ENV:
+        raise Exception
+    else:
+        return _DYNAMIC_SCOPING_ENV[var][-1]
+
+
+def pop_dynamic_variable(var):
+    if var not in _DYNAMIC_SCOPING_ENV or not _DYNAMIC_SCOPING_ENV[var]:
+        raise Exception
+    else:
+        _DYNAMIC_SCOPING_ENV[var].pop
+
 
 def need_not(condition):
     return condition == "DoesNotContain"
@@ -61,7 +93,7 @@ def convert_condition(condition):
     # BitwiseAnd
     # BitwiseOr
     elif condition is None:
-        warn("No condition given - assume EQ")
+        warn("No condition given for " + identifying_info(get_dynamic_variable("current_observable")) + " - assume '='")
         return "="
 
 
@@ -88,9 +120,9 @@ def create_term(lhs, condition, rhs):
         return create_term_with_regex(lhs, condition, rhs)
     elif condition == "InclusiveBetween" or condition == "ExclusiveBetween":
         return create_term_with_range(lhs, condition, rhs)
-    elif condition is None:
-        warn("No condition given - assume EQ")
-        return lhs + " EQ '" + str(rhs) + "'"
+#    elif condition is None:
+#        warn("No condition given for " + identifying_info(get_dynamic_variable("current_observable")) + " - assume EQ")
+#        return lhs + " = '" + str(rhs) + "'"
     else:
         try:
             if need_not(condition):
@@ -373,6 +405,7 @@ def convert_observable_composition_to_pattern(obs_comp, bundleInstance, observab
 
 def convert_object_to_pattern(obj):
     prop = obj.properties
+
     if isinstance(prop, Address):
         return convert_address_to_pattern(prop)
     elif isinstance(prop, URI):
@@ -410,9 +443,14 @@ def negate_expression(obs):
 
 
 def convert_observable_to_pattern(obs, bundleInstance, observable_mapping):
-    return ("NOT (" if negate_expression(obs) else "") + \
-           convert_observable_to_pattern_without_negate(obs, bundleInstance, observable_mapping) + \
-           (")" if negate_expression(obs) else "")
+    try:
+        set_dynamic_variable("current_observable", obs)
+        return ("NOT (" if negate_expression(obs) else "") + \
+               convert_observable_to_pattern_without_negate(obs, bundleInstance, observable_mapping) + \
+               (")" if negate_expression(obs) else "")
+    finally:
+        pop_dynamic_variable("current_observable")
+
 
 
 def convert_observable_to_pattern_without_negate(obs, bundleInstance, id_to_observable_mapping):
