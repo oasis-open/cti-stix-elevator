@@ -74,9 +74,10 @@ def convert_condition(condition):
         return "="
     elif condition == "DoesNotEqual":
         return "!="
-    # TODO: CONTAINS is defined to work only with ip addresses
-    elif condition == "Contains" or condition == "DoesNotContain":
-        return "CONTAINS"
+    elif condition == "Contains":
+        return "="
+    elif condition == "DoesNotContain":
+        return "!="
     elif condition == "GreaterThan":
         return ">"
     elif condition == "GreaterThanOrEqual":
@@ -102,6 +103,8 @@ def create_term_with_regex(lhs, condition, rhs):
         return lhs + " MATCHES " + " /^" + rhs + "/"
     elif condition == "EndsWith":
         return lhs + " MATCHES " + " /" + rhs + "$/"
+    elif condition == "Contains" or condition == "DoesNotContain":
+        return lhs + " MATCHES " + " /" + rhs + "/"
 
 
 def create_term_with_range(lhs, condition, rhs):
@@ -114,33 +117,29 @@ def create_term_with_range(lhs, condition, rhs):
         else: # "ExclusiveBetween"
             return "(" + lhs + " GT " + str(rhs[0]) + " AND " + lhs + " LT " + str(rhs[1]) + ")"
 
+def multi_valued_property(object_path):
+    return object_path and object_path.find("*") != -1
 
 def create_term(lhs, condition, rhs):
     if condition == "StartsWith" or condition == "EndsWith":
         return create_term_with_regex(lhs, condition, rhs)
     elif condition == "InclusiveBetween" or condition == "ExclusiveBetween":
         return create_term_with_range(lhs, condition, rhs)
-#    elif condition is None:
-#        warn("No condition given for " + identifying_info(get_dynamic_variable("current_observable")) + " - assume EQ")
-#        return lhs + " = '" + str(rhs) + "'"
     else:
-        try:
-            if need_not(condition):
-                return "NOT (" + lhs + " " + convert_condition(condition) + " '" + str(rhs) + "')"
-            else:
-                return lhs + " " + convert_condition(condition) + " '" + str(rhs) + "'"
-        except TypeError:
-            pass
+        if (condition == "Contains" or condition == "DoesNotContain") and not multi_valued_property(lhs):
+            warn("Used MATCHES operator for " + condition)
+            return ("NOT " if condition == "DoesNotContain" else "") + create_term_with_regex(lhs, condition, rhs)
+        return lhs + " " + convert_condition(condition) + " '" + str(rhs) + "'"
 
-def add_comparison_expression(prop, object_path, first):
+
+def add_comparison_expression(prop, object_path, first, op="AND"):
     if prop is not None:
         if hasattr(prop, "condition"):
             cond = prop.condition
         else:
-            warn("No condition given - assume EQ")
             cond = None
         comparison_expression = create_term(object_path, cond, prop.value)
-        return (" AND " if first else "") + comparison_expression
+        return (" " + op + " " if first else "") + comparison_expression
     return ""
 
 def convert_address_to_pattern(add):
@@ -159,25 +158,58 @@ def convert_address_to_pattern(add):
 def convert_uri_to_pattern(uri):
     return create_term("url:value", uri.value.condition, uri.value.value)
 
+_EMAIL_HEADER_PROPERTIES = { "email-message:subject": [ "subject" ],
+                             "email-message:from_ref": [ "from_", "address_value"],
+                             "email-message:sender_ref": [ "sender" ],
+                             "email-message:date": [ "date"],
+                             "email-message:content_type": [ "content_type"],
+                             "email-message:to_refs[*]": [ "to*", "address_value" ],
+                             "email-message:cc_refs[*]": [ "cc*", "address_value" ],
+                             "email-message:bcc_refs[*]": [ "bcc*", "address_value"]}
+
+def cannonicalize_prop_name(name):
+    if name.find("*") == -1:
+        return name
+    else:
+        return name[:-1]
+
+def create_terms_from_prop_list(prop_list, obj, object_path):
+    if len(prop_list) == 1:
+        prop_1x = prop_list[0]
+        if hasattr(obj, cannonicalize_prop_name(prop_1x)):
+            if multi_valued_property(prop_1x):
+                prop_expr = ""
+                for c in getattr(obj, cannonicalize_prop_name(prop_1x)):
+                    prop_expr += add_comparison_expression(c, object_path, (prop_expr != ""), "OR")
+                return prop_expr
+            else:
+                return add_comparison_expression(getattr(obj, cannonicalize_prop_name(prop_1x)), object_path, False)
+    else:
+        prop_1x, rest_of_prop_list = prop_list[0], prop_list[1:]
+        if hasattr(obj, cannonicalize_prop_name(prop_1x)):
+            if multi_valued_property(prop_1x):
+                prop_expr = ""
+                values = getattr(obj, cannonicalize_prop_name(prop_1x))
+                if values:
+                    for c in values:
+                        prop_expr += (" OR " if prop_expr != "" else "") + create_terms_from_prop_list(rest_of_prop_list, c, object_path)
+                return prop_expr
+            else:
+                return create_terms_from_prop_list(rest_of_prop_list, getattr(obj, cannonicalize_prop_name(prop_1x)), object_path)
+
+def convert_email_header_to_pattern(head):
+    header_expression = ""
+    for object_path, prop_1x_list in _EMAIL_HEADER_PROPERTIES.items():
+        if hasattr(head, cannonicalize_prop_name(prop_1x_list[0])):
+            term = create_terms_from_prop_list(prop_1x_list, head, object_path)
+            if term:
+                header_expression += (" AND " if header_expression != "" else "") + term
+    return header_expression
 
 def convert_email_message_to_pattern(mess):
-    first_one = True
     expression = ""
     if mess.header is not None:
-        header = mess.header
-        if header.to is not None:
-            # is to a list???
-            expression += (" AND " if not first_one else "") + \
-                          create_term("email-message:header.to",
-                                      header.to.condition,
-                                      header.to.value)
-            first_one = False
-        elif header.subject is not None:
-            expression += (" AND " if not first_one else "") + \
-                         create_term("email-message:header.subject",
-                                     header.subject.condition,
-                                     header.subject.value)
-            first_one = False
+        expression += convert_email_header_to_pattern(mess.header)
     if mess.attachments is not None:
         warn("email attachments not handled yet")
     return expression
@@ -369,7 +401,6 @@ _WINDOWS_PROCESS_PROPERTIES = { "service_name": "process:extension_data.windows_
 
 def convert_windows_service_to_pattern(service):
     expression = ""
-
     for prop1_x, object_path in _WINDOWS_PROCESS_PROPERTIES.items():
         if hasattr(service, prop1_x):
             expression += add_comparison_expression(getattr(service, prop1_x), object_path, (expression != ""))
