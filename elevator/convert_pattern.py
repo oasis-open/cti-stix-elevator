@@ -163,14 +163,14 @@ def convert_address_to_pattern(add):
 def convert_uri_to_pattern(uri):
     return create_term("url:value", uri.value.condition, uri.value.value)
 
-_EMAIL_HEADER_PROPERTIES = { "email-message:subject": [ "subject" ],
-                             "email-message:from_ref": [ "from_", "address_value"],
-                             "email-message:sender_ref": [ "sender" ],
-                             "email-message:date": [ "date"],
-                             "email-message:content_type": [ "content_type"],
-                             "email-message:to_refs[*]": [ "to*", "address_value" ],
-                             "email-message:cc_refs[*]": [ "cc*", "address_value" ],
-                             "email-message:bcc_refs[*]": [ "bcc*", "address_value"]}
+_EMAIL_HEADER_PROPERTIES = [ ["email-message:subject", [ "subject" ]],
+                             ["email-message:from_ref", [ "from_", "address_value"]],
+                             ["email-message:sender_ref", [ "sender" ]],
+                             ["email-message:date", [ "date"]],
+                             ["email-message:content_type", [ "content_type"]],
+                             ["email-message:to_refs[*]", [ "to*", "address_value" ]],
+                             ["email-message:cc_refs[*]", [ "cc*", "address_value" ]],
+                             ["email-message:bcc_refs[*]", [ "bcc*", "address_value"]] ]
 
 def cannonicalize_prop_name(name):
     if name.find("*") == -1:
@@ -204,7 +204,9 @@ def create_terms_from_prop_list(prop_list, obj, object_path):
 
 def convert_email_header_to_pattern(head):
     header_expression = ""
-    for object_path, prop_1x_list in _EMAIL_HEADER_PROPERTIES.items():
+    for prop_spec in _EMAIL_HEADER_PROPERTIES:
+        object_path = prop_spec[0]
+        prop_1x_list = prop_spec[1]
         if hasattr(head, cannonicalize_prop_name(prop_1x_list[0])):
             term = create_terms_from_prop_list(prop_1x_list, head, object_path)
             if term:
@@ -219,19 +221,19 @@ def convert_email_message_to_pattern(mess):
         warn("email attachments not handled yet")
     return expression
 
-_PE_FILE_HEADER_PROPERTIES = { "machine": "file:extended_properties.windows_pebinary_ext.file_header:machine",
-                               "time_date_stamp": "file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp",
-                               "number_of_sections": "file:extended_properties.windows_pebinary_ext.file_header.number_of_sections",
-                               "pointer_to_symbol_table": "file:extended_properties.windows_pebinary_ext.file_header.pointer_to_symbol_table",
-                               "number_of_symbols": "file:extended_properties.windows_pebinary_ext.file_header.number_of_symbols",
-                               "size_of_optional_header": "file:extended_properties.windows_pebinary_ext.file_header.size_of_optional_header",
-                               "characteristics": "file:extended_properties.windows_pebinary_ext.file_header.characteristics" }
+_PE_FILE_HEADER_PROPERTIES = [ ["machine", "file:extended_properties.windows_pebinary_ext.file_header:machine"],
+                               ["time_date_stamp", "file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp"],
+                               ["number_of_sections", "file:extended_properties.windows_pebinary_ext.file_header.number_of_sections"],
+                               ["pointer_to_symbol_table", "file:extended_properties.windows_pebinary_ext.file_header.pointer_to_symbol_table"],
+                               ["number_of_symbols", "file:extended_properties.windows_pebinary_ext.file_header.number_of_symbols"],
+                               ["size_of_optional_header", "file:extended_properties.windows_pebinary_ext.file_header.size_of_optional_header"],
+                               ["characteristics", "file:extended_properties.windows_pebinary_ext.file_header.characteristics"]]
 
-_PE_SECTION_HEADER_PROPERTIES = { "name": "file:extended_properties.windows_pebinary_ext.section[*].name",
-                                  "virtual_size": "file:extended_properties.windows_pebinary_ext.section[*].size" }
+_PE_SECTION_HEADER_PROPERTIES = [ ["name", "file:extended_properties.windows_pebinary_ext.section[*].name"],
+                                  ["virtual_size", "file:extended_properties.windows_pebinary_ext.section[*].size" ]]
 
-_ARCHIVE_FILE_PROPERTIES = { "comment": "file:extended_properties.archive_file.comment",
-                             "version": "file:extended_properties.archive_file.version" }
+_ARCHIVE_FILE_PROPERTIES = [ ["comment", "file:extended_properties.archive_file.comment"],
+                             ["version", "file:extended_properties.archive_file.version" ]]
 
 
 def convert_windows_executable_file_to_pattern(file):
@@ -240,7 +242,9 @@ def convert_windows_executable_file_to_pattern(file):
         file_header = file.headers.file_header
         if file_header:
             file_header_expression = ""
-            for prop_1x, object_path in _PE_FILE_HEADER_PROPERTIES.items():
+            for prop_spec in _PE_FILE_HEADER_PROPERTIES:
+                prop_1x = prop_spec[0]
+                object_path = prop_spec[1]
                 if hasattr(file_header, prop_1x):
                     file_header_expression += add_comparison_expression(getattr(file_header, prop_1x), object_path, (file_header_expression != ""))
             if file_header.hashes is not None:
@@ -263,7 +267,9 @@ def convert_windows_executable_file_to_pattern(file):
         for s in sections:
             section_expression = ""
             if s.section_header:
-                for prop_1x, object_path in _PE_SECTION_HEADER_PROPERTIES.items():
+                for prop_spec in _PE_SECTION_HEADER_PROPERTIES:
+                    prop_1x = prop_spec[0]
+                    object_path = prop_spec[1]
                     if hasattr(s.section_header, prop_1x):
                         section_expression += add_comparison_expression(getattr(s.section_header, prop_1x), object_path, (section_expression != ""))
             if s.entropy:
@@ -289,7 +295,9 @@ def convert_windows_executable_file_to_pattern(file):
 
 def convert_archive_file_to_pattern(file):
     expression = ""
-    for prop_1x, object_path in _ARCHIVE_FILE_PROPERTIES.items():
+    for prop_spec in _ARCHIVE_FILE_PROPERTIES:
+        prop_1x = prop_spec[0]
+        object_path = prop_spec[1]
         if hasattr(file, prop_1x):
             expression += add_comparison_expression(getattr(file, prop_1x), object_path, (expression != ""))
     return expression
@@ -321,13 +329,13 @@ def convert_file_name_and_path_to_pattern(file):
 
 
 
-_FILE_PROPERTIES = { "size_in_bytes": "file:size",
-                     "magic_number": "file:magic_number_hex",
-                     "created_time": "file:created",
-                     "modified_time": "file:modified",
-                     "accessed_time": "file:accessed",
-                     "encyption_algorithm": "file:encyption_algorithm",
-                     "decryption_key": "file:decryption_key" }
+_FILE_PROPERTIES = [ ["size_in_bytes", "file:size"],
+                     ["magic_number", "file:magic_number_hex"],
+                     ["created_time", "file:created"],
+                     ["modified_time", "file:modified"],
+                     ["accessed_time", "file:accessed"],
+                     ["encyption_algorithm", "file:encyption_algorithm"],
+                     ["decryption_key", "file:decryption_key" ]]
 
 
 def convert_file_to_pattern(file):
@@ -337,7 +345,9 @@ def convert_file_to_pattern(file):
         if hash_expression:
             expression += hash_expression
     expression += convert_file_name_and_path_to_pattern(file)
-    for prop_1x, object_path in _FILE_PROPERTIES.items():
+    for prop_spec in _FILE_PROPERTIES:
+        prop_1x = prop_spec[0]
+        object_path = prop_spec[1]
         if hasattr(file, prop_1x):
             expression += add_comparison_expression(getattr(file, prop_1x), object_path, (expression != ""))
     if isinstance(file, WinExecutableFile):
@@ -346,9 +356,9 @@ def convert_file_to_pattern(file):
         expression += (" AND " if expression != "" else "") + add_parens_if_needed(convert_archive_file_to_pattern(file))
     return expression
 
-_REGISTRY_KEY_VALUES_PROPERTIES = { "data": "win-registry-key:values[*].data",
-                                    "name": "win-registry-key:values[*].name",
-                                    "datatype": "win-registry-key:values[*].data_type" }
+_REGISTRY_KEY_VALUES_PROPERTIES = [["data", "win-registry-key:values[*].data"],
+                                    ["name", "win-registry-key:values[*].name"],
+                                    ["datatype", "win-registry-key:values[*].data_type" ]]
 
 
 def convert_registry_key_to_pattern(reg_key):
@@ -367,7 +377,9 @@ def convert_registry_key_to_pattern(reg_key):
         values_expression = ""
         for v in reg_key.values:
             value_expression = ""
-            for prop_1x, object_path in _REGISTRY_KEY_VALUES_PROPERTIES.items():
+            for prop_spec in _REGISTRY_KEY_VALUES_PROPERTIES:
+                prop_1x = prop_spec[0]
+                object_path = prop_spec[1]
                 if hasattr(v, prop_1x):
                     value_expression += add_comparison_expression(getattr(v, prop_1x), object_path, (value_expression != ""))
             values_expression += (" OR " if values_expression != "" else "") + value_expression
@@ -398,19 +410,21 @@ def convert_windows_process_to_pattern(process):
             warn("Window handles are not a part of CybOX 3.0")
     return expression
 
-_WINDOWS_PROCESS_PROPERTIES = { "service_name": "process:extension_data.windows_service_ext.service_name",
-                                "display_name": "process:extension_data.windows_service_ext.display_name",
-                                "startup_command_line": "process:extension_data.windows_service_ext.startup_command_line",
-                                "start_type": "process:extension_data.windows_service_ext.start_type",
-                                "service_type": "process:extension_data.windows_service_ext.service_type",
-                                "service_status": "process:extension_data.windows_service_ext.service_status" }
+_WINDOWS_PROCESS_PROPERTIES = [ ["service_name", "process:extension_data.windows_service_ext.service_name"],
+                                ["display_name", "process:extension_data.windows_service_ext.display_name"],
+                                ["startup_command_line", "process:extension_data.windows_service_ext.startup_command_line"],
+                                ["start_type", "process:extension_data.windows_service_ext.start_type"],
+                                ["service_type", "process:extension_data.windows_service_ext.service_type"],
+                                ["service_status", "process:extension_data.windows_service_ext.service_status" ]]
 
 
 def convert_windows_service_to_pattern(service):
     expression = ""
-    for prop1_x, object_path in _WINDOWS_PROCESS_PROPERTIES.items():
-        if hasattr(service, prop1_x):
-            expression += add_comparison_expression(getattr(service, prop1_x), object_path, (expression != ""))
+    for prop_spec in _WINDOWS_PROCESS_PROPERTIES:
+        prop_1x = prop_spec[0]
+        object_path = prop_spec[1]
+        if hasattr(service, prop_1x):
+            expression += add_comparison_expression(getattr(service, prop_1x), object_path, (expression != ""))
     if hasattr(service, "description_list") and service.description_list:
         description_expression = ""
         for d in service.description_list:
