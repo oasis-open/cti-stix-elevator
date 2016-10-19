@@ -10,7 +10,7 @@
             ],
             "modified": "2014-10-31T15:52:13.127931Z",
             "name": "Malicious E-mail",
-            "pattern": "email-message:header.subject MATCHES  /^[IMPORTANT] Please Review Before/",
+            "pattern": "email-message:subject MATCHES  /^[IMPORTANT] Please Review Before/",
             "pattern_lang": "cybox",
             "type": "indicator",
             "valid_from": "2014-10-31T15:52:13.127931Z",
@@ -25,7 +25,7 @@
             ],
             "modified": "2014-10-31T15:52:13.126999Z",
             "name": "Malicious E-mail Subject Line",
-            "pattern": "email-message:header.subject MATCHES  /^[IMPORTANT] Please Review Before/",
+            "pattern": "email-message:subject MATCHES  /^[IMPORTANT] Please Review Before/",
             "pattern_lang": "cybox",
             "type": "indicator",
             "valid_from": "2014-10-31T15:52:13.126999Z",
@@ -49,7 +49,7 @@
     "relationships": [
         {
             "created": "2014-10-31T15:52:13.127931Z",
-            "id": "relationship--73aade14-cf7f-4fb2-b36e-93781e8509c5",
+            "id": "relationship--134e1a3b-e7dd-48a4-8f1a-d657fdfb3a82",
             "modified": "2014-10-31T15:52:13.127931Z",
             "name": "indicates",
             "source_ref": "indicator--8cf9236f-1b96-493d-98be-0c1c1e8b62d7",
@@ -58,7 +58,7 @@
         },
         {
             "created": "2014-10-31T15:52:13.126999Z",
-            "id": "relationship--26b52406-28e6-4bbe-a79c-658ab98061df",
+            "id": "relationship--3de176af-469b-4dd7-aef4-e816133c91f3",
             "modified": "2014-10-31T15:52:13.126999Z",
             "name": "indicates",
             "source_ref": "indicator--b06b0eb7-61dd-4338-a094-0290c380fbd8",
@@ -67,7 +67,7 @@
         },
         {
             "created": "2014-10-31T15:52:13.127668Z",
-            "id": "relationship--1dbefa9d-3c21-4355-8097-c3849c9440cf",
+            "id": "relationship--73830cbc-3843-400b-a346-7f3d555427c5",
             "modified": "2014-10-31T15:52:13.127668Z",
             "name": "indicates",
             "source_ref": "indicator--2e17f6fe-3a4d-438a-911a-e509ba1b9933",

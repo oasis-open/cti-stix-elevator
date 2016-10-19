@@ -19,7 +19,7 @@
     "relationships": [
         {
             "created": "2014-05-08T09:00:00.000000Z",
-            "id": "relationship--22e071a6-600f-4d5c-ad8e-87ef2800e463",
+            "id": "relationship--509fd371-ecfa-4535-800f-d22259924193",
             "modified": "2014-05-08T09:00:00.000000Z",
             "name": "indicates",
             "source_ref": "indicator--53fe3b22-0201-47cf-85d0-97c02164528d",

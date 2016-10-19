@@ -140,9 +140,10 @@ def add_comparison_expression(prop, object_path, first):
         if hasattr(prop, "condition"):
             cond = prop.condition
         else:
+            warn("No condition given - assume EQ")
             cond = None
         comparison_expression = create_term(object_path, cond, prop.value)
-        return (" " + op + " " if first else "") + comparison_expression
+        return (" AND " if first else "") + comparison_expression
     return ""
 
 

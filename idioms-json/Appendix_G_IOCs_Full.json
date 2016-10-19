@@ -1,11 +1,11 @@
 {
-    "created_by_ref": "identity--109414f4-4d0e-4ce9-a1e3-c29cf6ba3dfe",
+    "created_by_ref": "identity--a621c165-1529-492a-bf10-6f402c3fcfc1",
     "id": "bundle--190593d6-1861-4cfe-b212-c016fce1e248",
     "identities": [
         {
-            "created": "2016-10-14T12:27:52.824819Z",
-            "id": "identity--109414f4-4d0e-4ce9-a1e3-c29cf6ba3dfe",
-            "modified": "2016-10-14T12:27:52.824819Z",
+            "created": "2016-10-19T13:04:05.188811Z",
+            "id": "identity--a621c165-1529-492a-bf10-6f402c3fcfc1",
+            "modified": "2016-10-19T13:04:05.188811Z",
             "name": "MITRE",
             "type": "identity",
             "version": 1
@@ -14,7 +14,7 @@
     "indicators": [
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "created_by_ref": "identity--109414f4-4d0e-4ce9-a1e3-c29cf6ba3dfe",
+            "created_by_ref": "identity--a621c165-1529-492a-bf10-6f402c3fcfc1",
             "description": "\\n                This family of malware is a utility designed to upload files to Google Docs. Nearly all communications are with docs.google.com are SSL encrypted. The malware does not use Google's published API to interact with their services. The malware does not currently work with Google Docs. It does not detect HTTP 302 redirections and will get caught in an infinite loop attempting to parse results from Google that are not present.\\n            ",
             "id": "indicator--8d88dd33-1e16-4814-814e-662fb0ac842f",
             "labels": [
@@ -30,7 +30,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "created_by_ref": "identity--109414f4-4d0e-4ce9-a1e3-c29cf6ba3dfe",
+            "created_by_ref": "identity--a621c165-1529-492a-bf10-6f402c3fcfc1",
             "description": "\\n                Members of this family are full featured backdoors that communicates with a Web-based Command & Control (C2) server over SSL. Features include interactive shell, gathering system info, uploading and downloading files, and creating and killing processes, Malware in this family usually communicates with a hard-coded domain using SSL on port 443. Some members of this family rely on launchers to establish persistence mechanism for them. Others contains functionality that allows it to install itself, replacing an existing Windows service, and uninstall itself. Several variants use %SystemRoot%\\\\Tasks or %WinDir%\\\\Tasks as working directories, additional malware artifacts may be found there.\\n            ",
             "id": "indicator--d577b671-abca-4318-ad94-27c793544168",
             "labels": [
@@ -46,7 +46,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "created_by_ref": "identity--109414f4-4d0e-4ce9-a1e3-c29cf6ba3dfe",
+            "created_by_ref": "identity--a621c165-1529-492a-bf10-6f402c3fcfc1",
             "description": "\\n                This family of malware is designed to operate as a service and provides remote command execution and file transfer capabilities to a fixed IP address or domain name. All communication with the C2 server happens over port 443 using SSL.\\nThis family can be installed as a service DLL. Some variants allow for uninstallation.\\n            ",
             "id": "indicator--554448f5-8e09-4c72-9dd9-5e2e1047eb33",
             "labels": [
@@ -62,7 +62,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "created_by_ref": "identity--109414f4-4d0e-4ce9-a1e3-c29cf6ba3dfe",
+            "created_by_ref": "identity--a621c165-1529-492a-bf10-6f402c3fcfc1",
             "description": "\\n                BOUNCER will load an extracted DLL into memory, and then will call the DLL's dump export.  The dump export is called with the parameters passed via the command line to the BOUNCER executable.  It requires at least two arguments, the IP and port to send the password dump information.  It can accept at most five arguments, including a proxy IP, port and an x.509 key for SSL authentication.  The DLL backdoor has the capability to execute arbitrary commands, collect database and server information, brute force SQL login credentials, launch arbitrary programs, create processes and threads, delete files, and redirect network traffic.\\n            ",
             "id": "indicator--36437a22-f0d7-4a48-bec4-153e19045f8d",
             "labels": [
@@ -78,7 +78,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "created_by_ref": "identity--109414f4-4d0e-4ce9-a1e3-c29cf6ba3dfe",
+            "created_by_ref": "identity--a621c165-1529-492a-bf10-6f402c3fcfc1",
             "description": "\\n                LONGRUN is a backdoor designed to communicate with a hard-coded IP address and provide the attackers with a custom interactive shell.  It supports file uploads and downloads, and executing arbitrary commands on the compromised machine.  When LONGRUN executes, it first loads configuration data stored as an obfuscated string inside the PE resource section. The distinctive string thequickbrownfxjmpsvalzydg is used as part of the input to the decoding algorithm.  When the configuration data string is decoded it is parsed and treated as an IP and port number.  The malware then connects to the host and begins interacting with it over a custom protocol.\\n            ",
             "id": "indicator--dc2eb534-d2c4-421c-89d0-9bc6762009c5",
             "labels": [
@@ -94,7 +94,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "created_by_ref": "identity--109414f4-4d0e-4ce9-a1e3-c29cf6ba3dfe",
+            "created_by_ref": "identity--a621c165-1529-492a-bf10-6f402c3fcfc1",
             "description": "\\n                A WEBC2 backdoor is designed to retrieve a Web page from a pre-determined C2 server. It expects the Web page to contain special HTML tags; the backdoor will attempt to interpret the data between the tags as commands. This family of malware is a backdoor capable of downloading files and updating its configuration.\\nCommunication with the command and control (C2) server uses a combination of single-byte XOR and Base64 encoded data wrapped in standard HTML tags. The malware family installs a registry key as a persistence mechanism.\\n            ",
             "id": "indicator--2322085d-c557-4278-affc-633be5f36fe5",
             "labels": [
@@ -102,7 +102,7 @@
             ],
             "modified": "2015-05-15T09:00:00.000000Z",
             "name": "WEBC2-BOLID (FAMILY)",
-            "pattern": "(file:hashes:md5 = '567395a3c720fcd09eb75b6c188b8687' OR file:hashes:md5 = '8153b612499dbf432e2d9805b20ae783' OR file:hashes:md5 = 'd8238e950608e5aba3d3e9e83e9ee2cc' OR file:hashes:md5 = '53b263dd41838aa178a5ced338a207f3' OR file:hashes:md5 = '5ff3269faca4a67d1a4c537154aaad4b' OR file:hashes:md5 = '1ea61a0945bde3c6f41e12bc01928d37' OR file:hashes:md5 = '9675827a495f4ba6a4efd4dd70932b7c' OR ((file:size = '32768' OR file:size = '73728') AND (file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2012-05-07T03:19:17Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2012-05-28T08:12:40Z') AND (file:file_name CONTAINS 'AcroRd32.exe' OR file:file_name CONTAINS 'hkcmd.exe' OR file:file_name CONTAINS 'svchost.exe' OR file:file_name CONTAINS 'google.exe' OR file:file_name CONTAINS 'wins.exe')) OR (win-registry-key:key CONTAINS 'Software\\Microsoft\\Windows\\CurrentVersion\\Run\\load' AND (win-registry-key:values[*].data CONTAINS 'acrord32.exe' OR win-registry-key:values[*].data CONTAINS 'hkcmd.exe' OR win-registry-key:values[*].data CONTAINS 'wins.exe' OR win-registry-key:values[*].data CONTAINS 'svchost.exe')))",
+            "pattern": "(file:hashes:md5 = '567395a3c720fcd09eb75b6c188b8687' OR file:hashes:md5 = '8153b612499dbf432e2d9805b20ae783' OR file:hashes:md5 = 'd8238e950608e5aba3d3e9e83e9ee2cc' OR file:hashes:md5 = '53b263dd41838aa178a5ced338a207f3' OR file:hashes:md5 = '5ff3269faca4a67d1a4c537154aaad4b' OR file:hashes:md5 = '1ea61a0945bde3c6f41e12bc01928d37' OR file:hashes:md5 = '9675827a495f4ba6a4efd4dd70932b7c' OR ((file:size = '32768' OR file:size = '73728') AND (file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2012-05-07T03:19:17Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2012-05-28T08:12:40Z') AND (file:file_name MATCHES  /AcroRd32.exe/ OR file:file_name MATCHES  /hkcmd.exe/ OR file:file_name MATCHES  /svchost.exe/ OR file:file_name MATCHES  /google.exe/ OR file:file_name MATCHES  /wins.exe/)) OR (win-registry-key:key MATCHES  /Software\\Microsoft\\Windows\\CurrentVersion\\Run\\load/ AND (win-registry-key:values[*].data = 'acrord32.exe' OR win-registry-key:values[*].data = 'hkcmd.exe' OR win-registry-key:values[*].data = 'wins.exe' OR win-registry-key:values[*].data = 'svchost.exe')))",
             "pattern_lang": "cybox",
             "type": "indicator",
             "valid_from": "2015-05-15T09:00:00.000000Z",
@@ -110,7 +110,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "created_by_ref": "identity--109414f4-4d0e-4ce9-a1e3-c29cf6ba3dfe",
+            "created_by_ref": "identity--a621c165-1529-492a-bf10-6f402c3fcfc1",
             "description": "\\n                This family of malware is a backdoor that tunnels its connection through a preconfigured proxy. The malware communicates with a remote command and control server over HTTPS via the proxy. The malware installs itself as a Windows service with a service name supplied by the attacker but defaults to IPRIP if no service name is provided during install.\\n            ",
             "id": "indicator--be16e289-114e-4f01-bc85-aa72f03a50dc",
             "labels": [
@@ -126,7 +126,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "created_by_ref": "identity--109414f4-4d0e-4ce9-a1e3-c29cf6ba3dfe",
+            "created_by_ref": "identity--a621c165-1529-492a-bf10-6f402c3fcfc1",
             "description": "\\n                This family of malware consists of backdoors that attempt to fetch encoded commands over HTTP. The malware is capable of downloading a file, downloading and executing a file, executing arbitrary shell commands, or sleeping a specified interval.\\n            ",
             "id": "indicator--34a5f05a-f830-4d55-bb09-c1e8745a998d",
             "labels": [
@@ -142,7 +142,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "created_by_ref": "identity--109414f4-4d0e-4ce9-a1e3-c29cf6ba3dfe",
+            "created_by_ref": "identity--a621c165-1529-492a-bf10-6f402c3fcfc1",
             "description": "\\n                This family of malware will beacon out at random intervals to the remote attacker. The attacker can run programs, execute arbitrary commands, and easily upload and download files. This IOC looks for both the dropper file and the backdoor.\\n            ",
             "id": "indicator--706a8e36-77d0-41bb-81b4-05ca92f4d2d1",
             "labels": [
@@ -158,7 +158,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "created_by_ref": "identity--109414f4-4d0e-4ce9-a1e3-c29cf6ba3dfe",
+            "created_by_ref": "identity--a621c165-1529-492a-bf10-6f402c3fcfc1",
             "description": "\\n                The SEASALT malware family communicates via a custom binary protocol.  It is capable of gathering some basic system information, file system manipulation, file upload and download, process creation and termination, and spawning an interactive reverse shell.  The malware maintains persistence by installing itself as a service.\\n            ",
             "id": "indicator--32ce1273-fc66-4de6-9e1d-fc6c55cdcae9",
             "labels": [
@@ -166,7 +166,7 @@
             ],
             "modified": "2015-05-15T09:00:00.000000Z",
             "name": "SEASALT (FAMILY)",
-            "pattern": "(file:hashes:md5 = 'f0726aadcf5d66daf528f79ba8507113' OR file:hashes:md5 = '5e0df5b28a349d46ac8cc7d9e5e61a96' OR process:extension_data.windows_service_ext.service_name CONTAINS 'SaSaut' OR process:extension_data.windows_service_ext.descriptions[*] CONTAINS 'Authorization and authentication service for starting and accessing machines.' OR win-registry-key:key CONTAINS 'CurrentVersion\\SvcHost\\SaSaut' OR ((file:file_name = 'setup.dll' OR file:file_name = 'spool.exe' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2010-03-30T09:00:00Z') AND (file:size = '37376' OR file:size = '50176')) OR (win-registry-key:values[*].data CONTAINS 'java.exe' AND win-registry-key:key CONTAINS 'CurrentVersion\\Run\\sysinfo'))",
+            "pattern": "(file:hashes:md5 = 'f0726aadcf5d66daf528f79ba8507113' OR file:hashes:md5 = '5e0df5b28a349d46ac8cc7d9e5e61a96' OR process:extension_data.windows_service_ext.service_name MATCHES  /SaSaut/ OR process:extension_data.windows_service_ext.descriptions[*] = 'Authorization and authentication service for starting and accessing machines.' OR win-registry-key:key MATCHES  /CurrentVersion\\SvcHost\\SaSaut/ OR ((file:file_name = 'setup.dll' OR file:file_name = 'spool.exe' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2010-03-30T09:00:00Z') AND (file:size = '37376' OR file:size = '50176')) OR (win-registry-key:values[*].data = 'java.exe' AND win-registry-key:key MATCHES  /CurrentVersion\\Run\\sysinfo/))",
             "pattern_lang": "cybox",
             "type": "indicator",
             "valid_from": "2015-05-15T09:00:00.000000Z",
@@ -174,7 +174,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "created_by_ref": "identity--109414f4-4d0e-4ce9-a1e3-c29cf6ba3dfe",
+            "created_by_ref": "identity--a621c165-1529-492a-bf10-6f402c3fcfc1",
             "description": "\\n                A WEBC2 backdoor is designed to retrieve a Web page from a pre-determined C2 server. It expects the Web page to contain special HTML tags; the backdoor will attempt to interpret the data between the tags as commands. This malware family is a only a downloader which operates over the HTTP protocol with a hard-coded URL. If directed, it has the capability to download, decompress, and execute compressed binaries.\\n            ",
             "id": "indicator--9658ae72-3f2c-4fa9-850b-aa86e8d976d6",
             "labels": [
@@ -190,7 +190,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "created_by_ref": "identity--109414f4-4d0e-4ce9-a1e3-c29cf6ba3dfe",
+            "created_by_ref": "identity--a621c165-1529-492a-bf10-6f402c3fcfc1",
             "description": "\\n                The WARP malware family is an HTTP based backdoor written in C++, and the majority of its code base is borrowed from source code available in the public domain.  Network communications are implemented using the same WWW client library (w3c.cpp) available from www.dankrusi.com/file_69653F3336383837.html.  The malware has system survey functionality (collects hostname, current user, system uptime, CPU speed, etc.) taken directly from the BO2K backdoor available from www.bo2k.com.  It also contains the hard disk identification code found at www.winsim.com/diskid32/diskid32.cpp.  When the WARP executing remote commands, the malware creates a copy of the ?%SYSTEMROOT%\\\\system32\\\\cmd.exe? file as '%USERPROFILE%\\\\Temp\\\\~ISUN32.EXE'.  The version signature information of the duplicate executable is zeroed out.  Some WARP variants maintain persistence through the use of DLL search order hijacking.\\n            ",
             "id": "indicator--85b02254-b7a0-4eaa-876d-bec18dd3c55c",
             "labels": [
@@ -206,7 +206,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "created_by_ref": "identity--109414f4-4d0e-4ce9-a1e3-c29cf6ba3dfe",
+            "created_by_ref": "identity--a621c165-1529-492a-bf10-6f402c3fcfc1",
             "description": "\\n                A WEBC2 backdoor is designed to retrieve a Web page from a pre-determined C2 server. It expects the Web page to contain special HTML tags; the backdoor will attempt to interpret the data between the tags as commands. Members of this family of malware act only as downloaders and droppers for other malware. They communicate with a hard-coded C2 server, reading commands embedded in HTML comment fields. Some variants are executables which act upon execution, others are DLLs which can be attached to services or loaded through search order hijacking.\\n            ",
             "id": "indicator--f799cdd4-57ae-40e9-8ee6-bcacc3f39430",
             "labels": [
@@ -214,7 +214,7 @@
             ],
             "modified": "2015-05-15T09:00:00.000000Z",
             "name": "WEBC2-CSON (FAMILY)",
-            "pattern": "(file:hashes:md5 = 'a38a367d6696ba90b2e778a5a4bf98fd' OR file:hashes:md5 = '4a2320b41a5216c741bf63fce562961a' OR file:hashes:md5 = '5537bdce991797198a9ff97ff1492f90' OR file:hashes:md5 = '0115338e11f85d7a2226933712acaae8' OR file:hashes:md5 = '277964807a66aeeb6bd81dbfcaa3e4e6' OR file:hashes:md5 = 'f802b6e448c054c9c16b97ff85646825' OR file:hashes:md5 = '7d3140bd028f70f1fa865364b69c5999' OR file:hashes:md5 = '18316e6ebb356a66c8ff51e73c1bcc8a' OR file:hashes:md5 = '91dc97c4b66e3282e1aa831e0bb0bb14' OR file:hashes:md5 = '53600687ec97c297f03b4f0f4710d0c5' OR file:hashes:md5 = '4192479b055b2b21cb7e6c803b765d34' OR file:hashes:md5 = '51ce169debea41314f591290839fd55f' OR file:hashes:md5 = '50f35b7c86aede891a72fcb85f06b0b7' OR file:hashes:md5 = '575836ebb1b8849f04e994e9160370e4' OR file:hashes:md5 = '73d125f84503bd87f8142cf2ba8ab05e' OR file:hashes:md5 = 'd22863c5e6f098a4b52688b021beef0a' OR file:hashes:md5 = '3ea7bf3b469499f0f6d4a78af865138f' OR file:hashes:md5 = '2d57aa4e7f2f4088f1b96313b24c7602' OR file:hashes:md5 = 'd6a01b61f490488d61dfb9376186d844' OR file:hashes:md5 = 'b1ee00cec6c2318fa86f320dd7fc99a8' OR file:hashes:md5 = '6ca59c9c4165796e08ba6ca3eeffdee6' OR file:hashes:md5 = '66c287675cd4c7172590f71181e723a8' OR file:hashes:md5 = 'f1e5d9bf7705b4dc5be0b8a90b73a863' OR ((file:file_name = 'update.exe' OR file:file_name = 'AcroRd32.exe' OR file:file_name = 'svchost.exe' OR file:file_name = 'nwsapagent.dll' OR file:file_name = 'update.exe' OR file:file_name = 'regsvr.exe' OR file:file_name = 'cmd.exe' OR file:file_name = 'ntshrui.dll' OR file:file_name = 'ipripp.dll' OR file:file_name = 'web.exe' OR file:file_name = 'dataaa.exe' OR file:file_name = 'dc120.exe' OR file:file_name = 'udaterui.exe' OR file:file_name = 'firefox.exe') AND (file:size = '10240' OR file:size = '24064' OR file:size = '33280' OR file:size = '55808' OR file:size = '66048' OR file:size = '83456' OR file:size = '9728') AND (file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2010-12-02T08:05:26Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2010-12-03T03:07:18Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2010-12-22T08:02:25Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-03-07T09:42:59Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-03-23T14:34:10Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-03-23T14:36:19Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-04-14T07:22:24Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-04-21T07:51:21Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-09-20T03:40:51Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-09-20T03:50:48Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-10-27T09:35:26Z')) OR (file:extended_properties.windows_pebinary_ext.pe_type CONTAINS 'dll'))",
+            "pattern": "(file:hashes:md5 = 'a38a367d6696ba90b2e778a5a4bf98fd' OR file:hashes:md5 = '4a2320b41a5216c741bf63fce562961a' OR file:hashes:md5 = '5537bdce991797198a9ff97ff1492f90' OR file:hashes:md5 = '0115338e11f85d7a2226933712acaae8' OR file:hashes:md5 = '277964807a66aeeb6bd81dbfcaa3e4e6' OR file:hashes:md5 = 'f802b6e448c054c9c16b97ff85646825' OR file:hashes:md5 = '7d3140bd028f70f1fa865364b69c5999' OR file:hashes:md5 = '18316e6ebb356a66c8ff51e73c1bcc8a' OR file:hashes:md5 = '91dc97c4b66e3282e1aa831e0bb0bb14' OR file:hashes:md5 = '53600687ec97c297f03b4f0f4710d0c5' OR file:hashes:md5 = '4192479b055b2b21cb7e6c803b765d34' OR file:hashes:md5 = '51ce169debea41314f591290839fd55f' OR file:hashes:md5 = '50f35b7c86aede891a72fcb85f06b0b7' OR file:hashes:md5 = '575836ebb1b8849f04e994e9160370e4' OR file:hashes:md5 = '73d125f84503bd87f8142cf2ba8ab05e' OR file:hashes:md5 = 'd22863c5e6f098a4b52688b021beef0a' OR file:hashes:md5 = '3ea7bf3b469499f0f6d4a78af865138f' OR file:hashes:md5 = '2d57aa4e7f2f4088f1b96313b24c7602' OR file:hashes:md5 = 'd6a01b61f490488d61dfb9376186d844' OR file:hashes:md5 = 'b1ee00cec6c2318fa86f320dd7fc99a8' OR file:hashes:md5 = '6ca59c9c4165796e08ba6ca3eeffdee6' OR file:hashes:md5 = '66c287675cd4c7172590f71181e723a8' OR file:hashes:md5 = 'f1e5d9bf7705b4dc5be0b8a90b73a863' OR ((file:file_name = 'update.exe' OR file:file_name = 'AcroRd32.exe' OR file:file_name = 'svchost.exe' OR file:file_name = 'nwsapagent.dll' OR file:file_name = 'update.exe' OR file:file_name = 'regsvr.exe' OR file:file_name = 'cmd.exe' OR file:file_name = 'ntshrui.dll' OR file:file_name = 'ipripp.dll' OR file:file_name = 'web.exe' OR file:file_name = 'dataaa.exe' OR file:file_name = 'dc120.exe' OR file:file_name = 'udaterui.exe' OR file:file_name = 'firefox.exe') AND (file:size = '10240' OR file:size = '24064' OR file:size = '33280' OR file:size = '55808' OR file:size = '66048' OR file:size = '83456' OR file:size = '9728') AND (file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2010-12-02T08:05:26Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2010-12-03T03:07:18Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2010-12-22T08:02:25Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-03-07T09:42:59Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-03-23T14:34:10Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-03-23T14:36:19Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-04-14T07:22:24Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-04-21T07:51:21Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-09-20T03:40:51Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-09-20T03:50:48Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-10-27T09:35:26Z')) OR (file:extended_properties.windows_pebinary_ext.pe_type MATCHES  /dll/))",
             "pattern_lang": "cybox",
             "type": "indicator",
             "valid_from": "2015-05-15T09:00:00.000000Z",
@@ -222,7 +222,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "created_by_ref": "identity--109414f4-4d0e-4ce9-a1e3-c29cf6ba3dfe",
+            "created_by_ref": "identity--a621c165-1529-492a-bf10-6f402c3fcfc1",
             "description": "\\n                The COMBOS malware family is an HTTP based backdoor.  The backdoor is capable of file upload, file download, spawning a interactive reverse shell, and terminating its own process.  The backdoor may decrypt stored Internet Explorer credentials from the local system and transmit the credentials to the C2 server.  The COMBOS malware family does not have any persistence mechanisms built into itself.\\n            ",
             "id": "indicator--c8a6f10c-3540-45a0-a94b-c367374770a7",
             "labels": [
@@ -238,7 +238,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "created_by_ref": "identity--109414f4-4d0e-4ce9-a1e3-c29cf6ba3dfe",
+            "created_by_ref": "identity--a621c165-1529-492a-bf10-6f402c3fcfc1",
             "description": "\\n                The WEBC2 malware family is designed to retrieve a Web page from a pre-determined C2 server. It expects the Web page to contain special HTML tags; the backdoor will attempt to interpret the data between the tags as commands.  The WEBC2-QBP variant will search for two strings in a HTML comment. The first will be \"2010QBP \" followed by \" 2010QBP//--\".  Inside these tags will be a DES-encrypted string. \\n            ",
             "id": "indicator--62355460-b3c7-4135-bfc8-c6c351391786",
             "labels": [
@@ -246,7 +246,7 @@
             ],
             "modified": "2015-05-15T09:00:00.000000Z",
             "name": "WEBC2-QBP (FAMILY)",
-            "pattern": "(file:hashes:md5 = '68e5bff12ac33ecb98977afed51ebad0' OR file:hashes:md5 = '929802a27737cebc59d19da724fdf30a' OR file:hashes:md5 = 'b9b3673a721578b230490f7dfc6df21e' OR file:hashes:md5 = 'cf9c2d5a8fbdd1c5adc20cfc5e663c21' OR file:hashes:md5 = 'c04c796ef126ad7429be7d55720fe392' OR file:hashes:md5 = '6b6c4c0e2959df248be90d89899953a9' OR file:hashes:md5 = '5ae0efccce47ea16bcc61e4003c1c57f' OR ((file:file_name = 'adobe_sl.exe' OR file:file_name = 'wuauclt.exe' OR file:file_name = 'spending_cutting_plan .exe' OR file:file_name = 'adobere.exe') AND (file:size = '300032' OR file:size = '301056' OR file:size = '304640' OR file:size = '305152' OR file:size = '8704') AND (file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2010-11-16T13:02:48Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2012-08-20T12:56:12Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2012-08-20T12:59:08Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2012-08-20T14:06:56Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2012-08-24T14:13:12Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2012-10-16T09:32:33Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2010-11-16T13:02:51Z')) OR (win-registry-key:values[*].data CONTAINS 'wuauclt.exe'))",
+            "pattern": "(file:hashes:md5 = '68e5bff12ac33ecb98977afed51ebad0' OR file:hashes:md5 = '929802a27737cebc59d19da724fdf30a' OR file:hashes:md5 = 'b9b3673a721578b230490f7dfc6df21e' OR file:hashes:md5 = 'cf9c2d5a8fbdd1c5adc20cfc5e663c21' OR file:hashes:md5 = 'c04c796ef126ad7429be7d55720fe392' OR file:hashes:md5 = '6b6c4c0e2959df248be90d89899953a9' OR file:hashes:md5 = '5ae0efccce47ea16bcc61e4003c1c57f' OR ((file:file_name = 'adobe_sl.exe' OR file:file_name = 'wuauclt.exe' OR file:file_name = 'spending_cutting_plan .exe' OR file:file_name = 'adobere.exe') AND (file:size = '300032' OR file:size = '301056' OR file:size = '304640' OR file:size = '305152' OR file:size = '8704') AND (file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2010-11-16T13:02:48Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2012-08-20T12:56:12Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2012-08-20T12:59:08Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2012-08-20T14:06:56Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2012-08-24T14:13:12Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2012-10-16T09:32:33Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2010-11-16T13:02:51Z')) OR (win-registry-key:values[*].data = 'wuauclt.exe'))",
             "pattern_lang": "cybox",
             "type": "indicator",
             "valid_from": "2015-05-15T09:00:00.000000Z",
@@ -254,7 +254,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "created_by_ref": "identity--109414f4-4d0e-4ce9-a1e3-c29cf6ba3dfe",
+            "created_by_ref": "identity--a621c165-1529-492a-bf10-6f402c3fcfc1",
             "description": "\\n                This malware utility is a set of two files that operate in conjunction to extract email messages and attachments from an Exchange server. In order to operate successfully, these programs require authentication credentials for a user on the Exchange server, and must be run from a machine joined to the domain that has Microsoft Outlook installed (or equivalent software that provides the Microsoft 'Messaging API' (MAPI) service).\\n            ",
             "id": "indicator--8dcc62d5-e91a-4cde-bc28-121d6f25a7d3",
             "labels": [
@@ -270,7 +270,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "created_by_ref": "identity--109414f4-4d0e-4ce9-a1e3-c29cf6ba3dfe",
+            "created_by_ref": "identity--a621c165-1529-492a-bf10-6f402c3fcfc1",
             "description": "\\n                This family of malware uses Google Calendar to retrieve commands and send results. It retrieves event feeds associated with Google Calendar, where each event contains commands from the attacker for the malware to perform. Results are posted back to the event feed. The malware authenticates with Google using the hard coded email address and passwords. The malware uses the deprecated ClientLogin authentication API from Google. The malware is registered as a service dll as a persistence mechanism. Artifacts of this may be found in the registry.\\n            ",
             "id": "indicator--1922d28b-6257-4f14-9988-00c906c1274f",
             "labels": [
@@ -278,7 +278,7 @@
             ],
             "modified": "2015-05-15T09:00:00.000000Z",
             "name": "CALENDAR (FAMILY)",
-            "pattern": "(file:hashes:md5 = 'cf37875adf10fb56c7c6edf86f2b3438' OR file:hashes:md5 = '7bea48f1f08e2677df168e0bbe9f19ac' OR file:hashes:md5 = '16c390a32f9a60bf50396fc86aea0f9d' OR ((file:file_name = 'wmdmpmsn.dll' OR file:file_name = 'rasautoe.dll') AND (file:size = '142848') AND (file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2012-02-15T13:49:01Z')) OR (win-registry-key:key CONTAINS 'system\\currentcontrolset\\services' AND win-registry-key:key CONTAINS 'parameters\\servicedllold'))",
+            "pattern": "(file:hashes:md5 = 'cf37875adf10fb56c7c6edf86f2b3438' OR file:hashes:md5 = '7bea48f1f08e2677df168e0bbe9f19ac' OR file:hashes:md5 = '16c390a32f9a60bf50396fc86aea0f9d' OR ((file:file_name = 'wmdmpmsn.dll' OR file:file_name = 'rasautoe.dll') AND (file:size = '142848') AND (file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2012-02-15T13:49:01Z')) OR (win-registry-key:key MATCHES  /system\\currentcontrolset\\services/ AND win-registry-key:key MATCHES  /parameters\\servicedllold/))",
             "pattern_lang": "cybox",
             "type": "indicator",
             "valid_from": "2015-05-15T09:00:00.000000Z",
@@ -286,7 +286,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "created_by_ref": "identity--109414f4-4d0e-4ce9-a1e3-c29cf6ba3dfe",
+            "created_by_ref": "identity--a621c165-1529-492a-bf10-6f402c3fcfc1",
             "description": "\\n                A WEBC2 backdoor is designed to retrieve a Web page from a pre-determined C2 server. It expects the Web page to contain special HTML tags; the backdoor will attempt to interpret the data between the tags as commands. Members of this family of backdoor malware talk to specific Web-based Command & Control (C2) servers. The backdoor has a limited command set, depending on version. It is primarily a downloader, but it classified as a backdoor because it can accept a limited command set, including changing local directories, downloading and executing additional files, sleeping, and connecting to a specific IP & port not initially included in the instruction set for the malware. Each version of the malware has at least one hardcoded URL to which it connects to receive its initial commands. This family of malware installs itself as a service, with the malware either being the executable run by the service, or the service DLL loaded by a legitimate service. The same core code is seen recompiled on different dates or with different names, but the same functionality. Key signatures include a specific set of functions (some of which can be used with the OS-provided rundll32.exe tool to install the malware as a service), and hardcoded strings used in communication with C2 servers to issue commands to the implant.\\n            ",
             "id": "indicator--8b34f3bd-8176-4e33-a4ca-6b9970c2be2e",
             "modified": "2015-05-15T09:00:00.000000Z",
@@ -299,7 +299,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "created_by_ref": "identity--109414f4-4d0e-4ce9-a1e3-c29cf6ba3dfe",
+            "created_by_ref": "identity--a621c165-1529-492a-bf10-6f402c3fcfc1",
             "description": "\\n                This family of malware is a backdoor that provides reverse shell, process creation, system statistics collection, process enumeration, and process termination capabilities.\\nThis family is designed to be a service DLL and does not contain an installation mechanism.\\nIt usually communicates over port 443. Some variants use their own encryption, others use SSL.\\n            ",
             "id": "indicator--034a708a-2bb0-45ad-85c5-7505d90ce2a5",
             "labels": [
@@ -307,7 +307,7 @@
             ],
             "modified": "2015-05-15T09:00:00.000000Z",
             "name": "HACKSFASE (FAMILY)",
-            "pattern": "(file:hashes:md5 = '1a0c7e61bcc50d57b7bcf9d9af691de5' OR file:hashes:md5 = 'a7117612ea6b6fa3307943f5ed21fbb4' OR file:hashes:md5 = '62ea10608f0d54cd284e8d7be32f206e' OR file:hashes:md5 = '4749f6336eb86b5fa7029661f88ded20' OR file:hashes:md5 = 'be74bf5afd4ba64cc8ce237307e9254d' OR file:hashes:md5 = '2b379d5346ffd386c28038630a9b0292' OR file:hashes:md5 = '0d0240672a314a7547d328f824642da8' OR file:hashes:md5 = 'f1eea61e49a3f86e95836d1c9f67e074' OR file:hashes:md5 = '5790c7c09735cf1ccf10625c7cd87f5e' OR file:hashes:md5 = '656baf38fa5ee776e2576cead664d004' OR file:hashes:md5 = 'bcbdef1678049378be04719ed29078d2' OR file:hashes:md5 = 'e9df2f69ed3d9c895ad9d399eaff1bc8' OR file:hashes:md5 = '0469a42d71b4a55118b9579c8c772bb6' OR file:hashes:md5 = '9e860622fee66074dfe81dcfcc40c4e2' OR file:hashes:md5 = '9ecf9d5d8872fe55ab120265c3749ffc' OR file:hashes:md5 = '6c5c5e4049265fffc87973f3e4978b26' OR file:hashes:md5 = 'd4c1bfc5cd3e33643a562696d5d29bf2' OR file:hashes:md5 = '11d350127ff1e9ecd665c34326475584' OR file:hashes:md5 = 'd8fdd9cfca25315635378dd2564094ca' OR file:hashes:md5 = '082cc969b3eb6786e3e951b450b8de0d' OR file:hashes:md5 = '0cf8259502d178a099ab2852e2bddbe1' OR file:hashes:md5 = '17199ddac616938f383a0339f416c890' OR ((file:file_name = 'sap.dll' OR file:file_name = 'nwsap.dll' OR file:file_name = 'nwcwks.dll' OR file:file_name = 'iass.dll' OR file:file_name = 'nwwkc.dll' OR file:file_name = 'irmon.dll' OR file:file_name = 'nwwkc.dll' OR file:file_name = 'iassvc.dll') AND (file:size = '173124' OR file:size = '217088' OR file:size = '217516' OR file:size = '37092' OR file:size = '41188' OR file:size = '42052') AND (file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2008-11-10T06:36:06Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2008-11-10T08:29:48Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2009-02-01T02:27:57Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2009-03-13T07:09:49Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2009-07-08T13:30:46Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2009-08-28T02:17:30Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2010-02-25T07:48:23Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2010-09-09T03:19:45Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2010-11-10T01:41:49Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2010-12-13T09:25:02Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2010-12-28T02:34:43Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-01-10T06:58:27Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-03-29T08:07:39Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-04-08T02:27:33Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-04-20T08:04:20Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-10-27T07:47:01Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2012-02-28T15:35:51Z')) OR ((file:extended_properties.windows_pebinary_ext.section[*].name CONTAINS '.vmp0' OR file:extended_properties.windows_pebinary_ext.section[*].name CONTAINS '.vmp1' OR file:extended_properties.windows_pebinary_ext.section[*].name CONTAINS '.vmp2')))",
+            "pattern": "(file:hashes:md5 = '1a0c7e61bcc50d57b7bcf9d9af691de5' OR file:hashes:md5 = 'a7117612ea6b6fa3307943f5ed21fbb4' OR file:hashes:md5 = '62ea10608f0d54cd284e8d7be32f206e' OR file:hashes:md5 = '4749f6336eb86b5fa7029661f88ded20' OR file:hashes:md5 = 'be74bf5afd4ba64cc8ce237307e9254d' OR file:hashes:md5 = '2b379d5346ffd386c28038630a9b0292' OR file:hashes:md5 = '0d0240672a314a7547d328f824642da8' OR file:hashes:md5 = 'f1eea61e49a3f86e95836d1c9f67e074' OR file:hashes:md5 = '5790c7c09735cf1ccf10625c7cd87f5e' OR file:hashes:md5 = '656baf38fa5ee776e2576cead664d004' OR file:hashes:md5 = 'bcbdef1678049378be04719ed29078d2' OR file:hashes:md5 = 'e9df2f69ed3d9c895ad9d399eaff1bc8' OR file:hashes:md5 = '0469a42d71b4a55118b9579c8c772bb6' OR file:hashes:md5 = '9e860622fee66074dfe81dcfcc40c4e2' OR file:hashes:md5 = '9ecf9d5d8872fe55ab120265c3749ffc' OR file:hashes:md5 = '6c5c5e4049265fffc87973f3e4978b26' OR file:hashes:md5 = 'd4c1bfc5cd3e33643a562696d5d29bf2' OR file:hashes:md5 = '11d350127ff1e9ecd665c34326475584' OR file:hashes:md5 = 'd8fdd9cfca25315635378dd2564094ca' OR file:hashes:md5 = '082cc969b3eb6786e3e951b450b8de0d' OR file:hashes:md5 = '0cf8259502d178a099ab2852e2bddbe1' OR file:hashes:md5 = '17199ddac616938f383a0339f416c890' OR ((file:file_name = 'sap.dll' OR file:file_name = 'nwsap.dll' OR file:file_name = 'nwcwks.dll' OR file:file_name = 'iass.dll' OR file:file_name = 'nwwkc.dll' OR file:file_name = 'irmon.dll' OR file:file_name = 'nwwkc.dll' OR file:file_name = 'iassvc.dll') AND (file:size = '173124' OR file:size = '217088' OR file:size = '217516' OR file:size = '37092' OR file:size = '41188' OR file:size = '42052') AND (file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2008-11-10T06:36:06Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2008-11-10T08:29:48Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2009-02-01T02:27:57Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2009-03-13T07:09:49Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2009-07-08T13:30:46Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2009-08-28T02:17:30Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2010-02-25T07:48:23Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2010-09-09T03:19:45Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2010-11-10T01:41:49Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2010-12-13T09:25:02Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2010-12-28T02:34:43Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-01-10T06:58:27Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-03-29T08:07:39Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-04-08T02:27:33Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-04-20T08:04:20Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-10-27T07:47:01Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2012-02-28T15:35:51Z')) OR ((file:extended_properties.windows_pebinary_ext.section[*].name = '.vmp0' OR file:extended_properties.windows_pebinary_ext.section[*].name = '.vmp1' OR file:extended_properties.windows_pebinary_ext.section[*].name = '.vmp2')))",
             "pattern_lang": "cybox",
             "type": "indicator",
             "valid_from": "2015-05-15T09:00:00.000000Z",
@@ -315,7 +315,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "created_by_ref": "identity--109414f4-4d0e-4ce9-a1e3-c29cf6ba3dfe",
+            "created_by_ref": "identity--a621c165-1529-492a-bf10-6f402c3fcfc1",
             "description": "\\n                This family of malware provides a backdoor over the network to the attackers. It is configured to connect to a single host and offers file download over HTTP, program execution, and arbitrary execution of commands through a cmd.exe instance.\\n            ",
             "id": "indicator--edc41062-7e8f-4603-9e62-5f4ec537e9af",
             "labels": [
@@ -331,7 +331,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "created_by_ref": "identity--109414f4-4d0e-4ce9-a1e3-c29cf6ba3dfe",
+            "created_by_ref": "identity--a621c165-1529-492a-bf10-6f402c3fcfc1",
             "description": "\\n                A WEBC2 backdoor is designed to retrieve a Web page from a pre-determined C2 server. It expects the Web page to contain special HTML tags; the backdoor will attempt to interpret the data between the tags as commands. This family of malware will set itself up as a service and connect out to a hardcoded web page and read a modified base64 string from this webpage. The later versions of this malware supports three commands (earlier ones are just downloaders or reverse shells). The first commands will sleep the malware for N number of hours. The second command will download a binary from the encoded HTML comment and execute it on the infected host. The third will spawn an encoded reverse shell to an attacker specified location and port.\\n            ",
             "id": "indicator--f96c7900-0cf5-4199-b314-860a1cdc008e",
             "labels": [
@@ -339,7 +339,7 @@
             ],
             "modified": "2015-05-15T09:00:00.000000Z",
             "name": "WEBC2-RAVE (FAMILY)",
-            "pattern": "(file:hashes:md5 = '3fc26910f9c31bd9ba3ccb09132d9ca3' OR file:hashes:md5 = 'f81991fab3b7d58d66629e26d21176ed' OR file:hashes:md5 = '2198fea94bb79b001fcfd3e03b269001' OR file:hashes:md5 = 'dba356a4726b94731e6ea97aa73cfc3f' OR file:hashes:md5 = 'a44312eb63de002383a57b5a93271cdc' OR file:hashes:md5 = '9f11bc08af048c5c3a110e567082fe0b' OR file:hashes:md5 = 'ef349196b0ffef5a02d30413c8dffc7c' OR file:hashes:md5 = '76c1b246703a10cb6e71a3e5b7b55b24' OR file:hashes:md5 = 'dc1cff84900afc9d292b305f9b9aae34' OR file:hashes:md5 = 'bdd2ad4c0e1e5667d117810ae9e36c4b' OR file:hashes:md5 = '277f95bff2e0fe317f86b5010bd83a18' OR file:hashes:md5 = '1aea4d24f3bd2c51288ad643fc66e0d2' OR file:hashes:md5 = 'd197c388184fef263b7944a7186bc6db' OR file:hashes:md5 = '129c6cd9d2aa895cf6fa137fa1d3a188' OR file:hashes:md5 = 'c8d2b7f92fff545b3b19e9b1e1057071' OR file:hashes:md5 = '5bcaa2f4bc7567f6ffd5507a161e221a' OR file:hashes:md5 = '438983192903f3fecf77500a39459ee6' OR file:hashes:md5 = '59620925bf1c4f760c4bf225c7efd6c0' OR file:hashes:md5 = 'bca9bd0abbb31a422458abf521a6a2fb' OR file:hashes:md5 = 'db5805604f84b7303fa04feb18ce8271' OR file:hashes:md5 = '0e84132e5ad04351b644b8d8743fc4d3' OR file:hashes:md5 = 'a2534e9b7e4146368ea3245381830eb0' OR file:hashes:md5 = '04f481d6710ac5d68d0eacac2600a041' OR file:hashes:md5 = 'bf0ee4367ea32f8e3b911c304258e439' OR win-registry-key:key CONTAINS 'services\\devfs' OR win-registry-key:key CONTAINS 'services\\oseasv' OR ((file:file_name = 'sacard.exe' OR file:file_name = 'mci.jpg' OR file:file_name = 'dfhost.exe' OR file:file_name = 'wmicide.exe' OR file:file_name = 'wmiprvse.exe' OR file:file_name = 'listen.exe' OR file:file_name = 'oobewmiprvse.exe' OR file:file_name = 'a.exe' OR file:file_name = 'msctcwmiprvse.exe' OR file:file_name = 'winsrv.exe' OR file:file_name = 'adress.jpg' OR file:file_name = 'adress2.jpg' OR file:file_name = 'abc.gif' OR file:file_name = 'devfs.exe' OR file:file_name = 'cft.exe') AND (file:size = '11264' OR file:size = '13824' OR file:size = '13825' OR file:size = '15872' OR file:size = '15873' OR file:size = '16384' OR file:size = '8704' OR file:size = '9216' OR file:size = '9728') AND (file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2009-07-02T07:45:46Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2009-10-27T07:23:52Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2009-11-11T06:33:02Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2010-06-29T00:31:41Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2010-08-04T02:47:55Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2010-09-19T08:33:34Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2010-09-19T08:34:11Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2010-12-06T00:38:26Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-04-21T16:30:21Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2012-02-28T11:48:43Z')) OR (process:extension_data.windows_service_ext.descriptions[*] CONTAINS 'Saves installation files used for updates and repairs and is required for the downloading of Setup updates and Watson error reports.' AND (process:extension_data.windows_service_ext.service_name CONTAINS 'DevFS' OR process:extension_data.windows_service_ext.service_name CONTAINS 'OSEASV')) OR (win-registry-key:values[*].data = 'plugplay'))",
+            "pattern": "(file:hashes:md5 = '3fc26910f9c31bd9ba3ccb09132d9ca3' OR file:hashes:md5 = 'f81991fab3b7d58d66629e26d21176ed' OR file:hashes:md5 = '2198fea94bb79b001fcfd3e03b269001' OR file:hashes:md5 = 'dba356a4726b94731e6ea97aa73cfc3f' OR file:hashes:md5 = 'a44312eb63de002383a57b5a93271cdc' OR file:hashes:md5 = '9f11bc08af048c5c3a110e567082fe0b' OR file:hashes:md5 = 'ef349196b0ffef5a02d30413c8dffc7c' OR file:hashes:md5 = '76c1b246703a10cb6e71a3e5b7b55b24' OR file:hashes:md5 = 'dc1cff84900afc9d292b305f9b9aae34' OR file:hashes:md5 = 'bdd2ad4c0e1e5667d117810ae9e36c4b' OR file:hashes:md5 = '277f95bff2e0fe317f86b5010bd83a18' OR file:hashes:md5 = '1aea4d24f3bd2c51288ad643fc66e0d2' OR file:hashes:md5 = 'd197c388184fef263b7944a7186bc6db' OR file:hashes:md5 = '129c6cd9d2aa895cf6fa137fa1d3a188' OR file:hashes:md5 = 'c8d2b7f92fff545b3b19e9b1e1057071' OR file:hashes:md5 = '5bcaa2f4bc7567f6ffd5507a161e221a' OR file:hashes:md5 = '438983192903f3fecf77500a39459ee6' OR file:hashes:md5 = '59620925bf1c4f760c4bf225c7efd6c0' OR file:hashes:md5 = 'bca9bd0abbb31a422458abf521a6a2fb' OR file:hashes:md5 = 'db5805604f84b7303fa04feb18ce8271' OR file:hashes:md5 = '0e84132e5ad04351b644b8d8743fc4d3' OR file:hashes:md5 = 'a2534e9b7e4146368ea3245381830eb0' OR file:hashes:md5 = '04f481d6710ac5d68d0eacac2600a041' OR file:hashes:md5 = 'bf0ee4367ea32f8e3b911c304258e439' OR win-registry-key:key MATCHES  /services\\devfs/ OR win-registry-key:key MATCHES  /services\\oseasv/ OR ((file:file_name = 'sacard.exe' OR file:file_name = 'mci.jpg' OR file:file_name = 'dfhost.exe' OR file:file_name = 'wmicide.exe' OR file:file_name = 'wmiprvse.exe' OR file:file_name = 'listen.exe' OR file:file_name = 'oobewmiprvse.exe' OR file:file_name = 'a.exe' OR file:file_name = 'msctcwmiprvse.exe' OR file:file_name = 'winsrv.exe' OR file:file_name = 'adress.jpg' OR file:file_name = 'adress2.jpg' OR file:file_name = 'abc.gif' OR file:file_name = 'devfs.exe' OR file:file_name = 'cft.exe') AND (file:size = '11264' OR file:size = '13824' OR file:size = '13825' OR file:size = '15872' OR file:size = '15873' OR file:size = '16384' OR file:size = '8704' OR file:size = '9216' OR file:size = '9728') AND (file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2009-07-02T07:45:46Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2009-10-27T07:23:52Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2009-11-11T06:33:02Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2010-06-29T00:31:41Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2010-08-04T02:47:55Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2010-09-19T08:33:34Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2010-09-19T08:34:11Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2010-12-06T00:38:26Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-04-21T16:30:21Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2012-02-28T11:48:43Z')) OR (process:extension_data.windows_service_ext.descriptions[*] = 'Saves installation files used for updates and repairs and is required for the downloading of Setup updates and Watson error reports.' AND (process:extension_data.windows_service_ext.service_name MATCHES  /DevFS/ OR process:extension_data.windows_service_ext.service_name MATCHES  /OSEASV/)) OR (win-registry-key:values[*].data = 'plugplay'))",
             "pattern_lang": "cybox",
             "type": "indicator",
             "valid_from": "2015-05-15T09:00:00.000000Z",
@@ -347,7 +347,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "created_by_ref": "identity--109414f4-4d0e-4ce9-a1e3-c29cf6ba3dfe",
+            "created_by_ref": "identity--a621c165-1529-492a-bf10-6f402c3fcfc1",
             "description": "\\n                The WEBC2 malware family is designed to retrieve a Web page from a pre-determined C2 server. It expects the Web page to contain special HTML tags; the backdoor will attempt to interpret the data between the tags as commands.  The WEBC2-HEAD variant communicates over HTTPS, using the system's SSL implementation to encrypt all communications with the C2 server.  WEBC2-HEAD first issues an HTTP GET to the host, sending the Base64-encoded string containing the name of the compromised machine running the malware.\\n            ",
             "id": "indicator--71a95442-f246-4c8c-8c4d-d24107401974",
             "labels": [
@@ -363,7 +363,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "created_by_ref": "identity--109414f4-4d0e-4ce9-a1e3-c29cf6ba3dfe",
+            "created_by_ref": "identity--a621c165-1529-492a-bf10-6f402c3fcfc1",
             "description": "\\n                GLOOXMAIL communicates with Google's Jabber/XMPP servers and authenticates with a hard-coded username and password.  The malware can accept commands over XMPP that includes file upload and download, provide a remote shell, sending process listings, and terminating specified processes.  The malware makes extensive use of the open source gloox library (http://camaya.net/gloox/, version 0.9.9.12) to communicate using the Jabber/XMPP protocol.  All communications with the Google XMPP server are encrypted.\\n            ",
             "id": "indicator--27d9d4b8-9230-4472-9b5c-f3783982c752",
             "labels": [
@@ -379,7 +379,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "created_by_ref": "identity--109414f4-4d0e-4ce9-a1e3-c29cf6ba3dfe",
+            "created_by_ref": "identity--a621c165-1529-492a-bf10-6f402c3fcfc1",
             "description": "\\n                The NEWSREELS malware family is an HTTP based backdoor.  When first started, NEWSREELS decodes two strings from its resources section. These strings are both used as C2 channels, one URL is used as a beacon URL (transmitting) and the second URL is used to get commands (receiving).  The NEWSREELS malware family is capable of performing file uploads, downloads, creating processes or creating an interactive reverse shell.\\n            ",
             "id": "indicator--9d11a416-43ba-42f4-bdfc-f142f04fec7a",
             "labels": [
@@ -395,7 +395,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "created_by_ref": "identity--109414f4-4d0e-4ce9-a1e3-c29cf6ba3dfe",
+            "created_by_ref": "identity--a621c165-1529-492a-bf10-6f402c3fcfc1",
             "description": "\\n                This malware family is a full-featured backdoor capable of file uploading and downloading, arbitrary execution of programs, and providing a remote interactive command shell.\\nAll communications with the C2 server are sent over HTTP to a static URL, appending various URL parameters to the request. Some variants use a slightly different URL.\\nThe C2 server appears to act as just a database, allowing the clients to craft and execute SQL statements of their choosing. The malware also implements a special mode that provides full administrative access to the C2 server. This includes displaying the status of clients who have checked in with the C2 server, queuing commands to any client, and uploading or downloading files to the C2 server.\\n            ",
             "id": "indicator--2c6d4480-4276-416a-ba13-26c7598fe55c",
             "labels": [
@@ -411,7 +411,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "created_by_ref": "identity--109414f4-4d0e-4ce9-a1e3-c29cf6ba3dfe",
+            "created_by_ref": "identity--a621c165-1529-492a-bf10-6f402c3fcfc1",
             "description": "\\n                This family of malware is a backdoor capable of file upload and download as well as providing remote interactive shell access to the compromised machine.\\nCommunication with the Command & Control (C2) servers uses a combination of single-byte XOR and Base64 encoded data in the Cookie and Set-Cookie HTTP header fields. Communication with the C2 servers is over port 80. Some variants install a registry key as means of a persistence mechanism. The hardcoded strings cited include a string of a command in common with several other APT1 families.\\n            ",
             "id": "indicator--809eca7a-fb86-44eb-b355-403c58e2159a",
             "labels": [
@@ -419,7 +419,7 @@
             ],
             "modified": "2015-05-15T09:00:00.000000Z",
             "name": "COOKIEBAG (FAMILY)",
-            "pattern": "(file:hashes:md5 = '73a63c21a08b0ad2c69999e448f8e6a1' OR file:hashes:md5 = 'a4903f7c293993069f865468bd7cec78' OR file:hashes:md5 = '0c28ad34f90950bc784339ec9f50d288' OR file:hashes:md5 = 'e6c25f9994b723d39c785ddfd38a31b8' OR file:hashes:md5 = '6ab7fa8e5fb63b8d0723387d0a1ffe6d' OR file:hashes:md5 = '989b797c2a63fbfc8e1c6e8a8ccd6204' OR file:hashes:md5 = '0cad42671e5771574df44a23b3634f32' OR file:hashes:md5 = '57326cd78a56d26e349bbd4bcc5b9fa2' OR file:hashes:md5 = '543e03cc5872e9ed870b2d64363f518b' OR file:hashes:md5 = 'db2580f5675f04716481b24bb7af468e' OR file:hashes:md5 = '687a58dcbc076b04bef4ec6050310fb5' OR file:hashes:md5 = '609d917a7f0c526b0d8091c8191da376' OR file:hashes:md5 = 'f9a46d5024c05a827912a89ca270c553' OR file:hashes:md5 = 'a311516cdf06d3db4f49e67da5213ebe' OR file:hashes:md5 = 'f3611c5c793f521f7ff2a69c22d4174e' OR file:hashes:md5 = 'c21591aa72ac72872f5bd05bbca5e4da' OR file:hashes:md5 = '3e72fd40e47e232496b303734f1b2b11' OR file:hashes:md5 = '321d75c9990408db812e5a248a74f8c8' OR ((file:size = '126976' OR file:size = '131072' OR file:size = '151552' OR file:size = '152064' OR file:size = '167936' OR file:size = '64000') AND (file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-06-03T08:09:58Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-07-18T03:10:56Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-10-12T01:58:10Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-11-16T15:07:45Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-11-22T01:15:22Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2012-03-12T01:34:56Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2012-03-13T03:47:57Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2012-03-14T14:29:00Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2012-04-17T07:24:52Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2012-06-19T07:21:24Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2012-06-11T12:37:20Z') AND (file:file_name = 'acrod32.exe' OR file:file_name = 'updata.exe' OR file:file_name = 'windows.exe' OR file:file_name = 'acrord32.exe' OR file:file_name = '204.exe' OR file:file_name = 'windows.exe' OR file:file_name = 'update.exe' OR file:file_name = 'googlee.exe' OR file:file_name = 'codeguru.exe' OR file:file_name = 'google.exe' OR file:file_name = '66.exe' OR file:file_name = 'services.exe' OR file:file_name = 'data.exe')) OR (win-registry-key:key CONTAINS 'Software\\Microsoft\\Windows Nt\\CurrentVersion\\load' AND (win-registry-key:values[*].data CONTAINS 'windows.exe' OR win-registry-key:values[*].data CONTAINS 'acrord32.exe' OR win-registry-key:values[*].data CONTAINS 'winword.exe' OR win-registry-key:values[*].data CONTAINS 'google.exe' OR win-registry-key:values[*].data CONTAINS '204.exe' OR win-registry-key:values[*].data CONTAINS 'acrod32.exe')))",
+            "pattern": "(file:hashes:md5 = '73a63c21a08b0ad2c69999e448f8e6a1' OR file:hashes:md5 = 'a4903f7c293993069f865468bd7cec78' OR file:hashes:md5 = '0c28ad34f90950bc784339ec9f50d288' OR file:hashes:md5 = 'e6c25f9994b723d39c785ddfd38a31b8' OR file:hashes:md5 = '6ab7fa8e5fb63b8d0723387d0a1ffe6d' OR file:hashes:md5 = '989b797c2a63fbfc8e1c6e8a8ccd6204' OR file:hashes:md5 = '0cad42671e5771574df44a23b3634f32' OR file:hashes:md5 = '57326cd78a56d26e349bbd4bcc5b9fa2' OR file:hashes:md5 = '543e03cc5872e9ed870b2d64363f518b' OR file:hashes:md5 = 'db2580f5675f04716481b24bb7af468e' OR file:hashes:md5 = '687a58dcbc076b04bef4ec6050310fb5' OR file:hashes:md5 = '609d917a7f0c526b0d8091c8191da376' OR file:hashes:md5 = 'f9a46d5024c05a827912a89ca270c553' OR file:hashes:md5 = 'a311516cdf06d3db4f49e67da5213ebe' OR file:hashes:md5 = 'f3611c5c793f521f7ff2a69c22d4174e' OR file:hashes:md5 = 'c21591aa72ac72872f5bd05bbca5e4da' OR file:hashes:md5 = '3e72fd40e47e232496b303734f1b2b11' OR file:hashes:md5 = '321d75c9990408db812e5a248a74f8c8' OR ((file:size = '126976' OR file:size = '131072' OR file:size = '151552' OR file:size = '152064' OR file:size = '167936' OR file:size = '64000') AND (file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-06-03T08:09:58Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-07-18T03:10:56Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-10-12T01:58:10Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-11-16T15:07:45Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-11-22T01:15:22Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2012-03-12T01:34:56Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2012-03-13T03:47:57Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2012-03-14T14:29:00Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2012-04-17T07:24:52Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2012-06-19T07:21:24Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2012-06-11T12:37:20Z') AND (file:file_name = 'acrod32.exe' OR file:file_name = 'updata.exe' OR file:file_name = 'windows.exe' OR file:file_name = 'acrord32.exe' OR file:file_name = '204.exe' OR file:file_name = 'windows.exe' OR file:file_name = 'update.exe' OR file:file_name = 'googlee.exe' OR file:file_name = 'codeguru.exe' OR file:file_name = 'google.exe' OR file:file_name = '66.exe' OR file:file_name = 'services.exe' OR file:file_name = 'data.exe')) OR (win-registry-key:key MATCHES  /Software\\Microsoft\\Windows Nt\\CurrentVersion\\load/ AND (win-registry-key:values[*].data = 'windows.exe' OR win-registry-key:values[*].data = 'acrord32.exe' OR win-registry-key:values[*].data = 'winword.exe' OR win-registry-key:values[*].data = 'google.exe' OR win-registry-key:values[*].data = '204.exe' OR win-registry-key:values[*].data = 'acrod32.exe')))",
             "pattern_lang": "cybox",
             "type": "indicator",
             "valid_from": "2015-05-15T09:00:00.000000Z",
@@ -427,7 +427,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "created_by_ref": "identity--109414f4-4d0e-4ce9-a1e3-c29cf6ba3dfe",
+            "created_by_ref": "identity--a621c165-1529-492a-bf10-6f402c3fcfc1",
             "description": "\\n                Members of this malware family are backdoors that provide file downloading, process listing, process killing, and reverse shell capabilities.\\n\\nThis malware may also add itself to the Authorized Applications list for the Windows Firewall.\\n            ",
             "id": "indicator--1c200d34-351f-47fa-bf6f-1c596d2779a7",
             "labels": [
@@ -435,7 +435,7 @@
             ],
             "modified": "2015-05-15T09:00:00.000000Z",
             "name": "DAIRY (FAMILY)",
-            "pattern": "(file:hashes:md5 = '995442f722cc037885335340fc297ea0' OR file:hashes:md5 = '8489dc2c1291aa717b8ce81d5bf90892' OR ((file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2008-01-29T22:52:49Z' OR file:size = '19456') AND (file:file_name = 'Lssavp32.exe' OR file:file_name = 'WinverSSL.exe')) OR (win-registry-key:key CONTAINS 'Services\\SharedAccess\\Parameters\\FirewallPolicy\\StandardProfile\\AuthorizedApplications\\List' AND (win-registry-key:values[*].data CONTAINS 'lssap32.exe' OR win-registry-key:values[*].data CONTAINS 'winverssl.exe')))",
+            "pattern": "(file:hashes:md5 = '995442f722cc037885335340fc297ea0' OR file:hashes:md5 = '8489dc2c1291aa717b8ce81d5bf90892' OR ((file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2008-01-29T22:52:49Z' OR file:size = '19456') AND (file:file_name = 'Lssavp32.exe' OR file:file_name = 'WinverSSL.exe')) OR (win-registry-key:key MATCHES  /Services\\SharedAccess\\Parameters\\FirewallPolicy\\StandardProfile\\AuthorizedApplications\\List/ AND (win-registry-key:values[*].data = 'lssap32.exe' OR win-registry-key:values[*].data = 'winverssl.exe')))",
             "pattern_lang": "cybox",
             "type": "indicator",
             "valid_from": "2015-05-15T09:00:00.000000Z",
@@ -443,7 +443,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "created_by_ref": "identity--109414f4-4d0e-4ce9-a1e3-c29cf6ba3dfe",
+            "created_by_ref": "identity--a621c165-1529-492a-bf10-6f402c3fcfc1",
             "description": "\\n                MD5 Hashes from APT 1 malware\\n            ",
             "id": "indicator--b26314f3-956f-4340-bd9a-60f0e4ff210f",
             "labels": [
@@ -459,7 +459,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "created_by_ref": "identity--109414f4-4d0e-4ce9-a1e3-c29cf6ba3dfe",
+            "created_by_ref": "identity--a621c165-1529-492a-bf10-6f402c3fcfc1",
             "description": "\\n                The WEBC2 malware family is designed to retrieve a Web page from a pre-determined C2 server. It expects the Web page to contain special HTML tags; the backdoor will attempt to interpret the data between the tags as commands. The WEBC2-TABLE variant looks for web pages containing 'background', 'align', and 'bgcolor' tags to be present in the requested Web page.  If the data in these tags are formatted correctly, the malware will decode a second URL and a filename.  This URL is then retrieved, written to the decoded filename and executed.\\n            ",
             "id": "indicator--b934ce84-ff5e-42d9-8c61-bee975f32b02",
             "labels": [
@@ -467,7 +467,7 @@
             ],
             "modified": "2015-05-15T09:00:00.000000Z",
             "name": "WEBC2-TABLE (FAMILY)",
-            "pattern": "(file:hashes:md5 = '7a7a46e8fbc25a624d58e897dee04ffa' OR file:hashes:md5 = 'be58ff564c854be419a19a030af25c86' OR file:file_name = 'sdwefa.gif' OR win-registry-key:values[*].data CONTAINS 'help\\svchost.exe' OR ((file:file_name = 'wuauclt.exe' OR file:file_name = 'svchost.exe') AND (file:size = '10240' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2012-03-16T07:10:50Z')) OR ((file:file_name = 'wuaclt.exe')) OR (win-registry-key:key CONTAINS 'currentversion\\run' AND win-registry-key:values[*].name = 'AdobeCom'))",
+            "pattern": "(file:hashes:md5 = '7a7a46e8fbc25a624d58e897dee04ffa' OR file:hashes:md5 = 'be58ff564c854be419a19a030af25c86' OR file:file_name = 'sdwefa.gif' OR win-registry-key:values[*].data = 'help\\svchost.exe' OR ((file:file_name = 'wuauclt.exe' OR file:file_name = 'svchost.exe') AND (file:size = '10240' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2012-03-16T07:10:50Z')) OR ((file:file_name = 'wuaclt.exe')) OR (win-registry-key:key MATCHES  /currentversion\\run/ AND win-registry-key:values[*].name = 'AdobeCom'))",
             "pattern_lang": "cybox",
             "type": "indicator",
             "valid_from": "2015-05-15T09:00:00.000000Z",
@@ -475,7 +475,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "created_by_ref": "identity--109414f4-4d0e-4ce9-a1e3-c29cf6ba3dfe",
+            "created_by_ref": "identity--a621c165-1529-492a-bf10-6f402c3fcfc1",
             "description": "\\n                BISCUIT provides attackers with full access to an infected host.  BISCUIT capabilities include launching an interactive command shell, enumerating servers on a Windows network, enumerating and manipulating process, and transferring files.  BISCUIT communicates using a custom protocol, which is then encrypted using SSL.  Once installed BISCUIT will attempt to beacon to its command/control servers approximately every 10 or 30 minutes.  It will beacon its primary server first, followed by a secondary server. All communication is encrypted with SSL (OpenSSL 0.9.8i).\\n            ",
             "id": "indicator--10df11ab-c69e-4f7a-b44b-52b4d3824007",
             "labels": [
@@ -491,7 +491,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "created_by_ref": "identity--109414f4-4d0e-4ce9-a1e3-c29cf6ba3dfe",
+            "created_by_ref": "identity--a621c165-1529-492a-bf10-6f402c3fcfc1",
             "description": "\\n                A WEBC2 backdoor is designed to retrieve a Web page from a pre-determined C2 server. It expects the Web page to contain special HTML tags; the backdoor will attempt to interpret the data between the tags as commands. Members of this family of malware provide remote command shell and remote file download and execution capabilities.\\nThe malware downloads a web page containing a crafted HTML comment that subsequently contains an encoded command. The contents of this command tell the malware whether to download and execute a program, launch a reverse shell to a specific host and port number, or to sleep for a period of time. \\n            ",
             "id": "indicator--f97ec627-8a79-484e-b889-de21ed02a4d4",
             "labels": [
@@ -507,7 +507,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "created_by_ref": "identity--109414f4-4d0e-4ce9-a1e3-c29cf6ba3dfe",
+            "created_by_ref": "identity--a621c165-1529-492a-bf10-6f402c3fcfc1",
             "description": "\\n                Members of this family of malware are utilities designed to extract email messages and attachments from Outlook PST files. One part of this utility set is an executable, one is a dll. The malware may create a registry artifact related to the executable.\\n            ",
             "id": "indicator--ee797e93-f583-4d6d-9523-11c47d2f1db9",
             "labels": [
@@ -515,7 +515,7 @@
             ],
             "modified": "2015-05-15T09:00:00.000000Z",
             "name": "GETMAIL (FAMILY)",
-            "pattern": "(file:hashes:md5 = 'e81db0198d2a63c4ccfc33f58fcb821e' OR file:hashes:md5 = '909bef6db8d33854e983ebccdd71419f' OR file:hashes:md5 = '36ca55556280f715e2de8b4b997a26c9' OR file:hashes:md5 = 'e212aaf642d73a2e4a885f12eea86c58' OR (file:size = '86016' AND (file:file_name = 'getmail.exe' OR file:file_name = 'gm.exe' OR file:file_name = 'winps.exe') AND (file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2005-01-05T01:38:18Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2005-08-18T09:17:08Z')) OR (file:size = '53248' AND file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2005-01-05T01:38:19Z' AND (file:file_name = 'getmail.dll' OR file:file_name = 'gm.dll' OR file:file_name = 'winps.dll')) OR (win-registry-key:key CONTAINS 'SOFTWARE\\Microsoft\\Windows Messaging Subsystem\\MSMapiApps' AND win-registry-key:values[*].data = 'Microsoft Outlook'))",
+            "pattern": "(file:hashes:md5 = 'e81db0198d2a63c4ccfc33f58fcb821e' OR file:hashes:md5 = '909bef6db8d33854e983ebccdd71419f' OR file:hashes:md5 = '36ca55556280f715e2de8b4b997a26c9' OR file:hashes:md5 = 'e212aaf642d73a2e4a885f12eea86c58' OR (file:size = '86016' AND (file:file_name = 'getmail.exe' OR file:file_name = 'gm.exe' OR file:file_name = 'winps.exe') AND (file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2005-01-05T01:38:18Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2005-08-18T09:17:08Z')) OR (file:size = '53248' AND file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2005-01-05T01:38:19Z' AND (file:file_name = 'getmail.dll' OR file:file_name = 'gm.dll' OR file:file_name = 'winps.dll')) OR (win-registry-key:key MATCHES  /SOFTWARE\\Microsoft\\Windows Messaging Subsystem\\MSMapiApps/ AND win-registry-key:values[*].data = 'Microsoft Outlook'))",
             "pattern_lang": "cybox",
             "type": "indicator",
             "valid_from": "2015-05-15T09:00:00.000000Z",
@@ -523,7 +523,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "created_by_ref": "identity--109414f4-4d0e-4ce9-a1e3-c29cf6ba3dfe",
+            "created_by_ref": "identity--a621c165-1529-492a-bf10-6f402c3fcfc1",
             "description": "\\n                The WEBC2 malware family is designed to retrieve a Web page from a pre-determined C2 server. It expects the Web page to contain special HTML tags; the backdoor will attempt to interpret the data between the tags as commands.  The WEBC2-DIV variant searches for the strings \"div safe:\" and \" balance\" to delimit encoded C2 information. If the decoded string begins with the letter \"J\" the malware will parse additional arguments in the decoded string to specify the sleep interval to use.  WEBC2-DIV is capable of downloading a file, downloading and executing a file, or sleeping a specified interval.\\n            ",
             "id": "indicator--d2ed1adc-26c9-48f8-881d-19dea55e0f5a",
             "labels": [
@@ -531,7 +531,7 @@
             ],
             "modified": "2015-05-15T09:00:00.000000Z",
             "name": "WEBC2-DIV (FAMILY)",
-            "pattern": "(file:hashes:md5 = 'ad7bdadde9a4da73ffc776c606dbb75e' OR file:hashes:md5 = '64fa1239f5aa9a9031e61533283f8c22' OR file:hashes:md5 = '855ca1b45a247754ad91d50827a2e16c' OR file:hashes:md5 = '1e5ec6c06e4f6bb958dcbb9fc636009d' OR file:hashes:md5 = '4962cb3f255b2eaf48847c754d2a553d' OR ((file:file_name = 'WINWORD.exe' OR file:file_name = '1.jpg' OR file:file_name = 'svchost.exe' OR file:file_name = 'winupdate.exe') AND (file:size = '13312' OR file:size = '6656' OR file:size = '7168') AND (file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-03-16T08:40:50Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-03-25T08:10:07Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-03-28T13:35:35Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2012-01-09T02:13:05Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2012-05-31T02:42:08Z')) OR ((win-registry-key:values[*].data CONTAINS 'winupdate.exe' OR win-registry-key:values[*].data CONTAINS '1.jpg' OR win-registry-key:values[*].data CONTAINS 'svchost.exe')))",
+            "pattern": "(file:hashes:md5 = 'ad7bdadde9a4da73ffc776c606dbb75e' OR file:hashes:md5 = '64fa1239f5aa9a9031e61533283f8c22' OR file:hashes:md5 = '855ca1b45a247754ad91d50827a2e16c' OR file:hashes:md5 = '1e5ec6c06e4f6bb958dcbb9fc636009d' OR file:hashes:md5 = '4962cb3f255b2eaf48847c754d2a553d' OR ((file:file_name = 'WINWORD.exe' OR file:file_name = '1.jpg' OR file:file_name = 'svchost.exe' OR file:file_name = 'winupdate.exe') AND (file:size = '13312' OR file:size = '6656' OR file:size = '7168') AND (file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-03-16T08:40:50Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-03-25T08:10:07Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-03-28T13:35:35Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2012-01-09T02:13:05Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2012-05-31T02:42:08Z')) OR ((win-registry-key:values[*].data = 'winupdate.exe' OR win-registry-key:values[*].data = '1.jpg' OR win-registry-key:values[*].data = 'svchost.exe')))",
             "pattern_lang": "cybox",
             "type": "indicator",
             "valid_from": "2015-05-15T09:00:00.000000Z",
@@ -539,7 +539,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "created_by_ref": "identity--109414f4-4d0e-4ce9-a1e3-c29cf6ba3dfe",
+            "created_by_ref": "identity--a621c165-1529-492a-bf10-6f402c3fcfc1",
             "description": "\\n                The WEBC2 malware family is designed to retrieve a Web page from a pre-determined C2 server. It expects the Web page to contain special HTML tags; the backdoor will attempt to interpret the data between the tags as commands.  The WEBC2-KT3 variant searches for commands in a specific comment tag.  Network traffic starting with *!Kt3+v| may indicate WEBC2-KT3 activity.\\n            ",
             "id": "indicator--f4e6caa1-f693-41eb-b8e7-1c20fca5c578",
             "labels": [
@@ -547,7 +547,7 @@
             ],
             "modified": "2015-05-15T09:00:00.000000Z",
             "name": "WEBC2-KT3 (FAMILY)",
-            "pattern": "(file:hashes:md5 = 'ad8cde8841208ff226e04e8514dc699c' OR file:hashes:md5 = 'ec3a2197ca6b63ee1454d99a6ae145ab' OR file:hashes:md5 = 'adb62105427567ddc11124fc27921c40' OR file:hashes:md5 = '84b83d0e8682e89747eee6ad65e21832' OR (file:file_name = 'svchost.exe' AND (file:size = '48640' OR file:size = '52606' OR file:size = '81920') AND (file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2008-10-31T03:49:45Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2008-12-08T01:22:53Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2009-03-16T13:30:51Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2009-05-25T07:58:16Z')) OR (win-registry-key:key CONTAINS 'Software\\Microsoft\\Windows\\CurrentVersion\\Run' AND win-registry-key:values[*].data CONTAINS 'svchost.exe' AND (win-registry-key:values[*].name = 'AcrobatAPP' OR win-registry-key:values[*].name = 'MSTDC' OR win-registry-key:values[*].name = 'SVCRTC')))",
+            "pattern": "(file:hashes:md5 = 'ad8cde8841208ff226e04e8514dc699c' OR file:hashes:md5 = 'ec3a2197ca6b63ee1454d99a6ae145ab' OR file:hashes:md5 = 'adb62105427567ddc11124fc27921c40' OR file:hashes:md5 = '84b83d0e8682e89747eee6ad65e21832' OR (file:file_name = 'svchost.exe' AND (file:size = '48640' OR file:size = '52606' OR file:size = '81920') AND (file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2008-10-31T03:49:45Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2008-12-08T01:22:53Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2009-03-16T13:30:51Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2009-05-25T07:58:16Z')) OR (win-registry-key:key MATCHES  /Software\\Microsoft\\Windows\\CurrentVersion\\Run/ AND win-registry-key:values[*].data = 'svchost.exe' AND (win-registry-key:values[*].name = 'AcrobatAPP' OR win-registry-key:values[*].name = 'MSTDC' OR win-registry-key:values[*].name = 'SVCRTC')))",
             "pattern_lang": "cybox",
             "type": "indicator",
             "valid_from": "2015-05-15T09:00:00.000000Z",
@@ -555,7 +555,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "created_by_ref": "identity--109414f4-4d0e-4ce9-a1e3-c29cf6ba3dfe",
+            "created_by_ref": "identity--a621c165-1529-492a-bf10-6f402c3fcfc1",
             "description": "\\n                A WEBC2 backdoor is designed to retrieve a Web page from a pre-determined C2 server. It expects the Web page to contain special HTML tags; the backdoor will attempt to interpret the data between the tags as commands. The family of malware provides the attacker with an interactive command shell, the ability to upload and download files, execute commands on the system, list processes and DLLs, kill processes, and ping hosts on the local network. Responses to these commands are encrypted and compressed before being POSTed to the server. Some variants copy cmd.exe to Updatasched.exe in a temporary directory, and then may launch that in a process if an interactive shell is called. On initial invocation, the malware also attempts to delete previous copies of the Updatasched.exe file.\\n            ",
             "id": "indicator--ef180c46-8d36-46bc-b45c-d88cefa85002",
             "labels": [
@@ -563,7 +563,7 @@
             ],
             "modified": "2015-05-15T09:00:00.000000Z",
             "name": "WEBC2-CLOVER (FAMILY)",
-            "pattern": "(file:hashes:md5 = '8fc5fb519a222ab919f28d21545774c6' OR file:hashes:md5 = '7aef47f9fd84669976c4b152910a6328' OR file:hashes:md5 = '5bac505fdc202e1c6507ef381a881ed1' OR file:hashes:md5 = '29c691978af80dc23c4df96b5f6076bb' OR file:hashes:md5 = '966db6a32ccf7e57394706abc3999189' OR file:hashes:md5 = '668b92feb7cbcc7ac75ff97dcec28d10' OR file:hashes:md5 = '7b3ce6c2af1acd119a25831fac670bab' OR file:hashes:md5 = 'ba10b9486043f76bb9e9a160bc1d2576' OR file:hashes:md5 = '68af7be698e8a7408451c158c04a9712' OR file:hashes:md5 = 'a1cb8a9f2b8926afeb254a64f1d78ee3' OR file:hashes:md5 = '6846ad52c9208830ceaf4cfd81402015' OR file:hashes:md5 = '56c26b175ae23d90244805a6ec347e42' OR file:hashes:md5 = 'ba773e1608198cf8337c5902d7930710' OR file:hashes:md5 = '065e63afdfa539727f63af7530b22d2f' OR file:hashes:md5 = 'bebbbc50a561681f48d174d6b7c2824e' OR file:hashes:md5 = 'bb286e9969ca197b461286b679c0886e' OR file:hashes:md5 = '3e32ab6a2eac5bd1cddd3146d1a1348b' OR file:hashes:md5 = '251c817f4144264c3e7a9dac03071daf' OR file:hashes:md5 = '3441cbdf8de9472c19b021b241429b22' OR file:hashes:md5 = '2fccaa39533de02490b1c6395878dd79' OR file:hashes:md5 = '2cdbeebcf4e0b6dbd24b8c7b4cd6d862' OR file:hashes:md5 = '9a58cc73e103fd5a14ef3564e35c03df' OR file:hashes:md5 = 'eca18e3872fd32f17410167871fbd1d2' OR file:hashes:md5 = '76ba06bac23a2c445cb982bf38b82199' OR file:hashes:md5 = 'cca290cd2abe96392378b71e9835ce06' OR file:hashes:md5 = '648ce1c45927b24563dd8361a1b74311' OR file:hashes:md5 = 'e22f2e9ee73ab8b12ee5069f7e39a615' OR file:hashes:md5 = '7ab86c938b960dfc0c4ffbadd4163666' OR file:hashes:md5 = '0829207a8400e2814990f79fbdfe7f4d' OR file:hashes:md5 = '98bddd6c789a883afa1de3524bb8ea8e' OR file:hashes:md5 = 'd776379bda9fdf695d6a54db8a5b4c72' OR file:hashes:md5 = '7253de652a025b2b4fa7b02e97a1ee6b' OR file:hashes:md5 = '9df30198f52b16925db1e3da61cfc754' OR file:hashes:md5 = 'a70aaf335f7f1a04c7fe194602b11c14' OR file:hashes:md5 = 'cd6c1dbf08d8864b382678284ef13358' OR file:hashes:md5 = '177e0270f25a901c216ffb2e7a36e5b1' OR file:hashes:md5 = '0141955eb5b90ce25b506757ce151275' OR process:name CONTAINS 'updatasched.exe' OR ((file:file_name = 'tcplink.exe' OR file:file_name = 'httpslink.exe' OR file:file_name = 'Temfoe367[1].htm' OR file:file_name = 'h1.exe' OR file:file_name = 'tc443.bin' OR file:file_name = 'tc443.exe' OR file:file_name = 'new80.exe' OR file:file_name = 'setup.exe' OR file:file_name = 'adosetup.exe') AND (file:size = '32768' OR file:size = '50176' OR file:size = '50689' OR file:size = '51200' OR file:size = '52224' OR file:size = '53248' OR file:size = '53249' OR file:size = '53608' OR file:size = '53760' OR file:size = '53761' OR file:size = '54272' OR file:size = '54784') AND (file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2009-01-15T03:30:11Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2010-09-03T02:56:32Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-03-22T12:59:55Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-05-16T01:19:31Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-06-10T01:36:32Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-06-14T03:38:58Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-06-14T03:40:49Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-06-24T07:22:12Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-09-22T09:11:41Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-09-22T09:15:45Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-10-10T00:20:22Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-10-10T14:16:57Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-10-31T03:15:21Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-11-03T02:43:11Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-11-03T03:38:17Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-11-04T06:41:46Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-11-04T06:50:05Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-11-04T07:15:01Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-11-04T08:12:26Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-11-04T08:47:56Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-11-04T09:38:23Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-12-09T19:29:48Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-12-30T18:48:59Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2012-01-09T19:15:34Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2012-02-09T16:42:08Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2012-05-30T23:59:47Z')))",
+            "pattern": "(file:hashes:md5 = '8fc5fb519a222ab919f28d21545774c6' OR file:hashes:md5 = '7aef47f9fd84669976c4b152910a6328' OR file:hashes:md5 = '5bac505fdc202e1c6507ef381a881ed1' OR file:hashes:md5 = '29c691978af80dc23c4df96b5f6076bb' OR file:hashes:md5 = '966db6a32ccf7e57394706abc3999189' OR file:hashes:md5 = '668b92feb7cbcc7ac75ff97dcec28d10' OR file:hashes:md5 = '7b3ce6c2af1acd119a25831fac670bab' OR file:hashes:md5 = 'ba10b9486043f76bb9e9a160bc1d2576' OR file:hashes:md5 = '68af7be698e8a7408451c158c04a9712' OR file:hashes:md5 = 'a1cb8a9f2b8926afeb254a64f1d78ee3' OR file:hashes:md5 = '6846ad52c9208830ceaf4cfd81402015' OR file:hashes:md5 = '56c26b175ae23d90244805a6ec347e42' OR file:hashes:md5 = 'ba773e1608198cf8337c5902d7930710' OR file:hashes:md5 = '065e63afdfa539727f63af7530b22d2f' OR file:hashes:md5 = 'bebbbc50a561681f48d174d6b7c2824e' OR file:hashes:md5 = 'bb286e9969ca197b461286b679c0886e' OR file:hashes:md5 = '3e32ab6a2eac5bd1cddd3146d1a1348b' OR file:hashes:md5 = '251c817f4144264c3e7a9dac03071daf' OR file:hashes:md5 = '3441cbdf8de9472c19b021b241429b22' OR file:hashes:md5 = '2fccaa39533de02490b1c6395878dd79' OR file:hashes:md5 = '2cdbeebcf4e0b6dbd24b8c7b4cd6d862' OR file:hashes:md5 = '9a58cc73e103fd5a14ef3564e35c03df' OR file:hashes:md5 = 'eca18e3872fd32f17410167871fbd1d2' OR file:hashes:md5 = '76ba06bac23a2c445cb982bf38b82199' OR file:hashes:md5 = 'cca290cd2abe96392378b71e9835ce06' OR file:hashes:md5 = '648ce1c45927b24563dd8361a1b74311' OR file:hashes:md5 = 'e22f2e9ee73ab8b12ee5069f7e39a615' OR file:hashes:md5 = '7ab86c938b960dfc0c4ffbadd4163666' OR file:hashes:md5 = '0829207a8400e2814990f79fbdfe7f4d' OR file:hashes:md5 = '98bddd6c789a883afa1de3524bb8ea8e' OR file:hashes:md5 = 'd776379bda9fdf695d6a54db8a5b4c72' OR file:hashes:md5 = '7253de652a025b2b4fa7b02e97a1ee6b' OR file:hashes:md5 = '9df30198f52b16925db1e3da61cfc754' OR file:hashes:md5 = 'a70aaf335f7f1a04c7fe194602b11c14' OR file:hashes:md5 = 'cd6c1dbf08d8864b382678284ef13358' OR file:hashes:md5 = '177e0270f25a901c216ffb2e7a36e5b1' OR file:hashes:md5 = '0141955eb5b90ce25b506757ce151275' OR process:name MATCHES  /updatasched.exe/ OR ((file:file_name = 'tcplink.exe' OR file:file_name = 'httpslink.exe' OR file:file_name = 'Temfoe367[1].htm' OR file:file_name = 'h1.exe' OR file:file_name = 'tc443.bin' OR file:file_name = 'tc443.exe' OR file:file_name = 'new80.exe' OR file:file_name = 'setup.exe' OR file:file_name = 'adosetup.exe') AND (file:size = '32768' OR file:size = '50176' OR file:size = '50689' OR file:size = '51200' OR file:size = '52224' OR file:size = '53248' OR file:size = '53249' OR file:size = '53608' OR file:size = '53760' OR file:size = '53761' OR file:size = '54272' OR file:size = '54784') AND (file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2009-01-15T03:30:11Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2010-09-03T02:56:32Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-03-22T12:59:55Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-05-16T01:19:31Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-06-10T01:36:32Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-06-14T03:38:58Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-06-14T03:40:49Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-06-24T07:22:12Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-09-22T09:11:41Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-09-22T09:15:45Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-10-10T00:20:22Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-10-10T14:16:57Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-10-31T03:15:21Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-11-03T02:43:11Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-11-03T03:38:17Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-11-04T06:41:46Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-11-04T06:50:05Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-11-04T07:15:01Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-11-04T08:12:26Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-11-04T08:47:56Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-11-04T09:38:23Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-12-09T19:29:48Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-12-30T18:48:59Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2012-01-09T19:15:34Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2012-02-09T16:42:08Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2012-05-30T23:59:47Z')))",
             "pattern_lang": "cybox",
             "type": "indicator",
             "valid_from": "2015-05-15T09:00:00.000000Z",
@@ -571,7 +571,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "created_by_ref": "identity--109414f4-4d0e-4ce9-a1e3-c29cf6ba3dfe",
+            "created_by_ref": "identity--a621c165-1529-492a-bf10-6f402c3fcfc1",
             "description": "\\n                The BANGAT malware family shares a large amount of functionality with the AURIGA backdoor.  The malware family contains functionality for keylogging, creating and killing processes, performing filesystem and registry modifications, spawning interactive command shells, performing process injection, logging off the current user or shutting down the local machine.  In addition, the malware also implements a custom VNC like protocol which sends screenshots of the desktop to the C2 server and accepts keyboard and mouse input.  The malware communicates to its C2 servers using SSL, with self signed SSL certificates.  The malware family will create a copy of cmd.exe to perform its C2 activity, and replace the \"Microsoft corp\" strings in the cmd.exe binary with different values.  The malware family typically maintains persistence through installing itself as a service.\\n            ",
             "id": "indicator--fe6cb826-5c1a-42ac-bd7d-d505e9e93e64",
             "labels": [
@@ -579,7 +579,7 @@
             ],
             "modified": "2015-05-15T09:00:00.000000Z",
             "name": "BANGAT (FAMILY)",
-            "pattern": "(file:hashes:md5 = 'b631a3d832f7c22c26554711188f59c3' OR file:hashes:md5 = '468ff2c12cffc7e5b2fe0ee6bb3b239e' OR file:hashes:md5 = '24f1b8266f4faf550999581bf0edac83' OR file:hashes:md5 = 'cb3c5c3f53ecb2cb656fb0f4b8de03f6' OR file:hashes:md5 = 'bf9aeefc53d97bb23d35d47986504cef' OR file:hashes:md5 = '25f240aed433c4ea52ccdb898e43756f' OR file:hashes:md5 = 'a510d0c9b7930abaa7aa6b0ac294e675' OR file:hashes:md5 = '1e48f6ba839d2c4794e23c10e5c4c138' OR file:hashes:md5 = '727a6800991eead454e53e8af164a99c' OR file:hashes:md5 = 'a807ad465b2fe5859c85626e97eaf907' OR file:hashes:md5 = '8e8622c393d7e832d39e620ead5d3b49' OR file:hashes:md5 = 'ef8e0fb20e7228c7492ccdc59d87c690' OR file:hashes:md5 = '07ae235391f7b290ea3a35067239a290' OR file:hashes:md5 = '10a38dd9598cc31efe664cfaa8f37bf1' OR file:hashes:md5 = 'df4da15796910690b05e393561b86fa1' OR file:hashes:md5 = '7d25a80fe2c42368adaea5fcbab866b6' OR file:hashes:md5 = '1809c3cc93332d7bc0799238519a2938' OR file:hashes:md5 = 'db05df0498b59b42a8e493cf3c10c578' OR file:hashes:md5 = 'abcaf816de63c632ec23d6bda3f02bb5' OR file:hashes:md5 = '4c6bddcca2695d6202df38708e14fc7e' OR file:hashes:md5 = 'f0bab119faa296c680a10ba81693915e' OR file:hashes:md5 = '1baa7f5813e259c6346d1b02a1370d75' OR file:hashes:md5 = '698fbe7ed1ddd7f5c76b86fad3f7a485' OR file:hashes:md5 = '6ebbfa603aa4e90148ad0b726806c359' OR file:hashes:md5 = '81ce61ed2dc567ce70589386563890ca' OR file:hashes:md5 = 'e1b6940985a23e5639450f8391820655' OR file:hashes:md5 = 'bd402e910e03b70f00685d8b8be5093c' OR file:hashes:md5 = '35008d12dfa47447112495f430e4aefe' OR file:hashes:md5 = 'c65617a4eedb8e0369ef8fe58ce20a02' OR file:hashes:md5 = 'd74b169e98dd16d0f3af0dc770dffac0' OR file:hashes:md5 = 'bd8b082b7711bc980252f988bb0ca936' OR file:hashes:md5 = 'b3defdbd173738d44137f88a571647e1' OR file:hashes:md5 = 'f4f8067d501bfef385274912d2a833b5' OR file:file_name = 'rasauto16.dll' OR file:file_name = 'AppMgmt32.dll' OR file:file_name = 'rasauto32.dll' OR ((file:file_name = 'Nwsapagent.dll' OR file:file_name = 'irmon32.dll' OR file:file_name = 'svc.exe' OR file:file_name = 'ctfmon.exe' OR file:file_name = 'Update.exe' OR file:file_name = 'svchost.exe' OR file:file_name = 'WINLOGON.EXE') AND (file:size = '102912' OR file:size = '598528' OR file:size = '642048' OR file:size = '645632' OR file:size = '647168' OR file:size = '647680' OR file:size = '668672' OR file:size = '725504' OR file:size = '754176' OR file:size = '762880' OR file:size = '764416' OR file:size = '769024' OR file:size = '769040' OR file:size = '778120' OR file:size = '779264') AND (file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2009-08-03T09:30:49Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2009-12-08T02:58:21Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2010-02-03T08:22:33Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2010-02-09T08:29:43Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2010-04-20T03:39:27Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2010-05-25T02:50:41Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2010-06-22T14:06:54Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2010-10-24T13:19:49Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2010-10-25T07:31:08Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2010-10-25T09:51:31Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2010-11-18T12:26:06Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2010-12-17T03:39:52Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-01-11T03:22:02Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-10-19T09:16:10Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-10-19T09:19:09Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-11-07T14:59:20Z')) OR (file:file_name != 'rasauto.dll') OR (file:file_name != 'mc_dll.dll') OR (process:extension_data.windows_service_ext.service_name != 'rasauto' AND (process:extension_data.windows_service_ext.descriptions[*] = 'Creates a connection to a remote network whenever a program references a remote DNS or NetBIOS name or address.')) OR ((win-registry-key:values[*].name = 'dwLowDateTime' OR win-registry-key:values[*].name = 'dwHighDateTime') AND (win-registry-key:key CONTAINS 'SOFTWARE\\Microsoft\\Time' OR win-registry-key:key CONTAINS 'SOFTWARE\\Time' OR win-registry-key:key CONTAINS 'SOFTWARE\\uinux')) OR (NOT (file:file_name CONTAINS 'cmd.exe') AND file:extended_properties.windows_pebinary_ext.pe_type = 'executable') OR ((file:file_name = 'mdm.exe' OR file:file_name = 'ati.exe')))",
+            "pattern": "(file:hashes:md5 = 'b631a3d832f7c22c26554711188f59c3' OR file:hashes:md5 = '468ff2c12cffc7e5b2fe0ee6bb3b239e' OR file:hashes:md5 = '24f1b8266f4faf550999581bf0edac83' OR file:hashes:md5 = 'cb3c5c3f53ecb2cb656fb0f4b8de03f6' OR file:hashes:md5 = 'bf9aeefc53d97bb23d35d47986504cef' OR file:hashes:md5 = '25f240aed433c4ea52ccdb898e43756f' OR file:hashes:md5 = 'a510d0c9b7930abaa7aa6b0ac294e675' OR file:hashes:md5 = '1e48f6ba839d2c4794e23c10e5c4c138' OR file:hashes:md5 = '727a6800991eead454e53e8af164a99c' OR file:hashes:md5 = 'a807ad465b2fe5859c85626e97eaf907' OR file:hashes:md5 = '8e8622c393d7e832d39e620ead5d3b49' OR file:hashes:md5 = 'ef8e0fb20e7228c7492ccdc59d87c690' OR file:hashes:md5 = '07ae235391f7b290ea3a35067239a290' OR file:hashes:md5 = '10a38dd9598cc31efe664cfaa8f37bf1' OR file:hashes:md5 = 'df4da15796910690b05e393561b86fa1' OR file:hashes:md5 = '7d25a80fe2c42368adaea5fcbab866b6' OR file:hashes:md5 = '1809c3cc93332d7bc0799238519a2938' OR file:hashes:md5 = 'db05df0498b59b42a8e493cf3c10c578' OR file:hashes:md5 = 'abcaf816de63c632ec23d6bda3f02bb5' OR file:hashes:md5 = '4c6bddcca2695d6202df38708e14fc7e' OR file:hashes:md5 = 'f0bab119faa296c680a10ba81693915e' OR file:hashes:md5 = '1baa7f5813e259c6346d1b02a1370d75' OR file:hashes:md5 = '698fbe7ed1ddd7f5c76b86fad3f7a485' OR file:hashes:md5 = '6ebbfa603aa4e90148ad0b726806c359' OR file:hashes:md5 = '81ce61ed2dc567ce70589386563890ca' OR file:hashes:md5 = 'e1b6940985a23e5639450f8391820655' OR file:hashes:md5 = 'bd402e910e03b70f00685d8b8be5093c' OR file:hashes:md5 = '35008d12dfa47447112495f430e4aefe' OR file:hashes:md5 = 'c65617a4eedb8e0369ef8fe58ce20a02' OR file:hashes:md5 = 'd74b169e98dd16d0f3af0dc770dffac0' OR file:hashes:md5 = 'bd8b082b7711bc980252f988bb0ca936' OR file:hashes:md5 = 'b3defdbd173738d44137f88a571647e1' OR file:hashes:md5 = 'f4f8067d501bfef385274912d2a833b5' OR file:file_name = 'rasauto16.dll' OR file:file_name = 'AppMgmt32.dll' OR file:file_name = 'rasauto32.dll' OR ((file:file_name = 'Nwsapagent.dll' OR file:file_name = 'irmon32.dll' OR file:file_name = 'svc.exe' OR file:file_name = 'ctfmon.exe' OR file:file_name = 'Update.exe' OR file:file_name = 'svchost.exe' OR file:file_name = 'WINLOGON.EXE') AND (file:size = '102912' OR file:size = '598528' OR file:size = '642048' OR file:size = '645632' OR file:size = '647168' OR file:size = '647680' OR file:size = '668672' OR file:size = '725504' OR file:size = '754176' OR file:size = '762880' OR file:size = '764416' OR file:size = '769024' OR file:size = '769040' OR file:size = '778120' OR file:size = '779264') AND (file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2009-08-03T09:30:49Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2009-12-08T02:58:21Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2010-02-03T08:22:33Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2010-02-09T08:29:43Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2010-04-20T03:39:27Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2010-05-25T02:50:41Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2010-06-22T14:06:54Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2010-10-24T13:19:49Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2010-10-25T07:31:08Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2010-10-25T09:51:31Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2010-11-18T12:26:06Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2010-12-17T03:39:52Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-01-11T03:22:02Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-10-19T09:16:10Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-10-19T09:19:09Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-11-07T14:59:20Z')) OR (file:file_name != 'rasauto.dll') OR (file:file_name != 'mc_dll.dll') OR (process:extension_data.windows_service_ext.service_name != 'rasauto' AND (process:extension_data.windows_service_ext.descriptions[*] = 'Creates a connection to a remote network whenever a program references a remote DNS or NetBIOS name or address.')) OR ((win-registry-key:values[*].name = 'dwLowDateTime' OR win-registry-key:values[*].name = 'dwHighDateTime') AND (win-registry-key:key MATCHES  /SOFTWARE\\Microsoft\\Time/ OR win-registry-key:key MATCHES  /SOFTWARE\\Time/ OR win-registry-key:key MATCHES  /SOFTWARE\\uinux/)) OR (NOT file:file_name MATCHES  /cmd.exe/ AND file:extended_properties.windows_pebinary_ext.pe_type = 'executable') OR ((file:file_name = 'mdm.exe' OR file:file_name = 'ati.exe')))",
             "pattern_lang": "cybox",
             "type": "indicator",
             "valid_from": "2015-05-15T09:00:00.000000Z",
@@ -587,7 +587,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "created_by_ref": "identity--109414f4-4d0e-4ce9-a1e3-c29cf6ba3dfe",
+            "created_by_ref": "identity--a621c165-1529-492a-bf10-6f402c3fcfc1",
             "description": "\\n                A WEBC2 backdoor is designed to retrieve a Web page from a pre-determined C2 server. It expects the Web page to contain special HTML tags; the backdoor will attempt to interpret the data between the tags as commands. This malware is a variant on the GREENCAT family, using a fixed web C2. This family is a full featured backdoor which provides remote command execution, file transfer, process and service enumeration and manipulation.  It installs itself persistently through the current user's registry Run key.\\n            ",
             "id": "indicator--21bf65fc-6b48-4f89-91bd-cd2e413a4c0b",
             "labels": [
@@ -603,7 +603,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "created_by_ref": "identity--109414f4-4d0e-4ce9-a1e3-c29cf6ba3dfe",
+            "created_by_ref": "identity--a621c165-1529-492a-bf10-6f402c3fcfc1",
             "description": "\\n                A WEBC2 backdoor is designed to retrieve a Web page from a pre-determined C2 server. It expects the Web page to contain special HTML tags; the backdoor will attempt to interpret the data between the tags as commands. This family of malware  is capable of downloading and executing a file. All variants represented here are the same file with different MD5 signatures. This malware attempts to contact its C2 once a week (Thursday at 10:00 AM). It looks for commands inside a set of HTML tags, part of which are in the File Strings indicator term below.\\n            ",
             "id": "indicator--d2acafe2-2f6a-4102-b96c-ba12300e6d7c",
             "labels": [
@@ -619,7 +619,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "created_by_ref": "identity--109414f4-4d0e-4ce9-a1e3-c29cf6ba3dfe",
+            "created_by_ref": "identity--a621c165-1529-492a-bf10-6f402c3fcfc1",
             "description": "\\n                The TARSIP malware family is a backdoor which communicates over encoded information in HTTPS headers.  Typical TARSIP malware samples will only beacon out to their C2 servers if the C2 DNS address resolves to a specific address.  The capability of TARSIP backdoors includes file uploading, file downloading, interactive command shells, process enumeration, process creation, process termination. The TARSIP-ECLIPSE family is distinguished by the presence of 'eclipse' in .pdb debug strings present in the malware samples. It does not provide a built in mechanism to maintain persistence.\\n            ",
             "id": "indicator--f668a9bf-4b6a-4f88-a5e0-3177dd01dcc8",
             "labels": [
@@ -635,7 +635,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "created_by_ref": "identity--109414f4-4d0e-4ce9-a1e3-c29cf6ba3dfe",
+            "created_by_ref": "identity--a621c165-1529-492a-bf10-6f402c3fcfc1",
             "description": "\\n                LIGHTBOLT is a utility with the ability to perform HTTP GET requests for a list of user-specified URLs. The responses of the HTTP requests are then saved as MHTML files, which are added to encrypted RAR files. LIGHTBOLT has the ability to use software certificates for authentication.\\n            ",
             "id": "indicator--d8cf6bb8-48fe-4160-ba20-b336dbd74d1b",
             "labels": [
@@ -643,7 +643,7 @@
             ],
             "modified": "2015-05-15T09:00:00.000000Z",
             "name": "LIGHTBOLT (FAMILY)",
-            "pattern": "(file:hashes:md5 = '4788960e489197f2633f581607eb0d26' OR file:hashes:md5 = '2ef062fa86537db34f5907a9775664a1' OR file:hashes:md5 = '2e86a9862257a0cf723ceef3868a1a12' OR file:file_name = 'exploie.exe' OR ((file:file_name = 'r.exe' OR file:file_name = 'Browser.exe' OR file:file_name CONTAINS 'bits.exe') AND (file:size = '378880' OR file:size = '40960' OR file:size = '536576') AND (file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2010-03-15T06:26:41Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-03-16T01:08:00Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-03-28T09:23:35Z')) OR (file:file_name != 'firefox.exe') OR (file:file_name != 'explorer.exe'))",
+            "pattern": "(file:hashes:md5 = '4788960e489197f2633f581607eb0d26' OR file:hashes:md5 = '2ef062fa86537db34f5907a9775664a1' OR file:hashes:md5 = '2e86a9862257a0cf723ceef3868a1a12' OR file:file_name = 'exploie.exe' OR ((file:file_name = 'r.exe' OR file:file_name = 'Browser.exe' OR file:file_name MATCHES  /bits.exe/) AND (file:size = '378880' OR file:size = '40960' OR file:size = '536576') AND (file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2010-03-15T06:26:41Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-03-16T01:08:00Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-03-28T09:23:35Z')) OR (file:file_name != 'firefox.exe') OR (file:file_name != 'explorer.exe'))",
             "pattern_lang": "cybox",
             "type": "indicator",
             "valid_from": "2015-05-15T09:00:00.000000Z",
@@ -651,7 +651,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "created_by_ref": "identity--109414f4-4d0e-4ce9-a1e3-c29cf6ba3dfe",
+            "created_by_ref": "identity--a621c165-1529-492a-bf10-6f402c3fcfc1",
             "description": "\\n                STARSYPOUND provides an interactive remote shell over an obfuscated communications channel.  When it is first run, it loads a string (from the executable PE resource section) containing the beacon IP address and port.  The malware sends the beacon string \"*(SY)# <HOSTNAME>\" to the remote system, where <HOSTNAME> is the hostname of the victim system.  The remote host responds with a packet that also begins with the string \"*(SY)# cmd\". This causes the malware to launch a new cmd.exe child process. Further communications are forwarded to the cmd.exe child process to execute. The commands sent to the shell and their responses are obfuscated when sent over the network.\\n            ",
             "id": "indicator--37cdc870-066f-4e90-a295-985372bfb9e6",
             "labels": [
@@ -667,7 +667,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "created_by_ref": "identity--109414f4-4d0e-4ce9-a1e3-c29cf6ba3dfe",
+            "created_by_ref": "identity--a621c165-1529-492a-bf10-6f402c3fcfc1",
             "description": "\\n                The AURIGA malware family shares a large amount of functionality with the BANGAT backdoor.  The malware family contains functionality for keystroke logging, creating and killing processes, performing file system and registry modifications, spawning interactive command shells, performing process injection, logging off the current user or shutting down the local machine.  The AURIGA malware contains a driver component which is used to inject the malware DLL into other processes.  This driver can also perform process and IP connection hiding.  The malware family will create a copy of cmd.exe to perform its C2 activity, and replace the \"Microsoft corp\" strings in the cmd.exe binary with different values.  The malware family typically maintains persistence through installing itself as a service.\\n            ",
             "id": "indicator--0ce3f149-586a-4e4b-a833-074bfe438557",
             "labels": [
@@ -675,7 +675,7 @@
             ],
             "modified": "2015-05-15T09:00:00.000000Z",
             "name": "AURIGA (FAMILY)",
-            "pattern": "(file:hashes:md5 = '3b0dad4763f6151515d819ae04a1f0f6' OR file:hashes:md5 = 'fd66b9718e650978eb0fff32b9edb377' OR file:hashes:md5 = '4e21010805d397aa848cfe63ab0e5eb9' OR file:hashes:md5 = 'e83cc769fc5601856d26c88dcb20458b' OR file:hashes:md5 = 'f662c8ae9a0257e68ae52cf354ebab43' OR file:hashes:md5 = 'cdcd3a09ee99cff9a58efea5ccbe2bed' OR file:hashes:md5 = '6b31344b40e2af9c9ee3ba707558c14e' OR file:file_name = 'riodrv32.sys' OR file:file_name = '~temp.pl' OR win-registry-key:key = 'HKEY_LOCAL_MACHINE\\Software\\riodriv' OR win-registry-key:key = 'HKEY_LOCAL_MACHINE\\Software\\riodriv16\\TEMP' OR win-registry-key:key = 'HKEY_LOCAL_MACHINE\\Software\\riodriv16\\DEL' OR win-registry-key:key = 'HKEY_LOCAL_MACHINE\\Software\\riodriv32\\TEMP' OR win-registry-key:key = 'HKEY_LOCAL_MACHINE\\Software\\riodriv32\\DEL' OR win-registry-key:key = 'HKEY_LOCAL_MACHINE\\Software\\riodriv64' OR process:extension_data.windows_service_ext.service_name = 'rio32drv' OR process:extension_data.windows_service_ext.service_name = 'riodrv16' OR win-registry-key:values[*].data CONTAINS 'riodrv32.sys' OR ((file:file_name = 'Nwsapagent32.dll' OR file:file_name = 'netui.dll' OR file:file_name = 'msxml0.dll') AND (file:size = '110592' OR file:size = '81920' OR file:size = '94208' OR file:size = '96136') AND (file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2009-06-25T00:29:11Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2009-08-04T03:35:45Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2010-03-01T08:26:01Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2010-11-06T13:54:41Z')) OR (file:size = '17408' AND file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '['2009-04-28T10:00:00Z', '2009-04-28T16:00:00Z']'))",
+            "pattern": "(file:hashes:md5 = '3b0dad4763f6151515d819ae04a1f0f6' OR file:hashes:md5 = 'fd66b9718e650978eb0fff32b9edb377' OR file:hashes:md5 = '4e21010805d397aa848cfe63ab0e5eb9' OR file:hashes:md5 = 'e83cc769fc5601856d26c88dcb20458b' OR file:hashes:md5 = 'f662c8ae9a0257e68ae52cf354ebab43' OR file:hashes:md5 = 'cdcd3a09ee99cff9a58efea5ccbe2bed' OR file:hashes:md5 = '6b31344b40e2af9c9ee3ba707558c14e' OR file:file_name = 'riodrv32.sys' OR file:file_name = '~temp.pl' OR win-registry-key:key = 'HKEY_LOCAL_MACHINE\\Software\\riodriv' OR win-registry-key:key = 'HKEY_LOCAL_MACHINE\\Software\\riodriv16\\TEMP' OR win-registry-key:key = 'HKEY_LOCAL_MACHINE\\Software\\riodriv16\\DEL' OR win-registry-key:key = 'HKEY_LOCAL_MACHINE\\Software\\riodriv32\\TEMP' OR win-registry-key:key = 'HKEY_LOCAL_MACHINE\\Software\\riodriv32\\DEL' OR win-registry-key:key = 'HKEY_LOCAL_MACHINE\\Software\\riodriv64' OR process:extension_data.windows_service_ext.service_name = 'rio32drv' OR process:extension_data.windows_service_ext.service_name = 'riodrv16' OR win-registry-key:values[*].data = 'riodrv32.sys' OR ((file:file_name = 'Nwsapagent32.dll' OR file:file_name = 'netui.dll' OR file:file_name = 'msxml0.dll') AND (file:size = '110592' OR file:size = '81920' OR file:size = '94208' OR file:size = '96136') AND (file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2009-06-25T00:29:11Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2009-08-04T03:35:45Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2010-03-01T08:26:01Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2010-11-06T13:54:41Z')) OR (file:size = '17408' AND file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '['2009-04-28T10:00:00Z', '2009-04-28T16:00:00Z']'))",
             "pattern_lang": "cybox",
             "type": "indicator",
             "valid_from": "2015-05-15T09:00:00.000000Z",
@@ -683,7 +683,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "created_by_ref": "identity--109414f4-4d0e-4ce9-a1e3-c29cf6ba3dfe",
+            "created_by_ref": "identity--a621c165-1529-492a-bf10-6f402c3fcfc1",
             "description": "\\n                The TARSIP malware family is a backdoor which communicates over encoded information in HTTPS headers.  Typical TARSIP malware samples will only beacon out to their C2 servers if the C2 DNS address resolves to a specific address.  The capability of TARSIP backdoors includes file uploading, file downloading, interactive command shells, process enumeration, process creation, process termination. The TARSIP-MOON family is distinguished by the presence of 'moon' in .pdb debug strings present in the malware samples.  It does not provide a built in mechanism to maintain persistence.\\n            ",
             "id": "indicator--330cf804-e267-42cb-820f-af444f1e9fd8",
             "labels": [
@@ -699,7 +699,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "created_by_ref": "identity--109414f4-4d0e-4ce9-a1e3-c29cf6ba3dfe",
+            "created_by_ref": "identity--a621c165-1529-492a-bf10-6f402c3fcfc1",
             "description": "\\n                A family of downloader malware, that retrieves an encoded payload from a fixed location, usually in the form of a file with the .jpg extension.\\nSome variants have just an .exe that acts as a downloader, others have an .exe launcher that runs as a service and then loads an associated .dll of the same name that acts as the downloader. This IOC is targeted at the downloaders only. After downloading the file, the malware decodes the downloaded payload into an .exe file and launches it. The malware usually stages the files it uses in the %TEMP% directory or the %WINDIR%\\\\Temp directory.\\n            ",
             "id": "indicator--8a57160c-53f6-4782-9c2f-d4b54c3e4201",
             "labels": [
@@ -715,7 +715,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "created_by_ref": "identity--109414f4-4d0e-4ce9-a1e3-c29cf6ba3dfe",
+            "created_by_ref": "identity--a621c165-1529-492a-bf10-6f402c3fcfc1",
             "description": "\\n                The WEBC2 malware family is designed to retrieve a Web page from a pre-determined C2 server. It expects the Web page to contain special HTML tags; the backdoor will attempt to interpret the data between the tags as commands.  The WEBC2-TOCK variant looks for tags which include the name of the system in them as a parameter.  If those tags are formed correctly, the malware will decode the payload URL from the web page, then download and execute the payload.\\n            ",
             "id": "indicator--2656e928-dd0f-49a5-b0d6-13c9a854a628",
             "labels": [
@@ -723,7 +723,7 @@
             ],
             "modified": "2015-05-15T09:00:00.000000Z",
             "name": "WEBC2-TOCK (FAMILY)",
-            "pattern": "(file:hashes:md5 = 'dbdd2a9c86e71ba0c9953ff4f89cc25b' OR file:hashes:md5 = '67f62f5accfeacf5e828c3b3905248fe' OR ((win-registry-key:values[*].data CONTAINS 'mshtml Class' OR win-registry-key:values[*].data CONTAINS 'Comhtml.mshtml.1' OR win-registry-key:values[*].data CONTAINS 'Apartment' OR win-registry-key:values[*].data CONTAINS 'ntoc.dll' OR win-registry-key:values[*].data CONTAINS '{B02DAAF7-C679-4D00-9805-BE94D23B3B99}')) OR ((win-registry-key:values[*].data CONTAINS 'comhtml 1.0 Type Library' OR win-registry-key:values[*].data CONTAINS 'ntoc.dll')) OR (file:file_name = 'ntoc.dll' AND (file:size = '32768' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2010-05-06T13:11:39Z')))",
+            "pattern": "(file:hashes:md5 = 'dbdd2a9c86e71ba0c9953ff4f89cc25b' OR file:hashes:md5 = '67f62f5accfeacf5e828c3b3905248fe' OR ((win-registry-key:values[*].data = 'mshtml Class' OR win-registry-key:values[*].data = 'Comhtml.mshtml.1' OR win-registry-key:values[*].data = 'Apartment' OR win-registry-key:values[*].data = 'ntoc.dll' OR win-registry-key:values[*].data = '{B02DAAF7-C679-4D00-9805-BE94D23B3B99}')) OR ((win-registry-key:values[*].data = 'comhtml 1.0 Type Library' OR win-registry-key:values[*].data = 'ntoc.dll')) OR (file:file_name = 'ntoc.dll' AND (file:size = '32768' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2010-05-06T13:11:39Z')))",
             "pattern_lang": "cybox",
             "type": "indicator",
             "valid_from": "2015-05-15T09:00:00.000000Z",
@@ -731,7 +731,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "created_by_ref": "identity--109414f4-4d0e-4ce9-a1e3-c29cf6ba3dfe",
+            "created_by_ref": "identity--a621c165-1529-492a-bf10-6f402c3fcfc1",
             "description": "\\n                The WEBC2 malware family is designed to retrieve a Web page from a pre-determined C2 server. It expects the Web page to contain special HTML tags; the backdoor will attempt to interpret the data between the tags as commands.  The WEBC2-YAHOO variant enters a loop where every ten minutes it attempts to download a web page that may contain an encoded URL.  The encoded URL will be found in the pages returned inside an attribute named 'sb' or 'ex' within a tag named 'yahoo'.  The embedded link can direct the malware to download and execute files.\\n            ",
             "id": "indicator--3c18ada4-2f65-46e8-b5cc-80b9d47f4e5c",
             "labels": [
@@ -739,7 +739,7 @@
             ],
             "modified": "2015-05-15T09:00:00.000000Z",
             "name": "WEBC2-YAHOO (FAMILY)",
-            "pattern": "(file:hashes:md5 = 'f7f85d7f628ce62d1d8f7b39d8940472' OR file:hashes:md5 = 'da52e6701c9eba92459c6be28efdba74' OR file:hashes:md5 = '9dab4da07ed669b44f409eb60f3b0e50' OR file:hashes:md5 = '0149b7bd7218aab4e257d28469fddb0d' OR file:hashes:md5 = '9d75897d9c0a5da7e95082ea5ae1f648' OR file:hashes:md5 = '496f04719a365f9718919002eff5748b' OR file:hashes:md5 = 'c2a79bb15a31fd6584d9bf0891673d14' OR file:hashes:md5 = '4e1a92036a577a87a6fa36168d192c4b' OR file:hashes:md5 = '6e9bedcf80f21171adb951a0d85d2adb' OR file:hashes:md5 = 'efc2025431e7ec8f8784fe81389c77cf' OR file:hashes:md5 = '37ddd3d72ead03c7518f5d47650c8572' OR file:hashes:md5 = 'dff4d874b2bfc64a4d1805959c379074' OR file:hashes:md5 = '70c10f8b4dcd01b07be6cfb4df0d3348' OR file:hashes:md5 = 'cc3a9a7b026bfe0e55ff219fd6aa7d94' OR file:hashes:md5 = 'aa4f1ecc4d25b33395196b5d51a06790' OR file:hashes:md5 = '1415eb8519d13328091cc5c76a624e3d' OR file:hashes:md5 = '3d573866620eae070a220be89e113f69' OR file:hashes:md5 = '2762fb36161086f7ef3f33232aa790dc' OR file:hashes:md5 = '57cbf78c226265cc1e61ad86779bf906' OR file:hashes:md5 = '20e2c8c7a98ddd4c16f6e878194c1e78' OR file:hashes:md5 = '6040dd5b603483f738be6a02a63538f2' OR file:hashes:md5 = 'abe6ab89f957f6edf8f41b5ad198e5e6' OR file:hashes:md5 = '3e3e6fe1a8c6ffc00a9c644997a4f7a1' OR file:hashes:md5 = '4c9c9dbf388a8d81d8cfb4d3fc05f8e4' OR file:hashes:md5 = '7a670d13d4d014169c4080328b8feb86' OR file:hashes:md5 = '36d5c8fc4b14559f73b6136d85b94198' OR file:hashes:md5 = 'e5237615fde0977c0ea3626fba609ab8' OR file:hashes:md5 = '2b659d71ae168e774faaf38db30f4a84' OR file:hashes:md5 = '2272791cadf422ce02a117a3a857f84e' OR file:hashes:md5 = 'a354e3c566645100e757f3e43c9b007d' OR file:hashes:md5 = '22aa55134d621672e93c6de928c8b122' OR file:hashes:md5 = '9d5aabcda9106132d1e1b6cf6cae28aa' OR file:hashes:md5 = '7f26403f8e59a5f2728af2d3e0efaabb' OR file:hashes:md5 = '70e2827ab4af1a38dc09a02fa95b82fe' OR file:hashes:md5 = 'a8f259bb36e00d124963cfa9b86f502e' OR file:hashes:md5 = 'c9f77569aa98f71cc42644d66d9f371c' OR file:hashes:md5 = '328c3ebb2fd2e170483e8d51ccc6c505' OR file:hashes:md5 = '3de60420845a582b0e44081b1138a7e4' OR file:hashes:md5 = '2a4604fcae876dee445de5ad74fd7835' OR file:hashes:md5 = '86a906db5686bbf487689937d15bf71a' OR file:hashes:md5 = '13835f0d5aafbeda50560afc92c8b7b7' OR file:hashes:md5 = '63db2f4fd717723f0e6f94e0a6a62c7b' OR file:hashes:md5 = 'ec82a53f44511ac09e916bde02cddef0' OR file:hashes:md5 = '0588ffa0a244a2c4431c5c4faac60b1f' OR file:hashes:md5 = 'a8b183fe32ad8d426e20227f3c8b7592' OR file:hashes:md5 = 'd751c7f7d2eab52c43ab31312e229307' OR file:hashes:md5 = '39e28f48c138dc156d1436fd02222e45' OR file:hashes:md5 = 'ca68ccc887cfe5d2194f6a4d3101ae66' OR file:hashes:md5 = '9ad292de00b2175a80b5909fa173cdcd' OR file:hashes:md5 = 'b743f6af7e307221ba425d6023ebe42c' OR ((file:file_name = 'iexplore.exe' OR file:file_name = 'svchost.exe' OR file:file_name = 'mswab.exe' OR file:file_name = '1.jpeg' OR file:file_name = 'buildout.exe' OR file:file_name = 'reader_sl.exe' OR file:file_name = 'WINWORD.EXE' OR file:file_name = 'press_releases_doc.doc.exe') AND (file:size = '1220608' OR file:size = '14336' OR file:size = '14848' OR file:size = '15360' OR file:size = '15872' OR file:size = '16896' OR file:size = '17408' OR file:size = '17409' OR file:size = '2886656' OR file:size = '40448') AND (file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2010-08-27T01:55:04Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2010-09-28T08:09:41Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-05-30T01:30:24Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-05-30T03:27:33Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-05-30T08:29:29Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-07-01T08:23:45Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-07-29T07:10:31Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-08-09T07:30:17Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-08-09T08:15:29Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-08-09T08:18:19Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-08-11T13:15:49Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-08-15T09:26:15Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-08-19T03:07:37Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-09-16T08:46:55Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-12-12T13:34:30Z')) OR ((process:extension_data.windows_service_ext.service_name = '.Net CLR' OR process:extension_data.windows_service_ext.descriptions[*] = 'Microsoft .NET and Windows XP COM+ Integration with SOAP')) OR (win-registry-key:key CONTAINS 'CurrentVersion\\Run\\' AND (win-registry-key:values[*].data CONTAINS 'Users\\' OR win-registry-key:values[*].data CONTAINS 'Documents and Settings\\') AND (win-registry-key:values[*].name = 'SysTray' OR win-registry-key:values[*].name = 'systemupdate')))",
+            "pattern": "(file:hashes:md5 = 'f7f85d7f628ce62d1d8f7b39d8940472' OR file:hashes:md5 = 'da52e6701c9eba92459c6be28efdba74' OR file:hashes:md5 = '9dab4da07ed669b44f409eb60f3b0e50' OR file:hashes:md5 = '0149b7bd7218aab4e257d28469fddb0d' OR file:hashes:md5 = '9d75897d9c0a5da7e95082ea5ae1f648' OR file:hashes:md5 = '496f04719a365f9718919002eff5748b' OR file:hashes:md5 = 'c2a79bb15a31fd6584d9bf0891673d14' OR file:hashes:md5 = '4e1a92036a577a87a6fa36168d192c4b' OR file:hashes:md5 = '6e9bedcf80f21171adb951a0d85d2adb' OR file:hashes:md5 = 'efc2025431e7ec8f8784fe81389c77cf' OR file:hashes:md5 = '37ddd3d72ead03c7518f5d47650c8572' OR file:hashes:md5 = 'dff4d874b2bfc64a4d1805959c379074' OR file:hashes:md5 = '70c10f8b4dcd01b07be6cfb4df0d3348' OR file:hashes:md5 = 'cc3a9a7b026bfe0e55ff219fd6aa7d94' OR file:hashes:md5 = 'aa4f1ecc4d25b33395196b5d51a06790' OR file:hashes:md5 = '1415eb8519d13328091cc5c76a624e3d' OR file:hashes:md5 = '3d573866620eae070a220be89e113f69' OR file:hashes:md5 = '2762fb36161086f7ef3f33232aa790dc' OR file:hashes:md5 = '57cbf78c226265cc1e61ad86779bf906' OR file:hashes:md5 = '20e2c8c7a98ddd4c16f6e878194c1e78' OR file:hashes:md5 = '6040dd5b603483f738be6a02a63538f2' OR file:hashes:md5 = 'abe6ab89f957f6edf8f41b5ad198e5e6' OR file:hashes:md5 = '3e3e6fe1a8c6ffc00a9c644997a4f7a1' OR file:hashes:md5 = '4c9c9dbf388a8d81d8cfb4d3fc05f8e4' OR file:hashes:md5 = '7a670d13d4d014169c4080328b8feb86' OR file:hashes:md5 = '36d5c8fc4b14559f73b6136d85b94198' OR file:hashes:md5 = 'e5237615fde0977c0ea3626fba609ab8' OR file:hashes:md5 = '2b659d71ae168e774faaf38db30f4a84' OR file:hashes:md5 = '2272791cadf422ce02a117a3a857f84e' OR file:hashes:md5 = 'a354e3c566645100e757f3e43c9b007d' OR file:hashes:md5 = '22aa55134d621672e93c6de928c8b122' OR file:hashes:md5 = '9d5aabcda9106132d1e1b6cf6cae28aa' OR file:hashes:md5 = '7f26403f8e59a5f2728af2d3e0efaabb' OR file:hashes:md5 = '70e2827ab4af1a38dc09a02fa95b82fe' OR file:hashes:md5 = 'a8f259bb36e00d124963cfa9b86f502e' OR file:hashes:md5 = 'c9f77569aa98f71cc42644d66d9f371c' OR file:hashes:md5 = '328c3ebb2fd2e170483e8d51ccc6c505' OR file:hashes:md5 = '3de60420845a582b0e44081b1138a7e4' OR file:hashes:md5 = '2a4604fcae876dee445de5ad74fd7835' OR file:hashes:md5 = '86a906db5686bbf487689937d15bf71a' OR file:hashes:md5 = '13835f0d5aafbeda50560afc92c8b7b7' OR file:hashes:md5 = '63db2f4fd717723f0e6f94e0a6a62c7b' OR file:hashes:md5 = 'ec82a53f44511ac09e916bde02cddef0' OR file:hashes:md5 = '0588ffa0a244a2c4431c5c4faac60b1f' OR file:hashes:md5 = 'a8b183fe32ad8d426e20227f3c8b7592' OR file:hashes:md5 = 'd751c7f7d2eab52c43ab31312e229307' OR file:hashes:md5 = '39e28f48c138dc156d1436fd02222e45' OR file:hashes:md5 = 'ca68ccc887cfe5d2194f6a4d3101ae66' OR file:hashes:md5 = '9ad292de00b2175a80b5909fa173cdcd' OR file:hashes:md5 = 'b743f6af7e307221ba425d6023ebe42c' OR ((file:file_name = 'iexplore.exe' OR file:file_name = 'svchost.exe' OR file:file_name = 'mswab.exe' OR file:file_name = '1.jpeg' OR file:file_name = 'buildout.exe' OR file:file_name = 'reader_sl.exe' OR file:file_name = 'WINWORD.EXE' OR file:file_name = 'press_releases_doc.doc.exe') AND (file:size = '1220608' OR file:size = '14336' OR file:size = '14848' OR file:size = '15360' OR file:size = '15872' OR file:size = '16896' OR file:size = '17408' OR file:size = '17409' OR file:size = '2886656' OR file:size = '40448') AND (file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2010-08-27T01:55:04Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2010-09-28T08:09:41Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-05-30T01:30:24Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-05-30T03:27:33Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-05-30T08:29:29Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-07-01T08:23:45Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-07-29T07:10:31Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-08-09T07:30:17Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-08-09T08:15:29Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-08-09T08:18:19Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-08-11T13:15:49Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-08-15T09:26:15Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-08-19T03:07:37Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-09-16T08:46:55Z' OR file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp = '2011-12-12T13:34:30Z')) OR ((process:extension_data.windows_service_ext.service_name = '.Net CLR' OR process:extension_data.windows_service_ext.descriptions[*] = 'Microsoft .NET and Windows XP COM+ Integration with SOAP')) OR (win-registry-key:key MATCHES  /CurrentVersion\\Run\\/ AND (win-registry-key:values[*].data = 'Users\\' OR win-registry-key:values[*].data = 'Documents and Settings\\') AND (win-registry-key:values[*].name = 'SysTray' OR win-registry-key:values[*].name = 'systemupdate')))",
             "pattern_lang": "cybox",
             "type": "indicator",
             "valid_from": "2015-05-15T09:00:00.000000Z",
@@ -747,7 +747,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "created_by_ref": "identity--109414f4-4d0e-4ce9-a1e3-c29cf6ba3dfe",
+            "created_by_ref": "identity--a621c165-1529-492a-bf10-6f402c3fcfc1",
             "description": "\\n                LIGHTDART is a tool used to access a pre-configured web page that hosts an interface to query a database or data set. The tool then downloads the results of a query against that web page to an encrypted RAR file. This RAR file (1.rar) is renamed and uploaded to an attacker controlled FTP server, or uploaded via an HTTP POST with a .jpg extension. The malware will execute this search once a day. The target webpage usually contains information useful to the attacker, which is updated on a regular basis. Examples of targeted information include weather information or ship coordinates.\\n            ",
             "id": "indicator--0302df0c-a056-48e2-99d2-7bfd23931cb6",
             "labels": [
@@ -765,7 +765,7 @@
     "relationships": [
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "id": "relationship--e2f02f92-40be-4561-8692-d44d68586120",
+            "id": "relationship--1824cf45-aa73-4ac5-a4a4-ee5ed3184bc5",
             "modified": "2015-05-15T09:00:00.000000Z",
             "name": "indicates",
             "source_ref": "indicator--8d88dd33-1e16-4814-814e-662fb0ac842f",
@@ -774,7 +774,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "id": "relationship--99768531-779f-422a-9e31-c9acd2fa3a0b",
+            "id": "relationship--1c2ad4b5-e5ef-4572-89f7-61db116ac6f2",
             "modified": "2015-05-15T09:00:00.000000Z",
             "name": "indicates",
             "source_ref": "indicator--d577b671-abca-4318-ad94-27c793544168",
@@ -783,7 +783,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "id": "relationship--973601b6-e47d-46b2-8c7c-36053fcb54c2",
+            "id": "relationship--c3f01367-6d30-4ae8-b443-84d197f30c8a",
             "modified": "2015-05-15T09:00:00.000000Z",
             "name": "indicates",
             "source_ref": "indicator--554448f5-8e09-4c72-9dd9-5e2e1047eb33",
@@ -792,7 +792,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "id": "relationship--7e36182b-3da3-4ad5-a5fe-a5f7abbf4a11",
+            "id": "relationship--7f83c646-630b-43e0-8dc5-6d2f1834280a",
             "modified": "2015-05-15T09:00:00.000000Z",
             "name": "indicates",
             "source_ref": "indicator--36437a22-f0d7-4a48-bec4-153e19045f8d",
@@ -801,7 +801,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "id": "relationship--360dca03-0bcb-420b-9493-2496ea69e5e2",
+            "id": "relationship--375cb811-ab67-4600-87d5-6c85e4109331",
             "modified": "2015-05-15T09:00:00.000000Z",
             "name": "indicates",
             "source_ref": "indicator--dc2eb534-d2c4-421c-89d0-9bc6762009c5",
@@ -810,7 +810,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "id": "relationship--8e29dd55-34ef-4803-8afd-e2cb3c71e112",
+            "id": "relationship--702cca18-7e92-4618-8539-42e2e49aeb45",
             "modified": "2015-05-15T09:00:00.000000Z",
             "name": "indicates",
             "source_ref": "indicator--2322085d-c557-4278-affc-633be5f36fe5",
@@ -819,7 +819,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "id": "relationship--16035e6e-8c7a-46fd-a5cd-6272bd55fe6d",
+            "id": "relationship--273debf9-c966-48fd-b633-c32126c1f5ca",
             "modified": "2015-05-15T09:00:00.000000Z",
             "name": "indicates",
             "source_ref": "indicator--be16e289-114e-4f01-bc85-aa72f03a50dc",
@@ -828,7 +828,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "id": "relationship--0ee3dc6b-559c-465c-9a26-23395b8c73de",
+            "id": "relationship--283f19d4-f2a0-43bc-af3f-3e8206731287",
             "modified": "2015-05-15T09:00:00.000000Z",
             "name": "indicates",
             "source_ref": "indicator--34a5f05a-f830-4d55-bb09-c1e8745a998d",
@@ -837,7 +837,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "id": "relationship--f859c4ce-e0b4-459f-a128-5bc738bc09c6",
+            "id": "relationship--67c9697e-b1f9-410f-a2cf-9c492eec4e9d",
             "modified": "2015-05-15T09:00:00.000000Z",
             "name": "indicates",
             "source_ref": "indicator--706a8e36-77d0-41bb-81b4-05ca92f4d2d1",
@@ -846,7 +846,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "id": "relationship--028f3b92-91d5-4664-a5f5-8a3bd049411b",
+            "id": "relationship--60789798-a1d1-44da-b704-1bdf1104228b",
             "modified": "2015-05-15T09:00:00.000000Z",
             "name": "indicates",
             "source_ref": "indicator--32ce1273-fc66-4de6-9e1d-fc6c55cdcae9",
@@ -855,7 +855,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "id": "relationship--8b5a8c67-1075-4712-87c5-bf0c993730eb",
+            "id": "relationship--2876c7e8-ef6a-487e-ac2c-ef9e27d6982f",
             "modified": "2015-05-15T09:00:00.000000Z",
             "name": "indicates",
             "source_ref": "indicator--9658ae72-3f2c-4fa9-850b-aa86e8d976d6",
@@ -864,7 +864,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "id": "relationship--197ad2de-53e9-480e-9abb-19fa09559e4d",
+            "id": "relationship--2468262b-1bf7-472e-9ff2-35adab9d85c2",
             "modified": "2015-05-15T09:00:00.000000Z",
             "name": "indicates",
             "source_ref": "indicator--85b02254-b7a0-4eaa-876d-bec18dd3c55c",
@@ -873,7 +873,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "id": "relationship--ab38a792-b06d-492c-9a6e-ebb3ce76dd5f",
+            "id": "relationship--53eaf51d-7bf3-4a6b-926f-b6ae79e1c679",
             "modified": "2015-05-15T09:00:00.000000Z",
             "name": "indicates",
             "source_ref": "indicator--f799cdd4-57ae-40e9-8ee6-bcacc3f39430",
@@ -882,7 +882,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "id": "relationship--0fb3b0d1-f155-49ff-ad32-5ef488aad460",
+            "id": "relationship--80e3eff2-98ad-480a-a511-1c6391b5b592",
             "modified": "2015-05-15T09:00:00.000000Z",
             "name": "indicates",
             "source_ref": "indicator--c8a6f10c-3540-45a0-a94b-c367374770a7",
@@ -891,7 +891,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "id": "relationship--e8cece5c-ab3e-431b-a2f7-5a96c49f6006",
+            "id": "relationship--fcf66e7b-b0fd-4b28-af7e-a724b93b81a2",
             "modified": "2015-05-15T09:00:00.000000Z",
             "name": "indicates",
             "source_ref": "indicator--62355460-b3c7-4135-bfc8-c6c351391786",
@@ -900,7 +900,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "id": "relationship--280ae03a-3aba-4c0d-a0af-c93e1ac11510",
+            "id": "relationship--a8838934-97be-448c-9d90-ae38c9ed1840",
             "modified": "2015-05-15T09:00:00.000000Z",
             "name": "indicates",
             "source_ref": "indicator--8dcc62d5-e91a-4cde-bc28-121d6f25a7d3",
@@ -909,7 +909,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "id": "relationship--df10935c-a89e-49de-b190-d8b17e079b9f",
+            "id": "relationship--bb5d7ef9-9aa3-4786-982e-31782efce84f",
             "modified": "2015-05-15T09:00:00.000000Z",
             "name": "indicates",
             "source_ref": "indicator--1922d28b-6257-4f14-9988-00c906c1274f",
@@ -918,7 +918,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "id": "relationship--0a235c46-2192-4539-ad5a-4acf8ea07899",
+            "id": "relationship--74afde69-9e44-4218-aa5f-ef595d35c6ba",
             "modified": "2015-05-15T09:00:00.000000Z",
             "name": "indicates",
             "source_ref": "indicator--8b34f3bd-8176-4e33-a4ca-6b9970c2be2e",
@@ -927,7 +927,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "id": "relationship--6dd28a3a-dec4-4478-8656-b3a08a25caca",
+            "id": "relationship--6651fbaf-31e0-4e51-94ad-79a39de2defe",
             "modified": "2015-05-15T09:00:00.000000Z",
             "name": "indicates",
             "source_ref": "indicator--034a708a-2bb0-45ad-85c5-7505d90ce2a5",
@@ -936,7 +936,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "id": "relationship--302ef6cc-4950-4c1a-b2c0-d8f1d5481d78",
+            "id": "relationship--21fcd72c-45cd-4c83-bf5b-4569b068754f",
             "modified": "2015-05-15T09:00:00.000000Z",
             "name": "indicates",
             "source_ref": "indicator--edc41062-7e8f-4603-9e62-5f4ec537e9af",
@@ -945,7 +945,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "id": "relationship--5e57af57-82c0-4cd3-8d28-d6f14fd7bd7e",
+            "id": "relationship--839829fb-b716-4a3d-8554-6d014391e29b",
             "modified": "2015-05-15T09:00:00.000000Z",
             "name": "indicates",
             "source_ref": "indicator--f96c7900-0cf5-4199-b314-860a1cdc008e",
@@ -954,7 +954,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "id": "relationship--c669ce51-4db8-4ed2-a040-acee210c06dc",
+            "id": "relationship--1bd59d4a-7abd-4584-9481-b508340b6f43",
             "modified": "2015-05-15T09:00:00.000000Z",
             "name": "indicates",
             "source_ref": "indicator--71a95442-f246-4c8c-8c4d-d24107401974",
@@ -963,7 +963,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "id": "relationship--e21eeb7f-662b-47f1-bcb8-aa87466db8ba",
+            "id": "relationship--6724e0dc-2206-4cfa-92e7-1b2ed55fd6f7",
             "modified": "2015-05-15T09:00:00.000000Z",
             "name": "indicates",
             "source_ref": "indicator--27d9d4b8-9230-4472-9b5c-f3783982c752",
@@ -972,7 +972,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "id": "relationship--e206dd4f-c126-454d-b8d3-defc768ae22e",
+            "id": "relationship--44e9fa12-2851-4eb3-8db2-c172af5fd8e4",
             "modified": "2015-05-15T09:00:00.000000Z",
             "name": "indicates",
             "source_ref": "indicator--9d11a416-43ba-42f4-bdfc-f142f04fec7a",
@@ -981,7 +981,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "id": "relationship--9fd80c87-0282-44c5-8a3d-51f4d65706d4",
+            "id": "relationship--4e825bbc-cf68-4cf8-b876-c6c20c0bca07",
             "modified": "2015-05-15T09:00:00.000000Z",
             "name": "indicates",
             "source_ref": "indicator--2c6d4480-4276-416a-ba13-26c7598fe55c",
@@ -990,7 +990,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "id": "relationship--4f33b09c-5eee-4243-af0f-b82e46445a98",
+            "id": "relationship--2424c8fd-d161-4aea-96cb-ab7af6373c49",
             "modified": "2015-05-15T09:00:00.000000Z",
             "name": "indicates",
             "source_ref": "indicator--809eca7a-fb86-44eb-b355-403c58e2159a",
@@ -999,7 +999,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "id": "relationship--5499eb95-4bd0-4ad8-9201-dadefe51d7b6",
+            "id": "relationship--9ee87660-0606-4c45-8136-32e157499462",
             "modified": "2015-05-15T09:00:00.000000Z",
             "name": "indicates",
             "source_ref": "indicator--1c200d34-351f-47fa-bf6f-1c596d2779a7",
@@ -1008,7 +1008,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "id": "relationship--a8458985-3831-4ecf-99f2-65f2a52627fb",
+            "id": "relationship--06dc51bd-c296-4a91-b3c2-0dd08524a0ed",
             "modified": "2015-05-15T09:00:00.000000Z",
             "name": "indicates",
             "source_ref": "indicator--b26314f3-956f-4340-bd9a-60f0e4ff210f",
@@ -1017,7 +1017,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "id": "relationship--6051a567-1763-41bd-bcef-09d64d4a8f36",
+            "id": "relationship--ccbfb447-40be-42af-9cbe-c715e608c16a",
             "modified": "2015-05-15T09:00:00.000000Z",
             "name": "indicates",
             "source_ref": "indicator--b934ce84-ff5e-42d9-8c61-bee975f32b02",
@@ -1026,7 +1026,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "id": "relationship--8739270a-dbeb-47a9-9683-6e65581708e9",
+            "id": "relationship--c99e9677-8660-4fbd-8a11-d103c1188bf6",
             "modified": "2015-05-15T09:00:00.000000Z",
             "name": "indicates",
             "source_ref": "indicator--10df11ab-c69e-4f7a-b44b-52b4d3824007",
@@ -1035,7 +1035,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "id": "relationship--e94cad5b-8991-4df2-b265-65ec1e31f32c",
+            "id": "relationship--d317bb80-6f04-41b6-a835-355bb603b614",
             "modified": "2015-05-15T09:00:00.000000Z",
             "name": "indicates",
             "source_ref": "indicator--f97ec627-8a79-484e-b889-de21ed02a4d4",
@@ -1044,7 +1044,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "id": "relationship--74e2a7df-77da-4891-b92c-98a943f02e81",
+            "id": "relationship--968db8b2-a971-41af-b29c-352efac6bfc5",
             "modified": "2015-05-15T09:00:00.000000Z",
             "name": "indicates",
             "source_ref": "indicator--ee797e93-f583-4d6d-9523-11c47d2f1db9",
@@ -1053,7 +1053,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "id": "relationship--1c5e5025-605e-451f-9a2a-9f3e6ac49a6c",
+            "id": "relationship--4a4368d7-26aa-494d-a8c5-23293256c8a1",
             "modified": "2015-05-15T09:00:00.000000Z",
             "name": "indicates",
             "source_ref": "indicator--d2ed1adc-26c9-48f8-881d-19dea55e0f5a",
@@ -1062,7 +1062,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "id": "relationship--9544b09f-e3bb-46bd-8752-8a68cfa62458",
+            "id": "relationship--17e32932-a16b-4f72-96be-babd663e6a22",
             "modified": "2015-05-15T09:00:00.000000Z",
             "name": "indicates",
             "source_ref": "indicator--f4e6caa1-f693-41eb-b8e7-1c20fca5c578",
@@ -1071,7 +1071,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "id": "relationship--bd22e2d5-c1de-42dd-b3f4-6a09985fcf67",
+            "id": "relationship--7b143156-445e-47fc-ad35-77c4ab448590",
             "modified": "2015-05-15T09:00:00.000000Z",
             "name": "indicates",
             "source_ref": "indicator--ef180c46-8d36-46bc-b45c-d88cefa85002",
@@ -1080,7 +1080,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "id": "relationship--5613e250-996f-4fae-bcbb-077df1e31fa0",
+            "id": "relationship--c8dd67a3-31cf-402c-b3f5-58f3e3a48808",
             "modified": "2015-05-15T09:00:00.000000Z",
             "name": "indicates",
             "source_ref": "indicator--fe6cb826-5c1a-42ac-bd7d-d505e9e93e64",
@@ -1089,7 +1089,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "id": "relationship--7ae685ce-8626-4439-85a6-e6420aa12483",
+            "id": "relationship--3db8afce-2493-46dd-92dd-359def458a23",
             "modified": "2015-05-15T09:00:00.000000Z",
             "name": "indicates",
             "source_ref": "indicator--21bf65fc-6b48-4f89-91bd-cd2e413a4c0b",
@@ -1098,7 +1098,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "id": "relationship--cda964b9-ac4d-44d0-a3b3-5af690a4d860",
+            "id": "relationship--5d9560bd-9fa6-4ecc-aa75-7c365da09fb0",
             "modified": "2015-05-15T09:00:00.000000Z",
             "name": "indicates",
             "source_ref": "indicator--d2acafe2-2f6a-4102-b96c-ba12300e6d7c",
@@ -1107,7 +1107,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "id": "relationship--9c64b8af-73a3-4c4e-b405-554a086c076f",
+            "id": "relationship--4039716d-895f-4ef4-8210-464b701343b8",
             "modified": "2015-05-15T09:00:00.000000Z",
             "name": "indicates",
             "source_ref": "indicator--f668a9bf-4b6a-4f88-a5e0-3177dd01dcc8",
@@ -1116,7 +1116,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "id": "relationship--7c4f3226-78dd-4059-a87e-7dc08a4bb639",
+            "id": "relationship--5bd6aaeb-0a71-42b4-8173-5fcde0fef998",
             "modified": "2015-05-15T09:00:00.000000Z",
             "name": "indicates",
             "source_ref": "indicator--d8cf6bb8-48fe-4160-ba20-b336dbd74d1b",
@@ -1125,7 +1125,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "id": "relationship--f24b1193-55f5-4339-929e-d0f39091c063",
+            "id": "relationship--2a471767-38d9-447f-87e7-f23cc757e950",
             "modified": "2015-05-15T09:00:00.000000Z",
             "name": "indicates",
             "source_ref": "indicator--37cdc870-066f-4e90-a295-985372bfb9e6",
@@ -1134,7 +1134,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "id": "relationship--77131cde-9f66-4303-a9b7-e5b9845f80c2",
+            "id": "relationship--7a4a2990-ce5d-4486-9137-37a1827c8575",
             "modified": "2015-05-15T09:00:00.000000Z",
             "name": "indicates",
             "source_ref": "indicator--0ce3f149-586a-4e4b-a833-074bfe438557",
@@ -1143,7 +1143,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "id": "relationship--d2544b0a-d141-4dc5-9fa1-8fc8bdeebafd",
+            "id": "relationship--151a8f49-d35c-424a-a8eb-1e478c94df14",
             "modified": "2015-05-15T09:00:00.000000Z",
             "name": "indicates",
             "source_ref": "indicator--330cf804-e267-42cb-820f-af444f1e9fd8",
@@ -1152,7 +1152,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "id": "relationship--a1212e6a-1328-410f-a2a6-b61940f7d2db",
+            "id": "relationship--666e12c0-adc7-4689-b5be-8e942cc35448",
             "modified": "2015-05-15T09:00:00.000000Z",
             "name": "indicates",
             "source_ref": "indicator--8a57160c-53f6-4782-9c2f-d4b54c3e4201",
@@ -1161,7 +1161,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "id": "relationship--10e22522-ff0a-4f32-a318-34f8a062be5e",
+            "id": "relationship--299e3af2-40ee-483a-af20-993530e7fc9d",
             "modified": "2015-05-15T09:00:00.000000Z",
             "name": "indicates",
             "source_ref": "indicator--2656e928-dd0f-49a5-b0d6-13c9a854a628",
@@ -1170,7 +1170,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "id": "relationship--60c78965-cec5-4575-ab6f-f97a45316f62",
+            "id": "relationship--c0620aa6-e794-4d2a-a464-589daf06ef7e",
             "modified": "2015-05-15T09:00:00.000000Z",
             "name": "indicates",
             "source_ref": "indicator--3c18ada4-2f65-46e8-b5cc-80b9d47f4e5c",
@@ -1179,7 +1179,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "id": "relationship--77bcd067-1a0c-4969-b41a-18cbc188bb76",
+            "id": "relationship--b4eaa0cf-7dac-4396-9434-dd7e08002152",
             "modified": "2015-05-15T09:00:00.000000Z",
             "name": "indicates",
             "source_ref": "indicator--0302df0c-a056-48e2-99d2-7bfd23931cb6",
@@ -1190,7 +1190,7 @@
     "reports": [
         {
             "created": "2015-05-15T09:00:00.000000Z",
-            "created_by_ref": "identity--109414f4-4d0e-4ce9-a1e3-c29cf6ba3dfe",
+            "created_by_ref": "identity--a621c165-1529-492a-bf10-6f402c3fcfc1",
             "description": "This report contains the IOCs referenced in Appendix G of the APT1 report.\n\nINTENT:\nIndicators",
             "id": "report--190593d6-1861-4cfe-b212-c016fce1e248",
             "labels": [
