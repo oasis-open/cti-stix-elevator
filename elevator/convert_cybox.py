@@ -63,6 +63,35 @@ def convert_file(file, directory_ref):
         warn("1.x full file paths are not processed, yet")
     return cybox_dict
 
+def convert_email_message(email_message):
+    index = 0;
+    cybox_dict = { }
+    email_dict = {"type": "email-message"}
+    cybox_dict[index] = email_dict
+    index += 1
+    if email_message.header:
+        header = email_message.header
+        if header.date:
+            email_dict["date"] = header,date.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
+        if header.content_type:
+            email_dict["content_type"] = header.content_type
+        if header.subject:
+            email_dict["subject"] = header.subject
+        if header.from_:
+            # should there ever be more than one?
+            from_ref = convert_address(header.from_)
+            cybox_dict[index] = from_ref
+            email_dict["from_ref"] = index
+            index += 1
+        if header.to:
+            for t in header.to:
+                to_ref = convert_address(t)
+                cybox_dict[index] = to_ref
+                if not "to_refs" in email_dict:
+                    email_dict["to_refs"] = []
+                email_dict["to_refs"].append(index)
+                index += 1
+    return cybox_dict
 
 def convert_registry_key(reg_key):
     cybox_reg = {"type": "windows-registry-key"}
@@ -206,6 +235,8 @@ def convert_cybox_object(obj):
         objs[obj_index] = convert_address(prop)
     elif isinstance(prop, URI):
         objs[obj_index] = convert_uri(prop)
+    elif isinstance(prop, EmailMessage):
+        objs = convert_email_message(prop)
     elif isinstance(prop, File):
         directory_obj_index = -1
         if prop.file_path:

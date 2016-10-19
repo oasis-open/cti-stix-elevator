@@ -26,6 +26,27 @@
 	http://stix.mitre.org/common-1 http://stix.mitre.org/XMLSchema/common/1.2/stix_common.xsd
 	http://stix.mitre.org/default_vocabularies-1 http://stix.mitre.org/XMLSchema/default_vocabularies/1.2.0/stix_default_vocabularies.xsd
 	http://stix.mitre.org/stix-1 http://stix.mitre.org/XMLSchema/core/1.2/stix_core.xsd" id="example:Package-8b8ed1c1-f01d-4393-ac65-97017ed15876" version="1.2" >
+    <stix:Observables>
+        <cybox:Observable id="example:Observable-e9926796-6b52-463c-8be1-0ab66e9adb1c">
+                <cybox:Object id="example:EmailMessage-38afa5c9-ef26-4948-928b-0230521c67b7">
+                    <cybox:Properties xsi:type="EmailMessageObj:EmailMessageObjectType">
+                        <EmailMessageObj:Header>
+                            <EmailMessageObj:To>
+                                <EmailMessageObj:Recipient category="e-mail">
+                                    <AddressObj:Address_Value>barney@abc.com</AddressObj:Address_Value>
+                                </EmailMessageObj:Recipient>
+                                <EmailMessageObj:Recipient category="e-mail">
+                                    <AddressObj:Address_Value>wilma@abc.com</AddressObj:Address_Value>
+                                </EmailMessageObj:Recipient>
+                            </EmailMessageObj:To>
+                            <EmailMessageObj:From category="e-mail">
+                                <AddressObj:Address_Value>fred@abc.com</AddressObj:Address_Value>
+                            </EmailMessageObj:From>
+                        </EmailMessageObj:Header>
+                    </cybox:Properties>
+                </cybox:Object>
+            </cybox:Observable>
+    </stix:Observables>
     <stix:Indicators>
         <stix:Indicator id="example:indicator-b06b0eb7-61dd-4338-a094-0290c380fbd8" timestamp="2014-10-31T15:52:13.126999+00:00" xsi:type='indicator:IndicatorType' negate="false" version="2.1.1">
             <indicator:Title>Malicious E-mail Addresses</indicator:Title>

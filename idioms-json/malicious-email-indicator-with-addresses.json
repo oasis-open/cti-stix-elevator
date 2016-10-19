@@ -17,10 +17,44 @@
             "version": 1
         }
     ],
+    "observed_data": [
+        {
+            "created": "2016-10-19T15:25:20.425754Z",
+            "first_observed": "2016-10-19T15:25:20.425754Z",
+            "id": "observable-data--e9926796-6b52-463c-8be1-0ab66e9adb1c",
+            "last_observed": "2016-10-19T15:25:20.425754Z",
+            "modified": "2016-10-19T15:25:20.425754Z",
+            "number_observed": 1,
+            "objects": {
+                "0": {
+                    "from_ref": 1,
+                    "to_refs": [
+                        2,
+                        3
+                    ],
+                    "type": "email-message"
+                },
+                "1": {
+                    "type": "email-addr",
+                    "value": "fred@abc.com"
+                },
+                "2": {
+                    "type": "email-addr",
+                    "value": "barney@abc.com"
+                },
+                "3": {
+                    "type": "email-addr",
+                    "value": "wilma@abc.com"
+                }
+            },
+            "type": "observable-data",
+            "version": 1
+        }
+    ],
     "relationships": [
         {
             "created": "2014-10-31T15:52:13.126999Z",
-            "id": "relationship--b1f7d2ff-7a7d-4f7c-81ba-267af8286d67",
+            "id": "relationship--07f7d5c4-2001-43a5-9951-98fdc1a9c30a",
             "modified": "2014-10-31T15:52:13.126999Z",
             "name": "indicates",
             "source_ref": "indicator--b06b0eb7-61dd-4338-a094-0290c380fbd8",
