@@ -114,114 +114,124 @@ class MappingContentTest(unittest.TestCase):
                                                     self.stored_json_files[4]):
             self.assertEquals(good_path, check_path)
 
-    def test_file_hash_reputation(self):
+    def test_file_and_directory(self):
         for good_path, check_path in idiom_mappings(self.tested_filenames[5],
                                                     self.stored_json_files[5]):
             self.assertEquals(good_path, check_path)
 
-    def test_fix_embedded_relationship_example(self):
+    def test_file_hash_reputation(self):
         for good_path, check_path in idiom_mappings(self.tested_filenames[6],
                                                     self.stored_json_files[6]):
             self.assertEquals(good_path, check_path)
 
-    def test_identifying_a_threat_actor_group(self):
+    def test_fix_embedded_relationship_example(self):
         for good_path, check_path in idiom_mappings(self.tested_filenames[7],
                                                     self.stored_json_files[7]):
             self.assertEquals(good_path, check_path)
 
-    def test_incident_malware(self):
+    def test_identifying_a_threat_actor_group(self):
         for good_path, check_path in idiom_mappings(self.tested_filenames[8],
                                                     self.stored_json_files[8]):
             self.assertEquals(good_path, check_path)
 
-    def test_incident_with_affected_asset(self):
+    def test_incident_malware(self):
         for good_path, check_path in idiom_mappings(self.tested_filenames[9],
                                                     self.stored_json_files[9]):
             self.assertEquals(good_path, check_path)
 
-    def test_incident_with_related_observables(self):
+    def test_incident_with_affected_asset(self):
         for good_path, check_path in idiom_mappings(self.tested_filenames[10],
                                                     self.stored_json_files[10]):
             self.assertEquals(good_path, check_path)
 
-    def test_indicator_for_c2_ip_address(self):
+    def test_incident_with_related_observables(self):
         for good_path, check_path in idiom_mappings(self.tested_filenames[11],
                                                     self.stored_json_files[11]):
             self.assertEquals(good_path, check_path)
 
-    def test_indicator_for_malicious_url(self):
+    def test_indicator_for_c2_ip_address(self):
         for good_path, check_path in idiom_mappings(self.tested_filenames[12],
                                                     self.stored_json_files[12]):
             self.assertEquals(good_path, check_path)
 
-    def test_indicator_w_kill_chain(self):
+    def test_indicator_for_malicious_url(self):
         for good_path, check_path in idiom_mappings(self.tested_filenames[13],
                                                     self.stored_json_files[13]):
             self.assertEquals(good_path, check_path)
 
-    def test_kill_chain(self):
+    def test_indicator_w_kill_chain(self):
         for good_path, check_path in idiom_mappings(self.tested_filenames[14],
                                                     self.stored_json_files[14]):
             self.assertEquals(good_path, check_path)
 
-    def test_malicious_email_indicator_with_attachment(self):
+    def test_kill_chain(self):
         for good_path, check_path in idiom_mappings(self.tested_filenames[15],
                                                     self.stored_json_files[15]):
             self.assertEquals(good_path, check_path)
 
-    def test_malware_characterization_using_maec(self):
+    def test_malicious_email_indicator_with_addresses(self):
         for good_path, check_path in idiom_mappings(self.tested_filenames[16],
                                                     self.stored_json_files[16]):
             self.assertEquals(good_path, check_path)
 
-    def test_malware_indicator_for_file_hash(self):
+    def test_malicious_email_indicator_with_attachment(self):
         for good_path, check_path in idiom_mappings(self.tested_filenames[17],
                                                     self.stored_json_files[17]):
             self.assertEquals(good_path, check_path)
 
-    def test_Mandiant_APT1_Report(self):
+    def test_malware_characterization_using_maec(self):
         for good_path, check_path in idiom_mappings(self.tested_filenames[18],
                                                     self.stored_json_files[18]):
             self.assertEquals(good_path, check_path)
 
-    def test_multiple_reports_in_package(self):
+    def test_malware_indicator_for_file_hash(self):
         for good_path, check_path in idiom_mappings(self.tested_filenames[19],
                                                     self.stored_json_files[19]):
             self.assertEquals(good_path, check_path)
 
-    def test_pattern_id_ref_issue(self):
+    def test_Mandiant_APT1_Report(self):
         for good_path, check_path in idiom_mappings(self.tested_filenames[20],
                                                     self.stored_json_files[20]):
             self.assertEquals(good_path, check_path)
 
-    def test_simple_incident(self):
+    def test_multiple_reports_in_package(self):
         for good_path, check_path in idiom_mappings(self.tested_filenames[21],
                                                     self.stored_json_files[21]):
             self.assertEquals(good_path, check_path)
 
-    def test_snort_test_mechanism(self):
+    def test_pattern_id_ref_issue(self):
         for good_path, check_path in idiom_mappings(self.tested_filenames[22],
                                                     self.stored_json_files[22]):
             self.assertEquals(good_path, check_path)
 
-    def test_threat_actor_leveraging_attack_patterns_and_malware(self):
+    def test_simple_incident(self):
         for good_path, check_path in idiom_mappings(self.tested_filenames[23],
                                                     self.stored_json_files[23]):
             self.assertEquals(good_path, check_path)
 
-    def test_victim_targeting(self):
+    def test_snort_test_mechanism(self):
         for good_path, check_path in idiom_mappings(self.tested_filenames[24],
                                                     self.stored_json_files[24]):
             self.assertEquals(good_path, check_path)
 
-    def test_victim_targeting_sector(self):
+    def test_threat_actor_leveraging_attack_patterns_and_malware(self):
         for good_path, check_path in idiom_mappings(self.tested_filenames[25],
                                                     self.stored_json_files[25]):
             self.assertEquals(good_path, check_path)
 
-    def test_yara_test_mechanism(self):
+    def test_victim_targeting(self):
+        for good_path, check_path in idiom_mappings(self.tested_filenames[25],
+                                                    self.stored_json_files[25]):
+            self.assertEquals(good_path, check_path)
+
+    def test_victim_targeting_sector(self):
         for good_path, check_path in idiom_mappings(self.tested_filenames[26],
                                                     self.stored_json_files[26]):
+            self.assertEquals(good_path, check_path)
+
+    def test_yara_test_mechanism(self):
+        for good_path, check_path in idiom_mappings(self.tested_filenames[27],
+                                                    self.stored_json_files[27]):
             self.assertEquals(good_path, check_path)
 
 if __name__ == '__main__':
