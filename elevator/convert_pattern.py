@@ -10,6 +10,9 @@ from cybox.objects.win_registry_key_object import WinRegistryKey
 from cybox.objects.win_process_object import WinProcess
 from cybox.objects.win_service_object import WinService
 from cybox.objects.process_object import Process
+from cybox.objects.domain_name_object import DomainName
+from cybox.objects.mutex_object import Mutex
+from cybox.objects.network_connection_object import NetworkConnection
 from cybox.objects.win_executable_file_object import WinExecutableFile
 from cybox.objects.archive_file_object import ArchiveFile
 
@@ -132,7 +135,7 @@ def create_term(lhs, condition, rhs):
         return lhs + " " + convert_condition(condition) + " '" + str(rhs) + "'"
 
 
-def add_comparison_expression(prop, object_path, first, op="AND"):
+def add_comparison_expression(prop, object_path, first):
     if prop is not None:
         if hasattr(prop, "condition"):
             cond = prop.condition
@@ -141,6 +144,7 @@ def add_comparison_expression(prop, object_path, first, op="AND"):
         comparison_expression = create_term(object_path, cond, prop.value)
         return (" " + op + " " if first else "") + comparison_expression
     return ""
+
 
 def convert_address_to_pattern(add):
     if add.category == add.CAT_IPV4:
@@ -289,6 +293,7 @@ def convert_archive_file_to_pattern(file):
             expression += add_comparison_expression(getattr(file, prop_1x), object_path, (expression != ""))
     return expression
 
+
 def convert_hashes_to_pattern(hashes):
     hash_expression = ""
     for hash in hashes:
@@ -343,6 +348,7 @@ def convert_file_to_pattern(file):
 _REGISTRY_KEY_VALUES_PROPERTIES = { "data": "win-registry-key:values[*].data",
                                     "name": "win-registry-key:values[*].name",
                                     "datatype": "win-registry-key:values[*].data_type" }
+
 
 def convert_registry_key_to_pattern(reg_key):
     first_one = True
@@ -434,6 +440,19 @@ def convert_observable_composition_to_pattern(obs_comp, bundleInstance, observab
         return ""
 
 
+def convert_domain_name_to_pattern(domain_name):
+    return create_term("domain-name:value", domain_name.value.condition, domain_name.value.value)
+
+
+def convert_mutex_to_pattern(mutex):
+    return create_term("mutex:name", mutex.name.condition, mutex.name.value)
+
+
+def convert_network_connection_to_pattern(conn):
+    # TODO: Implement pattern
+    return "'term not converted'"
+
+
 def convert_object_to_pattern(obj):
     prop = obj.properties
 
@@ -449,6 +468,12 @@ def convert_object_to_pattern(obj):
         return convert_registry_key_to_pattern(prop)
     elif isinstance(prop, Process):
         return convert_process_to_pattern(prop)
+    elif isinstance(prop, DomainName):
+        return convert_domain_name_to_pattern(prop)
+    elif isinstance(prop, Mutex):
+        return convert_mutex_to_pattern(prop)
+    elif isinstance(prop, NetworkConnection):
+        return convert_network_connection_to_pattern(prop)
     else:
         warn("{0} cannot be converted to a pattern, yet.".format(str(obj.properties)))
         return "'term not converted'"

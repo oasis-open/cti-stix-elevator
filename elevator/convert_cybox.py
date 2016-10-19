@@ -22,13 +22,13 @@ from elevator.vocab_mappings import *
 
 def convert_address(add):
     if add.category == add.CAT_IPV4:
-       return {"type": "ipv4-addr", "value": add.address_value.value}
+        return {"type": "ipv4-addr", "value": add.address_value.value}
     elif add.category == add.CAT_IPV6:
-        return {"type": "ipv6-addr","value": add.address_value.value}
+        return {"type": "ipv6-addr", "value": add.address_value.value}
     elif add.category == add.CAT_MAC:
-        return {"type": "mac-addr","value": add.address_value.value}
+        return {"type": "mac-addr", "value": add.address_value.value}
     elif add.category == add.CAT_EMAIL:
-        return {"type": "email-addr","value": add.address_value.value}
+        return {"type": "email-addr", "value": add.address_value.value}
     else:
         warn("The address type " + add.category + " is not part of Cybox 3.0")
 
@@ -39,6 +39,7 @@ def convert_uri(uri):
 
 def create_directory(file):
     return {"type": "directory", "path": file.file_path.value}
+
 
 def convert_file(file, directory_ref):
     first_one = True
@@ -159,33 +160,48 @@ def convert_windows_service(service):
 def convert_domain_name(domain_name):
     cybox_dm = {"type": "domain-name"}
     if domain_name.value:
-        cybox_dm["value"] = domain_name.value
+        cybox_dm["value"] = domain_name.value.value
 
-    # TODO: belongs_to_refs
-    # TODO: description
-    # TODO: extended_properties
+    # TODO: resolves_to_refs
     return cybox_dm
 
 
 def convert_mutex(mutex):
     cybox_mutex = {"type": "mutex"}
     if mutex.name:
-        cybox_mutex["name"] = mutex.name
+        cybox_mutex["name"] = mutex.name.value
 
-    # TODO: description
-    # TODO: extended_properties
     return cybox_mutex
 
 
 def convert_network_connection(conn):
-    # TODO: Implement when consensus on object is achieved.
-    return {}
+    cybox_traffic = {"type": "network-traffic"}
+
+    # cybox_traffic["start"]
+    # cybox_traffic["end"]
+    # cybox_traffic["is_active"]
+    # cybox_traffic["src_ref"]
+    # cybox_traffic["dst_ref"]
+    # cybox_traffic["src_port"]
+    # cybox_traffic["dst_port"]
+    # cybox_traffic["protocols"]
+    # cybox_traffic["src_byte_count"]
+    # cybox_traffic["dst_byte_count"]
+    # cybox_traffic["src_packets"]
+    # cybox_traffic["dst_packets"]
+    # cybox_traffic["ipfix"]
+    # cybox_traffic["src_payload_ref"]
+    # cybox_traffic["dst_payload_ref"]
+    # cybox_traffic["encapsulates_refs"]
+    # cybox_traffic["encapsulated_by_ref"]
+
+    return cybox_traffic
 
 
 def convert_cybox_object(obj):
     prop = obj.properties
     objs = {}
-    obj_index = 0;
+    obj_index = 0
     if isinstance(prop, Address):
         objs[obj_index] = convert_address(prop)
     elif isinstance(prop, URI):
@@ -201,13 +217,12 @@ def convert_cybox_object(obj):
         objs[obj_index] = convert_registry_key(prop)
     elif isinstance(prop, Process):
         objs[obj_index] = convert_process(prop)
-        cybox_obj = convert_process(prop)
     elif isinstance(prop, DomainName):
-        cybox_obj = convert_domain_name(prop)
+        objs[obj_index] = convert_domain_name(prop)
     elif isinstance(prop, Mutex):
-        cybox_obj = convert_mutex(prop)
+        objs[obj_index] = convert_mutex(prop)
     elif isinstance(prop, NetworkConnection):
-        cybox_obj = convert_network_connection(prop)
+        objs[obj_index] = convert_network_connection(prop)
     else:
         warn("{obj} not handled yet".format(obj=str(type(obj))))
         return None
