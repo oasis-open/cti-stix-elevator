@@ -83,8 +83,12 @@ def convert_to_str(value):
         return escaped_ascii
 
 
+_TYPE_MAP_FROM_1_x_TO_2_0 = { "observable": "observed-data",
+                              "toolinformation": "tool"}
+
 def map_1x_type_to_20(stix1x_type):
-    # TODO: stub
+    if stix1x_type in _TYPE_MAP_FROM_1_x_TO_2_0:
+        return _TYPE_MAP_FROM_1_x_TO_2_0[stix1x_type]
     return stix1x_type
 
 
