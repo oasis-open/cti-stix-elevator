@@ -76,11 +76,29 @@ def get_identity_ref(identity, bundle_instance):
 
 
 def process_information_source(information_source, so, bundle_instance, parent_created_by_ref):
-    if information_source is not None and information_source.identity is not None:
-        so["created_by_ref"] = get_identity_ref(information_source.identity, bundle_instance)
+    if information_source:
+        if information_source.identity is not None:
+            so["created_by_ref"] = get_identity_ref(information_source.identity, bundle_instance)
+        else:
+            so["created_by_ref"] = parent_created_by_ref
+
+        if so == bundle_instance:
+            warn("Information Source information on a STIX 1.x Package is not representable in STIX 2.0")
+        else:
+            if information_source.description:
+                process_description_and_short_description(so, information_source)
+            if information_source.references:
+                for ref in information_source.references:
+                    so["external_references"].append({"url": ref})
+            if information_source.roles:
+                for role in information_source.roles:
+                    # no vocab to make to in 2.0
+                    so["description"] += "\n\n" + "INFORMATION SOURCE ROLE: " + role.value
+            if information_source.tools:
+                for tool in information_source.tools:
+                    add_tool_property_to_description(so, tool)
     else:
         so["created_by_ref"] = parent_created_by_ref
-    # TODO: add to description
 
 
 def convert_to_open_vocabs(stix20_obj, stix20_property_name, value, vocab_mapping):
@@ -97,7 +115,7 @@ def process_structured_text_list(text_list):
 def process_description_and_short_description(so, entity):
     if hasattr(entity, "descriptions") and entity.descriptions is not None:
         so["description"] += convert_to_str(process_structured_text_list(entity.descriptions))
-        if SQUIRREL_GAPS_IN_DESCRIPTIONS and entity.short_description is not None:
+        if SQUIRREL_GAPS_IN_DESCRIPTIONS and hasattr(entity, "short_descriptions") and entity.short_description is not None:
             warn("The Short_Description property is no longer supported in STIX.  Added the text to the description property")
             so["description"] += "\nShort Description: \n" + convert_to_str(
                 process_structured_text_list(entity.short_descriptions))
@@ -180,6 +198,14 @@ def add_multiple_statement_types_to_description(sdo_instance, statements, proper
     if SQUIRREL_GAPS_IN_DESCRIPTIONS:
         for s in statements:
             add_statement_type_to_description(sdo_instance, s, property_name)
+
+
+def add_tool_property_to_description(sdo_instance, tool):
+    if SQUIRREL_GAPS_IN_DESCRIPTIONS:
+        sdo_instance["description"] += "\n\nTOOL SOURCE:"
+        if tool.name:
+            sdo_instance["description"] += "\n\tname: " + str(tool.name)
+
 
 
 # Relationships
