@@ -41,6 +41,14 @@
                 </stixCommon:Threat_Actor>
                 </campaign:Attributed_Threat_Actor>
             </campaign:Attribution>
+            <campaign:Information_Source>
+                <stixCommon:Description>Fred</stixCommon:Description>
+                <stixCommon:Role xsi:type="stixVocabs:InformationSourceRoleVocab-1.0">Aggregator</stixCommon:Role>
+                <stixCommon:Role xsi:type="stixVocabs:InformationSourceRoleVocab-1.0">Initial Author</stixCommon:Role>
+                <stixCommon:References>
+                    <stixCommon:Reference>http://foo.com/bar</stixCommon:Reference>
+                </stixCommon:References>
+            </campaign:Information_Source>
         </stix:Campaign>
     </stix:Campaigns>
 </stix:STIX_Package>

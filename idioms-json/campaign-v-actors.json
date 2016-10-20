@@ -2,6 +2,12 @@
     "campaigns": [
         {
             "created": "2014-08-08T15:50:10.983728Z",
+            "description": "Fred\n\nINFORMATION SOURCE ROLE: Aggregator\n\nINFORMATION SOURCE ROLE: Initial Author",
+            "external_references": [
+                {
+                    "url": "http://foo.com/bar"
+                }
+            ],
             "id": "campaign--e5268b6e-4931-42f1-b379-87f48eb41b1e",
             "modified": "2014-08-08T15:50:10.983728Z",
             "name": "Compromise of ATM Machines",
@@ -13,7 +19,7 @@
     "relationships": [
         {
             "created": "2014-08-08T15:50:10.983728Z",
-            "id": "relationship--d6a1046e-79f0-4316-bb5f-e7ca3a412f9b",
+            "id": "relationship--77412332-9074-4f88-825e-0da03a223574",
             "modified": "2014-08-08T15:50:10.983728Z",
             "name": "attributed-to",
             "source_ref": "incident--229ab6ba-0eb2-415b-bdf2-079e6b42f51e",
@@ -23,7 +29,7 @@
         },
         {
             "created": "2014-08-08T15:50:10.983728Z",
-            "id": "relationship--5d1e54c9-2407-46e5-9f40-fc3265f37db7",
+            "id": "relationship--950508d6-0edb-4f1f-a02a-9cef1a167c2f",
             "modified": "2014-08-08T15:50:10.983728Z",
             "name": "attributed-to",
             "source_ref": "incident--517cf274-038d-4ed4-a3ec-3ac18ad9db8a",
@@ -33,7 +39,7 @@
         },
         {
             "created": "2014-08-08T15:50:10.983728Z",
-            "id": "relationship--33b3482b-3aa1-4f3e-9a37-28d0d8869fd1",
+            "id": "relationship--8b801fd5-0f9b-41e4-b873-7062b6426c5f",
             "modified": "2014-08-08T15:50:10.983728Z",
             "name": "attributed-to",
             "source_ref": "incident--7d8cf96f-91cb-42d0-a1e0-bfa38ea08621",
@@ -43,7 +49,7 @@
         },
         {
             "created": "2014-08-08T15:50:10.983728Z",
-            "id": "relationship--06fea367-f6c1-4821-9bde-eafec08aa8bb",
+            "id": "relationship--4d427c7b-65c2-4a9a-9929-85b999c82acc",
             "modified": "2014-08-08T15:50:10.983728Z",
             "name": "attributed-to",
             "source_ref": "threat-actor--56f3f0db-b5d5-431c-ae56-c18f02caf500",
