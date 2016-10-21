@@ -1,6 +1,7 @@
 # Copyright (c) 2016, The MITRE Corporation. All rights reserved.
 # See LICENSE.txt for complete terms.
 
+import stix
 from stix.utils.parser import EntityParser
 from stix.core import STIXPackage
 from stix.campaign import Campaign
@@ -8,7 +9,8 @@ from stix.coa import CourseOfAction
 from stix.exploit_target import ExploitTarget
 from stix.incident import Incident
 from stix.indicator import Indicator
-from stix.report import Report
+if stix.__version__ >= "1.2.0.0":
+    from stix.report import Report
 from stix.threat_actor import ThreatActor
 from stix.ttp import TTP
 from stix.common.kill_chains import KillChain, KillChainPhase, KillChainPhaseReference
@@ -19,6 +21,8 @@ from stix.extensions.test_mechanism.yara_test_mechanism import YaraTestMechanism
 from stix.extensions.test_mechanism.snort_test_mechanism import SnortTestMechanism
 from stix.extensions.test_mechanism.open_ioc_2010_test_mechanism import OpenIOCTestMechanism
 from stix.extensions.identity.ciq_identity_3_0 import CIQIdentity3_0Instance
+if stix.__version__ < "1.2.0.0":
+    import stix.extensions.marking.ais
 
 import json
 from datetime import *
@@ -1122,7 +1126,7 @@ def handle_embedded_object(obj, bundle_instance):
         new20 = convert_observable_data(obj, bundle_instance)
         bundle_instance["observed_data"].append(new20)
     # reports
-    elif isinstance(obj, Report):
+    elif stix.__version__ >= "1.2.0.0" and isinstance(obj, Report):
         new20 = convert_report(obj, bundle_instance)
         bundle_instance["reports"].append(new20)
     # threat actors
@@ -1178,7 +1182,8 @@ def finalize_bundle(bundle_instance):
 
     fix_relationships(bundle_instance["relationships"], bundle_instance)
 
-    add_relationships_to_reports(bundle_instance)
+    if stix.__version__ >= "1.2.0.0":
+        add_relationships_to_reports(bundle_instance)
 
     # source and target_ref are taken care in fix_relationships(...)
     _TO_MAP = ("id", "idref", "created_by_ref", "external_references",
@@ -1280,7 +1285,7 @@ def convert_package(stixPackage):
             bundle_instance["indicators"].append(i20)
 
     # reports
-    if stixPackage.reports:
+    if stix.__version__ >= "1.2.0.0" and stixPackage.reports:
         for report in stixPackage.reports:
             report20 = convert_report(report, bundle_instance)
             bundle_instance["reports"].append(report20)
