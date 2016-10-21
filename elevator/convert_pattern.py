@@ -100,6 +100,11 @@ def convert_condition(condition):
         warn("No condition given for " + identifying_info(get_dynamic_variable("current_observable")) + " - assume '='")
         return "="
 
+def getCondition(obj):
+    if hasattr(obj, "condition"):
+        return obj.condition
+    else:
+        return None
 
 def create_term_with_regex(lhs, condition, rhs):
     if condition == "StartsWith":
@@ -148,14 +153,15 @@ def add_comparison_expression(prop, object_path, first):
 
 
 def convert_address_to_pattern(add):
+    cond = add.address_value.condition
     if add.category == add.CAT_IPV4:
-        return create_term("ipv4-addr:value", add.address_value.condition, add.address_value.value)
+        return create_term("ipv4-addr:value", cond, add.address_value.value)
     elif add.category == add.CAT_IPV6:
-        return create_term("ipv6-addr:value", add.address_value.condition, add.address_value.value)
+        return create_term("ipv6-addr:value", cond, add.address_value.value)
     elif add.category == add.CAT_MAC:
-        return create_term("mac-addr:value", add.address_value.condition, add.address_value.value)
+        return create_term("mac-addr:value", cond, add.address_value.value)
     elif add.category == add.CAT_EMAIL:
-        return create_term("email-addr:value", add.address_value.condition, add.address_value.value)
+        return create_term("email-addr:value", cond, add.address_value.value)
     else:
         warn("The address type " + add.category + " is not part of Cybox 3.0")
 
@@ -171,6 +177,10 @@ _EMAIL_HEADER_PROPERTIES = [ ["email-message:subject", [ "subject" ]],
                              ["email-message:to_refs[*]", [ "to*", "address_value" ]],
                              ["email-message:cc_refs[*]", [ "cc*", "address_value" ]],
                              ["email-message:bcc_refs[*]", [ "bcc*", "address_value"]] ]
+
+_EMAIL_ADDITIONAL_HEADERS_PROPERTIES = [ ["email-message:additional_header_fields:Reply-To", [ "reply-to*", "address_value"]],
+                                         ["email-message:additional_header_fields:Message_ID", ["message_id"]],
+                                         ["email-message:additional_header_fields:X_Mailer", ["x_mailer"]] ]
 
 def cannonicalize_prop_name(name):
     if name.find("*") == -1:
@@ -202,9 +212,9 @@ def create_terms_from_prop_list(prop_list, obj, object_path):
             else:
                 return create_terms_from_prop_list(rest_of_prop_list, getattr(obj, cannonicalize_prop_name(prop_1x)), object_path)
 
-def convert_email_header_to_pattern(head):
+def convert_email_header_to_pattern(head, properties):
     header_expression = ""
-    for prop_spec in _EMAIL_HEADER_PROPERTIES:
+    for prop_spec in properties:
         object_path = prop_spec[0]
         prop_1x_list = prop_spec[1]
         if hasattr(head, cannonicalize_prop_name(prop_1x_list[0])):
@@ -213,10 +223,14 @@ def convert_email_header_to_pattern(head):
                 header_expression += (" AND " if header_expression != "" else "") + term
     return header_expression
 
+
 def convert_email_message_to_pattern(mess):
     expression = ""
     if mess.header is not None:
-        expression += convert_email_header_to_pattern(mess.header)
+        expression += convert_email_header_to_pattern(mess.header, _EMAIL_HEADER_PROPERTIES)
+        add_headers = convert_email_header_to_pattern(mess.header, _EMAIL_ADDITIONAL_HEADERS_PROPERTIES)
+        if add_headers:
+            expression += (" AND " if expression != "" else "") + add_headers
     if mess.attachments is not None:
         warn("email attachments not handled yet")
     return expression
@@ -275,8 +289,8 @@ def convert_windows_executable_file_to_pattern(file):
             if s.entropy:
                 section_expression += (" AND " if section_expression != "" else "") + \
                                       create_term("file:extended_properties.windows_pebinary_ext.section[*].entropy",
-                                                    s.entropy.condition,
-                                                    s.entropy.value)
+                                                  s.entropy.condition,
+                                                  s.entropy.value)
             if s.data_hashes:
                 hash_expression1 = convert_hashes_to_pattern(s.data_hashes)
             hash_expression = ""
@@ -306,10 +320,14 @@ def convert_archive_file_to_pattern(file):
 def convert_hashes_to_pattern(hashes):
     hash_expression = ""
     for hash in hashes:
+        if getattr(hash, "simple_hash_value"):
+            hash_value = hash.simple_hash_value
+        else:
+            hash_value = hash.fuzzy_hash_value
         hash_expression += (" OR " if not hash_expression == "" else "") + \
                            create_term("file:hashes" + ":" + str(hash.type_).lower(),
-                                       hash.simple_hash_value.condition,
-                                       hash.simple_hash_value.value)
+                                       hash_value.condition,
+                                       hash_value.value)
     return hash_expression
 
 
@@ -344,7 +362,9 @@ def convert_file_to_pattern(file):
         hash_expression = convert_hashes_to_pattern(file.hashes)
         if hash_expression:
             expression += hash_expression
-    expression += convert_file_name_and_path_to_pattern(file)
+    file_name_and_path_expression = convert_file_name_and_path_to_pattern(file)
+    if file_name_and_path_expression:
+        expression += (" AND " if expression != "" else "") + file_name_and_path_expression
     for prop_spec in _FILE_PROPERTIES:
         prop_1x = prop_spec[0]
         object_path = prop_spec[1]
