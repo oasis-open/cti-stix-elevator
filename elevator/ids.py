@@ -37,7 +37,7 @@ def record_ids(id, new_id):
 #       if the stix20SOName has been given, create the new id from it and the UUID
 #       otherwise, unless the stix12ID's type is ttp or et (which don't exist in 2.0) use the mapped 1.x type
 #
-#   if a stix12ID isn't given or it has been used already
+#   if a stix12ID isn't given or it has been used already (STIX 1.x TTPs, etc can generate multiple STIX 2.0 objects)
 #       generated a new UUID
 #       create the new id using stix20SOName and the new UUID
 
@@ -57,7 +57,11 @@ def generateSTIX20Id(stix20SOName, stix12ID=None, id_used=False):
             else:
                 return map_1x_type_to_20(stx1x_type[1]) + "--" + namespace_type_uuid[1]
         else:
-            return stix20SOName + "--" + namespace_type_uuid[1]
+            if len(namespace_type_uuid) == 2:
+                return stix20SOName + "--" + namespace_type_uuid[1]
+            else:
+                warn("Malformed id " + stix12ID + ". Generated a new uuid")
+                return stix20SOName + "--" + str(uuid.uuid4())
 
 
 def exists_id_key(key):
