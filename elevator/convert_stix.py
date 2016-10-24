@@ -184,7 +184,7 @@ def add_confidence_property_to_description(sdo_instance, confidence):
 
 
 def add_statement_type_to_description(sdo_instance, statement, property_name):
-    if SQUIRREL_GAPS_IN_DESCRIPTIONS:
+    if statement and SQUIRREL_GAPS_IN_DESCRIPTIONS:
         sdo_instance["description"] += "\n\n" + property_name.upper() + ":"
         if statement.value:
             sdo_instance["description"] += str(statement.value)
@@ -441,7 +441,8 @@ def convert_course_of_action(coa, bundle_instance):
     process_description_and_short_description(coa_instance, coa)
     coa_instance["name"] = coa.title
     add_string_property_to_description(coa_instance, "stage", coa.stage)
-    convert_controlled_vocabs_to_open_vocabs(coa_instance, "labels", [coa.type_], COA_LABEL_MAP, False)
+    if coa.type_:
+        convert_controlled_vocabs_to_open_vocabs(coa_instance, "labels", [coa.type_], COA_LABEL_MAP, False)
     add_objective_property_to_description(coa_instance, coa.objective)
     # TODO: parameter observables, maybe turn into pattern expressions and put in description???
     if coa.structured_coa:
@@ -700,9 +701,11 @@ def convert_indicator(indicator, bundle_instance):
     if indicator.valid_time_positions is not None:
         for window in indicator.valid_time_positions:
             if "valid_from" not in indicator_instance:
-                indicator_instance["valid_from"] = window.start_time.value
+                indicator_instance["valid_from"] = \
+                    convert_timestamp_string(window.start_time.value, indicator, indicator_instance["created"])
                 indicator_instance["valid_from_precision"] = window.start_time.precision
-                indicator_instance["valid_until"] = window.end_time.value
+                indicator_instance["valid_until"] = \
+                    convert_timestamp_string(window.end_time.value, indicator, indicator_instance["created"])
                 indicator_instance["valid_until_precision"] = window.end_time.precision
             else:
                 warn("Only one valid time window allowed for {id} in STIX 2.0 - used first one".format(id=indicator_instance["id"]))
@@ -910,19 +913,20 @@ def convert_threat_actor(threat_actor, bundle_instance):
 # TTPs
 
 
-def process_ttp_properties(sdo_instance, ttp, bundle_instance, kill_chains_available=True):
+def process_ttp_properties(sdo_instance, ttp, bundle_instance, kill_chains_in_sdo=True):
     # TODO: handle description and short description
     add_multiple_statement_types_to_description(sdo_instance, ttp.intended_effects, "intended_effect")
     add_string_property_to_description(sdo_instance, "title", ttp.title, False)
     if ttp.exploit_targets is not None:
         handle_relationship_to_refs(ttp.exploit_targets, sdo_instance["id"], bundle_instance, "targets", ttp.timestamp)
-    if kill_chains_available:
+    # only populate kill chaiin phases if that is a property of the STIX 2.0 SDO
+    if kill_chains_in_sdo and hasattr(ttp, "kill_chain_phases"):
         convert_kill_chains(ttp.kill_chain_phases, sdo_instance)
     if ttp.related_ttps:
         warn("All related indicators relationships of {id} are assumed to not represent STIX 1.2 versioning".format(id=ttp.id_))
         handle_relationship_to_refs(ttp.related_ttps, sdo_instance["id"], bundle_instance,
                                     "related-to", ttp.timestamp)
-    if ttp.related_packages is not None:
+    if hasattr(ttp, "related_packages") and ttp.related_packages is not None:
         for p in ttp.related_packages:
             warn("TTP/Related_Packages on {id} not supported in STIX 2.0".format(id=ttp.id_))
     process_information_source(ttp.information_source, sdo_instance, bundle_instance,
@@ -1077,7 +1081,7 @@ def convert_ttp(ttp, bundle_instance):
         generated_objs.extend(convert_behavior(ttp.behavior, ttp, bundle_instance))
     if ttp.resources is not None:
         generated_objs.extend(convert_resources(ttp.resources, ttp, bundle_instance))
-    if ttp.kill_chain_phases is not None:
+    if hasattr(ttp, "kill_chain_phases") and ttp.kill_chain_phases is not None:
         for phase in ttp.kill_chain_phases:
             warn("Kill chains are not defined explicitly in STIX 2.0. {id}".format(id=ttp.id_))
     if ttp.victim_targeting is not None:
