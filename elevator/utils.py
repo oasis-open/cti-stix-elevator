@@ -3,6 +3,7 @@
 
 import sys
 from datetime import *
+from numbers import Number
 
 import six
 
@@ -58,13 +59,9 @@ def convert_controlled_vocabs_to_open_vocabs(new_obj, new_property_name, old_voc
             warn("Only one {prop} allowed in STIX 2.0 - used first one".format(prop=new_property_name))
 
 
-def convert_timestamp(entity, parent_timestamp=None):
-    if entity and hasattr(entity, "timestamp"):
-        if entity.timestamp is not None:
-            return entity.timestamp.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
-        else:
-            warn("Timestamp not available for " + identifying_info(entity)+ ", using current time")
-            return str(datetime.now().isoformat()) + "Z"
+def convert_timestamp_string(timestamp, entity, parent_timestamp):
+    if timestamp is not None:
+        return timestamp.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
     elif parent_timestamp is not None:
         info("Using enclosing object timestamp")
         return parent_timestamp.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
@@ -73,7 +70,22 @@ def convert_timestamp(entity, parent_timestamp=None):
         return str(datetime.now().isoformat()) + "Z"
 
 
+def convert_timestamp(entity, parent_timestamp=None):
+    if entity and hasattr(entity, "timestamp"):
+        if entity.timestamp is not None:
+            return entity.timestamp.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
+        elif parent_timestamp is not None:
+            info("Using enclosing object timestamp")
+            return parent_timestamp.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
+    warn("Timestamp not available for " + identifying_info(entity)  + ", using current time")
+    return str(datetime.now().isoformat()) + "Z"
+
+
 def convert_to_str(value):
+    if not value:
+        return ""
+    if isinstance(value, Number) or isinstance(value, list):
+       value = str(value)
     escaped = value.encode('unicode_escape')
     escaped_ascii = escaped.decode('ascii')
 
