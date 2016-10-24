@@ -26,11 +26,11 @@ def error(fmt, *args):
 def identifying_info(stix1x_obj):
     if stix1x_obj:
         if hasattr(stix1x_obj, "id_") and stix1x_obj.id_:
-            return str(stix1x_obj.id_)
+            return convert_to_str(stix1x_obj.id_)
         elif hasattr(stix1x_obj, "title") and stix1x_obj.title:
-            return "'" + str(stix1x_obj.title) + "'"
+            return "'" + convert_to_str(stix1x_obj.title) + "'"
         elif hasattr(stix1x_obj, "name") and stix1x_obj.name:
-            return "'" + str(stix1x_obj.name) + "'"
+            return "'" + convert_to_str(stix1x_obj.name) + "'"
     return "- no identifying information"
 
 
