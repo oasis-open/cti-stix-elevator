@@ -137,7 +137,7 @@ def create_term(lhs, condition, rhs):
         if (condition == "Contains" or condition == "DoesNotContain") and not multi_valued_property(lhs):
             warn("Used MATCHES operator for " + condition)
             return ("NOT " if condition == "DoesNotContain" else "") + create_term_with_regex(lhs, condition, rhs)
-        return lhs + " " + convert_condition(condition) + " '" + str(rhs) + "'"
+        return lhs + " " + convert_condition(condition) + " '" + convert_to_str(rhs) + "'"
 
 
 def add_comparison_expression(prop, object_path, first):
@@ -145,7 +145,7 @@ def add_comparison_expression(prop, object_path, first):
         if hasattr(prop, "condition"):
             cond = prop.condition
         else:
-            warn("No condition given - assume EQ")
+            warn("No condition given - assume ==")
             cond = None
         comparison_expression = create_term(object_path, cond, prop.value)
         return (" AND " if first else "") + comparison_expression
@@ -171,7 +171,7 @@ def convert_uri_to_pattern(uri):
 
 _EMAIL_HEADER_PROPERTIES = [ ["email-message:subject", [ "subject" ]],
                              ["email-message:from_ref", [ "from_", "address_value"]],
-                             ["email-message:sender_ref", [ "sender" ]],
+                             ["email-message:sender_ref", [ "sender", "address_value" ]],
                              ["email-message:date", [ "date"]],
                              ["email-message:content_type", [ "content_type"]],
                              ["email-message:to_refs[*]", [ "to*", "address_value" ]],
@@ -480,7 +480,10 @@ def convert_domain_name_to_pattern(domain_name):
 
 
 def convert_mutex_to_pattern(mutex):
-    return create_term("mutex:name", mutex.name.condition, mutex.name.value)
+    if mutex.name:
+        return create_term("mutex:name", mutex.name.condition, mutex.name.value)
+    else:
+        return ""
 
 
 def convert_network_connection_to_pattern(conn):
