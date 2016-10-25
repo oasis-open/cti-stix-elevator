@@ -46,7 +46,7 @@ def convert_file(file, directory_ref):
     cybox_dict = {"type": "file"}
     if file.size is not None:
         if isinstance(file.size.value, list):
-            error("file size window not allowed in top level observable, using first value")
+            error("File size window not allowed in top level observable, using first value")
             cybox_dict["size"] = int(file.size.value[0])
         else:
             cybox_dict["size"] = int(file.size)

@@ -334,9 +334,10 @@ def fix_relationships(relationships, bundle_instance):
 # This is done after the package has been processed, and the relationships are "fixed", so all relationships are known
 #
 # For each report:
-#   if the source and target are part of the report, add the relationship
-#   if the source is part of the report, add the relationship AND then the target, UNLESS the target ref is "dangling"
-#   if the target is part of the report, add the relationship AND then the source, UNLESS the source ref is "dangling"
+#   For each relationship
+#       if the source and target are part of the report, add the relationship
+#       if the source is part of the report, add the relationship AND then the target, UNLESS the target ref is "dangling"
+#       if the target is part of the report, add the relationship AND then the source, UNLESS the source ref is "dangling"
 
 
 def add_relationships_to_reports(bundle_instance):
@@ -349,6 +350,7 @@ def add_relationships_to_reports(bundle_instance):
                     ("target_ref" in rel and rel["target_ref"] in refs_in_this_report):
                 rels_to_include.append(rel["id"])
             elif "source_ref" in rel and rel["source_ref"] in refs_in_this_report:
+                # and target_ref is not in refs_in_this_report
                 if "target_ref" in rel and rel["target_ref"] and (
                         rel["target_ref"] in new_ids or rel["target_ref"] in SDO_WITH_NO_1X_OBJECT):
                     rels_to_include.append(rel["id"])
@@ -664,11 +666,13 @@ def convert_kill_chains(kill_chain_phases, sdo_instance):
 def convert_test_mechanism(indicator, indicator_instance):
     if indicator.test_mechanisms is not None:
         if hasattr(indicator_instance, "pattern"):
+            # TODO: maybe put in description
             warn("Only one type pattern can be specified in {id} - using cybox".format(id=indicator_instance["id"]))
         else:
             for tm in indicator.test_mechanisms:
                 if hasattr(indicator_instance, "pattern"):
-                    warn("only one alternative test mechanism allowed for {0} in STIX 2.0 - used first one, which was {1}".format(indicator_instance["id"], indicator_instance["pattern_lang"]))
+                    # TODO: maybe put in description
+                    warn("Only one alternative test mechanism allowed for {0} in STIX 2.0 - used first one, which was {1}".format(indicator_instance["id"], indicator_instance["pattern_lang"]))
                 else:
                     if isinstance(tm, YaraTestMechanism):
                         indicator_instance["pattern"] = convert_to_str(tm.rule.value)
@@ -725,7 +729,7 @@ def convert_indicator(indicator, bundle_instance):
             (")" if negate_indicator(indicator) else "")
         indicator_instance["pattern_lang"] = "cybox"
     if indicator.composite_indicator_expression is not None:
-        warn("composite indicator expressions are not handled - {id}".format(id=indicator.id_))
+        warn("Composite indicator expressions are not handled - {id}".format(id=indicator.id_))
     if "pattern" not in indicator_instance:
         # STIX doesn't handle multiple patterns for indicators
         convert_test_mechanism(indicator, indicator_instance)
@@ -957,6 +961,7 @@ def convert_malware_instance(mal, ttp, bundle_instance, ttp_id_used):
             if "name" not in malware_instance_instance:
                 malware_instance_instance["name"] = str(n)
             else:
+                # TODO: add to description?
                 warn("Only one name for malware is allowed for {id} in STIX 2.0 - used first one".format(id=malware_instance_instance["id"]))
     # TODO: warning for MAEC content
     process_ttp_properties(malware_instance_instance, ttp, bundle_instance)
@@ -1055,10 +1060,10 @@ def convert_victim_targeting(victim_targeting, ttp, bundle_instance, ttp_generat
             warn("Targeted systems on {id} are not a victim target in STIX 2.0".format(id=ttp.id_))
     if victim_targeting.targeted_information:
         for v in victim_targeting.targeted_information:
-            warn("targeted information on {id} is not a victim target in STIX 2.0".format(id=ttp.id_))
+            warn("Targeted information on {id} is not a victim target in STIX 2.0".format(id=ttp.id_))
     if hasattr(victim_targeting, "technical_details") and victim_targeting.targeted_technical_details is not None:
         for v in victim_targeting.targeted_technical_details:
-            warn("targeted technical details on {id} are not a victim target in STIX 2.0".format(id=ttp.id_))
+            warn("Targeted technical details on {id} are not a victim target in STIX 2.0".format(id=ttp.id_))
     if victim_targeting.identity:
         identity_instance = convert_identity_for_victim_target(victim_targeting.identity, ttp, bundle_instance,
                                                                ttp_generated)

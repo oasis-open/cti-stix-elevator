@@ -84,6 +84,8 @@ def convert_timestamp(entity, parent_timestamp=None):
 def convert_to_str(value):
     if not value:
         return ""
+    if isinstance(value, six.text_type):
+        return value
     if isinstance(value, Number) or isinstance(value, list):
        value = str(value)
     escaped = value.encode('unicode_escape')

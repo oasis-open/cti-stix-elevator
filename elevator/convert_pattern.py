@@ -232,7 +232,7 @@ def convert_email_message_to_pattern(mess):
         if add_headers:
             expression += (" AND " if expression != "" else "") + add_headers
     if mess.attachments is not None:
-        warn("email attachments not handled yet")
+        warn("Email attachments not handled yet")
     return expression
 
 _PE_FILE_HEADER_PROPERTIES = [ ["machine", "file:extended_properties.windows_pebinary_ext.file_header:machine"],
