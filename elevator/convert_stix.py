@@ -35,6 +35,10 @@ from elevator.ids import *
 from elevator.vocab_mappings import *
 from elevator.utils import *
 
+from validator.validators import ValidationOptions
+from validator.output import print_schema_results
+from validator import validate_string
+
 SQUIRREL_GAPS_IN_DESCRIPTIONS = True
 
 INFRASTRUCTURE_IN_20 = False
@@ -219,7 +223,7 @@ def create_relationship(source_ref, target_ref, verb, rel_obj, parent_timestamp)
     relationship_instance = create_basic_object("relationship", rel_obj, parent_timestamp)
     relationship_instance["source_ref"] = source_ref
     relationship_instance["target_ref"] = target_ref
-    relationship_instance["name"] = verb
+    relationship_instance["relationship_type"] = verb
     if rel_obj is not None and hasattr(rel_obj, "relationship") and rel_obj.relationship is not None:
         relationship_instance["description"] = rel_obj.relationship.value
     return relationship_instance
@@ -757,9 +761,9 @@ def convert_indicator(indicator, bundle_instance):
 # observables
 
 
-def convert_observable_data(obs, bundle_instance):
+def convert_observed_data(obs, bundle_instance):
     global OBSERVABLE_MAPPING
-    observed_data_instance = create_basic_object("observable-data", obs)
+    observed_data_instance = create_basic_object("observed-data", obs)
     # cybox_container = {"type": "cybox-container", "spec_version": "3.0"}
     observed_data_instance["objects"] = convert_cybox_object(obs.object_)
     info("'first_observed' and 'last_observed' data not available directly on {id} - using timestamp".format(id=obs.id_))
@@ -827,7 +831,7 @@ def process_report_contents(report, bundle_instance, report_instance):
     if report.observables:
         for o_d in report.observables:
             if o_d.id_ is not None:
-                o_d20 = convert_observable_data(o_d, bundle_instance)
+                o_d20 = convert_observed_data(o_d, bundle_instance)
                 bundle_instance["observed_data"].append(o_d20)
                 report_instance["object_refs"].append(o_d20["id"])
             else:
@@ -1132,7 +1136,7 @@ def handle_embedded_object(obj, bundle_instance):
         bundle_instance["indicators"].append(new20)
     # observables
     elif isinstance(obj, Observable):
-        new20 = convert_observable_data(obj, bundle_instance)
+        new20 = convert_observed_data(obj, bundle_instance)
         bundle_instance["observed_data"].append(new20)
     # reports
     elif stix.__version__ >= "1.2.0.0" and isinstance(obj, Report):
@@ -1260,7 +1264,7 @@ def convert_package(stixPackage):
     # observables
     if stixPackage.observables is not None:
         for o_d in stixPackage.observables:
-            o_d20 = convert_observable_data(o_d, bundle_instance)
+            o_d20 = convert_observed_data(o_d, bundle_instance)
             bundle_instance["observed_data"].append(o_d20)
 
     # campaigns
@@ -1319,8 +1323,12 @@ def convert_file(inFileName):
     clear_pattern_mapping()
     stixPackage = EntityParser().parse_xml(inFileName)
     if isinstance(stixPackage, STIXPackage):
-        return json.dumps(convert_package(stixPackage), indent=4, separators=(',', ': '), sort_keys=True)
+        json_string = json.dumps(convert_package(stixPackage), indent=4, separators=(',', ': '), sort_keys=True)
+        validation_results = validate_string(json_string, ValidationOptions(schema_dir="/Users/rpiazza/git/cti-stix2-json-schemas"))
+        print_schema_results(validation_results.schema_results)
+        return json_string
 
 
 if __name__ == '__main__':
     print(convert_file(sys.argv[1]))
+
