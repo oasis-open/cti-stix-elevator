@@ -842,7 +842,7 @@ def process_report_contents(report, bundle_instance, report_instance):
         for ta in report.threat_actors:
             if ta.id_ is not None:
                 ta20 = convert_threat_actor(ta, bundle_instance)
-                bundle_instance["threat-actors"].append(ta20)
+                bundle_instance["threat_actors"].append(ta20)
                 report_instance["object_refs"].append(ta20["id"])
             else:
                 report_instance["object_refs"].append(ta.idref)
@@ -1145,7 +1145,7 @@ def handle_embedded_object(obj, bundle_instance):
     # threat actors
     elif isinstance(obj, ThreatActor):
         new20 = convert_threat_actor(obj, bundle_instance)
-        bundle_instance["threat-actors"].append(new20)
+        bundle_instance["threat_actors"].append(new20)
     # ttps
     elif isinstance(obj, TTP):
         new20s = convert_ttp(obj, bundle_instance)
@@ -1168,7 +1168,7 @@ def initialize_bundle_lists(bundle_instance):
     bundle_instance["indicators"] = []
     bundle_instance["reports"] = []
     bundle_instance["observed_data"] = []
-    bundle_instance["threat-actors"] = []
+    bundle_instance["threat_actors"] = []
     bundle_instance["attack_patterns"] = []
     bundle_instance["malware"] = []
     bundle_instance["tools"] = []
@@ -1307,7 +1307,7 @@ def convert_package(stixPackage):
     if stixPackage.threat_actors:
         for ta in stixPackage.threat_actors:
             ta20 = convert_threat_actor(ta, bundle_instance)
-            bundle_instance["threat-actors"].append(ta20)
+            bundle_instance["threat_actors"].append(ta20)
 
     # ttps
     if stixPackage.ttps:

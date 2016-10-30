@@ -2,6 +2,7 @@
 # See LICENSE.txt for complete terms.
 
 import uuid
+import re
 
 from elevator.utils import *
 
@@ -48,20 +49,21 @@ def generateSTIX20Id(stix20SOName, stix12ID=None, id_used=False):
         SDO_WITH_NO_1X_OBJECT.append(new_id)
         return new_id
     else:
-        namespace_type_uuid = stix12ID.split("-", 1)
-        if stix20SOName is None:
-            stx1x_type = namespace_type_uuid[0].split(":", 1)
-            if stx1x_type[1].lower() == "ttp" or stx1x_type[1].lower() == "et":
-                error("Unable to determine the STIX 2.0 type for {id}".format(id=stix12ID))
-                return None
+        result = re.search('^(.+)-([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})', stix12ID)
+        if result:
+            current_uuid = result.group(2)
+            if stix20SOName is None:
+                stx1x_type = result.group(1).split(":")
+                if stx1x_type[1].lower() == "ttp" or stx1x_type[1].lower() == "et":
+                    error("Unable to determine the STIX 2.0 type for {id}".format(id=stix12ID))
+                    return None
+                else:
+                    return map_1x_type_to_20(stx1x_type[1]) + "--" + current_uuid
             else:
-                return map_1x_type_to_20(stx1x_type[1]) + "--" + namespace_type_uuid[1]
+                return stix20SOName + "--" + current_uuid
         else:
-            if len(namespace_type_uuid) == 2:
-                return stix20SOName + "--" + namespace_type_uuid[1]
-            else:
-                warn("Malformed id " + stix12ID + ". Generated a new uuid")
-                return stix20SOName + "--" + str(uuid.uuid4())
+            warn("Malformed id " + stix12ID + ". Generated a new uuid")
+            return stix20SOName + "--" + str(uuid.uuid4())
 
 
 def exists_id_key(key):
