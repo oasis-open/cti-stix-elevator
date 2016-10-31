@@ -35,9 +35,9 @@ from elevator.ids import *
 from elevator.vocab_mappings import *
 from elevator.utils import *
 
-from validator.validators import ValidationOptions
-from validator.output import print_schema_results
-from validator import validate_string
+from stix2validator.validators import ValidationOptions
+from stix2validator.output import print_results
+from stix2validator import validate_string
 
 SQUIRREL_GAPS_IN_DESCRIPTIONS = True
 
@@ -1325,7 +1325,7 @@ def convert_file(inFileName):
     if isinstance(stixPackage, STIXPackage):
         json_string = json.dumps(convert_package(stixPackage), indent=4, separators=(',', ': '), sort_keys=True)
         validation_results = validate_string(json_string, ValidationOptions(schema_dir="/Users/rpiazza/git/cti-stix2-json-schemas"))
-        print_schema_results(validation_results.schema_results)
+        print_results(validation_results)
         return json_string
 
 
