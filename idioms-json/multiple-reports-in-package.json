@@ -2,7 +2,7 @@
     "campaigns": [
         {
             "created": "2015-05-07T14:22:14.760144Z",
-            "created_by_ref": "identity--e81348cc-1504-48c7-a5c3-ca5d9d7102e4",
+            "created_by_ref": "identity--c91d042d-7ad8-423e-9e8f-aea3409544c2",
             "id": "campaign--1855cb8a-d96c-4859-a450-abb1e7c061f2",
             "modified": "2015-05-07T14:22:14.760144Z",
             "name": "Campaign against ICS",
@@ -10,13 +10,13 @@
             "version": 1
         }
     ],
-    "created_by_ref": "identity--e81348cc-1504-48c7-a5c3-ca5d9d7102e4",
+    "created_by_ref": "identity--c91d042d-7ad8-423e-9e8f-aea3409544c2",
     "id": "bundle--50578bc7-bb17-4f31-abf2-d5827d131368",
     "identities": [
         {
-            "created": "2016-10-19T13:04:10.702188Z",
-            "id": "identity--e81348cc-1504-48c7-a5c3-ca5d9d7102e4",
-            "modified": "2016-10-19T13:04:10.702188Z",
+            "created": "2016-10-31T15:07:49.127736Z",
+            "id": "identity--c91d042d-7ad8-423e-9e8f-aea3409544c2",
+            "modified": "2016-10-31T15:07:49.127736Z",
             "name": "Government Sharing Program - GSP",
             "type": "identity",
             "version": 1
@@ -25,7 +25,7 @@
     "reports": [
         {
             "created": "2015-05-07T14:22:14.760467Z",
-            "created_by_ref": "identity--e81348cc-1504-48c7-a5c3-ca5d9d7102e4",
+            "created_by_ref": "identity--c91d042d-7ad8-423e-9e8f-aea3409544c2",
             "description": "Adversary Alpha has a campaign against the ICS sector!\n\nINTENT:\nCampaign Characterization",
             "id": "report--ab11f431-4b3b-457c-835f-59920625fe65",
             "labels": [
@@ -41,7 +41,7 @@
         },
         {
             "created": "2015-05-07T14:22:14.760756Z",
-            "created_by_ref": "identity--e81348cc-1504-48c7-a5c3-ca5d9d7102e4",
+            "created_by_ref": "identity--c91d042d-7ad8-423e-9e8f-aea3409544c2",
             "description": "\n\nINTENT:\nIndicators - Malware Artifacts",
             "id": "report--f14804d5-3ee1-4a0e-b0f3-f9a643855ba5",
             "labels": [

@@ -18,10 +18,10 @@
     ],
     "relationships": [
         {
-            "created": "2014-05-08T09:00:00.000000Z",
-            "id": "relationship--509fd371-ecfa-4535-800f-d22259924193",
-            "modified": "2014-05-08T09:00:00.000000Z",
-            "name": "indicates",
+            "created": "2016-10-31T15:07:48.893216Z",
+            "id": "relationship--ba9cfdd9-b4ae-4b3f-88ac-7a80bbce9c21",
+            "modified": "2016-10-31T15:07:48.893216Z",
+            "relationship_type": "indicates",
             "source_ref": "indicator--53fe3b22-0201-47cf-85d0-97c02164528d",
             "type": "relationship",
             "version": 1

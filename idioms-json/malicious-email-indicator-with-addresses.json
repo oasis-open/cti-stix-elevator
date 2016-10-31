@@ -19,11 +19,11 @@
     ],
     "observed_data": [
         {
-            "created": "2016-10-19T15:25:20.425754Z",
-            "first_observed": "2016-10-19T15:25:20.425754Z",
-            "id": "observable-data--e9926796-6b52-463c-8be1-0ab66e9adb1c",
-            "last_observed": "2016-10-19T15:25:20.425754Z",
-            "modified": "2016-10-19T15:25:20.425754Z",
+            "created": "2016-10-31T15:07:48.940334Z",
+            "first_observed": "2016-10-31T15:07:48.940334Z",
+            "id": "observed-data--e9926796-6b52-463c-8be1-0ab66e9adb1c",
+            "last_observed": "2016-10-31T15:07:48.940334Z",
+            "modified": "2016-10-31T15:07:48.940334Z",
             "number_observed": 1,
             "objects": {
                 "0": {
@@ -47,16 +47,16 @@
                     "value": "wilma@abc.com"
                 }
             },
-            "type": "observable-data",
+            "type": "observed-data",
             "version": 1
         }
     ],
     "relationships": [
         {
-            "created": "2014-10-31T15:52:13.126999Z",
-            "id": "relationship--07f7d5c4-2001-43a5-9951-98fdc1a9c30a",
-            "modified": "2014-10-31T15:52:13.126999Z",
-            "name": "indicates",
+            "created": "2016-10-31T15:07:48.940686Z",
+            "id": "relationship--918c6915-1db8-4a33-9daa-b7e3d7c38925",
+            "modified": "2016-10-31T15:07:48.940686Z",
+            "relationship_type": "indicates",
             "source_ref": "indicator--b06b0eb7-61dd-4338-a094-0290c380fbd8",
             "type": "relationship",
             "version": 1

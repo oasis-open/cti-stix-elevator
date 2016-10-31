@@ -18,40 +18,40 @@
     "id": "bundle--81810123-b298-40f6-a4e7-186efcd07670",
     "relationships": [
         {
-            "created": "2014-08-08T15:50:10.983728Z",
-            "id": "relationship--77412332-9074-4f88-825e-0da03a223574",
-            "modified": "2014-08-08T15:50:10.983728Z",
-            "name": "attributed-to",
+            "created": "2016-10-31T15:07:48.739824Z",
+            "id": "relationship--fdd0c8f3-b4b3-46b2-b022-ee8217b94b80",
+            "modified": "2016-10-31T15:07:48.739824Z",
+            "relationship_type": "attributed-to",
             "source_ref": "incident--229ab6ba-0eb2-415b-bdf2-079e6b42f51e",
             "target_ref": "campaign--e5268b6e-4931-42f1-b379-87f48eb41b1e",
             "type": "relationship",
             "version": 1
         },
         {
-            "created": "2014-08-08T15:50:10.983728Z",
-            "id": "relationship--950508d6-0edb-4f1f-a02a-9cef1a167c2f",
-            "modified": "2014-08-08T15:50:10.983728Z",
-            "name": "attributed-to",
+            "created": "2016-10-31T15:07:48.739891Z",
+            "id": "relationship--3464477e-2339-4cb2-b63e-1124313a627c",
+            "modified": "2016-10-31T15:07:48.739891Z",
+            "relationship_type": "attributed-to",
             "source_ref": "incident--517cf274-038d-4ed4-a3ec-3ac18ad9db8a",
             "target_ref": "campaign--e5268b6e-4931-42f1-b379-87f48eb41b1e",
             "type": "relationship",
             "version": 1
         },
         {
-            "created": "2014-08-08T15:50:10.983728Z",
-            "id": "relationship--8b801fd5-0f9b-41e4-b873-7062b6426c5f",
-            "modified": "2014-08-08T15:50:10.983728Z",
-            "name": "attributed-to",
+            "created": "2016-10-31T15:07:48.739942Z",
+            "id": "relationship--c18a6ba2-a970-435f-96de-9b0b7b9eb65c",
+            "modified": "2016-10-31T15:07:48.739942Z",
+            "relationship_type": "attributed-to",
             "source_ref": "incident--7d8cf96f-91cb-42d0-a1e0-bfa38ea08621",
             "target_ref": "campaign--e5268b6e-4931-42f1-b379-87f48eb41b1e",
             "type": "relationship",
             "version": 1
         },
         {
-            "created": "2014-08-08T15:50:10.983728Z",
-            "id": "relationship--4d427c7b-65c2-4a9a-9929-85b999c82acc",
-            "modified": "2014-08-08T15:50:10.983728Z",
-            "name": "attributed-to",
+            "created": "2016-10-31T15:07:48.740101Z",
+            "id": "relationship--a1e1485f-cae1-4fb5-9ac8-01f56990c5a9",
+            "modified": "2016-10-31T15:07:48.740101Z",
+            "relationship_type": "attributed-to",
             "source_ref": "threat-actor--56f3f0db-b5d5-431c-ae56-c18f02caf500",
             "target_ref": "campaign--e5268b6e-4931-42f1-b379-87f48eb41b1e",
             "type": "relationship",
@@ -59,7 +59,7 @@
         }
     ],
     "spec_version": "2.0",
-    "threat-actors": [
+    "threat_actors": [
         {
             "created": "2014-08-08T15:50:10.983629Z",
             "id": "threat-actor--56f3f0db-b5d5-431c-ae56-c18f02caf500",

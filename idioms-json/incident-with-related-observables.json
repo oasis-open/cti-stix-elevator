@@ -12,11 +12,11 @@
     ],
     "observed_data": [
         {
-            "created": "2016-10-19T13:04:10.620572Z",
-            "first_observed": "2016-10-19T13:04:10.620572Z",
-            "id": "observable-data--0fd77202-c962-41c7-b90f-a906ab3b5392",
-            "last_observed": "2016-10-19T13:04:10.620572Z",
-            "modified": "2016-10-19T13:04:10.620572Z",
+            "created": "2016-10-31T15:07:48.880015Z",
+            "first_observed": "2016-10-31T15:07:48.880015Z",
+            "id": "observed-data--0fd77202-c962-41c7-b90f-a906ab3b5392",
+            "last_observed": "2016-10-31T15:07:48.880015Z",
+            "modified": "2016-10-31T15:07:48.880015Z",
             "number_observed": 1,
             "objects": {
                 "0": {
@@ -28,15 +28,15 @@
                     "type": "file"
                 }
             },
-            "type": "observable-data",
+            "type": "observed-data",
             "version": 1
         },
         {
-            "created": "2016-10-19T13:04:10.620761Z",
-            "first_observed": "2016-10-19T13:04:10.620761Z",
-            "id": "observable-data--b74949f0-cf41-4094-9b80-240201a96b60",
-            "last_observed": "2016-10-19T13:04:10.620761Z",
-            "modified": "2016-10-19T13:04:10.620761Z",
+            "created": "2016-10-31T15:07:48.880224Z",
+            "first_observed": "2016-10-31T15:07:48.880224Z",
+            "id": "observed-data--b74949f0-cf41-4094-9b80-240201a96b60",
+            "last_observed": "2016-10-31T15:07:48.880224Z",
+            "modified": "2016-10-31T15:07:48.880224Z",
             "number_observed": 1,
             "objects": {
                 "0": {
@@ -48,29 +48,29 @@
                     "type": "file"
                 }
             },
-            "type": "observable-data",
+            "type": "observed-data",
             "version": 1
         }
     ],
     "relationships": [
         {
-            "created": "2014-09-15T14:37:54.297669Z",
+            "created": "2016-10-31T15:07:48.880173Z",
             "description": "Malicious Artifact Detected",
-            "id": "relationship--63809257-6f70-4ab2-967b-7dc787de86cf",
-            "modified": "2014-09-15T14:37:54.297669Z",
-            "name": "part-of",
-            "source_ref": "observable-data--0fd77202-c962-41c7-b90f-a906ab3b5392",
+            "id": "relationship--57580452-e96f-489d-9ed7-0c22f39c8143",
+            "modified": "2016-10-31T15:07:48.880173Z",
+            "relationship_type": "part-of",
+            "source_ref": "observed-data--0fd77202-c962-41c7-b90f-a906ab3b5392",
             "target_ref": "incident--84d86106-d801-489b-87b6-d56bac58e6c1",
             "type": "relationship",
             "version": 1
         },
         {
-            "created": "2014-09-15T14:37:54.297669Z",
+            "created": "2016-10-31T15:07:48.880337Z",
             "description": "Malicious Artifact Detected",
-            "id": "relationship--f1a59b27-7e26-4d2f-adce-1cd3a837c466",
-            "modified": "2014-09-15T14:37:54.297669Z",
-            "name": "part-of",
-            "source_ref": "observable-data--b74949f0-cf41-4094-9b80-240201a96b60",
+            "id": "relationship--2c563676-fca1-4525-84ff-3782a06b848f",
+            "modified": "2016-10-31T15:07:48.880337Z",
+            "relationship_type": "part-of",
+            "source_ref": "observed-data--b74949f0-cf41-4094-9b80-240201a96b60",
             "target_ref": "incident--84d86106-d801-489b-87b6-d56bac58e6c1",
             "type": "relationship",
             "version": 1

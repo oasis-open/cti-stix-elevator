@@ -48,28 +48,28 @@
     ],
     "relationships": [
         {
-            "created": "2014-10-31T15:52:13.127931Z",
-            "id": "relationship--134e1a3b-e7dd-48a4-8f1a-d657fdfb3a82",
-            "modified": "2014-10-31T15:52:13.127931Z",
-            "name": "indicates",
+            "created": "2016-10-31T15:07:48.961229Z",
+            "id": "relationship--d2cd234e-b02e-4180-bab5-bc1a9a653fe5",
+            "modified": "2016-10-31T15:07:48.961229Z",
+            "relationship_type": "indicates",
             "source_ref": "indicator--8cf9236f-1b96-493d-98be-0c1c1e8b62d7",
             "type": "relationship",
             "version": 1
         },
         {
-            "created": "2014-10-31T15:52:13.126999Z",
-            "id": "relationship--3de176af-469b-4dd7-aef4-e816133c91f3",
-            "modified": "2014-10-31T15:52:13.126999Z",
-            "name": "indicates",
+            "created": "2016-10-31T15:07:48.961488Z",
+            "id": "relationship--e0721f5b-c5dc-47c8-937d-c3b7e2e398cd",
+            "modified": "2016-10-31T15:07:48.961488Z",
+            "relationship_type": "indicates",
             "source_ref": "indicator--b06b0eb7-61dd-4338-a094-0290c380fbd8",
             "type": "relationship",
             "version": 1
         },
         {
-            "created": "2014-10-31T15:52:13.127668Z",
-            "id": "relationship--73830cbc-3843-400b-a346-7f3d555427c5",
-            "modified": "2014-10-31T15:52:13.127668Z",
-            "name": "indicates",
+            "created": "2016-10-31T15:07:48.961759Z",
+            "id": "relationship--75ee1a64-d4d8-49d4-adf1-178bdd2eae53",
+            "modified": "2016-10-31T15:07:48.961759Z",
+            "relationship_type": "indicates",
             "source_ref": "indicator--2e17f6fe-3a4d-438a-911a-e509ba1b9933",
             "type": "relationship",
             "version": 1
