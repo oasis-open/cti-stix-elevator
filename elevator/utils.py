@@ -50,13 +50,21 @@ def map_vocabs_to_label(t, vocab_map):
         return canonicalize_label(t)
 
 
-def convert_controlled_vocabs_to_open_vocabs(new_obj, new_property_name, old_vocabs, vocab_mapping, only_one):
-    new_obj[new_property_name] = []
-    for t in old_vocabs:
-        if new_obj[new_property_name] is None or not only_one:
-            new_obj[new_property_name].append(map_vocabs_to_label(t.value, vocab_mapping))
+def convert_controlled_vocabs_to_open_vocabs(new_obj, new_property_name, old_vocabs, vocab_mapping, only_one, required=True):
+    if not old_vocabs and required:
+        if only_one:
+            new_obj[new_property_name] = "unknown"
         else:
-            warn("Only one {prop} allowed in STIX 2.0 - used first one".format(prop=new_property_name))
+            new_obj[new_property_name] = ["unknown"]
+        warn("No STIX 1.x vocab value given for {prop}, using 'unknown'".format(prop=new_property_name))
+    else:
+        new_obj[new_property_name] = []
+        for t in old_vocabs:
+            if new_obj[new_property_name] is None or not only_one:
+                new_obj[new_property_name].append(map_vocabs_to_label(t.value, vocab_mapping))
+            else:
+                warn("Only one {prop} allowed in STIX 2.0 - used first one".format(prop=new_property_name))
+
 
 
 def convert_timestamp_string(timestamp, entity, parent_timestamp):
