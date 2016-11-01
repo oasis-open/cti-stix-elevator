@@ -7,5 +7,28 @@ A Python library for upgrading Structured Threat Information eXpression (STIX) a
 Requirements
 ------------
 
-* Python 2.6/2.7/3.5
+For STIX 1.1.1 content;
+
+* Python 2.6/2.7
+* python-stix = 1.1.1.6 (other dependencies inherited from python-stix)
+ 
+
+For STIX 1.2 content:
+
+* Python 3.5
 * python-stix >= 1.2.0.0 (other dependencies inherited from python-stix)
+
+For both:
+
+* stix2validator (with all of its dependencies:  jsonschema, colorama, nose, tox
+* pycountry >= 1.20
+
+
+Installation
+------------
+
+Clone the following repositories:
+
+* stix-elevator
+* stix2validator
+
