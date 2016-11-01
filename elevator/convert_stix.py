@@ -155,7 +155,7 @@ def finish_basic_object(old_id, instance, stix1x_obj, clear_description=True):
         warn("Handling not implemented, yet")
     if hasattr(stix1x_obj, "related_packages") and stix1x_obj.related_packages is not None:
         for p in stix1x_obj.related_packages:
-            warn("Related_Packages property no longer supported in STIX")
+            warn("Related_Packages property no longer supported in STIX.  See {id}".format(id=stix1x_obj.id_))
 
 
 #
@@ -185,6 +185,7 @@ def add_confidence_property_to_description(sdo_instance, confidence):
                 sdo_instance["description"] += str(confidence.value)
             if confidence.description is not None:
                 sdo_instance["description"] += "\n\tDESCRIPTION: " + str(confidence.description)
+            warn("Added confidence property content to description of " + sdo_instance["id"])
 
 
 def add_statement_type_to_description(sdo_instance, statement, property_name):
@@ -200,6 +201,7 @@ def add_statement_type_to_description(sdo_instance, statement, property_name):
         # TODO: handle source
         if statement.confidence:
             add_confidence_property_to_description(sdo_instance, statement.confidence)
+        warn("Added statement type content to description of " + sdo_instance["id"])
 
 
 def add_multiple_statement_types_to_description(sdo_instance, statements, property_name):
@@ -213,7 +215,7 @@ def add_tool_property_to_description(sdo_instance, tool):
         sdo_instance["description"] += "\n\nTOOL SOURCE:"
         if tool.name:
             sdo_instance["description"] += "\n\tname: " + str(tool.name)
-
+        warn("Added tool property content to description of " + sdo_instance["id"])
 
 
 # Relationships
@@ -443,7 +445,7 @@ def add_objective_property_to_description(sdo_instance, objective):
 
 
 def convert_course_of_action(coa, bundle_instance):
-    coa_instance = create_basic_object("course_of_action", coa)
+    coa_instance = create_basic_object("course-of-action", coa)
     process_description_and_short_description(coa_instance, coa)
     coa_instance["name"] = coa.title
     add_string_property_to_description(coa_instance, "stage", coa.stage)
@@ -575,6 +577,7 @@ def convert_party_name(party_name, identity):
 def convert_identity(identity, bundle_instance, parent_timestamp=None, parent_id=None, clear_description=True):
     identity_instance = create_basic_object("identity", identity, parent_timestamp, parent_id)
     identity_instance["sectors"] = []
+    identity_instance["identity_class"] = "unknown"
     if identity.name is not None:
         identity_instance["name"] = identity.name
     if isinstance(identity, CIQIdentity3_0Instance):
@@ -589,6 +592,8 @@ def convert_identity(identity, bundle_instance, parent_timestamp=None, parent_id
             identity_instance["name"] = "None"
         if ciq_info.organisation_info is not None:
             convert_to_open_vocabs(identity_instance, "sectors", ciq_info.organisation_info.industry_type, SECTORS_MAP)
+            warn("Based on CIQ information, {id} is assumed to be an organization".format(id=identity_instance["id"]))
+            identity_instance["identity_class"] = "organization"
         if ciq_info.addresses is not None:
             convert_ciq_addresses(ciq_info.addresses, identity_instance)
             # add other properties to contact_information
@@ -731,7 +736,7 @@ def convert_indicator(indicator, bundle_instance):
             ("NOT (" if negate_indicator(indicator) else "") + \
             convert_observable_to_pattern(indicator.observable, bundle_instance, OBSERVABLE_MAPPING) + \
             (")" if negate_indicator(indicator) else "")
-        indicator_instance["pattern_lang"] = "cybox"
+        indicator_instance["pattern_lang"] = "stix"
     if indicator.composite_indicator_expression is not None:
         warn("Composite indicator expressions are not handled - {id}".format(id=indicator.id_))
     if "pattern" not in indicator_instance:
@@ -936,7 +941,7 @@ def process_ttp_properties(sdo_instance, ttp, bundle_instance, kill_chains_in_sd
                                     "related-to", ttp.timestamp)
     if hasattr(ttp, "related_packages") and ttp.related_packages is not None:
         for p in ttp.related_packages:
-            warn("TTP/Related_Packages on {id} not supported in STIX 2.0".format(id=ttp.id_))
+            warn("Related_Packages property no longer supported in STIX.  See {id}".format(id=ttp.id_))
     process_information_source(ttp.information_source, sdo_instance, bundle_instance,
                                bundle_instance["created_by_ref"] if "created_by_ref" in bundle_instance else None)
 
@@ -1240,17 +1245,17 @@ def finalize_bundle(bundle_instance):
     for item in to_remove:
         operation_on_path(bundle_instance, item, "", op=2)
 
+def process_package_content(stixPackage, bundle_instance):
+    # TODO: perhaps put content on an existing or new report
+    if hasattr(stixPackage, "information_source") and stixPackage.information_source():
+        warn("Information_source content from a STIX 1.x package is not supported on a STIX 2.0 Bundle")
 
 def convert_package(stixPackage):
     bundle_instance = {"type": "bundle"}
     bundle_instance["id"] = generateSTIX20Id("bundle", stixPackage.id_)
     bundle_instance["spec_version"] = "2.0"
     initialize_bundle_lists(bundle_instance)
-    if hasattr(stixPackage.stix_header,
-               "information_source") and stixPackage.stix_header.information_source is not None:
-        process_information_source(stixPackage.stix_header.information_source, bundle_instance, bundle_instance, None)
-    else:
-        bundle_instance["created_by_ref"] = None
+    process_package_content(stixPackage, bundle_instance)
 
     # TODO: other header stuff
 
