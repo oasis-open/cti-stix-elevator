@@ -11,6 +11,9 @@
                     "phase_name": "Infect Machine"
                 }
             ],
+            "labels": [
+                "unknown"
+            ],
             "modified": "2014-10-09T21:38:50.631509Z",
             "name": "Malicious executable",
             "type": "indicator",
