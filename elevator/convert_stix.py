@@ -26,6 +26,7 @@ if stix.__version__ < "1.2.0.0":
 
 import json
 from datetime import *
+import argparse
 import pycountry
 from lxml import etree
 
@@ -34,6 +35,7 @@ from elevator.convert_pattern import convert_observable_to_pattern, fix_pattern,
 from elevator.ids import *
 from elevator.vocab_mappings import *
 from elevator.utils import *
+from elevator.version import __version__
 
 from stix2validator.validators import ValidationOptions
 from stix2validator.output import print_results
@@ -1292,11 +1294,13 @@ def finalize_bundle(bundle_instance):
     for item in to_remove:
         operation_on_path(bundle_instance, item, "", op=2)
 
+
 def get_identity_from_package(information_source, bundle_instance):
     if information_source:
         if information_source.identity is not None:
             return get_identity_ref(information_source.identity, bundle_instance)
     return None
+
 
 def convert_package(stixPackage):
     bundle_instance = {"type": "bundle"}
@@ -1373,17 +1377,87 @@ def convert_package(stixPackage):
     return bundle_instance
 
 
+def _get_arg_parser():
+    """Create and return an ArgumentParser for this application."""
+
+    desc = "stix-elevator v{0}".format(__version__)
+
+    parser = argparse.ArgumentParser(description=desc)
+
+    parser.add_argument(
+        "--input",
+        help="The input STIX document to be elevated.",
+        default=""
+    )
+
+    parser.add_argument(
+        "--log-level",
+        help="The logging output level.",
+        choices=["INFO", "WARN", "ERROR"],
+        action="store",
+        default="INFO"
+    )
+
+    parser.add_argument(
+        "--no-incidents",
+        help="No incident will be included in the conversion.",
+        dest="no_incidents",
+        action="store_false",
+        default=True
+    )
+
+    parser.add_argument(
+        "--infrastructure",
+        help="Infrastructure will be included in the conversion.",
+        dest="infrastructure",
+        action="store_true",
+        default=False
+    )
+
+    parser.add_argument(
+        "--no-squirrel-gaps",
+        help="Do not include STIX 1.x content that cannot be represented directly in STIX 2.0 using the description property.",
+        dest="squirrel_gaps",
+        action="store_false",
+        default=True
+    )
+
+    parser.add_argument(
+        "--default-identifier",
+        help="Use the provided identifier for the created_by_ref",
+        action="store",
+        default=""
+    )
+
+    parser.add_argument(
+        "--default-timestamp",
+        help="Use the provided timestamp for properties that require one instead of generating a new timestamp.",
+        action="store",
+        default=""
+    )
+
+    return parser
+
+
 def convert_file(inFileName):
     clear_id_mapping()
     clear_pattern_mapping()
     stixPackage = EntityParser().parse_xml(inFileName)
     if isinstance(stixPackage, STIXPackage):
         json_string = json.dumps(convert_package(stixPackage), indent=4, separators=(',', ': '), sort_keys=True)
-        validation_results = validate_string(json_string, ValidationOptions(schema_dir="/Users/rpiazza/git/cti-stix2-json-schemas"))
+        validation_results = validate_string(json_string, ValidationOptions(schema_dir="/Users/rpiazza/git/cti-stix2-json-schemas"))  # We need to fix this.
         print_results(validation_results)
         return json_string
 
 
+def main():
+    # Parse the commandline args
+    parser = _get_arg_parser()
+    args = parser.parse_args()
+
+    print(convert_file(args.input))
+
+
 if __name__ == '__main__':
-    print(convert_file(sys.argv[1]))
+    main()
 
