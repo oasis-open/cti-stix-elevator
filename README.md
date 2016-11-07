@@ -28,6 +28,7 @@
 
 <div><h2><a id="purposeClarifications">Additions to Statement of Purpose</a></h2>
 
+</div>
 `Requirements`
 ,,,,,,,,,,,,,,
 
@@ -86,7 +87,7 @@ You can also use this library to integrate STIX validation into your own tools. 
   results = validate_file("stix_file.xml")
   print(results)
 
-<div>
+
 <h2><a id="maintainers">Maintainers</a></h2>
 
 <p>Open Repository <a href="https://www.oasis-open.org/resources/open-repositories/maintainers-guide">Maintainers</a> are responsible for oversight of this project's community development activities, including evaluation of GitHub <a href="https://github.com/oasis-open/cti-stix-elevator/blob/master/CONTRIBUTING.md#fork-and-pull-collaboration-model">pull requests</a> and <a href="https://www.oasis-open.org/policies-guidelines/open-repositories#repositoryManagement">preserving</a> open source principles of openness and fairness. Maintainers are recognized and trusted experts who serve to implement community goals and consensus design preferences.</p>
