@@ -76,9 +76,9 @@ Clone the following repositories, or download the zip files and unzip:
 
 The elevator comes with a bundled script which you can use to elevate STIX 1.1.1 - 1.2.1 content to STIX 2.0 content:
 
-::
-
-  $ stix-elevator <stix_file.xml>
+```
+$ stix-elevator <stix_file.xml>
+```
 
 ### As A Library
 
