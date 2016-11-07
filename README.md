@@ -31,7 +31,7 @@
 </div>
 The stix-elevator is a work-in-progress.  It should be used to explore how existing STIX 1.x would potentially be represented in STIX 2.0.  Using the current version of the elevator will provide insight to issues that might need to be mitigated to convert your STIX 1.x content.
 
-_It should not be used in a production environment, and should not be considered final._ 
+**_It should not be used in a production environment, and should not be considered final._**
 
 We welcome any comments on how to improve it.
 
