@@ -2,18 +2,19 @@
 # See LICENSE.txt for complete terms.
 
 import stix
-from stix.utils.parser import EntityParser
-from stix.core import STIXPackage
 from stix.campaign import Campaign
 from stix.coa import CourseOfAction
+from stix.core import STIXPackage
 from stix.exploit_target import ExploitTarget
 from stix.incident import Incident
 from stix.indicator import Indicator
+from stix.utils.parser import EntityParser
+
 if stix.__version__ >= "1.2.0.0":
     from stix.report import Report
 from stix.threat_actor import ThreatActor
 from stix.ttp import TTP
-from stix.common.kill_chains import KillChain, KillChainPhase, KillChainPhaseReference
+from stix.common.kill_chains import KillChainPhase, KillChainPhaseReference
 from stix.common.identity import Identity
 # from stix.ttp.attack_pattern import (AttackPattern)
 from cybox.core import Observable
@@ -25,9 +26,9 @@ if stix.__version__ < "1.2.0.0":
     import stix.extensions.marking.ais
 
 import json
-from datetime import *
 import argparse
 import pycountry
+import shlex
 from lxml import etree
 
 from elevator.convert_cybox import convert_cybox_object
@@ -40,6 +41,7 @@ from elevator.version import __version__
 from stix2validator.validators import ValidationOptions
 from stix2validator.output import print_results
 from stix2validator import validate_string
+from stix2validator.scripts import stix2_validator
 
 SQUIRREL_GAPS_IN_DESCRIPTIONS = True
 
@@ -1425,6 +1427,7 @@ def _get_arg_parser():
     parser.add_argument(
         "--default-identifier",
         help="Use the provided identifier for the created_by_ref",
+        dest="identifier",
         action="store",
         default=""
     )
@@ -1432,20 +1435,47 @@ def _get_arg_parser():
     parser.add_argument(
         "--default-timestamp",
         help="Use the provided timestamp for properties that require one instead of generating a new timestamp.",
+        dest="timestamp",
         action="store",
         default=""
+    )
+
+    parser.add_argument(
+        "--validator-args",
+        help="Arguments to pass stix-validator. DO NOT provide \"files\" arg.",
+        dest="validator_args",
+        action="store",
+        default=""
+    )
+
+    parser.add_argument(
+        "--indent-level",
+        help="Indentation of output. Default 4.",
+        dest="indent",
+        action="store",
+        default=4
+    )
+
+    parser.add_argument(
+        "--no-sort-keys",
+        help="Sort properties alphabetically.",
+        dest="sort_keys",
+        action="store_false",
+        default=True
     )
 
     return parser
 
 
-def convert_file(inFileName):
+def convert_file(fn):
     clear_id_mapping()
     clear_pattern_mapping()
-    stixPackage = EntityParser().parse_xml(inFileName)
-    if isinstance(stixPackage, STIXPackage):
-        json_string = json.dumps(convert_package(stixPackage), indent=4, separators=(',', ': '), sort_keys=True)
-        validation_results = validate_string(json_string, ValidationOptions(schema_dir="/Users/rpiazza/git/cti-stix2-json-schemas"))  # We need to fix this.
+
+    stix_package = EntityParser().parse_xml(fn)
+
+    if isinstance(stix_package, STIXPackage):
+        json_string = json.dumps(convert_package(stix_package), indent=4, separators=(',', ': '), sort_keys=True)
+        validation_results = validate_string(json_string, ValidationOptions(schema_dir=""))  # We need to fix this.
         print_results(validation_results)
         return json_string
 
@@ -1454,6 +1484,10 @@ def main():
     # Parse the commandline args
     parser = _get_arg_parser()
     args = parser.parse_args()
+
+    validator_parser = stix2_validator._get_arg_parser()
+    validator_args = validator_parser.parse_args(shlex.split(args.validator_args))
+
 
     print(convert_file(args.input))
 
