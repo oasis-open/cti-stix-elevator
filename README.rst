@@ -29,10 +29,13 @@ For both:
 
 Clone the following repositories, or download the zip files and unzip:
 
-* stix-elevator 
+* stix-elevator (https://github.com/oasis-open/cti-stix-elevator)
 * cti-stix-validator (https://github.com/oasis-open/cti-stix-validator)
 
-Install stix2validator
+**Install stix2validator**
+
+  $ cd cti-stix-validator
+  $ python setup.py install
 
 .. _usage:
 
