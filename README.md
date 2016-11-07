@@ -33,7 +33,7 @@ The stix-elevator is a work-in-progress.  It should be used to explore how exist
 
 **_It should not be used in a production environment, and should not be considered final._**
 
-We welcome any comments on how to improve it.
+Please enter any comments on how to improve it into the issue tracker.
 
 
 ### Requirements
