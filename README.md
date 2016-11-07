@@ -29,15 +29,14 @@
 <div><h2><a id="purposeClarifications">Additions to Statement of Purpose</a></h2>
 
 </div>
-`Requirements`
-,,,,,,,,,,,,,,
+
+### Requirements
 
 For STIX 1.1.1 content;
 
 * Python 2.6/2.7
 * python-stix = 1.1.1.6 (other dependencies inherited from python-stix)
  
-
 For STIX 1.2 content:
 
 * Python 3.5
@@ -49,44 +48,48 @@ For both:
 * pycountry >= 1.20
 
 
-`Installation`
-,,,,,,,,,,,,,,
+### Installation
 
 Clone the following repositories, or download the zip files and unzip:
 
 * stix-elevator (https://github.com/oasis-open/cti-stix-elevator)
 * cti-stix-validator (https://github.com/oasis-open/cti-stix-validator)
 
-**Install stix2validator**
+#### Install stix2validator
 
-``
+```
   $ cd cti-stix-validator
   $ python setup.py install
-``
-.. _usage:
+```
 
-`Usage`
-,,,,,,,
+#### Install stix-elevator
 
-**As A Script**
+```
+  $ cd cti-stix-elevator
+  $ python setup.py install
+```
 
-The validator comes with a bundled script which you can use to validate a JSON file containing STIX content:
+### Usage
+
+
+#### As A Script
+
+The elevator comes with a bundled script which you can use to elevate STIX 1.1.1 - 1.2.1 content to STIX 2.0 content:
 
 ::
 
-  $ stix2_validator <stix_file.json>
+  $ stix-elevator <stix_file.xml>
 
-**As A Library**
+### As A Library
 
 You can also use this library to integrate STIX validation into your own tools. You can validate a JSON file:
 
-.. code:: python
-
+```
   from elevator import convert_file
 
   results = validate_file("stix_file.xml")
   print(results)
-
+```
 
 <h2><a id="maintainers">Maintainers</a></h2>
 
