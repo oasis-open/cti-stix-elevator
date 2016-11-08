@@ -41,7 +41,7 @@ Please enter any comments on how to improve it into the issue tracker.
 For STIX 1.1.1 content;
 
 * Python 2.6/2.7
-* python-stix = 1.1.1.6 (other dependencies inherited from python-stix)
+* python-stix = 1.1.1.7 (other dependencies inherited from python-stix)
  
 For STIX 1.2 content:
 
