@@ -96,7 +96,7 @@ $ stix-elevator <stix_file.xml>
 
 ### As A Library
 
-You can also use this library to integrate STIX validation into your own tools. You can elevate a STIX 1.x file:
+You can also use this library to integrate STIX elevation into your own tools. You can elevate a STIX 1.x file:
 
 ```
   from elevator import elevate_file
