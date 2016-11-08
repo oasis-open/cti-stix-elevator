@@ -16,11 +16,13 @@ from stix2validator import validate_string
 # internal
 from elevator.convert_pattern import clear_pattern_mapping
 from elevator.ids import clear_id_mapping
+from elevator.utils import warn
 from elevator.convert_stix import convert_package
 from elevator.version import __version__  # noqa
 
 
 def elevate_file(fn):
+    warn("WARNING: Results produced by the stix-elevator are not for production purposes.")
     clear_id_mapping()
     clear_pattern_mapping()
 
@@ -34,7 +36,12 @@ def elevate_file(fn):
         return json_string
 
 
+def elevate_string(string):
+    warn("WARNING: Results produced by the stix-elevator are not for production purposes.")
+    raise NotImplementedError()
+
 def elevate_package(package):
+    warn("WARNING: Results produced by the stix-elevator are not for production purposes.")
     clear_id_mapping()
     clear_pattern_mapping()
 
