@@ -4,7 +4,7 @@
 import os
 import sys
 
-from elevator.convert_stix import convert_file
+from elevator import elevate_file
 
 
 def main():
@@ -13,7 +13,7 @@ def main():
 
         if path.endswith(".xml"):
             sys.stdout.write(path + "\n")
-            print(convert_file(path) + "\n")
+            print(elevate_file(path) + "\n")
 
 
 if __name__ == '__main__':

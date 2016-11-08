@@ -6,7 +6,7 @@
 import os
 import sys
 
-from elevator.convert_stix import convert_file
+from elevator import elevate_file
 
 # The output is set to the user home directory.
 
@@ -27,7 +27,7 @@ def main():
 
         if file_and_ext[1] == "xml":
             sys.stdout.write(xml_path + "\n")
-            json_output = convert_file(xml_path)
+            json_output = elevate_file(xml_path)
 
             output_file = open(destination, "w")
             output_file.write(json_output)

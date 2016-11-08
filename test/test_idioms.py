@@ -15,7 +15,7 @@ try:
 except ImportError:
     from io import StringIO
 
-from elevator.convert_stix import convert_file
+from elevator import elevate_file
 from elevator.utils import iterpath
 
 
@@ -39,7 +39,7 @@ def idiom_mappings(xml_file_path, stored_json):
     """Test fresh conversion from XML to JSON matches stored JSON samples."""
     print("Checking - " + xml_file_path)
 
-    converted_json = convert_file(xml_file_path)
+    converted_json = elevate_file(xml_file_path)
     io = StringIO(converted_json)
     converted_json = json.load(io)
 
