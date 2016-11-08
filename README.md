@@ -61,7 +61,7 @@ The needed software is located in the following repositories:
 * stix-elevator (https://github.com/oasis-open/cti-stix-elevator)
 * cti-stix-validator (https://github.com/oasis-open/cti-stix-validator)
 
-Install these two packages using pip
+_Install these two packages using pip._
 
 #### Install stix2validator
 
