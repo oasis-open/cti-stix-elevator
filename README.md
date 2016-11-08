@@ -96,14 +96,23 @@ $ stix-elevator <stix_file.xml>
 
 ### As A Library
 
-You can also use this library to integrate STIX validation into your own tools. You can validate a JSON file:
+You can also use this library to integrate STIX validation into your own tools. You can elevate a STIX 1.x file:
 
 ```
-  from elevator import convert_file
+  from elevator import elevate_file
 
-  results = validate_file("stix_file.xml")
+  results = elevate_file("stix_file.xml")
   print(results)
 ```
+Additionally, a similar method exists to accept a string as an argument:
+
+```
+  from elevator import elevate_string
+
+  results = elevate_string("...")
+  print(results)
+```
+
 
 <h2><a id="maintainers">Maintainers</a></h2>
 
