@@ -56,23 +56,31 @@ For both:
 
 ### Installation
 
-Clone the following repositories, or download the zip files and unzip:
+The needed software is located in the following repositories:
 
 * stix-elevator (https://github.com/oasis-open/cti-stix-elevator)
 * cti-stix-validator (https://github.com/oasis-open/cti-stix-validator)
 
 #### Install stix2validator
 
+The easiest way to install the STIX validator is with pip:
 ```
-  $ cd cti-stix-validator
-  $ python setup.py install
+$ pip install git+https://github.com/oasis-open/cti-stix-validator.git
+```
+
+Note that if you clone or download the repository and install it that way instead, you will need to set up the submodules before you install it:
+
+```
+$ git clone https://github.com/oasis-open/cti-stix-validator.git
+$ cd cti-stix-validator/
+$ git submodule update --init --recursive
+$ python setup.py install
 ```
 
 #### Install stix-elevator
 
 ```
-  $ cd cti-stix-elevator
-  $ python setup.py install
+$ pip install git+https://github.com/oasis-open/cti-stix-elevator.git
 ```
 
 ### Usage
