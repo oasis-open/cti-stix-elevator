@@ -83,7 +83,7 @@ $ pip install git+https://github.com/oasis-open/cti-stix-elevator.git
 The elevator comes with a bundled script which you can use to elevate STIX 1.1.1 - 1.2.1 content to STIX 2.0 content:
 
 ```
-$ stix-elevator <stix_file.xml>
+$ python scripts/stix-elevator.py --input <stix_file.xml>
 ```
 
 ### As A Library
