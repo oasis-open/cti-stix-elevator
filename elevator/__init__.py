@@ -21,6 +21,7 @@ from elevator.version import __version__  # noqa
 
 
 def elevate_file(fn):
+    print("WARNING: Results produced by the stix-elevator are not for production purposes.")
     clear_id_mapping()
     clear_pattern_mapping()
 
@@ -35,6 +36,7 @@ def elevate_file(fn):
 
 
 def elevate_package(package):
+    print("WARNING: Results produced by the stix-elevator are not for production purposes.")
     clear_id_mapping()
     clear_pattern_mapping()
 
