@@ -8,7 +8,6 @@ from stix.core import STIXPackage
 from stix.exploit_target import ExploitTarget
 from stix.incident import Incident
 from stix.indicator import Indicator
-from stix.utils.parser import EntityParser
 
 if stix.__version__ >= "1.2.0.0":
     from stix.report import Report
@@ -22,13 +21,10 @@ from stix.extensions.test_mechanism.yara_test_mechanism import YaraTestMechanism
 from stix.extensions.test_mechanism.snort_test_mechanism import SnortTestMechanism
 from stix.extensions.test_mechanism.open_ioc_2010_test_mechanism import OpenIOCTestMechanism
 from stix.extensions.identity.ciq_identity_3_0 import CIQIdentity3_0Instance
-if stix.__version__ < "1.2.0.0":
+if stix.__version__ == "1.1.1.7" or stix.__version__ == "1.1.1.6":
     import stix.extensions.marking.ais
 
-import json
-import argparse
 import pycountry
-import shlex
 from lxml import etree
 
 from elevator.convert_cybox import convert_cybox_object
@@ -36,12 +32,6 @@ from elevator.convert_pattern import convert_observable_to_pattern, fix_pattern,
 from elevator.ids import *
 from elevator.vocab_mappings import *
 from elevator.utils import *
-from elevator.version import __version__
-
-from stix2validator.validators import ValidationOptions
-from stix2validator.output import print_results
-from stix2validator import validate_string
-from stix2validator.scripts import stix2_validator
 
 SQUIRREL_GAPS_IN_DESCRIPTIONS = True
 
@@ -1377,121 +1367,3 @@ def convert_package(stixPackage):
 
     finalize_bundle(bundle_instance)
     return bundle_instance
-
-
-def _get_arg_parser():
-    """Create and return an ArgumentParser for this application."""
-
-    desc = "stix-elevator v{0}".format(__version__)
-
-    parser = argparse.ArgumentParser(description=desc)
-
-    parser.add_argument(
-        "--input",
-        help="The input STIX document to be elevated.",
-        default=""
-    )
-
-    parser.add_argument(
-        "--log-level",
-        help="The logging output level.",
-        choices=["INFO", "WARN", "ERROR"],
-        action="store",
-        default="INFO"
-    )
-
-    parser.add_argument(
-        "--no-incidents",
-        help="No incident will be included in the conversion.",
-        dest="no_incidents",
-        action="store_false",
-        default=True
-    )
-
-    parser.add_argument(
-        "--infrastructure",
-        help="Infrastructure will be included in the conversion.",
-        dest="infrastructure",
-        action="store_true",
-        default=False
-    )
-
-    parser.add_argument(
-        "--no-squirrel-gaps",
-        help="Do not include STIX 1.x content that cannot be represented directly in STIX 2.0 using the description property.",
-        dest="squirrel_gaps",
-        action="store_false",
-        default=True
-    )
-
-    parser.add_argument(
-        "--default-identifier",
-        help="Use the provided identifier for the created_by_ref",
-        dest="identifier",
-        action="store",
-        default=""
-    )
-
-    parser.add_argument(
-        "--default-timestamp",
-        help="Use the provided timestamp for properties that require one instead of generating a new timestamp.",
-        dest="timestamp",
-        action="store",
-        default=""
-    )
-
-    parser.add_argument(
-        "--validator-args",
-        help="Arguments to pass stix-validator. DO NOT provide \"files\" arg.",
-        dest="validator_args",
-        action="store",
-        default=""
-    )
-
-    parser.add_argument(
-        "--indent-level",
-        help="Indentation of output. Default 4.",
-        dest="indent",
-        action="store",
-        default=4
-    )
-
-    parser.add_argument(
-        "--no-sort-keys",
-        help="Sort properties alphabetically.",
-        dest="sort_keys",
-        action="store_false",
-        default=True
-    )
-
-    return parser
-
-
-def convert_file(fn):
-    clear_id_mapping()
-    clear_pattern_mapping()
-
-    stix_package = EntityParser().parse_xml(fn)
-
-    if isinstance(stix_package, STIXPackage):
-        json_string = json.dumps(convert_package(stix_package), indent=4, separators=(',', ': '), sort_keys=True)
-        validation_results = validate_string(json_string, ValidationOptions())
-        print_results(validation_results)
-        return json_string
-
-
-def main():
-    # Parse the commandline args
-    parser = _get_arg_parser()
-    args = parser.parse_args()
-
-    validator_parser = stix2_validator._get_arg_parser()
-    validator_args = validator_parser.parse_args(shlex.split(args.validator_args))
-
-
-    print(convert_file(args.input))
-
-
-if __name__ == '__main__':
-    main()
-
