@@ -1475,7 +1475,7 @@ def convert_file(fn):
 
     if isinstance(stix_package, STIXPackage):
         json_string = json.dumps(convert_package(stix_package), indent=4, separators=(',', ': '), sort_keys=True)
-        validation_results = validate_string(json_string, ValidationOptions(schema_dir=""))  # We need to fix this.
+        validation_results = validate_string(json_string, ValidationOptions())
         print_results(validation_results)
         return json_string
 
