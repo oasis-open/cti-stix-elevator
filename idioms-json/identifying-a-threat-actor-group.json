@@ -1,0 +1,41 @@
+{
+    "id": "bundle--c9567f73-3803-415c-b06e-2b0622830e5d",
+    "identities": [
+        {
+            "created": "2016-11-01T14:26:28.330784Z",
+            "id": "identity--733c5838-34d9-4fbf-949c-62aba761184c",
+            "identity_class": "unknown",
+            "modified": "2016-11-01T14:26:28.330784Z",
+            "type": "identity",
+            "version": 1
+        }
+    ],
+    "relationships": [
+        {
+            "created": "2016-11-01T14:26:28.330823Z",
+            "id": "relationship--733c5838-34d9-4fbf-949c-62aba761184c",
+            "modified": "2016-11-01T14:26:28.330823Z",
+            "relationship_type": "attributed-to",
+            "source_ref": "threat-actor--dfaa8d77-07e2-4e28-b2c8-92e9f7b04428",
+            "target_ref": "identity--733c5838-34d9-4fbf-949c-62aba761184c",
+            "type": "relationship",
+            "version": 1
+        }
+    ],
+    "spec_version": "2.0",
+    "threat_actors": [
+        {
+            "created": "2014-11-19T23:39:03.893348Z",
+            "id": "threat-actor--dfaa8d77-07e2-4e28-b2c8-92e9f7b04428",
+            "labels": [
+                "unknown"
+            ],
+            "modified": "2014-11-19T23:39:03.893348Z",
+            "name": "Disco Team Threat Actor Group",
+            "sophistication": "unknown",
+            "type": "threat-actor",
+            "version": 1
+        }
+    ],
+    "type": "bundle"
+}

@@ -1,0 +1,67 @@
+{
+    "id": "bundle--8b8ed1c1-f01d-4393-ac65-97017ed15876",
+    "indicators": [
+        {
+            "created": "2014-10-31T15:52:13.126999Z",
+            "description": "\n\nCONFIDENCE: Low",
+            "id": "indicator--b06b0eb7-61dd-4338-a094-0290c380fbd8",
+            "labels": [
+                "malicious-activity"
+            ],
+            "modified": "2014-10-31T15:52:13.126999Z",
+            "name": "Malicious E-mail Addresses",
+            "pattern": "email-message:from_ref = 'fred@abc.com' AND email-message:to_refs[*] = 'barney@abc.com' OR email-message:to_refs[*] = 'wilma@abc.com'",
+            "pattern_lang": "stix",
+            "type": "indicator",
+            "valid_from": "2014-10-31T15:52:13.126999Z",
+            "version": 1
+        }
+    ],
+    "observed_data": [
+        {
+            "created": "2016-11-01T14:26:28.409995Z",
+            "first_observed": "2016-11-01T14:26:28.409995Z",
+            "id": "observed-data--e9926796-6b52-463c-8be1-0ab66e9adb1c",
+            "last_observed": "2016-11-01T14:26:28.409995Z",
+            "modified": "2016-11-01T14:26:28.409995Z",
+            "number_observed": 1,
+            "objects": {
+                "0": {
+                    "from_ref": 1,
+                    "to_refs": [
+                        2,
+                        3
+                    ],
+                    "type": "email-message"
+                },
+                "1": {
+                    "type": "email-addr",
+                    "value": "fred@abc.com"
+                },
+                "2": {
+                    "type": "email-addr",
+                    "value": "barney@abc.com"
+                },
+                "3": {
+                    "type": "email-addr",
+                    "value": "wilma@abc.com"
+                }
+            },
+            "type": "observed-data",
+            "version": 1
+        }
+    ],
+    "relationships": [
+        {
+            "created": "2016-11-01T14:26:28.410357Z",
+            "id": "relationship--8932afce-d863-47e8-9963-f0713f2cc2f8",
+            "modified": "2016-11-01T14:26:28.410357Z",
+            "relationship_type": "indicates",
+            "source_ref": "indicator--b06b0eb7-61dd-4338-a094-0290c380fbd8",
+            "type": "relationship",
+            "version": 1
+        }
+    ],
+    "spec_version": "2.0",
+    "type": "bundle"
+}
