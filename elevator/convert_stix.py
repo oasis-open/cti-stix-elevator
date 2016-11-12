@@ -4,13 +4,9 @@
 import stix
 from stix.campaign import Campaign
 from stix.coa import CourseOfAction
-from stix.core import STIXPackage
 from stix.exploit_target import ExploitTarget
 from stix.incident import Incident
 from stix.indicator import Indicator
-
-if stix.__version__ >= "1.2.0.0":
-    from stix.report import Report
 from stix.threat_actor import ThreatActor
 from stix.ttp import TTP
 from stix.common.kill_chains import KillChainPhase, KillChainPhaseReference
@@ -21,8 +17,7 @@ from stix.extensions.test_mechanism.yara_test_mechanism import YaraTestMechanism
 from stix.extensions.test_mechanism.snort_test_mechanism import SnortTestMechanism
 from stix.extensions.test_mechanism.open_ioc_2010_test_mechanism import OpenIOCTestMechanism
 from stix.extensions.identity.ciq_identity_3_0 import CIQIdentity3_0Instance
-if stix.__version__ == "1.1.1.7" or stix.__version__ == "1.1.1.6":
-    import stix.extensions.marking.ais
+
 
 import pycountry
 from lxml import etree
@@ -32,6 +27,11 @@ from elevator.convert_pattern import convert_observable_to_pattern, fix_pattern,
 from elevator.ids import *
 from elevator.vocab_mappings import *
 from elevator.utils import *
+
+if stix.__version__ >= "1.2.0.0":
+    from stix.report import Report
+if stix.__version__ == "1.1.1.7":
+    import stix.extensions.marking.ais
 
 SQUIRREL_GAPS_IN_DESCRIPTIONS = True
 
@@ -130,9 +130,9 @@ def process_description_and_short_description(so, entity):
 
 def create_basic_object(stix20_type, stix1x_obj, parent_timestamp=None, parent_id=None, id_used=False):
     instance = {"type": stix20_type}
-    instance["id"] = generateSTIX20Id(stix20_type, stix1x_obj.id_ if stix1x_obj and hasattr(stix1x_obj,
-                                                                                            "id_") and stix1x_obj.id_ else parent_id,
-                                      id_used)
+    instance["id"] = generate_stix20_id(stix20_type, stix1x_obj.id_ if stix1x_obj and
+                                                                       hasattr(stix1x_obj, "id_") and
+                                                                       stix1x_obj.id_ else parent_id, id_used)
     instance["version"] = 1  # need to see about versioning
     timestamp = convert_timestamp(stix1x_obj, parent_timestamp)
     instance["created"] = timestamp
@@ -158,9 +158,9 @@ def finish_basic_object(old_id, instance, stix1x_obj, clear_description=True):
 #
 
 
-def add_string_property_to_description(sdo_instance, property_name, property_value, isList=False):
+def add_string_property_to_description(sdo_instance, property_name, property_value, is_list=False):
     if SQUIRREL_GAPS_IN_DESCRIPTIONS and property_value is not None:
-        if isList:
+        if is_list:
             sdo_instance["description"] += "\n\n" + property_name.upper() + ":\n"
             property_values = []
             for v in property_value:
@@ -315,7 +315,7 @@ def fix_relationships(relationships, bundle_instance):
     for ref in relationships:
         if reference_needs_fixing(ref["source_ref"]):
             if not exists_id_key(ref["source_ref"]):
-                new_id = generateSTIX20Id(None, str.lower(ref["source_ref"]))
+                new_id = generate_stix20_id(None, str.lower(ref["source_ref"]))
                 if new_id is None:
                     warn("Dangling source reference " + ref["source_ref"] + " in " + ref["id"])
                 add_id_value(ref["source_ref"], new_id)
@@ -327,7 +327,7 @@ def fix_relationships(relationships, bundle_instance):
                     bundle_instance["relationships"].append(create_relationship(m_id, ref["target_ref"], ref["verb"]))
         if reference_needs_fixing(ref["target_ref"]):
             if not exists_id_key(ref["target_ref"]):
-                new_id = generateSTIX20Id(None, str.lower(ref["target_ref"]))
+                new_id = generate_stix20_id(None, str.lower(ref["target_ref"]))
                 if new_id is None:
                     warn("Dangling target reference " + ref["target_ref"] + " in " + ref["id"])
                 add_id_value(ref["target_ref"], new_id)
@@ -345,8 +345,10 @@ def fix_relationships(relationships, bundle_instance):
 # For each report:
 #   For each relationship
 #       if the source and target are part of the report, add the relationship
-#       if the source is part of the report, add the relationship AND then the target, UNLESS the target ref is "dangling"
-#       if the target is part of the report, add the relationship AND then the source, UNLESS the source ref is "dangling"
+#       if the source is part of the report, add the relationship AND then the target,
+#          UNLESS the target ref is "dangling"
+#       if the target is part of the report, add the relationship AND then the source,
+#          UNLESS the source ref is "dangling"
 
 
 def add_relationships_to_reports(bundle_instance):
@@ -402,7 +404,7 @@ def convert_campaign(camp, bundle_instance, parent_created_by_ref):
         campaign_instance["aliases"] = []
         for name in camp.names:
             campaign_instance["aliases"].append(name)
-        if campaign_instance["aliases"] == []:
+        if not campaign_instance["aliases"]:
             del campaign_instance["aliases"]
     # process information source before any relationships
     campaign_created_by_ref = process_information_source(camp.information_source, campaign_instance, bundle_instance, parent_created_by_ref)
@@ -451,7 +453,8 @@ def convert_campaign(camp, bundle_instance, parent_created_by_ref):
                                           camp.timestamp,
                                           campaign_created_by_ref)
     if camp.associated_campaigns:
-        warn("All associated campaigns relationships of " + camp.id_ + " are assumed to not represent STIX 1.2 versioning")
+        warn("All associated campaigns relationships of " + camp.id_ +
+             " are assumed to not represent STIX 1.2 versioning")
         handle_relationship_to_refs(camp.related_coas,
                                     campaign_instance["id"],
                                     bundle_instance,
@@ -489,7 +492,10 @@ def convert_course_of_action(coa, bundle_instance, parent_created_by_ref):
     add_statement_type_to_description(coa_instance, coa.impact, "impact")
     add_statement_type_to_description(coa_instance, coa.cost, "cost")
     add_statement_type_to_description(coa_instance, coa.efficacy, "efficacy")
-    coa_created_by_ref = process_information_source(coa.information_source, coa_instance, bundle_instance, parent_created_by_ref)
+    coa_created_by_ref = process_information_source(coa.information_source,
+                                                    coa_instance,
+                                                    bundle_instance,
+                                                    parent_created_by_ref)
     # process information source before any relationships
     if coa.related_coas:
         warn("All related coas relationships of " + coa.id_ + " are assumed to not represent STIX 1.2 versioning")
@@ -1296,7 +1302,7 @@ def get_identity_from_package(information_source, bundle_instance):
 
 def convert_package(stixPackage):
     bundle_instance = {"type": "bundle"}
-    bundle_instance["id"] = generateSTIX20Id("bundle", stixPackage.id_)
+    bundle_instance["id"] = generate_stix20_id("bundle", stixPackage.id_)
     bundle_instance["spec_version"] = "2.0"
     initialize_bundle_lists(bundle_instance)
     if hasattr(stixPackage.stix_header, "information_source"):

@@ -1,7 +1,6 @@
 # Copyright (c) 2016, The MITRE Corporation. All rights reserved.
 # See LICENSE.txt for complete terms.
 
-from cybox.core import Observable
 from cybox.objects.address_object import Address
 from cybox.objects.uri_object import URI
 from cybox.objects.email_message_object import EmailMessage
@@ -26,15 +25,19 @@ def clear_pattern_mapping():
     global OBSERVABLE_TO_PATTERN_MAPPING
     OBSERVABLE_TO_PATTERN_MAPPING = {}
 
+
 KEEP_OBSERVABLE_DATA = False
+
 
 # simulate dynamic variable environment
 
-_DYNAMIC_SCOPING_ENV= {}
+
+_DYNAMIC_SCOPING_ENV = {}
+
 
 def intialize_dynamic_variable(var):
     global _DYNAMIC_SCOPING_ENV
-    if var in  _DYNAMIC_SCOPING_ENV:
+    if var in _DYNAMIC_SCOPING_ENV:
         raise Exception
     else:
         _DYNAMIC_SCOPING_ENV[var] = []
@@ -100,11 +103,6 @@ def convert_condition(condition):
         warn("No condition given for " + identifying_info(get_dynamic_variable("current_observable")) + " - assume '='")
         return "="
 
-def getCondition(obj):
-    if hasattr(obj, "condition"):
-        return obj.condition
-    else:
-        return None
 
 def create_term_with_regex(lhs, condition, rhs):
     if condition == "StartsWith":
@@ -125,8 +123,10 @@ def create_term_with_range(lhs, condition, rhs):
         else: # "ExclusiveBetween"
             return "(" + lhs + " GT " + str(rhs[0]) + " AND " + lhs + " LT " + str(rhs[1]) + ")"
 
+
 def multi_valued_property(object_path):
     return object_path and object_path.find("*") != -1
+
 
 def create_term(lhs, condition, rhs):
     if condition == "StartsWith" or condition == "EndsWith":
@@ -169,24 +169,29 @@ def convert_address_to_pattern(add):
 def convert_uri_to_pattern(uri):
     return create_term("url:value", uri.value.condition, uri.value.value)
 
-_EMAIL_HEADER_PROPERTIES = [ ["email-message:subject", [ "subject" ]],
-                             ["email-message:from_ref", [ "from_", "address_value"]],
-                             ["email-message:sender_ref", [ "sender", "address_value" ]],
-                             ["email-message:date", [ "date"]],
-                             ["email-message:content_type", [ "content_type"]],
-                             ["email-message:to_refs[*]", [ "to*", "address_value" ]],
-                             ["email-message:cc_refs[*]", [ "cc*", "address_value" ]],
-                             ["email-message:bcc_refs[*]", [ "bcc*", "address_value"]] ]
 
-_EMAIL_ADDITIONAL_HEADERS_PROPERTIES = [ ["email-message:additional_header_fields:Reply-To", [ "reply-to*", "address_value"]],
-                                         ["email-message:additional_header_fields:Message_ID", ["message_id"]],
-                                         ["email-message:additional_header_fields:X_Mailer", ["x_mailer"]] ]
+_EMAIL_HEADER_PROPERTIES = [["email-message:subject", ["subject"]],
+                            ["email-message:from_ref", ["from_", "address_value"]],
+                            ["email-message:sender_ref", ["sender", "address_value"]],
+                            ["email-message:date", ["date"]],
+                            ["email-message:content_type", ["content_type"]],
+                            ["email-message:to_refs[*]", ["to*", "address_value"]],
+                            ["email-message:cc_refs[*]", ["cc*", "address_value"]],
+                            ["email-message:bcc_refs[*]", ["bcc*", "address_value"]]]
+
+
+_EMAIL_ADDITIONAL_HEADERS_PROPERTIES = \
+    [["email-message:additional_header_fields:Reply-To", ["reply-to*", "address_value"]],
+     ["email-message:additional_header_fields:Message_ID", ["message_id"]],
+     ["email-message:additional_header_fields:X_Mailer", ["x_mailer"]]]
+
 
 def cannonicalize_prop_name(name):
     if name.find("*") == -1:
         return name
     else:
         return name[:-1]
+
 
 def create_terms_from_prop_list(prop_list, obj, object_path):
     if len(prop_list) == 1:
@@ -207,10 +212,14 @@ def create_terms_from_prop_list(prop_list, obj, object_path):
                 values = getattr(obj, cannonicalize_prop_name(prop_1x))
                 if values:
                     for c in values:
-                        prop_expr += (" OR " if prop_expr != "" else "") + create_terms_from_prop_list(rest_of_prop_list, c, object_path)
+                        prop_expr += (" OR " if prop_expr != "" else "") + \
+                                     create_terms_from_prop_list(rest_of_prop_list, c, object_path)
                 return prop_expr
             else:
-                return create_terms_from_prop_list(rest_of_prop_list, getattr(obj, cannonicalize_prop_name(prop_1x)), object_path)
+                return create_terms_from_prop_list(rest_of_prop_list,
+                                                   getattr(obj, cannonicalize_prop_name(prop_1x)),
+                                                   object_path)
+
 
 def convert_email_header_to_pattern(head, properties):
     header_expression = ""
@@ -235,19 +244,23 @@ def convert_email_message_to_pattern(mess):
         warn("Email attachments not handled yet")
     return expression
 
-_PE_FILE_HEADER_PROPERTIES = [ ["machine", "file:extended_properties.windows_pebinary_ext.file_header:machine"],
-                               ["time_date_stamp", "file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp"],
-                               ["number_of_sections", "file:extended_properties.windows_pebinary_ext.file_header.number_of_sections"],
-                               ["pointer_to_symbol_table", "file:extended_properties.windows_pebinary_ext.file_header.pointer_to_symbol_table"],
-                               ["number_of_symbols", "file:extended_properties.windows_pebinary_ext.file_header.number_of_symbols"],
-                               ["size_of_optional_header", "file:extended_properties.windows_pebinary_ext.file_header.size_of_optional_header"],
-                               ["characteristics", "file:extended_properties.windows_pebinary_ext.file_header.characteristics"]]
 
-_PE_SECTION_HEADER_PROPERTIES = [ ["name", "file:extended_properties.windows_pebinary_ext.section[*].name"],
-                                  ["virtual_size", "file:extended_properties.windows_pebinary_ext.section[*].size" ]]
+_PE_FILE_HEADER_PROPERTIES = \
+    [["machine", "file:extended_properties.windows_pebinary_ext.file_header:machine"],
+     ["time_date_stamp", "file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp"],
+     ["number_of_sections", "file:extended_properties.windows_pebinary_ext.file_header.number_of_sections"],
+     ["pointer_to_symbol_table", "file:extended_properties.windows_pebinary_ext.file_header.pointer_to_symbol_table"],
+     ["number_of_symbols", "file:extended_properties.windows_pebinary_ext.file_header.number_of_symbols"],
+     ["size_of_optional_header", "file:extended_properties.windows_pebinary_ext.file_header.size_of_optional_header"],
+     ["characteristics", "file:extended_properties.windows_pebinary_ext.file_header.characteristics"]]
 
-_ARCHIVE_FILE_PROPERTIES = [ ["comment", "file:extended_properties.archive_file.comment"],
-                             ["version", "file:extended_properties.archive_file.version" ]]
+
+_PE_SECTION_HEADER_PROPERTIES = [["name", "file:extended_properties.windows_pebinary_ext.section[*].name"],
+                                 ["virtual_size", "file:extended_properties.windows_pebinary_ext.section[*].size"]]
+
+
+_ARCHIVE_FILE_PROPERTIES = [["comment", "file:extended_properties.archive_file.comment"],
+                            ["version", "file:extended_properties.archive_file.version"]]
 
 
 def convert_windows_executable_file_to_pattern(file):
@@ -260,17 +273,19 @@ def convert_windows_executable_file_to_pattern(file):
                 prop_1x = prop_spec[0]
                 object_path = prop_spec[1]
                 if hasattr(file_header, prop_1x):
-                    file_header_expression += add_comparison_expression(getattr(file_header, prop_1x), object_path, (file_header_expression != ""))
+                    file_header_expression += add_comparison_expression(getattr(file_header, prop_1x),
+                                                                        object_path,
+                                                                        (file_header_expression != ""))
             if file_header.hashes is not None:
                 hash_expression = convert_hashes_to_pattern(file_header.hashes)
                 if hash_expression:
                     file_header_expression += (" AND " if file_header_expression != "" else "") + hash_expression
-        expression += (" AND " if expression != "" else "") + add_parens_if_needed(file_header_expression)
+            expression += (" AND " if expression != "" else "") + add_parens_if_needed(file_header_expression)
         if file.headers.optional_header:
             warn("file:extended_properties:windows_pebinary_ext:optional_header is not implemented yet")
 
     if file.type_:
-        expression += (" AND " if expression != "" else "") + \
+        expression += (" AND " if expression != "" else "") +\
                       create_term("file:extended_properties.windows_pebinary_ext.pe_type",
                                   file.type_.condition,
                                   map_vocabs_to_label(file.type_.value, WINDOWS_PEBINARY))
@@ -285,7 +300,10 @@ def convert_windows_executable_file_to_pattern(file):
                     prop_1x = prop_spec[0]
                     object_path = prop_spec[1]
                     if hasattr(s.section_header, prop_1x):
-                        section_expression += add_comparison_expression(getattr(s.section_header, prop_1x), object_path, (section_expression != ""))
+                        section_expression += \
+                            add_comparison_expression(getattr(s.section_header, prop_1x),
+                                                      object_path,
+                                                      (section_expression != ""))
             if s.entropy:
                 section_expression += (" AND " if section_expression != "" else "") + \
                                       create_term("file:extended_properties.windows_pebinary_ext.section[*].entropy",
@@ -295,11 +313,13 @@ def convert_windows_executable_file_to_pattern(file):
                 hash_expression1 = convert_hashes_to_pattern(s.data_hashes)
             hash_expression = ""
             if s.header_hashes:
-                hash_expression += (" AND " if hash_expression1 != hash_expression1 else "") + convert_hashes_to_pattern(s.header_hashes)
+                hash_expression += (" AND " if hash_expression1 != hash_expression1 else "") + \
+                                        convert_hashes_to_pattern(s.header_hashes)
             if hash_expression:
-                section_expression += (" AND " if section_expression != "" else "") + add_parens_if_needed(hash_expression)
+                section_expression += (" AND " if section_expression != "" else "") + \
+                                      add_parens_if_needed(hash_expression)
             sections_expression += (" AND " if sections_expression != "" else "") + section_expression
-        expression += (" AND " if expression != "" else "") + add_parens_if_needed(section_expression)
+        expression += (" AND " if expression != "" else "") + add_parens_if_needed(sections_expression)
     if file.exports:
         warn("The exports property of WinExecutableFileObj is not part of Cybox 3.0")
     if file.imports:
@@ -319,13 +339,13 @@ def convert_archive_file_to_pattern(file):
 
 def convert_hashes_to_pattern(hashes):
     hash_expression = ""
-    for hash in hashes:
-        if getattr(hash, "simple_hash_value"):
-            hash_value = hash.simple_hash_value
+    for h in hashes:
+        if getattr(h, "simple_hash_value"):
+            hash_value = h.simple_hash_value
         else:
-            hash_value = hash.fuzzy_hash_value
+            hash_value = h.fuzzy_hash_value
         hash_expression += (" OR " if not hash_expression == "" else "") + \
-                           create_term("file:hashes" + ":" + str(hash.type_).lower(),
+                           create_term("file:hashes" + ":" + str(h.type_).lower(),
                                        hash_value.condition,
                                        hash_value.value)
     return hash_expression
@@ -346,14 +366,13 @@ def convert_file_name_and_path_to_pattern(file):
     return file_name_path_expression
 
 
-
-_FILE_PROPERTIES = [ ["size_in_bytes", "file:size"],
-                     ["magic_number", "file:magic_number_hex"],
-                     ["created_time", "file:created"],
-                     ["modified_time", "file:modified"],
-                     ["accessed_time", "file:accessed"],
-                     ["encyption_algorithm", "file:encyption_algorithm"],
-                     ["decryption_key", "file:decryption_key" ]]
+_FILE_PROPERTIES = [["size_in_bytes", "file:size"],
+                    ["magic_number", "file:magic_number_hex"],
+                    ["created_time", "file:created"],
+                    ["modified_time", "file:modified"],
+                    ["accessed_time", "file:accessed"],
+                    ["encyption_algorithm", "file:encyption_algorithm"],
+                    ["decryption_key", "file:decryption_key"]]
 
 
 def convert_file_to_pattern(file):
@@ -371,18 +390,19 @@ def convert_file_to_pattern(file):
         if hasattr(file, prop_1x):
             expression += add_comparison_expression(getattr(file, prop_1x), object_path, (expression != ""))
     if isinstance(file, WinExecutableFile):
-        expression += (" AND " if expression != "" else "") + add_parens_if_needed(convert_windows_executable_file_to_pattern(file))
+        expression += (" AND " if expression != "" else "") + \
+                        add_parens_if_needed(convert_windows_executable_file_to_pattern(file))
     if isinstance(file, ArchiveFile):
-        expression += (" AND " if expression != "" else "") + add_parens_if_needed(convert_archive_file_to_pattern(file))
+        expression += (" AND " if expression != "" else "") + \
+                        add_parens_if_needed(convert_archive_file_to_pattern(file))
     return expression
 
 _REGISTRY_KEY_VALUES_PROPERTIES = [["data", "win-registry-key:values[*].data"],
-                                    ["name", "win-registry-key:values[*].name"],
-                                    ["datatype", "win-registry-key:values[*].data_type" ]]
+                                   ["name", "win-registry-key:values[*].name"],
+                                   ["datatype", "win-registry-key:values[*].data_type"]]
 
 
 def convert_registry_key_to_pattern(reg_key):
-    first_one = True
     expression = ""
     if reg_key.key:
         key_value_term = ""
@@ -401,7 +421,9 @@ def convert_registry_key_to_pattern(reg_key):
                 prop_1x = prop_spec[0]
                 object_path = prop_spec[1]
                 if hasattr(v, prop_1x):
-                    value_expression += add_comparison_expression(getattr(v, prop_1x), object_path, (value_expression != ""))
+                    value_expression += add_comparison_expression(getattr(v, prop_1x),
+                                                                  object_path,
+                                                                  (value_expression != ""))
             values_expression += (" OR " if values_expression != "" else "") + value_expression
         expression += (" AND " if expression != "" else "") + add_parens_if_needed(values_expression)
     return expression
@@ -430,12 +452,13 @@ def convert_windows_process_to_pattern(process):
             warn("Window handles are not a part of CybOX 3.0")
     return expression
 
-_WINDOWS_PROCESS_PROPERTIES = [ ["service_name", "process:extension_data.windows_service_ext.service_name"],
-                                ["display_name", "process:extension_data.windows_service_ext.display_name"],
-                                ["startup_command_line", "process:extension_data.windows_service_ext.startup_command_line"],
-                                ["start_type", "process:extension_data.windows_service_ext.start_type"],
-                                ["service_type", "process:extension_data.windows_service_ext.service_type"],
-                                ["service_status", "process:extension_data.windows_service_ext.service_status" ]]
+_WINDOWS_PROCESS_PROPERTIES = \
+    [["service_name", "process:extension_data.windows_service_ext.service_name"],
+     ["display_name", "process:extension_data.windows_service_ext.display_name"],
+     ["startup_command_line", "process:extension_data.windows_service_ext.startup_command_line"],
+     ["start_type", "process:extension_data.windows_service_ext.start_type"],
+     ["service_type", "process:extension_data.windows_service_ext.service_type"],
+     ["service_status", "process:extension_data.windows_service_ext.service_status"]]
 
 
 def convert_windows_service_to_pattern(service):
@@ -460,10 +483,10 @@ def convert_windows_service_to_pattern(service):
 ####################################################################################################################
 
 
-def convert_observable_composition_to_pattern(obs_comp, bundleInstance, observable_mapping):
+def convert_observable_composition_to_pattern(obs_comp, bundle_instance, observable_mapping):
     expression = []
     for obs in obs_comp.observables:
-        term = convert_observable_to_pattern(obs, bundleInstance, observable_mapping)
+        term = convert_observable_to_pattern(obs, bundle_instance, observable_mapping)
         if term:
             expression.append(term)
         else:
@@ -523,8 +546,8 @@ def match_1x_id_with_20_id(id_1x, id_20):
     return id_1x_split[1] == id_20_split[1]
 
 
-def find_observable_data(idref, obserableData):
-    for obs in obserableData:
+def find_observable_data(idref, obserable_data):
+    for obs in obserable_data:
         if match_1x_id_with_20_id(idref, obs["id"]):
             info("Found observed_data for {0}".format(idref))
             return obs
@@ -536,22 +559,21 @@ def negate_expression(obs):
     return hasattr(obs, "negate") and obs.negate
 
 
-def convert_observable_to_pattern(obs, bundleInstance, observable_mapping):
+def convert_observable_to_pattern(obs, bundle_instance, observable_mapping):
     try:
         set_dynamic_variable("current_observable", obs)
         return ("NOT (" if negate_expression(obs) else "") + \
-               convert_observable_to_pattern_without_negate(obs, bundleInstance, observable_mapping) + \
-               (")" if negate_expression(obs) else "")
+                convert_observable_to_pattern_without_negate(obs, bundle_instance, observable_mapping) + \
+                (")" if negate_expression(obs) else "")
     finally:
         pop_dynamic_variable("current_observable")
 
 
-
-def convert_observable_to_pattern_without_negate(obs, bundleInstance, id_to_observable_mapping):
+def convert_observable_to_pattern_without_negate(obs, bundle_instance, id_to_observable_mapping):
     global OBSERVABLE_TO_PATTERN_MAPPING
     if obs.observable_composition is not None:
         pattern = convert_observable_composition_to_pattern(obs.observable_composition,
-                                                            bundleInstance,
+                                                            bundle_instance,
                                                             id_to_observable_mapping)
         if pattern and obs.id_:
             OBSERVABLE_TO_PATTERN_MAPPING[obs.id_] = pattern
@@ -565,13 +587,15 @@ def convert_observable_to_pattern_without_negate(obs, bundleInstance, id_to_obse
             return OBSERVABLE_TO_PATTERN_MAPPING[obs.idref]
         else:
             # resolve now if possible, and remove from observed_data
-            observableDataInstance = find_observable_data(obs.idref, bundleInstance["observed_data"])
-            if observableDataInstance is not None:
+            observable_data_instance = find_observable_data(obs.idref, bundle_instance["observed_data"])
+            if observable_data_instance is not None:
                 if not KEEP_OBSERVABLE_DATA:
-                    bundleInstance["observed_data"].remove(observableDataInstance)
+                    bundle_instance["observed_data"].remove(observable_data_instance)
                     # TODO: remove from the report's object_refs
                 if obs.idref in id_to_observable_mapping:
-                    return convert_observable_to_pattern(id_to_observable_mapping[obs.idref], bundleInstance, id_to_observable_mapping)
+                    return convert_observable_to_pattern(id_to_observable_mapping[obs.idref],
+                                                         bundle_instance,
+                                                         id_to_observable_mapping)
             return "PLACEHOLDER:" + obs.idref
 
 
@@ -595,14 +619,15 @@ def interatively_resolve_placeholder_refs():
                 if expr.find("PLACEHOLDER:" + fr_idref) != -1:
                     # a change will be made, which could introduce a new placeholder id into the expr
                     change_made = True
-                    OBSERVABLE_TO_PATTERN_MAPPING[idref] = expr.replace("PLACEHOLDER:" + fr_idref, OBSERVABLE_TO_PATTERN_MAPPING[fr_idref])
+                    OBSERVABLE_TO_PATTERN_MAPPING[idref] = \
+                        expr.replace("PLACEHOLDER:" + fr_idref, OBSERVABLE_TO_PATTERN_MAPPING[fr_idref])
         done = not change_made
 
 
 def fix_pattern(pattern):
     if not OBSERVABLE_TO_PATTERN_MAPPING == {}:
-        #info(str(OBSERVABLE_TO_PATTERN_MAPPING))
-        #info("pattern is: " +  pattern)
+        # info(str(OBSERVABLE_TO_PATTERN_MAPPING))
+        # info("pattern is: " +  pattern)
         for idref in OBSERVABLE_TO_PATTERN_MAPPING.keys():
             # TODO: this can probably be done in place
             pattern = pattern.replace("PLACEHOLDER:" + idref, OBSERVABLE_TO_PATTERN_MAPPING[idref])

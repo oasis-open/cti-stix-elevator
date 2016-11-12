@@ -1,7 +1,6 @@
 # Copyright (c) 2016, The MITRE Corporation. All rights reserved.
 # See LICENSE.txt for complete terms.
 
-import sys
 from datetime import *
 from numbers import Number
 
@@ -66,7 +65,6 @@ def convert_controlled_vocabs_to_open_vocabs(new_obj, new_property_name, old_voc
                 warn("Only one {prop} allowed in STIX 2.0 - used first one".format(prop=new_property_name))
 
 
-
 def convert_timestamp_string(timestamp, entity, parent_timestamp):
     if timestamp is not None:
         return timestamp.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
@@ -74,7 +72,7 @@ def convert_timestamp_string(timestamp, entity, parent_timestamp):
         info("Using enclosing object timestamp")
         return parent_timestamp.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
     else:
-        warn("Timestamp not available for " + identifying_info(entity)+ ", using current time")
+        warn("Timestamp not available for " + identifying_info(entity) + ", using current time")
         return str(datetime.now().isoformat()) + "Z"
 
 
@@ -85,7 +83,7 @@ def convert_timestamp(entity, parent_timestamp=None):
         elif parent_timestamp is not None:
             info("Using enclosing object timestamp")
             return parent_timestamp.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
-    warn("Timestamp not available for " + identifying_info(entity)  + ", using current time")
+    warn("Timestamp not available for " + identifying_info(entity) + ", using current time")
     return str(datetime.now().isoformat()) + "Z"
 
 
@@ -95,7 +93,7 @@ def convert_to_str(value):
     if isinstance(value, six.text_type):
         return value
     if isinstance(value, Number) or isinstance(value, list):
-       value = str(value)
+        value = str(value)
     escaped = value.encode('unicode_escape')
     escaped_ascii = escaped.decode('ascii')
 
@@ -105,8 +103,9 @@ def convert_to_str(value):
         return escaped_ascii
 
 
-_TYPE_MAP_FROM_1_x_TO_2_0 = { "observable": "observed-data",
-                              "toolinformation": "tool"}
+_TYPE_MAP_FROM_1_x_TO_2_0 = {"observable": "observed-data",
+                             "toolinformation": "tool"}
+
 
 def map_1x_type_to_20(stix1x_type):
     if stix1x_type in _TYPE_MAP_FROM_1_x_TO_2_0:

@@ -1,21 +1,8 @@
 # Copyright (c) 2016, The MITRE Corporation. All rights reserved.
 # See LICENSE.txt for complete terms.
 
-import sys
-import stix
 import cybox
-from cybox.objects.address_object import Address
-from cybox.objects.uri_object import URI
-from cybox.objects.file_object import File
-from cybox.objects.win_registry_key_object import WinRegistryKey
-from cybox.objects.process_object import Process
-from cybox.objects.win_process_object import WinProcess
-from cybox.objects.win_service_object import WinService
-from cybox.objects.domain_name_object import DomainName
-from cybox.objects.mutex_object import Mutex
-from cybox.objects.network_connection_object import NetworkConnection
 
-from elevator.utils import *
 from elevator.convert_pattern import *
 from elevator.vocab_mappings import *
 
@@ -42,7 +29,6 @@ def create_directory(file):
 
 
 def convert_file(file, directory_ref):
-    first_one = True
     cybox_dict = {"type": "file"}
     if file.size is not None:
         if isinstance(file.size.value, list):
@@ -63,16 +49,17 @@ def convert_file(file, directory_ref):
         warn("1.x full file paths are not processed, yet")
     return cybox_dict
 
+
 def convert_email_message(email_message):
-    index = 0;
-    cybox_dict = { }
+    index = 0
+    cybox_dict = {}
     email_dict = {"type": "email-message"}
     cybox_dict[index] = email_dict
     index += 1
     if email_message.header:
         header = email_message.header
         if header.date:
-            email_dict["date"] = header,date.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
+            email_dict["date"] = header, date.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
         if header.content_type:
             email_dict["content_type"] = header.content_type
         if header.subject:
@@ -87,11 +74,12 @@ def convert_email_message(email_message):
             for t in header.to:
                 to_ref = convert_address(t)
                 cybox_dict[index] = to_ref
-                if not "to_refs" in email_dict:
+                if "to_refs" not in email_dict:
                     email_dict["to_refs"] = []
                 email_dict["to_refs"].append(index)
                 index += 1
     return cybox_dict
+
 
 def convert_registry_key(reg_key):
     cybox_reg = {"type": "windows-registry-key"}

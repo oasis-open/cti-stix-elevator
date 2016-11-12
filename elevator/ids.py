@@ -16,14 +16,14 @@ def clear_id_mapping():
     IDS_TO_NEW_IDS = {}
 
 
-def record_ids(id, new_id):
-    if id in IDS_TO_NEW_IDS:
-        info("{0} is already associated other ids: {1}".format(str(id), tuple(IDS_TO_NEW_IDS[id])))
+def record_ids(stix_id, new_id):
+    if stix_id in IDS_TO_NEW_IDS:
+        info("{0} is already associated other ids: {1}".format(str(stix_id), tuple(IDS_TO_NEW_IDS[stix_id])))
     # info("associating " + new_id + " with " + id)
     if new_id is None:
-        error("Could not associate {id} with None".format(id=id))
+        error("Could not associate {id} with None".format(id=stix_id))
         return
-    add_id_value(id, new_id)
+    add_id_value(stix_id, new_id)
 
 # arguments:
 #   stix20SOName - the name of the type of object in 2.0
@@ -43,27 +43,28 @@ def record_ids(id, new_id):
 #       create the new id using stix20SOName and the new UUID
 
 
-def generateSTIX20Id(stix20SOName, stix12ID=None, id_used=False):
-    if not stix12ID or id_used:
-        new_id = stix20SOName + "--" + str(uuid.uuid4())
+def generate_stix20_id(stix20_so_name, stix12_id=None, id_used=False):
+    if not stix12_id or id_used:
+        new_id = stix20_so_name + "--" + str(uuid.uuid4())
         SDO_WITH_NO_1X_OBJECT.append(new_id)
         return new_id
     else:
-        result = re.search('^(.+)-([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})', stix12ID)
+        result = re.search('^(.+)-([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})',
+                           stix12_id)
         if result:
             current_uuid = result.group(2)
-            if stix20SOName is None:
+            if stix20_so_name is None:
                 stx1x_type = result.group(1).split(":")
                 if stx1x_type[1].lower() == "ttp" or stx1x_type[1].lower() == "et":
-                    error("Unable to determine the STIX 2.0 type for {id}".format(id=stix12ID))
+                    error("Unable to determine the STIX 2.0 type for {id}".format(id=stix12_id))
                     return None
                 else:
                     return map_1x_type_to_20(stx1x_type[1]) + "--" + current_uuid
             else:
-                return stix20SOName + "--" + current_uuid
+                return stix20_so_name + "--" + current_uuid
         else:
-            warn("Malformed id " + stix12ID + ". Generated a new uuid")
-            return stix20SOName + "--" + str(uuid.uuid4())
+            warn("Malformed id " + stix12_id + ". Generated a new uuid")
+            return stix20_so_name + "--" + str(uuid.uuid4())
 
 
 def exists_id_key(key):
