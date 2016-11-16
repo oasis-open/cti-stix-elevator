@@ -1,6 +1,3 @@
-# Copyright (c) 2016, The MITRE Corporation. All rights reserved.
-# See LICENSE.txt for complete terms.
-
 # STIX
 
 # Limited in STIX 2.0, no labels available.
