@@ -5,6 +5,7 @@ from datetime import *
 from numbers import Number
 
 import six
+import sys
 
 
 def info(fmt, *args):
@@ -60,7 +61,7 @@ def convert_controlled_vocabs_to_open_vocabs(new_obj, new_property_name, old_voc
         new_obj[new_property_name] = []
         for t in old_vocabs:
             if new_obj[new_property_name] is None or not only_one:
-                new_obj[new_property_name].append(map_vocabs_to_label(t.value, vocab_mapping))
+                new_obj[new_property_name].append(map_vocabs_to_label(str(t.value), vocab_mapping))
             else:
                 warn("Only one {prop} allowed in STIX 2.0 - used first one".format(prop=new_property_name))
 

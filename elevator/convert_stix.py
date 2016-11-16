@@ -960,7 +960,7 @@ def convert_threat_actor(threat_actor, bundle_instance, parent_created_by_ref):
                                     "uses", threat_actor.timestamp, threat_actor_created_by_ref)
     if threat_actor.associated_campaigns is not None:
         handle_relationship_from_refs(threat_actor.associated_campaigns, threat_actor_instance["id"], bundle_instance,
-                                      "attributed_to", threat_actor.timestamp, threat_actor_created_by_ref)
+                                      "attributed-to", threat_actor.timestamp, threat_actor_created_by_ref)
     if threat_actor.associated_actors:
         warn("All associated actors relationships of {id} are assumed to not represent STIX 1.2 versioning".format(id=threat_actor.id_))
         handle_relationship_to_refs(threat_actor.associated_actors, threat_actor_instance["id"], bundle_instance,
