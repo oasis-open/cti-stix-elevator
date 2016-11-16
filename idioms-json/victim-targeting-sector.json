@@ -2,11 +2,11 @@
     "id": "bundle--e5114ee8-303f-4428-98ff-9499f099c961",
     "identities": [
         {
-            "created": "2016-10-31T15:07:49.203962Z",
-            "description": "\n\nTITLE:\n\tVictim Targeting: Electricity Sector and Industrial Control System Sector",
+            "created": "2016-11-16T14:43:59.115041Z",
             "id": "identity--dfd23353-167f-411c-a258-e08ec9d284af",
             "identity_class": "unknown",
-            "modified": "2016-10-31T15:07:49.203962Z",
+            "modified": "2016-11-16T14:43:59.115041Z",
+            "name": "Victim Targeting: Electricity Sector and Industrial Control System Sector",
             "type": "identity",
             "version": 1
         }
