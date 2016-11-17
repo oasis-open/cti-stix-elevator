@@ -1,6 +1,3 @@
-# Copyright (c) 2016, The MITRE Corporation. All rights reserved.
-# See LICENSE.txt for complete terms.
-
 from cybox.objects.address_object import Address
 from cybox.objects.uri_object import URI
 from cybox.objects.email_message_object import EmailMessage

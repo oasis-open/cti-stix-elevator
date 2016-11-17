@@ -1,6 +1,3 @@
-# Copyright (c) 2016, The MITRE Corporation. All rights reserved.
-# See LICENSE.txt for complete terms.
-
 import uuid
 import re
 
@@ -72,7 +69,10 @@ def exists_id_key(key):
 
 
 def get_id_value(key):
-    return IDS_TO_NEW_IDS[key]
+    if exists_id_key(key):
+        return IDS_TO_NEW_IDS[key]
+    else:
+        return []
 
 
 def get_id_values():

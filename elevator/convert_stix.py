@@ -1,6 +1,3 @@
-# Copyright (c) 2016, The MITRE Corporation. All rights reserved.
-# See LICENSE.txt for complete terms.
-
 import stix
 from stix.campaign import Campaign
 from stix.coa import CourseOfAction
@@ -303,6 +300,14 @@ def reference_needs_fixing(ref):
     return ref and ref.find("--") == -1
 
 
+def determine_appropriate_verb(current_verb, m_id):
+    if m_id is not None and current_verb == "uses":
+        type_and_uuid = m_id.split("--")
+        if type_and_uuid[0] == "identity":
+            return "targets"
+    return current_verb
+
+
 # for ids in source and target refs that are still 1.x ids,
 def fix_relationships(relationships, bundle_instance):
     # TODO:  warn if ref not available??
@@ -327,10 +332,12 @@ def fix_relationships(relationships, bundle_instance):
                 add_id_value(ref["target_ref"], new_id)
             first_one = True
             for m_id in get_id_value(ref["target_ref"]):
+                verb = determine_appropriate_verb(ref["relationship_type"], m_id)
                 if first_one:
                     ref["target_ref"] = m_id
+                    ref["relationship_type"] = verb
                 else:
-                    bundle_instance["relationships"].append(create_relationship(ref["source_ref"], m_id, ref["verb"]))
+                    bundle_instance["relationships"].append(create_relationship(ref["source_ref"], m_id, verb))
 
 
 # Relationships are not in 1.x, so they must be added explicitly to reports.
@@ -406,13 +413,7 @@ def convert_campaign(camp, bundle_instance, parent_created_by_ref):
     add_string_property_to_description(campaign_instance, "status", camp.status)
     if hasattr(camp, "confidence"):
         add_confidence_property_to_description(campaign_instance, camp.confidence)
-    if camp.attribution:
-        handle_relationship_to_refs(camp.related_ttps,
-                                    campaign_instance["id"],
-                                    bundle_instance,
-                                    "attributed-to",
-                                    camp.timestamp,
-                                    campaign_created_by_ref)
+
     if camp.activity is not None:
         for a in camp.activity:
             warn("Campaign/Activity not supported in STIX 2.0")
@@ -440,7 +441,7 @@ def convert_campaign(camp, bundle_instance, parent_created_by_ref):
                                       campaign_created_by_ref)
     if camp.attribution is not None:
         for att in camp.attribution:
-            handle_relationship_from_refs(att,
+            handle_relationship_to_refs(att,
                                           campaign_instance["id"],
                                           bundle_instance,
                                           "attributed-to",
@@ -954,7 +955,7 @@ def convert_threat_actor(threat_actor, bundle_instance, parent_created_by_ref):
                                     "uses", threat_actor.timestamp, threat_actor_created_by_ref)
     if threat_actor.associated_campaigns is not None:
         handle_relationship_from_refs(threat_actor.associated_campaigns, threat_actor_instance["id"], bundle_instance,
-                                      "attributed_to", threat_actor.timestamp, threat_actor_created_by_ref)
+                                      "attributed-to", threat_actor.timestamp, threat_actor_created_by_ref)
     if threat_actor.associated_actors:
         warn("All associated actors relationships of {id} are assumed to not represent STIX 1.2 versioning".format(id=threat_actor.id_))
         handle_relationship_to_refs(threat_actor.associated_actors, threat_actor_instance["id"], bundle_instance,
@@ -970,7 +971,11 @@ def convert_threat_actor(threat_actor, bundle_instance, parent_created_by_ref):
 def process_ttp_properties(sdo_instance, ttp, bundle_instance, parent_created_by_ref, kill_chains_in_sdo=True):
     # TODO: handle description and short description
     add_multiple_statement_types_to_description(sdo_instance, ttp.intended_effects, "intended_effect")
-    add_string_property_to_description(sdo_instance, "title", ttp.title, False)
+    if hasattr(ttp, "title"):
+        if "name" not in sdo_instance:
+            sdo_instance["name"] = ttp.title
+        else:
+            add_string_property_to_description(sdo_instance, "title", ttp.title, False)
     if ttp.exploit_targets is not None:
         handle_relationship_to_refs(ttp.exploit_targets, sdo_instance["id"], bundle_instance, "targets", ttp.timestamp)
     # only populate kill chaiin phases if that is a property of the STIX 2.0 SDO
