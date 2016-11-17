@@ -25,6 +25,7 @@ from lxml import etree
 from elevator.convert_cybox import convert_cybox_object
 from elevator.convert_pattern import convert_observable_to_pattern, fix_pattern, clear_pattern_mapping, interatively_resolve_placeholder_refs
 from elevator.ids import *
+from elevator.options import *
 from elevator.vocab_mappings import *
 from elevator.utils import *
 
@@ -33,14 +34,7 @@ if stix.__version__ >= "1.2.0.0":
 if stix.__version__ == "1.1.1.7":
     import stix.extensions.marking.ais
 
-SQUIRREL_GAPS_IN_DESCRIPTIONS = True
-
-INFRASTRUCTURE_IN_20 = False
-
-INCIDENT_IN_20 = True
-
 # collect kill chains
-
 KILL_CHAINS_PHASES = {}
 
 OBSERVABLE_MAPPING = {}

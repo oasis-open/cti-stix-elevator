@@ -1,13 +1,8 @@
-# Copyright (c) 2016, The MITRE Corporation. All rights reserved.
-# See LICENSE.txt for complete terms.
-
-import json
 
 try:
     from StringIO import StringIO
 except ImportError:
     from io import StringIO
-
 
 # built-in
 import json
@@ -17,13 +12,12 @@ import stix
 from stix.core import STIXPackage
 from stix.utils.parser import EntityParser
 
-from stix2validator.validators import ValidationOptions
-from stix2validator.output import print_results
-from stix2validator import validate_string
-
+from stix2validator import codes
+from stix2validator import output
+from stix2validator import validators
+from stix2validator import validate_string, ValidationError
 
 # internal
-
 from elevator.convert_pattern import clear_pattern_mapping
 from elevator.ids import clear_id_mapping
 from elevator.utils import warn
@@ -31,51 +25,81 @@ from elevator.convert_stix import convert_package
 from elevator.version import __version__  # noqa
 
 
-def elevate_file(fn):
+def elevate_file(fn, validator_options=None):
     warn("WARNING: Results produced by the stix-elevator are not for production purposes.")
     clear_id_mapping()
     clear_pattern_mapping()
 
-    stix_package = EntityParser().parse_xml(fn)
+    if not validator_options:
+        validator_options = validators.ValidationOptions()
 
-    if isinstance(stix_package, STIXPackage):
+    try:
+        output.set_level(validator_options.verbose)
+
+        stix_package = EntityParser().parse_xml(fn)
+
+        if not isinstance(stix_package, STIXPackage):
+            raise TypeError("Must be an instance of stix.core.STIXPackage")
+
         json_string = json.dumps(convert_package(stix_package), indent=4,
                                  separators=(',', ': '), sort_keys=True)
-        validation_results = validate_string(json_string, ValidationOptions())
-        print_results(validation_results)
+        validation_results = validate_string(json_string, validator_options)
+        output.print_results(validation_results)
         return json_string
-    else:
-        raise TypeError("Must be an instance of stix.core.STIXPackage")
+
+    except ValidationError as ex:
+        output.error("Validation error occurred: '%s'" % str(ex),
+                     codes.EXIT_VALIDATION_ERROR)
 
 
-def elevate_string(string):
+def elevate_string(string, validator_options=None):
     warn("WARNING: Results produced by the stix-elevator are not for production purposes.")
     clear_id_mapping()
     clear_pattern_mapping()
 
-    io = StringIO(string)
-    stix_package = EntityParser().parse_xml(io)
+    if not validator_options:
+        validator_options = validators.ValidationOptions()
 
-    if isinstance(stix_package, STIXPackage):
+    try:
+        output.set_level(validator_options.verbose)
+
+        io = StringIO(string)
+        stix_package = EntityParser().parse_xml(io)
+
+        if not isinstance(stix_package, STIXPackage):
+            raise TypeError("Must be an instance of stix.core.STIXPackage")
+
         json_string = json.dumps(convert_package(stix_package), indent=4,
                                  separators=(',', ': '), sort_keys=True)
-        validation_results = validate_string(json_string, ValidationOptions())
-        print_results(validation_results)
+        validation_results = validate_string(json_string, validator_options)
+        output.print_results(validation_results)
         return json_string
-    else:
-        raise TypeError("Must be an instance of stix.core.STIXPackage")
+
+    except ValidationError as ex:
+        output.error("Validation error occurred: '%s'" % str(ex),
+                     codes.EXIT_VALIDATION_ERROR)
 
 
-def elevate_package(package):
+def elevate_package(package, validator_options=None):
     warn("WARNING: Results produced by the stix-elevator are not for production purposes.")
     clear_id_mapping()
     clear_pattern_mapping()
 
-    if isinstance(package, STIXPackage):
+    if not validator_options:
+        validator_options = validators.ValidationOptions()
+
+    try:
+        output.set_level(validator_options.verbose)
+
+        if not isinstance(package, STIXPackage):
+            raise TypeError("Must be an instance of stix.core.STIXPackage")
+
         json_string = json.dumps(convert_package(package), indent=4,
                                  separators=(',', ': '), sort_keys=True)
-        validation_results = validate_string(json_string, ValidationOptions())
-        print_results(validation_results)
+        validation_results = validate_string(json_string, validator_options)
+        output.print_results(validation_results)
         return json_string
-    else:
-        raise TypeError("Must be an instance of stix.core.STIXPackage")
+
+    except ValidationError as ex:
+        output.error("Validation error occurred: '%s'" % str(ex),
+                     codes.EXIT_VALIDATION_ERROR)
