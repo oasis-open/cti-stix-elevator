@@ -8,15 +8,10 @@ to be mitigated to convert your STIX 1.x content.
 
 import argparse
 import textwrap
-import shlex
 
 from argparse import RawDescriptionHelpFormatter
 
-from stix2validator.scripts import stix2_validator
-from stix2validator.validators import ValidationOptions
-
 from elevator import elevate_file
-from elevator import options
 from elevator.options import ElevatorOptions
 from elevator.version import __version__
 
@@ -56,7 +51,8 @@ def _get_arg_parser(is_script=True):
 
     parser = argparse.ArgumentParser(
         description=desc + __doc__,
-        formatter_class=NewlinesHelpFormatter
+        formatter_class=NewlinesHelpFormatter,
+        epilog=CODE_TABLE
     )
 
     if is_script:
@@ -95,7 +91,7 @@ def _get_arg_parser(is_script=True):
         "--default-created-by-id",
         help="Use provided identifier for \"created_by_ref\" properties. \n\n"
              "Example: --default-created-by-id \"identity--1234abcd-1a12-12a3-0ab4-1234abcd5678\"",
-        dest="identifier",
+        dest="default_created_by_id",
         action="store",
         default=""
     )
@@ -104,7 +100,7 @@ def _get_arg_parser(is_script=True):
         "--default-timestamp",
         help="Use provided timestamp for properties that require a timestamp. "
              "\n\nExample: --default-timestamp \"2016-11-15T13:10:35.053000Z\"",
-        dest="timestamp",
+        dest="default_timestamp",
         action="store",
         default=""
     )
@@ -132,7 +128,7 @@ def _get_arg_parser(is_script=True):
         help="A comma-separated list of the elevator messages to enable. "
              "If the --disable option is not used, no other messages will be "
              "shown. \n\nExample: --enable 250",
-        dest="enabled",
+        dest="enable",
         default=""
     )
 
@@ -153,18 +149,9 @@ def main():
     elevator_parser = _get_arg_parser()
     elevator_args = elevator_parser.parse_args()
 
-    # Parse stix-validator command-line args
-    validator_parser = stix2_validator._get_arg_parser(is_script=False)
-    validator_args = validator_parser.parse_args(
-        shlex.split(elevator_args.validator_args))
-
     elevator_options = ElevatorOptions(elevator_args)
-    options.set_options(elevator_options)
 
-    validator_args.files = None
-    validator_options = ValidationOptions(validator_args)
-
-    print(elevate_file(elevator_args.file_, validator_options))
+    print(elevate_file(elevator_options.file_, elevator_options))
 
 
 if __name__ == '__main__':

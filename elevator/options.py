@@ -1,3 +1,8 @@
+import shlex
+
+from stix2validator.scripts import stix2_validator
+from stix2validator.validators import ValidationOptions
+
 
 SQUIRREL_GAPS_IN_DESCRIPTIONS = True
 
@@ -23,24 +28,29 @@ class ElevatorOptions(object):
             supplied on the command line.
         verbose: True if informational notes and more verbose error messages
             should be printed to stdout/stderr.
-        file_: A list of input files and directories of files to be
-            validated.
-        schema_dir: A user-defined schema directory to validate against.
-        lax: Specifies that only mandatory requirements, not ones which are
-            merely recommended, should be checked.
-        lax_prefix: Specifies that less strict requirements for custom object
-            and property names should be used.
-        strict_types: Specifies that no custom object types be used, only
-            those detailed in the STIX specification.
+        file_: Input file to be elevated.
+        no_incidents: False if no incidents should be included in the result.
+        infrastructure: True if infrastructure should be included in the result.
+        default_created_by_id: If set, this identifier ref will be applied in
+            the `created_by_ref` property.
+        default_timestamp: If set, this value will be used when: the object
+            does not have a timestamp, the parent does not have a timestamp.
+            When this value is not set, current time will be used instead.
+        validator_args: If set, these values will be used to create a
+            ValidationOptions instance if requested.
+        enable: Messages to enable.
+        disable: Messages to disable.
 
     """
     def __init__(self, cmd_args=None, file_=None, no_incidents=True,
-                 infrastructure=False, default_created_by_id="",
-                 default_timestamp="", validator_args="", verbose=False,
+                 squirrel_gaps=True, infrastructure=False,
+                 default_created_by_id="", default_timestamp="",
+                 validator_args="--lax --strict-types", verbose=False,
                  enable="", disable=""):
         if cmd_args is not None:
             self.file_ = cmd_args.file_
             self.no_incidents = cmd_args.no_incidents
+            self.squirrel_gaps = squirrel_gaps
             self.infrastructure = cmd_args.infrastructure
             self.default_created_by_id = cmd_args.default_created_by_id
             self.default_timestamp = cmd_args.default_timestamp
@@ -53,6 +63,7 @@ class ElevatorOptions(object):
         else:
             self.file_ = file_
             self.no_incidents = no_incidents
+            self.squirrel_gaps = squirrel_gaps
             self.infrastructure = infrastructure
             self.default_created_by_id = default_created_by_id
             self.default_timestamp = default_timestamp
@@ -72,6 +83,16 @@ class ElevatorOptions(object):
             self.enable = self.enable.split(",")
             self.enable = [CHECK_CODES[x] if x in CHECK_CODES else x
                            for x in self.enable]
+
+    def get_validator_options(self):
+        """Return a stix2validator.validators.ValidationOptions instance."""
+        # Parse stix-validator command-line args
+        validator_parser = stix2_validator._get_arg_parser(is_script=False)
+        validator_args = validator_parser.parse_args(
+            shlex.split(self.validator_args))
+
+        validator_args.files = None
+        return ValidationOptions(validator_args)
 
 
 def set_infrastructure(include_infrastructure=False):
@@ -101,10 +122,10 @@ def set_default_timestamp(default_timestamp=""):
 
 def set_options(options):
     set_infrastructure(options.infrastructure)
-    set_incidents(options.incidents)
-    set_gap_descriptions(options.gaps)
-    set_default_identifier(options.identifier)
-    set_default_timestamp(options.timestamp)
+    set_incidents(options.no_incidents)
+    set_gap_descriptions(options.squirrel_gaps)
+    set_default_identifier(options.default_created_by_id)
+    set_default_timestamp(options.default_timestamp)
 
 
 # Mapping of check code numbers to names

@@ -22,16 +22,22 @@ from elevator.convert_pattern import clear_pattern_mapping
 from elevator.ids import clear_id_mapping
 from elevator.utils import warn
 from elevator.convert_stix import convert_package
+from elevator import options
 from elevator.version import __version__  # noqa
 
 
-def elevate_file(fn, validator_options=None):
+def elevate_file(fn, elevator_options=None):
     warn("WARNING: Results produced by the stix-elevator are not for production purposes.")
     clear_id_mapping()
     clear_pattern_mapping()
 
-    if not validator_options:
-        validator_options = validators.ValidationOptions()
+    if not elevator_options:
+        elevator_options = options.ElevatorOptions()
+        options.set_options(elevator_options)
+        validator_options = elevator_options.get_validator_options()
+    else:
+        options.set_options(elevator_options)
+        validator_options = elevator_options.get_validator_options()
 
     try:
         output.set_level(validator_options.verbose)
@@ -52,13 +58,18 @@ def elevate_file(fn, validator_options=None):
                      codes.EXIT_VALIDATION_ERROR)
 
 
-def elevate_string(string, validator_options=None):
+def elevate_string(string, elevator_options=None):
     warn("WARNING: Results produced by the stix-elevator are not for production purposes.")
     clear_id_mapping()
     clear_pattern_mapping()
 
-    if not validator_options:
-        validator_options = validators.ValidationOptions()
+    if not elevator_options:
+        elevator_options = options.ElevatorOptions()
+        options.set_options(elevator_options)
+        validator_options = elevator_options.get_validator_options()
+    else:
+        options.set_options(elevator_options)
+        validator_options = elevator_options.get_validator_options()
 
     try:
         output.set_level(validator_options.verbose)
@@ -80,13 +91,18 @@ def elevate_string(string, validator_options=None):
                      codes.EXIT_VALIDATION_ERROR)
 
 
-def elevate_package(package, validator_options=None):
+def elevate_package(package, elevator_options=None):
     warn("WARNING: Results produced by the stix-elevator are not for production purposes.")
     clear_id_mapping()
     clear_pattern_mapping()
 
-    if not validator_options:
-        validator_options = validators.ValidationOptions()
+    if not elevator_options:
+        elevator_options = options.ElevatorOptions()
+        options.set_options(elevator_options)
+        validator_options = elevator_options.get_validator_options()
+    else:
+        options.set_options(elevator_options)
+        validator_options = elevator_options.get_validator_options()
 
     try:
         output.set_level(validator_options.verbose)
