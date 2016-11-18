@@ -61,6 +61,24 @@ def pop_dynamic_variable(var):
         _DYNAMIC_SCOPING_ENV[var].pop
 
 
+_CLASS_NAME_MAPPING = { "File": "file",
+                        "URI": "uri",
+                        "EmailMessage": "email-message",
+                        "WinRegistryKey": "win-registry-key",
+                        "Process": "process",
+                        "DomainName": "domain_name",
+                        "Mutex": "mutex"}
+# address, network_connection
+
+def convert_cybox_class_name_to_object_path_root_name(instance):
+    class_name = instance.__class__.__name__
+    if class_name in _CLASS_NAME_MAPPING:
+        return _CLASS_NAME_MAPPING[class_name]
+    else:
+        error("Cannot convert cybox 2.x class name {name} to an object_path_root_name".format(name=class_name))
+        return None
+
+
 def need_not(condition):
     return condition == "DoesNotContain"
 
@@ -117,7 +135,7 @@ def create_term_with_range(lhs, condition, rhs):
     else:
         if condition == "InclusiveBetween":
             return "(" + lhs + " GE " + str(rhs[0]) + " AND " + lhs + " LE " + str(rhs[1]) + ")"
-        else: # "ExclusiveBetween"
+        else:  # "ExclusiveBetween"
             return "(" + lhs + " GT " + str(rhs[0]) + " AND " + lhs + " LT " + str(rhs[1]) + ")"
 
 
@@ -149,6 +167,14 @@ def add_comparison_expression(prop, object_path, first):
     return ""
 
 
+def convert_custom_properties(cps, object_type_name):
+    expression = ""
+    for cp in cps.property_:
+        expression += (" AND " if expression != "" else "") + \
+                      create_term(object_type_name + ":x_" + cp.name, cp.condition, cp.value)
+    return expression
+
+
 def convert_address_to_pattern(add):
     cond = add.address_value.condition
     if add.category == add.CAT_IPV4:
@@ -166,7 +192,7 @@ def convert_address_to_pattern(add):
 def convert_uri_to_pattern(uri):
     return create_term("url:value", uri.value.condition, uri.value.value)
 
-
+# NOTICE:  The format of these PROPERTIES is different than the others in this file!!!!!!
 _EMAIL_HEADER_PROPERTIES = [["email-message:subject", ["subject"]],
                             ["email-message:from_ref", ["from_", "address_value"]],
                             ["email-message:sender_ref", ["sender", "address_value"]],
@@ -381,6 +407,7 @@ def convert_file_to_pattern(file):
     file_name_and_path_expression = convert_file_name_and_path_to_pattern(file)
     if file_name_and_path_expression:
         expression += (" AND " if expression != "" else "") + file_name_and_path_expression
+
     for prop_spec in _FILE_PROPERTIES:
         prop_1x = prop_spec[0]
         object_path = prop_spec[1]
@@ -392,6 +419,7 @@ def convert_file_to_pattern(file):
     if isinstance(file, ArchiveFile):
         expression += (" AND " if expression != "" else "") + \
                         add_parens_if_needed(convert_archive_file_to_pattern(file))
+
     return expression
 
 _REGISTRY_KEY_VALUES_PROPERTIES = [["data", "win-registry-key:values[*].data"],
@@ -515,26 +543,30 @@ def convert_object_to_pattern(obj):
     prop = obj.properties
 
     if isinstance(prop, Address):
-        return convert_address_to_pattern(prop)
+        expression = convert_address_to_pattern(prop)
     elif isinstance(prop, URI):
-        return convert_uri_to_pattern(prop)
+        expression = convert_uri_to_pattern(prop)
     elif isinstance(prop, EmailMessage):
-        return convert_email_message_to_pattern(prop)
+        expression = convert_email_message_to_pattern(prop)
     elif isinstance(prop, File):
-        return convert_file_to_pattern(prop)
+        expression = convert_file_to_pattern(prop)
     elif isinstance(prop, WinRegistryKey):
-        return convert_registry_key_to_pattern(prop)
+        expression = convert_registry_key_to_pattern(prop)
     elif isinstance(prop, Process):
-        return convert_process_to_pattern(prop)
+        expression = convert_process_to_pattern(prop)
     elif isinstance(prop, DomainName):
-        return convert_domain_name_to_pattern(prop)
+        expression = convert_domain_name_to_pattern(prop)
     elif isinstance(prop, Mutex):
-        return convert_mutex_to_pattern(prop)
+        expression = convert_mutex_to_pattern(prop)
     elif isinstance(prop, NetworkConnection):
-        return convert_network_connection_to_pattern(prop)
+        expression = convert_network_connection_to_pattern(prop)
     else:
         warn("{0} cannot be converted to a pattern, yet.".format(str(obj.properties)))
         return "'term not converted'"
+    if prop.custom_properties is not None:
+        expression += (" AND " if expression != "" else "") + convert_custom_properties(prop.custom_properties,
+                                                                                        convert_cybox_class_name_to_object_path_root_name(prop))
+    return expression
 
 
 def match_1x_id_with_20_id(id_1x, id_20):
