@@ -18,9 +18,6 @@ from stix2validator.validators import ValidationOptions
 from stix2validator.output import print_results
 from stix2validator import validate_string
 
-
-# internal
-
 from elevator.convert_pattern import clear_pattern_mapping
 from elevator.ids import clear_id_mapping
 from elevator.utils import warn
