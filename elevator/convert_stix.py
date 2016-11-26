@@ -20,7 +20,9 @@ import pycountry
 from lxml import etree
 
 from elevator.convert_cybox import convert_cybox_object
-from elevator.convert_pattern import convert_observable_to_pattern, fix_pattern, clear_pattern_mapping, interatively_resolve_placeholder_refs
+from elevator.convert_pattern import convert_indicator_to_pattern, convert_observable_to_pattern, fix_pattern, \
+                                     clear_pattern_mapping, interatively_resolve_placeholder_refs, \
+                                     add_to_pattern_cache, remove_pattern_objects
 from elevator.ids import *
 from elevator.vocab_mappings import *
 from elevator.utils import *
@@ -36,12 +38,13 @@ INFRASTRUCTURE_IN_20 = False
 
 INCIDENT_IN_20 = True
 
+SUB_INDICATOR_IDS = []
+
 # collect kill chains
 
 KILL_CHAINS_PHASES = {}
 
 OBSERVABLE_MAPPING = {}
-
 
 def process_kill_chain(kc):
     for kcp in kc.kill_chain_phases:
@@ -740,6 +743,7 @@ def negate_indicator(indicator):
 
 
 def convert_indicator(indicator, bundle_instance, parent_created_by_ref):
+    global OBSERVABLE_TO_PATTERN_MAPPING, SUB_INDICATOR_IDS
     indicator_instance = create_basic_object("indicator", indicator)
     process_description_and_short_description(indicator_instance, indicator)
     convert_controlled_vocabs_to_open_vocabs(indicator_instance, "labels", indicator.indicator_types,
@@ -769,14 +773,24 @@ def convert_indicator(indicator, bundle_instance, parent_created_by_ref):
     if hasattr(indicator, "confidence"):
         add_confidence_property_to_description(indicator_instance, indicator.confidence)
     # TODO: sightings
+    if indicator.observable and indicator.composite_indicator_expression:
+        error("Indicator {id} has an observable and composite_indictor_expression which is illegal".format(id=indicator.id_))
     if indicator.observable is not None:
         indicator_instance["pattern"] = \
             ("NOT (" if negate_indicator(indicator) else "") + \
             convert_observable_to_pattern(indicator.observable, bundle_instance, OBSERVABLE_MAPPING) + \
             (")" if negate_indicator(indicator) else "")
-        indicator_instance["pattern_lang"] = "stix"
+        add_to_pattern_cache(indicator.id_, indicator_instance["pattern"])
     if indicator.composite_indicator_expression is not None:
-        warn("Composite indicator expressions are not handled - {id}".format(id=indicator.id_))
+        expression = ""
+        for ind in indicator.composite_indicator_expression.indicator:
+            ind_expression =  \
+                ("NOT (" if ind.negate else "") + \
+                convert_indicator_to_pattern(ind, bundle_instance, OBSERVABLE_MAPPING) + \
+                  (")" if ind.negate else "")
+            expression += (" " + indicator.composite_indicator_expression.operator + " " if expression != "" else "") + ind_expression
+        indicator_instance["pattern"] = expression
+        #add_to_pattern_cache(indicator.id_, indicator_instance["pattern"])
     if "pattern" not in indicator_instance:
         # STIX doesn't handle multiple patterns for indicators
         convert_test_mechanism(indicator, indicator_instance)
@@ -1270,6 +1284,9 @@ def finalize_bundle(bundle_instance):
             if "pattern" in ind:
                 ind["pattern"] = fix_pattern(ind["pattern"])
 
+    # do before empty items are deleted
+    remove_pattern_objects(bundle_instance)
+
     for entry in iterpath(bundle_instance):
         path, value = entry
         last_field = path[-1]
@@ -1294,8 +1311,13 @@ def finalize_bundle(bundle_instance):
             elif reference_needs_fixing(value) and not exists_id_key(value):
                 warn("1.X ID: {0} was not mapped to 2.0 ID.".format(value))
 
+
+
     for item in to_remove:
         operation_on_path(bundle_instance, item, "", op=2)
+
+
+
 
 
 def get_identity_from_package(information_source, bundle_instance):
