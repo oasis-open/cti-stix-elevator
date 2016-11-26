@@ -10,7 +10,6 @@
             "modified": "2016-11-01T14:26:28.380460Z",
             "name": "Malicious site hosting downloader",
             "pattern": "url:value = 'http://x4z9arb.cn/4712'",
-            "pattern_lang": "stix",
             "type": "indicator",
             "valid_from": "2016-11-01T14:26:28.380573Z",
             "version": 1

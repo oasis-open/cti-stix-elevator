@@ -11,7 +11,6 @@
             "modified": "2014-10-31T15:52:13.127931Z",
             "name": "Malicious E-mail",
             "pattern": "email-message:subject MATCHES  /^[IMPORTANT] Please Review Before/",
-            "pattern_lang": "stix",
             "type": "indicator",
             "valid_from": "2014-10-31T15:52:13.127931Z",
             "version": 1
@@ -26,7 +25,6 @@
             "modified": "2014-10-31T15:52:13.126999Z",
             "name": "Malicious E-mail Subject Line",
             "pattern": "email-message:subject MATCHES  /^[IMPORTANT] Please Review Before/",
-            "pattern_lang": "stix",
             "type": "indicator",
             "valid_from": "2014-10-31T15:52:13.126999Z",
             "version": 1
@@ -40,7 +38,6 @@
             ],
             "modified": "2014-10-31T15:52:13.127668Z",
             "name": "Malicious E-mail Attachment",
-            "pattern_lang": "stix",
             "type": "indicator",
             "valid_from": "2014-10-31T15:52:13.127668Z",
             "version": 1
