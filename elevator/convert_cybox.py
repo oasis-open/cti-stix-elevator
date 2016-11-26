@@ -220,6 +220,9 @@ def convert_network_connection(conn):
 
 
 def convert_cybox_object(obj):
+    # TODO:  should related objects be handled on a case-by-case basis or just ignored
+    if obj.related_objects:
+       warn("Related objects of cyber observables for {id} are not handled yet".format(id=obj.id_))
     prop = obj.properties
     objs = {}
     if isinstance(prop, Address):
