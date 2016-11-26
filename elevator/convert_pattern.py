@@ -14,17 +14,22 @@ from cybox.objects.archive_file_object import ArchiveFile
 
 from elevator.utils import *
 from elevator.vocab_mappings import *
+from elevator.ids import *
 
-OBSERVABLE_TO_PATTERN_MAPPING = {}
+PATTERN_CACHE = {}
+
+KEEP_OBSERVABLE_DATA_USED_IN_PATTERNS = False
+
+KEEP_INDICATORS_USED_IN_COMPOSITE_INDICATOR_EXPRESSION = True
 
 
 def clear_pattern_mapping():
-    global OBSERVABLE_TO_PATTERN_MAPPING
-    OBSERVABLE_TO_PATTERN_MAPPING = {}
+    global PATTERN_CACHE
+    PATTERN_CACHE = {}
 
-
-KEEP_OBSERVABLE_DATA = False
-
+def add_to_pattern_cache(key, pattern):
+    global PATTERN_CACHE
+    PATTERN_CACHE[key] = pattern
 
 # simulate dynamic variable environment
 
@@ -564,8 +569,9 @@ def convert_object_to_pattern(obj):
         warn("{0} cannot be converted to a pattern, yet.".format(str(obj.properties)))
         return "'term not converted'"
     if prop.custom_properties is not None:
-        expression += (" AND " if expression != "" else "") + convert_custom_properties(prop.custom_properties,
-                                                                                        convert_cybox_class_name_to_object_path_root_name(prop))
+        expression += (" AND " if expression != "" else "") + \
+                      convert_custom_properties(prop.custom_properties,
+                                                convert_cybox_class_name_to_object_path_root_name(prop))
     return expression
 
 
@@ -575,10 +581,10 @@ def match_1x_id_with_20_id(id_1x, id_20):
     return id_1x_split[1] == id_20_split[1]
 
 
-def find_observable_data(idref, obserable_data):
-    for obs in obserable_data:
+def find_definition(idref, sdos):
+    for obs in sdos:
         if match_1x_id_with_20_id(idref, obs["id"]):
-            info("Found observed_data for {0}".format(idref))
+            info("Found definition for {0}".format(idref))
             return obs
     # warn (idref + " cannot be resolved")
     return None
@@ -599,27 +605,25 @@ def convert_observable_to_pattern(obs, bundle_instance, observable_mapping):
 
 
 def convert_observable_to_pattern_without_negate(obs, bundle_instance, id_to_observable_mapping):
-    global OBSERVABLE_TO_PATTERN_MAPPING
+    global PATTERN_CACHE
     if obs.observable_composition is not None:
         pattern = convert_observable_composition_to_pattern(obs.observable_composition,
                                                             bundle_instance,
                                                             id_to_observable_mapping)
         if pattern and obs.id_:
-            OBSERVABLE_TO_PATTERN_MAPPING[obs.id_] = pattern
+            add_to_pattern_cache(obs.id_, pattern)
         return pattern
     elif obs.object_ is not None:
         pattern = convert_object_to_pattern(obs.object_)
-        OBSERVABLE_TO_PATTERN_MAPPING[obs.id_] = pattern
+        add_to_pattern_cache(obs.id_, pattern)
         return pattern
     elif obs.idref is not None:
-        if obs.idref in OBSERVABLE_TO_PATTERN_MAPPING:
-            return OBSERVABLE_TO_PATTERN_MAPPING[obs.idref]
+        if obs.idref in PATTERN_CACHE:
+            return PATTERN_CACHE[obs.idref]
         else:
             # resolve now if possible, and remove from observed_data
-            observable_data_instance = find_observable_data(obs.idref, bundle_instance["observed_data"])
+            observable_data_instance = find_definition(obs.idref, bundle_instance["observed_data"])
             if observable_data_instance is not None:
-                if not KEEP_OBSERVABLE_DATA:
-                    bundle_instance["observed_data"].remove(observable_data_instance)
                     # TODO: remove from the report's object_refs
                 if obs.idref in id_to_observable_mapping:
                     return convert_observable_to_pattern(id_to_observable_mapping[obs.idref],
@@ -630,34 +634,116 @@ def convert_observable_to_pattern_without_negate(obs, bundle_instance, id_to_obs
 
 # patterns can contain idrefs which might need to be resolved because the order in which the ids and idrefs appear
 def interatively_resolve_placeholder_refs():
-    global OBSERVABLE_TO_PATTERN_MAPPING
-    if not OBSERVABLE_TO_PATTERN_MAPPING:
+    global PATTERN_CACHE
+    if not PATTERN_CACHE:
         return
     done = False
     while not done:
         # collect all of the fully resolved idrefs
         fully_resolved_idrefs = []
-        for idref, expr in OBSERVABLE_TO_PATTERN_MAPPING.items():
+        for idref, expr in PATTERN_CACHE.items():
             if expr.find("PLACEHOLDER:") == -1:
                 # no PLACEHOLDER idrefs found in the expr, means this idref is fully resolved
                 fully_resolved_idrefs.append(idref)
         # replace only fully resolved idrefs
         change_made = False
         for fr_idref in fully_resolved_idrefs:
-            for idref, expr in OBSERVABLE_TO_PATTERN_MAPPING.items():
+            for idref, expr in PATTERN_CACHE.items():
                 if expr.find("PLACEHOLDER:" + fr_idref) != -1:
                     # a change will be made, which could introduce a new placeholder id into the expr
                     change_made = True
-                    OBSERVABLE_TO_PATTERN_MAPPING[idref] = \
-                        expr.replace("PLACEHOLDER:" + fr_idref, OBSERVABLE_TO_PATTERN_MAPPING[fr_idref])
+                    PATTERN_CACHE[idref] = \
+                        expr.replace("PLACEHOLDER:" + fr_idref, PATTERN_CACHE[fr_idref])
         done = not change_made
 
 
+def is_placeholder(thing):
+    return thing.index("PLACEHOLDER") != -1
+
+
 def fix_pattern(pattern):
-    if not OBSERVABLE_TO_PATTERN_MAPPING == {}:
-        # info(str(OBSERVABLE_TO_PATTERN_MAPPING))
+    if not PATTERN_CACHE == {}:
+        # info(str(PATTERN_CACHE))
         # info("pattern is: " +  pattern)
-        for idref in OBSERVABLE_TO_PATTERN_MAPPING.keys():
-            # TODO: this can probably be done in place
-            pattern = pattern.replace("PLACEHOLDER:" + idref, OBSERVABLE_TO_PATTERN_MAPPING[idref])
+        if pattern.find("PLACEHOLDER:") != -1:
+            for idref in PATTERN_CACHE.keys():
+                pattern = pattern.replace("PLACEHOLDER:" + idref, PATTERN_CACHE[idref])
     return pattern
+
+
+def convert_indicator_to_pattern(ind, bundle_instance, observable_mapping):
+    try:
+        set_dynamic_variable("current_indicator", ind)
+        return ("NOT (" if ind.negate else "") + \
+                convert_indicator_to_pattern_without_negate(ind, bundle_instance, observable_mapping) + \
+                (")" if ind.negate else "")
+    finally:
+        pop_dynamic_variable("current_indicator")
+
+
+def convert_indicator_to_pattern_without_negate(ind, bundle_instance, id_to_observable_mapping):
+    global PATTERN_CACHE
+    if ind.composite_indicator_expression is not None:
+        pattern = convert_indicator_composition_to_pattern(ind.composite_indicator_expression,
+                                                           bundle_instance,
+                                                           id_to_observable_mapping)
+        if pattern and ind.id_:
+            add_to_pattern_cache(ind.id_, pattern)
+        return pattern
+    elif ind.observable is not None:
+        pattern = convert_observable_to_pattern(ind.observable)
+        add_to_pattern_cache(ind.id_, pattern)
+        return pattern
+    elif ind.idref is not None:
+        if ind.idref in PATTERN_CACHE:
+            return PATTERN_CACHE[ind.idref]
+        else:
+            # resolve now if possible, and remove from observed_data
+            indicator_data_instance = find_definition(ind.idref, bundle_instance["indicators"])
+            if indicator_data_instance is not None:
+                indicator_data_instance["used_in_pattern"] = True
+                # TODO: remove from the report's object_refs
+                if ind.idref in id_to_observable_mapping:
+                    return convert_observable_to_pattern(id_to_observable_mapping[ind.idref],
+                                                         bundle_instance,
+                                                         id_to_observable_mapping)
+            return "PLACEHOLDER:" + ind.idref
+
+
+def convert_indicator_composition_to_pattern(ind_comp, bundle_instance, observable_mapping):
+    expression = []
+    for ind in ind_comp.indicators:
+        term = convert_indicator_to_pattern(ind, bundle_instance, observable_mapping)
+        if term:
+            expression.append(term)
+        else:
+            warn("No term was yielded for {0}".format((ind.id_ if ind.id_ else ind.idref)))
+    if expression:
+        operator_as_string = " " + ind_comp.operator + " "
+        return "(" + operator_as_string.join(expression) + ")"
+    else:
+        return ""
+
+
+def remove_pattern_objects(bundle_instance):
+    all_new_ids_with_patterns = []
+    for old_id in PATTERN_CACHE.keys():
+        new_id = get_id_value(old_id)
+        if new_id and len(new_id) == 1:
+            all_new_ids_with_patterns.append(new_id[0])
+
+    print(all_new_ids_with_patterns)
+    if not KEEP_OBSERVABLE_DATA_USED_IN_PATTERNS and "observed_data" in bundle_instance:
+        remaining_observed_data = []
+        for obs in bundle_instance["observed_data"]:
+            if obs["id"] not in all_new_ids_with_patterns:
+                remaining_observed_data.append(obs)
+        bundle_instance["observed_data"] = remaining_observed_data
+
+ # TODO: only remove indicators that were involved ONLY as sub-indicators within composite indicator expressions
+ #   if not KEEP_INDICATORS_USED_IN_COMPOSITE_INDICATOR_EXPRESSION and "indicators" in bundle_instance:
+ #       remaining_indicators = []
+ #       for ind in bundle_instance["indicators"]:
+ #           if ind["id"] not in all_new_ids_with_patterns:
+ #               remaining_indicators.append(ind)
+ #       bundle_instance["indicators"] = remaining_indicators
