@@ -164,24 +164,22 @@ def create_term(lhs, condition, rhs):
         return lhs + " " + convert_condition(condition) + " '" + convert_to_str(rhs) + "'"
 
 
-def add_comparison_expression(prop, object_path, first):
+def add_comparison_expression(prop, object_path):
     if prop is not None:
         if hasattr(prop, "condition"):
             cond = prop.condition
         else:
             warn("No condition given - assume ==")
             cond = None
-        comparison_expression = create_term(object_path, cond, prop.value)
-        return (" AND " if first else "") + comparison_expression
+        return create_term(object_path, cond, prop.value)
     return ""
 
 
 def convert_custom_properties(cps, object_type_name):
-    expression = ""
+    expressions = []
     for cp in cps.property_:
-        expression += (" AND " if expression != "" else "") + \
-                      create_term(object_type_name + ":x_" + cp.name, cp.condition, cp.value)
-    return expression
+        expressions.append(create_term(object_type_name + ":x_" + cp.name, cp.condition, cp.value))
+    return " AND ".join(expressions)
 
 
 def convert_address_to_pattern(add):
@@ -230,23 +228,22 @@ def create_terms_from_prop_list(prop_list, obj, object_path):
         prop_1x = prop_list[0]
         if hasattr(obj, cannonicalize_prop_name(prop_1x)):
             if multi_valued_property(prop_1x):
-                prop_expr = ""
+                prop_exprs = []
                 for c in getattr(obj, cannonicalize_prop_name(prop_1x)):
-                    prop_expr += add_comparison_expression(c, object_path, (prop_expr != ""), "OR")
-                return prop_expr
+                    prop_exprs.append(add_comparison_expression(c, object_path))
+                return " OR ".join(prop_exprs)
             else:
-                return add_comparison_expression(getattr(obj, cannonicalize_prop_name(prop_1x)), object_path, False)
+                return add_comparison_expression(getattr(obj, cannonicalize_prop_name(prop_1x)), object_path)
     else:
         prop_1x, rest_of_prop_list = prop_list[0], prop_list[1:]
         if hasattr(obj, cannonicalize_prop_name(prop_1x)):
             if multi_valued_property(prop_1x):
-                prop_expr = ""
+                prop_exprs = []
                 values = getattr(obj, cannonicalize_prop_name(prop_1x))
                 if values:
                     for c in values:
-                        prop_expr += (" OR " if prop_expr != "" else "") + \
-                                     create_terms_from_prop_list(rest_of_prop_list, c, object_path)
-                return prop_expr
+                        prop_exprs.append(create_terms_from_prop_list(rest_of_prop_list, c, object_path))
+                return " OR ".join(prop_exprs)
             else:
                 return create_terms_from_prop_list(rest_of_prop_list,
                                                    getattr(obj, cannonicalize_prop_name(prop_1x)),
@@ -254,27 +251,27 @@ def create_terms_from_prop_list(prop_list, obj, object_path):
 
 
 def convert_email_header_to_pattern(head, properties):
-    header_expression = ""
+    header_expressions = []
     for prop_spec in properties:
         object_path = prop_spec[0]
         prop_1x_list = prop_spec[1]
         if hasattr(head, cannonicalize_prop_name(prop_1x_list[0])):
             term = create_terms_from_prop_list(prop_1x_list, head, object_path)
             if term:
-                header_expression += (" AND " if header_expression != "" else "") + term
-    return header_expression
+                header_expressions.append(term)
+    return " AND ".join(header_expressions)
 
 
 def convert_email_message_to_pattern(mess):
-    expression = ""
+    expressions = []
     if mess.header is not None:
-        expression += convert_email_header_to_pattern(mess.header, _EMAIL_HEADER_PROPERTIES)
+        expressions.append(convert_email_header_to_pattern(mess.header, _EMAIL_HEADER_PROPERTIES))
         add_headers = convert_email_header_to_pattern(mess.header, _EMAIL_ADDITIONAL_HEADERS_PROPERTIES)
         if add_headers:
-            expression += (" AND " if expression != "" else "") + add_headers
+            expressions.append(add_headers)
     if mess.attachments is not None:
         warn("Email attachments not handled yet")
-    return expression
+    return " AND ".join(expressions)
 
 
 _PE_FILE_HEADER_PROPERTIES = \
@@ -296,106 +293,96 @@ _ARCHIVE_FILE_PROPERTIES = [["comment", "file:extended_properties.archive_file.c
 
 
 def convert_windows_executable_file_to_pattern(file):
-    expression = ""
+    expressions = []
     if file.headers:
         file_header = file.headers.file_header
         if file_header:
-            file_header_expression = ""
+            file_header_expressions = []
             for prop_spec in _PE_FILE_HEADER_PROPERTIES:
                 prop_1x = prop_spec[0]
                 object_path = prop_spec[1]
-                if hasattr(file_header, prop_1x):
-                    file_header_expression += add_comparison_expression(getattr(file_header, prop_1x),
-                                                                        object_path,
-                                                                        (file_header_expression != ""))
+                if hasattr(file_header, prop_1x) and getattr(file_header, prop_1x):
+                    file_header_expressions.append(add_comparison_expression(getattr(file_header, prop_1x),
+                                                                             object_path))
             if file_header.hashes is not None:
                 hash_expression = convert_hashes_to_pattern(file_header.hashes)
                 if hash_expression:
-                    file_header_expression += (" AND " if file_header_expression != "" else "") + hash_expression
-            expression += (" AND " if expression != "" else "") + add_parens_if_needed(file_header_expression)
+                    file_header_expressions.append(hash_expression)
+            if file_header_expressions:
+                expressions.append(add_parens_if_needed(" AND ".join(file_header_expressions)))
         if file.headers.optional_header:
             warn("file:extended_properties:windows_pebinary_ext:optional_header is not implemented yet")
 
     if file.type_:
-        expression += (" AND " if expression != "" else "") +\
-                      create_term("file:extended_properties.windows_pebinary_ext.pe_type",
-                                  file.type_.condition,
-                                  map_vocabs_to_label(file.type_.value, WINDOWS_PEBINARY))
+        expressions.append(create_term("file:extended_properties.windows_pebinary_ext.pe_type",
+                                       file.type_.condition,
+                                       map_vocabs_to_label(file.type_.value, WINDOWS_PEBINARY)))
     sections = file.sections
     if sections:
-        sections_expression = ""
+        sections_expressions = []
         # should order matter in patterns???
         for s in sections:
-            section_expression = ""
+            section_expressions = []
             if s.section_header:
                 for prop_spec in _PE_SECTION_HEADER_PROPERTIES:
                     prop_1x = prop_spec[0]
                     object_path = prop_spec[1]
-                    if hasattr(s.section_header, prop_1x):
-                        section_expression += \
-                            add_comparison_expression(getattr(s.section_header, prop_1x),
-                                                      object_path,
-                                                      (section_expression != ""))
+                    if hasattr(s.section_header, prop_1x) and getattr(s.section_header, prop_1x):
+                        section_expressions.append(add_comparison_expression(getattr(s.section_header, prop_1x),
+                                                                             object_path))
             if s.entropy:
-                section_expression += (" AND " if section_expression != "" else "") + \
-                                      create_term("file:extended_properties.windows_pebinary_ext.section[*].entropy",
-                                                  s.entropy.condition,
-                                                  s.entropy.value)
+                section_expressions.append(create_term("file:extended_properties.windows_pebinary_ext.section[*].entropy",
+                                                       s.entropy.condition,
+                                                       s.entropy.value))
             if s.data_hashes:
-                hash_expression1 = convert_hashes_to_pattern(s.data_hashes)
+                section_expressions.append(convert_hashes_to_pattern(s.data_hashes))
             hash_expression = ""
             if s.header_hashes:
-                hash_expression += (" AND " if hash_expression1 != hash_expression1 else "") + \
-                                        convert_hashes_to_pattern(s.header_hashes)
-            if hash_expression:
-                section_expression += (" AND " if section_expression != "" else "") + \
-                                      add_parens_if_needed(hash_expression)
-            sections_expression += (" AND " if sections_expression != "" else "") + section_expression
-        expression += (" AND " if expression != "" else "") + add_parens_if_needed(sections_expression)
+                section_expressions.append(convert_hashes_to_pattern(s.header_hashes))
+            sections_expressions.append(" AND ".join(section_expressions))
+        expressions.append(add_parens_if_needed(" AND ".join(sections_expressions)))
     if file.exports:
         warn("The exports property of WinExecutableFileObj is not part of Cybox 3.0")
     if file.imports:
         warn("The imports property of WinExecutableFileObj is not part of Cybox 3.0")
-    return expression
+    return " AND ".join(expressions)
 
 
 def convert_archive_file_to_pattern(file):
-    expression = ""
+    and_expressions = []
     for prop_spec in _ARCHIVE_FILE_PROPERTIES:
         prop_1x = prop_spec[0]
         object_path = prop_spec[1]
         if hasattr(file, prop_1x):
-            expression += add_comparison_expression(getattr(file, prop_1x), object_path, (expression != ""))
-    return expression
+            and_expressions.append(add_comparison_expression(getattr(file, prop_1x), object_path))
+    return " AND ".join(and_expressions)
 
 
 def convert_hashes_to_pattern(hashes):
-    hash_expression = ""
+    hash_expressions = []
     for h in hashes:
         if getattr(h, "simple_hash_value"):
             hash_value = h.simple_hash_value
         else:
             hash_value = h.fuzzy_hash_value
-        hash_expression += ((" OR " if not hash_expression == "" else "") +
-                           create_term("file:hashes" + ":" + str(h.type_).lower(),
-                                       hash_value.condition,
-                                       hash_value.value))
-    return hash_expression
+        hash_expressions.append(create_term("file:hashes" + ":" + str(h.type_).lower(),
+                                            hash_value.condition,
+                                            hash_value.value))
+    return " OR ".join(hash_expressions)
 
 
 def convert_file_name_and_path_to_pattern(file):
-    file_name_path_expression = ""
+    file_name_path_expressions = []
     if file.file_name:
-        file_name_path_expression += create_term("file:file_name", file.file_name.condition, file.file_name.value)
+        file_name_path_expressions.append(create_term("file:file_name", file.file_name.condition, file.file_name.value))
     if file.file_path:
         if file.device_path:
-            file_name_path_expression += (" AND " if file_name_path_expression != "" else "") + \
-                                            create_term("file:parent_directory_ref.name",
-                                                        file.file_path.condition,
-                                                        file.device_path.value + file.file_path.value)
+            file_name_path_expressions.append(create_term("file:parent_directory_ref.name",
+                                                          file.file_path.condition,
+                                                          file.device_path.value + file.file_path.value))
     if file.full_path:
         warn("1.x full file paths are not processed, yet")
-    return file_name_path_expression
+    return " AND ".join(file_name_path_expressions)
 
 
 _FILE_PROPERTIES = [["size_in_bytes", "file:size"],
@@ -408,28 +395,27 @@ _FILE_PROPERTIES = [["size_in_bytes", "file:size"],
 
 
 def convert_file_to_pattern(file):
-    expression = ""
+    expressions = []
     if file.hashes is not None:
         hash_expression = convert_hashes_to_pattern(file.hashes)
         if hash_expression:
-            expression += hash_expression
+            expressions.append(hash_expression)
     file_name_and_path_expression = convert_file_name_and_path_to_pattern(file)
     if file_name_and_path_expression:
-        expression += (" AND " if expression != "" else "") + file_name_and_path_expression
-
+        expressions.append(file_name_and_path_expression)
+    properties_expressions = []
     for prop_spec in _FILE_PROPERTIES:
         prop_1x = prop_spec[0]
         object_path = prop_spec[1]
-        if hasattr(file, prop_1x):
-            expression += add_comparison_expression(getattr(file, prop_1x), object_path, (expression != ""))
+        if hasattr(file, prop_1x) and getattr(file, prop_1x):
+            properties_expressions.append(add_comparison_expression(getattr(file, prop_1x), object_path))
+    if properties_expressions:
+        expressions.append(" AND ".join(properties_expressions))
     if isinstance(file, WinExecutableFile):
-        expression += (" AND " if expression != "" else "") + \
-                        add_parens_if_needed(convert_windows_executable_file_to_pattern(file))
+        expressions.append(add_parens_if_needed(convert_windows_executable_file_to_pattern(file)))
     if isinstance(file, ArchiveFile):
-        expression += (" AND " if expression != "" else "") + \
-                        add_parens_if_needed(convert_archive_file_to_pattern(file))
-
-    return expression
+        expressions.append(add_parens_if_needed(convert_archive_file_to_pattern(file)))
+    return " AND ".join(expressions)
 
 _REGISTRY_KEY_VALUES_PROPERTIES = [["data", "win-registry-key:values[*].data"],
                                    ["name", "win-registry-key:values[*].name"],
@@ -450,33 +436,31 @@ def convert_registry_key_to_pattern(reg_key):
     if reg_key.values:
         values_expression = ""
         for v in reg_key.values:
-            value_expression = ""
+            value_expression = []
             for prop_spec in _REGISTRY_KEY_VALUES_PROPERTIES:
                 prop_1x = prop_spec[0]
                 object_path = prop_spec[1]
-                if hasattr(v, prop_1x):
-                    value_expression += add_comparison_expression(getattr(v, prop_1x),
-                                                                  object_path,
-                                                                  (value_expression != ""))
-            values_expression += (" OR " if values_expression != "" else "") + value_expression
+                if hasattr(v, prop_1x) and getattr(v, prop_1x):
+                    value_expression.append(add_comparison_expression(getattr(v, prop_1x),
+                                                                      object_path))
+            values_expression += " OR ".join(value_expression)
         expression += (" AND " if expression != "" else "") + add_parens_if_needed(values_expression)
     return expression
 
 
 def convert_process_to_pattern(process):
-    expression = ""
+    expressions = []
     if process.name:
-        expression += (" AND " if expression != "" else "") + \
-                      create_term("process:name", process.name.condition, process.name.value)
+        expressions.append(create_term("process:name", process.name.condition, process.name.value))
     if isinstance(process, WinProcess):
         win_process_expression = convert_windows_process_to_pattern(process)
         if win_process_expression:
-            expression += (" AND " if expression != "" else "") + add_parens_if_needed(win_process_expression)
+            expressions.append(add_parens_if_needed(win_process_expression))
         if isinstance(process, WinService):
             service_expression = convert_windows_service_to_pattern(process)
             if service_expression:
-                expression += (" AND " if expression != "" else "") + add_parens_if_needed(service_expression)
-    return expression
+                expressions.append(add_parens_if_needed(service_expression))
+    return " AND ".join(expressions)
 
 
 def convert_windows_process_to_pattern(process):
@@ -496,23 +480,23 @@ _WINDOWS_PROCESS_PROPERTIES = \
 
 
 def convert_windows_service_to_pattern(service):
-    expression = ""
+    expressions = []
     for prop_spec in _WINDOWS_PROCESS_PROPERTIES:
         prop_1x = prop_spec[0]
         object_path = prop_spec[1]
-        if hasattr(service, prop_1x):
-            expression += add_comparison_expression(getattr(service, prop_1x), object_path, (expression != ""))
+        if hasattr(service, prop_1x) and getattr(service, prop_1x):
+            expressions.append(add_comparison_expression(getattr(service, prop_1x), object_path))
     if hasattr(service, "description_list") and service.description_list:
-        description_expression = ""
+        description_expressions = []
         for d in service.description_list:
-            description_expression += (" OR " if not description_expression == "" else "") + \
-                           create_term("process:extension_data.windows_service_ext.descriptions[*]",
-                                       d.condition,
-                                       d.value)
-        expression += (" AND " if expression != "" else "") + description_expression
+            description_expressions.append(create_term("process:extension_data.windows_service_ext.descriptions[*]",
+                                                       d.condition,
+                                                       d.value))
+        if description_expressions:
+            expressions.append(" OR ".join(description_expressions))
     if hasattr(service, "service_dll") and service.service_dll:
         warn("WinServiceObject.service_dll cannot be converted to a pattern, yet.")
-    return expression
+    return " AND ".join(expressions)
 
 ####################################################################################################################
 
