@@ -722,8 +722,14 @@ def convert_kill_chains(kill_chain_phases, sdo_instance):
             sdo_instance["kill_chain_phases"] = kill_chain_phases_20
 
 
+_ALLOW_YARA_AND_SNORT_PATTENS = False
+
+
 def convert_test_mechanism(indicator, indicator_instance):
     if indicator.test_mechanisms is not None:
+        if not _ALLOW_YARA_AND_SNORT_PATTENS:
+            warn("YARA or SNORT patterns on {id} are not supported in STIX 2.0".format(id=indicator_instance["id"]))
+            return
         if hasattr(indicator_instance, "pattern"):
             # TODO: maybe put in description
             warn("Only one type pattern can be specified in {id} - using cybox".format(id=indicator_instance["id"]))
@@ -734,6 +740,7 @@ def convert_test_mechanism(indicator, indicator_instance):
                     warn("Only one alternative test mechanism allowed for {0} in STIX 2.0 - used first one, which was {1}".format(indicator_instance["id"], indicator_instance["pattern_lang"]))
                 else:
                     if isinstance(tm, YaraTestMechanism):
+
                         indicator_instance["pattern"] = convert_to_str(tm.rule.value)
                         indicator_instance["pattern_lang"] = "yara"
                     elif isinstance(tm, SnortTestMechanism):

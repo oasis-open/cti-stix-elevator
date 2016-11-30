@@ -548,7 +548,7 @@ def convert_network_connection_to_pattern(conn):
     return "'term not converted'"
 
 
-def convert_object_to_pattern(obj):
+def convert_object_to_pattern(obj, obs_id):
     prop = obj.properties
 
     if isinstance(prop, Address):
@@ -570,7 +570,7 @@ def convert_object_to_pattern(obj):
     elif isinstance(prop, NetworkConnection):
         expression = convert_network_connection_to_pattern(prop)
     else:
-        warn("{0} cannot be converted to a pattern, yet.".format(str(obj.properties)))
+        warn("{0} found in {1} cannot be converted to a pattern, yet.".format(str(obj.properties), obs_id))
         return "'term not converted'"
     if prop.custom_properties is not None:
         expression += (" AND " if expression != "" else "") + \
@@ -618,7 +618,7 @@ def convert_observable_to_pattern_without_negate(obs, bundle_instance, id_to_obs
             add_to_pattern_cache(obs.id_, pattern)
         return pattern
     elif obs.object_ is not None:
-        pattern = convert_object_to_pattern(obs.object_)
+        pattern = convert_object_to_pattern(obs.object_, obs.id_)
         add_to_pattern_cache(obs.id_, pattern)
         return pattern
     elif obs.idref is not None:
