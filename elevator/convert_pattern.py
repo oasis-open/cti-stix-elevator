@@ -27,6 +27,7 @@ def clear_pattern_mapping():
     global PATTERN_CACHE
     PATTERN_CACHE = {}
 
+
 def add_to_pattern_cache(key, pattern):
     global PATTERN_CACHE
     PATTERN_CACHE[key] = pattern
@@ -66,14 +67,17 @@ def pop_dynamic_variable(var):
         _DYNAMIC_SCOPING_ENV[var].pop
 
 
-_CLASS_NAME_MAPPING = { "File": "file",
-                        "URI": "uri",
-                        "EmailMessage": "email-message",
-                        "WinRegistryKey": "win-registry-key",
-                        "Process": "process",
-                        "DomainName": "domain_name",
-                        "Mutex": "mutex"}
+_CLASS_NAME_MAPPING = {"File": "file",
+                       "URI": "uri",
+                       "EmailMessage": "email-message",
+                       "WinRegistryKey": "win-registry-key",
+                       "Process": "process",
+                       "DomainName": "domain_name",
+                       "Mutex": "mutex"}
+
+
 # address, network_connection
+
 
 def convert_cybox_class_name_to_object_path_root_name(instance):
     class_name = instance.__class__.__name__
@@ -372,10 +376,10 @@ def convert_hashes_to_pattern(hashes):
             hash_value = h.simple_hash_value
         else:
             hash_value = h.fuzzy_hash_value
-        hash_expression += (" OR " if not hash_expression == "" else "") + \
+        hash_expression += ((" OR " if not hash_expression == "" else "") +
                            create_term("file:hashes" + ":" + str(h.type_).lower(),
                                        hash_value.condition,
-                                       hash_value.value)
+                                       hash_value.value))
     return hash_expression
 
 
@@ -597,9 +601,9 @@ def negate_expression(obs):
 def convert_observable_to_pattern(obs, bundle_instance, observable_mapping):
     try:
         set_dynamic_variable("current_observable", obs)
-        return ("NOT (" if negate_expression(obs) else "") + \
-                convert_observable_to_pattern_without_negate(obs, bundle_instance, observable_mapping) + \
-                (")" if negate_expression(obs) else "")
+        return (("NOT (" if negate_expression(obs) else "") +
+                convert_observable_to_pattern_without_negate(obs, bundle_instance, observable_mapping) +
+                (")" if negate_expression(obs) else ""))
     finally:
         pop_dynamic_variable("current_observable")
 
@@ -674,9 +678,9 @@ def fix_pattern(pattern):
 def convert_indicator_to_pattern(ind, bundle_instance, observable_mapping):
     try:
         set_dynamic_variable("current_indicator", ind)
-        return ("NOT (" if ind.negate else "") + \
-                convert_indicator_to_pattern_without_negate(ind, bundle_instance, observable_mapping) + \
-                (")" if ind.negate else "")
+        return (("NOT (" if ind.negate else "") +
+                convert_indicator_to_pattern_without_negate(ind, bundle_instance, observable_mapping) +
+                (")" if ind.negate else ""))
     finally:
         pop_dynamic_variable("current_indicator")
 
