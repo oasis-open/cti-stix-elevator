@@ -672,7 +672,7 @@ def convert_incident(incident, bundle_instance, parent_created_by_ref):
         handle_relationship_from_refs(incident.related_observables, incident_instance["id"], bundle_instance, "part-of",
                                       incident.timestamp, incident_created_by_ref)
     if incident.leveraged_ttps is not None:
-        warn("Using related-to")
+        warn("Using related-to for the leveraged TTPs of {id}".format(id=incident.id_))
         handle_relationship_to_refs(incident.leveraged_ttps, incident_instance["id"], bundle_instance, "related-to",
                                     incident.timestamp, incident_created_by_ref)
     # TODO: add reporter to description
@@ -683,7 +683,7 @@ def convert_incident(incident, bundle_instance, parent_created_by_ref):
     # TODO: add impact_assessment to description
     add_string_property_to_description(incident_instance, "status", incident.status)
     if incident.related_incidents:
-        warn("All related ncidents relationships of {id} are assumed to not represent STIX 1.2 versioning".format(id=incident.id_))
+        warn("All related incidents relationships of {id} are assumed to not represent STIX 1.2 versioning".format(id=incident.id_))
         handle_relationship_to_refs(incident.related_incidents, incident_instance["id"], bundle_instance,
                                     "related-to", incident.timestamp, incident_created_by_ref)
     finish_basic_object(incident.id_, incident_instance, incident)
@@ -798,11 +798,8 @@ def convert_indicator(indicator, bundle_instance, parent_created_by_ref):
         process_information_source(indicator.producer, indicator_instance, bundle_instance, parent_created_by_ref)
     # process information source before any relationships
     if indicator.suggested_coas is not None:
-        warn("Using related-to")
+        warn("Using related-to for the suggested COAs of {id}".format(id=indicator.id_) )
         handle_relationship_to_refs(indicator.suggested_coas, indicator_instance["id"], bundle_instance,
-                                    "related-to", indicator.timestamp, indicator_created_by_ref)
-    if indicator.related_indicators is not None:
-        handle_relationship_to_refs(indicator.related_indicators, indicator_instance["id"], bundle_instance,
                                     "related-to", indicator.timestamp, indicator_created_by_ref)
     if indicator.related_campaigns is not None:
         handle_relationship_to_refs(indicator.related_campaigns, indicator_instance["id"], bundle_instance,
@@ -1283,6 +1280,8 @@ def finalize_bundle(bundle_instance):
         for ind in bundle_instance["indicators"]:
             if "pattern" in ind:
                 ind["pattern"] = fix_pattern(ind["pattern"])
+                if ind["pattern"].find("PLACEHOLDER") != -1:
+                    warn("At least one PLACEHOLDER idref was not resolved in {id}".format(id=ind["id"]))
 
     # do before empty items are deleted
     remove_pattern_objects(bundle_instance)
