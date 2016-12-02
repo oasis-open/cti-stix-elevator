@@ -128,16 +128,17 @@ def convert_condition(condition):
         return "="
 
 
-def create_term_with_regex(lhs, condition, rhs):
+def create_term_with_regex(lhs, condition, rhs, negated):
     if condition == "StartsWith":
-        return lhs + " MATCHES " + " /^" + rhs + "/"
+        pattern = " /^" + rhs + "/"
     elif condition == "EndsWith":
-        return lhs + " MATCHES " + " /" + rhs + "$/"
+        pattern = " /" + rhs + "$/"
     elif condition == "Contains" or condition == "DoesNotContain":
-        return lhs + " MATCHES " + " /" + rhs + "/"
+        pattern = " /" + rhs + "/"
+    return lhs + (" NOT MATCHES " if negated else " MATCHES ") + pattern
 
-
-def create_term_with_range(lhs, condition, rhs):
+def create_term_with_range(lhs, condition, rhs, negated=False):
+    # TODO: handle negated
     if not isinstance(rhs, list) or len(rhs) != 2:
         error("{0} was used, but two values were not provided.".format(condition))
         return "'range term underspecified'"
@@ -152,16 +153,26 @@ def multi_valued_property(object_path):
     return object_path and object_path.find("*") != -1
 
 
-def create_term(lhs, condition, rhs):
-    if condition == "StartsWith" or condition == "EndsWith":
-        return create_term_with_regex(lhs, condition, rhs)
-    elif condition == "InclusiveBetween" or condition == "ExclusiveBetween":
-        return create_term_with_range(lhs, condition, rhs)
+def negate_if_needed(condition, negated):
+    if negated:
+        return "NOT " + condition
     else:
-        if (condition == "Contains" or condition == "DoesNotContain") and not multi_valued_property(lhs):
+        return condition
+
+
+def create_term(lhs, condition, rhs, negated=False):
+    if condition == "StartsWith" or condition == "EndsWith":
+        return create_term_with_regex(lhs, condition, rhs, negated)
+    elif condition == "InclusiveBetween" or condition == "ExclusiveBetween":
+        return create_term_with_range(lhs, condition, rhs, negated)
+    else:
+        if condition == "Contains" and not multi_valued_property(lhs):
             warn("Used MATCHES operator for " + condition)
-            return ("NOT " if condition == "DoesNotContain" else "") + create_term_with_regex(lhs, condition, rhs)
-        return lhs + " " + convert_condition(condition) + " '" + convert_to_str(rhs) + "'"
+            return (create_term_with_regex(lhs, condition, rhs, negated))
+        elif condition == "DoesNotContain":
+            warn("Used MATCHES operator for " + condition)
+            return (create_term_with_regex(lhs, condition, rhs, not negated))
+        return lhs + " " + negate_if_needed(convert_condition(condition), negated) + " '" + convert_to_str(rhs) + "'"
 
 
 def add_comparison_expression(prop, object_path):
@@ -585,9 +596,9 @@ def negate_expression(obs):
 def convert_observable_to_pattern(obs, bundle_instance, observable_mapping):
     try:
         set_dynamic_variable("current_observable", obs)
-        return (("NOT (" if negate_expression(obs) else "") +
-                convert_observable_to_pattern_without_negate(obs, bundle_instance, observable_mapping) +
-                (")" if negate_expression(obs) else ""))
+        if negate_expression(obs):
+            warn("Negation of {obs_id} is not handled yet".format(obs_id=obs.id_))
+        return convert_observable_to_pattern_without_negate(obs, bundle_instance, observable_mapping)
     finally:
         pop_dynamic_variable("current_observable")
 
@@ -662,9 +673,10 @@ def fix_pattern(pattern):
 def convert_indicator_to_pattern(ind, bundle_instance, observable_mapping):
     try:
         set_dynamic_variable("current_indicator", ind)
-        return (("NOT (" if ind.negate else "") +
-                convert_indicator_to_pattern_without_negate(ind, bundle_instance, observable_mapping) +
-                (")" if ind.negate else ""))
+        if ind.negate:
+            warn("Negation of {ind_id} is not handled yet".format(ind_id=ind.id_))
+        return convert_indicator_to_pattern_without_negate(ind, bundle_instance, observable_mapping)
+
     finally:
         pop_dynamic_variable("current_indicator")
 
