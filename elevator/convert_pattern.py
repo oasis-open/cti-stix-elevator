@@ -22,6 +22,47 @@ KEEP_OBSERVABLE_DATA_USED_IN_PATTERNS = False
 
 KEEP_INDICATORS_USED_IN_COMPOSITE_INDICATOR_EXPRESSION = True
 
+def get_root_from_object_path(lhs):
+    path_as_parts = lhs.split(":")
+    return path_as_parts[0]
+
+class ComparisonExpression():
+    def __init__(self, operator, lhs, rhs, negated=False):
+        self.operator = operator
+        self.lhs = lhs
+        self.rhs = rhs
+        self.negated = negated
+        self.root_type = get_root_from_object_path(lhs)
+
+    def to_string(self):
+        return self.lhs + (" NOT" if self.negated else "") + " " + self.operator + " " + self.rhs
+
+class BooleanExpression():
+    def __init__(self, operator, negated=False):
+        self.operator = operator
+        self.operands = []
+        self.negated = negated
+
+    def add_operand(self, operand):
+        self.operands.append(operand)
+
+    def to_string(self):
+        return "(" + (" " + self.operator + " ").join(map(self.to_string, self.operands)) + ")"
+
+
+def createBooleanExpression(operator, operands, negated):
+    exp = BooleanExpression(operator, negated)
+    for arg in operands:
+        if not hasattr(exp, "root_type"):
+            exp.root_type = arg.root_type
+        elif exp.root_type and exp.root_type != arg.root_type:
+            exp.root_type = None
+        exp.add_operand(arg)
+    return exp
+
+
+###################
+
 
 def clear_pattern_mapping():
     global PATTERN_CACHE
@@ -73,7 +114,9 @@ _CLASS_NAME_MAPPING = {"File": "file",
                        "WinRegistryKey": "win-registry-key",
                        "Process": "process",
                        "DomainName": "domain_name",
-                       "Mutex": "mutex"}
+                       "Mutex": "mutex",
+                       "WinExecutableFile": "file:extended_properties.windows_pebinary_ext",
+                       "ArchiveFile": "file:extended_properties.archive_ext"}
 
 
 # address, network_connection
@@ -299,8 +342,8 @@ _PE_SECTION_HEADER_PROPERTIES = [["name", "file:extended_properties.windows_pebi
                                  ["virtual_size", "file:extended_properties.windows_pebinary_ext.section[*].size"]]
 
 
-_ARCHIVE_FILE_PROPERTIES = [["comment", "file:extended_properties.archive_file.comment"],
-                            ["version", "file:extended_properties.archive_file.version"]]
+_ARCHIVE_FILE_PROPERTIES = [["comment", "file:extended_properties.archive_ext.comment"],
+                            ["version", "file:extended_properties.archive_ext.version"]]
 
 
 def convert_windows_executable_file_to_pattern(file):
@@ -423,9 +466,17 @@ def convert_file_to_pattern(file):
     if properties_expressions:
         expressions.append(" AND ".join(properties_expressions))
     if isinstance(file, WinExecutableFile):
-        expressions.append(add_parens_if_needed(convert_windows_executable_file_to_pattern(file)))
+        windows_executable_file_expression = convert_windows_executable_file_to_pattern(file)
+        if windows_executable_file_expression:
+            expressions.append(add_parens_if_needed(windows_executable_file_expression))
+        else:
+            warn("No WinExecutableFile properties found in " + str(file))
     if isinstance(file, ArchiveFile):
-        expressions.append(add_parens_if_needed(convert_archive_file_to_pattern(file)))
+        archive_file_expressions = convert_archive_file_to_pattern(file)
+        if archive_file_expressions:
+            expressions.append(add_parens_if_needed(archive_file_expressions))
+        else:
+            warn("No ArchiveFile properties found in " + str(file))
     return " AND ".join(expressions)
 
 _REGISTRY_KEY_VALUES_PROPERTIES = [["data", "win-registry-key:values[*].data"],
@@ -467,10 +518,14 @@ def convert_process_to_pattern(process):
         win_process_expression = convert_windows_process_to_pattern(process)
         if win_process_expression:
             expressions.append(add_parens_if_needed(win_process_expression))
+        else:
+            warn("No WinProcess properties found in " + str(process))
         if isinstance(process, WinService):
             service_expression = convert_windows_service_to_pattern(process)
             if service_expression:
                 expressions.append(add_parens_if_needed(service_expression))
+            else:
+                warn("No WinService properties found in " + str(process))
     return " AND ".join(expressions)
 
 
@@ -566,11 +621,11 @@ def convert_object_to_pattern(obj, obs_id):
         expression = convert_network_connection_to_pattern(prop)
     else:
         warn("{0} found in {1} cannot be converted to a pattern, yet.".format(str(obj.properties), obs_id))
-        return "'term not converted'"
-    if prop.custom_properties is not None:
+        expression = "'{id} not converted'".format(id=obs_id)
+    object_path_root = convert_cybox_class_name_to_object_path_root_name(prop)
+    if prop.custom_properties is not None and object_path_root:
         expression += (" AND " if expression != "" else "") + \
-                      convert_custom_properties(prop.custom_properties,
-                                                convert_cybox_class_name_to_object_path_root_name(prop))
+                      convert_custom_properties(prop.custom_properties, object_path_root)
     return expression
 
 
