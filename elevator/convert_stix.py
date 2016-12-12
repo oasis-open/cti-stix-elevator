@@ -792,10 +792,8 @@ def convert_indicator(indicator, bundle_instance, parent_created_by_ref):
     if indicator.observable and indicator.composite_indicator_expression:
         error("Indicator {id} has an observable and composite_indictor_expression which is illegal".format(id=indicator.id_))
     if indicator.observable is not None:
-        indicator_instance["pattern"] = (("NOT (" if negate_indicator(indicator) else "") +
-                                        convert_observable_to_pattern(indicator.observable, bundle_instance,
-                                                                      OBSERVABLE_MAPPING) +
-                                        (")" if negate_indicator(indicator) else ""))
+        indicator_instance["pattern"] = convert_observable_to_pattern(indicator.observable, bundle_instance,
+                                                                      OBSERVABLE_MAPPING)
         add_to_pattern_cache(indicator.id_, indicator_instance["pattern"])
     if indicator.composite_indicator_expression is not None:
         expression = ""
@@ -1299,9 +1297,11 @@ def finalize_bundle(bundle_instance):
         interatively_resolve_placeholder_refs()
         for ind in bundle_instance["indicators"]:
             if "pattern" in ind:
-                ind["pattern"] = fix_pattern(ind["pattern"])
-                if ind["pattern"].find("PLACEHOLDER") != -1:
-                    warn("At least one PLACEHOLDER idref was not resolved in {id}".format(id=ind["id"]))
+                final_pattern = fix_pattern(ind["pattern"])
+                if final_pattern:
+                    if final_pattern.contains_placeholder():
+                        warn("At least one PLACEHOLDER idref was not resolved in {id}".format(id=ind["id"]))
+                    ind["pattern"] = final_pattern.to_string()
 
     # do before empty items are deleted
     remove_pattern_objects(bundle_instance)

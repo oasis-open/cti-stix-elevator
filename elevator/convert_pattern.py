@@ -35,7 +35,13 @@ class ComparisonExpression():
         self.root_type = get_root_from_object_path(lhs)
 
     def to_string(self):
-        return self.lhs + (" NOT" if self.negated else "") + " " + self.operator + " " + self.rhs
+        return self.lhs + (" NOT" if self.negated else "") + " " + self.operator + " '"  + convert_to_str(self.rhs) + "'"
+
+    def contains_placeholder(self):
+        return False
+
+    def replace_placeholder_with_idref_pattern(self, idref):
+        return False, self
 
 class BooleanExpression():
     def __init__(self, operator, negated=False):
@@ -47,16 +53,54 @@ class BooleanExpression():
         self.operands.append(operand)
 
     def to_string(self):
-        return "(" + (" " + self.operator + " ").join(map(self.to_string, self.operands)) + ")"
+        sub_exprs = []
+        for o in self.operands:
+            sub_exprs.append(o.to_string())
+        return "(" + (" " + self.operator + " ").join(sub_exprs) + ")"
+
+    def contains_placeholder(self):
+        for args in self.operands:
+            if args.contains_placeholder():
+                return True
+        return False
+
+    def replace_placeholder_with_idref_pattern(self, idref):
+        new_operands = []
+        change_made = False
+        for args in self.operands:
+            change_made_this_time, new_operand = args.replace_placeholder_with_idref_pattern(idref)
+            change_made = change_made or change_made_this_time
+            new_operands.append(new_operand)
+        self.operands = new_operands
+        return change_made, self
+
+class IdrefPlaceHolder():
+    def __init__(self, idref):
+        self.idref = idref
+
+    def to_string(self):
+        return "PLACEHOLDER:" + self.idref
+
+    def contains_placeholder(self):
+        return True
+
+    def replace_placeholder_with_idref_pattern(self, idref):
+        if idref == self.idref:
+            return True, PATTERN_CACHE[idref]
+        else:
+            return False, self
 
 
-def createBooleanExpression(operator, operands, negated):
+def create_boolean_expression(operator, operands, negated=False):
+    if len(operands) == 1:
+        return operands[0]
     exp = BooleanExpression(operator, negated)
     for arg in operands:
-        if not hasattr(exp, "root_type"):
-            exp.root_type = arg.root_type
-        elif exp.root_type and exp.root_type != arg.root_type:
-            exp.root_type = None
+        if not isinstance(arg, IdrefPlaceHolder):
+            if not hasattr(exp, "root_type"):
+                exp.root_type = arg.root_type
+            elif exp.root_type and (exp.root_type != arg.root_type):
+                exp.root_type = None
         exp.add_operand(arg)
     return exp
 
@@ -71,6 +115,8 @@ def clear_pattern_mapping():
 
 def add_to_pattern_cache(key, pattern):
     global PATTERN_CACHE
+    if pattern is None:
+        pass
     PATTERN_CACHE[key] = pattern
 
 # simulate dynamic variable environment
@@ -173,12 +219,13 @@ def convert_condition(condition):
 
 def create_term_with_regex(lhs, condition, rhs, negated):
     if condition == "StartsWith":
-        pattern = " /^" + rhs + "/"
+        pattern = "^" + rhs
     elif condition == "EndsWith":
-        pattern = " /" + rhs + "$/"
+        pattern = rhs + "$"
     elif condition == "Contains" or condition == "DoesNotContain":
-        pattern = " /" + rhs + "/"
-    return lhs + (" NOT MATCHES " if negated else " MATCHES ") + pattern
+        pattern =  rhs
+    # return lhs + (" NOT MATCHES " if negated else " MATCHES ") + pattern
+    return ComparisonExpression("MATCHES", lhs, pattern, negated)
 
 def create_term_with_range(lhs, condition, rhs, negated=False):
     # TODO: handle negated
@@ -187,9 +234,15 @@ def create_term_with_range(lhs, condition, rhs, negated=False):
         return "'range term underspecified'"
     else:
         if condition == "InclusiveBetween":
-            return "(" + lhs + " GE " + str(rhs[0]) + " AND " + lhs + " LE " + str(rhs[1]) + ")"
+            # return "(" + lhs + " GE " + str(rhs[0]) + " AND " + lhs + " LE " + str(rhs[1]) + ")"
+            lower_bound = ComparisonExpression(">=", lhs, str(rhs[0]))
+            upper_bound = ComparisonExpression("<=", lhs, str(rhs[1]))
+
         else:  # "ExclusiveBetween"
-            return "(" + lhs + " GT " + str(rhs[0]) + " AND " + lhs + " LT " + str(rhs[1]) + ")"
+            # return "(" + lhs + " GT " + str(rhs[0]) + " AND " + lhs + " LT " + str(rhs[1]) + ")"
+            lower_bound = ComparisonExpression(">", lhs, str(rhs[0]))
+            upper_bound = ComparisonExpression("<", lhs, str(rhs[1]))
+        return create_boolean_expression("AND", [lower_bound, upper_bound], negated)
 
 
 def multi_valued_property(object_path):
@@ -215,7 +268,8 @@ def create_term(lhs, condition, rhs, negated=False):
         elif condition == "DoesNotContain":
             warn("Used MATCHES operator for " + condition)
             return (create_term_with_regex(lhs, condition, rhs, not negated))
-        return lhs + " " + negate_if_needed(convert_condition(condition), negated) + " '" + convert_to_str(rhs) + "'"
+        # return lhs + " " + negate_if_needed(convert_condition(condition), negated) + " '" + convert_to_str(rhs) + "'"
+        return ComparisonExpression(convert_condition(condition), lhs, convert_to_str(rhs), negated)
 
 
 def add_comparison_expression(prop, object_path):
@@ -285,7 +339,9 @@ def create_terms_from_prop_list(prop_list, obj, object_path):
                 prop_exprs = []
                 for c in getattr(obj, cannonicalize_prop_name(prop_1x)):
                     prop_exprs.append(add_comparison_expression(c, object_path))
-                return " OR ".join(prop_exprs)
+                # return " OR ".join(prop_exprs)
+                if prop_exprs:
+                    return create_boolean_expression("OR", prop_exprs)
             else:
                 return add_comparison_expression(getattr(obj, cannonicalize_prop_name(prop_1x)), object_path)
     else:
@@ -297,7 +353,9 @@ def create_terms_from_prop_list(prop_list, obj, object_path):
                 if values:
                     for c in values:
                         prop_exprs.append(create_terms_from_prop_list(rest_of_prop_list, c, object_path))
-                return " OR ".join(prop_exprs)
+                # return " OR ".join(prop_exprs)
+                if prop_exprs:
+                    return create_boolean_expression("OR", prop_exprs)
             else:
                 return create_terms_from_prop_list(rest_of_prop_list,
                                                    getattr(obj, cannonicalize_prop_name(prop_1x)),
@@ -313,7 +371,8 @@ def convert_email_header_to_pattern(head, properties):
             term = create_terms_from_prop_list(prop_1x_list, head, object_path)
             if term:
                 header_expressions.append(term)
-    return " AND ".join(header_expressions)
+    if header_expressions:
+        return create_boolean_expression("AND", header_expressions)
 
 
 def convert_email_message_to_pattern(mess):
@@ -325,7 +384,8 @@ def convert_email_message_to_pattern(mess):
             expressions.append(add_headers)
     if mess.attachments is not None:
         warn("Email attachments not handled yet")
-    return " AND ".join(expressions)
+    if expressions:
+        return create_boolean_expression("AND", expressions)
 
 
 _PE_FILE_HEADER_PROPERTIES = \
@@ -363,7 +423,7 @@ def convert_windows_executable_file_to_pattern(file):
                 if hash_expression:
                     file_header_expressions.append(hash_expression)
             if file_header_expressions:
-                expressions.append(add_parens_if_needed(" AND ".join(file_header_expressions)))
+                expressions.append(create_boolean_expression("AND", file_header_expressions))
         if file.headers.optional_header:
             warn("file:extended_properties:windows_pebinary_ext:optional_header is not implemented yet")
 
@@ -390,16 +450,18 @@ def convert_windows_executable_file_to_pattern(file):
                                                        s.entropy.value))
             if s.data_hashes:
                 section_expressions.append(convert_hashes_to_pattern(s.data_hashes))
-            hash_expression = ""
             if s.header_hashes:
                 section_expressions.append(convert_hashes_to_pattern(s.header_hashes))
-            sections_expressions.append(" AND ".join(section_expressions))
-        expressions.append(add_parens_if_needed(" AND ".join(sections_expressions)))
+            if section_expressions:
+                sections_expressions.append(create_boolean_expression("AND", section_expressions))
+        if sections_expressions:
+            expressions.append(create_boolean_expression("AND", sections_expressions))
     if file.exports:
         warn("The exports property of WinExecutableFileObj is not part of Cybox 3.0")
     if file.imports:
         warn("The imports property of WinExecutableFileObj is not part of Cybox 3.0")
-    return " AND ".join(expressions)
+    if expressions:
+        return create_boolean_expression("AND", expressions)
 
 
 def convert_archive_file_to_pattern(file):
@@ -409,7 +471,8 @@ def convert_archive_file_to_pattern(file):
         object_path = prop_spec[1]
         if hasattr(file, prop_1x):
             and_expressions.append(add_comparison_expression(getattr(file, prop_1x), object_path))
-    return " AND ".join(and_expressions)
+    if and_expressions:
+        return create_boolean_expression("AND", and_expressions)
 
 
 def convert_hashes_to_pattern(hashes):
@@ -422,7 +485,8 @@ def convert_hashes_to_pattern(hashes):
         hash_expressions.append(create_term("file:hashes" + ":" + str(h.type_).lower(),
                                             hash_value.condition,
                                             hash_value.value))
-    return " OR ".join(hash_expressions)
+    if hash_expressions:
+        return create_boolean_expression("OR", hash_expressions)
 
 
 def convert_file_name_and_path_to_pattern(file):
@@ -436,7 +500,8 @@ def convert_file_name_and_path_to_pattern(file):
                                                           file.device_path.value + file.file_path.value))
     if file.full_path:
         warn("1.x full file paths are not processed, yet")
-    return " AND ".join(file_name_path_expressions)
+    if file_name_path_expressions:
+        return create_boolean_expression("AND", file_name_path_expressions)
 
 
 _FILE_PROPERTIES = [["size_in_bytes", "file:size"],
@@ -464,20 +529,21 @@ def convert_file_to_pattern(file):
         if hasattr(file, prop_1x) and getattr(file, prop_1x):
             properties_expressions.append(add_comparison_expression(getattr(file, prop_1x), object_path))
     if properties_expressions:
-        expressions.append(" AND ".join(properties_expressions))
+        expressions.extend(properties_expressions)
     if isinstance(file, WinExecutableFile):
         windows_executable_file_expression = convert_windows_executable_file_to_pattern(file)
         if windows_executable_file_expression:
-            expressions.append(add_parens_if_needed(windows_executable_file_expression))
+            expressions.append(windows_executable_file_expression)
         else:
             warn("No WinExecutableFile properties found in " + str(file))
     if isinstance(file, ArchiveFile):
         archive_file_expressions = convert_archive_file_to_pattern(file)
         if archive_file_expressions:
-            expressions.append(add_parens_if_needed(archive_file_expressions))
+            expressions.append(archive_file_expressions)
         else:
             warn("No ArchiveFile properties found in " + str(file))
-    return " AND ".join(expressions)
+    if expressions:
+        return create_boolean_expression("AND", expressions)
 
 _REGISTRY_KEY_VALUES_PROPERTIES = [["data", "win-registry-key:values[*].data"],
                                    ["name", "win-registry-key:values[*].name"],
@@ -485,7 +551,7 @@ _REGISTRY_KEY_VALUES_PROPERTIES = [["data", "win-registry-key:values[*].data"],
 
 
 def convert_registry_key_to_pattern(reg_key):
-    expression = ""
+    expressions = []
     if reg_key.key:
         key_value_term = ""
         if reg_key.hive:
@@ -494,20 +560,22 @@ def convert_registry_key_to_pattern(reg_key):
             else:
                 warn("Condition on a hive property not handled")
             key_value_term += reg_key.key.value
-            expression += create_term("win-registry-key:key", reg_key.key.condition,  key_value_term)
+            expressions.append(create_term("win-registry-key:key", reg_key.key.condition,  key_value_term))
     if reg_key.values:
-        values_expression = ""
+        values_expressions = []
         for v in reg_key.values:
-            value_expression = []
+            value_expressions = []
             for prop_spec in _REGISTRY_KEY_VALUES_PROPERTIES:
                 prop_1x = prop_spec[0]
                 object_path = prop_spec[1]
                 if hasattr(v, prop_1x) and getattr(v, prop_1x):
-                    value_expression.append(add_comparison_expression(getattr(v, prop_1x),
+                    value_expressions.append(add_comparison_expression(getattr(v, prop_1x),
                                                                       object_path))
-            values_expression += " OR ".join(value_expression)
-        expression += (" AND " if expression != "" else "") + add_parens_if_needed(values_expression)
-    return expression
+            if value_expressions:
+                values_expressions.append(create_boolean_expression("OR", value_expressions))
+        expressions.extend(values_expressions)
+    if expressions:
+        return create_boolean_expression("AND", expressions)
 
 
 def convert_process_to_pattern(process):
@@ -517,16 +585,17 @@ def convert_process_to_pattern(process):
     if isinstance(process, WinProcess):
         win_process_expression = convert_windows_process_to_pattern(process)
         if win_process_expression:
-            expressions.append(add_parens_if_needed(win_process_expression))
+            expressions.append(win_process_expression)
         else:
             warn("No WinProcess properties found in " + str(process))
         if isinstance(process, WinService):
             service_expression = convert_windows_service_to_pattern(process)
             if service_expression:
-                expressions.append(add_parens_if_needed(service_expression))
+                expressions.append(service_expression)
             else:
                 warn("No WinService properties found in " + str(process))
-    return " AND ".join(expressions)
+    if expressions:
+        return create_boolean_expression("AND", expressions)
 
 
 def convert_windows_process_to_pattern(process):
@@ -559,27 +628,11 @@ def convert_windows_service_to_pattern(service):
                                                        d.condition,
                                                        d.value))
         if description_expressions:
-            expressions.append(" OR ".join(description_expressions))
+            expressions.append(create_boolean_expression("OR", description_expressions))
     if hasattr(service, "service_dll") and service.service_dll:
         warn("WinServiceObject.service_dll cannot be converted to a pattern, yet.")
-    return " AND ".join(expressions)
-
-####################################################################################################################
-
-
-def convert_observable_composition_to_pattern(obs_comp, bundle_instance, observable_mapping):
-    expression = []
-    for obs in obs_comp.observables:
-        term = convert_observable_to_pattern(obs, bundle_instance, observable_mapping)
-        if term:
-            expression.append(term)
-        else:
-            warn("No term was yielded for {0}".format((obs.id_ if obs.id_ else obs.idref)))
-    if expression:
-        operator_as_string = " " + obs_comp.operator + " "
-        return "(" + operator_as_string.join(expression) + ")"
-    else:
-        return ""
+    if expressions:
+        return create_boolean_expression("AND", expressions)
 
 
 def convert_domain_name_to_pattern(domain_name):
@@ -590,13 +643,29 @@ def convert_mutex_to_pattern(mutex):
     if mutex.name:
         return create_term("mutex:name", mutex.name.condition, mutex.name.value)
     else:
-        return ""
+        return None
 
 
 def convert_network_connection_to_pattern(conn):
     # TODO: Implement pattern
     return "'term not converted'"
 
+
+####################################################################################################################
+
+
+def convert_observable_composition_to_pattern(obs_comp, bundle_instance, observable_mapping):
+    expressions = []
+    for obs in obs_comp.observables:
+        term = convert_observable_to_pattern(obs, bundle_instance, observable_mapping)
+        if term:
+            expressions.append(term)
+        else:
+            warn("No term was yielded for {0}".format((obs.id_ if obs.id_ else obs.idref)))
+    if expressions:
+        return create_boolean_expression(obs_comp.operator, expressions)
+    else:
+        return ""
 
 def convert_object_to_pattern(obj, obs_id):
     prop = obj.properties
@@ -669,7 +738,8 @@ def convert_observable_to_pattern_without_negate(obs, bundle_instance, id_to_obs
         return pattern
     elif obs.object_ is not None:
         pattern = convert_object_to_pattern(obs.object_, obs.id_)
-        add_to_pattern_cache(obs.id_, pattern)
+        if pattern:
+            add_to_pattern_cache(obs.id_, pattern)
         return pattern
     elif obs.idref is not None:
         if obs.idref in PATTERN_CACHE:
@@ -683,7 +753,7 @@ def convert_observable_to_pattern_without_negate(obs, bundle_instance, id_to_obs
                     return convert_observable_to_pattern(id_to_observable_mapping[obs.idref],
                                                          bundle_instance,
                                                          id_to_observable_mapping)
-            return "PLACEHOLDER:" + obs.idref
+            return IdrefPlaceHolder(obs.idref)
 
 
 # patterns can contain idrefs which might need to be resolved because the order in which the ids and idrefs appear
@@ -696,18 +766,18 @@ def interatively_resolve_placeholder_refs():
         # collect all of the fully resolved idrefs
         fully_resolved_idrefs = []
         for idref, expr in PATTERN_CACHE.items():
-            if expr.find("PLACEHOLDER:") == -1:
+            if expr and not expr.contains_placeholder():
                 # no PLACEHOLDER idrefs found in the expr, means this idref is fully resolved
                 fully_resolved_idrefs.append(idref)
         # replace only fully resolved idrefs
         change_made = False
         for fr_idref in fully_resolved_idrefs:
             for idref, expr in PATTERN_CACHE.items():
-                if expr.find("PLACEHOLDER:" + fr_idref) != -1:
+                if expr:
+                    change_made, expr = expr.replace_placeholder_with_idref_pattern(fr_idref)
                     # a change will be made, which could introduce a new placeholder id into the expr
-                    change_made = True
-                    PATTERN_CACHE[idref] = \
-                        expr.replace("PLACEHOLDER:" + fr_idref, PATTERN_CACHE[fr_idref])
+                    if change_made:
+                        PATTERN_CACHE[idref] = expr
         done = not change_made
 
 
@@ -719,9 +789,9 @@ def fix_pattern(pattern):
     if not PATTERN_CACHE == {}:
         # info(str(PATTERN_CACHE))
         # info("pattern is: " +  pattern)
-        if pattern.find("PLACEHOLDER:") != -1:
+        if pattern and pattern.contains_placeholder:
             for idref in PATTERN_CACHE.keys():
-                pattern = pattern.replace("PLACEHOLDER:" + idref, PATTERN_CACHE[idref])
+                pattern.replace_placeholder_with_idref_pattern(idref)
     return pattern
 
 
@@ -747,7 +817,8 @@ def convert_indicator_to_pattern_without_negate(ind, bundle_instance, id_to_obse
         return pattern
     elif ind.observable is not None:
         pattern = convert_observable_to_pattern(ind.observable)
-        add_to_pattern_cache(ind.id_, pattern)
+        if pattern:
+            add_to_pattern_cache(ind.id_, pattern)
         return pattern
     elif ind.idref is not None:
         if ind.idref in PATTERN_CACHE:

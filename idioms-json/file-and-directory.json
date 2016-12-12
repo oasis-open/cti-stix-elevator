@@ -2,11 +2,11 @@
     "id": "bundle--cc0ca596-70e6-4dac-9bef-603166d17db8",
     "observed_data": [
         {
-            "created": "2016-11-18T13:12:26.437888Z",
-            "first_observed": "2016-11-18T13:12:26.437888Z",
+            "created": "2016-11-30T14:53:14.356304Z",
+            "first_observed": "2016-11-30T14:53:14.356304Z",
             "id": "observed-data--c8c32b6e-2ea8-51c4-6446-7f5218072f27",
-            "last_observed": "2016-11-18T13:12:26.437888Z",
-            "modified": "2016-11-18T13:12:26.437888Z",
+            "last_observed": "2016-11-30T14:53:14.356304Z",
+            "modified": "2016-11-30T14:53:14.356304Z",
             "number_observed": 1,
             "objects": {
                 "0": {

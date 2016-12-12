@@ -10,7 +10,7 @@
             ],
             "modified": "2014-10-31T15:52:13.126999Z",
             "name": "Malicious E-mail Addresses",
-            "pattern": "email-message:from_ref = 'fred@abc.com' AND email-message:to_refs[*] = 'barney@abc.com' OR email-message:to_refs[*] = 'wilma@abc.com'",
+            "pattern": "(email-message:from_ref = 'fred@abc.com' AND (email-message:to_refs[*] = 'barney@abc.com' OR email-message:to_refs[*] = 'wilma@abc.com'))",
             "type": "indicator",
             "valid_from": "2014-10-31T15:52:13.126999Z",
             "version": 1
