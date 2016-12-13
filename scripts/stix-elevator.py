@@ -9,8 +9,6 @@ to be mitigated to convert your STIX 1.x content.
 import argparse
 import textwrap
 
-from argparse import RawDescriptionHelpFormatter
-
 from elevator import elevate_file
 from elevator.options import ElevatorOptions
 from elevator.version import __version__
@@ -34,7 +32,7 @@ messages. Note: disabling the message does not disable the functionality.
 """
 
 
-class NewlinesHelpFormatter(RawDescriptionHelpFormatter):
+class NewlinesHelpFormatter(argparse.RawDescriptionHelpFormatter):
     """Custom help formatter to insert newlines between argument help texts.
     """
     def _split_lines(self, text, width):
