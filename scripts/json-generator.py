@@ -8,21 +8,29 @@ import sys
 
 from elevator import elevate_file
 
-# The output is set to the user home directory.
+# The output is set to the own json-idioms container.
+# WARNING: This will overwrite the contents inside the idioms-json directory.
 
 
 def main():
-    output_path = os.path.expanduser("~/Desktop/")
-    directory = os.path.join(output_path, "idioms-json")
 
-    if not os.path.exists(directory):
-        os.makedirs(directory)
+    directory = os.path.dirname(__file__)
+    path, last_dir = os.path.split(directory)
 
-    for filename in os.listdir(sys.argv[1]):
+    xml_idioms_dir = os.path.join(path, "idioms-xml")
+    xml_idioms_dir = os.path.abspath(xml_idioms_dir)
+
+    json_idioms_dir = os.path.join(path, "idioms-json")
+    json_idioms_dir = os.path.abspath(json_idioms_dir)
+
+    if not os.path.exists(json_idioms_dir):
+        os.makedirs(json_idioms_dir)
+
+    for filename in os.listdir(xml_idioms_dir):
         file_and_ext = filename.split(".")
-        xml_path = os.path.join(sys.argv[1], filename)
+        xml_path = os.path.join(xml_idioms_dir, filename)
 
-        destination = os.path.join(directory, str(file_and_ext[0]) + ".json")
+        destination = os.path.join(json_idioms_dir, str(file_and_ext[0]) + ".json")
         destination = os.path.abspath(destination)
 
         if file_and_ext[1] == "xml":
