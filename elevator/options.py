@@ -129,6 +129,7 @@ def set_options(options):
 
 
 # Mapping of check code numbers to names
+# TODO: complete list
 CHECK_CODES = {
     '3': 'append-to-description-property',
     '301': '',

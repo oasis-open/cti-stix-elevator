@@ -7,16 +7,25 @@ import sys
 
 def info(fmt, *args):
     msg = fmt % args
+
+    if isinstance(msg, six.text_type) and six.PY2:
+        msg = msg.encode(encoding='utf8')
     sys.stdout.write("[INFO] {message}\n".format(message=msg))
 
 
 def warn(fmt, *args):
     msg = fmt % args
+
+    if isinstance(msg, six.text_type) and six.PY2:
+        msg = msg.encode(encoding='utf8')
     sys.stderr.write("[WARN] {message}\n".format(message=msg))
 
 
 def error(fmt, *args):
     msg = fmt % args
+
+    if isinstance(msg, six.text_type) and six.PY2:
+        msg = msg.encode(encoding='utf8')
     sys.stderr.write("[ERROR] {message}\n".format(message=msg))
 
 
@@ -58,7 +67,10 @@ def convert_controlled_vocabs_to_open_vocabs(new_obj, new_property_name, old_voc
         new_obj[new_property_name] = []
         for t in old_vocabs:
             if new_obj[new_property_name] is None or not only_one:
-                new_obj[new_property_name].append(map_vocabs_to_label(str(t.value), vocab_mapping))
+                if isinstance(t, (six.text_type, six.binary_type)):
+                    new_obj[new_property_name].append(map_vocabs_to_label(t, vocab_mapping))
+                else:
+                    new_obj[new_property_name].append(map_vocabs_to_label(str(t.value), vocab_mapping))
             else:
                 warn("Only one {prop} allowed in STIX 2.0 - used first one".format(prop=new_property_name))
 
@@ -85,14 +97,15 @@ def convert_timestamp(entity, parent_timestamp=None):
     return str(datetime.now().isoformat()) + "Z"
 
 
-def convert_to_str(value):
+def convert_to_str(value, encoding='utf-8'):
     if not value:
         return ""
     if isinstance(value, six.text_type):
         return value
     if isinstance(value, Number) or isinstance(value, list):
         value = str(value)
-    escaped = value.encode('unicode_escape')
+
+    escaped = value.encode(encoding)
     escaped_ascii = escaped.decode('ascii')
 
     if isinstance(escaped, str):
