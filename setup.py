@@ -1,5 +1,3 @@
-
-
 from os.path import abspath, dirname, join
 from setuptools import setup, find_packages
 
@@ -25,8 +23,6 @@ with open('README.rst') as f:
 setup(
     name="stix-elevator",
     version=get_version(),
-    author="The MITRE Corporation",
-    author_email="stix@mitre.org",
     description="Utilities to upgrade STIX and CybOX content to 2.0",
     long_description=readme,
     url="http://stixproject.github.io/",

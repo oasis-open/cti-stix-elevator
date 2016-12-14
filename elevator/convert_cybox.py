@@ -25,7 +25,7 @@ def create_directory(file):
     return {"type": "directory", "path": file.file_path.value}
 
 
-def convert_file(file, directory_ref):
+def convert_file_properties(file):
     cybox_dict = {"type": "file"}
     if file.size is not None:
         if isinstance(file.size.value, list):
@@ -40,11 +40,18 @@ def convert_file(file, directory_ref):
         cybox_dict["hashes"] = hashes
     if file.file_name:
         cybox_dict["file_name"] = str(file.file_name)
-    if directory_ref != -1:
-        cybox_dict["parent_directory_ref"] = directory_ref
     if file.full_path:
         warn("1.x full file paths are not processed, yet")
     return cybox_dict
+
+
+def convert_file(file):
+    objs = {}
+    objs[0] = convert_file_properties(file)
+    if file.file_path:
+        objs[1] = create_directory(file)
+        objs[0]["parent_directory_ref"] = 1
+    return objs
 
 
 def convert_email_message(email_message):
@@ -213,32 +220,31 @@ def convert_network_connection(conn):
 
 
 def convert_cybox_object(obj):
+    # TODO:  should related objects be handled on a case-by-case basis or just ignored
+    if obj.related_objects:
+       warn("Related objects of cyber observables for {id} are not handled yet".format(id=obj.id_))
     prop = obj.properties
     objs = {}
-    obj_index = 0
     if isinstance(prop, Address):
-        objs[obj_index] = convert_address(prop)
+        objs[0] = convert_address(prop)
     elif isinstance(prop, URI):
-        objs[obj_index] = convert_uri(prop)
+        objs[0] = convert_uri(prop)
     elif isinstance(prop, EmailMessage):
+        # potentially returns multiple objects
         objs = convert_email_message(prop)
     elif isinstance(prop, File):
-        directory_obj_index = -1
-        if prop.file_path:
-            objs[obj_index] = create_directory(prop)
-            directory_obj_index = obj_index
-            obj_index += 1
-        objs[obj_index] = convert_file(prop, directory_obj_index)
+        # potentially returns multiple objects
+        objs = convert_file(prop)
     elif isinstance(prop, WinRegistryKey):
-        objs[obj_index] = convert_registry_key(prop)
+        objs[0] = convert_registry_key(prop)
     elif isinstance(prop, Process):
-        objs[obj_index] = convert_process(prop)
+        objs[0] = convert_process(prop)
     elif isinstance(prop, DomainName):
-        objs[obj_index] = convert_domain_name(prop)
+        objs[0] = convert_domain_name(prop)
     elif isinstance(prop, Mutex):
-        objs[obj_index] = convert_mutex(prop)
+        objs[0] = convert_mutex(prop)
     elif isinstance(prop, NetworkConnection):
-        objs[obj_index] = convert_network_connection(prop)
+        objs[0] = convert_network_connection(prop)
     else:
         warn("{obj} not handled yet".format(obj=str(type(obj))))
         return None
@@ -246,4 +252,8 @@ def convert_cybox_object(obj):
         warn("{obj} didn't yield any STIX 2.0 object".format(obj=str(prop)))
         return None
     else:
+        primary_obj = objs[0]
+        if prop.custom_properties:
+            for cp in prop.custom_properties.property_:
+                primary_obj["x_" + cp.name] = cp.value
         return objs

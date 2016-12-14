@@ -17,7 +17,6 @@ from stix2validator import output
 from stix2validator import validators
 from stix2validator import validate_string, ValidationError
 
-# internal
 from elevator.convert_pattern import clear_pattern_mapping
 from elevator.ids import clear_id_mapping
 from elevator.utils import warn
