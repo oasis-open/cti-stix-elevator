@@ -24,6 +24,7 @@ from elevator.convert_pattern import (convert_indicator_to_pattern, convert_obse
                                       interatively_resolve_placeholder_refs,
                                       add_to_pattern_cache, remove_pattern_objects)
 from elevator.ids import *
+from elevator.options import *
 from elevator.vocab_mappings import *
 from elevator.utils import *
 
@@ -32,16 +33,7 @@ if stix.__version__ >= "1.2.0.0":
 if stix.__version__ == "1.1.1.7":
     import stix.extensions.marking.ais
 
-SQUIRREL_GAPS_IN_DESCRIPTIONS = True
-
-INFRASTRUCTURE_IN_20 = False
-
-INCIDENT_IN_20 = True
-
-SUB_INDICATOR_IDS = []
-
 # collect kill chains
-
 KILL_CHAINS_PHASES = {}
 
 OBSERVABLE_MAPPING = {}
@@ -193,7 +185,7 @@ def add_statement_type_to_description(sdo_instance, statement, property_name):
         if statement.descriptions:
             descriptions = []
             for d in statement.descriptions:
-                descriptions.append(str(d))
+                descriptions.append(convert_to_str(d.value))
             sdo_instance["description"] += "\n\n\t".join(descriptions)
         # TODO: handle source
         if statement.confidence:
@@ -574,9 +566,11 @@ def convert_ciq_addresses(addresses, identity_instance):
     identity_instance["country"] = []
     identity_instance["regions"] = []
     for add in addresses:
+        temp_country = None
         if hasattr(add, "country"):
             for name in add.country.name_elements:
                 iso = pycountry.countries.get(name=name.value)
+                temp_country = iso.alpha2
                 if iso is not None:
                     identity_instance["country"].append(iso.alpha2)
                 else:
@@ -584,10 +578,10 @@ def convert_ciq_addresses(addresses, identity_instance):
                     identity_instance["country"].append(name.value)
         if hasattr(add, "administrative_area"):
             for name in add.administrative_area.name_elements:
-                # bug in pycountry - need to make sure that subdivisions are indexed using "name"
-                iso = pycountry.subdivisions.get(name=name.value)
-                if iso is not None:
-                    identity_instance["regions"].append(iso.code)
+                iso = pycountry.subdivisions.get(country_code=temp_country)
+                iso = [x for x in iso if x.name == six.text_type(name.value)]
+                if iso:
+                    identity_instance["regions"].append(iso[0].code)
                 else:
                     identity_instance["regions"].append(name.value)
 
@@ -608,7 +602,7 @@ def convert_party_name(party_name, identity):
                 identity["name"] = get_name(name)
                 first_one = False
             else:
-                warn("more than one person name for {id} not allowed in STIX 2.0, used first one".format(id=identity.id_))
+                warn("more than one person name for {id} not allowed in STIX 2.0, used first one".format(id=identity["id"]))
                 # add to description
     elif not party_name.organisation_names == []:
         identity["identity_class"] = "organization"
@@ -629,21 +623,22 @@ def convert_identity(identity, bundle_instance, parent_timestamp=None, parent_id
     if identity.name is not None:
         identity_instance["name"] = identity.name
     if isinstance(identity, CIQIdentity3_0Instance):
-        if identity.roles is not None:
+        if identity.roles:
             convert_controlled_vocabs_to_open_vocabs(identity_instance, "roles", identity.roles, ROLES_MAP, False)
         ciq_info = identity._specification
-        if ciq_info.party_name is not None:
+        if ciq_info.party_name:
             warn("ciq name found in {id}, possibly overriding other name".format(id=identity_instance["id"]))
             convert_party_name(ciq_info.party_name, identity_instance)
         if "name" not in identity_instance:
             error("{id} must have a name, using 'None'".format(id=identity_instance["id"]))
             identity_instance["name"] = "None"
-        if ciq_info.organisation_info is not None:
+        if ciq_info.organisation_info:
             convert_to_open_vocabs(identity_instance, "sectors", ciq_info.organisation_info.industry_type, SECTORS_MAP)
             warn("Based on CIQ information, {id} is assumed to be an organization".format(id=identity_instance["id"]))
             identity_instance["identity_class"] = "organization"
-        if ciq_info.addresses is not None:
-            convert_ciq_addresses(ciq_info.addresses, identity_instance)
+        if ciq_info.addresses:
+            pass
+            # convert_ciq_addresses(ciq_info.addresses, identity_instance)
             # add other properties to contact_information
     if identity.related_identities:
         warn("All related identitiies relationships {id} are assumed to not represent STIX 1.2 versioning".format(id=((" of " + identity.id_) if identity.id_ else "")))
