@@ -31,6 +31,11 @@ setup(
     long_description=readme,
     url="http://stixproject.github.io/",
     packages=find_packages(),
+    entry_points={
+        'console_scripts': [
+            'stix_elevator = elevator.scripts.stix_elevator:main',
+        ],
+    },
     install_requires=['stix>=1.2.0.0,<1.2.1.0'],
     classifiers=[
         "Programming Language :: Python",
