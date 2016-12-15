@@ -86,12 +86,12 @@ def _get_arg_parser(is_script=True):
     )
 
     parser.add_argument(
-        "--default-created-by-id",
+        "--package-created-by-id",
         help="Use provided identifier for \"created_by_ref\" properties. \n\n"
-             "Example: --default-created-by-id \"identity--1234abcd-1a12-12a3-0ab4-1234abcd5678\"",
-        dest="default_created_by_id",
+             "Example: --package-created-by-id \"identity--1234abcd-1a12-12a3-0ab4-1234abcd5678\"",
+        dest="package_created_by_id",
         action="store",
-        default=""
+        default=None
     )
 
     parser.add_argument(
@@ -100,7 +100,7 @@ def _get_arg_parser(is_script=True):
              "\n\nExample: --default-timestamp \"2016-11-15T13:10:35.053000Z\"",
         dest="default_timestamp",
         action="store",
-        default=""
+        default=None
     )
 
     parser.add_argument(

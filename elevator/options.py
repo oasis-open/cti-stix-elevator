@@ -31,7 +31,7 @@ class ElevatorOptions(object):
         file_: Input file to be elevated.
         no_incidents: False if no incidents should be included in the result.
         infrastructure: True if infrastructure should be included in the result.
-        default_created_by_id: If set, this identifier ref will be applied in
+        package_created_by_id: If set, this identifier ref will be applied in
             the `created_by_ref` property.
         default_timestamp: If set, this value will be used when: the object
             does not have a timestamp, the parent does not have a timestamp.
@@ -44,7 +44,7 @@ class ElevatorOptions(object):
     """
     def __init__(self, cmd_args=None, file_=None, no_incidents=True,
                  squirrel_gaps=True, infrastructure=False,
-                 default_created_by_id="", default_timestamp="",
+                 package_created_by_id=None, default_timestamp=None,
                  validator_args="--lax --strict-types", verbose=False,
                  enable="", disable=""):
         if cmd_args is not None:
@@ -52,7 +52,7 @@ class ElevatorOptions(object):
             self.no_incidents = cmd_args.no_incidents
             self.squirrel_gaps = squirrel_gaps
             self.infrastructure = cmd_args.infrastructure
-            self.default_created_by_id = cmd_args.default_created_by_id
+            self.package_created_by_id = cmd_args.default_created_by_id
             self.default_timestamp = cmd_args.default_timestamp
             self.validator_args = cmd_args.validator_args
 
@@ -65,7 +65,7 @@ class ElevatorOptions(object):
             self.no_incidents = no_incidents
             self.squirrel_gaps = squirrel_gaps
             self.infrastructure = infrastructure
-            self.default_created_by_id = default_created_by_id
+            self.package_created_by_id = package_created_by_id
             self.default_timestamp = default_timestamp
             self.validator_args = validator_args
 
@@ -124,7 +124,7 @@ def set_options(options):
     set_infrastructure(options.infrastructure)
     set_incidents(options.no_incidents)
     set_gap_descriptions(options.squirrel_gaps)
-    set_default_identifier(options.default_created_by_id)
+    set_default_identifier(options.package_created_by_id)
     set_default_timestamp(options.default_timestamp)
 
 

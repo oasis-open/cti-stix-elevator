@@ -21,7 +21,7 @@ from lxml import etree
 
 from elevator.convert_cybox import convert_cybox_object
 from elevator.convert_pattern import (convert_indicator_to_pattern, convert_observable_to_pattern, fix_pattern,
-                                      interatively_resolve_placeholder_refs,
+                                      interatively_resolve_placeholder_refs, create_boolean_expression,
                                       add_to_pattern_cache, remove_pattern_objects)
 from elevator.ids import *
 from elevator.options import *
@@ -791,14 +791,15 @@ def convert_indicator(indicator, bundle_instance, parent_created_by_ref):
                                                                       OBSERVABLE_MAPPING)
         add_to_pattern_cache(indicator.id_, indicator_instance["pattern"])
     if indicator.composite_indicator_expression is not None:
-        expression = ""
+        expressions = []
         for ind in indicator.composite_indicator_expression.indicator:
-            ind_expression = (("NOT (" if ind.negate else "") +
-                                convert_indicator_to_pattern(ind, bundle_instance, OBSERVABLE_MAPPING) +
-                                (")" if ind.negate else ""))
-            expression += ((" " + indicator.composite_indicator_expression.operator + " " if expression != "" else "") +
-                            ind_expression)
-        indicator_instance["pattern"] = expression
+            term = convert_indicator_to_pattern(ind, bundle_instance, OBSERVABLE_MAPPING)
+            if term:
+                expressions.append(term)
+            else:
+                warn("term is null")
+        indicator_instance["pattern"] = create_boolean_expression(indicator.composite_indicator_expression.operator,
+                                                                  expressions)
         #add_to_pattern_cache(indicator.id_, indicator_instance["pattern"])
     if "pattern" not in indicator_instance:
         # STIX doesn't handle multiple patterns for indicators
@@ -1338,16 +1339,16 @@ def get_identity_from_package(information_source, bundle_instance):
     return None
 
 
-def convert_package(stixPackage):
+def convert_package(stixPackage, package_created_by_ref=None):
     bundle_instance = {"type": "bundle"}
     bundle_instance["id"] = generate_stix20_id("bundle", stixPackage.id_)
     bundle_instance["spec_version"] = "2.0"
     initialize_bundle_lists(bundle_instance)
-    if hasattr(stixPackage.stix_header, "information_source"):
+    # created_by_idref from the command line is used instead of the one from the package, if given
+    if not package_created_by_ref and hasattr(stixPackage.stix_header, "information_source"):
         package_created_by_ref = get_identity_from_package(stixPackage.stix_header.information_source, bundle_instance)
-    else:
-        package_created_by_ref = None
-        # TODO: other header stuff
+
+    # TODO: other header stuff
 
     # do observables first, especially before indicators!
 

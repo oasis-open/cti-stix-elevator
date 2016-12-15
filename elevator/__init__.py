@@ -46,7 +46,7 @@ def elevate_file(fn, elevator_options=None):
         if not isinstance(stix_package, STIXPackage):
             raise TypeError("Must be an instance of stix.core.STIXPackage")
 
-        json_string = json.dumps(convert_package(stix_package), indent=4,
+        json_string = json.dumps(convert_package(stix_package, elevator_options.package_created_by_id), indent=4,
                                  separators=(',', ': '), sort_keys=True)
         validation_results = validate_string(json_string, validator_options)
         output.print_results(validation_results)

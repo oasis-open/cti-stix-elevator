@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<stix:STIX_Package xmlns:stix="http://stix.mitre.org/stix-1" xmlns:TOUMarking="http://data-marking.mitre.org/extensions/MarkingStructure#Terms_Of_Use-1" xmlns:cybox="http://cybox.mitre.org/cybox-2" xmlns:cyboxCommon="http://cybox.mitre.org/common-2" xmlns:cyboxVocabs="http://cybox.mitre.org/default_vocabularies-2" xmlns:edge="http://soltra.com/" xmlns:indicator="http://stix.mitre.org/Indicator-2" xmlns:marking="http://data-marking.mitre.org/Marking-1" xmlns:opensource="http://hailataxii.com" xmlns:simpleMarking="http://data-marking.mitre.org/extensions/MarkingStructure#Simple-1" xmlns:stixCommon="http://stix.mitre.org/common-1" xmlns:stixVocabs="http://stix.mitre.org/default_vocabularies-1" xmlns:tlpMarking="http://data-marking.mitre.org/extensions/MarkingStructure#TLP-1" xmlns:ttp="http://stix.mitre.org/TTP-1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="edge:Package-26f03880-1338-4768-91e7-68861b5a2e4b" version="1.1.1" timestamp="2016-11-15T20:45:56.624806+00:00">
+   <stix:STIX_Header>
+      <stix:Handling>
+         <marking:Marking>
+            <marking:Controlled_Structure>../../../../descendant-or-self::node()</marking:Controlled_Structure>
+            <marking:Marking_Structure xsi:type="tlpMarking:TLPMarkingStructureType" color="WHITE" />
+            <marking:Marking_Structure xsi:type="TOUMarking:TermsOfUseMarkingStructureType">
+               <TOUMarking:Terms_Of_Use>www.malwaredomainlist.com | Malware Domain List - is a non-commercial community project. Our list can be used for free by anyone. Feel free to use it.</TOUMarking:Terms_Of_Use>
+            </marking:Marking_Structure>
+            <marking:Marking_Structure xsi:type="simpleMarking:SimpleMarkingStructureType">
+               <simpleMarking:Statement>Unclassified (Public)</simpleMarking:Statement>
+            </marking:Marking_Structure>
+         </marking:Marking>
+      </stix:Handling>
+   </stix:STIX_Header>
+   <stix:Indicators>
+      <stix:Indicator id="opensource:indicator-00055363-d2e5-4f2d-891e-54bc543b8d5c" timestamp="2015-04-23T02:07:02.758292+00:00" xsi:type="indicator:IndicatorType" version="2.1.1">
+         <indicator:Title>Compromised Site: : aminev.com/HSBC_BANK-STORAGE.DATA/new_payment-document.html</indicator:Title>
+         <indicator:Type xsi:type="stixVocabs:IndicatorTypeVocab-1.1">IP Watchlist</indicator:Type>
+         <indicator:Type xsi:type="stixVocabs:IndicatorTypeVocab-1.1">Domain Watchlist</indicator:Type>
+         <indicator:Type xsi:type="stixVocabs:IndicatorTypeVocab-1.1">URL Watchlist</indicator:Type>
+         <indicator:Description>This domain aminev.com (69.89.22.122) located in US (United States), has been identified as Malious [Script.Exploit] by www.malwaredomainlist.com. For more detailed infomation about this indicator go to [CAUTION!!Read-URL-Before-Click] [http://www.malwaredomainlist.com/mdl.php?search=aminev.com].</indicator:Description>
+         <indicator:Observable idref="opensource:Observable-be80298d-913a-4071-9c05-4b8ca988e856" />
+         <indicator:Indicated_TTP>
+            <stixCommon:TTP idref="opensource:ttp-8104235b-6918-4771-b33d-a85a06661a6d" xsi:type="ttp:TTPType" />
+         </indicator:Indicated_TTP>
+         <indicator:Producer>
+            <stixCommon:Identity id="opensource:Identity-5d74c958-1704-4281-a9f2-7d858fd033de">
+               <stixCommon:Name>www.malwaredomainlist.com</stixCommon:Name>
+            </stixCommon:Identity>
+            <stixCommon:Time>
+               <cyboxCommon:Produced_Time>2015-04-22T15:17:00+00:00</cyboxCommon:Produced_Time>
+               <cyboxCommon:Received_Time>2015-04-23T02:07:02+00:00</cyboxCommon:Received_Time>
+            </stixCommon:Time>
+         </indicator:Producer>
+      </stix:Indicator>
+   </stix:Indicators>
+</stix:STIX_Package>
+

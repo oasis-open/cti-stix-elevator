@@ -16,6 +16,8 @@ from elevator.utils import *
 from elevator.vocab_mappings import *
 from elevator.ids import *
 
+import re
+
 PATTERN_CACHE = {}
 
 KEEP_OBSERVABLE_DATA_USED_IN_PATTERNS = False
@@ -90,13 +92,29 @@ class IdrefPlaceHolder():
         else:
             return False, self
 
+class UnconvertedTerm():
+    def __init__(self, term):
+        self.unconverted_term = term
+
+    def to_string(self):
+        return "uncoverted_term:" + str(self.unconverted_term)
+
+    def contains_placeholder(self):
+        return False
+
+    def replace_placeholder_with_idref_pattern(self, idref):
+        return False, self
+
+
 
 def create_boolean_expression(operator, operands, negated=False):
     if len(operands) == 1:
         return operands[0]
     exp = BooleanExpression(operator, negated)
     for arg in operands:
-        if not isinstance(arg, IdrefPlaceHolder):
+        if not arg:
+            warn("arg is null")
+        if not isinstance(arg, IdrefPlaceHolder) and not isinstance(arg, UnconvertedTerm):
             if not hasattr(exp, "root_type"):
                 exp.root_type = arg.root_type
             elif exp.root_type and (exp.root_type != arg.root_type):
@@ -115,9 +133,8 @@ def clear_pattern_mapping():
 
 def add_to_pattern_cache(key, pattern):
     global PATTERN_CACHE
-    if pattern is None:
-        pass
-    PATTERN_CACHE[key] = pattern
+    if pattern:
+        PATTERN_CACHE[key] = pattern
 
 # simulate dynamic variable environment
 
@@ -286,8 +303,10 @@ def add_comparison_expression(prop, object_path):
 def convert_custom_properties(cps, object_type_name):
     expressions = []
     for cp in cps.property_:
+        if not re.match("[a-z0-9_]+", cp.name):
+            warn("The custom property name '{name}' does not adhere to the specification rules".format(name=cp.name))
         expressions.append(create_term(object_type_name + ":x_" + cp.name, cp.condition, cp.value))
-    return " AND ".join(expressions)
+    return create_boolean_expression("AND", expressions)
 
 
 def convert_address_to_pattern(add):
@@ -648,7 +667,8 @@ def convert_mutex_to_pattern(mutex):
 
 def convert_network_connection_to_pattern(conn):
     # TODO: Implement pattern
-    return "'term not converted'"
+    warn("network connection not implemented, yet")
+    return UnconvertedTerm(conn)
 
 
 ####################################################################################################################
@@ -686,15 +706,20 @@ def convert_object_to_pattern(obj, obs_id):
         expression = convert_domain_name_to_pattern(prop)
     elif isinstance(prop, Mutex):
         expression = convert_mutex_to_pattern(prop)
-    elif isinstance(prop, NetworkConnection):
-        expression = convert_network_connection_to_pattern(prop)
+#    elif isinstance(prop, NetworkConnection):
+#        expression = convert_network_connection_to_pattern(prop)
     else:
         warn("{0} found in {1} cannot be converted to a pattern, yet.".format(str(obj.properties), obs_id))
-        expression = "'{id} not converted'".format(id=obs_id)
+        expression = UnconvertedTerm(obs_id)
     object_path_root = convert_cybox_class_name_to_object_path_root_name(prop)
     if prop.custom_properties is not None and object_path_root:
-        expression += (" AND " if expression != "" else "") + \
-                      convert_custom_properties(prop.custom_properties, object_path_root)
+        if expression:
+            expression = create_boolean_expression("AND",
+                                                   [expression,
+                                                    convert_custom_properties(prop.custom_properties,
+                                                                              object_path_root)])
+        else:
+            expression = convert_custom_properties(prop.custom_properties, object_path_root)
     return expression
 
 
@@ -833,20 +858,20 @@ def convert_indicator_to_pattern_without_negate(ind, bundle_instance, id_to_obse
                     return convert_observable_to_pattern(id_to_observable_mapping[ind.idref],
                                                          bundle_instance,
                                                          id_to_observable_mapping)
-            return "PLACEHOLDER:" + ind.idref
+            return IdrefPlaceHolder(ind.idref)
 
 
 def convert_indicator_composition_to_pattern(ind_comp, bundle_instance, observable_mapping):
-    expression = []
+    expressions = []
     for ind in ind_comp.indicators:
         term = convert_indicator_to_pattern(ind, bundle_instance, observable_mapping)
         if term:
-            expression.append(term)
+            expressions.append(term)
         else:
             warn("No term was yielded for {0}".format((ind.id_ if ind.id_ else ind.idref)))
-    if expression:
-        operator_as_string = " " + ind_comp.operator + " "
-        return "(" + operator_as_string.join(expression) + ")"
+    if expressions:
+        operator_as_string = " " +  + " "
+        return create_boolean_expression(ind_comp.operator, expressions)
     else:
         return ""
 
