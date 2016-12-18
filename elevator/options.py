@@ -2,18 +2,9 @@ import shlex
 
 from stix2validator.scripts import stix2_validator
 from stix2validator.validators import ValidationOptions
+from elevator.utils import *
 
-
-SQUIRREL_GAPS_IN_DESCRIPTIONS = True
-
-INFRASTRUCTURE_IN_20 = False
-
-INCIDENT_IN_20 = True
-
-DEFAULT_TIMESTAMP = ""
-
-DEFAULT_IDENTIFIER = ""
-
+ALL_OPTIONS = None
 
 class ElevatorOptions(object):
     """Collection of elevator options which can be set via command line or
@@ -47,12 +38,15 @@ class ElevatorOptions(object):
                  package_created_by_id=None, default_timestamp=None,
                  validator_args="--lax --strict-types", verbose=False,
                  enable="", disable=""):
+
+        _unique_instance = None
+
         if cmd_args is not None:
             self.file_ = cmd_args.file_
             self.no_incidents = cmd_args.no_incidents
             self.squirrel_gaps = squirrel_gaps
             self.infrastructure = cmd_args.infrastructure
-            self.package_created_by_id = cmd_args.default_created_by_id
+            self.package_created_by_id = cmd_args.package_created_by_id
             self.default_timestamp = cmd_args.default_timestamp
             self.validator_args = cmd_args.validator_args
 
@@ -84,48 +78,34 @@ class ElevatorOptions(object):
             self.enable = [CHECK_CODES[x] if x in CHECK_CODES else x
                            for x in self.enable]
 
-    def get_validator_options(self):
+def initialize_options(elevator_args=None):
+    global ALL_OPTIONS
+    if not ALL_OPTIONS:
+        ALL_OPTIONS = ElevatorOptions(elevator_args)
+
+
+def get_validator_options():
+    if ALL_OPTIONS:
         """Return a stix2validator.validators.ValidationOptions instance."""
         # Parse stix-validator command-line args
         validator_parser = stix2_validator._get_arg_parser(is_script=False)
         validator_args = validator_parser.parse_args(
-            shlex.split(self.validator_args))
+            shlex.split(get_option_value("validator_args")))
 
         validator_args.files = None
         return ValidationOptions(validator_args)
 
+def get_option_value(option_name):
+    if ALL_OPTIONS and hasattr(ALL_OPTIONS, option_name):
+        return getattr(ALL_OPTIONS, option_name)
+    else:
+        return None
 
-def set_infrastructure(include_infrastructure=False):
-    global INFRASTRUCTURE_IN_20
-    INFRASTRUCTURE_IN_20 = include_infrastructure
-
-
-def set_incidents(include_incidents=True):
-    global INCIDENT_IN_20
-    INCIDENT_IN_20 = include_incidents
-
-
-def set_gap_descriptions(include_descriptions=True):
-    global SQUIRREL_GAPS_IN_DESCRIPTIONS
-    SQUIRREL_GAPS_IN_DESCRIPTIONS = include_descriptions
-
-
-def set_default_identifier(default_identifier=""):
-    global DEFAULT_IDENTIFIER
-    DEFAULT_IDENTIFIER = default_identifier
-
-
-def set_default_timestamp(default_timestamp=""):
-    global DEFAULT_TIMESTAMP
-    DEFAULT_TIMESTAMP = default_timestamp
-
-
-def set_options(options):
-    set_infrastructure(options.infrastructure)
-    set_incidents(options.no_incidents)
-    set_gap_descriptions(options.squirrel_gaps)
-    set_default_identifier(options.package_created_by_id)
-    set_default_timestamp(options.default_timestamp)
+def set_option_value(option_name, option_value):
+    if ALL_OPTIONS:
+        setattr(ALL_OPTIONS, option_name, option_value)
+    else:
+        error("options not initialized")
 
 
 # Mapping of check code numbers to names

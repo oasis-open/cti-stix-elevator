@@ -90,8 +90,12 @@ def convert_timestamp(entity, parent_timestamp=None):
     if entity and hasattr(entity, "timestamp"):
         if entity.timestamp is not None:
             return entity.timestamp.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
-        elif parent_timestamp is not None:
-            info("Using enclosing object timestamp")
+    if parent_timestamp is not None:
+        info("Using enclosing object timestamp")
+        # parent_timestamp might have already been converted to a string in a previous call
+        if isinstance(parent_timestamp, str):
+            return parent_timestamp
+        else:
             return parent_timestamp.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
     warn("Timestamp not available for " + identifying_info(entity) + ", using current time")
     return str(datetime.now().isoformat()) + "Z"

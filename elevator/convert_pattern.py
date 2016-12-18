@@ -15,6 +15,7 @@ from cybox.objects.archive_file_object import ArchiveFile
 from elevator.utils import *
 from elevator.vocab_mappings import *
 from elevator.ids import *
+from elevator.options import get_option_value
 
 import re
 
@@ -45,10 +46,13 @@ class ComparisonExpression():
     def replace_placeholder_with_idref_pattern(self, idref):
         return False, self
 
+    def partition_according_to_object_path(self):
+        return self
+
 class BooleanExpression():
-    def __init__(self, operator, negated=False):
+    def __init__(self, operator, operands,negated=False):
         self.operator = operator
-        self.operands = []
+        self.operands = operands
         self.negated = negated
 
     def add_operand(self, operand):
@@ -76,6 +80,26 @@ class BooleanExpression():
         self.operands = new_operands
         return change_made, self
 
+    def partition_according_to_object_path(self):
+        subexpressions = []
+        results = []
+        for term in self.operands:
+            term_was_appended = False
+            for sub in subexpressions:
+                if term.root_type == sub[0].root_type:
+                    sub.append(term)
+                    term_was_appended = True
+                    break
+            if not term_was_appended:
+                subexpressions.append([term])
+        for x in subexpressions:
+            if len(x) == 1:
+                results.append(x[0])
+            else:
+                results.append(create_boolean_expression(self.operator, x))
+        return ObservableExpression(self.operator, results)
+
+
 class IdrefPlaceHolder():
     def __init__(self, idref):
         self.idref = idref
@@ -92,6 +116,9 @@ class IdrefPlaceHolder():
         else:
             return False, self
 
+    def partition_according_to_object_path(self):
+        error("Placeholders should be resolved")
+
 class UnconvertedTerm():
     def __init__(self, term):
         self.unconverted_term = term
@@ -105,15 +132,33 @@ class UnconvertedTerm():
     def replace_placeholder_with_idref_pattern(self, idref):
         return False, self
 
+    def partition_according_to_object_path(self):
+        return self
+
+class ObservableExpression:
+    def __init__(self, operator, operands):
+        self.operator = operator
+        self.operands = operands
+
+    def to_string(self):
+        sub_exprs = []
+        if len(self.operands) == 1:
+            return "[" + self.operands[0].to_string() + "]"
+        for o in self.operands:
+            sub_exprs.append("[" + o.to_string() + "]")
+        return (" " + self.operator + " ").join(sub_exprs)
+
+    def contains_placeholder(self):
+        for args in self.operands:
+            if args.contains_placeholder():
+                error("Observable Expressions should not contain placeholders")
 
 
 def create_boolean_expression(operator, operands, negated=False):
     if len(operands) == 1:
         return operands[0]
-    exp = BooleanExpression(operator, negated)
+    exp = BooleanExpression(operator, [], negated)
     for arg in operands:
-        if not arg:
-            warn("arg is null")
         if not isinstance(arg, IdrefPlaceHolder) and not isinstance(arg, UnconvertedTerm):
             if not hasattr(exp, "root_type"):
                 exp.root_type = arg.root_type

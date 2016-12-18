@@ -14,6 +14,7 @@ except ImportError:
 
 from elevator import elevate_file
 from elevator.utils import iterpath
+from elevator.options import initialize_options, set_option_value
 
 
 TESTED_XML_FILES = []
@@ -35,6 +36,9 @@ class MappingContentTest(unittest.TestCase):
 def idiom_mappings(xml_file_path, stored_json):
     """Test fresh conversion from XML to JSON matches stored JSON samples."""
     print("Checking - " + xml_file_path)
+
+    initialize_options()
+    set_option_value("no_incidents", False)
 
     converted_json = elevate_file(xml_file_path)
     io = StringIO(converted_json)
