@@ -2,16 +2,16 @@
     "id": "bundle--8fab937e-b694-11e3-b71c-0800271e87d2",
     "indicators": [
         {
-            "created": "2016-11-01T14:26:28.380460Z",
+            "created": "2016-12-20T13:53:49.787928Z",
             "id": "indicator--d81f86b9-975b-bc0b-775e-810c5ad45a4f",
             "labels": [
                 "benign"
             ],
-            "modified": "2016-11-01T14:26:28.380460Z",
+            "modified": "2016-12-20T13:53:49.787928Z",
             "name": "Malicious site hosting downloader",
-            "pattern": "url:value = 'http://x4z9arb.cn/4712'",
+            "pattern": "[url:value = 'http://x4z9arb.cn/4712']",
             "type": "indicator",
-            "valid_from": "2016-11-01T14:26:28.380573Z",
+            "valid_from": "2016-12-20T13:53:49.788009Z",
             "version": 1
         }
     ],

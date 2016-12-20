@@ -1311,6 +1311,8 @@ def finalize_bundle(bundle_instance):
                 if final_pattern:
                     if final_pattern.contains_placeholder():
                         warn("At least one PLACEHOLDER idref was not resolved in {id}".format(id=ind["id"]))
+                    if final_pattern.contains_unconverted_term():
+                        warn("At least one observable could not be converted in {id}".format(id=ind["id"]))
                     if isinstance(final_pattern, ComparisonExpression):
                         ind["pattern"] = "[" + final_pattern.to_string() + "]"
                     else:

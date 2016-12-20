@@ -9,7 +9,7 @@
             ],
             "modified": "2014-05-08T09:00:00.000000Z",
             "name": "IP Address for known C2 channel",
-            "pattern": "ipv4-addr:value = '10.0.0.0'",
+            "pattern": "[ipv4-addr:value = '10.0.0.0']",
             "type": "indicator",
             "valid_from": "2014-05-08T09:00:00.000000Z",
             "version": 1
@@ -17,9 +17,9 @@
     ],
     "relationships": [
         {
-            "created": "2016-11-01T14:26:28.371603Z",
-            "id": "relationship--c43b77e8-8c21-4408-8e81-a5e76f52de9d",
-            "modified": "2016-11-01T14:26:28.371603Z",
+            "created": "2014-05-08T09:00:00.000000Z",
+            "id": "relationship--3b2afee9-d080-4d5a-8c4f-12bc7e8cc2ca",
+            "modified": "2014-05-08T09:00:00.000000Z",
             "relationship_type": "indicates",
             "source_ref": "indicator--53fe3b22-0201-47cf-85d0-97c02164528d",
             "type": "relationship",

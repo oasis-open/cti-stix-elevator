@@ -2,11 +2,11 @@
     "id": "bundle--cc0ca596-70e6-4dac-9bef-603166d17db8",
     "observed_data": [
         {
-            "created": "2016-10-31T15:07:48.783057Z",
-            "first_observed": "2016-10-31T15:07:48.783057Z",
+            "created": "2016-12-20T13:53:49.689992Z",
+            "first_observed": "2016-12-20T13:53:49.689992Z",
             "id": "observed-data--c8c32b6e-2ea8-51c4-6446-7f5218072f27",
-            "last_observed": "2016-10-31T15:07:48.783057Z",
-            "modified": "2016-10-31T15:07:48.783057Z",
+            "last_observed": "2016-12-20T13:53:49.689992Z",
+            "modified": "2016-12-20T13:53:49.689992Z",
             "number_observed": 1,
             "objects": {
                 "0": {
@@ -18,11 +18,11 @@
             "version": 1
         },
         {
-            "created": "2016-10-31T15:07:48.783162Z",
-            "first_observed": "2016-10-31T15:07:48.783162Z",
+            "created": "2016-12-20T13:53:49.690074Z",
+            "first_observed": "2016-12-20T13:53:49.690074Z",
             "id": "observed-data--b57aa65f-9598-04fb-a9d1-5094c36d5dc4",
-            "last_observed": "2016-10-31T15:07:48.783162Z",
-            "modified": "2016-10-31T15:07:48.783162Z",
+            "last_observed": "2016-12-20T13:53:49.690074Z",
+            "modified": "2016-12-20T13:53:49.690074Z",
             "number_observed": 1,
             "objects": {
                 "0": {
@@ -34,11 +34,11 @@
             "version": 1
         },
         {
-            "created": "2016-10-31T15:07:48.783219Z",
-            "first_observed": "2016-10-31T15:07:48.783219Z",
+            "created": "2016-12-20T13:53:49.690133Z",
+            "first_observed": "2016-12-20T13:53:49.690133Z",
             "id": "observed-data--19c16346-0eb4-99e2-00bb-4ec3ed174cac",
-            "last_observed": "2016-10-31T15:07:48.783219Z",
-            "modified": "2016-10-31T15:07:48.783219Z",
+            "last_observed": "2016-12-20T13:53:49.690133Z",
+            "modified": "2016-12-20T13:53:49.690133Z",
             "number_observed": 1,
             "objects": {
                 "0": {

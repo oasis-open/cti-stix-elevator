@@ -2,7 +2,7 @@
     "campaigns": [
         {
             "created": "2015-05-07T14:22:14.760144Z",
-            "created_by_ref": "identity--c91d042d-7ad8-423e-9e8f-aea3409544c2",
+            "created_by_ref": "identity--221a2371-d2cc-491b-a1a2-2aa124eaed0f",
             "id": "campaign--1855cb8a-d96c-4859-a450-abb1e7c061f2",
             "modified": "2015-05-07T14:22:14.760144Z",
             "name": "Campaign against ICS",
@@ -10,13 +10,13 @@
             "version": 1
         }
     ],
-    "created_by_ref": "identity--c91d042d-7ad8-423e-9e8f-aea3409544c2",
     "id": "bundle--50578bc7-bb17-4f31-abf2-d5827d131368",
     "identities": [
         {
-            "created": "2016-10-31T15:07:49.127736Z",
-            "id": "identity--c91d042d-7ad8-423e-9e8f-aea3409544c2",
-            "modified": "2016-10-31T15:07:49.127736Z",
+            "created": "2016-12-20T13:53:50.010600Z",
+            "id": "identity--221a2371-d2cc-491b-a1a2-2aa124eaed0f",
+            "identity_class": "unknown",
+            "modified": "2016-12-20T13:53:50.010600Z",
             "name": "Government Sharing Program - GSP",
             "type": "identity",
             "version": 1
@@ -25,7 +25,7 @@
     "reports": [
         {
             "created": "2015-05-07T14:22:14.760467Z",
-            "created_by_ref": "identity--c91d042d-7ad8-423e-9e8f-aea3409544c2",
+            "created_by_ref": "identity--221a2371-d2cc-491b-a1a2-2aa124eaed0f",
             "description": "Adversary Alpha has a campaign against the ICS sector!\n\nINTENT:\nCampaign Characterization",
             "id": "report--ab11f431-4b3b-457c-835f-59920625fe65",
             "labels": [
@@ -41,7 +41,7 @@
         },
         {
             "created": "2015-05-07T14:22:14.760756Z",
-            "created_by_ref": "identity--c91d042d-7ad8-423e-9e8f-aea3409544c2",
+            "created_by_ref": "identity--221a2371-d2cc-491b-a1a2-2aa124eaed0f",
             "description": "\n\nINTENT:\nIndicators - Malware Artifacts",
             "id": "report--f14804d5-3ee1-4a0e-b0f3-f9a643855ba5",
             "labels": [

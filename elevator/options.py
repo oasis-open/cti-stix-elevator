@@ -36,7 +36,7 @@ class ElevatorOptions(object):
     def __init__(self, cmd_args=None, file_=None, no_incidents=True,
                  squirrel_gaps=True, infrastructure=False,
                  package_created_by_id=None, default_timestamp=None,
-                 validator_args="--lax --strict-types", verbose=False,
+                 validator_args="--strict-types", verbose=False,
                  enable="", disable=""):
 
         _unique_instance = None

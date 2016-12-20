@@ -49,6 +49,9 @@ class ComparisonExpression():
     def partition_according_to_object_path(self):
         return self
 
+    def contains_unconverted_term(self):
+        return False
+
 class BooleanExpression():
     def __init__(self, operator, operands,negated=False):
         self.operator = operator
@@ -86,7 +89,7 @@ class BooleanExpression():
         for term in self.operands:
             term_was_appended = False
             for sub in subexpressions:
-                if term.root_type == sub[0].root_type:
+                if not hasattr(term, "root_type") or term.root_type == sub[0].root_type:
                     sub.append(term)
                     term_was_appended = True
                     break
@@ -98,6 +101,12 @@ class BooleanExpression():
             else:
                 results.append(create_boolean_expression(self.operator, x))
         return ObservableExpression(self.operator, results)
+
+    def contains_unconverted_term(self):
+        for args in self.operands:
+            if args.contains_unconverted_term():
+                return True
+        return False
 
 
 class IdrefPlaceHolder():
@@ -119,12 +128,15 @@ class IdrefPlaceHolder():
     def partition_according_to_object_path(self):
         error("Placeholders should be resolved")
 
+    def contains_unconverted_term(self):
+        return False
+
 class UnconvertedTerm():
-    def __init__(self, term):
-        self.unconverted_term = term
+    def __init__(self, term_info):
+        self.term_info = term_info
 
     def to_string(self):
-        return "uncoverted_term:" + str(self.unconverted_term)
+        return "unconverted_term:" + str(self.term_info)
 
     def contains_placeholder(self):
         return False
@@ -134,6 +146,10 @@ class UnconvertedTerm():
 
     def partition_according_to_object_path(self):
         return self
+
+    def contains_unconverted_term(self):
+        return True
+
 
 class ObservableExpression:
     def __init__(self, operator, operands):
@@ -153,13 +169,19 @@ class ObservableExpression:
             if args.contains_placeholder():
                 error("Observable Expressions should not contain placeholders")
 
+    def contains_unconverted_term(self):
+        for args in self.operands:
+            if args.contains_unconverted_term():
+                return True
+        return False
+
 
 def create_boolean_expression(operator, operands, negated=False):
     if len(operands) == 1:
         return operands[0]
     exp = BooleanExpression(operator, [], negated)
     for arg in operands:
-        if not isinstance(arg, IdrefPlaceHolder) and not isinstance(arg, UnconvertedTerm):
+        if not isinstance(arg, IdrefPlaceHolder) and not isinstance(arg, UnconvertedTerm) and hasattr(arg, "root_type"):
             if not hasattr(exp, "root_type"):
                 exp.root_type = arg.root_type
             elif exp.root_type and (exp.root_type != arg.root_type):
@@ -522,8 +544,10 @@ def convert_windows_executable_file_to_pattern(file):
             expressions.append(create_boolean_expression("AND", sections_expressions))
     if file.exports:
         warn("The exports property of WinExecutableFileObj is not part of Cybox 3.0")
+        expressions.append(UnconvertedTerm(file.exports))
     if file.imports:
         warn("The imports property of WinExecutableFileObj is not part of Cybox 3.0")
+        expressions.append(UnconvertedTerm(file.imports))
     if expressions:
         return create_boolean_expression("AND", expressions)
 
@@ -695,6 +719,7 @@ def convert_windows_service_to_pattern(service):
             expressions.append(create_boolean_expression("OR", description_expressions))
     if hasattr(service, "service_dll") and service.service_dll:
         warn("WinServiceObject.service_dll cannot be converted to a pattern, yet.")
+        expressions.append(UnconvertedTerm(service.service_dll))
     if expressions:
         return create_boolean_expression("AND", expressions)
 
@@ -725,8 +750,6 @@ def convert_observable_composition_to_pattern(obs_comp, bundle_instance, observa
         term = convert_observable_to_pattern(obs, bundle_instance, observable_mapping)
         if term:
             expressions.append(term)
-        else:
-            warn("No term was yielded for {0}".format((obs.id_ if obs.id_ else obs.idref)))
     if expressions:
         return create_boolean_expression(obs_comp.operator, expressions)
     else:
@@ -765,6 +788,9 @@ def convert_object_to_pattern(obj, obs_id):
                                                                               object_path_root)])
         else:
             expression = convert_custom_properties(prop.custom_properties, object_path_root)
+    if not expression:
+        warn("No pattern term was created from {id}".format(id=obs_id))
+        expression = UnconvertedTerm(obs_id)
     return expression
 
 
@@ -928,7 +954,6 @@ def remove_pattern_objects(bundle_instance):
         if new_id and len(new_id) == 1:
             all_new_ids_with_patterns.append(new_id[0])
 
-    print(all_new_ids_with_patterns)
     if not KEEP_OBSERVABLE_DATA_USED_IN_PATTERNS and "observed_data" in bundle_instance:
         remaining_observed_data = []
         for obs in bundle_instance["observed_data"]:
