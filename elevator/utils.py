@@ -4,6 +4,7 @@ from numbers import Number
 import six
 import sys
 
+from elevator.options import msg_id_enabled
 
 def info(fmt, *args):
     msg = fmt % args
@@ -28,6 +29,9 @@ def error(fmt, *args):
         msg = msg.encode(encoding='utf8')
     sys.stderr.write("[ERROR] {message}\n".format(message=msg))
 
+def maybe_warn(msg_id, msg):
+    if msg_id_enabled(msg_id):
+        warn("{msg_id}: {msg}", format(msg_id=msg_id, msg=msg))
 
 def identifying_info(stix1x_obj):
     if stix1x_obj:

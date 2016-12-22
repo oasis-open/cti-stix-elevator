@@ -71,12 +71,10 @@ class ElevatorOptions(object):
         # and convert check code numbers to names
         if self.disable:
             self.disable = self.disable.split(",")
-            self.disable = [CHECK_CODES[x] if x in CHECK_CODES else x
-                            for x in self.disable]
+
         if self.enable:
             self.enable = self.enable.split(",")
-            self.enable = [CHECK_CODES[x] if x in CHECK_CODES else x
-                           for x in self.enable]
+
 
 def initialize_options(elevator_args=None):
     global ALL_OPTIONS
@@ -106,6 +104,13 @@ def set_option_value(option_name, option_value):
         setattr(ALL_OPTIONS, option_name, option_value)
     else:
         error("options not initialized")
+
+def msg_id_enabled(msg_id):
+    if not get_option_value("disable"):
+        return msg_id in get_option_value("enable")
+    else:
+        return not (msg_id in get_option_value("disable"))
+
 
 
 # Mapping of check code numbers to names

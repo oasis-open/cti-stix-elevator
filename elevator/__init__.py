@@ -25,12 +25,11 @@ from elevator.options import get_validator_options, initialize_options, get_opti
 from elevator.version import __version__  # noqa
 
 
-def elevate_file(fn, elevator_args=None):
+def elevate_file(fn):
     warn("WARNING: Results produced by the stix-elevator are not for production purposes.")
     clear_id_mapping()
     clear_pattern_mapping()
 
-    initialize_options(elevator_args)
     validator_options = get_validator_options()
 
     try:

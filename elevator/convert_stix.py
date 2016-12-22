@@ -114,7 +114,7 @@ def process_description_and_short_description(so, entity):
         so["description"] += convert_to_str(process_structured_text_list(entity.descriptions))
         if (get_option_value("squirrel_gaps") and hasattr(entity, "short_descriptions") and
             entity.short_description is not None):
-            warn("The Short_Description property is no longer supported in STIX.  Added the text to the description property")
+            maybe_warn(301, "The Short_Description property is no longer supported in STIX.  Added the text to the description property")
             so["description"] += "\nShort Description: \n" + convert_to_str(
                 process_structured_text_list(entity.short_descriptions))
     elif hasattr(entity, "description") and entity.description is not None:
@@ -800,7 +800,11 @@ def convert_indicator(indicator, bundle_instance, parent_created_by_ref, parent_
         add_to_pattern_cache(indicator.id_, indicator_instance["pattern"])
     if indicator.composite_indicator_expression is not None:
         expressions = []
-        for ind in indicator.composite_indicator_expression.indicator:
+        if stix.__version__ >= "1.2.0.0":
+            sub_indicators = indicator.composite_indicator_expression.indicator
+        else:
+            sub_indicators = indicator.composite_indicator_expression
+        for ind in sub_indicators:
             term = convert_indicator_to_pattern(ind, bundle_instance, OBSERVABLE_MAPPING)
             if term:
                 expressions.append(term)

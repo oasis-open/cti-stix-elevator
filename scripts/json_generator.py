@@ -7,6 +7,7 @@ import os
 import sys
 
 from elevator import elevate_file
+from elevator.options import initialize_options, set_option_value
 
 # The output is set to the own json-idioms container.
 # WARNING: This will overwrite the contents inside the idioms-json directory.
@@ -15,23 +16,32 @@ from elevator import elevate_file
 def main():
 
     directory = os.path.dirname(__file__)
-    path, last_dir = os.path.split(directory)
+    project_path, last_dir = os.path.split(directory)
 
-    xml_idioms_dir = os.path.join(path, "idioms-xml")
-    xml_idioms_dir = os.path.abspath(xml_idioms_dir)
+    if len(sys.argv) > 1:
+        json_dir = sys.argv[1]
+    else:
+        json_dir = os.path.join(project_path, "idioms-json")
+        json_dir = os.path.abspath(json_dir)
 
-    json_idioms_dir = os.path.join(path, "idioms-json")
-    json_idioms_dir = os.path.abspath(json_idioms_dir)
+    if len(sys.argv) > 2:
+        xml_dir = sys.argv[2]
+    else:
+        xml_dir = os.path.join(project_path, "idioms-xml")
+        xml_dir = os.path.abspath(xml_dir)
 
-    if not os.path.exists(json_idioms_dir):
-        os.makedirs(json_idioms_dir)
+    if not os.path.exists(json_dir):
+        os.makedirs(json_dir)
 
-    for filename in os.listdir(xml_idioms_dir):
+    for filename in os.listdir(xml_dir):
         file_and_ext = filename.split(".")
-        xml_path = os.path.join(xml_idioms_dir, filename)
+        xml_path = os.path.join(xml_dir, filename)
 
-        destination = os.path.join(json_idioms_dir, str(file_and_ext[0]) + ".json")
+        destination = os.path.join(json_dir, str(file_and_ext[0]) + ".json")
         destination = os.path.abspath(destination)
+
+        initialize_options()
+        set_option_value("no_incidents", False)
 
         if file_and_ext[1] == "xml":
             sys.stdout.write(xml_path + "\n")

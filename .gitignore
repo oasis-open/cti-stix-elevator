@@ -49,3 +49,6 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
+# project specific
+
+other_xml_files/stix-*.xml

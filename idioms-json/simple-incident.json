@@ -1,5 +1,16 @@
 {
     "id": "bundle--ec96d2a6-5a95-48f2-93c0-b3b2198633ca",
+    "incidents": [
+        {
+            "created": "2014-11-18T23:40:08.061362Z",
+            "description": "Intrusion into enterprise network",
+            "id": "incident--8236b4a2-abe0-4b56-9347-288005c4bb92",
+            "modified": "2014-11-18T23:40:08.061362Z",
+            "name": "Breach of Cyber Tech Dynamics",
+            "type": "incident",
+            "version": 1
+        }
+    ],
     "spec_version": "2.0",
     "type": "bundle"
 }

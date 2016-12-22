@@ -248,6 +248,11 @@ _CLASS_NAME_MAPPING = {"File": "file",
                        "WinExecutableFile": "file:extended_properties.windows_pebinary_ext",
                        "ArchiveFile": "file:extended_properties.archive_ext"}
 
+_ADDRESS_NAME_MAPPING = {Address.CAT_IPV4: "ipv4-addr",
+                         Address.CAT_IPV6: "ipv6-addr",
+                         Address.CAT_MAC: "mac-addr",
+                         Address.CAT_EMAIL: "email-addr"}
+
 
 # address, network_connection
 
@@ -256,8 +261,10 @@ def convert_cybox_class_name_to_object_path_root_name(instance):
     class_name = instance.__class__.__name__
     if class_name in _CLASS_NAME_MAPPING:
         return _CLASS_NAME_MAPPING[class_name]
+    elif class_name == "Address" and instance.category in _ADDRESS_NAME_MAPPING:
+        return _ADDRESS_NAME_MAPPING[class_name]
     else:
-        error("Cannot convert cybox 2.x class name {name} to an object_path_root_name".format(name=class_name))
+        error("Cannot convert CybOX 2.x class name {name} to an object_path_root_name".format(name=class_name))
         return None
 
 
@@ -544,10 +551,10 @@ def convert_windows_executable_file_to_pattern(file):
             expressions.append(create_boolean_expression("AND", sections_expressions))
     if file.exports:
         warn("The exports property of WinExecutableFileObj is not part of Cybox 3.0")
-        expressions.append(UnconvertedTerm(file.exports))
+        expressions.append(UnconvertedTerm("WinExecutableFileObj.exports"))
     if file.imports:
         warn("The imports property of WinExecutableFileObj is not part of Cybox 3.0")
-        expressions.append(UnconvertedTerm(file.imports))
+        expressions.append(UnconvertedTerm("WinExecutableFileObj.imports"))
     if expressions:
         return create_boolean_expression("AND", expressions)
 
@@ -719,7 +726,7 @@ def convert_windows_service_to_pattern(service):
             expressions.append(create_boolean_expression("OR", description_expressions))
     if hasattr(service, "service_dll") and service.service_dll:
         warn("WinServiceObject.service_dll cannot be converted to a pattern, yet.")
-        expressions.append(UnconvertedTerm(service.service_dll))
+        expressions.append(UnconvertedTerm("WinServiceObject.service_dll"))
     if expressions:
         return create_boolean_expression("AND", expressions)
 
@@ -757,37 +764,41 @@ def convert_observable_composition_to_pattern(obs_comp, bundle_instance, observa
 
 def convert_object_to_pattern(obj, obs_id):
     prop = obj.properties
+    expression = None
 
-    if isinstance(prop, Address):
-        expression = convert_address_to_pattern(prop)
-    elif isinstance(prop, URI):
-        expression = convert_uri_to_pattern(prop)
-    elif isinstance(prop, EmailMessage):
-        expression = convert_email_message_to_pattern(prop)
-    elif isinstance(prop, File):
-        expression = convert_file_to_pattern(prop)
-    elif isinstance(prop, WinRegistryKey):
-        expression = convert_registry_key_to_pattern(prop)
-    elif isinstance(prop, Process):
-        expression = convert_process_to_pattern(prop)
-    elif isinstance(prop, DomainName):
-        expression = convert_domain_name_to_pattern(prop)
-    elif isinstance(prop, Mutex):
-        expression = convert_mutex_to_pattern(prop)
-#    elif isinstance(prop, NetworkConnection):
-#        expression = convert_network_connection_to_pattern(prop)
-    else:
-        warn("{0} found in {1} cannot be converted to a pattern, yet.".format(str(obj.properties), obs_id))
-        expression = UnconvertedTerm(obs_id)
-    object_path_root = convert_cybox_class_name_to_object_path_root_name(prop)
-    if prop.custom_properties is not None and object_path_root:
-        if expression:
-            expression = create_boolean_expression("AND",
-                                                   [expression,
-                                                    convert_custom_properties(prop.custom_properties,
-                                                                              object_path_root)])
+    if prop:
+        if isinstance(prop, Address):
+            expression = convert_address_to_pattern(prop)
+        elif isinstance(prop, URI):
+            expression = convert_uri_to_pattern(prop)
+        elif isinstance(prop, EmailMessage):
+            expression = convert_email_message_to_pattern(prop)
+        elif isinstance(prop, File):
+            expression = convert_file_to_pattern(prop)
+        elif isinstance(prop, WinRegistryKey):
+            expression = convert_registry_key_to_pattern(prop)
+        elif isinstance(prop, Process):
+            expression = convert_process_to_pattern(prop)
+        elif isinstance(prop, DomainName):
+            expression = convert_domain_name_to_pattern(prop)
+        elif isinstance(prop, Mutex):
+            expression = convert_mutex_to_pattern(prop)
+    #    elif isinstance(prop, NetworkConnection):
+    #        expression = convert_network_connection_to_pattern(prop)
         else:
-            expression = convert_custom_properties(prop.custom_properties, object_path_root)
+            warn("{0} found in {1} cannot be converted to a pattern, yet.".format(str(obj.properties), obs_id))
+            expression = UnconvertedTerm(obs_id)
+
+        if prop.custom_properties is not None:
+            object_path_root = convert_cybox_class_name_to_object_path_root_name(prop)
+            if object_path_root:
+                if expression:
+                    expression = create_boolean_expression("AND",
+                                                           [expression,
+                                                            convert_custom_properties(prop.custom_properties,
+                                                                                      object_path_root)])
+                else:
+                    expression = convert_custom_properties(prop.custom_properties, object_path_root)
     if not expression:
         warn("No pattern term was created from {id}".format(id=obs_id))
         expression = UnconvertedTerm(obs_id)

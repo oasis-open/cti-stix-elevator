@@ -10,7 +10,7 @@ import argparse
 import textwrap
 
 from elevator import elevate_file
-from elevator.options import initialize_options, get_option_value
+from elevator.options import initialize_options
 from elevator.version import __version__
 
 
@@ -147,7 +147,8 @@ def main():
     elevator_parser = _get_arg_parser()
     elevator_args = elevator_parser.parse_args()
 
-    print(elevate_file(elevator_args.file_, elevator_args))
+    initialize_options(elevator_args)
+    print(elevate_file(elevator_args.file_))
 
 
 if __name__ == '__main__':
