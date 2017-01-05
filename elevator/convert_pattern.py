@@ -22,9 +22,11 @@ KEEP_OBSERVABLE_DATA_USED_IN_PATTERNS = False
 
 KEEP_INDICATORS_USED_IN_COMPOSITE_INDICATOR_EXPRESSION = True
 
+
 def get_root_from_object_path(lhs):
     path_as_parts = lhs.split(":")
     return path_as_parts[0]
+
 
 class ComparisonExpression():
     def __init__(self, operator, lhs, rhs, negated=False):
@@ -36,6 +38,7 @@ class ComparisonExpression():
 
     def to_string(self):
         return self.lhs + (" NOT" if self.negated else "") + " " + self.operator + " " + self.rhs
+
 
 class BooleanExpression():
     def __init__(self, operator, negated=False):
@@ -180,6 +183,7 @@ def create_term_with_regex(lhs, condition, rhs, negated):
         pattern = " /" + rhs + "/"
     return lhs + (" NOT MATCHES " if negated else " MATCHES ") + pattern
 
+
 def create_term_with_range(lhs, condition, rhs, negated=False):
     # TODO: handle negated
     if not isinstance(rhs, list) or len(rhs) != 2:
@@ -252,6 +256,7 @@ def convert_address_to_pattern(add):
 
 def convert_uri_to_pattern(uri):
     return create_term("url:value", uri.value.condition, uri.value.value)
+
 
 # NOTICE:  The format of these PROPERTIES is different than the others in this file!!!!!!
 _EMAIL_HEADER_PROPERTIES = [["email-message:subject", ["subject"]],
@@ -479,6 +484,7 @@ def convert_file_to_pattern(file):
             warn("No ArchiveFile properties found in " + str(file))
     return " AND ".join(expressions)
 
+
 _REGISTRY_KEY_VALUES_PROPERTIES = [["data", "win-registry-key:values[*].data"],
                                    ["name", "win-registry-key:values[*].name"],
                                    ["datatype", "win-registry-key:values[*].data_type"]]
@@ -535,6 +541,7 @@ def convert_windows_process_to_pattern(process):
         for h in process.handle_list:
             warn("Window handles are not a part of CybOX 3.0")
     return expression
+
 
 _WINDOWS_PROCESS_PROPERTIES = \
     [["service_name", "process:extension_data.windows_service_ext.service_name"],
@@ -795,10 +802,10 @@ def remove_pattern_objects(bundle_instance):
                 remaining_observed_data.append(obs)
         bundle_instance["observed_data"] = remaining_observed_data
 
- # TODO: only remove indicators that were involved ONLY as sub-indicators within composite indicator expressions
- #   if not KEEP_INDICATORS_USED_IN_COMPOSITE_INDICATOR_EXPRESSION and "indicators" in bundle_instance:
- #       remaining_indicators = []
- #       for ind in bundle_instance["indicators"]:
- #           if ind["id"] not in all_new_ids_with_patterns:
- #               remaining_indicators.append(ind)
- #       bundle_instance["indicators"] = remaining_indicators
+# TODO: only remove indicators that were involved ONLY as sub-indicators within composite indicator expressions
+#   if not KEEP_INDICATORS_USED_IN_COMPOSITE_INDICATOR_EXPRESSION and "indicators" in bundle_instance:
+#       remaining_indicators = []
+#       for ind in bundle_instance["indicators"]:
+#           if ind["id"] not in all_new_ids_with_patterns:
+#               remaining_indicators.append(ind)
+#       bundle_instance["indicators"] = remaining_indicators

@@ -112,7 +112,7 @@ def process_description_and_short_description(so, entity):
     if hasattr(entity, "descriptions") and entity.descriptions is not None:
         so["description"] += convert_to_str(process_structured_text_list(entity.descriptions))
         if (SQUIRREL_GAPS_IN_DESCRIPTIONS and hasattr(entity, "short_descriptions") and
-            entity.short_description is not None):
+                entity.short_description is not None):
             warn("The Short_Description property is no longer supported in STIX.  Added the text to the description property")
             so["description"] += "\nShort Description: \n" + convert_to_str(
                 process_structured_text_list(entity.short_descriptions))
@@ -125,8 +125,8 @@ def process_description_and_short_description(so, entity):
 def create_basic_object(stix20_type, stix1x_obj, parent_timestamp=None, parent_id=None, id_used=False):
     instance = {"type": stix20_type}
     instance["id"] = generate_stix20_id(stix20_type, stix1x_obj.id_ if (stix1x_obj and
-                                                                       hasattr(stix1x_obj, "id_") and
-                                                                       stix1x_obj.id_ ) else parent_id, id_used)
+                                                                        hasattr(stix1x_obj, "id_") and
+                                                                        stix1x_obj.id_) else parent_id, id_used)
     instance["version"] = 1  # need to see about versioning
     timestamp = convert_timestamp(stix1x_obj, parent_timestamp)
     instance["created"] = timestamp
@@ -641,7 +641,8 @@ def convert_identity(identity, bundle_instance, parent_timestamp=None, parent_id
             # convert_ciq_addresses(ciq_info.addresses, identity_instance)
             # add other properties to contact_information
     if identity.related_identities:
-        warn("All related identitiies relationships {id} are assumed to not represent STIX 1.2 versioning".format(id=((" of " + identity.id_) if identity.id_ else "")))
+        msg = "All related identitiies relationships {id} are assumed to not represent STIX 1.2 versioning"
+        warn(msg.format(id=((" of " + identity.id_) if identity.id_ else "")))
         handle_relationship_to_refs(identity.related_identities, identity_instance["id"], bundle_instance,
                                     "related-to", parent_timestamp)
     finish_basic_object(identity.id_, identity_instance, identity)
@@ -732,7 +733,8 @@ def convert_test_mechanism(indicator, indicator_instance):
             for tm in indicator.test_mechanisms:
                 if hasattr(indicator_instance, "pattern"):
                     # TODO: maybe put in description
-                    warn("Only one alternative test mechanism allowed for {0} in STIX 2.0 - used first one, which was {1}".format(indicator_instance["id"], indicator_instance["pattern_lang"]))
+                    msg = "Only one alternative test mechanism allowed for {0} in STIX 2.0 - used first one, which was {1}"
+                    warn(msg.format(indicator_instance["id"], indicator_instance["pattern_lang"]))
                 else:
                     if isinstance(tm, YaraTestMechanism):
 
@@ -788,20 +790,20 @@ def convert_indicator(indicator, bundle_instance, parent_created_by_ref):
         error("Indicator {id} has an observable and composite_indictor_expression which is illegal".format(id=indicator.id_))
     if indicator.observable is not None:
         indicator_instance["pattern"] = (("NOT (" if negate_indicator(indicator) else "") +
-                                        convert_observable_to_pattern(indicator.observable, bundle_instance,
-                                                                      OBSERVABLE_MAPPING) +
-                                        (")" if negate_indicator(indicator) else ""))
+                                         convert_observable_to_pattern(indicator.observable, bundle_instance,
+                                                                       OBSERVABLE_MAPPING) +
+                                         (")" if negate_indicator(indicator) else ""))
         add_to_pattern_cache(indicator.id_, indicator_instance["pattern"])
     if indicator.composite_indicator_expression is not None:
         expression = ""
         for ind in indicator.composite_indicator_expression.indicator:
             ind_expression = (("NOT (" if ind.negate else "") +
-                                convert_indicator_to_pattern(ind, bundle_instance, OBSERVABLE_MAPPING) +
-                                (")" if ind.negate else ""))
+                              convert_indicator_to_pattern(ind, bundle_instance, OBSERVABLE_MAPPING) +
+                              (")" if ind.negate else ""))
             expression += ((" " + indicator.composite_indicator_expression.operator + " " if expression != "" else "") +
-                            ind_expression)
+                           ind_expression)
         indicator_instance["pattern"] = expression
-        #add_to_pattern_cache(indicator.id_, indicator_instance["pattern"])
+        # add_to_pattern_cache(indicator.id_, indicator_instance["pattern"])
     if "pattern" not in indicator_instance:
         # STIX doesn't handle multiple patterns for indicators
         convert_test_mechanism(indicator, indicator_instance)
@@ -809,7 +811,7 @@ def convert_indicator(indicator, bundle_instance, parent_created_by_ref):
                                                           bundle_instance, parent_created_by_ref)
     # process information source before any relationships
     if indicator.suggested_coas is not None:
-        warn("Using related-to for the suggested COAs of {id}".format(id=indicator.id_) )
+        warn("Using related-to for the suggested COAs of {id}".format(id=indicator.id_))
         handle_relationship_to_refs(indicator.suggested_coas, indicator_instance["id"], bundle_instance,
                                     "related-to", indicator.timestamp, indicator_created_by_ref)
     if indicator.related_campaigns is not None:
@@ -1138,7 +1140,7 @@ def convert_identity_for_victim_target(identity, ttp, bundle_instance, ttp_gener
     return identity_instance
 
 
-def convert_victim_targeting(victim_targeting, ttp, bundle_instance, ttp_generated, parent_created_by_ref ):
+def convert_victim_targeting(victim_targeting, ttp, bundle_instance, ttp_generated, parent_created_by_ref):
     if victim_targeting.targeted_systems:
         for v in victim_targeting.targeted_systems:
             warn("Targeted systems on {id} are not a victim target in STIX 2.0".format(id=ttp.id_))
@@ -1324,8 +1326,6 @@ def finalize_bundle(bundle_instance):
                 info("Found {0} replaced by {1}.".format(value, stix20_id[0]))
             elif reference_needs_fixing(value) and not exists_id_key(value):
                 warn("1.X ID: {0} was not mapped to 2.0 ID.".format(value))
-
-
 
     for item in to_remove:
         operation_on_path(bundle_instance, item, "", op=2)
