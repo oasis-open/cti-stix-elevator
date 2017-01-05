@@ -18,6 +18,7 @@ dist/
 *.egg-info
 
 .tox
+.cache
 
 docs/_build
 
