@@ -246,10 +246,10 @@ def convert_cybox_object(obj):
     elif isinstance(prop, NetworkConnection):
         objs[0] = convert_network_connection(prop)
     else:
-        warn("{obj} not handled yet".format(obj=str(type(obj))))
+        warn("{obj} not handled yet".format(obj=str(type(prop))))
         return None
     if not objs:
-        warn("{obj} didn't yield any STIX 2.0 object".format(obj=str(prop)))
+        warn("{obj} didn't yield any STIX 2.0 object".format(obj=str(type(prop))))
         return None
     else:
         primary_obj = objs[0]

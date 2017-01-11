@@ -89,7 +89,11 @@ class BooleanExpression():
         for term in self.operands:
             term_was_appended = False
             for sub in subexpressions:
-                if not hasattr(term, "root_type") or term.root_type == sub[0].root_type:
+                if not hasattr(term, "root_type") and not hasattr(sub[0], "root_type"):
+                    sub.append(term)
+                    term_was_appended = True
+                    break
+                elif hasattr(term, "root_type") and hasattr(sub[0], "root_type") and term.root_type == sub[0].root_type:
                     sub.append(term)
                     term_was_appended = True
                     break
