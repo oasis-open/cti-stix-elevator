@@ -128,8 +128,7 @@ def create_basic_object(stix20_type, stix1x_obj, parent_timestamp=None, parent_i
     instance["id"] = generate_stix20_id(stix20_type, stix1x_obj.id_ if (stix1x_obj and
                                                                        hasattr(stix1x_obj, "id_") and
                                                                        stix1x_obj.id_ ) else parent_id, id_used)
-    instance["version"] = 1  # need to see about versioning
-    timestamp = convert_timestamp(stix1x_obj, parent_timestamp)
+    timestamp = convert_timestamp(stix1x_obj, parent_timestamp, True)
     instance["created"] = timestamp
     # may need to revisit if we handle 1.x versioning.
     instance["modified"] = timestamp
@@ -777,15 +776,13 @@ def convert_indicator(indicator, bundle_instance, parent_created_by_ref, parent_
             if "valid_from" not in indicator_instance:
                 indicator_instance["valid_from"] = \
                     convert_timestamp_string(window.start_time.value, indicator, indicator_instance["created"])
-                indicator_instance["valid_from_precision"] = window.start_time.precision
                 indicator_instance["valid_until"] = \
                     convert_timestamp_string(window.end_time.value, indicator, indicator_instance["created"])
-                indicator_instance["valid_until_precision"] = window.end_time.precision
             else:
                 warn("Only one valid time window allowed for {id} in STIX 2.0 - used first one".format(id=indicator_instance["id"]))
         if "valid_from" not in indicator_instance:
             warn("No valid time position information available in {id}, using timestamp".format(id=indicator.id_))
-            indicator_instance["valid_from"] = convert_timestamp(indicator)
+            indicator_instance["valid_from"] = convert_timestamp(indicator, parent_timestamp)
     convert_kill_chains(indicator.kill_chain_phases, indicator_instance)
     if indicator.likely_impact:
         add_statement_type_to_description(indicator_instance, indicator.likely_impact, "likely_impact")

@@ -78,29 +78,35 @@ def convert_controlled_vocabs_to_open_vocabs(new_obj, new_property_name, old_voc
             else:
                 warn("Only one {prop} allowed in STIX 2.0 - used first one".format(prop=new_property_name))
 
-
-def convert_timestamp_string(timestamp, entity, parent_timestamp):
-    if timestamp is not None:
+def strftime_with_appropriate_fractional_seconds(timestamp, milliseconds_only):
+    if milliseconds_only:
+        return timestamp.strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3] + "Z"
+    else:
         return timestamp.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
+
+def convert_timestamp_string(timestamp, entity, parent_timestamp, milliseconds_only=False):
+
+    if timestamp is not None:
+        return strftime_with_appropriate_fractional_seconds(timestamp, milliseconds_only)
     elif parent_timestamp is not None:
         info("Using enclosing object timestamp")
-        return parent_timestamp.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
+        return strftime_with_appropriate_fractional_seconds(parent_timestamp, milliseconds_only)
     else:
         warn("Timestamp not available for " + identifying_info(entity) + ", using current time")
         return str(datetime.now().isoformat()) + "Z"
 
 
-def convert_timestamp(entity, parent_timestamp=None):
+def convert_timestamp(entity, parent_timestamp=None, milliseconds_only=False):
     if entity and hasattr(entity, "timestamp"):
         if entity.timestamp is not None:
-            return entity.timestamp.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
+            return strftime_with_appropriate_fractional_seconds(entity.timestamp, milliseconds_only)
     if parent_timestamp is not None:
         info("Using enclosing object timestamp")
         # parent_timestamp might have already been converted to a string in a previous call
         if isinstance(parent_timestamp, str):
             return parent_timestamp
         else:
-            return parent_timestamp.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
+            return strftime_with_appropriate_fractional_seconds(parent_timestamp, milliseconds_only)
     warn("Timestamp not available for " + identifying_info(entity) + ", using current time")
     return str(datetime.now().isoformat()) + "Z"
 
