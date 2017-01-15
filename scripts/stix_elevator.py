@@ -61,20 +61,20 @@ def _get_arg_parser(is_script=True):
         )
 
     parser.add_argument(
-        "--no-incidents",
-        help="No incident will be included in the conversion.",
-        dest="no_incidents",
-        action="store_false",
-        default=True
+        "--incidents",
+        help="Incidents will be included in the conversion.",
+        dest="incidents",
+        action="store_true",
+        default=False
     )
 
     parser.add_argument(
         "--no-squirrel-gaps",
         help="Do not include STIX 1.x content that cannot be represented "
              "directly in STIX 2.0 using the description property.",
-        dest="squirrel_gaps",
-        action="store_false",
-        default=True
+        dest="no_squirrel_gaps",
+        action="store_true",
+        default=False
     )
 
     parser.add_argument(

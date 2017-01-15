@@ -67,7 +67,7 @@ def get_identity_ref(identity, bundle_instance, parent_timestamp):
         return identity.idref
     else:
         ident20 = convert_identity(identity, bundle_instance, parent_timestamp)
-        bundle_instance["identities"].append(ident20)
+        bundle_instance["objects"].append(ident20)
         return ident20["id"]
 
 
@@ -86,7 +86,7 @@ def process_information_source(information_source, so, bundle_instance, parent_c
             if information_source.references:
                 for ref in information_source.references:
                     so["external_references"].append({"url": ref})
-            if information_source.roles:
+            if not get_option_value("no_squirrel_gaps")and information_source.roles:
                 for role in information_source.roles:
                     # no vocab to make to in 2.0
                     so["description"] += "\n\n" + "INFORMATION SOURCE ROLE: " + role.value
@@ -112,7 +112,7 @@ def process_structured_text_list(text_list):
 def process_description_and_short_description(so, entity):
     if hasattr(entity, "descriptions") and entity.descriptions is not None:
         so["description"] += convert_to_str(process_structured_text_list(entity.descriptions))
-        if (get_option_value("squirrel_gaps") and hasattr(entity, "short_descriptions") and
+        if (not get_option_value("no_squirrel_gaps") and hasattr(entity, "short_descriptions") and
             entity.short_description is not None):
             maybe_warn(301, "The Short_Description property is no longer supported in STIX.  Added the text to the description property")
             so["description"] += "\nShort Description: \n" + convert_to_str(
@@ -153,7 +153,7 @@ def finish_basic_object(old_id, instance, stix1x_obj):
 
 
 def add_string_property_to_description(sdo_instance, property_name, property_value, is_list=False):
-    if get_option_value("squirrel_gaps") and property_value is not None:
+    if not get_option_value("no_squirrel_gaps") and property_value is not None:
         if is_list:
             sdo_instance["description"] += "\n\n" + property_name.upper() + ":\n"
             property_values = []
@@ -167,7 +167,7 @@ def add_string_property_to_description(sdo_instance, property_name, property_val
 
 
 def add_confidence_property_to_description(sdo_instance, confidence):
-    if get_option_value("squirrel_gaps"):
+    if not get_option_value("no_squirrel_gaps"):
         if confidence is not None:
             sdo_instance["description"] += "\n\n" + "CONFIDENCE: "
             if confidence.value is not None:
@@ -178,7 +178,7 @@ def add_confidence_property_to_description(sdo_instance, confidence):
 
 
 def add_statement_type_to_description(sdo_instance, statement, property_name):
-    if statement and get_option_value("squirrel_gaps"):
+    if statement and not get_option_value("no_squirrel_gaps"):
         sdo_instance["description"] += "\n\n" + property_name.upper() + ":"
         if statement.value:
             sdo_instance["description"] += str(statement.value)
@@ -194,13 +194,13 @@ def add_statement_type_to_description(sdo_instance, statement, property_name):
 
 
 def add_multiple_statement_types_to_description(sdo_instance, statements, property_name):
-    if get_option_value("squirrel_gaps"):
+    if not get_option_value("no_squirrel_gaps"):
         for s in statements:
             add_statement_type_to_description(sdo_instance, s, property_name)
 
 
 def add_tool_property_to_description(sdo_instance, tool):
-    if get_option_value("squirrel_gaps"):
+    if not get_option_value("no_squirrel_gaps"):
         sdo_instance["description"] += "\n\nTOOL SOURCE:"
         if tool.name:
             sdo_instance["description"] += "\n\tname: " + str(tool.name)
@@ -472,7 +472,7 @@ def convert_campaign(camp, bundle_instance, parent_created_by_ref, parent_timest
 
 
 def add_objective_property_to_description(sdo_instance, objective):
-    if get_option_value("squirrel_gaps"):
+    if not get_option_value("no_squirrel_gaps"):
         if objective is not None:
             sdo_instance["description"] += "\n\n" + "OBJECTIVE: "
             descriptions = []
@@ -554,7 +554,7 @@ def convert_exploit_target(et, bundle_instance, parent_created_by_ref, parent_ti
         parent_timestamp = et.timestamp
     if et.vulnerabilities is not None:
         for v in et.vulnerabilities:
-            bundle_instance["vulnerabilities"].append(convert_vulnerability(v, et, bundle_instance,
+            bundle_instance["objects"].append(convert_vulnerability(v, et, bundle_instance,
                                                                             parent_created_by_ref,
                                                                             parent_timestamp))
     if et.weaknesses is not None:
@@ -861,7 +861,7 @@ def process_report_contents(report, bundle_instance, report_instance, parent_cre
         for camp in report.campaigns:
             if camp.id_ is not None:
                 camp20 = convert_campaign(camp, bundle_instance, parent_created_by_ref, parent_timestamp)
-                bundle_instance["campaigns"].append(camp20)
+                bundle_instance["objects"].append(camp20)
                 report_instance["object_refs"].append(camp20["id"])
             else:
                 report_instance["object_refs"].append(camp.idref)
@@ -871,7 +871,7 @@ def process_report_contents(report, bundle_instance, report_instance, parent_cre
         for coa in report.courses_of_action:
             if coa.id_ is not None:
                 coa20 = convert_course_of_action(coa, bundle_instance, parent_created_by_ref, parent_timestamp)
-                bundle_instance["courses_of_action"].append(coa20)
+                bundle_instance["objects"].append(coa20)
                 report_instance["object_refs"].append(coa20["id"])
             else:
                 report_instance["object_refs"].append(coa.idref)
@@ -897,7 +897,7 @@ def process_report_contents(report, bundle_instance, report_instance, parent_cre
         for i in report.indicators:
             if i.id_ is not None:
                 i20 = convert_indicator(i, bundle_instance, parent_created_by_ref, parent_timestamp)
-                bundle_instance["indicators"].append(i20)
+                bundle_instance["objects"].append(i20)
                 report_instance["object_refs"].append(i20["id"])
             else:
                 report_instance["object_refs"].append(i.idref)
@@ -917,7 +917,7 @@ def process_report_contents(report, bundle_instance, report_instance, parent_cre
         for ta in report.threat_actors:
             if ta.id_ is not None:
                 ta20 = convert_threat_actor(ta, bundle_instance, parent_created_by_ref, parent_timestamp)
-                bundle_instance["threat_actors"].append(ta20)
+                bundle_instance["objects"].append(ta20)
                 report_instance["object_refs"].append(ta20["id"])
             else:
                 report_instance["object_refs"].append(ta.idref)
@@ -929,11 +929,11 @@ def process_report_contents(report, bundle_instance, report_instance, parent_cre
                 ttps20 = convert_ttp(ttp, bundle_instance, parent_created_by_ref, parent_timestamp)
                 for ttp20 in ttps20:
                     if ttp20["type"] == "malware":
-                        bundle_instance["malware"].append(ttp)
+                        bundle_instance["objects"].append(ttp)
                     elif ttp20["type"] == "tool":
-                        bundle_instance["tools"].append(ttp)
+                        bundle_instance["objects"].append(ttp)
                     elif ttp20["type"] == "attack_pattern":
-                        bundle_instance["attack_patterns"].append(ttp)
+                        bundle_instance["objects"].append(ttp)
                     report_instance["object_refs"].append(ttp20["id"])
             else:
                 report_instance["object_refs"].append(ttp.idref)
@@ -1070,13 +1070,13 @@ def convert_behavior(behavior, ttp, bundle_instance, parent_created_by_ref, pare
     if behavior.attack_patterns is not None:
         for ap in behavior.attack_patterns:
             new_obj = convert_attack_pattern(ap, ttp, bundle_instance, first_one, parent_created_by_ref, parent_timestamp)
-            bundle_instance["attack_patterns"].append(new_obj)
+            bundle_instance["objects"].append(new_obj)
             resources_generated.append(new_obj)
             first_one = False
     if behavior.malware_instances is not None:
         for mal in behavior.malware_instances:
             new_obj = convert_malware_instance(mal, ttp, bundle_instance, first_one, parent_created_by_ref, parent_timestamp)
-            bundle_instance["malware"].append(new_obj)
+            bundle_instance["objects"].append(new_obj)
             resources_generated.append(new_obj)
             first_one = False
     if behavior.exploits is not None:
@@ -1126,14 +1126,14 @@ def convert_resources(resources, ttp, bundle_instance, parent_created_by_ref, pa
     if resources.tools is not None:
         for t in resources.tools:
             new_obj = convert_tool(t, ttp, bundle_instance, first_one, parent_created_by_ref, parent_timestamp)
-            bundle_instance["tools"].append(new_obj)
+            bundle_instance["objects"].append(new_obj)
             resources_generated.append(new_obj)
             first_one = False
     if resources.infrastructure is not None:
         if get_option_value("infrastructure"):
             new_obj = convert_infrastructure(resources.infrastructure, ttp, bundle_instance,
                                              first_one, parent_created_by_ref, parent_timestamp)
-            bundle_instance["infrastructure"].append(new_obj)
+            bundle_instance["objects"].append(new_obj)
             resources_generated.append(new_obj)
         else:
             warn("Infrastructure is not part of of STIX 2.0 {id}".format(id=(" - " + ttp.id_ if ttp.id_ else "")))
@@ -1143,7 +1143,7 @@ def convert_resources(resources, ttp, bundle_instance, parent_created_by_ref, pa
 def convert_identity_for_victim_target(identity, ttp, bundle_instance, ttp_generated, parent_timestamp):
     identity_instance = convert_identity(identity, bundle_instance, parent_timestamp,
                                          ttp.id_ if not ttp_generated else None)
-    bundle_instance["identities"].append(identity_instance)
+    bundle_instance["objects"].append(identity_instance)
     process_ttp_properties(identity_instance, ttp, bundle_instance, None, False)
     finish_basic_object(ttp.id_, identity_instance, identity)
     return identity_instance
@@ -1210,22 +1210,22 @@ def handle_embedded_object(obj, bundle_instance, parent_created_by_ref, parent_t
     # campaigns
     if isinstance(obj, Campaign):
         new20 = convert_campaign(obj, bundle_instance, parent_created_by_ref, parent_timestamp)
-        bundle_instance["campaigns"].append(new20)
+        bundle_instance["objects"].append(new20)
     # coas
     elif isinstance(obj, CourseOfAction):
         new20 = convert_course_of_action(obj, bundle_instance, parent_created_by_ref, parent_timestamp)
-        bundle_instance["courses_of_action"].append(new20)
+        bundle_instance["objects"].append(new20)
     # exploit-targets
     elif isinstance(obj, ExploitTarget):
         new20s = convert_exploit_target(obj, bundle_instance, parent_created_by_ref, parent_timestamp)
     # identities
     elif isinstance(obj, Identity) or isinstance(obj, CIQIdentity3_0Instance):
         new20 = convert_identity(obj, bundle_instance)
-        bundle_instance["identities"].append(new20)
+        bundle_instance["objects"].append(new20)
     # incidents
     elif not get_option_value("no_incidents") and isinstance(obj, Incident):
         new20 = convert_incident(obj, bundle_instance, parent_created_by_ref, parent_timestamp)
-        bundle_instance["incidents"].append(new20)
+        bundle_instance["objects"].append(new20)
     # indicators
     elif isinstance(obj, Indicator):
         new20 = convert_indicator(obj, bundle_instance, parent_created_by_ref, parent_timestamp)
@@ -1241,7 +1241,7 @@ def handle_embedded_object(obj, bundle_instance, parent_created_by_ref, parent_t
     # threat actors
     elif isinstance(obj, ThreatActor):
         new20 = convert_threat_actor(obj, bundle_instance, parent_created_by_ref, parent_timestamp)
-        bundle_instance["threat_actors"].append(new20)
+        bundle_instance["objects"].append(new20)
     # ttps
     elif isinstance(obj, TTP):
         new20s = convert_ttp(obj, bundle_instance, parent_created_by_ref, parent_timestamp)
@@ -1256,20 +1256,21 @@ def handle_embedded_object(obj, bundle_instance, parent_created_by_ref, parent_t
 
 def initialize_bundle_lists(bundle_instance):
     bundle_instance["relationships"] = []
-    bundle_instance["campaigns"] = []
-    bundle_instance["courses_of_action"] = []
-    bundle_instance["vulnerabilities"] = []
-    bundle_instance["identities"] = []
-    bundle_instance["incidents"] = []
+    #bundle_instance["campaigns"] = []
+    #bundle_instance["courses_of_action"] = []
+    #bundle_instance["vulnerabilities"] = []
+    #bundle_instance["identities"] = []
+    #bundle_instance["incidents"] = []
     bundle_instance["indicators"] = []
     bundle_instance["reports"] = []
     bundle_instance["observed_data"] = []
-    bundle_instance["threat_actors"] = []
-    bundle_instance["attack_patterns"] = []
-    bundle_instance["malware"] = []
-    bundle_instance["tools"] = []
-    bundle_instance["infrastructure"] = []
-    bundle_instance["victim_targets"] = []
+    #bundle_instance["threat_actors"] = []
+    #bundle_instance["attack_patterns"] = []
+    #bundle_instance["malware"] = []
+    #bundle_instance["tools"] = []
+    #bundle_instance["infrastructure"] = []
+    #bundle_instance["victim_targets"] = []
+    bundle_instance["objects"] = []
 
 
 def finalize_bundle(bundle_instance):
@@ -1321,6 +1322,15 @@ def finalize_bundle(bundle_instance):
 
     # do before empty items are deleted
     remove_pattern_objects(bundle_instance)
+
+    bundle_instance["objects"].extend(bundle_instance["indicators"])
+    del(bundle_instance["indicators"])
+    bundle_instance["objects"].extend(bundle_instance["relationships"])
+    del(bundle_instance["relationships"])
+    bundle_instance["objects"].extend(bundle_instance["observed_data"])
+    del(bundle_instance["observed_data"])
+    bundle_instance["objects"].extend(bundle_instance["reports"])
+    del(bundle_instance["reports"])
 
     for entry in iterpath(bundle_instance):
         path, value = entry
@@ -1397,13 +1407,13 @@ def convert_package(stixPackage, package_created_by_ref=None, default_timestamp=
     if stixPackage.campaigns:
         for camp in stixPackage.campaigns:
             camp20 = convert_campaign(camp, bundle_instance, package_created_by_ref, parent_timestamp)
-            bundle_instance["campaigns"].append(camp20)
+            bundle_instance["objects"].append(camp20)
 
     # coas
     if stixPackage.courses_of_action:
         for coa in stixPackage.courses_of_action:
             coa20 = convert_course_of_action(coa, bundle_instance, package_created_by_ref, parent_timestamp)
-            bundle_instance["courses_of_action"].append(coa20)
+            bundle_instance["objects"].append(coa20)
 
     # exploit-targets
     if stixPackage.exploit_targets:
@@ -1411,11 +1421,11 @@ def convert_package(stixPackage, package_created_by_ref=None, default_timestamp=
             convert_exploit_target(et, bundle_instance, package_created_by_ref, parent_timestamp)
 
     # incidents
-    if not get_option_value("no_incidents"):
+    if get_option_value("incidents"):
         if stixPackage.incidents:
             for i in stixPackage.incidents:
                 i20 = convert_incident(i, bundle_instance, package_created_by_ref, parent_timestamp)
-                bundle_instance["incidents"].append(i20)
+                bundle_instance["objects"].append(i20)
 
     # indicators
     if stixPackage.indicators:
@@ -1433,7 +1443,7 @@ def convert_package(stixPackage, package_created_by_ref=None, default_timestamp=
     if stixPackage.threat_actors:
         for ta in stixPackage.threat_actors:
             ta20 = convert_threat_actor(ta, bundle_instance, package_created_by_ref, parent_timestamp)
-            bundle_instance["threat_actors"].append(ta20)
+            bundle_instance["objects"].append(ta20)
 
     # ttps
     if stixPackage.ttps:

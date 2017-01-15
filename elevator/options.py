@@ -33,8 +33,8 @@ class ElevatorOptions(object):
         disable: Messages to disable.
 
     """
-    def __init__(self, cmd_args=None, file_=None, no_incidents=True,
-                 squirrel_gaps=True, infrastructure=False,
+    def __init__(self, cmd_args=None, file_=None, incidents=True,
+                 no_squirrel_gaps=False, infrastructure=False,
                  package_created_by_id=None, default_timestamp=None,
                  validator_args="--strict-types", verbose=False,
                  enable="", disable=""):
@@ -43,8 +43,8 @@ class ElevatorOptions(object):
 
         if cmd_args is not None:
             self.file_ = cmd_args.file_
-            self.no_incidents = cmd_args.no_incidents
-            self.squirrel_gaps = squirrel_gaps
+            self.incidents = cmd_args.incidents
+            self.no_squirrel_gaps = cmd_args.no_squirrel_gaps
             self.infrastructure = cmd_args.infrastructure
             self.package_created_by_id = cmd_args.package_created_by_id
             self.default_timestamp = cmd_args.default_timestamp
@@ -56,8 +56,8 @@ class ElevatorOptions(object):
 
         else:
             self.file_ = file_
-            self.no_incidents = no_incidents
-            self.squirrel_gaps = squirrel_gaps
+            self.incidents = incidents
+            self.no_squirrel_gaps = no_squirrel_gaps
             self.infrastructure = infrastructure
             self.package_created_by_id = package_created_by_id
             self.default_timestamp = default_timestamp

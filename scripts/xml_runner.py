@@ -2,7 +2,7 @@ import os
 import sys
 
 from elevator import elevate_file
-from elevator.options import initialize_options
+from elevator.options import initialize_options, set_option_value
 
 
 def main():
@@ -10,6 +10,7 @@ def main():
         path = os.path.join(sys.argv[1], filename)
 
         initialize_options()
+        set_option_value("incidents", False)
         if path.endswith(".xml"):
             sys.stdout.write(path + "\n")
             print(elevate_file(path) + "\n")

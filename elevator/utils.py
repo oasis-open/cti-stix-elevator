@@ -93,7 +93,7 @@ def convert_timestamp_string(timestamp, entity, parent_timestamp, milliseconds_o
         return strftime_with_appropriate_fractional_seconds(parent_timestamp, milliseconds_only)
     else:
         warn("Timestamp not available for " + identifying_info(entity) + ", using current time")
-        return str(datetime.now().isoformat()) + "Z"
+        return strftime_with_appropriate_fractional_seconds(datetime.now(), milliseconds_only)
 
 
 def convert_timestamp(entity, parent_timestamp=None, milliseconds_only=False):
@@ -108,7 +108,7 @@ def convert_timestamp(entity, parent_timestamp=None, milliseconds_only=False):
         else:
             return strftime_with_appropriate_fractional_seconds(parent_timestamp, milliseconds_only)
     warn("Timestamp not available for " + identifying_info(entity) + ", using current time")
-    return str(datetime.now().isoformat()) + "Z"
+    return strftime_with_appropriate_fractional_seconds(datetime.now(), milliseconds_only)
 
 
 def convert_to_str(value, encoding='utf-8'):
