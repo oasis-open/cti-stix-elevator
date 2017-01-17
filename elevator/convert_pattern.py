@@ -418,6 +418,14 @@ _EMAIL_HEADER_PROPERTIES = [["email-message:subject", ["subject"]],
 _EMAIL_ADDITIONAL_HEADERS_PROPERTIES = \
     [["email-message:additional_header_fields:Reply-To", ["reply-to*", "address_value"]],
      ["email-message:additional_header_fields:Message_ID", ["message_id"]],
+     ["email-message:additional_header_fields:In_Reply_To", ["in_reply_to"]],
+     ["email-message:additional_header_fields:Errors_To", ["errors_to"]],
+     ["email-message:additional_header_fields:MIME_Version", ["mime_version"]],
+     ["email-message:additional_header_fields:Precedence", ["precedence"]],
+     ["email-message:additional_header_fields:User_Agent", ["user_agent"]],
+     ["email-message:additional_header_fields:Boundary", ["boundary"]],
+     ["email-message:additional_header_fields:X_Originating_IP", ["x_originating_ip", "address_value"]],
+     ["email-message:additional_header_fields:X_Priority", ["x_priority"]],
      ["email-message:additional_header_fields:X_Mailer", ["x_mailer"]]]
 
 
@@ -468,6 +476,8 @@ def convert_email_header_to_pattern(head, properties):
             term = create_terms_from_prop_list(prop_1x_list, head, object_path)
             if term:
                 header_expressions.append(term)
+    if head.received_lines:
+        warn("Email received lines not handled yet")
     if header_expressions:
         return create_boolean_expression("AND", header_expressions)
 
@@ -481,6 +491,10 @@ def convert_email_message_to_pattern(mess):
             expressions.append(add_headers)
     if mess.attachments is not None:
         warn("Email attachments not handled yet")
+    if mess.raw_body is not None:
+        warn("Email raw body not handled yet")
+    if mess.links is not None:
+        warn("Email links handled yet")
     if expressions:
         return create_boolean_expression("AND", expressions)
 
