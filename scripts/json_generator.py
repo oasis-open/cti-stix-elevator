@@ -42,6 +42,7 @@ def main():
 
         initialize_options()
         set_option_value("no_incidents", False)
+        set_option_value("disable", 905)
 
         if file_and_ext[1] == "xml":
             sys.stdout.write(xml_path + "\n")

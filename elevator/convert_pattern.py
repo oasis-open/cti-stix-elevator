@@ -25,11 +25,13 @@ KEEP_OBSERVABLE_DATA_USED_IN_PATTERNS = False
 
 KEEP_INDICATORS_USED_IN_COMPOSITE_INDICATOR_EXPRESSION = True
 
+
 def get_root_from_object_path(lhs):
     path_as_parts = lhs.split(":")
     return path_as_parts[0]
 
-class ComparisonExpression():
+
+class ComparisonExpression(object):
     def __init__(self, operator, lhs, rhs, negated=False):
         self.operator = operator
         self.lhs = lhs
@@ -52,7 +54,8 @@ class ComparisonExpression():
     def contains_unconverted_term(self):
         return False
 
-class BooleanExpression():
+
+class BooleanExpression(object):
     def __init__(self, operator, operands,negated=False):
         self.operator = operator
         self.operands = operands
@@ -113,7 +116,7 @@ class BooleanExpression():
         return False
 
 
-class IdrefPlaceHolder():
+class IdrefPlaceHolder(object):
     def __init__(self, idref):
         self.idref = idref
 
@@ -130,12 +133,13 @@ class IdrefPlaceHolder():
             return False, self
 
     def partition_according_to_object_path(self):
-        error("Placeholders should be resolved")
+        error("Placeholders should be resolved", 203)
 
     def contains_unconverted_term(self):
         return False
 
-class UnconvertedTerm():
+
+class UnconvertedTerm(object):
     def __init__(self, term_info):
         self.term_info = term_info
 
@@ -155,7 +159,7 @@ class UnconvertedTerm():
         return True
 
 
-class ObservableExpression:
+class ObservableExpression(object):
     def __init__(self, operator, operands):
         self.operator = operator
         self.operands = operands
@@ -171,7 +175,7 @@ class ObservableExpression:
     def contains_placeholder(self):
         for args in self.operands:
             if args.contains_placeholder():
-                error("Observable Expressions should not contain placeholders")
+                error("Observable Expressions should not contain placeholders", 202)
 
     def contains_unconverted_term(self):
         for args in self.operands:
@@ -268,7 +272,7 @@ def convert_cybox_class_name_to_object_path_root_name(instance):
     elif class_name == "Address" and instance.category in _ADDRESS_NAME_MAPPING:
         return _ADDRESS_NAME_MAPPING[class_name]
     else:
-        error("Cannot convert CybOX 2.x class name {name} to an object_path_root_name".format(name=class_name))
+        error("Cannot convert CybOX 2.x class name %s to an object_path_root_name", 813, class_name)
         return None
 
 
@@ -308,7 +312,7 @@ def convert_condition(condition):
     # BitwiseAnd
     # BitwiseOr
     elif condition is None:
-        warn("No condition given for " + identifying_info(get_dynamic_variable("current_observable")) + " - assume '='")
+        warn("No condition given for %s - assume '='", 714,  identifying_info(get_dynamic_variable("current_observable")))
         return "="
 
 
@@ -322,10 +326,11 @@ def create_term_with_regex(lhs, condition, rhs, negated):
     # return lhs + (" NOT MATCHES " if negated else " MATCHES ") + pattern
     return ComparisonExpression("MATCHES", lhs, pattern, negated)
 
+
 def create_term_with_range(lhs, condition, rhs, negated=False):
     # TODO: handle negated
     if not isinstance(rhs, list) or len(rhs) != 2:
-        error("{0} was used, but two values were not provided.".format(condition))
+        error("%s was used, but two values were not provided.", 609, condition)
         return "'range term underspecified'"
     else:
         if condition == "InclusiveBetween":
@@ -358,10 +363,10 @@ def create_term(lhs, condition, rhs, negated=False):
         return create_term_with_range(lhs, condition, rhs, negated)
     else:
         if condition == "Contains" and not multi_valued_property(lhs):
-            warn("Used MATCHES operator for " + condition)
+            warn("Used MATCHES operator for %s", 715, condition)
             return (create_term_with_regex(lhs, condition, rhs, negated))
         elif condition == "DoesNotContain":
-            warn("Used MATCHES operator for " + condition)
+            warn("Used MATCHES operator for %s", 715, condition)
             return (create_term_with_regex(lhs, condition, rhs, not negated))
         # return lhs + " " + negate_if_needed(convert_condition(condition), negated) + " '" + convert_to_str(rhs) + "'"
         return ComparisonExpression(convert_condition(condition), lhs, convert_to_str(rhs), negated)
@@ -372,7 +377,7 @@ def add_comparison_expression(prop, object_path):
         if hasattr(prop, "condition"):
             cond = prop.condition
         else:
-            warn("No condition given - assume ==")
+            warn("No condition given - assume '='", 714)
             cond = None
         return create_term(object_path, cond, prop.value)
     return ""
@@ -382,7 +387,7 @@ def convert_custom_properties(cps, object_type_name):
     expressions = []
     for cp in cps.property_:
         if not re.match("[a-z0-9_]+", cp.name):
-            warn("The custom property name '{name}' does not adhere to the specification rules".format(name=cp.name))
+            warn("The custom property name %s does not adhere to the specification rules", 617, cp.name)
         expressions.append(create_term(object_type_name + ":x_" + cp.name, cp.condition, cp.value))
     return create_boolean_expression("AND", expressions)
 
@@ -398,7 +403,7 @@ def convert_address_to_pattern(add):
     elif add.category == add.CAT_EMAIL:
         return create_term("email-addr:value", cond, add.address_value.value)
     else:
-        warn("The address type " + add.category + " is not part of Cybox 3.0")
+        warn("The address type %s is not part of Cybox 3.0", 421, add.category)
 
 
 def convert_uri_to_pattern(uri):
@@ -490,11 +495,11 @@ def convert_email_message_to_pattern(mess):
         if add_headers:
             expressions.append(add_headers)
     if mess.attachments is not None:
-        warn("Email attachments not handled yet")
+        warn("Email attachments not handled yet", 806)
     if mess.raw_body is not None:
-        warn("Email raw body not handled yet")
+        warn("Email raw body not handled yet", 806)
     if mess.links is not None:
-        warn("Email links handled yet")
+        warn("Email links not handled yet", 806)
     if expressions:
         return create_boolean_expression("AND", expressions)
 
@@ -536,7 +541,7 @@ def convert_windows_executable_file_to_pattern(file):
             if file_header_expressions:
                 expressions.append(create_boolean_expression("AND", file_header_expressions))
         if file.headers.optional_header:
-            warn("file:extended_properties:windows_pebinary_ext:optional_header is not implemented yet")
+            warn("file:extended_properties:windows_pebinary_ext:optional_header is not implemented yet", 807)
 
     if file.type_:
         expressions.append(create_term("file:extended_properties.windows_pebinary_ext.pe_type",
@@ -568,10 +573,10 @@ def convert_windows_executable_file_to_pattern(file):
         if sections_expressions:
             expressions.append(create_boolean_expression("AND", sections_expressions))
     if file.exports:
-        warn("The exports property of WinExecutableFileObj is not part of Cybox 3.0")
+        warn("The exports property of WinExecutableFileObj is not part of Cybox 3.0", 418)
         expressions.append(UnconvertedTerm("WinExecutableFileObj.exports"))
     if file.imports:
-        warn("The imports property of WinExecutableFileObj is not part of Cybox 3.0")
+        warn("The imports property of WinExecutableFileObj is not part of Cybox 3.0", 419)
         expressions.append(UnconvertedTerm("WinExecutableFileObj.imports"))
     if expressions:
         return create_boolean_expression("AND", expressions)
@@ -612,7 +617,7 @@ def convert_file_name_and_path_to_pattern(file):
                                                           file.file_path.condition,
                                                           file.device_path.value + file.file_path.value))
     if file.full_path:
-        warn("1.x full file paths are not processed, yet")
+        warn("1.x full file paths are not processed, yet", 802)
     if file_name_path_expressions:
         return create_boolean_expression("AND", file_name_path_expressions)
 
@@ -648,13 +653,13 @@ def convert_file_to_pattern(file):
         if windows_executable_file_expression:
             expressions.append(windows_executable_file_expression)
         else:
-            warn("No WinExecutableFile properties found in " + str(file))
+            warn("No WinExecutableFile properties found in %s", 613, str(file))
     if isinstance(file, ArchiveFile):
         archive_file_expressions = convert_archive_file_to_pattern(file)
         if archive_file_expressions:
             expressions.append(archive_file_expressions)
         else:
-            warn("No ArchiveFile properties found in " + str(file))
+            warn("No ArchiveFile properties found in %s", 614, str(file))
     if expressions:
         return create_boolean_expression("AND", expressions)
 
@@ -671,7 +676,7 @@ def convert_registry_key_to_pattern(reg_key):
             if reg_key.hive.condition is None:
                 key_value_term += reg_key.hive.value + "\\"
             else:
-                warn("Condition on a hive property not handled")
+                warn("Condition on a hive property not handled", 812)
             key_value_term += reg_key.key.value
             expressions.append(create_term("win-registry-key:key", reg_key.key.condition,  key_value_term))
     if reg_key.values:
@@ -700,13 +705,13 @@ def convert_process_to_pattern(process):
         if win_process_expression:
             expressions.append(win_process_expression)
         else:
-            warn("No WinProcess properties found in " + str(process))
+            warn("No WinProcess properties found in %s", 615, str(process))
         if isinstance(process, WinService):
             service_expression = convert_windows_service_to_pattern(process)
             if service_expression:
                 expressions.append(service_expression)
             else:
-                warn("No WinService properties found in " + str(process))
+                warn("No WinService properties found in %s", 616, str(process))
     if expressions:
         return create_boolean_expression("AND", expressions)
 
@@ -715,7 +720,7 @@ def convert_windows_process_to_pattern(process):
     expression = ""
     if process.handle_list:
         for h in process.handle_list:
-            warn("Window handles are not a part of CybOX 3.0")
+            warn("Windows Handles are not a part of CybOX 3.0", 420)
     return expression
 
 _WINDOWS_PROCESS_PROPERTIES = \
@@ -743,7 +748,7 @@ def convert_windows_service_to_pattern(service):
         if description_expressions:
             expressions.append(create_boolean_expression("OR", description_expressions))
     if hasattr(service, "service_dll") and service.service_dll:
-        warn("WinServiceObject.service_dll cannot be converted to a pattern, yet.")
+        warn("WinServiceObject.service_dll is not handled, yet.", 804)
         expressions.append(UnconvertedTerm("WinServiceObject.service_dll"))
     if expressions:
         return create_boolean_expression("AND", expressions)
@@ -762,7 +767,7 @@ def convert_mutex_to_pattern(mutex):
 
 def convert_network_connection_to_pattern(conn):
     # TODO: Implement pattern
-    warn("network connection not implemented, yet")
+    error("Network Connection not implemented, yet", 811)
     return UnconvertedTerm(conn)
 
 
@@ -779,6 +784,7 @@ def convert_observable_composition_to_pattern(obs_comp, bundle_instance, observa
         return create_boolean_expression(obs_comp.operator, expressions)
     else:
         return ""
+
 
 def convert_object_to_pattern(obj, obs_id):
     prop = obj.properties
@@ -804,21 +810,18 @@ def convert_object_to_pattern(obj, obs_id):
     #    elif isinstance(prop, NetworkConnection):
     #        expression = convert_network_connection_to_pattern(prop)
         else:
-            warn("{0} found in {1} cannot be converted to a pattern, yet.".format(str(obj.properties), obs_id))
+            warn("%s found in %s cannot be converted to a pattern, yet.", 808, str(obj.properties), obs_id)
             expression = UnconvertedTerm(obs_id)
 
         if prop.custom_properties is not None:
             object_path_root = convert_cybox_class_name_to_object_path_root_name(prop)
             if object_path_root:
                 if expression:
-                    expression = create_boolean_expression("AND",
-                                                           [expression,
-                                                            convert_custom_properties(prop.custom_properties,
-                                                                                      object_path_root)])
+                    expression = create_boolean_expression("AND", [expression, convert_custom_properties(prop.custom_properties, object_path_root)])
                 else:
                     expression = convert_custom_properties(prop.custom_properties, object_path_root)
     if not expression:
-        warn("No pattern term was created from {id}".format(id=obs_id))
+        warn("No pattern term was created from %s", 422, obs_id)
         expression = UnconvertedTerm(obs_id)
     return expression
 
@@ -832,7 +835,7 @@ def match_1x_id_with_20_id(id_1x, id_20):
 def find_definition(idref, sdos):
     for obs in sdos:
         if match_1x_id_with_20_id(idref, obs["id"]):
-            info("Found definition for {0}".format(idref))
+            info("Found definition for %s", 204, idref)
             return obs
     # warn (idref + " cannot be resolved")
     return None
@@ -846,7 +849,7 @@ def convert_observable_to_pattern(obs, bundle_instance, observable_mapping):
     try:
         set_dynamic_variable("current_observable", obs)
         if negate_expression(obs):
-            warn("Negation of {obs_id} is not handled yet".format(obs_id=obs.id_))
+            warn("Negation of %s is not handled yet", 810, obs.id_)
         return convert_observable_to_pattern_without_negate(obs, bundle_instance, observable_mapping)
     finally:
         pop_dynamic_variable("current_observable")
@@ -924,7 +927,7 @@ def convert_indicator_to_pattern(ind, bundle_instance, observable_mapping):
     try:
         set_dynamic_variable("current_indicator", ind)
         if ind.negate:
-            warn("Negation of {ind_id} is not handled yet".format(ind_id=ind.id_))
+            warn("Negation of %s is not handled yet", 810, ind.id_)
         return convert_indicator_to_pattern_without_negate(ind, bundle_instance, observable_mapping)
 
     finally:
@@ -968,9 +971,8 @@ def convert_indicator_composition_to_pattern(ind_comp, bundle_instance, observab
         if term:
             expressions.append(term)
         else:
-            warn("No term was yielded for {0}".format((ind.id_ if ind.id_ else ind.idref)))
+            warn("No term was yielded for %s", 422, ind.id_ or ind.idref)
     if expressions:
-        operator_as_string = " " +  + " "
         return create_boolean_expression(ind_comp.operator, expressions)
     else:
         return ""

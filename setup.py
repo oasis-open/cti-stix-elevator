@@ -32,7 +32,7 @@ setup(
             'stix_elevator = elevator.scripts.stix_elevator:main',
         ],
     },
-    install_requires=['stix>=1.2.0.0,<1.2.1.0'],
+    install_requires=['stix>=1.1.1.7,<1.2.1.0', 'pycountry>=1.17.8'],
     classifiers=[
         "Programming Language :: Python",
         "Development Status :: 2 - Pre-Alpha",
