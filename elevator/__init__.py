@@ -14,7 +14,6 @@ from stix.utils.parser import EntityParser
 
 from stix2validator import codes
 from stix2validator import output
-from stix2validator import validators
 from stix2validator import validate_string, ValidationError
 
 from elevator.convert_pattern import clear_pattern_mapping

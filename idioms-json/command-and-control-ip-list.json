@@ -1,12 +1,12 @@
 {
     "id": "bundle--cc0ca596-70e6-4dac-9bef-603166d17db8",
-    "observed_data": [
+    "objects": [
         {
-            "created": "2016-12-20T13:53:49.689992Z",
-            "first_observed": "2016-12-20T13:53:49.689992Z",
+            "created": "2017-01-19T11:42:13.586Z",
+            "first_observed": "2017-01-19T11:42:13.586Z",
             "id": "observed-data--c8c32b6e-2ea8-51c4-6446-7f5218072f27",
-            "last_observed": "2016-12-20T13:53:49.689992Z",
-            "modified": "2016-12-20T13:53:49.689992Z",
+            "last_observed": "2017-01-19T11:42:13.586Z",
+            "modified": "2017-01-19T11:42:13.586Z",
             "number_observed": 1,
             "objects": {
                 "0": {
@@ -14,15 +14,14 @@
                     "value": "198.51.100.2"
                 }
             },
-            "type": "observed-data",
-            "version": 1
+            "type": "observed-data"
         },
         {
-            "created": "2016-12-20T13:53:49.690074Z",
-            "first_observed": "2016-12-20T13:53:49.690074Z",
+            "created": "2017-01-19T11:42:13.586Z",
+            "first_observed": "2017-01-19T11:42:13.586Z",
             "id": "observed-data--b57aa65f-9598-04fb-a9d1-5094c36d5dc4",
-            "last_observed": "2016-12-20T13:53:49.690074Z",
-            "modified": "2016-12-20T13:53:49.690074Z",
+            "last_observed": "2017-01-19T11:42:13.586Z",
+            "modified": "2017-01-19T11:42:13.586Z",
             "number_observed": 1,
             "objects": {
                 "0": {
@@ -30,15 +29,14 @@
                     "value": "198.51.100.17"
                 }
             },
-            "type": "observed-data",
-            "version": 1
+            "type": "observed-data"
         },
         {
-            "created": "2016-12-20T13:53:49.690133Z",
-            "first_observed": "2016-12-20T13:53:49.690133Z",
+            "created": "2017-01-19T11:42:13.586Z",
+            "first_observed": "2017-01-19T11:42:13.586Z",
             "id": "observed-data--19c16346-0eb4-99e2-00bb-4ec3ed174cac",
-            "last_observed": "2016-12-20T13:53:49.690133Z",
-            "modified": "2016-12-20T13:53:49.690133Z",
+            "last_observed": "2017-01-19T11:42:13.586Z",
+            "modified": "2017-01-19T11:42:13.586Z",
             "number_observed": 1,
             "objects": {
                 "0": {
@@ -46,8 +44,7 @@
                     "value": "203.0.113.19"
                 }
             },
-            "type": "observed-data",
-            "version": 1
+            "type": "observed-data"
         }
     ],
     "spec_version": "2.0",

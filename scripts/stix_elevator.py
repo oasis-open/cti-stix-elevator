@@ -105,10 +105,10 @@ def _get_arg_parser(is_script=True):
 
     parser.add_argument(
         "--validator-args",
-        help="Arguments to pass stix-validator. Default: -l --strict-types",
+        help="Arguments to pass stix-validator. Default: --strict-types",
         dest="validator_args",
         action="store",
-        default="--lax --strict-types"
+        default="--strict-types"
     )
 
     parser.add_argument(

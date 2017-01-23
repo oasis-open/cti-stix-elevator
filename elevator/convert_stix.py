@@ -109,17 +109,34 @@ def process_structured_text_list(text_list):
     return full_text
 
 
-def process_description_and_short_description(so, entity):
+def process_description_and_short_description(so, entity, parent_info=False):
     if hasattr(entity, "descriptions") and entity.descriptions is not None:
-        so["description"] += convert_to_str(process_structured_text_list(entity.descriptions))
-        if (not get_option_value("no_squirrel_gaps") and hasattr(entity, "short_descriptions") and
-            entity.short_description is not None):
-            maybe_warn(301, "The Short_Description property is no longer supported in STIX.  Added the text to the description property")
-            so["description"] += "\nShort Description: \n" + convert_to_str(
-                process_structured_text_list(entity.short_descriptions))
+        description_as_text = convert_to_str(process_structured_text_list(entity.descriptions))
+        if description_as_text:
+            if parent_info:
+                if not get_option_value("no_squirrel_gaps"):
+                    if so["description"]:
+                        so["description"] += "\nPARENT_DESCRIPTION: \n" + description_as_text
+                    else:
+                        so["description"] += description_as_text
+            else:
+                so["description"] += description_as_text
+        if (not get_option_value("no_squirrel_gaps") and
+            hasattr(entity, "short_descriptions") and entity.short_descriptions is not None):
+            short_description_as_text = process_structured_text_list(entity.short_descriptions)
+            if short_description_as_text:
+                warn("The Short_Description property is no longer supported in STIX.  Added the text to the description property")
+                if parent_info:
+                    if so["description"]:
+                        so["description"] += "\nPARENT_SHORT_DESCRIPTION: \n" + short_description_as_text
+                    else:
+                        so["description"] += short_description_as_text
+                else:
+                    so["description"] += short_description_as_text
+    # could be descriptionS or description
     elif hasattr(entity, "description") and entity.description is not None:
         so["description"] += convert_to_str(entity.description.value)
-    elif hasattr(entity, "short_descriptions") and entity.short_descriptions is not None:
+    elif not get_option_value("no_squirrel_gaps") and hasattr(entity, "short_descriptions") and entity.short_descriptions is not None:
         so["description"] = convert_to_str(process_structured_text_list(entity.short_descriptions))
 
 
@@ -513,7 +530,7 @@ def convert_course_of_action(coa, bundle_instance, parent_created_by_ref, parent
 
 
 def process_et_properties(sdo_instance, et, bundle_instance, parent_created_by_ref):
-    process_description_and_short_description(sdo_instance, et)
+    process_description_and_short_description(sdo_instance, et, True)
     if "name" in sdo_instance:
         info("title from {title} used for name, put exploit_target title in description".format(title=sdo_instance["type"]))
         add_string_property_to_description(sdo_instance, "title", et.title, False)
@@ -635,9 +652,6 @@ def convert_identity(identity, bundle_instance, parent_timestamp=None, parent_id
         if ciq_info.party_name:
             warn("ciq name found in {id}, possibly overriding other name".format(id=identity_instance["id"]))
             convert_party_name(ciq_info.party_name, identity_instance)
-        if "name" not in identity_instance:
-            error("{id} must have a name, using 'None'".format(id=identity_instance["id"]))
-            identity_instance["name"] = "None"
         if ciq_info.organisation_info:
             convert_to_open_vocabs(identity_instance, "sectors", ciq_info.organisation_info.industry_type, SECTORS_MAP)
             warn("Based on CIQ information, {id} is assumed to be an organization".format(id=identity_instance["id"]))
@@ -1007,17 +1021,17 @@ def convert_threat_actor(threat_actor, bundle_instance, parent_created_by_ref, p
 
 
 def process_ttp_properties(sdo_instance, ttp, bundle_instance, parent_created_by_ref, kill_chains_in_sdo=True):
-    # TODO: handle description and short description
+    process_description_and_short_description(sdo_instance, ttp, True)
     add_multiple_statement_types_to_description(sdo_instance, ttp.intended_effects, "intended_effect")
     if hasattr(ttp, "title"):
-        if "name" not in sdo_instance:
+        if "name" not in sdo_instance or sdo_instance["name"] is None:
             sdo_instance["name"] = ttp.title
         else:
             add_string_property_to_description(sdo_instance, "title", ttp.title, False)
     if ttp.exploit_targets is not None:
         handle_relationship_to_refs(ttp.exploit_targets, sdo_instance["id"], bundle_instance,
                                     "targets", )
-    # only populate kill chaiin phases if that is a property of the STsdo_instance["created"]IX 2.0 SDO
+    # only populate kill chain phases if that is a property of the sdo_instance type, as indicated by kill_chains_in_sdo
     if kill_chains_in_sdo and hasattr(ttp, "kill_chain_phases"):
         convert_kill_chains(ttp.kill_chain_phases, sdo_instance)
     ttp_created_by_ref = process_information_source(ttp.information_source, sdo_instance,

@@ -1,59 +1,51 @@
 {
-    "campaigns": [
-        {
-            "created": "2015-05-07T14:22:14.760144Z",
-            "created_by_ref": "identity--221a2371-d2cc-491b-a1a2-2aa124eaed0f",
-            "id": "campaign--1855cb8a-d96c-4859-a450-abb1e7c061f2",
-            "modified": "2015-05-07T14:22:14.760144Z",
-            "name": "Campaign against ICS",
-            "type": "campaign",
-            "version": 1
-        }
-    ],
     "id": "bundle--50578bc7-bb17-4f31-abf2-d5827d131368",
-    "identities": [
+    "objects": [
         {
-            "created": "2016-12-20T13:53:50.010600Z",
-            "id": "identity--221a2371-d2cc-491b-a1a2-2aa124eaed0f",
+            "created": "2017-01-19T11:42:21.653Z",
+            "id": "identity--4c577431-e591-43f3-8880-8828c868a2c5",
             "identity_class": "unknown",
-            "modified": "2016-12-20T13:53:50.010600Z",
+            "modified": "2017-01-19T11:42:21.653Z",
             "name": "Government Sharing Program - GSP",
-            "type": "identity",
-            "version": 1
-        }
-    ],
-    "reports": [
+            "type": "identity"
+        },
         {
-            "created": "2015-05-07T14:22:14.760467Z",
-            "created_by_ref": "identity--221a2371-d2cc-491b-a1a2-2aa124eaed0f",
+            "created": "2015-05-07T14:22:14.760Z",
+            "created_by_ref": "identity--4c577431-e591-43f3-8880-8828c868a2c5",
+            "id": "campaign--1855cb8a-d96c-4859-a450-abb1e7c061f2",
+            "modified": "2015-05-07T14:22:14.760Z",
+            "name": "Campaign against ICS",
+            "type": "campaign"
+        },
+        {
+            "created": "2015-05-07T14:22:14.760Z",
+            "created_by_ref": "identity--4c577431-e591-43f3-8880-8828c868a2c5",
             "description": "Adversary Alpha has a campaign against the ICS sector!\n\nINTENT:\nCampaign Characterization",
             "id": "report--ab11f431-4b3b-457c-835f-59920625fe65",
             "labels": [
                 "campaign"
             ],
-            "modified": "2015-05-07T14:22:14.760467Z",
+            "modified": "2015-05-07T14:22:14.760Z",
             "name": "Report on Adversary Alpha's Campaign against the Industrial Control Sector",
             "object_refs": [
                 "campaign--1855cb8a-d96c-4859-a450-abb1e7c061f2"
             ],
-            "type": "report",
-            "version": 1
+            "type": "report"
         },
         {
-            "created": "2015-05-07T14:22:14.760756Z",
-            "created_by_ref": "identity--221a2371-d2cc-491b-a1a2-2aa124eaed0f",
+            "created": "2015-05-07T14:22:14.760Z",
+            "created_by_ref": "identity--4c577431-e591-43f3-8880-8828c868a2c5",
             "description": "\n\nINTENT:\nIndicators - Malware Artifacts",
             "id": "report--f14804d5-3ee1-4a0e-b0f3-f9a643855ba5",
             "labels": [
                 "indicator"
             ],
-            "modified": "2015-05-07T14:22:14.760756Z",
+            "modified": "2015-05-07T14:22:14.760Z",
             "name": "Indicators for Malware DrownedRat",
             "object_refs": [
                 "example:ttp-66647c79-5766-4ca7-ab8a-a579056e3c83"
             ],
-            "type": "report",
-            "version": 1
+            "type": "report"
         }
     ],
     "spec_version": "2.0",

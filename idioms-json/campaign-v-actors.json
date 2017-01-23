@@ -1,7 +1,19 @@
 {
-    "campaigns": [
+    "id": "bundle--81810123-b298-40f6-a4e7-186efcd07670",
+    "objects": [
         {
-            "created": "2014-08-08T15:50:10.983728Z",
+            "created": "2014-08-08T15:50:10.983Z",
+            "id": "threat-actor--56f3f0db-b5d5-431c-ae56-c18f02caf500",
+            "labels": [
+                "unknown"
+            ],
+            "modified": "2014-08-08T15:50:10.983Z",
+            "name": "People behind the intrusion",
+            "sophistication": "unknown",
+            "type": "threat-actor"
+        },
+        {
+            "created": "2014-08-08T15:50:10.983Z",
             "description": "Fred\n\nINFORMATION SOURCE ROLE: Aggregator\n\nINFORMATION SOURCE ROLE: Initial Author",
             "external_references": [
                 {
@@ -9,69 +21,47 @@
                 }
             ],
             "id": "campaign--e5268b6e-4931-42f1-b379-87f48eb41b1e",
-            "modified": "2014-08-08T15:50:10.983728Z",
+            "modified": "2014-08-08T15:50:10.983Z",
             "name": "Compromise of ATM Machines",
-            "type": "campaign",
-            "version": 1
-        }
-    ],
-    "id": "bundle--81810123-b298-40f6-a4e7-186efcd07670",
-    "relationships": [
+            "type": "campaign"
+        },
         {
-            "created": "2014-08-08T15:50:10.983728Z",
-            "id": "relationship--088721da-5b60-4780-87c9-3dfa0abb1ed3",
-            "modified": "2014-08-08T15:50:10.983728Z",
+            "created": "2014-08-08T15:50:10.983Z",
+            "id": "relationship--721b8dfa-f695-4183-acc5-11d7f8273add",
+            "modified": "2014-08-08T15:50:10.983Z",
             "relationship_type": "attributed-to",
             "source_ref": "incident--229ab6ba-0eb2-415b-bdf2-079e6b42f51e",
             "target_ref": "campaign--e5268b6e-4931-42f1-b379-87f48eb41b1e",
-            "type": "relationship",
-            "version": 1
+            "type": "relationship"
         },
         {
-            "created": "2014-08-08T15:50:10.983728Z",
-            "id": "relationship--f06abf2f-9f94-417f-b144-37a54d2c957c",
-            "modified": "2014-08-08T15:50:10.983728Z",
+            "created": "2014-08-08T15:50:10.983Z",
+            "id": "relationship--11ae4284-45bc-4ce7-b2f3-4f4ad2714fea",
+            "modified": "2014-08-08T15:50:10.983Z",
             "relationship_type": "attributed-to",
             "source_ref": "incident--517cf274-038d-4ed4-a3ec-3ac18ad9db8a",
             "target_ref": "campaign--e5268b6e-4931-42f1-b379-87f48eb41b1e",
-            "type": "relationship",
-            "version": 1
+            "type": "relationship"
         },
         {
-            "created": "2014-08-08T15:50:10.983728Z",
-            "id": "relationship--eaa6b896-d524-4a63-9233-528578b77f4b",
-            "modified": "2014-08-08T15:50:10.983728Z",
+            "created": "2014-08-08T15:50:10.983Z",
+            "id": "relationship--72d1aae5-2f60-4947-8aa3-121fdd325477",
+            "modified": "2014-08-08T15:50:10.983Z",
             "relationship_type": "attributed-to",
             "source_ref": "incident--7d8cf96f-91cb-42d0-a1e0-bfa38ea08621",
             "target_ref": "campaign--e5268b6e-4931-42f1-b379-87f48eb41b1e",
-            "type": "relationship",
-            "version": 1
+            "type": "relationship"
         },
         {
-            "created": "2014-08-08T15:50:10.983728Z",
-            "id": "relationship--fd43ed2c-4c25-4017-b11b-2f87d3feb74c",
-            "modified": "2014-08-08T15:50:10.983728Z",
+            "created": "2014-08-08T15:50:10.983Z",
+            "id": "relationship--6ac9118d-c634-4fce-9622-29b032cb66a5",
+            "modified": "2014-08-08T15:50:10.983Z",
             "relationship_type": "attributed-to",
             "source_ref": "campaign--e5268b6e-4931-42f1-b379-87f48eb41b1e",
             "target_ref": "threat-actor--56f3f0db-b5d5-431c-ae56-c18f02caf500",
-            "type": "relationship",
-            "version": 1
+            "type": "relationship"
         }
     ],
     "spec_version": "2.0",
-    "threat_actors": [
-        {
-            "created": "2014-08-08T15:50:10.983629Z",
-            "id": "threat-actor--56f3f0db-b5d5-431c-ae56-c18f02caf500",
-            "labels": [
-                "unknown"
-            ],
-            "modified": "2014-08-08T15:50:10.983629Z",
-            "name": "People behind the intrusion",
-            "sophistication": "unknown",
-            "type": "threat-actor",
-            "version": 1
-        }
-    ],
     "type": "bundle"
 }

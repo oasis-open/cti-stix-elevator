@@ -1,12 +1,12 @@
 {
     "id": "bundle--cc0ca596-70e6-4dac-9bef-603166d17db8",
-    "observed_data": [
+    "objects": [
         {
-            "created": "2016-12-20T13:53:49.708830Z",
-            "first_observed": "2016-12-20T13:53:49.708830Z",
+            "created": "2017-01-19T11:42:13.602Z",
+            "first_observed": "2017-01-19T11:42:13.602Z",
             "id": "observed-data--c8c32b6e-2ea8-51c4-6446-7f5218072f27",
-            "last_observed": "2016-12-20T13:53:49.708830Z",
-            "modified": "2016-12-20T13:53:49.708830Z",
+            "last_observed": "2017-01-19T11:42:13.602Z",
+            "modified": "2017-01-19T11:42:13.602Z",
             "number_observed": 1,
             "objects": {
                 "0": {
@@ -19,8 +19,7 @@
                     "type": "directory"
                 }
             },
-            "type": "observed-data",
-            "version": 1
+            "type": "observed-data"
         }
     ],
     "spec_version": "2.0",

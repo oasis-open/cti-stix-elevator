@@ -1,22 +1,39 @@
 {
     "id": "bundle--035391ea-ef0d-48c9-ae9b-d50452fcb296",
-    "incidents": [
+    "objects": [
         {
-            "created": "2014-09-15T14:37:54.297669Z",
+            "created": "2014-09-15T14:37:54.297Z",
             "id": "incident--84d86106-d801-489b-87b6-d56bac58e6c1",
-            "modified": "2014-09-15T14:37:54.297669Z",
+            "modified": "2014-09-15T14:37:54.297Z",
             "name": "Malicious files detected",
-            "type": "incident",
-            "version": 1
-        }
-    ],
-    "observed_data": [
+            "type": "incident"
+        },
         {
-            "created": "2014-09-15T14:37:54.297669Z",
-            "first_observed": "2014-09-15T14:37:54.297669Z",
+            "created": "2014-09-15T14:37:54.297Z",
+            "description": "Malicious Artifact Detected",
+            "id": "relationship--83fa969c-ba07-442b-9f59-0760af500db0",
+            "modified": "2014-09-15T14:37:54.297Z",
+            "relationship_type": "part-of",
+            "source_ref": "observed-data--0fd77202-c962-41c7-b90f-a906ab3b5392",
+            "target_ref": "incident--84d86106-d801-489b-87b6-d56bac58e6c1",
+            "type": "relationship"
+        },
+        {
+            "created": "2014-09-15T14:37:54.297Z",
+            "description": "Malicious Artifact Detected",
+            "id": "relationship--e09c1d6f-9b0e-4cc5-a78d-8befb184d6a1",
+            "modified": "2014-09-15T14:37:54.297Z",
+            "relationship_type": "part-of",
+            "source_ref": "observed-data--b74949f0-cf41-4094-9b80-240201a96b60",
+            "target_ref": "incident--84d86106-d801-489b-87b6-d56bac58e6c1",
+            "type": "relationship"
+        },
+        {
+            "created": "2014-09-15T14:37:54.297Z",
+            "first_observed": "2014-09-15T14:37:54.297Z",
             "id": "observed-data--0fd77202-c962-41c7-b90f-a906ab3b5392",
-            "last_observed": "2014-09-15T14:37:54.297669Z",
-            "modified": "2014-09-15T14:37:54.297669Z",
+            "last_observed": "2014-09-15T14:37:54.297Z",
+            "modified": "2014-09-15T14:37:54.297Z",
             "number_observed": 1,
             "objects": {
                 "0": {
@@ -28,15 +45,14 @@
                     "type": "file"
                 }
             },
-            "type": "observed-data",
-            "version": 1
+            "type": "observed-data"
         },
         {
-            "created": "2014-09-15T14:37:54.297669Z",
-            "first_observed": "2014-09-15T14:37:54.297669Z",
+            "created": "2014-09-15T14:37:54.297Z",
+            "first_observed": "2014-09-15T14:37:54.297Z",
             "id": "observed-data--b74949f0-cf41-4094-9b80-240201a96b60",
-            "last_observed": "2014-09-15T14:37:54.297669Z",
-            "modified": "2014-09-15T14:37:54.297669Z",
+            "last_observed": "2014-09-15T14:37:54.297Z",
+            "modified": "2014-09-15T14:37:54.297Z",
             "number_observed": 1,
             "objects": {
                 "0": {
@@ -48,32 +64,7 @@
                     "type": "file"
                 }
             },
-            "type": "observed-data",
-            "version": 1
-        }
-    ],
-    "relationships": [
-        {
-            "created": "2014-09-15T14:37:54.297669Z",
-            "description": "Malicious Artifact Detected",
-            "id": "relationship--60bb6efc-9459-4c6e-9576-19ec2d7564cf",
-            "modified": "2014-09-15T14:37:54.297669Z",
-            "relationship_type": "part-of",
-            "source_ref": "observed-data--0fd77202-c962-41c7-b90f-a906ab3b5392",
-            "target_ref": "incident--84d86106-d801-489b-87b6-d56bac58e6c1",
-            "type": "relationship",
-            "version": 1
-        },
-        {
-            "created": "2014-09-15T14:37:54.297669Z",
-            "description": "Malicious Artifact Detected",
-            "id": "relationship--073eb249-b1a0-4161-8942-56e9561b3238",
-            "modified": "2014-09-15T14:37:54.297669Z",
-            "relationship_type": "part-of",
-            "source_ref": "observed-data--b74949f0-cf41-4094-9b80-240201a96b60",
-            "target_ref": "incident--84d86106-d801-489b-87b6-d56bac58e6c1",
-            "type": "relationship",
-            "version": 1
+            "type": "observed-data"
         }
     ],
     "spec_version": "2.0",
