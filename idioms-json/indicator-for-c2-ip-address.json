@@ -1,29 +1,25 @@
 {
     "id": "bundle--63fe3b22-0201-47cf-85d0-97c02164528d",
-    "indicators": [
+    "objects": [
         {
-            "created": "2014-05-08T09:00:00.000000Z",
+            "created": "2014-05-08T09:00:00.000Z",
             "id": "indicator--53fe3b22-0201-47cf-85d0-97c02164528d",
             "labels": [
                 "benign"
             ],
-            "modified": "2014-05-08T09:00:00.000000Z",
+            "modified": "2014-05-08T09:00:00.000Z",
             "name": "IP Address for known C2 channel",
             "pattern": "[ipv4-addr:value = '10.0.0.0']",
             "type": "indicator",
-            "valid_from": "2014-05-08T09:00:00.000000Z",
-            "version": 1
-        }
-    ],
-    "relationships": [
+            "valid_from": "2014-05-08T09:00:00.000000Z"
+        },
         {
-            "created": "2014-05-08T09:00:00.000000Z",
-            "id": "relationship--3b2afee9-d080-4d5a-8c4f-12bc7e8cc2ca",
-            "modified": "2014-05-08T09:00:00.000000Z",
+            "created": "2014-05-08T09:00:00.000Z",
+            "id": "relationship--803d85b6-99a0-4fdf-8e34-895e50b34724",
+            "modified": "2014-05-08T09:00:00.000Z",
             "relationship_type": "indicates",
             "source_ref": "indicator--53fe3b22-0201-47cf-85d0-97c02164528d",
-            "type": "relationship",
-            "version": 1
+            "type": "relationship"
         }
     ],
     "spec_version": "2.0",

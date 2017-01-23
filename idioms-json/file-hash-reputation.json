@@ -1,19 +1,18 @@
 {
     "id": "bundle--bc2955f8-f1bb-4f02-b2ed-339d7daf6d75",
-    "indicators": [
+    "objects": [
         {
-            "created": "2015-07-20T19:52:13.853585Z",
+            "created": "2015-07-20T19:52:13.853Z",
             "description": "\n\nCONFIDENCE: 75",
             "id": "indicator--14975dea-86cd-4211-a5f8-9c2e4daab69a",
             "labels": [
                 "benign"
             ],
-            "modified": "2015-07-20T19:52:13.853585Z",
+            "modified": "2015-07-20T19:52:13.853Z",
             "name": "File Reputation for SHA256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
             "pattern": "[file:hashes:sha256 = 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855']",
             "type": "indicator",
-            "valid_from": "2015-07-20T19:52:13.853585Z",
-            "version": 1
+            "valid_from": "2015-07-20T19:52:13.853585Z"
         }
     ],
     "spec_version": "2.0",
