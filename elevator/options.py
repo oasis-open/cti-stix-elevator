@@ -1,4 +1,5 @@
 import shlex
+from six import text_type
 
 from stix2validator.scripts import stix2_validator
 from stix2validator.validators import ValidationOptions
@@ -71,7 +72,8 @@ class ElevatorOptions(object):
             self.silent = silent
 
         # Convert string of comma-separated checks to a list,
-        # and convert check code numbers to names
+        # and convert check code numbers to names. By default all messages are
+        # enabled.
         if self.disable:
             self.disabled = self.disable.split(",")
             self.disabled = [CHECK_CODES[x] if x in CHECK_CODES else x
@@ -84,7 +86,7 @@ class ElevatorOptions(object):
             self.enabled = [CHECK_CODES[x] if x in CHECK_CODES else x
                             for x in self.enabled]
         else:
-            self.enabled = CHECK_CODES
+            self.enabled = [text_type(x) for x in CHECK_CODES]
 
 
 def initialize_options(elevator_args=None):
@@ -132,15 +134,11 @@ def msg_id_enabled(msg_id):
 
 
 # These codes are aligned with elevator_log_messages spreadsheet.
-CHECK_CODES = ["201", "202", "203", "204", "205", "206", "207", "301", "302",
-               "303", "304", "305", "306", "401", "402", "403", "404", "405",
-               "406", "407", "408", "409", "410", "411", "412", "413", "414",
-               "415", "416", "417", "418", "419", "420", "421", "422", "501",
-               "502", "503", "504", "505", "506", "507", "508", "509", "510",
-               "511", "601", "602", "603", "604", "605", "606", "607", "608",
-               "609", "610", "611", "612", "613", "614", "615", "616", "617",
-               "618", "701", "702", "703", "704", "705", "706", "707", "708",
-               "709", "710", "711", "712", "713", "714", "715", "716", "717",
-               "718", "801", "802", "803", "804", "805", "806", "807", "808",
-               "809", "810", "811", "812", "813", "901", "902", "903", "904",
-               "905"]
+CHECK_CODES = [201, 202, 203, 204, 205, 206, 207, 301, 302, 303, 304, 305, 306,
+               401, 402, 403, 404, 405, 406, 407, 408, 409, 410, 411, 412, 413,
+               414, 415, 416, 417, 418, 419, 420, 421, 422, 501, 502, 503, 504,
+               505, 506, 507, 508, 509, 510, 511, 601, 602, 603, 604, 605, 606,
+               607, 608, 609, 610, 611, 612, 613, 614, 615, 616, 617, 618, 701,
+               702, 703, 704, 705, 706, 707, 708, 709, 710, 711, 712, 713, 714,
+               715, 716, 717, 718, 801, 802, 803, 804, 805, 806, 807, 808, 809,
+               810, 811, 812, 813, 901, 902, 903, 904, 905]

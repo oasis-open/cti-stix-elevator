@@ -2,10 +2,9 @@
 # built-in
 import logging
 from datetime import datetime
-from numbers import Number
 
 # external
-import six
+from six import text_type, binary_type, iteritems
 
 from elevator import options
 
@@ -30,16 +29,20 @@ def error(fmt, ecode, *args):
 def identifying_info(stix1x_obj):
     if stix1x_obj:
         if hasattr(stix1x_obj, "id_") and stix1x_obj.id_:
-            return convert_to_str(stix1x_obj.id_)
+            return text_type(stix1x_obj.id_)
+        elif hasattr(stix1x_obj, "idref") and stix1x_obj.idref:
+            return text_type(stix1x_obj.idref)
         elif hasattr(stix1x_obj, "title") and stix1x_obj.title:
-            return "'" + convert_to_str(stix1x_obj.title) + "'"
+            return "'" + text_type(stix1x_obj.title) + "'"
         elif hasattr(stix1x_obj, "name") and stix1x_obj.name:
-            return "'" + convert_to_str(stix1x_obj.name) + "'"
+            return "'" + text_type(stix1x_obj.name) + "'"
+        elif hasattr(stix1x_obj, "item") and stix1x_obj.item:
+            return identifying_info(stix1x_obj.item)  # Useful in Related Types.
     return "- no identifying information"
 
 
 def canonicalize_label(t):
-    t = convert_to_str(t)
+    t = text_type(t)
     t = t.lower()
 
     t = t.replace(" ", "-")
@@ -65,10 +68,10 @@ def convert_controlled_vocabs_to_open_vocabs(new_obj, new_property_name, old_voc
         new_obj[new_property_name] = []
         for t in old_vocabs:
             if new_obj[new_property_name] is None or not only_one:
-                if isinstance(t, (six.text_type, six.binary_type)):
+                if isinstance(t, (text_type, binary_type)):
                     new_obj[new_property_name].append(map_vocabs_to_label(t, vocab_mapping))
                 else:
-                    new_obj[new_property_name].append(map_vocabs_to_label(str(t.value), vocab_mapping))
+                    new_obj[new_property_name].append(map_vocabs_to_label(text_type(t.value), vocab_mapping))
             else:
                 warn("Only one %s allowed in STIX 2.0 - used first one", 510, new_property_name)
 
@@ -99,29 +102,12 @@ def convert_timestamp(entity, parent_timestamp=None, milliseconds_only=False):
     if parent_timestamp is not None:
         info("Using parent object timestamp on %s", 902, identifying_info(entity))
         # parent_timestamp might have already been converted to a string in a previous call
-        if isinstance(parent_timestamp, str):
+        if isinstance(parent_timestamp, text_type):
             return parent_timestamp
         else:
             return strftime_with_appropriate_fractional_seconds(parent_timestamp, milliseconds_only)
     warn("Timestamp not available for %s, using current time", 905, identifying_info(entity))
     return strftime_with_appropriate_fractional_seconds(datetime.now(), milliseconds_only)
-
-
-def convert_to_str(value, encoding='utf-8'):
-    if not value:
-        return ""
-    if isinstance(value, six.text_type):
-        return value
-    if isinstance(value, Number) or isinstance(value, list):
-        value = str(value)
-
-    escaped = value.encode(encoding)
-    escaped_ascii = escaped.decode('ascii')
-
-    if isinstance(escaped, str):
-        return escaped
-    else:
-        return escaped_ascii
 
 
 _TYPE_MAP_FROM_1_x_TO_2_0 = {"observable": "observed-data",
@@ -157,7 +143,7 @@ def iterpath(obj, path=None):
     if path is None:
         path = []
 
-    for varname, varobj in iter(sorted(six.iteritems(obj))):
+    for varname, varobj in iter(sorted(iteritems(obj))):
         path.append(varname)
         yield (path, varobj)
 

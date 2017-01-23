@@ -1,6 +1,7 @@
 
 # external
 import pycountry
+from six import text_type
 
 from cybox.core import Observable
 from lxml import etree
@@ -112,16 +113,15 @@ def process_structured_text_list(text_list):
 
 def process_description_and_short_description(so, entity):
     if hasattr(entity, "descriptions") and entity.descriptions is not None:
-        so["description"] += convert_to_str(process_structured_text_list(entity.descriptions))
+        so["description"] += text_type(process_structured_text_list(entity.descriptions))
         if (not get_option_value("no_squirrel_gaps") and hasattr(entity, "short_descriptions") and
-            entity.short_description is not None):
+                    entity.short_description is not None):
             warn("The Short_Description property is no longer supported in STIX. The text was appended to the description property of %s", 301, so["id"])
-            so["description"] += "\nShort Description: \n" + convert_to_str(
-                process_structured_text_list(entity.short_descriptions))
+            so["description"] += "\nShort Description: \n" + text_type(process_structured_text_list(entity.short_descriptions))
     elif hasattr(entity, "description") and entity.description is not None:
-        so["description"] += convert_to_str(entity.description.value)
+        so["description"] += text_type(entity.description.value)
     elif hasattr(entity, "short_descriptions") and entity.short_descriptions is not None:
-        so["description"] = convert_to_str(process_structured_text_list(entity.short_descriptions))
+        so["description"] = text_type(process_structured_text_list(entity.short_descriptions))
 
 
 def create_basic_object(stix20_type, stix1x_obj, parent_timestamp=None, parent_id=None, id_used=False):
@@ -159,11 +159,10 @@ def add_string_property_to_description(sdo_instance, property_name, property_val
             sdo_instance["description"] += "\n\n" + property_name.upper() + ":\n"
             property_values = []
             for v in property_value:
-                property_values.append(convert_to_str(str(v)))
+                property_values.append(text_type(v))
             sdo_instance["description"] += ",\n".join(property_values)
         else:
-            sdo_instance["description"] += "\n\n" + property_name.upper() + ":\n\t" + convert_to_str(
-                str(property_value))
+            sdo_instance["description"] += "\n\n" + property_name.upper() + ":\n\t" + text_type(property_value)
         warn("Appended %s to description of %s", 302, property_name, sdo_instance["id"])
 
 
@@ -172,9 +171,9 @@ def add_confidence_property_to_description(sdo_instance, confidence):
         if confidence is not None:
             sdo_instance["description"] += "\n\n" + "CONFIDENCE: "
             if confidence.value is not None:
-                sdo_instance["description"] += str(confidence.value)
+                sdo_instance["description"] += text_type(confidence.value)
             if confidence.description is not None:
-                sdo_instance["description"] += "\n\tDESCRIPTION: " + str(confidence.description)
+                sdo_instance["description"] += "\n\tDESCRIPTION: " + text_type(confidence.description)
             warn("Appended Confidence type content to description of %s", 304, sdo_instance["id"])
 
 
@@ -182,11 +181,11 @@ def add_statement_type_to_description(sdo_instance, statement, property_name):
     if statement and not get_option_value("no_squirrel_gaps"):
         sdo_instance["description"] += "\n\n" + property_name.upper() + ":"
         if statement.value:
-            sdo_instance["description"] += str(statement.value)
+            sdo_instance["description"] += text_type(statement.value)
         if statement.descriptions:
             descriptions = []
             for d in statement.descriptions:
-                descriptions.append(convert_to_str(d.value))
+                descriptions.append(text_type(d.value))
             sdo_instance["description"] += "\n\n\t".join(descriptions)
         # TODO: handle source
         if statement.confidence:
@@ -204,7 +203,7 @@ def add_tool_property_to_description(sdo_instance, tool):
     if not get_option_value("no_squirrel_gaps"):
         sdo_instance["description"] += "\n\nTOOL SOURCE:"
         if tool.name:
-            sdo_instance["description"] += "\n\tname: " + str(tool.name)
+            sdo_instance["description"] += "\n\tname: " + text_type(tool.name)
         warn("Appended Tool type content to description of %s", 306, sdo_instance["id"])
 
 
@@ -473,7 +472,7 @@ def add_objective_property_to_description(sdo_instance, objective):
             sdo_instance["description"] += "\n\n" + "OBJECTIVE: "
             descriptions = []
             for d in objective.descriptions:
-                descriptions.append(str(d))
+                descriptions.append(text_type(d))
             sdo_instance["description"] += "\n\n\t".join(descriptions)
 
 
@@ -581,7 +580,7 @@ def convert_ciq_addresses(addresses, identity_instance):
         if hasattr(add, "administrative_area"):
             for name in add.administrative_area.name_elements:
                 iso = pycountry.subdivisions.get(country_code=temp_country)
-                iso = [x for x in iso if x.name == six.text_type(name.value)]
+                iso = [x for x in iso if x.name == text_type(name.value)]
                 if iso:
                     identity_instance["regions"].append(iso[0].code)
                 else:
@@ -739,12 +738,12 @@ def convert_test_mechanism(indicator, indicator_instance):
                 else:
                     if isinstance(tm, YaraTestMechanism):
 
-                        indicator_instance["pattern"] = convert_to_str(tm.rule.value)
+                        indicator_instance["pattern"] = text_type(tm.rule.value)
                         indicator_instance["pattern_lang"] = "yara"
                     elif isinstance(tm, SnortTestMechanism):
                         list_of_strings = []
                         for rule in tm.rules:
-                            list_of_strings.append(convert_to_str(rule.value))
+                            list_of_strings.append(text_type(rule.value))
                         indicator_instance["pattern"] = ", ".join(list_of_strings)
                         indicator_instance["pattern_lang"] = "snort"
                     elif isinstance(tm, OpenIOCTestMechanism):
@@ -1050,7 +1049,7 @@ def convert_malware_instance(mal, ttp, bundle_instance, ttp_id_used, parent_crea
     if mal.names is not None:
         for n in mal.names:
             if "name" not in malware_instance_instance:
-                malware_instance_instance["name"] = str(n)
+                malware_instance_instance["name"] = text_type(n)
             else:
                 # TODO: add to description?
                 warn("Only one name for malware is allowed for %s in STIX 2.0 - used first one", 508, malware_instance_instance["id"])

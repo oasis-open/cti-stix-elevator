@@ -1,5 +1,6 @@
 import uuid
 import re
+from six import text_type
 
 from elevator.utils import *
 
@@ -15,7 +16,7 @@ def clear_id_mapping():
 
 def record_ids(stix_id, new_id):
     if stix_id in IDS_TO_NEW_IDS:
-        info("%s is already associated other ids: %s", 703, str(stix_id), tuple(IDS_TO_NEW_IDS[stix_id]))
+        info("%s is already associated other ids: %s", 703, text_type(stix_id), tuple(IDS_TO_NEW_IDS[stix_id]))
     # info("associating " + new_id + " with " + id)
     if new_id is None:
         error("Could not associate %s with None", 611, stix_id)
@@ -42,7 +43,7 @@ def record_ids(stix_id, new_id):
 
 def generate_stix20_id(stix20_so_name, stix12_id=None, id_used=False):
     if not stix12_id or id_used:
-        new_id = stix20_so_name + "--" + str(uuid.uuid4())
+        new_id = stix20_so_name + "--" + text_type(uuid.uuid4())
         SDO_WITH_NO_1X_OBJECT.append(new_id)
         return new_id
     else:
@@ -61,7 +62,7 @@ def generate_stix20_id(stix20_so_name, stix12_id=None, id_used=False):
                 return stix20_so_name + "--" + current_uuid
         else:
             warn("Malformed id %s. Generated a new uuid", 605, stix12_id)
-            return stix20_so_name + "--" + str(uuid.uuid4())
+            return stix20_so_name + "--" + text_type(uuid.uuid4())
 
 
 def exists_id_key(key):

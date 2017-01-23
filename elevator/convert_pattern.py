@@ -12,12 +12,11 @@ from cybox.objects.network_connection_object import NetworkConnection
 from cybox.objects.win_executable_file_object import WinExecutableFile
 from cybox.objects.archive_file_object import ArchiveFile
 
-from elevator.utils import *
 from elevator.vocab_mappings import *
 from elevator.ids import *
-from elevator.options import get_option_value
 
 import re
+from six import text_type
 
 PATTERN_CACHE = {}
 
@@ -40,7 +39,7 @@ class ComparisonExpression(object):
         self.root_type = get_root_from_object_path(lhs)
 
     def to_string(self):
-        return self.lhs + (" NOT" if self.negated else "") + " " + self.operator + " '"  + convert_to_str(self.rhs) + "'"
+        return self.lhs + (" NOT" if self.negated else "") + " " + self.operator + " '" + text_type(self.rhs) + "'"
 
     def contains_placeholder(self):
         return False
@@ -144,7 +143,7 @@ class UnconvertedTerm(object):
         self.term_info = term_info
 
     def to_string(self):
-        return "unconverted_term:" + str(self.term_info)
+        return "unconverted_term:" + text_type(self.term_info)
 
     def contains_placeholder(self):
         return False
@@ -334,14 +333,14 @@ def create_term_with_range(lhs, condition, rhs, negated=False):
         return "'range term underspecified'"
     else:
         if condition == "InclusiveBetween":
-            # return "(" + lhs + " GE " + str(rhs[0]) + " AND " + lhs + " LE " + str(rhs[1]) + ")"
-            lower_bound = ComparisonExpression(">=", lhs, str(rhs[0]))
-            upper_bound = ComparisonExpression("<=", lhs, str(rhs[1]))
+            # return "(" + lhs + " GE " + text_type(rhs[0]) + " AND " + lhs + " LE " + text_type(rhs[1]) + ")"
+            lower_bound = ComparisonExpression(">=", lhs, text_type(rhs[0]))
+            upper_bound = ComparisonExpression("<=", lhs, text_type(rhs[1]))
 
         else:  # "ExclusiveBetween"
-            # return "(" + lhs + " GT " + str(rhs[0]) + " AND " + lhs + " LT " + str(rhs[1]) + ")"
-            lower_bound = ComparisonExpression(">", lhs, str(rhs[0]))
-            upper_bound = ComparisonExpression("<", lhs, str(rhs[1]))
+            # return "(" + lhs + " GT " + text_type(rhs[0]) + " AND " + lhs + " LT " + text_type(rhs[1]) + ")"
+            lower_bound = ComparisonExpression(">", lhs, text_type(rhs[0]))
+            upper_bound = ComparisonExpression("<", lhs, text_type(rhs[1]))
         return create_boolean_expression("AND", [lower_bound, upper_bound], negated)
 
 
@@ -368,8 +367,8 @@ def create_term(lhs, condition, rhs, negated=False):
         elif condition == "DoesNotContain":
             warn("Used MATCHES operator for %s", 715, condition)
             return (create_term_with_regex(lhs, condition, rhs, not negated))
-        # return lhs + " " + negate_if_needed(convert_condition(condition), negated) + " '" + convert_to_str(rhs) + "'"
-        return ComparisonExpression(convert_condition(condition), lhs, convert_to_str(rhs), negated)
+        # return lhs + " " + negate_if_needed(convert_condition(condition), negated) + " '" + convert_to_text_type(rhs) + "'"
+        return ComparisonExpression(convert_condition(condition), lhs, text_type(rhs), negated)
 
 
 def add_comparison_expression(prop, object_path):
@@ -482,7 +481,7 @@ def convert_email_header_to_pattern(head, properties):
             if term:
                 header_expressions.append(term)
     if head.received_lines:
-        warn("Email received lines not handled yet")
+        warn("Email received lines not handled yet", 806)
     if header_expressions:
         return create_boolean_expression("AND", header_expressions)
 
@@ -600,7 +599,7 @@ def convert_hashes_to_pattern(hashes):
             hash_value = h.simple_hash_value
         else:
             hash_value = h.fuzzy_hash_value
-        hash_expressions.append(create_term("file:hashes" + ":" + str(h.type_).lower(),
+        hash_expressions.append(create_term("file:hashes" + ":" + text_type(h.type_).lower(),
                                             hash_value.condition,
                                             hash_value.value))
     if hash_expressions:
@@ -653,13 +652,13 @@ def convert_file_to_pattern(file):
         if windows_executable_file_expression:
             expressions.append(windows_executable_file_expression)
         else:
-            warn("No WinExecutableFile properties found in %s", 613, str(file))
+            warn("No WinExecutableFile properties found in %s", 613, text_type(file))
     if isinstance(file, ArchiveFile):
         archive_file_expressions = convert_archive_file_to_pattern(file)
         if archive_file_expressions:
             expressions.append(archive_file_expressions)
         else:
-            warn("No ArchiveFile properties found in %s", 614, str(file))
+            warn("No ArchiveFile properties found in %s", 614, text_type(file))
     if expressions:
         return create_boolean_expression("AND", expressions)
 
@@ -705,13 +704,13 @@ def convert_process_to_pattern(process):
         if win_process_expression:
             expressions.append(win_process_expression)
         else:
-            warn("No WinProcess properties found in %s", 615, str(process))
+            warn("No WinProcess properties found in %s", 615, text_type(process))
         if isinstance(process, WinService):
             service_expression = convert_windows_service_to_pattern(process)
             if service_expression:
                 expressions.append(service_expression)
             else:
-                warn("No WinService properties found in %s", 616, str(process))
+                warn("No WinService properties found in %s", 616, text_type(process))
     if expressions:
         return create_boolean_expression("AND", expressions)
 
@@ -807,10 +806,10 @@ def convert_object_to_pattern(obj, obs_id):
             expression = convert_domain_name_to_pattern(prop)
         elif isinstance(prop, Mutex):
             expression = convert_mutex_to_pattern(prop)
-    #    elif isinstance(prop, NetworkConnection):
-    #        expression = convert_network_connection_to_pattern(prop)
+       # elif isinstance(prop, NetworkConnection):
+       #     expression = convert_network_connection_to_pattern(prop)
         else:
-            warn("%s found in %s cannot be converted to a pattern, yet.", 808, str(obj.properties), obs_id)
+            warn("%s found in %s cannot be converted to a pattern, yet.", 808, text_type(obj.properties), obs_id)
             expression = UnconvertedTerm(obs_id)
 
         if prop.custom_properties is not None:
@@ -915,7 +914,7 @@ def is_placeholder(thing):
 
 def fix_pattern(pattern):
     if not PATTERN_CACHE == {}:
-        # info(str(PATTERN_CACHE))
+        # info(text_type(PATTERN_CACHE))
         # info("pattern is: " +  pattern)
         if pattern and pattern.contains_placeholder:
             for idref in PATTERN_CACHE.keys():
