@@ -1,5 +1,6 @@
 import uuid
 import re
+from six import text_type
 
 from elevator.utils import *
 
@@ -15,10 +16,10 @@ def clear_id_mapping():
 
 def record_ids(stix_id, new_id):
     if stix_id in IDS_TO_NEW_IDS:
-        info("{0} is already associated other ids: {1}".format(str(stix_id), tuple(IDS_TO_NEW_IDS[stix_id])))
+        info("%s is already associated other ids: %s", 703, text_type(stix_id), tuple(IDS_TO_NEW_IDS[stix_id]))
     # info("associating " + new_id + " with " + id)
     if new_id is None:
-        error("Could not associate {id} with None".format(id=stix_id))
+        error("Could not associate %s with None", 611, stix_id)
         return
     add_id_value(stix_id, new_id)
 
@@ -42,7 +43,7 @@ def record_ids(stix_id, new_id):
 
 def generate_stix20_id(stix20_so_name, stix12_id=None, id_used=False):
     if not stix12_id or id_used:
-        new_id = stix20_so_name + "--" + str(uuid.uuid4())
+        new_id = stix20_so_name + "--" + text_type(uuid.uuid4())
         SDO_WITH_NO_1X_OBJECT.append(new_id)
         return new_id
     else:
@@ -53,15 +54,15 @@ def generate_stix20_id(stix20_so_name, stix12_id=None, id_used=False):
             if stix20_so_name is None:
                 stx1x_type = result.group(1).split(":")
                 if stx1x_type[1].lower() == "ttp" or stx1x_type[1].lower() == "et":
-                    error("Unable to determine the STIX 2.0 type for {id}".format(id=stix12_id))
+                    error("Unable to determine the STIX 2.0 type for %s", 604, stix12_id)
                     return None
                 else:
                     return map_1x_type_to_20(stx1x_type[1]) + "--" + current_uuid
             else:
                 return stix20_so_name + "--" + current_uuid
         else:
-            warn("Malformed id " + stix12_id + ". Generated a new uuid")
-            return stix20_so_name + "--" + str(uuid.uuid4())
+            warn("Malformed id %s. Generated a new uuid", 605, stix12_id)
+            return stix20_so_name + "--" + text_type(uuid.uuid4())
 
 
 def exists_id_key(key):
@@ -85,4 +86,4 @@ def add_id_value(key, value):
     else:
         IDS_TO_NEW_IDS[key] = [value]
     if not value:
-        warn("Trying to associate {k} with None".format(k=key))
+        warn("Trying to associate %s with None", 610, key)

@@ -1,10 +1,12 @@
 import shlex
+from six import text_type
 
 from stix2validator.scripts import stix2_validator
 from stix2validator.validator import ValidationOptions
 from elevator.utils import *
 
 ALL_OPTIONS = None
+
 
 class ElevatorOptions(object):
     """Collection of elevator options which can be set via command line or
@@ -20,7 +22,7 @@ class ElevatorOptions(object):
         verbose: True if informational notes and more verbose error messages
             should be printed to stdout/stderr.
         file_: Input file to be elevated.
-        no_incidents: False if no incidents should be included in the result.
+        incidents: False if no incidents should be included in the result.
         infrastructure: True if infrastructure should be included in the result.
         package_created_by_id: If set, this identifier ref will be applied in
             the `created_by_ref` property.
@@ -32,14 +34,14 @@ class ElevatorOptions(object):
         enable: Messages to enable.
         disable: Messages to disable.
 
+    Note:
+        All messages are turned on by default.
     """
     def __init__(self, cmd_args=None, file_=None, incidents=True,
                  no_squirrel_gaps=False, infrastructure=False,
                  package_created_by_id=None, default_timestamp=None,
                  validator_args="--strict-types", verbose=False,
-                 enable="", disable=""):
-
-        _unique_instance = None
+                 enable="", disable="", silent=False):
 
         if cmd_args is not None:
             self.file_ = cmd_args.file_
@@ -53,6 +55,7 @@ class ElevatorOptions(object):
             self.verbose = cmd_args.verbose
             self.enable = cmd_args.enable
             self.disable = cmd_args.disable
+            self.silent = cmd_args.silent
 
         else:
             self.file_ = file_
@@ -66,14 +69,24 @@ class ElevatorOptions(object):
             self.verbose = verbose
             self.enable = enable
             self.disable = disable
+            self.silent = silent
 
         # Convert string of comma-separated checks to a list,
-        # and convert check code numbers to names
+        # and convert check code numbers to names. By default all messages are
+        # enabled.
         if self.disable:
-            self.disable = self.disable.split(",")
+            self.disabled = self.disable.split(",")
+            self.disabled = [CHECK_CODES[x] if x in CHECK_CODES else x
+                             for x in self.disabled]
+        else:
+            self.disabled = []
 
         if self.enable:
-            self.enable = self.enable.split(",")
+            self.enabled = self.enable.split(",")
+            self.enabled = [CHECK_CODES[x] if x in CHECK_CODES else x
+                            for x in self.enabled]
+        else:
+            self.enabled = [text_type(x) for x in CHECK_CODES]
 
 
 def initialize_options(elevator_args=None):
@@ -93,105 +106,39 @@ def get_validator_options():
         validator_args.files = None
         return ValidationOptions(validator_args)
 
+
 def get_option_value(option_name):
     if ALL_OPTIONS and hasattr(ALL_OPTIONS, option_name):
         return getattr(ALL_OPTIONS, option_name)
     else:
         return None
 
+
 def set_option_value(option_name, option_value):
     if ALL_OPTIONS:
         setattr(ALL_OPTIONS, option_name, option_value)
     else:
-        error("options not initialized")
+        error("options not initialized", 207)
+
 
 def msg_id_enabled(msg_id):
-    if not get_option_value("disable"):
-        return msg_id in get_option_value("enable")
+    msg_id = str(msg_id)
+
+    if get_option_value("silent"):
+        return False
+
+    if not get_option_value("disabled"):
+        return msg_id in get_option_value("enabled")
     else:
-        return not (msg_id in get_option_value("disable"))
+        return not (msg_id in get_option_value("disabled"))
 
 
-
-# Mapping of check code numbers to names
-# TODO: complete list
-CHECK_CODES = {
-    '3': 'append-to-description-property',
-    '301': '',
-    '302': '',
-    '303': '',
-    '304': '',
-    '305': '',
-    '306': '',
-    '4': 'drop-content-not-supported',
-    '401': '',
-    '402': '',
-    '403': '',
-    '404': '',
-    '405': '',
-    '406': '',
-    '407': '',
-    '408': '',
-    '409': '',
-    '410': '',
-    '411': '',
-    '412': '',
-    '413': '',
-    '414': '',
-    '415': '',
-    '416': '',
-    '417': '',
-    '418': '',
-    '419': '',
-    '420': '',
-    '421': '',
-    '5': 'multiple-values-not-supported',
-    '501': '',
-    '502': '',
-    '503': '',
-    '504': '',
-    '505': '',
-    '506': '',
-    '507': '',
-    '6': 'issues-in-original-content',
-    '601': '',
-    '602': '',
-    '603': '',
-    '604': '',
-    '605': '',
-    '606': '',
-    '607': '',
-    '608': '',
-    '609': '',
-    '610': '',
-    '611': '',
-    '7': 'conversion-assumptions',
-    '701': '',
-    '702': '',
-    '703': '',
-    '704': '',
-    '705': '',
-    '706': '',
-    '707': '',
-    '708': '',
-    '709': '',
-    '710': '',
-    '711': '',
-    '712': '',
-    '713': '',
-    '8': 'content-not-supported',
-    '801': '',
-    '802': '',
-    '803': '',
-    '804': '',
-    '805': '',
-    '806': '',
-    '807': '',
-    '808': '',
-    '9': 'using-parent-or-current-timestamp',
-    '901': '',
-    '902': '',
-    '903': '',
-    '904': '',
-    '905': '',
-}
+# These codes are aligned with elevator_log_messages spreadsheet.
+CHECK_CODES = [201, 202, 203, 204, 205, 206, 207, 301, 302, 303, 304, 305, 306,
+               401, 402, 403, 404, 405, 406, 407, 408, 409, 410, 411, 412, 413,
+               414, 415, 416, 417, 418, 419, 420, 421, 422, 501, 502, 503, 504,
+               505, 506, 507, 508, 509, 510, 511, 601, 602, 603, 604, 605, 606,
+               607, 608, 609, 610, 611, 612, 613, 614, 615, 616, 617, 618, 701,
+               702, 703, 704, 705, 706, 707, 708, 709, 710, 711, 712, 713, 714,
+               715, 716, 717, 718, 801, 802, 803, 804, 805, 806, 807, 808, 809,
+               810, 811, 812, 813, 901, 902, 903, 904, 905]

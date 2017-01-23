@@ -1,3 +1,6 @@
+import datetime
+from six import text_type
+
 import cybox
 
 from elevator.convert_pattern import *
@@ -14,7 +17,7 @@ def convert_address(add):
     elif add.category == add.CAT_EMAIL:
         return {"type": "email-addr", "value": add.address_value.value}
     else:
-        warn("The address type " + add.category + " is not part of Cybox 3.0")
+        warn("The address type %s is not part of Cybox 3.0", 421, add.category)
 
 
 def convert_uri(uri):
@@ -29,19 +32,19 @@ def convert_file_properties(file):
     cybox_dict = {"type": "file"}
     if file.size is not None:
         if isinstance(file.size.value, list):
-            error("File size window not allowed in top level observable, using first value")
+            error("File size window not allowed in top level observable, using first value", 511)
             cybox_dict["size"] = int(file.size.value[0])
         else:
             cybox_dict["size"] = int(file.size)
     if file.hashes is not None:
         hashes = {}
         for h in file.hashes:
-            hashes[str(h.type_).lower()] = h.simple_hash_value.value
+            hashes[text_type(h.type_).lower()] = h.simple_hash_value.value
         cybox_dict["hashes"] = hashes
     if file.file_name:
-        cybox_dict["file_name"] = str(file.file_name)
+        cybox_dict["file_name"] = text_type(file.file_name)
     if file.full_path:
-        warn("1.x full file paths are not processed, yet")
+        warn("1.x full file paths are not processed, yet", 802)
     return cybox_dict
 
 
@@ -63,7 +66,7 @@ def convert_email_message(email_message):
     if email_message.header:
         header = email_message.header
         if header.date:
-            email_dict["date"] = header, date.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
+            email_dict["date"] = header, datetime.date.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
         if header.content_type:
             email_dict["content_type"] = header.content_type
         if header.subject:
@@ -95,17 +98,17 @@ def convert_registry_key(reg_key):
             full_key += reg_key.key.value
         cybox_reg["key"] = full_key
     else:
-        error("windows-registry-key is required to have a key property")
+        error("windows-registry-key is required to have a key property", 608)
     if reg_key.values:
         cybox_reg["values"] = []
         for v in reg_key.values:
             reg_value = {}
             if hasattr(v, "data") and v.data:
-                reg_value["data"] = str(v.data)
+                reg_value["data"] = text_type(v.data)
             if hasattr(v, "name") and v.name:
-                reg_value["name"] = str(v.name)
+                reg_value["name"] = text_type(v.name)
             if hasattr(v, "datatype") and v.datatype:
-                reg_value["data_type"] = str(v.datatype)
+                reg_value["data_type"] = text_type(v.datatype)
             cybox_reg["values"].append(reg_value)
     return cybox_reg
 
@@ -113,9 +116,9 @@ def convert_registry_key(reg_key):
 def convert_process(process):
     cybox_p = {}
     if process.name:
-        cybox_p["name"] = str(process.name)
+        cybox_p["name"] = text_type(process.name)
     if process.pid:
-        cybox_p["pid"] = str(process.pid)
+        cybox_p["pid"] = text_type(process.pid)
     if process.creation_time:
         cybox_p["created"] = convert_timestamp(process.creation_time)
     if isinstance(process, WinProcess):
@@ -138,19 +141,19 @@ def convert_windows_process(process):
     ext = {}
     if process.handle_list:
         for h in process.handle_list:
-            warn("Window handles are not a part of CybOX 3.0")
+            warn("Windows handles are not a part of CybOX 3.0", 420)
     if process.aslr_enabled:
         ext["asl_enabled"] = bool(process.aslr_enabled)
     if process.dep_enabled:
         ext["dep_enabled"] = bool(process.dep_enabled)
     if process.priority:
-        ext["priority"] = str(process.priority)
+        ext["priority"] = text_type(process.priority)
     if process.security_type:
-        ext["owner_sid"] = str(process.security_type)
+        ext["owner_sid"] = text_type(process.security_type)
     if process.window_title:
-        ext["window_title"] = str(process.window_title)
+        ext["window_title"] = text_type(process.window_title)
     if process.startup_info:
-        warn("process:startup_info not handled yet")
+        warn("process:startup_info not handled yet", 803)
     return ext
 
 
@@ -174,14 +177,14 @@ def convert_windows_service(service):
     if hasattr(service, "service_status") and service.service_status:
         cybox_ws["service_status"] = map_vocabs_to_label(service.service_status, SERVICE_STATUS)
     if hasattr(service, "service_dll") and service.service_dll:
-        warn("WinServiceObject.service_dll is not handled, yet.")
+        warn("WinServiceObject.service_dll is not handled, yet.", 804)
     return cybox_ws
 
 
 def convert_domain_name(domain_name):
     cybox_dm = {"type": "domain-name"}
     if domain_name.value:
-        cybox_dm["value"] = domain_name.value.value
+        cybox_dm["value"] = text_type(domain_name.value.value)
 
     # TODO: resolves_to_refs
     return cybox_dm
@@ -190,7 +193,7 @@ def convert_domain_name(domain_name):
 def convert_mutex(mutex):
     cybox_mutex = {"type": "mutex"}
     if mutex.name:
-        cybox_mutex["name"] = mutex.name.value
+        cybox_mutex["name"] = text_type(mutex.name.value)
 
     return cybox_mutex
 
@@ -222,7 +225,7 @@ def convert_network_connection(conn):
 def convert_cybox_object(obj):
     # TODO:  should related objects be handled on a case-by-case basis or just ignored
     if obj.related_objects:
-       warn("Related objects of cyber observables for {id} are not handled yet".format(id=obj.id_))
+       warn("Related Objects of cyber observables for %s are not handled yet", 809, obj.id_)
     prop = obj.properties
     objs = {}
     if isinstance(prop, Address):
@@ -246,10 +249,10 @@ def convert_cybox_object(obj):
     elif isinstance(prop, NetworkConnection):
         objs[0] = convert_network_connection(prop)
     else:
-        warn("{obj} not handled yet".format(obj=str(type(prop))))
+        warn("CybOX object %s not handled yet", 805, text_type(type(prop)))
         return None
     if not objs:
-        warn("{obj} didn't yield any STIX 2.0 object".format(obj=str(type(prop))))
+        warn("%s did not yield any STIX 2.0 object", 417, text_type(type(prop)))
         return None
     else:
         primary_obj = objs[0]

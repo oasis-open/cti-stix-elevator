@@ -19,16 +19,7 @@ The following table shows all elevator messages. Use the associate code number
 to --enable or --disable a message. By default, the elevator displays all
 messages. Note: disabling the message does not disable the functionality.
 
-+------+----------------------------------------------------------------------+
-| Code | Message                                                              |
-+------+----------------------------------------------------------------------+
-|      |                                                                      |
-|      |                                                                      |
-|      |                                                                      |
-|      |                                                                      |
-|      |                                                                      |
-|      |                                                                      |
-+------+----------------------------------------------------------------------+
+Refer to elevator_log_messages.xlsx for error codes.
 """
 
 
@@ -137,6 +128,15 @@ def _get_arg_parser(is_script=True):
              "Example: --disable 212,220",
         dest="disable",
         default=""
+    )
+
+    parser.add_argument(
+        "-s",
+        "--silent",
+        help="If this flag is set. All elevator messages will be disabled.",
+        dest="silent",
+        action="store_true",
+        default=False
     )
 
     return parser

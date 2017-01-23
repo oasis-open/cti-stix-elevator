@@ -1,37 +1,39 @@
+
+# external
+import pycountry
+from six import text_type
+
+from cybox.core import Observable
+from lxml import etree
+
 import stix
 from stix.campaign import Campaign
 from stix.coa import CourseOfAction
+from stix.common.identity import Identity
+from stix.common.kill_chains import KillChainPhase, KillChainPhaseReference
 from stix.exploit_target import ExploitTarget
+from stix.extensions.identity.ciq_identity_3_0 import CIQIdentity3_0Instance
+from stix.extensions.test_mechanism.open_ioc_2010_test_mechanism import OpenIOCTestMechanism
+from stix.extensions.test_mechanism.snort_test_mechanism import SnortTestMechanism
+from stix.extensions.test_mechanism.yara_test_mechanism import YaraTestMechanism
 from stix.incident import Incident
 from stix.indicator import Indicator
 from stix.threat_actor import ThreatActor
 from stix.ttp import TTP
-from stix.common.kill_chains import KillChainPhase, KillChainPhaseReference
-from stix.common.identity import Identity
-# from stix.ttp.attack_pattern import (AttackPattern)
-from cybox.core import Observable
-from stix.extensions.test_mechanism.yara_test_mechanism import YaraTestMechanism
-from stix.extensions.test_mechanism.snort_test_mechanism import SnortTestMechanism
-from stix.extensions.test_mechanism.open_ioc_2010_test_mechanism import OpenIOCTestMechanism
-from stix.extensions.identity.ciq_identity_3_0 import CIQIdentity3_0Instance
 
-
-import pycountry
-from lxml import etree
-
+# internal
 from elevator.convert_cybox import convert_cybox_object
 from elevator.convert_pattern import (convert_indicator_to_pattern, convert_observable_to_pattern, fix_pattern,
                                       interatively_resolve_placeholder_refs, create_boolean_expression,
                                       add_to_pattern_cache, remove_pattern_objects, ComparisonExpression)
 from elevator.ids import *
 from elevator.options import get_option_value
-from elevator.vocab_mappings import *
 from elevator.utils import *
-
+from elevator.vocab_mappings import *
 
 if stix.__version__ >= "1.2.0.0":
     from stix.report import Report
-if stix.__version__ == "1.1.1.7":
+if "1.2.0.0" > stix.__version__ >= "1.1.1.7":
     import stix.extensions.marking.ais
 
 # collect kill chains
@@ -79,7 +81,7 @@ def process_information_source(information_source, so, bundle_instance, parent_c
             so["created_by_ref"] = parent_created_by_ref
 
         if so == bundle_instance:
-            warn("Information Source information on a STIX 1.x Package is not representable in STIX 2.0")
+            warn("Information Source on %s is not representable in STIX 2.0", 401, so["id"])
         else:
             if information_source.description:
                 process_description_and_short_description(so, information_source)
@@ -139,7 +141,6 @@ def process_description_and_short_description(so, entity, parent_info=False):
     elif not get_option_value("no_squirrel_gaps") and hasattr(entity, "short_descriptions") and entity.short_descriptions is not None:
         so["description"] = convert_to_str(process_structured_text_list(entity.short_descriptions))
 
-
 def create_basic_object(stix20_type, stix1x_obj, parent_timestamp=None, parent_id=None, id_used=False):
     instance = {"type": stix20_type}
     instance["id"] = generate_stix20_id(stix20_type, stix1x_obj.id_ if (stix1x_obj and
@@ -158,10 +159,10 @@ def finish_basic_object(old_id, instance, stix1x_obj):
     if old_id is not None:
         record_ids(old_id, instance["id"])
     if hasattr(stix1x_obj, "handling") and stix1x_obj.handling is not None:
-        warn("Handling not implemented, yet")
+        info("Handling not implemented, yet", 801)
     if hasattr(stix1x_obj, "related_packages") and stix1x_obj.related_packages is not None:
         for p in stix1x_obj.related_packages:
-            warn("Related_Packages property no longer supported in STIX.  See {id}".format(id=stix1x_obj.id_))
+            warn("Related_Packages type in %s not supported in STIX 2.0", 402, stix1x_obj.id_)
 
 
 #
@@ -175,12 +176,11 @@ def add_string_property_to_description(sdo_instance, property_name, property_val
             sdo_instance["description"] += "\n\n" + property_name.upper() + ":\n"
             property_values = []
             for v in property_value:
-                property_values.append(convert_to_str(str(v)))
+                property_values.append(text_type(v))
             sdo_instance["description"] += ",\n".join(property_values)
         else:
-            sdo_instance["description"] += "\n\n" + property_name.upper() + ":\n\t" + convert_to_str(
-                str(property_value))
-        warn("Added " + property_name + " to description of " + sdo_instance["id"])
+            sdo_instance["description"] += "\n\n" + property_name.upper() + ":\n\t" + text_type(property_value)
+        warn("Appended %s to description of %s", 302, property_name, sdo_instance["id"])
 
 
 def add_confidence_property_to_description(sdo_instance, confidence):
@@ -188,26 +188,26 @@ def add_confidence_property_to_description(sdo_instance, confidence):
         if confidence is not None:
             sdo_instance["description"] += "\n\n" + "CONFIDENCE: "
             if confidence.value is not None:
-                sdo_instance["description"] += str(confidence.value)
+                sdo_instance["description"] += text_type(confidence.value)
             if confidence.description is not None:
-                sdo_instance["description"] += "\n\tDESCRIPTION: " + str(confidence.description)
-            warn("Added confidence property content to description of " + sdo_instance["id"])
+                sdo_instance["description"] += "\n\tDESCRIPTION: " + text_type(confidence.description)
+            warn("Appended Confidence type content to description of %s", 304, sdo_instance["id"])
 
 
 def add_statement_type_to_description(sdo_instance, statement, property_name):
     if statement and not get_option_value("no_squirrel_gaps"):
         sdo_instance["description"] += "\n\n" + property_name.upper() + ":"
         if statement.value:
-            sdo_instance["description"] += str(statement.value)
+            sdo_instance["description"] += text_type(statement.value)
         if statement.descriptions:
             descriptions = []
             for d in statement.descriptions:
-                descriptions.append(convert_to_str(d.value))
+                descriptions.append(text_type(d.value))
             sdo_instance["description"] += "\n\n\t".join(descriptions)
         # TODO: handle source
         if statement.confidence:
             add_confidence_property_to_description(sdo_instance, statement.confidence)
-        warn("Added statement type content to description of " + sdo_instance["id"])
+        warn("Appended Statement type content to description of %s", 305, sdo_instance["id"])
 
 
 def add_multiple_statement_types_to_description(sdo_instance, statements, property_name):
@@ -220,8 +220,8 @@ def add_tool_property_to_description(sdo_instance, tool):
     if not get_option_value("no_squirrel_gaps"):
         sdo_instance["description"] += "\n\nTOOL SOURCE:"
         if tool.name:
-            sdo_instance["description"] += "\n\tname: " + str(tool.name)
-        warn("Added tool property content to description of " + sdo_instance["id"])
+            sdo_instance["description"] += "\n\tname: " + text_type(tool.name)
+        warn("Appended Tool type content to description of %s", 306, sdo_instance["id"])
 
 
 # Relationships
@@ -339,7 +339,7 @@ def fix_relationships(relationships, bundle_instance):
             if not exists_id_key(ref["source_ref"]):
                 new_id = generate_stix20_id(None, str.lower(ref["source_ref"]))
                 if new_id is None:
-                    warn("Dangling source reference " + ref["source_ref"] + " in " + ref["id"])
+                    warn("Dangling source reference %s in %s", 601, ref["source_ref"], ref["id"])
                 add_id_value(ref["source_ref"], new_id)
             first_one = True
             for m_id in get_id_value(ref["source_ref"]):
@@ -351,7 +351,7 @@ def fix_relationships(relationships, bundle_instance):
             if not exists_id_key(ref["target_ref"]):
                 new_id = generate_stix20_id(None, str.lower(ref["target_ref"]))
                 if new_id is None:
-                    warn("Dangling target reference " + ref["target_ref"] + " in " + ref["id"])
+                    warn("Dangling target reference %s in %s", 602, ref["target_ref"], ref["id"])
                 add_id_value(ref["target_ref"], new_id)
             first_one = True
             for m_id in get_id_value(ref["target_ref"]):
@@ -390,27 +390,23 @@ def add_relationships_to_reports(bundle_instance):
                         rel["target_ref"] in new_ids or rel["target_ref"] in SDO_WITH_NO_1X_OBJECT):
                     rels_to_include.append(rel["id"])
                     rels_to_include.append(rel["target_ref"])
-                    warn("Including " + rel["id"] + " in " + rep["id"] + " and added the target_ref " + rel[
-                        "target_ref"] + " to the report")
+                    warn("Including %s in %s and added the target_ref %s to the report", 704, rel["id"], rep["id"], rel["target_ref"])
                 elif not ("target_ref" in rel and rel["target_ref"]):
                     rels_to_include.append(rel["id"])
-                    warn("Including " + rel["id"] + " in " + rep["id"] + " although the target_ref is unknown")
+                    warn("Including %s in %s although the target_ref is unknown", 706, rel["id"], rep["id"])
                 elif not (rel["target_ref"] in new_ids or rel["target_ref"] in SDO_WITH_NO_1X_OBJECT):
-                    warn("Not including " + rel["id"] + " in " + rep[
-                        "id"] + " because there is no corresponding SDO for " + rel["target_ref"])
+                    warn("Not including %s in %s because there is no corresponding SDO for %s", 708, rel["id"], rep["id"], rel["target_ref"])
             elif "target_ref" in rel and rel["target_ref"] in refs_in_this_report:
                 if "source_ref" in rel and rel["source_ref"] and (
                         rel["source_ref"] in new_ids or rel["source_ref"] in SDO_WITH_NO_1X_OBJECT):
                     rels_to_include.append(rel["id"])
                     rels_to_include.append(rel["source_ref"])
-                    warn("Including " + rel["id"] + " in " + rep["id"] + " and added the source_ref " + rel[
-                        "source_ref"] + " to the report")
+                    warn("Including %s in %s and added the source_ref %s to the report", 705, rel["id"], rep["id"], rel["source_ref"])
                 elif not ("source_ref" in rel and rel["source_ref"]):
                     rels_to_include.append(rel["id"])
-                    warn("Including " + rel["id"] + " in " + rep["id"] + " although the target_ref is unknown")
+                    warn("Including %s in %s although the source_ref is unknown", 707, rel["id"], rep["id"])
                 elif not (rel["source_ref"] in new_ids or rel["source_ref"] in SDO_WITH_NO_1X_OBJECT):
-                    warn("Not including " + rel["id"] + " in " + rep[
-                        "id"] + " because there is no corresponding SDO for " + rel["source_ref"])
+                    warn("Not including %s in %s because there is no corresponding SDO for %s", 709, rel["id"], rep["id"], rel["source_ref"])
         if "object_refs" in rep:
             rep["object_refs"].extend(rels_to_include)
         else:
@@ -441,7 +437,7 @@ def convert_campaign(camp, bundle_instance, parent_created_by_ref, parent_timest
 
     if camp.activity is not None:
         for a in camp.activity:
-            warn("Campaign/Activity not supported in STIX 2.0")
+            warn("Campaign/Activity type in %s not supported in STIX 2.0", 403, campaign_instance["id"])
     if camp.related_ttps is not None:
         # victims use targets, not uses
         handle_relationship_to_refs(camp.related_ttps,
@@ -473,8 +469,7 @@ def convert_campaign(camp, bundle_instance, parent_created_by_ref, parent_timest
                                         campaign_instance["created"],
                                         campaign_created_by_ref)
     if camp.associated_campaigns:
-        warn("All associated campaigns relationships of " + camp.id_ +
-             " are assumed to not represent STIX 1.2 versioning")
+        warn("All associated campaigns relationships of %s are assumed to not represent STIX 1.2 versioning", 710, camp.id_)
         handle_relationship_to_refs(camp.related_coas,
                                     campaign_instance["id"],
                                     bundle_instance,
@@ -494,7 +489,7 @@ def add_objective_property_to_description(sdo_instance, objective):
             sdo_instance["description"] += "\n\n" + "OBJECTIVE: "
             descriptions = []
             for d in objective.descriptions:
-                descriptions.append(str(d))
+                descriptions.append(text_type(d))
             sdo_instance["description"] += "\n\n\t".join(descriptions)
 
 
@@ -508,7 +503,7 @@ def convert_course_of_action(coa, bundle_instance, parent_created_by_ref, parent
     add_objective_property_to_description(coa_instance, coa.objective)
     # TODO: parameter observables, maybe turn into pattern expressions and put in description???
     if coa.structured_coa:
-        warn("Structured COAs are not supported in STIX 2.0")
+        warn("Structured COAs type in %s are not supported in STIX 2.0", 404, coa_instance["id"])
     add_statement_type_to_description(coa_instance, coa.impact, "impact")
     add_statement_type_to_description(coa_instance, coa.cost, "cost")
     add_statement_type_to_description(coa_instance, coa.efficacy, "efficacy")
@@ -519,7 +514,7 @@ def convert_course_of_action(coa, bundle_instance, parent_created_by_ref, parent
                                                     coa_instance["created"])
     # process information source before any relationships
     if coa.related_coas:
-        warn("All related coas relationships of " + coa.id_ + " are assumed to not represent STIX 1.2 versioning")
+        warn("All associated coas relationships of %s are assumed to not represent STIX 1.2 versioning", 710, coa.id_)
         handle_relationship_to_refs(coa.related_coas, coa_instance["id"], bundle_instance,
                                     "related-to", coa_instance["created"], coa_created_by_ref)
     finish_basic_object(coa.id_, coa_instance, coa)
@@ -532,7 +527,7 @@ def convert_course_of_action(coa, bundle_instance, parent_created_by_ref, parent
 def process_et_properties(sdo_instance, et, bundle_instance, parent_created_by_ref):
     process_description_and_short_description(sdo_instance, et, True)
     if "name" in sdo_instance:
-        info("title from {title} used for name, put exploit_target title in description".format(title=sdo_instance["type"]))
+        info("Title %s used for name, appending exploit_target %s title in description property", 303, sdo_instance["type"], sdo_instance["id"])
         add_string_property_to_description(sdo_instance, "title", et.title, False)
     elif et.title is not None:
         sdo_instance["name"] = et.title
@@ -576,10 +571,10 @@ def convert_exploit_target(et, bundle_instance, parent_created_by_ref, parent_ti
                                                                             parent_timestamp))
     if et.weaknesses is not None:
         for w in et.weaknesses:
-            warn("ExploitTarget/Weaknesses not supported in STIX 2.0")
+            warn("ExploitTarget/Weaknesses type in %s not supported in STIX 2.0", 405, et.id_)
     if et.configuration is not None:
         for c in et.configuration:
-            warn("ExploitTarget/Configurations not supported in STIX 2.0")
+            warn("ExploitTarget/Configurations type in %s not supported in STIX 2.0", 406, et.id_)
 
 
 # identities
@@ -597,12 +592,12 @@ def convert_ciq_addresses(addresses, identity_instance):
                 if iso is not None:
                     identity_instance["country"].append(iso.alpha2)
                 else:
-                    warn("No ISO code for {val}".format(val=name.value))
+                    warn("No ISO code for %s in %s", 618, name.value, identifying_info(identity_instance))
                     identity_instance["country"].append(name.value)
         if hasattr(add, "administrative_area"):
             for name in add.administrative_area.name_elements:
                 iso = pycountry.subdivisions.get(country_code=temp_country)
-                iso = [x for x in iso if x.name == six.text_type(name.value)]
+                iso = [x for x in iso if x.name == text_type(name.value)]
                 if iso:
                     identity_instance["regions"].append(iso[0].code)
                 else:
@@ -615,9 +610,9 @@ def get_name(name):
 
 
 def convert_party_name(party_name, identity):
-    if not party_name.organisation_names == [] and not party_name.person_names == []:
-        error("Identity has organization and person names")
-    if not party_name.person_names == []:
+    if party_name.organisation_names and party_name.person_names:
+        error("Identity %s has organization and person names", 606, identity["id"])
+    if party_name.person_names:
         identity["identity_class"] = "individual"
         first_one = True
         for name in party_name.person_names:
@@ -625,9 +620,9 @@ def convert_party_name(party_name, identity):
                 identity["name"] = get_name(name)
                 first_one = False
             else:
-                warn("more than one person name for {id} not allowed in STIX 2.0, used first one".format(id=identity["id"]))
+                warn("Only one person name allowed for %s in STIX 2.0, used first one", 502, identity["id"])
                 # add to description
-    elif not party_name.organisation_names == []:
+    elif party_name.organisation_names:
         identity["identity_class"] = "organization"
         first_one = True
         for name in party_name.organisation_names:
@@ -635,7 +630,7 @@ def convert_party_name(party_name, identity):
                 identity["name"] = get_name(name)
                 first_one = False
             else:
-                warn("more than one organization name for {id} not allowed in STIX 2.0, used first one".format(id=identity["id"]))
+                warn("Only one organization name allowed for %s in STIX 2.0, used first one", 503, identity["id"])
                 # add to description
 
 
@@ -650,18 +645,18 @@ def convert_identity(identity, bundle_instance, parent_timestamp=None, parent_id
             convert_controlled_vocabs_to_open_vocabs(identity_instance, "roles", identity.roles, ROLES_MAP, False)
         ciq_info = identity._specification
         if ciq_info.party_name:
-            warn("ciq name found in {id}, possibly overriding other name".format(id=identity_instance["id"]))
+            warn("CIQ name found in %s, possibly overriding other name", 711, identity_instance["id"])
             convert_party_name(ciq_info.party_name, identity_instance)
         if ciq_info.organisation_info:
             convert_to_open_vocabs(identity_instance, "sectors", ciq_info.organisation_info.industry_type, SECTORS_MAP)
-            warn("Based on CIQ information, {id} is assumed to be an organization".format(id=identity_instance["id"]))
+            warn("Based on CIQ information, %s is assumed to be an organization", 716, identity_instance["id"])
             identity_instance["identity_class"] = "organization"
         if ciq_info.addresses:
             pass
             # convert_ciq_addresses(ciq_info.addresses, identity_instance)
             # add other properties to contact_information
     if identity.related_identities:
-        warn("All related identitiies relationships {id} are assumed to not represent STIX 1.2 versioning".format(id=((" of " + identity.id_) if identity.id_ else "")))
+        warn("All associated identities relationships of %s are assumed to not represent STIX 1.2 versioning", 710, identity.id_ or "")
         handle_relationship_to_refs(identity.related_identities, identity_instance["id"], bundle_instance,
                                     "related-to", parent_timestamp)
     finish_basic_object(identity.id_, identity_instance, identity)
@@ -697,7 +692,7 @@ def convert_incident(incident, bundle_instance, parent_created_by_ref, parent_ti
         handle_relationship_from_refs(incident.related_observables, incident_instance["id"], bundle_instance, "part-of",
                                       incident_instance["created"], incident_created_by_ref)
     if incident.leveraged_ttps is not None:
-        warn("Using related-to for the leveraged TTPs of {id}".format(id=incident.id_))
+        warn("Using related-to for the leveraged TTPs of %s", 718, incident.id_)
         handle_relationship_to_refs(incident.leveraged_ttps, incident_instance["id"], bundle_instance, "related-to",
                                     incident_instance["created"], incident_created_by_ref)
     # TODO: add reporter to description
@@ -708,7 +703,7 @@ def convert_incident(incident, bundle_instance, parent_created_by_ref, parent_ti
     # TODO: add impact_assessment to description
     add_string_property_to_description(incident_instance, "status", incident.status)
     if incident.related_incidents:
-        warn("All related incidents relationships of {id} are assumed to not represent STIX 1.2 versioning".format(id=incident.id_))
+        warn("All associated incidents relationships of %s are assumed to not represent STIX 1.2 versioning", 710, incident.id_)
         handle_relationship_to_refs(incident.related_incidents, incident_instance["id"], bundle_instance,
                                     "related-to", incident_instance["created"], incident_created_by_ref)
     finish_basic_object(incident.id_, incident_instance, incident)
@@ -744,25 +739,25 @@ _ALLOW_YARA_AND_SNORT_PATTENS = False
 def convert_test_mechanism(indicator, indicator_instance):
     if indicator.test_mechanisms is not None:
         if not _ALLOW_YARA_AND_SNORT_PATTENS:
-            warn("YARA or SNORT patterns on {id} are not supported in STIX 2.0".format(id=indicator_instance["id"]))
+            warn("YARA/SNORT patterns on %s not supported in STIX 2.0", 504, indicator_instance["id"])
             return
         if hasattr(indicator_instance, "pattern"):
             # TODO: maybe put in description
-            warn("Only one type pattern can be specified in {id} - using cybox".format(id=indicator_instance["id"]))
+            warn("Only one type pattern can be specified in %s - using cybox", 712, indicator_instance["id"])
         else:
             for tm in indicator.test_mechanisms:
                 if hasattr(indicator_instance, "pattern"):
                     # TODO: maybe put in description
-                    warn("Only one alternative test mechanism allowed for {0} in STIX 2.0 - used first one, which was {1}".format(indicator_instance["id"], indicator_instance["pattern_lang"]))
+                    warn("Only one alternative test mechanism allowed for %s in STIX 2.0 - used first one, which was %s", 506, indicator_instance["id"], indicator_instance["pattern_lang"])
                 else:
                     if isinstance(tm, YaraTestMechanism):
 
-                        indicator_instance["pattern"] = convert_to_str(tm.rule.value)
+                        indicator_instance["pattern"] = text_type(tm.rule.value)
                         indicator_instance["pattern_lang"] = "yara"
                     elif isinstance(tm, SnortTestMechanism):
                         list_of_strings = []
                         for rule in tm.rules:
-                            list_of_strings.append(convert_to_str(rule.value))
+                            list_of_strings.append(text_type(rule.value))
                         indicator_instance["pattern"] = ", ".join(list_of_strings)
                         indicator_instance["pattern_lang"] = "snort"
                     elif isinstance(tm, OpenIOCTestMechanism):
@@ -793,9 +788,9 @@ def convert_indicator(indicator, bundle_instance, parent_created_by_ref, parent_
                 indicator_instance["valid_until"] = \
                     convert_timestamp_string(window.end_time.value, indicator, indicator_instance["created"])
             else:
-                warn("Only one valid time window allowed for {id} in STIX 2.0 - used first one".format(id=indicator_instance["id"]))
+                warn("Only one valid time window allowed for %s in STIX 2.0 - used first one", 507, indicator_instance["id"])
         if "valid_from" not in indicator_instance:
-            warn("No valid time position information available in {id}, using timestamp".format(id=indicator.id_))
+            warn("No valid time position information available in %s, using parent timestamp", 903, indicator.id_)
             indicator_instance["valid_from"] = convert_timestamp(indicator, parent_timestamp)
     convert_kill_chains(indicator.kill_chain_phases, indicator_instance)
     if indicator.likely_impact:
@@ -803,8 +798,8 @@ def convert_indicator(indicator, bundle_instance, parent_created_by_ref, parent_
     if hasattr(indicator, "confidence"):
         add_confidence_property_to_description(indicator_instance, indicator.confidence)
     # TODO: sightings
-    if indicator.observable and indicator.composite_indicator_expression:
-        error("Indicator {id} has an observable and composite_indictor_expression which is illegal".format(id=indicator.id_))
+    if indicator.observable and indicator.composite_indicator_expression or indicator.composite_indicator_expression:
+        warn("Indicator %s has an observable or indicator composite expression which is not supported in STIX 2.0", 407, indicator.id_)
     if indicator.observable is not None:
         indicator_instance["pattern"] = convert_observable_to_pattern(indicator.observable, bundle_instance,
                                                                       OBSERVABLE_MAPPING)
@@ -830,7 +825,7 @@ def convert_indicator(indicator, bundle_instance, parent_created_by_ref, parent_
                                                           indicator_instance["created"])
     # process information source before any relationships
     if indicator.suggested_coas is not None:
-        warn("Using related-to for the suggested COAs of {id}".format(id=indicator.id_) )
+        warn("Using related-to for the suggested COAs of {id}", 718, indicator.id_)
         handle_relationship_to_refs(indicator.suggested_coas, indicator_instance["id"], bundle_instance,
                                     "related-to", indicator_instance["created"], indicator_created_by_ref)
     if indicator.related_campaigns is not None:
@@ -840,7 +835,7 @@ def convert_indicator(indicator, bundle_instance, parent_created_by_ref, parent_
         handle_relationship_to_refs(indicator.indicated_ttps, indicator_instance["id"], bundle_instance,
                                     "indicates", indicator_instance["created"], indicator_created_by_ref)
     if indicator.related_indicators:
-        warn("All related indicators relationships of {id} are assumed to not represent STIX 1.2 versioning".format(id=indicator.id_))
+        warn("All associated indicators relationships of %s are assumed to not represent STIX 1.2 versioning", 710, indicator.id_)
         handle_relationship_to_refs(indicator.related_indicators, indicator_instance["id"], bundle_instance,
                                     "related-to", indicator_instance["created"], indicator_created_by_ref)
     finish_basic_object(indicator.id_, indicator_instance, indicator)
@@ -855,7 +850,7 @@ def convert_observed_data(obs, bundle_instance, parent_created_by_ref, parent_ti
     observed_data_instance = create_basic_object("observed-data", obs, parent_timestamp)
     # cybox_container = {"type": "cybox-container", "spec_version": "3.0"}
     observed_data_instance["objects"] = convert_cybox_object(obs.object_)
-    info("'first_observed' and 'last_observed' data not available directly on {id} - using timestamp".format(id=obs.id_))
+    info("'first_observed' and 'last_observed' data not available directly on %s - using timestamp", 901, obs.id_)
     observed_data_instance["first_observed"] = observed_data_instance["created"]
     observed_data_instance["last_observed"] = observed_data_instance["created"]
     observed_data_instance["number_observed"] = 1 if obs.sighting_count is None else obs.sighting_count
@@ -984,11 +979,11 @@ def convert_threat_actor(threat_actor, bundle_instance, parent_created_by_ref, p
     # process information source before any relationships
     if threat_actor.identity is not None:
         if threat_actor.identity.id_:
-            info("Threat actor identity {id} being used as basis of attributed-to relationship".format(id=threat_actor.identity.id_))
+            info("Threat Actor identity %s being used as basis of attributed-to relationship", 701, threat_actor.identity.id_)
         handle_relationship_to_objs([threat_actor.identity], threat_actor_instance["id"], bundle_instance,
                                     "attributed-to", threat_actor.timestamp, threat_actor_created_by_ref)
     if threat_actor.title is not None:
-        info("Threat actor {id}'s title is used for name property".format(id=threat_actor.id_))
+        info("Threat Actor %s title is used for name property", 717, threat_actor.id_)
         threat_actor_instance["name"] = threat_actor.title
     convert_controlled_vocabs_to_open_vocabs(threat_actor_instance, "labels", threat_actor.types,
                                              THREAT_ACTOR_LABEL_MAP, False)
@@ -1009,7 +1004,7 @@ def convert_threat_actor(threat_actor, bundle_instance, parent_created_by_ref, p
         handle_relationship_from_refs(threat_actor.associated_campaigns, threat_actor_instance["id"], bundle_instance,
                                       "attributed-to", threat_actor_instance["created"], threat_actor_created_by_ref)
     if threat_actor.associated_actors:
-        warn("All associated actors relationships of {id} are assumed to not represent STIX 1.2 versioning".format(id=threat_actor.id_))
+        warn("All associated actors relationships of %s are assumed to not represent STIX 1.2 versioning", 710, threat_actor.id_)
         handle_relationship_to_refs(threat_actor.associated_actors, threat_actor_instance["id"], bundle_instance,
                                     "related-to", threat_actor_instance["created"], threat_actor_created_by_ref)
 
@@ -1038,12 +1033,12 @@ def process_ttp_properties(sdo_instance, ttp, bundle_instance, parent_created_by
                                                     bundle_instance, parent_created_by_ref,
                                                     sdo_instance["created"])
     if ttp.related_ttps:
-        warn("All related indicators relationships of {id} are assumed to not represent STIX 1.2 versioning".format(id=ttp.id_))
+        warn("All associated indicators relationships of %s are assumed to not represent STIX 1.2 versioning", 710, ttp.id_)
         handle_relationship_to_refs(ttp.related_ttps, sdo_instance["id"], bundle_instance,
                                     "related-to", sdo_instance["created"], ttp_created_by_ref)
     if hasattr(ttp, "related_packages") and ttp.related_packages is not None:
         for p in ttp.related_packages:
-            warn("Related_Packages property no longer supported in STIX.  See {id}".format(id=ttp.id_))
+            warn("Related_Packages type in %s not supported in STIX 2.0", 402, ttp.id_)
 
 
 def convert_attack_pattern(ap, ttp, bundle_instance, ttp_id_used, parent_created_by_ref, parent_timestamp):
@@ -1068,10 +1063,10 @@ def convert_malware_instance(mal, ttp, bundle_instance, ttp_id_used, parent_crea
     if mal.names is not None:
         for n in mal.names:
             if "name" not in malware_instance_instance:
-                malware_instance_instance["name"] = str(n)
+                malware_instance_instance["name"] = text_type(n)
             else:
                 # TODO: add to description?
-                warn("Only one name for malware is allowed for {id} in STIX 2.0 - used first one".format(id=malware_instance_instance["id"]))
+                warn("Only one name for malware is allowed for %s in STIX 2.0 - used first one", 508, malware_instance_instance["id"])
     # TODO: warning for MAEC content
     process_ttp_properties(malware_instance_instance, ttp, bundle_instance, parent_created_by_ref)
     finish_basic_object(ttp.id_, malware_instance_instance, mal)
@@ -1095,7 +1090,7 @@ def convert_behavior(behavior, ttp, bundle_instance, parent_created_by_ref, pare
             first_one = False
     if behavior.exploits is not None:
         for e in behavior.exploits:
-            warn("TTP/Behavior/Exploits/Exploit not supported in STIX 2.0")
+            warn("TTP/Behavior/Exploits/Exploit in %s not supported in STIX 2.0", 408, ttp.id_)
     return resources_generated
 
 
@@ -1126,7 +1121,7 @@ def convert_infrastructure(infra, ttp, bundle_instance, first_one, parent_create
         infrastructure_instance["name"] = infra.title
     process_description_and_short_description(infrastructure_instance, infra)
     convert_controlled_vocabs_to_open_vocabs(infrastructure_instance, "labels", infra.types, {}, False)
-    info("No 'first_seen' data on {id} - using timestamp".format(id=(infra.id_ if infra.id_ is not None else ttp.id_)))
+    info("No 'first_seen' data on %s - using timestamp", 904, infra.id_ if infra.id_ else ttp.id_)
     infrastructure_instance["first_seen"] = convert_timestamp(infra, infrastructure_instance["created"])
     # TODO: observable_characterizations?
     process_ttp_properties(infrastructure_instance, ttp, bundle_instance, parent_created_by_ref)
@@ -1150,7 +1145,7 @@ def convert_resources(resources, ttp, bundle_instance, parent_created_by_ref, pa
             bundle_instance["objects"].append(new_obj)
             resources_generated.append(new_obj)
         else:
-            warn("Infrastructure is not part of of STIX 2.0 {id}".format(id=(" - " + ttp.id_ if ttp.id_ else "")))
+            warn("Infrastructure in %s not part of STIX 2.0", 409, ttp.id_ or "")
     return resources_generated
 
 
@@ -1166,18 +1161,18 @@ def convert_identity_for_victim_target(identity, ttp, bundle_instance, ttp_gener
 def convert_victim_targeting(victim_targeting, ttp, bundle_instance, ttp_generated, parent_created_by_ref, parent_timestamp):
     if victim_targeting.targeted_systems:
         for v in victim_targeting.targeted_systems:
-            warn("Targeted systems on {id} are not a victim target in STIX 2.0".format(id=ttp.id_))
+            warn("Targeted systems on %s are not a victim target in STIX 2.0", 410, ttp.id_)
     if victim_targeting.targeted_information:
         for v in victim_targeting.targeted_information:
-            warn("Targeted information on {id} is not a victim target in STIX 2.0".format(id=ttp.id_))
+            warn("Targeted information on %s is not a victim target in STIX 2.0", 411, ttp.id_)
     if hasattr(victim_targeting, "technical_details") and victim_targeting.targeted_technical_details is not None:
         for v in victim_targeting.targeted_technical_details:
-            warn("Targeted technical details on {id} are not a victim target in STIX 2.0".format(id=ttp.id_))
+            warn("Targeted technical details on %s are not a victim target in STIX 2.0", 412, ttp.id_)
     if victim_targeting.identity:
         identity_instance = convert_identity_for_victim_target(victim_targeting.identity, ttp, bundle_instance,
                                                                ttp_generated, parent_timestamp)
         if identity_instance:
-            warn("{id} generated an identity associated with a victim".format(id=ttp.id_))
+            warn("%s generated an identity associated with a victim", 713, ttp.id_)
             if ttp_generated:
                 bundle_instance["relationships"].append(
                     create_relationship(ttp.id_, identity_instance["id"],
@@ -1200,18 +1195,18 @@ def convert_ttp(ttp, bundle_instance, parent_created_by_ref, parent_timestamp):
         generated_objs.extend(convert_resources(ttp.resources, ttp, bundle_instance, parent_created_by_ref, parent_timestamp))
     if hasattr(ttp, "kill_chain_phases") and ttp.kill_chain_phases is not None:
         for phase in ttp.kill_chain_phases:
-            warn("Kill chains are not defined explicitly in STIX 2.0. {id}".format(id=ttp.id_))
+            warn("Kill Chains type in %s not supported in STIX 2.0", 413, ttp.id_)
     if ttp.victim_targeting is not None:
         victim_target = convert_victim_targeting(ttp.victim_targeting, ttp, bundle_instance,
                                                  generated_objs, parent_created_by_ref,
                                                  parent_timestamp)
         if not victim_target:
-            warn("{id} didn't yield any STIX 2.0 object".format(id=ttp.id_))
+            warn("Victim Target in %s did not generate any STIX 2.0 object", 414, ttp.id_)
         else:
             return generated_objs.append(victim_target)
     # victims weren't involved, check existing list
     if not generated_objs and ttp.id_ is not None:
-        warn("{id} didn't yield any STIX 2.0 object".format(id=ttp.id_))
+        warn("TTP %s did not generate any STIX 2.0 object", 415, ttp.id_)
     return generated_objs
 
 
@@ -1264,7 +1259,7 @@ def handle_embedded_object(obj, bundle_instance, parent_created_by_ref, parent_t
     elif new20s:
         return new20s
     else:
-        warn("No STIX 2.0 object generated from embedded object " + identifying_info(obj))
+        warn("No STIX 2.0 object generated from embedded object %s", 416, identifying_info(obj))
         return []
 
 
@@ -1299,7 +1294,7 @@ def finalize_bundle(bundle_instance):
                             kill_chain_phase_in_20 = KILL_CHAINS_PHASES[kcp]
                             fixed_kill_chain_phases.append(kill_chain_phase_in_20)
                         except:
-                            error("Dangling kill chain phase id")
+                            error("Dangling kill chain phase id in indicator %s", 607, ind20["id"])
                     else:
                         fixed_kill_chain_phases.append(kcp)
                 ind20["kill_chain_phases"] = fixed_kill_chain_phases
@@ -1326,9 +1321,11 @@ def finalize_bundle(bundle_instance):
                 final_pattern = fix_pattern(ind["pattern"])
                 if final_pattern:
                     if final_pattern.contains_placeholder():
-                        warn("At least one PLACEHOLDER idref was not resolved in {id}".format(id=ind["id"]))
+                        pass
+                        warn("At least one PLACEHOLDER idref was not resolved in %s", 205, ind["id"])
                     if final_pattern.contains_unconverted_term():
-                        warn("At least one observable could not be converted in {id}".format(id=ind["id"]))
+                        pass
+                        warn("At least one observable could not be converted in %s", 206, ind["id"])
                     if isinstance(final_pattern, ComparisonExpression):
                         ind["pattern"] = "[" + final_pattern.to_string() + "]"
                     else:
@@ -1362,15 +1359,13 @@ def finalize_bundle(bundle_instance):
                 stix20_id = get_id_value(value)
 
                 if stix20_id[0] is None:
-                    warn("1.X ID: {0} was not mapped to 2.0 ID.".format(value))
+                    warn("1.X ID: %s was not mapped to STIX 2.0 ID", 603, value)
                     continue
 
                 operation_on_path(bundle_instance, path, stix20_id[0])
-                info("Found {0} replaced by {1}.".format(value, stix20_id[0]))
+                info("Found STIX 1.X ID: %s replaced by %s", 702, value, stix20_id[0])
             elif reference_needs_fixing(value) and not exists_id_key(value):
-                warn("1.X ID: {0} was not mapped to 2.0 ID.".format(value))
-
-
+                warn("1.X ID: %s was not mapped to STIX 2.0 ID", 603, value)
 
     for item in to_remove:
         operation_on_path(bundle_instance, item, "", op=2)
