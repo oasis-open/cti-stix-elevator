@@ -62,7 +62,7 @@ def idiom_mappings(xml_file_path, stored_json):
         yield good, to_check
 
 
-def test_generator(test_file, stored_master):
+def generate_test(test_file, stored_master):
     def test(self):
         for good_path, check_path in idiom_mappings(test_file, stored_master):
             self.assertEquals(good_path, check_path)
@@ -106,7 +106,7 @@ def load_tests(loader, standard_tests, pattern):
 
     for idx, tname in enumerate(XML_FILENAMES):
         test_name = "test_%s" % tname
-        test = test_generator(TESTED_XML_FILES[idx], MASTER_JSON_FILES[idx])
+        test = generate_test(TESTED_XML_FILES[idx], MASTER_JSON_FILES[idx])
         setattr(MappingContentTest, test_name, test)
 
     standard_tests = loader.loadTestsFromTestCase(MappingContentTest)

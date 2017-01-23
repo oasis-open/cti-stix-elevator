@@ -140,7 +140,7 @@ REPORT_LABELS_MAP = \
         "Malware Samples": ""
     }
 
-#CybOX
+# CybOX
 
 WINDOWS_PEBINARY = {}
 

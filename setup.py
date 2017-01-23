@@ -27,12 +27,16 @@ setup(
     long_description=readme,
     url="http://stixproject.github.io/",
     packages=find_packages(),
+    install_requires=[
+        'pycountry',
+        'stix>=1.2.0.0,<1.2.1.0',
+        'stix2-validator',
+    ],
     entry_points={
         'console_scripts': [
             'stix_elevator = elevator.scripts.stix_elevator:main',
         ],
     },
-    install_requires=['stix>=1.2.0.0,<1.2.1.0'],
     classifiers=[
         "Programming Language :: Python",
         "Development Status :: 2 - Pre-Alpha",
