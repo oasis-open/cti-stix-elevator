@@ -7,10 +7,12 @@ import os
 import sys
 
 from elevator import elevate_file
-from elevator.options import initialize_options, set_option_value
+from elevator.options import initialize_options
 
 # The output is set to the own json-idioms container.
 # WARNING: This will overwrite the contents inside the idioms-json directory.
+
+# First argument is the output location for json-idioms. Second for input XML.
 
 
 def main():
@@ -41,7 +43,6 @@ def main():
         destination = os.path.abspath(destination)
 
         initialize_options()
-        set_option_value("no_incidents", False)
 
         if file_and_ext[1] == "xml":
             sys.stdout.write(xml_path + "\n")

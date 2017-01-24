@@ -1,16 +1,14 @@
 
-try:
-    from StringIO import StringIO
-except ImportError:
-    from io import StringIO
-
 # built-in
 import json
+import logging
 
 # external
 import stix
 from stix.core import STIXPackage
 from stix.utils.parser import EntityParser
+
+from six import StringIO
 
 from stix2validator import codes
 from stix2validator import output
@@ -23,9 +21,16 @@ from elevator.convert_stix import convert_package
 from elevator.options import get_validator_options, initialize_options, get_option_value
 from elevator.version import __version__  # noqa
 
+logging.basicConfig(
+    level=logging.DEBUG,
+    format="[%(ecode)d] [%(levelname)-7s] [%(asctime)s] %(message)s"
+)
+
+log = logging.getLogger(__name__)
+
 
 def elevate_file(fn):
-    warn("WARNING: Results produced by the stix-elevator are not for production purposes.")
+    warn("Results produced by the stix-elevator are not for production purposes.", 201)
     clear_id_mapping()
     clear_pattern_mapping()
 
@@ -57,7 +62,7 @@ def elevate_file(fn):
 
 
 def elevate_string(string, elevator_options=None):
-    warn("WARNING: Results produced by the stix-elevator are not for production purposes.")
+    warn("Results produced by the stix-elevator are not for production purposes.", 201)
     clear_id_mapping()
     clear_pattern_mapping()
 
@@ -90,7 +95,7 @@ def elevate_string(string, elevator_options=None):
 
 
 def elevate_package(package, elevator_options=None):
-    warn("WARNING: Results produced by the stix-elevator are not for production purposes.")
+    warn("Results produced by the stix-elevator are not for production purposes.", 201)
     clear_id_mapping()
     clear_pattern_mapping()
 
