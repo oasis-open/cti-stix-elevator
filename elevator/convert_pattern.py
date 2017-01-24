@@ -40,7 +40,7 @@ class ComparisonExpression():
         self.root_type = get_root_from_object_path(lhs)
 
     def to_string(self):
-        return self.lhs + (" NOT" if self.negated else "") + " " + self.operator + " '"  + convert_to_str(self.rhs) + "'"
+        return self.lhs + (" NOT" if self.negated else "") + " " + self.operator + " '" + convert_to_str(self.rhs) + "'"
 
     def contains_placeholder(self):
         return False
@@ -56,7 +56,7 @@ class ComparisonExpression():
 
 
 class BooleanExpression():
-    def __init__(self, operator, operands,negated=False):
+    def __init__(self, operator, operands, negated=False):
         self.operator = operator
         self.operands = operands
         self.negated = negated
@@ -137,6 +137,7 @@ class IdrefPlaceHolder():
 
     def contains_unconverted_term(self):
         return False
+
 
 class UnconvertedTerm():
     def __init__(self, term_info):
@@ -321,7 +322,7 @@ def create_term_with_regex(lhs, condition, rhs, negated):
     elif condition == "EndsWith":
         pattern = rhs + "$"
     elif condition == "Contains" or condition == "DoesNotContain":
-        pattern =  rhs
+        pattern = rhs
     # return lhs + (" NOT MATCHES " if negated else " MATCHES ") + pattern
     return ComparisonExpression("MATCHES", lhs, pattern, negated)
 
@@ -689,7 +690,7 @@ def convert_registry_key_to_pattern(reg_key):
                 object_path = prop_spec[1]
                 if hasattr(v, prop_1x) and getattr(v, prop_1x):
                     value_expressions.append(add_comparison_expression(getattr(v, prop_1x),
-                                                                      object_path))
+                                                                       object_path))
             if value_expressions:
                 values_expressions.append(create_boolean_expression("OR", value_expressions))
         expressions.extend(values_expressions)
@@ -786,6 +787,7 @@ def convert_observable_composition_to_pattern(obs_comp, bundle_instance, observa
         return create_boolean_expression(obs_comp.operator, expressions)
     else:
         return ""
+
 
 def convert_object_to_pattern(obj, obs_id):
     prop = obj.properties
@@ -977,7 +979,6 @@ def convert_indicator_composition_to_pattern(ind_comp, bundle_instance, observab
         else:
             warn("No term was yielded for {0}".format((ind.id_ if ind.id_ else ind.idref)))
     if expressions:
-        operator_as_string = " " +  + " "
         return create_boolean_expression(ind_comp.operator, expressions)
     else:
         return ""

@@ -6,6 +6,7 @@ from elevator.utils import *
 
 ALL_OPTIONS = None
 
+
 class ElevatorOptions(object):
     """Collection of elevator options which can be set via command line or
     programmatically in a script.
@@ -93,11 +94,13 @@ def get_validator_options():
         validator_args.files = None
         return ValidationOptions(validator_args)
 
+
 def get_option_value(option_name):
     if ALL_OPTIONS and hasattr(ALL_OPTIONS, option_name):
         return getattr(ALL_OPTIONS, option_name)
     else:
         return None
+
 
 def set_option_value(option_name, option_value):
     if ALL_OPTIONS:
@@ -105,12 +108,12 @@ def set_option_value(option_name, option_value):
     else:
         error("options not initialized")
 
+
 def msg_id_enabled(msg_id):
     if not get_option_value("disable"):
         return msg_id in get_option_value("enable")
     else:
         return not (msg_id in get_option_value("disable"))
-
 
 
 # Mapping of check code numbers to names

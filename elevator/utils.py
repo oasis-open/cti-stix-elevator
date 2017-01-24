@@ -6,6 +6,7 @@ import sys
 
 from elevator.options import msg_id_enabled
 
+
 def info(fmt, *args):
     msg = fmt % args
 
@@ -29,9 +30,11 @@ def error(fmt, *args):
         msg = msg.encode(encoding='utf8')
     sys.stderr.write("[ERROR] {message}\n".format(message=msg))
 
+
 def maybe_warn(msg_id, msg):
     if msg_id_enabled(msg_id):
         warn("{msg_id}: {msg}", format(msg_id=msg_id, msg=msg))
+
 
 def identifying_info(stix1x_obj):
     if stix1x_obj:
@@ -78,11 +81,13 @@ def convert_controlled_vocabs_to_open_vocabs(new_obj, new_property_name, old_voc
             else:
                 warn("Only one {prop} allowed in STIX 2.0 - used first one".format(prop=new_property_name))
 
+
 def strftime_with_appropriate_fractional_seconds(timestamp, milliseconds_only):
     if milliseconds_only:
         return timestamp.strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3] + "Z"
     else:
         return timestamp.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
+
 
 def convert_timestamp_string(timestamp, entity, parent_timestamp, milliseconds_only=False):
 
