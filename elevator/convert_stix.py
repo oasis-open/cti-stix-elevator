@@ -124,7 +124,8 @@ def process_description_and_short_description(so, entity, parent_info=False):
             else:
                 so["description"] += description_as_text
         if (not get_option_value("no_squirrel_gaps") and
-            hasattr(entity, "short_descriptions") and entity.short_descriptions is not None):
+                hasattr(entity, "short_descriptions") and
+                entity.short_descriptions is not None):
             short_description_as_text = process_structured_text_list(entity.short_descriptions)
             if short_description_as_text:
                 warn("The Short_Description property is no longer supported in STIX.  Added the text to the description property")
@@ -141,11 +142,12 @@ def process_description_and_short_description(so, entity, parent_info=False):
     elif not get_option_value("no_squirrel_gaps") and hasattr(entity, "short_descriptions") and entity.short_descriptions is not None:
         so["description"] = convert_to_str(process_structured_text_list(entity.short_descriptions))
 
+
 def create_basic_object(stix20_type, stix1x_obj, parent_timestamp=None, parent_id=None, id_used=False):
     instance = {"type": stix20_type}
     instance["id"] = generate_stix20_id(stix20_type, stix1x_obj.id_ if (stix1x_obj and
-                                                                       hasattr(stix1x_obj, "id_") and
-                                                                       stix1x_obj.id_ ) else parent_id, id_used)
+                                                                        hasattr(stix1x_obj, "id_") and
+                                                                        stix1x_obj.id_) else parent_id, id_used)
     timestamp = convert_timestamp(stix1x_obj, parent_timestamp, True)
     instance["created"] = timestamp
     # may need to revisit if we handle 1.x versioning.
@@ -567,8 +569,8 @@ def convert_exploit_target(et, bundle_instance, parent_created_by_ref, parent_ti
     if et.vulnerabilities is not None:
         for v in et.vulnerabilities:
             bundle_instance["objects"].append(convert_vulnerability(v, et, bundle_instance,
-                                                                            parent_created_by_ref,
-                                                                            parent_timestamp))
+                                                                    parent_created_by_ref,
+                                                                    parent_timestamp))
     if et.weaknesses is not None:
         for w in et.weaknesses:
             warn("ExploitTarget/Weaknesses type in %s not supported in STIX 2.0", 405, et.id_)
@@ -656,7 +658,8 @@ def convert_identity(identity, bundle_instance, parent_timestamp=None, parent_id
             # convert_ciq_addresses(ciq_info.addresses, identity_instance)
             # add other properties to contact_information
     if identity.related_identities:
-        warn("All associated identities relationships of %s are assumed to not represent STIX 1.2 versioning", 710, identity.id_ or "")
+        msg = "All associated identities relationships of %s are assumed to not represent STIX 1.2 versioning"
+        warn(msg, 710, identity.id_ or "")
         handle_relationship_to_refs(identity.related_identities, identity_instance["id"], bundle_instance,
                                     "related-to", parent_timestamp)
     finish_basic_object(identity.id_, identity_instance, identity)
@@ -748,7 +751,8 @@ def convert_test_mechanism(indicator, indicator_instance):
             for tm in indicator.test_mechanisms:
                 if hasattr(indicator_instance, "pattern"):
                     # TODO: maybe put in description
-                    warn("Only one alternative test mechanism allowed for %s in STIX 2.0 - used first one, which was %s", 506, indicator_instance["id"], indicator_instance["pattern_lang"])
+                    msg = "Only one alternative test mechanism allowed for %s in STIX 2.0 - used first one, which was %s"
+                    warn(msg, 506, indicator_instance["id"], indicator_instance["pattern_lang"])
                 else:
                     if isinstance(tm, YaraTestMechanism):
 
@@ -816,7 +820,7 @@ def convert_indicator(indicator, bundle_instance, parent_created_by_ref, parent_
                 expressions.append(term)
         indicator_instance["pattern"] = create_boolean_expression(indicator.composite_indicator_expression.operator,
                                                                   expressions)
-        #add_to_pattern_cache(indicator.id_, indicator_instance["pattern"])
+        # add_to_pattern_cache(indicator.id_, indicator_instance["pattern"])
     if "pattern" not in indicator_instance:
         # STIX doesn't handle multiple patterns for indicators
         convert_test_mechanism(indicator, indicator_instance)
@@ -1265,20 +1269,20 @@ def handle_embedded_object(obj, bundle_instance, parent_created_by_ref, parent_t
 
 def initialize_bundle_lists(bundle_instance):
     bundle_instance["relationships"] = []
-    #bundle_instance["campaigns"] = []
-    #bundle_instance["courses_of_action"] = []
-    #bundle_instance["vulnerabilities"] = []
-    #bundle_instance["identities"] = []
-    #bundle_instance["incidents"] = []
+    # bundle_instance["campaigns"] = []
+    # bundle_instance["courses_of_action"] = []
+    # bundle_instance["vulnerabilities"] = []
+    # bundle_instance["identities"] = []
+    # bundle_instance["incidents"] = []
     bundle_instance["indicators"] = []
     bundle_instance["reports"] = []
     bundle_instance["observed_data"] = []
-    #bundle_instance["threat_actors"] = []
-    #bundle_instance["attack_patterns"] = []
-    #bundle_instance["malware"] = []
-    #bundle_instance["tools"] = []
-    #bundle_instance["infrastructure"] = []
-    #bundle_instance["victim_targets"] = []
+    # bundle_instance["threat_actors"] = []
+    # bundle_instance["attack_patterns"] = []
+    # bundle_instance["malware"] = []
+    # bundle_instance["tools"] = []
+    # bundle_instance["infrastructure"] = []
+    # bundle_instance["victim_targets"] = []
     bundle_instance["objects"] = []
 
 
@@ -1383,7 +1387,6 @@ def convert_package(stixPackage, package_created_by_ref=None, default_timestamp=
     bundle_instance["id"] = generate_stix20_id("bundle", stixPackage.id_)
     bundle_instance["spec_version"] = "2.0"
     initialize_bundle_lists(bundle_instance)
-
 
     if default_timestamp:
         parent_timestamp = datetime.strptime(default_timestamp, "%Y-%m-%dT%H:%M:%S.%fZ")

@@ -17,6 +17,7 @@ def get_version():
 
         raise AttributeError("Package does not have a __version__")
 
+
 with open('README.md') as f:
     readme = f.read()
 
@@ -27,12 +28,16 @@ setup(
     long_description=readme,
     url="http://stixproject.github.io/",
     packages=find_packages(),
+    install_requires=[
+        'pycountry>=1.17.8',
+        'stix>=1.1.1.7,<1.2.1.0',
+        'stix2-validator>=0.0.2',
+    ],
     entry_points={
         'console_scripts': [
             'stix_elevator = elevator.scripts.stix_elevator:main',
         ],
     },
-    install_requires=['stix>=1.1.1.7,<1.2.1.0', 'pycountry>=1.17.8'],
     classifiers=[
         "Programming Language :: Python",
         "Development Status :: 2 - Pre-Alpha",

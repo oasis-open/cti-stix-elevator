@@ -55,7 +55,7 @@ class ComparisonExpression(object):
 
 
 class BooleanExpression(object):
-    def __init__(self, operator, operands,negated=False):
+    def __init__(self, operator, operands, negated=False):
         self.operator = operator
         self.operands = operands
         self.negated = negated
@@ -321,7 +321,7 @@ def create_term_with_regex(lhs, condition, rhs, negated):
     elif condition == "EndsWith":
         pattern = rhs + "$"
     elif condition == "Contains" or condition == "DoesNotContain":
-        pattern =  rhs
+        pattern = rhs
     # return lhs + (" NOT MATCHES " if negated else " MATCHES ") + pattern
     return ComparisonExpression("MATCHES", lhs, pattern, negated)
 
@@ -407,6 +407,7 @@ def convert_address_to_pattern(add):
 
 def convert_uri_to_pattern(uri):
     return create_term("url:value", uri.value.condition, uri.value.value)
+
 
 # NOTICE:  The format of these PROPERTIES is different than the others in this file!!!!!!
 _EMAIL_HEADER_PROPERTIES = [["email-message:subject", ["subject"]],
@@ -662,6 +663,7 @@ def convert_file_to_pattern(file):
     if expressions:
         return create_boolean_expression("AND", expressions)
 
+
 _REGISTRY_KEY_VALUES_PROPERTIES = [["data", "win-registry-key:values[*].data"],
                                    ["name", "win-registry-key:values[*].name"],
                                    ["datatype", "win-registry-key:values[*].data_type"]]
@@ -687,7 +689,7 @@ def convert_registry_key_to_pattern(reg_key):
                 object_path = prop_spec[1]
                 if hasattr(v, prop_1x) and getattr(v, prop_1x):
                     value_expressions.append(add_comparison_expression(getattr(v, prop_1x),
-                                                                      object_path))
+                                                                       object_path))
             if value_expressions:
                 values_expressions.append(create_boolean_expression("OR", value_expressions))
         expressions.extend(values_expressions)
@@ -721,6 +723,7 @@ def convert_windows_process_to_pattern(process):
         for h in process.handle_list:
             warn("Windows Handles are not a part of CybOX 3.0", 420)
     return expression
+
 
 _WINDOWS_PROCESS_PROPERTIES = \
     [["service_name", "process:extension_data.windows_service_ext.service_name"],
@@ -806,8 +809,8 @@ def convert_object_to_pattern(obj, obs_id):
             expression = convert_domain_name_to_pattern(prop)
         elif isinstance(prop, Mutex):
             expression = convert_mutex_to_pattern(prop)
-       # elif isinstance(prop, NetworkConnection):
-       #     expression = convert_network_connection_to_pattern(prop)
+        # elif isinstance(prop, NetworkConnection):
+        #     expression = convert_network_connection_to_pattern(prop)
         else:
             warn("%s found in %s cannot be converted to a pattern, yet.", 808, text_type(obj.properties), obs_id)
             expression = UnconvertedTerm(obs_id)
@@ -991,10 +994,10 @@ def remove_pattern_objects(bundle_instance):
                 remaining_observed_data.append(obs)
         bundle_instance["observed_data"] = remaining_observed_data
 
- # TODO: only remove indicators that were involved ONLY as sub-indicators within composite indicator expressions
- #   if not KEEP_INDICATORS_USED_IN_COMPOSITE_INDICATOR_EXPRESSION and "indicators" in bundle_instance:
- #       remaining_indicators = []
- #       for ind in bundle_instance["indicators"]:
- #           if ind["id"] not in all_new_ids_with_patterns:
- #               remaining_indicators.append(ind)
- #       bundle_instance["indicators"] = remaining_indicators
+# TODO: only remove indicators that were involved ONLY as sub-indicators within composite indicator expressions
+#   if not KEEP_INDICATORS_USED_IN_COMPOSITE_INDICATOR_EXPRESSION and "indicators" in bundle_instance:
+#       remaining_indicators = []
+#       for ind in bundle_instance["indicators"]:
+#           if ind["id"] not in all_new_ids_with_patterns:
+#               remaining_indicators.append(ind)
+#       bundle_instance["indicators"] = remaining_indicators

@@ -2,7 +2,7 @@ import shlex
 from six import text_type
 
 from stix2validator.scripts import stix2_validator
-from stix2validator.validator import ValidationOptions
+from stix2validator import ValidationOptions
 from elevator.utils import *
 
 ALL_OPTIONS = None
