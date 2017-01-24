@@ -30,7 +30,7 @@ setup(
     install_requires=[
         'pycountry',
         'stix>=1.2.0.0,<1.2.1.0',
-        'stix2-validator',
+        'stix2-validator>=0.0.2',
     ],
     entry_points={
         'console_scripts': [
