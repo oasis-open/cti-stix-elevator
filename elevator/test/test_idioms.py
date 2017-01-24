@@ -73,10 +73,10 @@ def setup_tests():
     directory = os.path.dirname(__file__)
     path, last_dir = os.path.split(directory)
 
-    xml_idioms_dir = os.path.join(path, "idioms-xml")
+    xml_idioms_dir = os.path.join(path, "../idioms-xml")
     xml_idioms_dir = os.path.abspath(xml_idioms_dir)
 
-    json_idioms_dir = os.path.join(path, "idioms-json")
+    json_idioms_dir = os.path.join(path, "../idioms-json")
     json_idioms_dir = os.path.abspath(json_idioms_dir)
 
     print("Setting up tests from following directories...")
