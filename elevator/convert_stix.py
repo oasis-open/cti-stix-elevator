@@ -1269,20 +1269,9 @@ def handle_embedded_object(obj, bundle_instance, parent_created_by_ref, parent_t
 
 def initialize_bundle_lists(bundle_instance):
     bundle_instance["relationships"] = []
-    # bundle_instance["campaigns"] = []
-    # bundle_instance["courses_of_action"] = []
-    # bundle_instance["vulnerabilities"] = []
-    # bundle_instance["identities"] = []
-    # bundle_instance["incidents"] = []
     bundle_instance["indicators"] = []
     bundle_instance["reports"] = []
     bundle_instance["observed_data"] = []
-    # bundle_instance["threat_actors"] = []
-    # bundle_instance["attack_patterns"] = []
-    # bundle_instance["malware"] = []
-    # bundle_instance["tools"] = []
-    # bundle_instance["infrastructure"] = []
-    # bundle_instance["victim_targets"] = []
     bundle_instance["objects"] = []
 
 
@@ -1325,10 +1314,8 @@ def finalize_bundle(bundle_instance):
                 final_pattern = fix_pattern(ind["pattern"])
                 if final_pattern:
                     if final_pattern.contains_placeholder():
-                        pass
                         warn("At least one PLACEHOLDER idref was not resolved in %s", 205, ind["id"])
                     if final_pattern.contains_unconverted_term():
-                        pass
                         warn("At least one observable could not be converted in %s", 206, ind["id"])
                     if isinstance(final_pattern, ComparisonExpression):
                         ind["pattern"] = "[" + final_pattern.to_string() + "]"
