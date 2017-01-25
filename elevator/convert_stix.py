@@ -113,7 +113,7 @@ def process_structured_text_list(text_list):
 
 def process_description_and_short_description(so, entity, parent_info=False):
     if hasattr(entity, "descriptions") and entity.descriptions is not None:
-        description_as_text = convert_to_str(process_structured_text_list(entity.descriptions))
+        description_as_text = text_type(process_structured_text_list(entity.descriptions))
         if description_as_text:
             if parent_info:
                 if not get_option_value("no_squirrel_gaps"):
@@ -138,9 +138,9 @@ def process_description_and_short_description(so, entity, parent_info=False):
                     so["description"] += short_description_as_text
     # could be descriptionS or description
     elif hasattr(entity, "description") and entity.description is not None:
-        so["description"] += convert_to_str(entity.description.value)
+        so["description"] += text_type(entity.description.value)
     elif not get_option_value("no_squirrel_gaps") and hasattr(entity, "short_descriptions") and entity.short_descriptions is not None:
-        so["description"] = convert_to_str(process_structured_text_list(entity.short_descriptions))
+        so["description"] = text_type(process_structured_text_list(entity.short_descriptions))
 
 
 def create_basic_object(stix20_type, stix1x_obj, parent_timestamp=None, parent_id=None, id_used=False):
@@ -649,7 +649,7 @@ def convert_identity(identity, bundle_instance, parent_timestamp=None, parent_id
         if ciq_info.party_name:
             warn("CIQ name found in %s, possibly overriding other name", 711, identity_instance["id"])
             convert_party_name(ciq_info.party_name, identity_instance)
-        if ciq_info.organisation_info:
+        if ciq_info.organisation_info and ciq_info.organisation_info.industry_type:
             convert_to_open_vocabs(identity_instance, "sectors", ciq_info.organisation_info.industry_type, SECTORS_MAP)
             warn("Based on CIQ information, %s is assumed to be an organization", 716, identity_instance["id"])
             identity_instance["identity_class"] = "organization"
