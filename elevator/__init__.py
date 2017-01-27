@@ -44,6 +44,7 @@ def elevate_file(fn):
         if not isinstance(stix_package, STIXPackage):
             raise TypeError("Must be an instance of stix.core.STIXPackage")
 
+        setup_logger(stix_package.id_)
         json_string = json.dumps(convert_package(stix_package,
                                                  get_option_value("package_created_by_id"),
                                                  get_option_value("default_timestamp")),
@@ -55,24 +56,18 @@ def elevate_file(fn):
         return json_string
 
     except ValidationError as ex:
-        output.error("Validation error occurred: '%s'" % str(ex),
+        output.error("Validation error occurred: '%s'" % ex,
                      codes.EXIT_VALIDATION_ERROR)
     except OSError as ex:
-        error(str(ex))
+        log.error(ex)
 
 
-def elevate_string(string, elevator_options=None):
+def elevate_string(string):
     warn("Results produced by the stix-elevator are not for production purposes.", 201)
     clear_id_mapping()
     clear_pattern_mapping()
 
-    if not elevator_options:
-        elevator_options = options.ElevatorOptions()
-        options.set_options(elevator_options)
-        validator_options = elevator_options.get_validator_options()
-    else:
-        options.set_options(elevator_options)
-        validator_options = elevator_options.get_validator_options()
+    validator_options = get_validator_options()
 
     try:
         output.set_level(validator_options.verbose)
@@ -83,29 +78,30 @@ def elevate_string(string, elevator_options=None):
         if not isinstance(stix_package, STIXPackage):
             raise TypeError("Must be an instance of stix.core.STIXPackage")
 
-        json_string = json.dumps(convert_package(stix_package), indent=4,
-                                 separators=(',', ': '), sort_keys=True)
+        setup_logger(stix_package.id_)
+        json_string = json.dumps(convert_package(stix_package,
+                                                 get_option_value("package_created_by_id"),
+                                                 get_option_value("default_timestamp")),
+                                 indent=4,
+                                 separators=(',', ': '),
+                                 sort_keys=True)
         validation_results = validate_string(json_string, validator_options)
         output.print_results(validation_results)
         return json_string
 
     except ValidationError as ex:
-        output.error("Validation error occurred: '%s'" % str(ex),
+        output.error("Validation error occurred: '%s'" % ex,
                      codes.EXIT_VALIDATION_ERROR)
+    except OSError as ex:
+        log.error(ex)
 
 
-def elevate_package(package, elevator_options=None):
+def elevate_package(package):
     warn("Results produced by the stix-elevator are not for production purposes.", 201)
     clear_id_mapping()
     clear_pattern_mapping()
 
-    if not elevator_options:
-        elevator_options = options.ElevatorOptions()
-        options.set_options(elevator_options)
-        validator_options = elevator_options.get_validator_options()
-    else:
-        options.set_options(elevator_options)
-        validator_options = elevator_options.get_validator_options()
+    validator_options = get_validator_options()
 
     try:
         output.set_level(validator_options.verbose)
@@ -113,12 +109,19 @@ def elevate_package(package, elevator_options=None):
         if not isinstance(package, STIXPackage):
             raise TypeError("Must be an instance of stix.core.STIXPackage")
 
-        json_string = json.dumps(convert_package(package), indent=4,
-                                 separators=(',', ': '), sort_keys=True)
+        setup_logger(package.id_)
+        json_string = json.dumps(convert_package(package,
+                                                 get_option_value("package_created_by_id"),
+                                                 get_option_value("default_timestamp")),
+                                 indent=4,
+                                 separators=(',', ': '),
+                                 sort_keys=True)
         validation_results = validate_string(json_string, validator_options)
         output.print_results(validation_results)
         return json_string
 
     except ValidationError as ex:
-        output.error("Validation error occurred: '%s'" % str(ex),
+        output.error("Validation error occurred: '%s'" % ex,
                      codes.EXIT_VALIDATION_ERROR)
+    except OSError as ex:
+        log.error(ex)

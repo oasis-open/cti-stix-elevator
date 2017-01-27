@@ -7,14 +7,11 @@ try:
 except ImportError:
     from itertools import zip_longest as zip
 
-try:
-    from StringIO import StringIO
-except ImportError:
-    from io import StringIO
+from six import StringIO
 
 from elevator import elevate_file
-from elevator.utils import iterpath
 from elevator.options import initialize_options, set_option_value
+from elevator.utils import iterpath, find_dir
 
 
 TESTED_XML_FILES = []
@@ -38,7 +35,6 @@ def idiom_mappings(xml_file_path, stored_json):
     print("Checking - " + xml_file_path)
 
     initialize_options()
-    set_option_value("no_incidents", False)
 
     converted_json = elevate_file(xml_file_path)
     io = StringIO(converted_json)
@@ -71,13 +67,9 @@ def generate_test(test_file, stored_master):
 
 def setup_tests():
     directory = os.path.dirname(__file__)
-    path, last_dir = os.path.split(directory)
 
-    xml_idioms_dir = os.path.join(path, "../idioms-xml")
-    xml_idioms_dir = os.path.abspath(xml_idioms_dir)
-
-    json_idioms_dir = os.path.join(path, "../idioms-json")
-    json_idioms_dir = os.path.abspath(json_idioms_dir)
+    xml_idioms_dir = find_dir(directory, "idioms-xml")
+    json_idioms_dir = find_dir(directory, "idioms-json")
 
     print("Setting up tests from following directories...")
     print(xml_idioms_dir)

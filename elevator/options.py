@@ -1,11 +1,13 @@
 import shlex
-from six import text_type
+import logging
 
 from stix2validator.scripts import stix2_validator
 from stix2validator import ValidationOptions
 from elevator.utils import *
 
 ALL_OPTIONS = None
+
+log = logging.getLogger(__name__)
 
 
 class ElevatorOptions(object):
@@ -19,8 +21,6 @@ class ElevatorOptions(object):
     Attributes:
         cmd_args: An instance of ``argparse.Namespace`` containing options
             supplied on the command line.
-        verbose: True if informational notes and more verbose error messages
-            should be printed to stdout/stderr.
         file_: Input file to be elevated.
         incidents: False if no incidents should be included in the result.
         infrastructure: True if infrastructure should be included in the result.
@@ -37,11 +37,11 @@ class ElevatorOptions(object):
     Note:
         All messages are turned on by default.
     """
-    def __init__(self, cmd_args=None, file_=None, incidents=True,
+    def __init__(self, cmd_args=None, file_=None, incidents=False,
                  no_squirrel_gaps=False, infrastructure=False,
                  package_created_by_id=None, default_timestamp=None,
-                 validator_args="--strict-types", verbose=False,
-                 enable="", disable="", silent=False):
+                 validator_args="--strict-types", enable="", disable="",
+                 silent=False, message_log_directory=None):
 
         if cmd_args is not None:
             self.file_ = cmd_args.file_
@@ -52,10 +52,10 @@ class ElevatorOptions(object):
             self.default_timestamp = cmd_args.default_timestamp
             self.validator_args = cmd_args.validator_args
 
-            self.verbose = cmd_args.verbose
             self.enable = cmd_args.enable
             self.disable = cmd_args.disable
             self.silent = cmd_args.silent
+            self.message_log_directory = cmd_args.message_log_directory
 
         else:
             self.file_ = file_
@@ -66,10 +66,13 @@ class ElevatorOptions(object):
             self.default_timestamp = default_timestamp
             self.validator_args = validator_args
 
-            self.verbose = verbose
             self.enable = enable
             self.disable = disable
             self.silent = silent
+            self.message_log_directory = message_log_directory
+
+        if self.silent and self.message_log_directory:
+            log.warn("Both console and output log have disabled messages.")
 
         # Convert string of comma-separated checks to a list,
         # and convert check code numbers to names. By default all messages are
@@ -122,7 +125,7 @@ def set_option_value(option_name, option_value):
 
 
 def msg_id_enabled(msg_id):
-    msg_id = str(msg_id)
+    msg_id = text_type(msg_id)
 
     if get_option_value("silent"):
         return False

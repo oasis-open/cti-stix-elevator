@@ -103,15 +103,6 @@ def _get_arg_parser(is_script=True):
     )
 
     parser.add_argument(
-        "-v"
-        "--verbose",
-        help="Print information messages and more verbose error messages.",
-        dest="verbose",
-        action="store_true",
-        default=False
-    )
-
-    parser.add_argument(
         "-e",
         "--enable",
         help="A comma-separated list of the elevator messages to enable. "
@@ -137,6 +128,16 @@ def _get_arg_parser(is_script=True):
         dest="silent",
         action="store_true",
         default=False
+    )
+
+    parser.add_argument(
+        "--message-log-directory",
+        help="If this flag is set. All elevator messages will be saved to "
+             "file. The name of the file will be the input file with "
+             "extension .log in the specified directory.",
+        dest="message_log_directory",
+        action="store",
+        default=None
     )
 
     return parser

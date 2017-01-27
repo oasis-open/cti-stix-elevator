@@ -1,6 +1,7 @@
 
 # built-in
 import logging
+import os
 from datetime import datetime
 
 # external
@@ -24,6 +25,31 @@ def warn(fmt, ecode, *args):
 def error(fmt, ecode, *args):
     if options.msg_id_enabled(ecode):
         log.error(fmt, *args, extra={'ecode': ecode})
+
+
+def setup_logger(package_id):
+    if options.ALL_OPTIONS:
+        if not options.get_option_value("message_log_directory"):
+            print("LOL", options.get_option_value("message_log_directory"))
+            return
+
+        global log
+        output_directory = options.get_option_value("message_log_directory")
+        file_directory = options.get_option_value("file_")
+
+        if file_directory:
+            project_path, filename = os.path.split(file_directory)
+            filename = filename.split(".")[0]
+            filename += ".log"
+        else:
+            filename = package_id.split(":")[1]
+            filename += ".log"
+
+        destination = os.path.join(output_directory, filename)
+
+        fh = logging.FileHandler(destination, mode='w')
+        fh.setFormatter(logging.Formatter("[%(ecode)d] [%(levelname)-7s] [%(asctime)s] %(message)s"))
+        log.addHandler(fh)
 
 
 def identifying_info(stix1x_obj):
@@ -77,6 +103,9 @@ def convert_controlled_vocabs_to_open_vocabs(new_obj, new_property_name, old_voc
 
 
 def strftime_with_appropriate_fractional_seconds(timestamp, milliseconds_only):
+    if isinstance(timestamp, (text_type, binary_type)):
+        timestamp = datetime.strptime(timestamp, "%Y-%m-%dT%H:%M:%S.%fZ")
+
     if milliseconds_only:
         return timestamp.strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3] + "Z"
     else:
@@ -189,3 +218,34 @@ def operation_on_path(obj, path, value, op=1):
         return
 
     operation_on_path(current_obj, path, value, op)
+
+
+def find_dir(path, directory):
+    """
+    Args:
+        path: str containing path of the script calling this method.
+        directory: str containing directory to find.
+
+    Returns:
+        str: A string containing the absolute path to the directory.
+        None otherwise.
+
+    Note:
+        It only finds directories under the cti-stix-elevator package.
+
+    Raises:
+        RuntimeError: If trying to access other directories outside of the
+        cti-stix-elevator package.
+    """
+    working_dir = path.split("cti-stix-elevator")
+
+    if len(working_dir) <= 1 or not all(x for x in working_dir):
+        msg = "Verify working directory. Only works under cti-stix-elevator"
+        raise RuntimeError(msg)
+
+    working_dir = working_dir[0]
+
+    for root, dirs, files in os.walk(working_dir, topdown=True):
+        if directory in dirs:
+            found_dir = os.path.join(root, directory)
+            return os.path.abspath(found_dir)

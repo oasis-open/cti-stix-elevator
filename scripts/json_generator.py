@@ -8,6 +8,7 @@ import sys
 
 from elevator import elevate_file
 from elevator.options import initialize_options
+from elevator.utils import find_dir
 
 # The output is set to the own json-idioms container.
 # WARNING: This will overwrite the contents inside the idioms-json directory.
@@ -16,21 +17,17 @@ from elevator.options import initialize_options
 
 
 def main():
-
     directory = os.path.dirname(__file__)
-    project_path, last_dir = os.path.split(directory)
 
     if len(sys.argv) > 1:
         json_dir = sys.argv[1]
     else:
-        json_dir = os.path.join(project_path, "idioms-json")
-        json_dir = os.path.abspath(json_dir)
+        json_dir = find_dir(directory, "idioms-json")
 
     if len(sys.argv) > 2:
         xml_dir = sys.argv[2]
     else:
-        xml_dir = os.path.join(project_path, "idioms-xml")
-        xml_dir = os.path.abspath(xml_dir)
+        xml_dir = find_dir(directory, "idioms-xml")
 
     if not os.path.exists(json_dir):
         os.makedirs(json_dir)
@@ -39,7 +36,7 @@ def main():
         file_and_ext = filename.split(".")
         xml_path = os.path.join(xml_dir, filename)
 
-        destination = os.path.join(json_dir, str(file_and_ext[0]) + ".json")
+        destination = os.path.join(json_dir, file_and_ext[0] + ".json")
         destination = os.path.abspath(destination)
 
         initialize_options()
