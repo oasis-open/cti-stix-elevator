@@ -30,7 +30,6 @@ def error(fmt, ecode, *args):
 def setup_logger(package_id):
     if options.ALL_OPTIONS:
         if not options.get_option_value("message_log_directory"):
-            print("LOL", options.get_option_value("message_log_directory"))
             return
 
         global log
