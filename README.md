@@ -15,7 +15,7 @@ Please enter any comments on how to improve it into the issue tracker.
 For STIX 1.1.1 content;
 
 * Python 2.6/2.7
-* python-stix = 1.1.1.7 (other dependencies inherited from python-stix)
+* python-stix >= 1.1.1.7 (other dependencies inherited from python-stix)
  
 For STIX 1.2 content:
 
@@ -57,7 +57,7 @@ $ pip install git+https://github.com/oasis-open/cti-stix-elevator.git
 The elevator comes with a bundled script which you can use to elevate STIX 1.1.1 - 1.2.1 content to STIX 2.0 content:
 
 ```
-$ python scripts/stix-elevator.py --input <stix_file.xml>
+$ python scripts/stix_elevator.py <stix_file.xml> 
 ```
 
 ### As A Library
