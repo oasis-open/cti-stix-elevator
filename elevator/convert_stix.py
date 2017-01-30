@@ -895,7 +895,7 @@ def process_report_contents(report, bundle_instance, report_instance, parent_cre
             convert_exploit_target(et, bundle_instance, parent_created_by_ref, parent_timestamp)
 
     # incidents
-    if not get_option_value("incidents"):
+    if get_option_value("incidents"):
         if report.incidents:
             for i in report.incidents:
                 if i.id_ is not None:
@@ -1236,7 +1236,7 @@ def handle_embedded_object(obj, bundle_instance, parent_created_by_ref, parent_t
         new20 = convert_identity(obj, bundle_instance)
         bundle_instance["objects"].append(new20)
     # incidents
-    elif not get_option_value("incidents") and isinstance(obj, Incident):
+    elif get_option_value("incidents") and isinstance(obj, Incident):
         new20 = convert_incident(obj, bundle_instance, parent_created_by_ref, parent_timestamp)
         bundle_instance["objects"].append(new20)
     # indicators
