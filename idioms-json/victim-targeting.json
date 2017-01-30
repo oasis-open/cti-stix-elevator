@@ -11,7 +11,7 @@
         {
             "created": "2014-05-08T09:00:00.000Z",
             "description": "Targets",
-            "id": "relationship--5aff16d2-5538-47e3-a15c-b8630fbf5420",
+            "id": "relationship--88d1b107-8a5e-4329-ba81-937fecfaa637",
             "modified": "2014-05-08T09:00:00.000Z",
             "relationship_type": "uses",
             "source_ref": "campaign--c831ab93-ff84-9cda-2bd8-b094004da969",

@@ -128,7 +128,7 @@ def process_description_and_short_description(so, entity, parent_info=False):
                 entity.short_descriptions is not None):
             short_description_as_text = process_structured_text_list(entity.short_descriptions)
             if short_description_as_text:
-                warn("The Short_Description property is no longer supported in STIX.  Added the text to the description property")
+                warn("The Short_Description property is no longer supported in STIX. The text was appended to the description property of %s", 301, so["id"])
                 if parent_info:
                     if so["description"]:
                         so["description"] += "\nPARENT_SHORT_DESCRIPTION: \n" + short_description_as_text
@@ -426,8 +426,6 @@ def convert_campaign(camp, bundle_instance, parent_created_by_ref, parent_timest
         campaign_instance["aliases"] = []
         for name in camp.names:
             campaign_instance["aliases"].append(name)
-        if not campaign_instance["aliases"]:
-            del campaign_instance["aliases"]
     # process information source before any relationships
     campaign_created_by_ref = process_information_source(camp.information_source, campaign_instance,
                                                          bundle_instance, parent_created_by_ref,
@@ -489,10 +487,17 @@ def add_objective_property_to_description(sdo_instance, objective):
     if not get_option_value("no_squirrel_gaps"):
         if objective is not None:
             sdo_instance["description"] += "\n\n" + "OBJECTIVE: "
-            descriptions = []
+            all_text = []
             for d in objective.descriptions:
-                descriptions.append(text_type(d))
-            sdo_instance["description"] += "\n\n\t".join(descriptions)
+                all_text.append(text_type(d))
+
+            for sd in objective.short_descriptions:
+                all_text.append(text_type(sd))
+
+            sdo_instance["description"] += "\n\n\t".join(all_text)
+
+            if hasattr(objective, "applicability_confidence") and objective.applicability_confidence:
+                add_confidence_property_to_description(sdo_instance, objective.applicability_confidence)
 
 
 def convert_course_of_action(coa, bundle_instance, parent_created_by_ref, parent_timestamp):
