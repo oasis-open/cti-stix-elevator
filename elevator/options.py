@@ -15,14 +15,14 @@ class ElevatorOptions(object):
     programmatically in a script.
 
     It can be initialized either by passing in the result of parse_args() from
-    argparse to the cmd_args parameter, or by specifying individual options
-    with the other parameters.
+    ``argparse.Namespace`` to the cmd_args parameter, or by specifying
+    individual options with the other parameters.
 
     Attributes:
         cmd_args: An instance of ``argparse.Namespace`` containing options
             supplied on the command line.
         file_: Input file to be elevated.
-        incidents: False if no incidents should be included in the result.
+        incidents: True if incidents should be included in the result.
         infrastructure: True if infrastructure should be included in the result.
         package_created_by_id: If set, this identifier ref will be applied in
             the `created_by_ref` property.
@@ -33,6 +33,9 @@ class ElevatorOptions(object):
             ValidationOptions instance if requested.
         enable: Messages to enable.
         disable: Messages to disable.
+        silent: If set, no elevator log messages will be emitted.
+        message_log_directory: If set, it will write all emitted messages to
+            file. It will use the filename or package id to name the log file.
 
     Note:
         All messages are turned on by default.

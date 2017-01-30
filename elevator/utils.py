@@ -45,6 +45,7 @@ def setup_logger(package_id):
             filename += ".log"
 
         destination = os.path.join(output_directory, filename)
+        destination = os.path.abspath(destination)
 
         fh = logging.FileHandler(destination, mode='w')
         fh.setFormatter(logging.Formatter("[%(ecode)d] [%(levelname)-7s] [%(asctime)s] %(message)s"))
