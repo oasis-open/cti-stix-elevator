@@ -829,7 +829,7 @@ def convert_indicator(indicator, bundle_instance, parent_created_by_ref, parent_
                                                           indicator_instance["created"])
     # process information source before any relationships
     if indicator.suggested_coas is not None:
-        warn("Using related-to for the suggested COAs of {id}", 718, indicator.id_)
+        warn("Using related-to for the suggested COAs of %s", 718, indicator.id_)
         handle_relationship_to_refs(indicator.suggested_coas, indicator_instance["id"], bundle_instance,
                                     "related-to", indicator_instance["created"], indicator_created_by_ref)
     if indicator.related_campaigns is not None:
@@ -895,7 +895,7 @@ def process_report_contents(report, bundle_instance, report_instance, parent_cre
             convert_exploit_target(et, bundle_instance, parent_created_by_ref, parent_timestamp)
 
     # incidents
-    if not get_option_value("no_incidents"):
+    if get_option_value("incidents"):
         if report.incidents:
             for i in report.incidents:
                 if i.id_ is not None:
@@ -1236,7 +1236,7 @@ def handle_embedded_object(obj, bundle_instance, parent_created_by_ref, parent_t
         new20 = convert_identity(obj, bundle_instance)
         bundle_instance["objects"].append(new20)
     # incidents
-    elif not get_option_value("no_incidents") and isinstance(obj, Incident):
+    elif get_option_value("incidents") and isinstance(obj, Incident):
         new20 = convert_incident(obj, bundle_instance, parent_created_by_ref, parent_timestamp)
         bundle_instance["objects"].append(new20)
     # indicators
