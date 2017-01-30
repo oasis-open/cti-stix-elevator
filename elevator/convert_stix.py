@@ -728,7 +728,7 @@ def convert_kill_chains(kill_chain_phases, sdo_instance):
                         kill_chain_info = KILL_CHAINS_PHASES[phase]
                     kill_chain_phases_20.append({"kill_chain_name": kill_chain_info["kill_chain_name"],
                                                  "phase_name": kill_chain_info["phase_name"]})
-                except:
+                except KeyError:
                     kill_chain_phases_20.append(phase.phase_id)
             elif isinstance(phase, KillChainPhase):
                 kill_chain_phases_20.append({"kill_chain_name": phase.kill_chain_name, "phase_name": phase.name})
@@ -1286,7 +1286,7 @@ def finalize_bundle(bundle_instance):
                         try:
                             kill_chain_phase_in_20 = KILL_CHAINS_PHASES[kcp]
                             fixed_kill_chain_phases.append(kill_chain_phase_in_20)
-                        except:
+                        except KeyError:
                             error("Dangling kill chain phase id in indicator %s", 607, ind20["id"])
                     else:
                         fixed_kill_chain_phases.append(kcp)
