@@ -53,7 +53,7 @@ def convert_file(file):
     objs[0] = convert_file_properties(file)
     if file.file_path:
         objs[1] = create_directory(file)
-        objs[0]["parent_directory_ref"] = 1
+        objs[0]["parent_directory_ref"] = "1"
     return objs
 
 
@@ -75,7 +75,7 @@ def convert_email_message(email_message):
             # should there ever be more than one?
             from_ref = convert_address(header.from_)
             cybox_dict[index] = from_ref
-            email_dict["from_ref"] = index
+            email_dict["from_ref"] = str(index)
             index += 1
         if header.to:
             for t in header.to:
@@ -83,7 +83,7 @@ def convert_email_message(email_message):
                 cybox_dict[index] = to_ref
                 if "to_refs" not in email_dict:
                     email_dict["to_refs"] = []
-                email_dict["to_refs"].append(index)
+                email_dict["to_refs"].append(str(index))
                 index += 1
     return cybox_dict
 

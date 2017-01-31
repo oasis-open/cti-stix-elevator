@@ -1322,17 +1322,15 @@ def finalize_bundle(bundle_instance):
                     else:
                         ind["pattern"] = final_pattern.partition_according_to_object_path().to_string()
 
-    # do before empty items are deleted
-    remove_pattern_objects(bundle_instance)
 
     bundle_instance["objects"].extend(bundle_instance["indicators"])
-    del(bundle_instance["indicators"])
+    bundle_instance["indicators"] = []
     bundle_instance["objects"].extend(bundle_instance["relationships"])
-    del(bundle_instance["relationships"])
+    bundle_instance["relationships"] = []
     bundle_instance["objects"].extend(bundle_instance["observed_data"])
-    del(bundle_instance["observed_data"])
+    bundle_instance["observed_data"] = []
     bundle_instance["objects"].extend(bundle_instance["reports"])
-    del(bundle_instance["reports"])
+    bundle_instance["reports"] = []
 
     for entry in iterpath(bundle_instance):
         path, value = entry
@@ -1360,6 +1358,8 @@ def finalize_bundle(bundle_instance):
 
     for item in to_remove:
         operation_on_path(bundle_instance, item, "", op=2)
+
+    remove_pattern_objects(bundle_instance)
 
 
 def get_identity_from_package(information_source, bundle_instance, parent_timestamp):

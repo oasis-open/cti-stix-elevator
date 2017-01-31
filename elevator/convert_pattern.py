@@ -987,12 +987,23 @@ def remove_pattern_objects(bundle_instance):
         if new_id and len(new_id) == 1:
             all_new_ids_with_patterns.append(new_id[0])
 
-    if not KEEP_OBSERVABLE_DATA_USED_IN_PATTERNS and "observed_data" in bundle_instance:
-        remaining_observed_data = []
-        for obs in bundle_instance["observed_data"]:
-            if obs["id"] not in all_new_ids_with_patterns:
-                remaining_observed_data.append(obs)
-        bundle_instance["observed_data"] = remaining_observed_data
+    if not KEEP_OBSERVABLE_DATA_USED_IN_PATTERNS:
+        remaining_objects = []
+        for obj in bundle_instance["objects"]:
+            if obj["type"] != "observed-data" or obj["id"] not in all_new_ids_with_patterns:
+                remaining_objects.append(obj)
+            else:
+                warn("%s is used as a pattern, therefore it is not included as an observed_data instance", 423, obj["id"])
+        bundle_instance["objects"] = remaining_objects
+
+    if not KEEP_OBSERVABLE_DATA_USED_IN_PATTERNS:
+        for obj in bundle_instance["objects"]:
+            if obj["type"] == "report":
+                remaining_object_refs = []
+                for ident in obj["object_refs"]:
+                    if not ident.startswith("observed-data") or ident not in all_new_ids_with_patterns:
+                        remaining_object_refs.append(ident)
+                obj["object_refs"] = remaining_object_refs
 
 # TODO: only remove indicators that were involved ONLY as sub-indicators within composite indicator expressions
 #   if not KEEP_INDICATORS_USED_IN_COMPOSITE_INDICATOR_EXPRESSION and "indicators" in bundle_instance:
