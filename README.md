@@ -57,8 +57,68 @@ $ pip install git+https://github.com/oasis-open/cti-stix-elevator.git
 The elevator comes with a bundled script which you can use to elevate STIX 1.1.1 - 1.2.1 content to STIX 2.0 content:
 
 ```
-$ python scripts/stix_elevator.py <stix_file.xml> 
+usage: stix_elevator.py [-h] [--incidents] [--no-squirrel-gaps]
+                        [--infrastructure]
+                        [--package-created-by-id PACKAGE_CREATED_BY_ID]
+                        [--default-timestamp DEFAULT_TIMESTAMP]
+                        [--validator-args VALIDATOR_ARGS] [-e ENABLE]
+                        [-d DISABLE] [-s]
+                        [--message-log-directory MESSAGE_LOG_DIRECTORY]
+                        file
+
+positional arguments:
+  file                  The input STIX 1.x document to be elevated.
+
+optional arguments:
+  -h, --help            show this help message and exit
+
+  --incidents           Incidents will be included in the conversion.
+
+  --no-squirrel-gaps    Do not include STIX 1.x content that cannot be
+                        represented directly in STIX 2.0 using the description
+                        property.
+
+  --infrastructure      Infrastructure will be included in the conversion.
+
+  --package-created-by-id PACKAGE_CREATED_BY_ID
+                        Use provided identifier for "created_by_ref"
+                        properties.Example: --package-created-by-id "identity
+                        --1234abcd-1a12-12a3-0ab4-1234abcd5678"
+
+  --default-timestamp DEFAULT_TIMESTAMP
+                        Use provided timestamp for properties that require a
+                        timestamp. Example: --default-timestamp
+                        "2016-11-15T13:10:35.053000Z"
+
+  --validator-args VALIDATOR_ARGS
+                        Arguments to pass stix-validator. Default: --strict-
+                        types Example: stix_elevator.py <file> --validator-
+                        args "-v --strict-types -d 212"
+
+  -e ENABLE, --enable ENABLE
+                        A comma-separated list of the elevator messages to
+                        enable. If the --disable option is not used, no other
+                        messages will be shown. Example: stix_elevator.py
+                        <file> --enable 250
+
+  -d DISABLE, --disable DISABLE
+                        A comma-separated list of the elevator messages to
+                        disable. Example: stix_elevator.py <file> --disable
+                        212,220
+
+  -s, --silent          If this flag is set. All elevator messages will be
+                        disabled.
+
+  --message-log-directory MESSAGE_LOG_DIRECTORY
+                        If this flag is set. All elevator messages will be
+                        saved to file. The name of the file will be the input
+                        file with extension .log in the specified directory.
+                        Note, make surethe directory already exists. Example:
+                        stix_elevator.py <file> --message-log-directory
+                        "..\logs"
 ```
+
+Refer to elevator_log_messages.xlsx for error codes.
 
 ### As A Library
 
