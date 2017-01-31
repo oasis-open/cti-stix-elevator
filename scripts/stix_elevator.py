@@ -47,7 +47,7 @@ def _get_arg_parser(is_script=True):
     if is_script:
         parser.add_argument(
             "file_",
-            help="The input STIX document to be elevated.",
+            help="The input STIX 1.x document to be elevated.",
             metavar="file"
         )
 
@@ -78,7 +78,7 @@ def _get_arg_parser(is_script=True):
 
     parser.add_argument(
         "--package-created-by-id",
-        help="Use provided identifier for \"created_by_ref\" properties. \n\n"
+        help="Use provided identifier for \"created_by_ref\" properties."
              "Example: --package-created-by-id \"identity--1234abcd-1a12-12a3-0ab4-1234abcd5678\"",
         dest="package_created_by_id",
         action="store",
@@ -96,19 +96,11 @@ def _get_arg_parser(is_script=True):
 
     parser.add_argument(
         "--validator-args",
-        help="Arguments to pass stix-validator. Default: --strict-types",
+        help="Arguments to pass stix-validator. Default: --strict-types\n\n"
+             "Example: stix_elevator.py <file> --validator-args \"-v --strict-types -d 212\"",
         dest="validator_args",
         action="store",
         default="--strict-types"
-    )
-
-    parser.add_argument(
-        "-v"
-        "--verbose",
-        help="Print information messages and more verbose error messages.",
-        dest="verbose",
-        action="store_true",
-        default=False
     )
 
     parser.add_argument(
@@ -116,7 +108,7 @@ def _get_arg_parser(is_script=True):
         "--enable",
         help="A comma-separated list of the elevator messages to enable. "
              "If the --disable option is not used, no other messages will be "
-             "shown. \n\nExample: --enable 250",
+             "shown. \n\nExample: stix_elevator.py <file> --enable 250",
         dest="enable",
         default=""
     )
@@ -125,7 +117,7 @@ def _get_arg_parser(is_script=True):
         "-d",
         "--disable",
         help="A comma-separated list of the elevator messages to disable. \n\n"
-             "Example: --disable 212,220",
+             "Example: stix_elevator.py <file> --disable 212,220",
         dest="disable",
         default=""
     )
@@ -137,6 +129,18 @@ def _get_arg_parser(is_script=True):
         dest="silent",
         action="store_true",
         default=False
+    )
+
+    parser.add_argument(
+        "--message-log-directory",
+        help="If this flag is set. All elevator messages will be saved to "
+             "file. The name of the file will be the input file with "
+             "extension .log in the specified directory. Note, make sure"
+             "the directory already exists.\n\n"
+             "Example: stix_elevator.py <file> --message-log-directory \"..\logs\"",
+        dest="message_log_directory",
+        action="store",
+        default=None
     )
 
     return parser

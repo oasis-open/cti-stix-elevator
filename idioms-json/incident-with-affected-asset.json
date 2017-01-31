@@ -1,14 +1,5 @@
 {
     "id": "bundle--d1a8110e-b693-11e3-8747-0800271e87d2",
-    "objects": [
-        {
-            "created": "2014-05-08T09:00:00.000Z",
-            "id": "incident--081d344b-9fae-d182-9cc7-d2d103e7c64f",
-            "modified": "2014-05-08T09:00:00.000Z",
-            "name": "Exfiltration from hr-data1.example.com",
-            "type": "incident"
-        }
-    ],
     "spec_version": "2.0",
     "type": "bundle"
 }

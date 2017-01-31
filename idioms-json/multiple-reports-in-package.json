@@ -2,16 +2,16 @@
     "id": "bundle--50578bc7-bb17-4f31-abf2-d5827d131368",
     "objects": [
         {
-            "created": "2017-01-19T11:42:21.653Z",
-            "id": "identity--4c577431-e591-43f3-8880-8828c868a2c5",
+            "created": "2017-01-27T13:49:54.263Z",
+            "id": "identity--c1b58a86-e037-4069-814d-dd0bc75539e3",
             "identity_class": "unknown",
-            "modified": "2017-01-19T11:42:21.653Z",
+            "modified": "2017-01-27T13:49:54.263Z",
             "name": "Government Sharing Program - GSP",
             "type": "identity"
         },
         {
             "created": "2015-05-07T14:22:14.760Z",
-            "created_by_ref": "identity--4c577431-e591-43f3-8880-8828c868a2c5",
+            "created_by_ref": "identity--c1b58a86-e037-4069-814d-dd0bc75539e3",
             "id": "campaign--1855cb8a-d96c-4859-a450-abb1e7c061f2",
             "modified": "2015-05-07T14:22:14.760Z",
             "name": "Campaign against ICS",
@@ -19,7 +19,7 @@
         },
         {
             "created": "2015-05-07T14:22:14.760Z",
-            "created_by_ref": "identity--4c577431-e591-43f3-8880-8828c868a2c5",
+            "created_by_ref": "identity--c1b58a86-e037-4069-814d-dd0bc75539e3",
             "description": "Adversary Alpha has a campaign against the ICS sector!\n\nINTENT:\nCampaign Characterization",
             "id": "report--ab11f431-4b3b-457c-835f-59920625fe65",
             "labels": [
@@ -34,7 +34,7 @@
         },
         {
             "created": "2015-05-07T14:22:14.760Z",
-            "created_by_ref": "identity--4c577431-e591-43f3-8880-8828c868a2c5",
+            "created_by_ref": "identity--c1b58a86-e037-4069-814d-dd0bc75539e3",
             "description": "\n\nINTENT:\nIndicators - Malware Artifacts",
             "id": "report--f14804d5-3ee1-4a0e-b0f3-f9a643855ba5",
             "labels": [
