@@ -1327,7 +1327,6 @@ def finalize_bundle(bundle_instance):
                     else:
                         ind["pattern"] = final_pattern.partition_according_to_object_path().to_string()
 
-
     bundle_instance["objects"].extend(bundle_instance["indicators"])
     bundle_instance["indicators"] = []
     bundle_instance["objects"].extend(bundle_instance["relationships"])
