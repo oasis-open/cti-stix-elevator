@@ -8,8 +8,7 @@ The stix-elevator is a work-in-progress.  It should be used to explore how exist
 
 **_It should not be used in a production environment, and should not be considered final._**
 
-**_Composite Indicator Expressions and Composite Observable Expressions are often intricate and ambiguous, and therefore cannot be converted to a STIX 2.0 pattern expression with complete fidelity. 
-A best attempt is made, but any such expression should be inspected._**
+**_STIX 1.x Composite Indicator Expressions and CybOX 2.x Composite Observable Expressions allow a level of flexibility not present in STIX 2 patterns. These composite expressions can frequently have ambiguous interpretations, so STIX 2 Indicators created by the stix-elevator from STIX 1.x Indicators containing composite expressions should be inspected to ensure the STIX 2 Indicator has the intended meaning._**
 
 Please enter any comments on how to improve it into the issue tracker.
 
