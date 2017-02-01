@@ -132,7 +132,8 @@ class IdrefPlaceHolder(object):
             return False, self
 
     def partition_according_to_object_path(self):
-        error("Placeholders should be resolved", 203)
+        error("Placeholder %s should be resolved", 203, self.idref)
+        return self
 
     def contains_unconverted_term(self):
         return False

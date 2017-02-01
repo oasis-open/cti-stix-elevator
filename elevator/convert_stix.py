@@ -206,7 +206,10 @@ def add_statement_type_to_description(sdo_instance, statement, property_name):
             for d in statement.descriptions:
                 descriptions.append(text_type(d.value))
             sdo_instance["description"] += "\n\n\t".join(descriptions)
-        # TODO: handle source
+
+        if statement.source is not None:
+            # FIXME: Handle source
+            info("Source in %s is not handled, yet.", 815, sdo_instance["id"])
         if statement.confidence:
             add_confidence_property_to_description(sdo_instance, statement.confidence)
         warn("Appended Statement type content to description of %s", 305, sdo_instance["id"])
@@ -335,7 +338,6 @@ def determine_appropriate_verb(current_verb, m_id):
 
 # for ids in source and target refs that are still 1.x ids,
 def fix_relationships(relationships, bundle_instance):
-    # TODO:  warn if ref not available??
     for ref in relationships:
         if reference_needs_fixing(ref["source_ref"]):
             if not exists_id_key(ref["source_ref"]):
@@ -488,15 +490,18 @@ def add_objective_property_to_description(sdo_instance, objective):
         if objective is not None:
             sdo_instance["description"] += "\n\n" + "OBJECTIVE: "
             all_text = []
-            for d in objective.descriptions:
-                all_text.append(text_type(d))
 
-            for sd in objective.short_descriptions:
-                all_text.append(text_type(sd))
+            if objective.descriptions:
+                for d in objective.descriptions:
+                    all_text.append(text_type(d.value))
+
+            if objective.short_descriptions:
+                for sd in objective.short_descriptions:
+                    all_text.append(text_type(sd.value))
 
             sdo_instance["description"] += "\n\n\t".join(all_text)
 
-            if hasattr(objective, "applicability_confidence") and objective.applicability_confidence:
+            if objective.applicability_confidence:
                 add_confidence_property_to_description(sdo_instance, objective.applicability_confidence)
 
 
@@ -508,7 +513,10 @@ def convert_course_of_action(coa, bundle_instance, parent_created_by_ref, parent
     if coa.type_:
         convert_controlled_vocabs_to_open_vocabs(coa_instance, "labels", [coa.type_], COA_LABEL_MAP, False)
     add_objective_property_to_description(coa_instance, coa.objective)
-    # TODO: parameter observables, maybe turn into pattern expressions and put in description???
+
+    if coa.parameter_observables is not None:
+        # parameter observables, maybe turn into pattern expressions and put in description???
+        warn("Parameter Observables in %s are not handled, yet.", 814, coa_instance["id"])
     if coa.structured_coa:
         warn("Structured COAs type in %s are not supported in STIX 2.0", 404, coa_instance["id"])
     add_statement_type_to_description(coa_instance, coa.impact, "impact")
@@ -555,14 +563,26 @@ def convert_vulnerability(v, et, bundle_instance, parent_created_by_ref, parent_
         vulnerability_instance["external_references"].append({"source_name": "cve", "external_id": v.cve_id})
     if v.osvdb_id is not None:
         vulnerability_instance["external_references"].append({"source_name": "osvdb", "external_id": v.osvdb_id})
-    # source?
-    # TODO: add CVSS score into description
-    # TODO: add date times into description
-    # TODO: add affected software into description
+
+    if v.source is not None:
+        # FIXME: add source.
+        info("Source in %s is not handled, yet.", 815, vulnerability_instance["id"])
+
+    if v.cvss_score is not None:
+        # FIXME: add CVSS score into description
+        info("CVSS Score in %s is not handled, yet.", 815, vulnerability_instance["id"])
+
+    if v.discovered_datetime is not None or v.published_datetime is not None:
+        # FIXME: add date times into description
+        info("Discoreved_DateTime and Published_DateTime in %s is not handled, yet.", 815, vulnerability_instance["id"])
+
+    if v.affected_software is not None:
+        #  FIXME: add affected software into description
+        info("Affected_Software in %s is not handled, yet.", 815, vulnerability_instance["id"])
+
     if v.references is not None:
-        # TODO: url can't exist alone
         for ref in v.references:
-            vulnerability_instance["external_references"].append({"url": ref.reference})
+            vulnerability_instance["external_references"].append({"source_name": "internet_resource", "url": ref.reference})
     process_et_properties(vulnerability_instance, et, bundle_instance, parent_created_by_ref)
     finish_basic_object(et.id_, vulnerability_instance, v)
     return vulnerability_instance
@@ -612,7 +632,6 @@ def convert_ciq_addresses(addresses, identity_instance):
 
 
 def get_name(name):
-    # TODO:  this is much too simple
     return name.name_elements[0].value
 
 
@@ -692,6 +711,9 @@ def convert_incident(incident, bundle_instance, parent_created_by_ref, parent_ti
     incident_created_by_ref = process_information_source(incident.information_source, incident_instance,
                                                          bundle_instance, parent_created_by_ref,
                                                          incident_instance["created"])
+
+    add_confidence_property_to_description(incident_instance, incident.confidence)
+
     # process information source before any relationships
     if incident.related_indicators is not None:
         handle_relationship_from_refs(incident.related_indicators, incident_instance["id"], bundle_instance,
@@ -703,15 +725,33 @@ def convert_incident(incident, bundle_instance, parent_created_by_ref, parent_ti
         warn("Using related-to for the leveraged TTPs of %s", 718, incident.id_)
         handle_relationship_to_refs(incident.leveraged_ttps, incident_instance["id"], bundle_instance, "related-to",
                                     incident_instance["created"], incident_created_by_ref)
-    # TODO: add reporter to description
-    # TODO: add responder to description
-    # TODO: add coordinator to description
-    # TODO: add victim to description
-    # TODO: add affected_assets to description
-    # TODO: add impact_assessment to description
+
+    if incident.reporter is not None:
+        # FIXME: add reporter to description
+        info("Incident Reporter in %s is not handled, yet.", 815, incident_instance["id"])
+
+    if incident.responders is not None:
+        # FIXME: add responders to description
+        info("Incident Responders in %s is not handled, yet.", 815, incident_instance["id"])
+
+    if incident.coordinators is not None:
+        # FIXME: add coordinators to description
+        info("Incident Coordinators in %s is not handled, yet.", 815, incident_instance["id"])
+
+    if incident.victims is not None:
+        # FIXME: add victim to description
+        info("Incident Victims in %s is not handled, yet.", 815, incident_instance["id"])
+
+    if incident.affected_assets is not None:
+        # FIXME: add affected_assets to description
+        info("Incident Affected Assets in %s is not handled, yet.", 815, incident_instance["id"])
+
+    if incident.impact_assessment is not None:
+        # FIXME: add impact_assessment to description
+        info("Incident Impact Assessment in %s is not handled, yet", 815, incident_instance["id"])
     add_string_property_to_description(incident_instance, "status", incident.status)
     if incident.related_incidents:
-        warn("All associated incidents relationships of %s are assumed to not represent STIX 1.2 versioning", 710, incident.id_)
+        warn("All associated incidents relationships of %s are assumed to not represent STIX 1.2 versioning", 710, incident_instance["id"])
         handle_relationship_to_refs(incident.related_incidents, incident_instance["id"], bundle_instance,
                                     "related-to", incident_instance["created"], incident_created_by_ref)
     finish_basic_object(incident.id_, incident_instance, incident)
@@ -799,16 +839,17 @@ def convert_indicator(indicator, bundle_instance, parent_created_by_ref, parent_
             else:
                 warn("Only one valid time window allowed for %s in STIX 2.0 - used first one", 507, indicator_instance["id"])
         if "valid_from" not in indicator_instance:
-            warn("No valid time position information available in %s, using parent timestamp", 903, indicator.id_)
+            warn("No valid time position information available in %s, using parent timestamp", 903, indicator_instance["id"])
             indicator_instance["valid_from"] = convert_timestamp(indicator, parent_timestamp)
     convert_kill_chains(indicator.kill_chain_phases, indicator_instance)
     if indicator.likely_impact:
         add_statement_type_to_description(indicator_instance, indicator.likely_impact, "likely_impact")
-    if hasattr(indicator, "confidence"):
+    if indicator.confidence:
         add_confidence_property_to_description(indicator_instance, indicator.confidence)
-    # TODO: sightings
+    if indicator.sightings:
+        info("Sighthings in %s are not handled, yet.", 815, indicator_instance["id"])
     if indicator.observable and indicator.composite_indicator_expression or indicator.composite_indicator_expression:
-        warn("Indicator %s has an observable or indicator composite expression which is not supported in STIX 2.0", 407, indicator.id_)
+        warn("Indicator %s has an observable or indicator composite expression which is not supported in STIX 2.0", 407, indicator_instance["id"])
     if indicator.observable is not None:
         indicator_instance["pattern"] = convert_observable_to_pattern(indicator.observable, bundle_instance,
                                                                       OBSERVABLE_MAPPING)
@@ -971,12 +1012,31 @@ def convert_report(report, bundle_instance, parent_created_by_ref, parent_timest
                                              report.header.intents, REPORT_LABELS_MAP, False)
     process_report_contents(report, bundle_instance, report_instance,
                             report_created_by_def, report_instance["created"])
-    # TODO: related reports?
+
+    if report.related_reports is not None:
+        # FIXME: related reports?
+        info("Report Related_Reports in %s is not handled, yet.", 815, report_instance["id"])
     finish_basic_object(report.id_, report_instance, report.header)
     return report_instance
 
 
 # threat actor
+
+def add_motivations_to_threat_actor(sdo_instance, motivations):
+    info("Using first Threat Actor motivation as primary_motivation. If more, as secondary_motivation", 719)
+
+    if motivations[0].value is not None:
+        sdo_instance["primary_motivation"] = map_vocabs_to_label(text_type(motivations[0].value), ATTACK_MOTIVATION_MAP)
+
+    values = []
+
+    if len(motivations) > 1:
+        for m in motivations[1:]:
+            if m.value is not None:
+                values.append(m.value)
+
+        if values:
+            convert_controlled_vocabs_to_open_vocabs(sdo_instance, "secondary_motivations", values, ATTACK_MOTIVATION_MAP, False)
 
 
 def convert_threat_actor(threat_actor, bundle_instance, parent_created_by_ref, parent_timestamp):
@@ -999,9 +1059,12 @@ def convert_threat_actor(threat_actor, bundle_instance, parent_created_by_ref, p
     add_multiple_statement_types_to_description(threat_actor_instance, threat_actor.intended_effects, "intended_effect")
     add_multiple_statement_types_to_description(threat_actor_instance, threat_actor.planning_and_operational_supports,
                                                 "planning_and_operational_support")
-    if hasattr(threat_actor, "confidence"):
+    if threat_actor.confidence:
         add_confidence_property_to_description(threat_actor_instance, threat_actor.confidence)
-    # TODO: motivation is complicated
+
+    if threat_actor.motivations:
+        add_motivations_to_threat_actor(threat_actor_instance, threat_actor.motivations)
+
     convert_controlled_vocabs_to_open_vocabs(threat_actor_instance, "sophistication", threat_actor.sophistications,
                                              THREAT_ACTOR_SOPHISTICATION_MAP, True)
 
@@ -1110,12 +1173,16 @@ def convert_tool(tool, ttp, bundle_instance, first_one, parent_created_by_ref, p
     process_description_and_short_description(tool_instance, tool)
     add_string_property_to_description(tool_instance, "vendor", tool.vendor)
     add_string_property_to_description(tool_instance, "service_pack", tool.service_pack)
-    # TODO: add tool_specific_data to descriptor
-    # TODO: add tool_hashes to descriptor
-    # TODO: add tool_configuration to descriptor
-    # TODO: add execution_environment to descriptor
-    # TODO: add errors to descriptor
-    # TODO: add compensation_model to descriptor
+    # TODO: add tool_specific_data to descriptor <-- Not Implemented!
+
+    if tool.tool_hashes is not None:
+        # FIXME: add tool_hashes to descriptor
+        info("Tool Tool_Hashes in %s is not handled, yet.", 815, tool_instance["id"])
+
+    # TODO: add tool_configuration to descriptor <-- Not Implemented!
+    # TODO: add execution_environment to descriptor <-- Not Implemented!
+    # TODO: add errors to descriptor <-- Not Implemented!
+    # TODO: add compensation_model to descriptor <-- Not Implemented!
     add_string_property_to_description(tool_instance, "title", tool.title)
     convert_controlled_vocabs_to_open_vocabs(tool_instance, "labels", tool.type_, TOOL_LABELS_MAP, False)
     tool_instance["tool_version"] = tool.version
@@ -1132,7 +1199,10 @@ def convert_infrastructure(infra, ttp, bundle_instance, first_one, parent_create
     convert_controlled_vocabs_to_open_vocabs(infrastructure_instance, "labels", infra.types, {}, False)
     info("No 'first_seen' data on %s - using timestamp", 904, infra.id_ if infra.id_ else ttp.id_)
     infrastructure_instance["first_seen"] = convert_timestamp(infra, infrastructure_instance["created"])
-    # TODO: observable_characterizations?
+
+    if infra.observable_characterization is not None:
+        # FIXME: add observable_characterizations
+        info("Infrastructure Observable_Characterization in %s is not handled, yet.", 815, infrastructure_instance["id"])
     process_ttp_properties(infrastructure_instance, ttp, bundle_instance, parent_created_by_ref)
     finish_basic_object(ttp.id_, infrastructure_instance, infra)
     return infrastructure_instance
@@ -1363,7 +1433,10 @@ def finalize_bundle(bundle_instance):
     for item in to_remove:
         operation_on_path(bundle_instance, item, "", op=2)
 
-    remove_pattern_objects(bundle_instance)
+    if "objects" in bundle_instance:
+        remove_pattern_objects(bundle_instance)
+    else:
+        error("EMPTY BUNDLE -- No objects created from 1.x input document!", 208)
 
 
 def get_identity_from_package(information_source, bundle_instance, parent_timestamp):
