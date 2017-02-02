@@ -7,7 +7,7 @@ from datetime import datetime
 # external
 from six import text_type, binary_type, iteritems
 
-from elevator import options
+from stix2elevator import options
 
 log = logging.getLogger(__name__)
 
@@ -43,6 +43,9 @@ def setup_logger(package_id):
         else:
             filename = package_id.split(":")[1]
             filename += ".log"
+
+        if not os.path.exists(output_directory):
+            os.makedirs(output_directory)
 
         destination = os.path.join(output_directory, filename)
         destination = os.path.abspath(destination)

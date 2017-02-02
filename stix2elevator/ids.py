@@ -2,7 +2,7 @@ import uuid
 import re
 from six import text_type
 
-from elevator.utils import *
+from stix2elevator.utils import *
 
 IDS_TO_NEW_IDS = {}
 

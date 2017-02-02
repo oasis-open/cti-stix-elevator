@@ -14,12 +14,12 @@ from stix2validator import codes
 from stix2validator import output
 from stix2validator import validate_string, ValidationError
 
-from elevator.convert_pattern import clear_pattern_mapping
-from elevator.ids import clear_id_mapping
-from elevator.utils import *
-from elevator.convert_stix import convert_package
-from elevator.options import get_validator_options, initialize_options, get_option_value
-from elevator.version import __version__  # noqa
+from stix2elevator.convert_pattern import clear_pattern_mapping
+from stix2elevator.ids import clear_id_mapping
+from stix2elevator.utils import *
+from stix2elevator.convert_stix import convert_package
+from stix2elevator.options import get_validator_options, initialize_options, get_option_value
+from stix2elevator.version import __version__  # noqa
 
 logging.basicConfig(
     level=logging.DEBUG,
@@ -30,7 +30,7 @@ log = logging.getLogger(__name__)
 
 
 def elevate_file(fn):
-    warn("Results produced by the stix-elevator are not for production purposes.", 201)
+    warn("Results produced by the stix2-elevator are not for production purposes.", 201)
     clear_id_mapping()
     clear_pattern_mapping()
 
@@ -59,11 +59,11 @@ def elevate_file(fn):
         output.error("Validation error occurred: '%s'" % ex,
                      codes.EXIT_VALIDATION_ERROR)
     except OSError as ex:
-        log.error(ex)
+        log.error(ex, extra={"ecode": 210})
 
 
 def elevate_string(string):
-    warn("Results produced by the stix-elevator are not for production purposes.", 201)
+    warn("Results produced by the stix2-elevator are not for production purposes.", 201)
     clear_id_mapping()
     clear_pattern_mapping()
 
@@ -93,11 +93,11 @@ def elevate_string(string):
         output.error("Validation error occurred: '%s'" % ex,
                      codes.EXIT_VALIDATION_ERROR)
     except OSError as ex:
-        log.error(ex)
+        log.error(ex, extra={"ecode": 210})
 
 
 def elevate_package(package):
-    warn("Results produced by the stix-elevator are not for production purposes.", 201)
+    warn("Results produced by the stix2-elevator are not for production purposes.", 201)
     clear_id_mapping()
     clear_pattern_mapping()
 
@@ -124,4 +124,4 @@ def elevate_package(package):
         output.error("Validation error occurred: '%s'" % ex,
                      codes.EXIT_VALIDATION_ERROR)
     except OSError as ex:
-        log.error(ex)
+        log.error(ex, extra={"ecode": 210})

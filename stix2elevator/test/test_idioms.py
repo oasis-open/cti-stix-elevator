@@ -1,6 +1,6 @@
 import os
 import json
-import unittest
+import pytest
 
 try:
     from itertools import izip as zip
@@ -9,9 +9,9 @@ except ImportError:
 
 from six import StringIO
 
-from elevator import elevate_file
-from elevator.options import initialize_options, set_option_value
-from elevator.utils import iterpath, find_dir
+from stix2elevator import elevate_file
+from stix2elevator.options import initialize_options
+from stix2elevator.utils import iterpath, find_dir
 
 
 TESTED_XML_FILES = []
@@ -24,10 +24,6 @@ IGNORE = (u"id", u"idref", u"created_by_ref", u"object_refs", u"marking_ref",
           u"created", u"modified", u"first_seen", u"valid_from", u"last_seen",
           u"first_observed", u"last_observed", u"published",
           u"external_references")
-
-
-class MappingContentTest(unittest.TestCase):
-    longMessage = True
 
 
 def idiom_mappings(xml_file_path, stored_json):
@@ -58,13 +54,6 @@ def idiom_mappings(xml_file_path, stored_json):
         yield good, to_check
 
 
-def generate_test(test_file, stored_master):
-    def test(self):
-        for good_path, check_path in idiom_mappings(test_file, stored_master):
-            self.assertEquals(good_path, check_path)
-    return test
-
-
 def setup_tests():
     directory = os.path.dirname(__file__)
 
@@ -91,21 +80,15 @@ def setup_tests():
         TESTED_XML_FILES.append(path)
 
 
-def load_tests(loader, standard_tests, pattern):
+def test_idiom_mapping(test_file, stored_master):
+    for good_path, check_path in idiom_mappings(test_file, stored_master):
+        assert good_path == check_path
+
+
+def pytest_generate_tests(metafunc):
     setup_tests()
+    argnames = ["test_file", "stored_master"]
+    argvalues = [(x, y) for x, y in zip(TESTED_XML_FILES, MASTER_JSON_FILES)]
 
-    suite = unittest.TestSuite()
+    metafunc.parametrize(argnames=argnames, argvalues=argvalues, ids=XML_FILENAMES, scope="function")
 
-    for idx, tname in enumerate(XML_FILENAMES):
-        test_name = "test_%s" % tname
-        test = generate_test(TESTED_XML_FILES[idx], MASTER_JSON_FILES[idx])
-        setattr(MappingContentTest, test_name, test)
-
-    standard_tests = loader.loadTestsFromTestCase(MappingContentTest)
-    suite.addTests(standard_tests)
-
-    return suite
-
-
-if __name__ == '__main__':
-    unittest.main()

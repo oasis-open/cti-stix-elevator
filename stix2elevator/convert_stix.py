@@ -22,14 +22,14 @@ from stix.threat_actor import ThreatActor
 from stix.ttp import TTP
 
 # internal
-from elevator.convert_cybox import convert_cybox_object
-from elevator.convert_pattern import (convert_indicator_to_pattern, convert_observable_to_pattern, fix_pattern,
-                                      interatively_resolve_placeholder_refs, create_boolean_expression,
-                                      add_to_pattern_cache, remove_pattern_objects, ComparisonExpression)
-from elevator.ids import *
-from elevator.options import get_option_value
-from elevator.utils import *
-from elevator.vocab_mappings import *
+from stix2elevator.convert_cybox import convert_cybox_object
+from stix2elevator.convert_pattern import (convert_indicator_to_pattern, convert_observable_to_pattern, fix_pattern,
+                                           interatively_resolve_placeholder_refs, create_boolean_expression,
+                                           add_to_pattern_cache, remove_pattern_objects, ComparisonExpression)
+from stix2elevator.ids import *
+from stix2elevator.options import get_option_value
+from stix2elevator.utils import *
+from stix2elevator.vocab_mappings import *
 
 if stix.__version__ >= "1.2.0.0":
     from stix.report import Report
@@ -673,22 +673,24 @@ def convert_identity(identity, bundle_instance, parent_timestamp=None, parent_id
         if ciq_info.party_name:
             warn("CIQ name found in %s, possibly overriding other name", 711, identity_instance["id"])
             convert_party_name(ciq_info.party_name, identity_instance)
-        if ciq_info.organisation_info and ciq_info.organisation_info.industry_type:
-            convert_to_open_vocabs(identity_instance, "sectors", ciq_info.organisation_info.industry_type, SECTORS_MAP)
-            warn("Based on CIQ information, %s is assumed to be an organization", 716, identity_instance["id"])
+        if ciq_info.organisation_info:
             identity_instance["identity_class"] = "organization"
+            warn("Based on CIQ information, %s is assumed to be an organization", 716, identity_instance["id"])
+            if ciq_info.organisation_info.industry_type:
+                industry = ciq_info.organisation_info.industry_type.replace(" ,", ",")
+                industry = industry.replace(", ", ",")
+                industry = industry.split(",")
+                convert_controlled_vocabs_to_open_vocabs(identity_instance, "sectors", industry, SECTORS_MAP, False)
         if ciq_info.addresses:
             pass
             # convert_ciq_addresses(ciq_info.addresses, identity_instance)
             # add other properties to contact_information
     if identity.related_identities:
         msg = "All associated identities relationships of %s are assumed to not represent STIX 1.2 versioning"
-        warn(msg, 710, identity.id_ or "")
+        warn(msg, 710, identity_instance["id"])
         handle_relationship_to_refs(identity.related_identities, identity_instance["id"], bundle_instance,
                                     "related-to", parent_timestamp)
     finish_basic_object(identity.id_, identity_instance, identity)
-    if not identity_instance["sectors"]:
-        del identity_instance["sectors"]
     return identity_instance
 
 

@@ -39,13 +39,13 @@ The needed software is located in the following repositories:
 
 _Install these two packages using pip._
 
-### Install stix2validator
+### Install stix2-validator
 
 ```
 $ pip install git+https://github.com/oasis-open/cti-stix-validator.git
 ```
 
-### Install stix-elevator
+### Install stix2-elevator
 
 ```
 $ pip install git+https://github.com/oasis-open/cti-stix-elevator.git
@@ -127,7 +127,7 @@ Refer to elevator_log_messages.xlsx for error codes.
 You can also use this library to integrate STIX elevation into your own tools. You can elevate a STIX 1.x file:
 
 ```
-  from elevator import elevate_file
+  from stix2elevator import elevate_file
 
   results = elevate_file("stix_file.xml")
   print(results)
@@ -135,7 +135,7 @@ You can also use this library to integrate STIX elevation into your own tools. Y
 Additionally, a similar method exists to accept a string as an argument:
 
 ```
-  from elevator import elevate_string
+  from stix2elevator import elevate_string
 
   results = elevate_string("...")
   print(results)

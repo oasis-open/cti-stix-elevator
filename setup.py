@@ -2,8 +2,8 @@ from os.path import abspath, dirname, join
 from setuptools import setup, find_packages
 
 CUR_DIR = dirname(abspath(__file__))
-INIT_FILE = join(CUR_DIR, 'elevator', '__init__.py')
-VERSION_FILE = join(CUR_DIR, 'elevator', 'version.py')
+INIT_FILE = join(CUR_DIR, 'stix2elevator', '__init__.py')
+VERSION_FILE = join(CUR_DIR, 'stix2elevator', 'version.py')
 
 
 def get_version():
@@ -22,7 +22,7 @@ with open('README.md') as f:
     readme = f.read()
 
 setup(
-    name="stix-elevator",
+    name="stix2-elevator",
     version=get_version(),
     description="Utilities to upgrade STIX and CybOX content to 2.0",
     long_description=readme,
@@ -36,7 +36,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'stix_elevator = elevator.scripts.stix_elevator:main',
+            'stix2_elevator = stix2elevator.scripts.stix2_elevator:main',
         ],
     },
     classifiers=[

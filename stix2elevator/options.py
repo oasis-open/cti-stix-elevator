@@ -3,7 +3,7 @@ import logging
 
 from stix2validator.scripts import stix2_validator
 from stix2validator import ValidationOptions
-from elevator.utils import *
+from stix2elevator.utils import *
 
 ALL_OPTIONS = None
 
@@ -11,7 +11,7 @@ log = logging.getLogger(__name__)
 
 
 class ElevatorOptions(object):
-    """Collection of elevator options which can be set via command line or
+    """Collection of stix2-elevator options which can be set via command line or
     programmatically in a script.
 
     It can be initialized either by passing in the result of parse_args() from
@@ -33,7 +33,7 @@ class ElevatorOptions(object):
             ValidationOptions instance if requested.
         enable: Messages to enable.
         disable: Messages to disable.
-        silent: If set, no elevator log messages will be emitted.
+        silent: If set, no stix2-elevator log messages will be emitted.
         message_log_directory: If set, it will write all emitted messages to
             file. It will use the filename or package id to name the log file.
 
@@ -75,7 +75,7 @@ class ElevatorOptions(object):
             self.message_log_directory = message_log_directory
 
         if self.silent and self.message_log_directory:
-            log.warn("Both console and output log have disabled messages.")
+            log.warn("Both console and output log have disabled messages.", extra={"ecode": 209})
 
         # Convert string of comma-separated checks to a list,
         # and convert check code numbers to names. By default all messages are
@@ -140,7 +140,7 @@ def msg_id_enabled(msg_id):
 
 
 # These codes are aligned with elevator_log_messages spreadsheet.
-CHECK_CODES = [201, 202, 203, 204, 205, 206, 207, 208,
+CHECK_CODES = [201, 202, 203, 204, 205, 206, 207, 208, 209, 210,
 
                301, 302, 303, 304, 305, 306,
 

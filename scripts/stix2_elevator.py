@@ -1,22 +1,22 @@
 #!/usr/bin/env python
 
-"""The stix-elevator is a work-in-progress. It should be used to explore how
+"""The stix2-elevator is a work-in-progress. It should be used to explore how
 existing STIX 1.x would potentially be represented in STIX 2.0. Using the
-current version of the elevator will provide insight to issues that might need
+current version of the stix2-elevator will provide insight to issues that might need
 to be mitigated to convert your STIX 1.x content.
 """
 
 import argparse
 import textwrap
 
-from elevator import elevate_file
-from elevator.options import initialize_options
-from elevator.version import __version__
+from stix2elevator import elevate_file
+from stix2elevator.options import initialize_options
+from stix2elevator.version import __version__
 
 
 CODE_TABLE = """
-The following table shows all elevator messages. Use the associate code number
-to --enable or --disable a message. By default, the elevator displays all
+The following table shows all stix2-elevator messages. Use the associate code number
+to --enable or --disable a message. By default, the stix2-elevator displays all
 messages. Note: disabling the message does not disable the functionality.
 
 Refer to elevator_log_messages.xlsx for error codes.
@@ -36,7 +36,7 @@ class NewlinesHelpFormatter(argparse.RawDescriptionHelpFormatter):
 def _get_arg_parser(is_script=True):
     """Create and return an ArgumentParser for this application."""
 
-    desc = "stix-elevator v{0}\n\n".format(__version__)
+    desc = "stix2-elevator v{0}\n\n".format(__version__)
 
     parser = argparse.ArgumentParser(
         description=desc + __doc__,
@@ -97,7 +97,7 @@ def _get_arg_parser(is_script=True):
     parser.add_argument(
         "--validator-args",
         help="Arguments to pass stix-validator. Default: --strict-types\n\n"
-             "Example: stix_elevator.py <file> --validator-args \"-v --strict-types -d 212\"",
+             "Example: stix2_elevator.py <file> --validator-args \"-v --strict-types -d 212\"",
         dest="validator_args",
         action="store",
         default="--strict-types"
@@ -106,9 +106,9 @@ def _get_arg_parser(is_script=True):
     parser.add_argument(
         "-e",
         "--enable",
-        help="A comma-separated list of the elevator messages to enable. "
+        help="A comma-separated list of the stix2-elevator messages to enable. "
              "If the --disable option is not used, no other messages will be "
-             "shown. \n\nExample: stix_elevator.py <file> --enable 250",
+             "shown. \n\nExample: stix2_elevator.py <file> --enable 250",
         dest="enable",
         default=""
     )
@@ -116,8 +116,8 @@ def _get_arg_parser(is_script=True):
     parser.add_argument(
         "-d",
         "--disable",
-        help="A comma-separated list of the elevator messages to disable. \n\n"
-             "Example: stix_elevator.py <file> --disable 212,220",
+        help="A comma-separated list of the stix2-elevator messages to disable. \n\n"
+             "Example: stix2_elevator.py <file> --disable 212,220",
         dest="disable",
         default=""
     )
@@ -125,7 +125,7 @@ def _get_arg_parser(is_script=True):
     parser.add_argument(
         "-s",
         "--silent",
-        help="If this flag is set. All elevator messages will be disabled.",
+        help="If this flag is set. All stix2-elevator messages will be disabled.",
         dest="silent",
         action="store_true",
         default=False
@@ -133,11 +133,11 @@ def _get_arg_parser(is_script=True):
 
     parser.add_argument(
         "--message-log-directory",
-        help="If this flag is set. All elevator messages will be saved to "
+        help="If this flag is set. All stix2-elevator messages will be saved to "
              "file. The name of the file will be the input file with "
              "extension .log in the specified directory. Note, make sure"
              "the directory already exists.\n\n"
-             "Example: stix_elevator.py <file> --message-log-directory \"..\logs\"",
+             "Example: stix2_elevator.py <file> --message-log-directory \"..\logs\"",
         dest="message_log_directory",
         action="store",
         default=None

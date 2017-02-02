@@ -1,6 +1,6 @@
 import stix
 
-from elevator import convert_stix
+from stix2elevator import convert_stix
 
 
 def test_structured_text_list():

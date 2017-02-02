@@ -1,8 +1,8 @@
 import os
 import sys
 
-from elevator import elevate_file
-from elevator.options import initialize_options, set_option_value
+from stix2elevator import elevate_file
+from stix2elevator.options import initialize_options, set_option_value
 
 
 def main():

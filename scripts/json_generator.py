@@ -6,11 +6,11 @@
 import os
 import sys
 
-from elevator import elevate_file
-from elevator.options import initialize_options
-from elevator.utils import find_dir
+from stix2elevator import elevate_file
+from stix2elevator.options import initialize_options
+from stix2elevator.utils import find_dir
 
-# The output is set to the own json-idioms container.
+# The output is set to the internal json-idioms container.
 # WARNING: This will overwrite the contents inside the idioms-json directory.
 
 # First argument is the output location for json-idioms. Second for input XML.
