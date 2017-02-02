@@ -5,7 +5,7 @@
             "created": "2014-05-08T09:00:00.000Z",
             "id": "indicator--53fe3b22-0201-47cf-85d0-97c02164528d",
             "labels": [
-                "benign"
+                "ip-watchlist"
             ],
             "modified": "2014-05-08T09:00:00.000Z",
             "name": "IP Address for known C2 channel",

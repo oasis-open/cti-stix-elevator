@@ -5,7 +5,7 @@
             "created": "2014-05-08T09:00:00.000Z",
             "id": "indicator--865d068f-45db-4671-a23a-4bfbe92b31e9",
             "labels": [
-                "benign"
+                "ip-watchlist"
             ],
             "modified": "2014-05-08T09:00:00.000Z",
             "name": "indicator 3",
@@ -17,7 +17,7 @@
             "created": "2014-05-08T09:00:00.000Z",
             "id": "indicator--44fe3b22-0201-47cf-85d0-97c0216452ab",
             "labels": [
-                "benign"
+                "ip-watchlist"
             ],
             "modified": "2014-05-08T09:00:00.000Z",
             "name": "indicator 2",
@@ -29,7 +29,7 @@
             "created": "2014-05-08T09:00:00.000Z",
             "id": "indicator--33fe3b22-0201-47cf-85d0-97c02164528d",
             "labels": [
-                "benign"
+                "ip-watchlist"
             ],
             "modified": "2014-05-08T09:00:00.000Z",
             "name": "IP Address for known C2 channel",
@@ -41,7 +41,7 @@
             "created": "2014-05-08T09:00:00.000Z",
             "id": "indicator--b312970e-b34b-4323-9aee-d953d003bc19",
             "labels": [
-                "benign"
+                "ip-watchlist"
             ],
             "modified": "2014-05-08T09:00:00.000Z",
             "name": "indicator 4",

@@ -6,7 +6,7 @@
             "description": "\n\nCONFIDENCE: Low",
             "id": "indicator--b06b0eb7-61dd-4338-a094-0290c380fbd8",
             "labels": [
-                "malicious-activity"
+                "malicious-email"
             ],
             "modified": "2014-10-31T15:52:13.126Z",
             "name": "Malicious E-mail Addresses",

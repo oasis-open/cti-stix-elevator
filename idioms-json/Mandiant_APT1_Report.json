@@ -28,8 +28,13 @@
         {
             "created": "2017-01-27T13:49:54.060Z",
             "id": "identity--84ded36a-f3c0-4ad7-a057-2d8454687d46",
-            "identity_class": "unknown",
+            "identity_class": "organization",
             "modified": "2017-01-27T13:49:54.060Z",
+            "name": "People's Liberation Army",
+            "roles": [
+                "nation-state",
+                "military"
+            ],
             "type": "identity"
         },
         {
@@ -46,8 +51,9 @@
         {
             "created": "2017-01-27T13:49:54.060Z",
             "id": "identity--b18817d6-5124-4813-abaa-256bcb0d0f8e",
-            "identity_class": "unknown",
+            "identity_class": "individual",
             "modified": "2017-01-27T13:49:54.060Z",
+            "name": "Ugly Gorilla",
             "type": "identity"
         },
         {
@@ -75,8 +81,9 @@
         {
             "created": "2017-01-27T13:49:54.060Z",
             "id": "identity--8cd0aeb3-62ca-4912-8d77-9817c2ea3411",
-            "identity_class": "unknown",
+            "identity_class": "individual",
             "modified": "2017-01-27T13:49:54.060Z",
+            "name": "dota",
             "type": "identity"
         },
         {
@@ -93,8 +100,12 @@
         {
             "created": "2017-01-27T13:49:54.076Z",
             "id": "identity--fdef0535-457f-4396-8e2a-938add2f5110",
-            "identity_class": "unknown",
+            "identity_class": "individual",
             "modified": "2017-01-27T13:49:54.076Z",
+            "name": "SuperHard",
+            "roles": [
+                "research-and-development"
+            ],
             "type": "identity"
         },
         {
@@ -247,8 +258,12 @@
         {
             "created": "2017-01-27T13:49:54.091Z",
             "id": "identity--af641525-8a49-42d7-ba29-36775a8c21b0",
-            "identity_class": "unknown",
+            "identity_class": "organization",
             "modified": "2017-01-27T13:49:54.091Z",
+            "name": "Communist Part of China",
+            "roles": [
+                "nation-state"
+            ],
             "type": "identity"
         },
         {
@@ -265,8 +280,12 @@
         {
             "created": "2017-01-27T13:49:54.091Z",
             "id": "identity--f86b8028-8f04-40bc-8ab4-7a57d32ffece",
-            "identity_class": "unknown",
+            "identity_class": "organization",
             "modified": "2017-01-27T13:49:54.091Z",
+            "name": "China Telecom",
+            "roles": [
+                "state-influenced-commercial-entity"
+            ],
             "type": "identity"
         },
         {

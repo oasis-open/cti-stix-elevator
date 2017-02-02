@@ -23,7 +23,7 @@
             "description": "Adversary Alpha has a campaign against the ICS sector!\n\nINTENT:\nCampaign Characterization",
             "id": "report--ab11f431-4b3b-457c-835f-59920625fe65",
             "labels": [
-                "campaign"
+                "campaign-characterization"
             ],
             "modified": "2015-05-07T14:22:14.760Z",
             "name": "Report on Adversary Alpha's Campaign against the Industrial Control Sector",
@@ -38,7 +38,7 @@
             "description": "\n\nINTENT:\nIndicators - Malware Artifacts",
             "id": "report--f14804d5-3ee1-4a0e-b0f3-f9a643855ba5",
             "labels": [
-                "indicator"
+                "indicator-malware-artifacts"
             ],
             "modified": "2015-05-07T14:22:14.760Z",
             "name": "Indicators for Malware DrownedRat",

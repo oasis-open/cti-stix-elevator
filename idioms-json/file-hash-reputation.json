@@ -6,7 +6,7 @@
             "description": "\n\nCONFIDENCE: 75",
             "id": "indicator--14975dea-86cd-4211-a5f8-9c2e4daab69a",
             "labels": [
-                "benign"
+                "file-hash-watchlist"
             ],
             "modified": "2015-07-20T19:52:13.853Z",
             "name": "File Reputation for SHA256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
