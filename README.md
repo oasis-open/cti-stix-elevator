@@ -26,7 +26,7 @@ For STIX 1.2 content:
 
 For both:
 
-* stix2validator >= 0.1.0 (including its dependencies:  jsonschema, colorama, requests)
+* stix2validator >= 0.2.0 (including its dependencies:  jsonschema, colorama, requests)
 * pycountry >= 1.20
 
 
@@ -40,6 +40,22 @@ $ pip install git+https://github.com/oasis-open/cti-stix-elevator.git
 
 This will install all necessary dependencies.
 
+### Using pypi:
+
+For STIX 1.1.1 content:
+
+```
+$ pip install stix<1.2  - this will install python-stix 1.1.1.8
+$ pip install stix2-elevator
+```
+
+For STIX 1.2 content:
+
+```
+$ pip install stix2-elevator  - this will install python-stix 1.2.0.2
+
+```
+
 ## Usage
 
 
@@ -48,14 +64,14 @@ This will install all necessary dependencies.
 The elevator comes with a bundled script which you can use to elevate STIX 1.1.1 - 1.2.1 content to STIX 2.0 content:
 
 ```
-usage: stix_elevator.py [-h] [--incidents] [--no-squirrel-gaps]
-                        [--infrastructure]
-                        [--package-created-by-id PACKAGE_CREATED_BY_ID]
-                        [--default-timestamp DEFAULT_TIMESTAMP]
-                        [--validator-args VALIDATOR_ARGS] [-e ENABLE]
-                        [-d DISABLE] [-s]
-                        [--message-log-directory MESSAGE_LOG_DIRECTORY]
-                        file
+usage: stix2_elevator [-h] [--incidents] [--no-squirrel-gaps]
+                      [--infrastructure]
+                      [--package-created-by-id PACKAGE_CREATED_BY_ID]
+                      [--default-timestamp DEFAULT_TIMESTAMP]
+                      [--validator-args VALIDATOR_ARGS] [-e ENABLE]
+                      [-d DISABLE] [-s]
+                      [--message-log-directory MESSAGE_LOG_DIRECTORY]
+                      file
 
 positional arguments:
   file                  The input STIX 1.x document to be elevated.
