@@ -91,4 +91,3 @@ def pytest_generate_tests(metafunc):
     argvalues = [(x, y) for x, y in zip(TESTED_XML_FILES, MASTER_JSON_FILES)]
 
     metafunc.parametrize(argnames=argnames, argvalues=argvalues, ids=XML_FILENAMES, scope="function")
-
