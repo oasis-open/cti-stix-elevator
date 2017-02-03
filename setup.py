@@ -36,7 +36,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'stix2_elevator = stix2elevator.scripts.stix2_elevator:main',
+            'stix2_elevator = stix2elevator.cli:main',
         ],
     },
     classifiers=[
