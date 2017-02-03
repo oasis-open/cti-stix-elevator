@@ -57,13 +57,13 @@ def identifying_info(stix1x_obj):
         if hasattr(stix1x_obj, "id_") and stix1x_obj.id_:
             return text_type(stix1x_obj.id_)
         elif hasattr(stix1x_obj, "idref") and stix1x_obj.idref:
-            return text_type(stix1x_obj.idref)
+            return " with idref " + text_type(stix1x_obj.idref)
         elif hasattr(stix1x_obj, "title") and stix1x_obj.title:
             return "'" + text_type(stix1x_obj.title) + "'"
         elif hasattr(stix1x_obj, "name") and stix1x_obj.name:
             return "'" + text_type(stix1x_obj.name) + "'"
         elif hasattr(stix1x_obj, "item") and stix1x_obj.item:
-            return identifying_info(stix1x_obj.item)  # Useful in Related Types.
+            return "parent of object " + identifying_info(stix1x_obj.item)  # Useful in Related Types.
     return "- no identifying information"
 
 
