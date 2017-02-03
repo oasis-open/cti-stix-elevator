@@ -6,7 +6,7 @@
             "description": "\n\nCONFIDENCE: High",
             "id": "indicator--8cf9236f-1b96-493d-98be-0c1c1e8b62d7",
             "labels": [
-                "malicious-activity"
+                "malicious-email"
             ],
             "modified": "2014-10-31T15:52:13.127Z",
             "name": "Malicious E-mail",
@@ -19,7 +19,7 @@
             "description": "\n\nCONFIDENCE: Low",
             "id": "indicator--b06b0eb7-61dd-4338-a094-0290c380fbd8",
             "labels": [
-                "malicious-activity"
+                "malicious-email"
             ],
             "modified": "2014-10-31T15:52:13.126Z",
             "name": "Malicious E-mail Subject Line",
@@ -32,7 +32,7 @@
             "description": "\n\nCONFIDENCE: Low",
             "id": "indicator--2e17f6fe-3a4d-438a-911a-e509ba1b9933",
             "labels": [
-                "malicious-activity"
+                "malicious-email"
             ],
             "modified": "2014-10-31T15:52:13.127Z",
             "name": "Malicious E-mail Attachment",

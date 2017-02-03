@@ -5,7 +5,7 @@
             "created": "2017-01-27T13:49:53.935Z",
             "id": "indicator--d81f86b9-975b-bc0b-775e-810c5ad45a4f",
             "labels": [
-                "benign"
+                "url-watchlist"
             ],
             "modified": "2017-01-27T13:49:53.935Z",
             "name": "Malicious site hosting downloader",

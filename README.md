@@ -18,7 +18,7 @@ For STIX 1.1.1 content;
 
 * Python 2.6/2.7
 * python-stix >= 1.1.1.7 (other dependencies inherited from python-stix)
- 
+
 For STIX 1.2 content:
 
 * Python 3.5
@@ -26,30 +26,19 @@ For STIX 1.2 content:
 
 For both:
 
-* stix2validator (with all of its dependencies:  jsonschema, colorama, nose, tox
+* stix2validator >= 0.1.0 (including its dependencies:  jsonschema, colorama, requests)
 * pycountry >= 1.20
 
 
 ## Installation
 
-The needed software is located in the following repositories:
-
-* stix-elevator (https://github.com/oasis-open/cti-stix-elevator)
-* cti-stix-validator (https://github.com/oasis-open/cti-stix-validator)
-
-_Install these two packages using pip._
-
-### Install stix2validator
-
-```
-$ pip install git+https://github.com/oasis-open/cti-stix-validator.git
-```
-
-### Install stix-elevator
+stix-elevator should be installed using the git repository:
 
 ```
 $ pip install git+https://github.com/oasis-open/cti-stix-elevator.git
 ```
+
+This will install all necessary dependencies.
 
 ## Usage
 
@@ -127,7 +116,7 @@ Refer to elevator_log_messages.xlsx for error codes.
 You can also use this library to integrate STIX elevation into your own tools. You can elevate a STIX 1.x file:
 
 ```
-  from elevator import elevate_file
+  from stix2elevator import elevate_file
 
   results = elevate_file("stix_file.xml")
   print(results)
@@ -135,7 +124,7 @@ You can also use this library to integrate STIX elevation into your own tools. Y
 Additionally, a similar method exists to accept a string as an argument:
 
 ```
-  from elevator import elevate_string
+  from stix2elevator import elevate_string
 
   results = elevate_string("...")
   print(results)

@@ -4,9 +4,13 @@
         {
             "created": "2017-01-27T13:49:54.341Z",
             "id": "identity--dfd23353-167f-411c-a258-e08ec9d284af",
-            "identity_class": "unknown",
+            "identity_class": "organization",
             "modified": "2017-01-27T13:49:54.341Z",
             "name": "Victim Targeting: Electricity Sector and Industrial Control System Sector",
+            "sectors": [
+                "electricity",
+                "industrial-control-systems"
+            ],
             "type": "identity"
         }
     ],

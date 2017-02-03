@@ -3,8 +3,8 @@ from six import text_type
 
 import cybox
 
-from elevator.convert_pattern import *
-from elevator.vocab_mappings import *
+from stix2elevator.convert_pattern import *
+from stix2elevator.vocab_mappings import *
 
 
 def convert_address(add):

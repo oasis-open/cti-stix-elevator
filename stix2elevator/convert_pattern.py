@@ -12,8 +12,8 @@ from cybox.objects.network_connection_object import NetworkConnection
 from cybox.objects.win_executable_file_object import WinExecutableFile
 from cybox.objects.archive_file_object import ArchiveFile
 
-from elevator.vocab_mappings import *
-from elevator.ids import *
+from stix2elevator.vocab_mappings import *
+from stix2elevator.ids import *
 
 import re
 from six import text_type

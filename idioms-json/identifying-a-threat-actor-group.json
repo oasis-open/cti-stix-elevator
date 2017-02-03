@@ -4,8 +4,9 @@
         {
             "created": "2017-01-27T13:49:53.888Z",
             "id": "identity--733c5838-34d9-4fbf-949c-62aba761184c",
-            "identity_class": "unknown",
+            "identity_class": "organization",
             "modified": "2017-01-27T13:49:53.888Z",
+            "name": "Disco Tean",
             "type": "identity"
         },
         {
