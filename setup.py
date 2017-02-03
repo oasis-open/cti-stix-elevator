@@ -31,7 +31,7 @@ setup(
     install_requires=[
         'pycountry>=1.17.8',
         'stix>=1.1.1.7,<1.2.1.0',
-        'stix2-validator>=0.0.2',
+        'stix2-validator>=0.1.0',
         'six>=1.10.0',
     ],
     entry_points={

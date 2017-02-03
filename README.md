@@ -18,7 +18,7 @@ For STIX 1.1.1 content;
 
 * Python 2.6/2.7
 * python-stix >= 1.1.1.7 (other dependencies inherited from python-stix)
- 
+
 For STIX 1.2 content:
 
 * Python 3.5
@@ -26,30 +26,19 @@ For STIX 1.2 content:
 
 For both:
 
-* stix2validator (with all of its dependencies:  jsonschema, colorama, nose, tox
+* stix2validator >= 0.1.0 (including its dependencies:  jsonschema, colorama, requests)
 * pycountry >= 1.20
 
 
 ## Installation
 
-The needed software is located in the following repositories:
-
-* stix-elevator (https://github.com/oasis-open/cti-stix-elevator)
-* cti-stix-validator (https://github.com/oasis-open/cti-stix-validator)
-
-_Install these two packages using pip._
-
-### Install stix2-validator
-
-```
-$ pip install git+https://github.com/oasis-open/cti-stix-validator.git
-```
-
-### Install stix2-elevator
+stix-elevator should be installed using the git repository:
 
 ```
 $ pip install git+https://github.com/oasis-open/cti-stix-elevator.git
 ```
+
+This will install all necessary dependencies.
 
 ## Usage
 
