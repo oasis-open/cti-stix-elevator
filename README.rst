@@ -53,23 +53,23 @@ For both:
 Installation
 ------------
 
-stix-elevator should be installed using the git repository::
+Install with pip::
 
-    $ pip install git+https://github.com/oasis-open/cti-stix-elevator.git
-
-This will install all necessary dependencies.
-
-Using pypi:
-~~~~~~~~~~~
-
-For STIX 1.1.1 content::
-
-    $ pip install stix<1.2  - this will install python-stix 1.1.1.8
     $ pip install stix2-elevator
 
-For STIX 1.2 content::
+This will install all necessary dependencies, including the latest version of
+python-stix.
 
-    $ pip install stix2-elevator  - this will install python-stix 1.2.0.2
+If you need to support older STIX 1.1.1 content, install python-stix 1.1.1.x
+first::
+
+    $ pip install stix<1.2
+    $ pip install stix2-elevator
+
+You can also install the stix-elevator from GitHub to get the latest (unstable)
+version::
+
+    $ pip install git+https://github.com/oasis-open/cti-stix-elevator.git
 
 Usage
 -----
