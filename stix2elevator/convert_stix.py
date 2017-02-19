@@ -753,7 +753,8 @@ def convert_incident(incident, bundle_instance, parent_created_by_ref, parent_ti
         info("Incident Impact Assessment in %s is not handled, yet", 815, incident_instance["id"])
     add_string_property_to_description(incident_instance, "status", incident.status)
     if incident.related_incidents:
-        warn("All associated incidents relationships of %s are assumed to not represent STIX 1.2 versioning", 710, incident_instance["id"])
+        warn("All associated incidents relationships of %s are assumed to not represent STIX 1.2 versioning",
+             710, incident_instance["id"])
         handle_relationship_to_refs(incident.related_incidents, incident_instance["id"], bundle_instance,
                                     "related-to", incident_instance["created"], incident_created_by_ref)
     finish_basic_object(incident.id_, incident_instance, incident)
@@ -834,14 +835,19 @@ def convert_indicator(indicator, bundle_instance, parent_created_by_ref, parent_
     if indicator.valid_time_positions is not None:
         for window in indicator.valid_time_positions:
             if "valid_from" not in indicator_instance:
+                if not window.start_time.value:
+                    warn("No start time for the first valid time interval is available in %s, other time intervals might be more appropriate",
+                         619, indicator_instance["id"])
                 indicator_instance["valid_from"] = \
                     convert_timestamp_string(window.start_time.value, indicator, indicator_instance["created"])
                 indicator_instance["valid_until"] = \
                     convert_timestamp_string(window.end_time.value, indicator, indicator_instance["created"])
             else:
-                warn("Only one valid time window allowed for %s in STIX 2.0 - used first one", 507, indicator_instance["id"])
+                warn("Only one valid time window allowed for %s in STIX 2.0 - used first one",
+                     507, indicator_instance["id"])
         if "valid_from" not in indicator_instance:
-            warn("No valid time position information available in %s, using parent timestamp", 903, indicator_instance["id"])
+            warn("No valid time position information available in %s, using parent timestamp",
+                 903, indicator_instance["id"])
             indicator_instance["valid_from"] = convert_timestamp(indicator, parent_timestamp)
     convert_kill_chains(indicator.kill_chain_phases, indicator_instance)
     if indicator.likely_impact:
@@ -849,9 +855,10 @@ def convert_indicator(indicator, bundle_instance, parent_created_by_ref, parent_
     if indicator.confidence:
         add_confidence_property_to_description(indicator_instance, indicator.confidence)
     if indicator.sightings:
-        info("Sighthings in %s are not handled, yet.", 815, indicator_instance["id"])
+        info("Sightings in %s are not handled, yet.", 815, indicator_instance["id"])
     if indicator.observable and indicator.composite_indicator_expression or indicator.composite_indicator_expression:
-        warn("Indicator %s has an observable or indicator composite expression which is not supported in STIX 2.0", 407, indicator_instance["id"])
+        warn("Indicator %s has an observable or indicator composite expression which is not supported in STIX 2.0",
+             407, indicator_instance["id"])
     if indicator.observable is not None:
         indicator_instance["pattern"] = convert_observable_to_pattern(indicator.observable, bundle_instance,
                                                                       OBSERVABLE_MAPPING)
