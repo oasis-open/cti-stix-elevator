@@ -149,16 +149,22 @@ You can also use this library to integrate STIX elevation into your own
 tools. You can elevate a STIX 1.x file::
 
       from stix2elevator import elevate_file
+      from stix2elevator.options import initialize_options
 
+      intialize_options()
       results = elevate_file("stix_file.xml")
       print(results)
 
 Additionally, a similar method exists to accept a string as an argument::
 
       from stix2elevator import elevate_string
-
+      from stix2elevator.options import initialize_options
+      
+      intialize_options()  
       results = elevate_string("...")
       print(results)
+
+To set options, use set_option_value, found in options.py
 
 Governance
 ----------
