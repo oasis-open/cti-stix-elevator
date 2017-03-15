@@ -32,23 +32,17 @@ Please enter any comments on how to improve it into the issue tracker.
 Requirements
 ------------
 
-For STIX 1.1.1 content;
-
--  Python 2.6/2.7
--  python-stix >= 1.1.1.7 (other dependencies inherited from
-   python-stix)
-
-For STIX 1.2 content:
-
--  Python 3.5
--  python-stix >= 1.2.0.0 (other dependencies inherited from
-   python-stix)
-
-For both:
-
--  stix2validator >= 0.2.0 (including its dependencies: jsonschema,
-   colorama, requests)
--  pycountry >= 1.20
+- Python 2.6, 2.7, or 3.3+
+- `python-stix <https://stix.readthedocs.io/en/stable/>`_ and its dependencies
+  
+  .. note::
+  
+      Make sure to use either the latest version of python-stix 1.1.1.x or 
+      1.2.0.x, depending on whether you want to support STIX 1.1.1 or STIX 1.2.
+      
+-  `stix2-validator <https://pypi.python.org/pypi/stix2-validator>`_ >= 0.1.0
+   and its dependencies
+-  `pycountry <https://pypi.python.org/pypi/pycountry/>`_ >= 1.20
 
 Installation
 ------------
