@@ -5,11 +5,11 @@ NOTE: This is an `OASIS Open
 Repository <https://www.oasis-open.org/resources/open-repositories/>`_.
 See the `Governance`_ section for more information.
 
-The stix-elevator is a software tool for converting STIX 1.2 XML to STIX
-2.0 JSON. Due to the differences between STIX 1.2 and STIX 2.0, this
+The stix-elevator is a software tool for converting STIX 1.x XML to STIX
+2.0 JSON. Due to the differences between STIX 1.x and STIX 2.0, this
 conversion is best-effort only, and stix-elevator cannot convert from
-STIX 2.0 back to STIX 1.2. During the conversion, stix-elevator provides
-information on the assumptions it needs to make to produce valid STIX
+STIX 2.0 JSON back to STIX 1.x XML. During the conversion, stix-elevator
+provides information on the assumptions it needs to make to produce valid STIX
 2.0 JSON, and what information was not able to be converted.
 
 The stix-elevator is a work-in-progress. It should be used to explore
@@ -32,21 +32,16 @@ Please enter any comments on how to improve it into the issue tracker.
 Requirements
 ------------
 
-For STIX 1.1.1 content;
+The stix-elevator supports the latest python-stix 1.x libraries on Python 2.x
+or 3.x environments.
 
--  Python 2.6/2.7
--  python-stix >= 1.1.1.7 (other dependencies inherited from
-   python-stix)
+For STIX 1.2/1.1.1 content:
 
-For STIX 1.2 content:
+-  python-stix (other dependencies inherited from python-stix)
 
--  Python 3.5
--  python-stix >= 1.2.0.0 (other dependencies inherited from
-   python-stix)
+Other requirements:
 
-For both:
-
--  stix2validator >= 0.2.0 (including its dependencies: jsonschema,
+-  stix2validator >= 0.1.0 (including its dependencies: jsonschema,
    colorama, requests)
 -  pycountry >= 1.20
 
