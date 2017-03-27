@@ -65,19 +65,21 @@ def setup_tests():
     print(json_idioms_dir)
 
     for json_filename in os.listdir(json_idioms_dir):
-        path = os.path.join(json_idioms_dir, json_filename)
+        if json_filename.endswith(".json"):
+            path = os.path.join(json_idioms_dir, json_filename)
 
-        json_file = open(path, "r")
-        io = StringIO(json_file.read())
-        loaded_json = json.load(io)
-        json_file.close()
+            json_file = open(path, "r")
+            io = StringIO(json_file.read())
+            loaded_json = json.load(io)
+            json_file.close()
 
-        MASTER_JSON_FILES.append(loaded_json)
+            MASTER_JSON_FILES.append(loaded_json)
 
     for xml_filename in os.listdir(xml_idioms_dir):
-        path = os.path.join(xml_idioms_dir, xml_filename)
-        XML_FILENAMES.append(xml_filename.split(".")[0])
-        TESTED_XML_FILES.append(path)
+        if xml_filename.endswith(".xml"):
+            path = os.path.join(xml_idioms_dir, xml_filename)
+            XML_FILENAMES.append(xml_filename.split(".")[0])
+            TESTED_XML_FILES.append(path)
 
 
 def test_idiom_mapping(test_file, stored_master):

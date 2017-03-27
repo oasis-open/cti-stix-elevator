@@ -855,7 +855,11 @@ def convert_indicator(indicator, bundle_instance, parent_created_by_ref, parent_
     if indicator.confidence:
         add_confidence_property_to_description(indicator_instance, indicator.confidence)
     if indicator.sightings:
-        info("Sightings in %s are not handled, yet.", 815, indicator_instance["id"])
+        for s in indicator.sightings:
+            if s.related_observables:
+                warn("Sighting with observables in %s are not handled, yet.", 815, indicator_instance["id"])
+            else:
+                info("Sighting in %s are not handled, yet.", 815, indicator_instance["id"])
     if indicator.observable and indicator.composite_indicator_expression or indicator.composite_indicator_expression:
         warn("Indicator %s has an observable or indicator composite expression which is not supported in STIX 2.0",
              407, indicator_instance["id"])
