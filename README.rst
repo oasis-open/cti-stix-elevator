@@ -32,18 +32,17 @@ Please enter any comments on how to improve it into the issue tracker.
 Requirements
 ------------
 
-The stix-elevator supports the latest python-stix 1.x libraries on Python 2.x
-or 3.x environments.
-
-For STIX 1.2/1.1.1 content:
-
--  python-stix (other dependencies inherited from python-stix)
-
-Other requirements:
-
--  stix2validator >= 0.1.0 (including its dependencies: jsonschema,
-   colorama, requests)
--  pycountry >= 1.20
+- Python 2.6, 2.7, or 3.3+
+- `python-stix <https://stix.readthedocs.io/en/stable/>`_ and its dependencies
+  
+  .. note::
+  
+      Make sure to use either the latest version of python-stix 1.1.1.x or 
+      1.2.0.x, depending on whether you want to support STIX 1.1.1 or STIX 1.2.
+      
+-  `stix2-validator <https://pypi.python.org/pypi/stix2-validator>`_ >= 0.1.0
+   and its dependencies
+-  `pycountry <https://pypi.python.org/pypi/pycountry/>`_ >= 1.20
 
 Installation
 ------------
@@ -144,16 +143,22 @@ You can also use this library to integrate STIX elevation into your own
 tools. You can elevate a STIX 1.x file::
 
       from stix2elevator import elevate_file
+      from stix2elevator.options import initialize_options
 
+      intialize_options()
       results = elevate_file("stix_file.xml")
       print(results)
 
 Additionally, a similar method exists to accept a string as an argument::
 
       from stix2elevator import elevate_string
-
+      from stix2elevator.options import initialize_options
+      
+      intialize_options()  
       results = elevate_string("...")
       print(results)
+
+To set options, use set_option_value, found in options.py
 
 Governance
 ----------
