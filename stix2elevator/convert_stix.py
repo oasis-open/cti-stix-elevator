@@ -198,7 +198,7 @@ def finish_basic_object(old_id, instance, stix1x_obj):
     if old_id is not None:
         record_ids(old_id, instance["id"])
     if hasattr(stix1x_obj, "handling") and stix1x_obj.handling is not None:
-        pass
+        info("Handling not implemented, yet", 801)
     if hasattr(stix1x_obj, "related_packages") and stix1x_obj.related_packages is not None:
         for p in stix1x_obj.related_packages:
             warn("Related_Packages type in %s not supported in STIX 2.0", 402, stix1x_obj.id_)
@@ -1513,9 +1513,9 @@ def convert_package(stixPackage, package_created_by_ref=None, default_timestamp=
         package_created_by_ref = get_identity_from_package(stixPackage.stix_header.information_source,
                                                            bundle_instance, parent_timestamp)
 
-    if stixPackage.stix_header is not None and stixPackage.stix_header.handling is not None:
-        for marking in stixPackage.stix_header.handling:
-            bundle_instance["objects"].extend(convert_marking_specification(marking, bundle_instance, None, package_created_by_ref, parent_timestamp))
+    # if stixPackage.stix_header is not None and stixPackage.stix_header.handling is not None:
+    #     for marking in stixPackage.stix_header.handling:
+    #         bundle_instance["objects"].extend(convert_marking_specification(marking, bundle_instance, None, package_created_by_ref, parent_timestamp))
 
     # do observables first, especially before indicators!
 

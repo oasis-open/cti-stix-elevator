@@ -289,7 +289,7 @@ def create_http_request_extension(http):
                 if http.http_client_request.http_request_header.parsed_header.x_requested_with is not None:
                     header["X-Requested-With"] = text_type(http.http_client_request.http_request_header.parsed_header.x_requested_with.value)
                 if http.http_client_request.http_request_header.parsed_header.x_forwarded_for is not None:
-                    header["X_Forwarded-For"] = text_type(http.http_client_request.http_request_header.parsed_header.x_forwarded_for.value)
+                    header["X-Forwarded-For"] = text_type(http.http_client_request.http_request_header.parsed_header.x_forwarded_for.value)
                 if http.http_client_request.http_request_header.parsed_header.x_att_deviceid is not None:
                     header["X-ATT-DeviceId"] = text_type(http.http_client_request.http_request_header.parsed_header.x_att_deviceid.value)
                 if http.http_client_request.http_request_header.parsed_header.x_wap_profile is not None:
@@ -324,7 +324,7 @@ def convert_network_connection(conn):
         # The source, if present will have index "0".
         if conn.source_socket_address.port is not None:
             if conn.source_socket_address.port.port_value is not None:
-                cybox_traffic["src_port"] = text_type(conn.source_socket_address.port.port_value)
+                cybox_traffic["src_port"] = int(conn.source_socket_address.port.port_value)
             if conn.source_socket_address.port.layer4_protocol is not None:
                 cybox_traffic["protocols"].append(text_type(conn.source_socket_address.port.layer4_protocol.value.lower()))
         if conn.source_socket_address.ip_address is not None:
@@ -348,7 +348,7 @@ def convert_network_connection(conn):
         # The destination will have index "1" if there is a source.
         if conn.destination_socket_address.port is not None:
             if conn.destination_socket_address.port is not None:
-                cybox_traffic["dst_port"] = text_type(conn.destination_socket_address.port.port_value)
+                cybox_traffic["dst_port"] = int(conn.destination_socket_address.port.port_value)
             if conn.destination_socket_address.port.layer4_protocol is not None:
                 cybox_traffic["protocols"].append(text_type(conn.destination_socket_address.port.layer4_protocol.value.lower()))
         if conn.destination_socket_address.ip_address is not None:

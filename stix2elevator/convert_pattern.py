@@ -251,10 +251,11 @@ _CLASS_NAME_MAPPING = {"File": "file",
                        "EmailMessage": "email-message",
                        "WinRegistryKey": "win-registry-key",
                        "Process": "process",
-                       "DomainName": "domain_name",
+                       "DomainName": "domain-name",
                        "Mutex": "mutex",
                        "WinExecutableFile": "file:extended_properties.windows_pebinary_ext",
-                       "ArchiveFile": "file:extended_properties.archive_ext"}
+                       "ArchiveFile": "file:extended_properties.archive_ext",
+                       "NetworkConnection": "network-traffic"}
 
 _ADDRESS_NAME_MAPPING = {Address.CAT_IPV4: "ipv4-addr",
                          Address.CAT_IPV6: "ipv6-addr",
@@ -769,10 +770,117 @@ def convert_mutex_to_pattern(mutex):
 
 
 def convert_network_connection_to_pattern(conn):
-    # TODO: Implement pattern
-    error("Network Connection not implemented, yet", 811)
-    return UnconvertedTerm(conn)
+    expressions = []
 
+    if conn.layer3_protocol is not None:
+        expressions.append(create_term("network-traffic:protocols[*]", conn.layer3_protocol.condition, text_type(conn.layer3_protocol.value).lower()))
+
+    if conn.layer4_protocol is not None:
+        expressions.append(create_term("network-traffic:protocols[*]", conn.layer4_protocol.condition, text_type(conn.layer4_protocol.value).lower()))
+
+    if conn.layer7_protocol is not None:
+        expressions.append(create_term("network-traffic:protocols[*]", conn.layer7_protocol.condition, text_type(conn.layer7_protocol.value).lower()))
+
+    if conn.source_socket_address is not None:
+        if conn.source_socket_address.port is not None:
+            if conn.source_socket_address.port.port_value is not None:
+                expressions.append(create_term("network-traffic:src_port", conn.source_socket_address.port.port_value.condition, int(conn.source_socket_address.port.port_value)))
+            if conn.source_socket_address.port.layer4_protocol is not None:
+                expressions.append(create_term("network-traffic:protocols[*]", conn.source_socket_address.port.layer4_protocol.condition, text_type(conn.source_socket_address.port.layer4_protocol.value.lower())))
+        if conn.source_socket_address.ip_address is not None:
+            expressions.append(create_term("network-traffic:src_ref.value", conn.source_socket_address.ip_address.address_value.condition, conn.source_socket_address.ip_address.address_value.value))
+        elif conn.source_socket_address.hostname is not None:
+            if conn.source_socket_address.hostname.is_domain_name and conn.source_socket_address.hostname.hostname_value is not None:
+                expressions.append(create_term("network-traffic:src_ref.value", conn.source_socket_address.hostname.condition, conn.source_socket_address.hostname.hostname_value))
+            elif conn.source_socket_address.hostname.naming_system is not None and any(x.value == "DNS" for x in conn.source_socket_address.hostname.naming_system):
+                expressions.append(create_term("network-traffic:src_ref.value", conn.source_socket_address.hostname.condition, conn.source_socket_address.hostname.hostname_value))
+
+    if conn.destination_socket_address is not None:
+        if conn.destination_socket_address.port is not None:
+            if conn.destination_socket_address.port.port_value is not None:
+                expressions.append(create_term("network-traffic:dst_port", conn.destination_socket_address.port.port_value.condition, int(conn.destination_socket_address.port.port_value)))
+            if conn.destination_socket_address.port.layer4_protocol is not None:
+                expressions.append(create_term("network-traffic:protocols[*]", conn.destination_socket_address.port.layer4_protocol.condition, text_type(conn.destination_socket_address.port.layer4_protocol.value.lower())))
+        if conn.destination_socket_address.ip_address is not None:
+            expressions.append(create_term("network-traffic:dst_ref.value", conn.destination_socket_address.ip_address.address_value.condition, conn.destination_socket_address.ip_address.address_value.value))
+        elif conn.destination_socket_address.hostname is not None:
+            if conn.destination_socket_address.hostname.is_domain_name and conn.destination_socket_address.hostname.hostname_value is not None:
+                expressions.append(create_term("network-traffic:dst_ref.value", conn.destination_socket_address.hostname.condition, conn.destination_socket_address.hostname.hostname_value))
+            elif conn.destination_socket_address.hostname.naming_system is not None and any(x.value == "DNS" for x in conn.destination_socket_address.hostname.naming_system):
+                expressions.append(create_term("network-traffic:dst_ref.value", conn.destination_socket_address.hostname.condition, conn.destination_socket_address.hostname.hostname_value))
+
+    if conn.layer7_connections is not None:
+        if conn.layer7_connections.http_session is not None:
+            if conn.layer7_connections.http_session.http_request_response:
+                extension_expressions = convert_http_network_connection_extension(conn.layer7_connections.http_session.http_request_response[0])
+
+                if len(conn.layer7_connections.http_session.http_request_response) > 1:
+                    warn("Only one Layer7_Connections/HTTP_Request_Response used fot http-request-ext, using first value", 512)
+
+                expressions.extend(extension_expressions)
+
+    return create_boolean_expression("AND", expressions)
+
+
+def convert_http_network_connection_extension(http):
+    expressions = []
+
+    if http.http_client_request is not None:
+        if http.http_client_request.http_request_line is not None:
+            if http.http_client_request.http_request_line.http_method is not None:
+                expressions.append(add_comparison_expression(http.http_client_request.http_request_line.http_method, "network-traffic:extensions.http-request-ext.request_method"))
+            if http.http_client_request.http_request_line.version is not None:
+                expressions.append(add_comparison_expression(http.http_client_request.http_request_line.version, "network-traffic:extensions.http-request-ext.request_version"))
+
+        if http.http_client_request.http_request_header is not None:
+            if http.http_client_request.http_request_header.parsed_header is not None:
+                header = http.http_client_request.http_request_header.parsed_header
+
+                for prop_spec in _NETWORK_CONNECTION_PROPERTIES:
+                    prop_1x = prop_spec[0]
+                    object_path = prop_spec[1]
+                    if hasattr(header, prop_1x) and getattr(header, prop_1x):
+                        expressions.append(add_comparison_expression(getattr(header, prop_1x), object_path))
+
+    return expressions
+
+_NETWORK_CONNECTION_PROPERTIES = [
+    ["accept", "network-traffic:extensions.http-request-ext.request_header.Accept"],
+    ["accept_charset", "network-traffic:extensions.http-request-ext.request_header.Accept-Charset"],
+    ["accept_language", "network-traffic:extensions.http-request-ext.request_header.Accept-Language"],
+    ["accept_datetime", "network-traffic:extensions.http-request-ext.request_header.Accept-Datetime"],
+    ["accept_encoding", "network-traffic:extensions.http-request-ext.request_header.Accept-Encoding"],
+    ["authorization", "network-traffic:extensions.http-request-ext.request_header.Authorization"],
+    ["cache_control", "network-traffic:extensions.http-request-ext.request_header.Cache-Control"],
+    ["connection", "network-traffic:extensions.http-request-ext.request_header.Connection"],
+    ["cookie", "network-traffic:extensions.http-request-ext.request_header.Cookie"],
+    ["content_length", "network-traffic:extensions.http-request-ext.request_header.Content-Length"],
+    ["content_md5", "network-traffic:extensions.http-request-ext.request_header.Content-MD5"],
+    ["content_type", "network-traffic:extensions.http-request-ext.request_header.Content-Type"],
+    ["date", "network-traffic:extensions.http-request-ext.request_header.Date"],
+    ["expect", "network-traffic:extensions.http-request-ext.request_header.Expect"],
+    ["from_", "network-traffic:extensions.http-request-ext.request_header.From"],
+    ["host", "network-traffic:extensions.http-request-ext.request_header.Host"],
+    ["if_match", "network-traffic:extensions.http-request-ext.request_header.If-Match"],
+    ["if_modified_since", "network-traffic:extensions.http-request-ext.request_header.If-Modified-Since"],
+    ["if_none_match", "network-traffic:extensions.http-request-ext.request_header.If-None-Match"],
+    ["if_range", "network-traffic:extensions.http-request-ext.request_header.If-Range"],
+    ["if_unmodified_since", "network-traffic:extensions.http-request-ext.request_header.If-Unmodified-Since"],
+    ["max_forwards", "network-traffic:extensions.http-request-ext.request_header.Max-Forwards"],
+    ["pragma", "network-traffic:extensions.http-request-ext.request_header.Pragma"],
+    ["proxy_authorization", "network-traffic:extensions.http-request-ext.request_header.Proxy-Authorization"],
+    ["range", "network-traffic:extensions.http-request-ext.request_header.Range"],
+    ["referer", "network-traffic:extensions.http-request-ext.request_header.Referer"],
+    ["te", "network-traffic:extensions.http-request-ext.request_header.TE"],
+    ["user_agent", "network-traffic:extensions.http-request-ext.request_header.User-Agent"],
+    ["via", "network-traffic:extensions.http-request-ext.request_header.Via"],
+    ["warning", "network-traffic:extensions.http-request-ext.request_header.Warning"],
+    ["dnt", "network-traffic:extensions.http-request-ext.request_header.DNT"],
+    ["x_requested_with", "network-traffic:extensions.http-request-ext.request_header.X-Requested-With"],
+    ["x_forwarded_for", "network-traffic:extensions.http-request-ext.request_header.X-Forwarded-For"],
+    ["x_att_deviceid", "network-traffic:extensions.http-request-ext.request_header.X-ATT-DeviceId"],
+    ["x_wap_profile", "network-traffic:extensions.http-request-ext.request_header.X-Wap-Profile"],
+]
 
 ####################################################################################################################
 
@@ -810,8 +918,8 @@ def convert_object_to_pattern(obj, obs_id):
             expression = convert_domain_name_to_pattern(prop)
         elif isinstance(prop, Mutex):
             expression = convert_mutex_to_pattern(prop)
-        # elif isinstance(prop, NetworkConnection):
-        #     expression = convert_network_connection_to_pattern(prop)
+        elif isinstance(prop, NetworkConnection):
+            expression = convert_network_connection_to_pattern(prop)
         else:
             warn("%s found in %s cannot be converted to a pattern, yet.", 808, text_type(obj.properties), obs_id)
             expression = UnconvertedTerm(obs_id)
