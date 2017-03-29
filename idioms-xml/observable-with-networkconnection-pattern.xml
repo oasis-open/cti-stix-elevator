@@ -1,0 +1,45 @@
+<stix:STIX_Package
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:cybox="http://cybox.mitre.org/cybox-2"
+    xmlns:stix="http://stix.mitre.org/stix-1"
+    xmlns:AddressObj="http://cybox.mitre.org/objects#AddressObject-2"
+    xmlns:PortObj="http://cybox.mitre.org/objects#PortObject-2"
+    xmlns:SocketAddressObj="http://cybox.mitre.org/objects#SocketAddressObject-1"
+    xmlns:NetworkConnectionObj="http://cybox.mitre.org/objects#NetworkConnectionObject-2"
+    xmlns:example="http://example.com/"
+    xsi:schemaLocation="
+    http://stix.mitre.org/stix-1 http://stix.mitre.org/XMLSchema/core/1.2/stix_core.xsd
+    http://cybox.mitre.org/cybox-2 http://cybox.mitre.org/XMLSchema/cybox_core.xsd
+    http://cybox.mitre.org/objects#NetworkConnectionObject-2 http://cybox.mitre.org/XMLSchema/objects/Network_Connection_Object.xsd"
+    id="example:package-e33ffe07-2f4c-48d8-b0af-ee2619d765cf" version="1.2">
+    <stix:Observables cybox_major_version="2" cybox_minor_version="1" cybox_update_version="1">
+        <cybox:Observable id="example:Observable-1aec7752-29e1-4018-806c-7a9a21ddb20e">
+            <cybox:Description>
+                This Observable specifies an example pattern written against a Network Connection Object,
+                specifically the Layer 3 and 4 Protocols and Destination Socket IP Address and Port. 
+            </cybox:Description>
+            <cybox:Object id="example:Object-54400c36-5038-478b-bffe-808c40b2f04e">
+                <cybox:Properties xsi:type="NetworkConnectionObj:NetworkConnectionObjectType">
+                    <NetworkConnectionObj:Layer3_Protocol datatype="string" condition="Equals">IPv4</NetworkConnectionObj:Layer3_Protocol>
+                    <NetworkConnectionObj:Layer4_Protocol datatype="string" condition="Equals">TCP</NetworkConnectionObj:Layer4_Protocol>
+                    <NetworkConnectionObj:Destination_Socket_Address>
+                        <SocketAddressObj:IP_Address>
+                            <AddressObj:Address_Value datatype="string" condition="StartsWith">198.49</AddressObj:Address_Value>
+                        </SocketAddressObj:IP_Address>
+                        <SocketAddressObj:Port>
+                            <PortObj:Port_Value condition="Equals">80</PortObj:Port_Value>
+                        </SocketAddressObj:Port>
+                    </NetworkConnectionObj:Destination_Socket_Address>
+                    <NetworkConnectionObj:Source_Socket_Address>
+                        <SocketAddressObj:IP_Address>
+                            <AddressObj:Address_Value datatype="string" condition="Equals">198.49.168.11</AddressObj:Address_Value>
+                        </SocketAddressObj:IP_Address>
+                        <SocketAddressObj:Port>
+                            <PortObj:Port_Value condition="Equals">5255</PortObj:Port_Value>
+                        </SocketAddressObj:Port>
+                    </NetworkConnectionObj:Source_Socket_Address>
+                </cybox:Properties>
+            </cybox:Object>
+        </cybox:Observable>
+    </stix:Observables>
+</stix:STIX_Package>
