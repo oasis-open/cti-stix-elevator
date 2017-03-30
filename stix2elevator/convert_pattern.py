@@ -844,6 +844,7 @@ def convert_http_network_connection_extension(http):
 
     return expressions
 
+
 _NETWORK_CONNECTION_PROPERTIES = [
     ["accept", "network-traffic:extensions.http-request-ext.request_header.Accept"],
     ["accept_charset", "network-traffic:extensions.http-request-ext.request_header.Accept-Charset"],
@@ -881,6 +882,7 @@ _NETWORK_CONNECTION_PROPERTIES = [
     ["x_att_deviceid", "network-traffic:extensions.http-request-ext.request_header.X-ATT-DeviceId"],
     ["x_wap_profile", "network-traffic:extensions.http-request-ext.request_header.X-Wap-Profile"],
 ]
+
 
 ####################################################################################################################
 
