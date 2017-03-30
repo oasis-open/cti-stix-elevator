@@ -424,16 +424,16 @@ _EMAIL_HEADER_PROPERTIES = [["email-message:subject", ["subject"]],
 
 _EMAIL_ADDITIONAL_HEADERS_PROPERTIES = \
     [["email-message:additional_header_fields:Reply-To", ["reply-to*", "address_value"]],
-     ["email-message:additional_header_fields:Message_ID", ["message_id"]],
-     ["email-message:additional_header_fields:In_Reply_To", ["in_reply_to"]],
-     ["email-message:additional_header_fields:Errors_To", ["errors_to"]],
-     ["email-message:additional_header_fields:MIME_Version", ["mime_version"]],
+     ["email-message:additional_header_fields:Message-ID", ["message_id"]],
+     ["email-message:additional_header_fields:In-Reply-To", ["in_reply_to"]],
+     ["email-message:additional_header_fields:Errors-To", ["errors_to"]],
+     ["email-message:additional_header_fields:MIME-Version", ["mime_version"]],
      ["email-message:additional_header_fields:Precedence", ["precedence"]],
-     ["email-message:additional_header_fields:User_Agent", ["user_agent"]],
+     ["email-message:additional_header_fields:User-Agent", ["user_agent"]],
      ["email-message:additional_header_fields:Boundary", ["boundary"]],
-     ["email-message:additional_header_fields:X_Originating_IP", ["x_originating_ip", "address_value"]],
-     ["email-message:additional_header_fields:X_Priority", ["x_priority"]],
-     ["email-message:additional_header_fields:X_Mailer", ["x_mailer"]]]
+     ["email-message:additional_header_fields:X-Originating-IP", ["x_originating_ip", "address_value"]],
+     ["email-message:additional_header_fields:X-Priority", ["x_priority"]],
+     ["email-message:additional_header_fields:X-Mailer", ["x_mailer"]]]
 
 
 def cannonicalize_prop_name(name):
