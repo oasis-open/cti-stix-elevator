@@ -198,17 +198,242 @@ def convert_mutex(mutex):
     return cybox_mutex
 
 
-def convert_network_connection(conn):
-    cybox_traffic = {"type": "network-traffic"}
+def create_http_request_extension(http):
+    http_extension = {}
 
-    # cybox_traffic["start"]
+    if http.http_client_request is not None:
+        if http.http_client_request.http_request_line is not None:
+            if http.http_client_request.http_request_line.http_method is not None:
+                http_extension["request_method"] = text_type(http.http_client_request.http_request_line.http_method.value.lower())
+            if http.http_client_request.http_request_line.version is not None:
+                http_extension["request_version"] = text_type(http.http_client_request.http_request_line.version.value.lower())
+
+        if http.http_client_request.http_request_header is not None:
+            if http.http_client_request.http_request_header.parsed_header is not None:
+                header = {}
+                if http.http_client_request.http_request_header.parsed_header.accept is not None:
+                    header["Accept"] = text_type(http.http_client_request.http_request_header.parsed_header.accept.value)
+                if http.http_client_request.http_request_header.parsed_header.accept_charset is not None:
+                    header["Accept-Charset"] = text_type(http.http_client_request.http_request_header.parsed_header.accept_charset.value)
+                if http.http_client_request.http_request_header.parsed_header.accept_language is not None:
+                    header["Accept-Language"] = text_type(http.http_client_request.http_request_header.parsed_header.accept_language.value)
+                if http.http_client_request.http_request_header.parsed_header.accept_datetime is not None:
+                    header["Accept-Datetime"] = text_type(http.http_client_request.http_request_header.parsed_header.accept_datetime.value)
+                if http.http_client_request.http_request_header.parsed_header.accept_encoding is not None:
+                    header["Accept-Encoding"] = text_type(http.http_client_request.http_request_header.parsed_header.accept_encoding.value)
+                if http.http_client_request.http_request_header.parsed_header.authorization is not None:
+                    header["Authorization"] = text_type(http.http_client_request.http_request_header.parsed_header.authorization.value)
+                if http.http_client_request.http_request_header.parsed_header.cache_control is not None:
+                    header["Cache-Control"] = text_type(http.http_client_request.http_request_header.parsed_header.cache_control.value)
+                if http.http_client_request.http_request_header.parsed_header.connection is not None:
+                    header["Connection"] = text_type(http.http_client_request.http_request_header.parsed_header.connection.value)
+                if http.http_client_request.http_request_header.parsed_header.cookie is not None:
+                    header["Cookie"] = text_type(http.http_client_request.http_request_header.parsed_header.cookie.value)
+                if http.http_client_request.http_request_header.parsed_header.content_length is not None:
+                    header["Content-Length"] = text_type(http.http_client_request.http_request_header.parsed_header.content_length.value)
+                if http.http_client_request.http_request_header.parsed_header.content_md5 is not None:
+                    header["Content-MD5"] = text_type(http.http_client_request.http_request_header.parsed_header.content_md5.value)
+                if http.http_client_request.http_request_header.parsed_header.content_type is not None:
+                    header["Content-Type"] = text_type(http.http_client_request.http_request_header.parsed_header.content_type.value)
+                if http.http_client_request.http_request_header.parsed_header.date is not None:
+                    header["Date"] = text_type(http.http_client_request.http_request_header.parsed_header.date)
+                if http.http_client_request.http_request_header.parsed_header.expect is not None:
+                    header["Expect"] = text_type(http.http_client_request.http_request_header.parsed_header.expect.value)
+                if http.http_client_request.http_request_header.parsed_header.from_ is not None:
+                    from_ = http.http_client_request.http_request_header.parsed_header.from_
+                    if from_.address_value is not None:
+                        header["From"] = text_type(from_.address_value.value)
+                if http.http_client_request.http_request_header.parsed_header.host is not None:
+                    host = http.http_client_request.http_request_header.parsed_header.host
+                    value = ""
+                    has_domain = False
+                    if host.domain_name is not None:
+                        has_domain = True
+                        value += text_type(host.domain_name.value)
+                    if host.port is not None and has_domain:
+                        value += ":" + text_type(host.port.port_value)
+                    else:
+                        value += text_type(host.port.port_value)
+                    if value:
+                        header["Host"] = value
+                if http.http_client_request.http_request_header.parsed_header.if_match is not None:
+                    header["If-Match"] = text_type(http.http_client_request.http_request_header.parsed_header.if_match.value)
+                if http.http_client_request.http_request_header.parsed_header.if_modified_since is not None:
+                    header["If-Modified-Since"] = text_type(http.http_client_request.http_request_header.parsed_header.if_modified_since.value)
+                if http.http_client_request.http_request_header.parsed_header.if_none_match is not None:
+                    header["If-None-Match"] = text_type(http.http_client_request.http_request_header.parsed_header.if_none_match.value)
+                if http.http_client_request.http_request_header.parsed_header.if_range is not None:
+                    header["If-Range"] = text_type(http.http_client_request.http_request_header.parsed_header.if_range.value)
+                if http.http_client_request.http_request_header.parsed_header.if_unmodified_since is not None:
+                    header["If-Unmodified-Since"] = text_type(http.http_client_request.http_request_header.parsed_header.if_unmodified_since.value)
+                if http.http_client_request.http_request_header.parsed_header.max_forwards is not None:
+                    header["Max-Forwards"] = text_type(http.http_client_request.http_request_header.parsed_header.max_forwards.value)
+                if http.http_client_request.http_request_header.parsed_header.pragma is not None:
+                    header["Pragma"] = text_type(http.http_client_request.http_request_header.parsed_header.pragma.value)
+                if http.http_client_request.http_request_header.parsed_header.proxy_authorization is not None:
+                    header["Proxy-Authorization"] = text_type(http.http_client_request.http_request_header.parsed_header.proxy_authorization.value)
+                if http.http_client_request.http_request_header.parsed_header.range_ is not None:
+                    header["Range"] = text_type(http.http_client_request.http_request_header.parsed_header.range_.value)
+                if http.http_client_request.http_request_header.parsed_header.referer is not None:
+                    header["Referer"] = text_type(http.http_client_request.http_request_header.parsed_header.referer.value)
+                if http.http_client_request.http_request_header.parsed_header.te is not None:
+                    header["TE"] = text_type(http.http_client_request.http_request_header.parsed_header.te.value)
+                if http.http_client_request.http_request_header.parsed_header.user_agent is not None:
+                    header["User-Agent"] = text_type(http.http_client_request.http_request_header.parsed_header.user_agent.value)
+                if http.http_client_request.http_request_header.parsed_header.via is not None:
+                    header["Via"] = text_type(http.http_client_request.http_request_header.parsed_header.via.value)
+                if http.http_client_request.http_request_header.parsed_header.warning is not None:
+                    header["Warning"] = text_type(http.http_client_request.http_request_header.parsed_header.warning.value)
+                if http.http_client_request.http_request_header.parsed_header.dnt is not None:
+                    header["DNT"] = text_type(http.http_client_request.http_request_header.parsed_header.dnt.value)
+                if http.http_client_request.http_request_header.parsed_header.x_requested_with is not None:
+                    header["X-Requested-With"] = text_type(http.http_client_request.http_request_header.parsed_header.x_requested_with.value)
+                if http.http_client_request.http_request_header.parsed_header.x_forwarded_for is not None:
+                    header["X-Forwarded-For"] = text_type(http.http_client_request.http_request_header.parsed_header.x_forwarded_for.value)
+                if http.http_client_request.http_request_header.parsed_header.x_att_deviceid is not None:
+                    header["X-ATT-DeviceId"] = text_type(http.http_client_request.http_request_header.parsed_header.x_att_deviceid.value)
+                if http.http_client_request.http_request_header.parsed_header.x_wap_profile is not None:
+                    header["X-Wap-Profile"] = text_type(http.http_client_request.http_request_header.parsed_header.x_wap_profile.value)
+
+                http_extension["request_header"] = header
+
+    # http_extension["request_value"]
+    # http_extension["message_body_length"]
+    # http_extension["message_body_data_length"]
+
+    return http_extension
+
+
+def convert_network_connection(conn):
+    index = 0
+    cybox_dict = {}
+    cybox_traffic = {}
+
+    def create_domain_name_object(dn):
+        return {"type": "domain-name", "value": text_type(dn.value)}
+
+    if conn.creation_time is not None:
+        cybox_traffic["start"] = convert_timestamp_string(conn.creation_time.value, None, None)
+
+    cybox_traffic["protocols"] = []
+
+    if conn.layer3_protocol is not None:
+        cybox_traffic["protocols"].append(text_type(conn.layer3_protocol.value).lower())
+
+    if conn.source_socket_address is not None:
+        # The source, if present will have index "0".
+        if conn.source_socket_address.port is not None:
+            if conn.source_socket_address.port.port_value is not None:
+                cybox_traffic["src_port"] = int(conn.source_socket_address.port.port_value)
+            if conn.source_socket_address.port.layer4_protocol is not None:
+                cybox_traffic["protocols"].append(text_type(conn.source_socket_address.port.layer4_protocol.value.lower()))
+        if conn.source_socket_address.ip_address is not None:
+            source = convert_address(conn.source_socket_address.ip_address)
+            cybox_traffic["src_ref"] = str(index)
+            cybox_dict[index] = source
+            index += 1
+        elif conn.source_socket_address.hostname is not None:
+            if conn.source_socket_address.hostname.is_domain_name and conn.source_socket_address.hostname.hostname_value is not None:
+                source_domain = create_domain_name_object(conn.source_socket_address.hostname.hostname_value)
+                cybox_traffic["src_ref"] = str(index)
+                cybox_dict[index] = source_domain
+                index += 1
+            elif (conn.source_socket_address.hostname.naming_system is not None and
+                    any(x.value == "DNS" for x in conn.source_socket_address.hostname.naming_system)):
+                source_domain = create_domain_name_object(conn.source_socket_address.hostname.hostname_value)
+                cybox_traffic["src_ref"] = str(index)
+                cybox_dict[index] = source_domain
+                index += 1
+
+    if conn.destination_socket_address is not None:
+        # The destination will have index "1" if there is a source.
+        if conn.destination_socket_address.port is not None:
+            if conn.destination_socket_address.port is not None:
+                cybox_traffic["dst_port"] = int(conn.destination_socket_address.port.port_value)
+            if conn.destination_socket_address.port.layer4_protocol is not None:
+                cybox_traffic["protocols"].append(text_type(conn.destination_socket_address.port.layer4_protocol.value.lower()))
+        if conn.destination_socket_address.ip_address is not None:
+            destination = convert_address(conn.destination_socket_address.ip_address)
+            cybox_traffic["dst_ref"] = str(index)
+            cybox_dict[index] = destination
+            index += 1
+        elif conn.destination_socket_address.hostname is not None:
+            if conn.destination_socket_address.hostname.is_domain_name and conn.destination_socket_address.hostname.hostname_value is not None:
+                destination_domain = create_domain_name_object(conn.destination_socket_address.hostname.hostname_value)
+                cybox_traffic["dst_ref"] = str(index)
+                cybox_dict[index] = destination_domain
+                index += 1
+            elif (conn.destination_socket_address.hostname.naming_system is not None and
+                    any(x.value == "DNS" for x in conn.destination_socket_address.hostname.naming_system)):
+                destination_domain = create_domain_name_object(conn.destination_socket_address.hostname.hostname_value)
+                cybox_traffic["dst_ref"] = str(index)
+                cybox_dict[index] = destination_domain
+                index += 1
+
+    if conn.layer4_protocol is not None:
+        cybox_traffic["protocols"].append(text_type(conn.layer4_protocol.value).lower())
+
+    if conn.layer7_protocol is not None:
+        cybox_traffic["protocols"].append(text_type(conn.layer7_protocol.value).lower())
+
+    if conn.layer7_connections is not None:
+        if conn.layer7_connections.http_session is not None:
+            # HTTP extension
+            cybox_traffic["extensions"] = {}
+            if conn.layer7_connections.http_session.http_request_response:
+                cybox_traffic["extensions"] = {"http-request-ext": create_http_request_extension(conn.layer7_connections.http_session.http_request_response[0])}
+
+                if len(conn.layer7_connections.http_session.http_request_response) > 1:
+                    warn("Only one Layer7_Connections/HTTP_Request_Response used fot http-request-ext, using first value", 512)
+        if conn.layer7_connections.dns_query:
+            def add_resource_records(resource, index):
+                # All domain records will be included with resolves to refs if ip address is present.
+                for res in resource:
+                    has_ip = False
+                    if res.ip_address is not None:
+                        cybox_dict[index] = convert_address(res.ip_address)
+                        index += 1
+                        has_ip = True
+                    if res.domain_name is not None:
+                        domain = create_domain_name_object(res.domain_name)
+                        if has_ip:
+                            domain["resolves_to_refs"] = index - 1
+                        cybox_dict[index] = domain
+                        index += 1
+                    if res.entry_type is not None:
+                        warn("Resource_Record/Entry_Type content not supported in STIX 2.0", 424)
+                    if res.record_name is not None:
+                        warn("Resource_Record/Record_Name content not supported in STIX 2.0", 424)
+                    if res.record_type is not None:
+                        warn("Resource_Record/Record_Type content not supported in STIX 2.0", 424)
+                    if res.ttl is not None:
+                        warn("Resource_Record/TTL content not supported in STIX 2.0", 424)
+                    if res.flags is not None:
+                        warn("Resource_Record/Flags content not supported in STIX 2.0", 424)
+                    if res.data_length is not None:
+                        warn("Resource_Record/Data_Length content not supported in STIX 2.0", 424)
+
+            for dns in conn.layer7_connections.dns_query:
+                if dns.answer_resource_records is not None and dns.answer_resource_records.resource_record:
+                    add_resource_records(dns.answer_resource_records.resource_record, index)
+                if dns.authority_resource_records is not None and dns.authority_resource_records.recource_record:
+                    add_resource_records(dns.authority_resource_records.recource_record, index)
+                if dns.additional_records is not None and dns.additional_records.resource_record:
+                    add_resource_records(dns.additional_records.resource_record, index)
+                if dns.question is not None:
+                    if dns.question.qname is not None:
+                        warn("Question\QName content not supported in STIX 2.0", 424)
+                    if dns.question.qtype is not None:
+                        warn("Question\QType content not supported in STIX 2.0", 424)
+                    if dns.question.qclass is not None:
+                        warn("Question\QClass content not supported in STIX 2.0", 424)
+
+    if cybox_traffic:
+        cybox_traffic["type"] = "network-traffic"
+        cybox_dict[index] = cybox_traffic
+
     # cybox_traffic["end"]
     # cybox_traffic["is_active"]
-    # cybox_traffic["src_ref"]
-    # cybox_traffic["dst_ref"]
-    # cybox_traffic["src_port"]
-    # cybox_traffic["dst_port"]
-    # cybox_traffic["protocols"]
     # cybox_traffic["src_byte_count"]
     # cybox_traffic["dst_byte_count"]
     # cybox_traffic["src_packets"]
@@ -219,7 +444,7 @@ def convert_network_connection(conn):
     # cybox_traffic["encapsulates_refs"]
     # cybox_traffic["encapsulated_by_ref"]
 
-    return cybox_traffic
+    return cybox_dict
 
 
 def convert_cybox_object(obj):
@@ -247,7 +472,8 @@ def convert_cybox_object(obj):
     elif isinstance(prop, Mutex):
         objs[0] = convert_mutex(prop)
     elif isinstance(prop, NetworkConnection):
-        objs[0] = convert_network_connection(prop)
+        # potentially returns multiple objects
+        objs = convert_network_connection(prop)
     else:
         warn("CybOX object %s not handled yet", 805, text_type(type(prop)))
         return None
