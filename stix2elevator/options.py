@@ -60,7 +60,8 @@ class ElevatorOptions(object):
             self.disable = cmd_args.disable
             self.silent = cmd_args.silent
             self.message_log_directory = cmd_args.message_log_directory
-            self.output_directory = cmd_args.output_directory
+            if hasattr(cmd_args, "output_directory"):
+                self.output_directory = cmd_args.output_directory
 
         else:
             self.file_ = file_

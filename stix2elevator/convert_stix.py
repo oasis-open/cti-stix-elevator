@@ -228,6 +228,51 @@ def add_tool_property_to_description(sdo_instance, tool):
             sdo_instance["description"] += "\n\tname: " + text_type(tool.name)
         warn("Appended Tool type content to description of %s", 306, sdo_instance["id"])
 
+# Sightings
+
+def handle_sightings_observables(related_observables, bundle_instance, parent_timestamp, sighted_object_created_by_ref):
+    refs = []
+    for ref in related_observables:
+        if ref.item.idref is None:
+            # embedded
+            new20s = handle_embedded_object(ref.item, bundle_instance, sighted_object_created_by_ref, parent_timestamp)
+            refs.append(new20s["id"])
+        else:
+            refs.append(ref.item.idref)
+
+def process_information_source_for_sighting(information_source, sighting_instance, bundle_instance, parent_timestamp):
+    if information_source:
+        if information_source.identity is not None:
+            sighting_instance["where_sighted_refs"] = [ get_identity_ref(information_source.identity, bundle_instance, parent_timestamp) ]
+            if information_source.description:
+                process_description_and_short_description(sighting_instance, information_source)
+            if information_source.references:
+                for ref in information_source.references:
+                    sighting_instance["external_references"].append({"url": ref})
+            if not get_option_value("no_squirrel_gaps") and information_source.roles:
+                for role in information_source.roles:
+                    # no vocab to make to in 2.0
+                    sighting_instance["description"] += "\n\n" + "INFORMATION SOURCE ROLE: " + role.value
+            if information_source.tools:
+                for tool in information_source.tools:
+                    add_tool_property_to_description(sighting_instance, tool)
+
+
+def handle_sighting(sighting, sighted_object_id, bundle_instance, parent_timestamp, sighted_object_created_by_ref):
+    sighting_instance = create_basic_object("sighting", sighting, parent_timestamp)
+    sighting_instance["count"] = 1
+    sighting_instance["sighting_of_ref"] = sighted_object_id
+    if sighting.related_observables:
+        sighting_instance["observed_data_refs"] = handle_sightings_observables(sighting.related_observables,
+                                                                               bundle_instance,
+                                                                               parent_timestamp,
+                                                                               sighted_object_created_by_ref)
+    if sighting.source:
+        process_information_source_for_sighting(sighting.source, sighting_instance, bundle_instance, parent_timestamp)
+    # assumption is that the observation is a singular, not a summary of observations
+    sighting_instance["summary"] = False
+    return sighting_instance
+
 
 # Relationships
 
@@ -854,12 +899,7 @@ def convert_indicator(indicator, bundle_instance, parent_created_by_ref, parent_
         add_statement_type_to_description(indicator_instance, indicator.likely_impact, "likely_impact")
     if indicator.confidence:
         add_confidence_property_to_description(indicator_instance, indicator.confidence)
-    if indicator.sightings:
-        for s in indicator.sightings:
-            if s.related_observables:
-                warn("Sighting with observables in %s are not handled, yet.", 815, indicator_instance["id"])
-            else:
-                info("Sighting in %s are not handled, yet.", 815, indicator_instance["id"])
+
     if indicator.observable and indicator.composite_indicator_expression or indicator.composite_indicator_expression:
         warn("Indicator %s has an observable or indicator composite expression which is not supported in STIX 2.0",
              407, indicator_instance["id"])
@@ -887,6 +927,11 @@ def convert_indicator(indicator, bundle_instance, parent_created_by_ref, parent_
                                                           bundle_instance, parent_created_by_ref,
                                                           indicator_instance["created"])
     # process information source before any relationships
+    if indicator.sightings:
+        for s in indicator.sightings:
+            bundle_instance["objects"].append(handle_sighting(s, indicator_instance["id"], bundle_instance,
+                                                                indicator_instance["created"],
+                                                                indicator_created_by_ref))
     if indicator.suggested_coas is not None:
         warn("Using related-to for the suggested COAs of %s", 718, indicator.id_)
         handle_relationship_to_refs(indicator.suggested_coas, indicator_instance["id"], bundle_instance,
@@ -1418,6 +1463,7 @@ def finalize_bundle(bundle_instance):
     bundle_instance["observed_data"] = []
     bundle_instance["objects"].extend(bundle_instance["reports"])
     bundle_instance["reports"] = []
+
 
     for entry in iterpath(bundle_instance):
         path, value = entry
