@@ -797,7 +797,7 @@ def convert_network_connection_to_pattern(conn):
                 expressions.append(create_term("network-traffic:src_ref.value", conn.source_socket_address.hostname.condition,
                                                conn.source_socket_address.hostname.hostname_value))
             elif (conn.source_socket_address.hostname.naming_system is not None and
-                      any(x.value == "DNS" for x in conn.source_socket_address.hostname.naming_system)):
+                    any(x.value == "DNS" for x in conn.source_socket_address.hostname.naming_system)):
                 expressions.append(create_term("network-traffic:src_ref.value", conn.source_socket_address.hostname.condition,
                                                conn.source_socket_address.hostname.hostname_value))
 
@@ -817,7 +817,7 @@ def convert_network_connection_to_pattern(conn):
                 expressions.append(create_term("network-traffic:dst_ref.value", conn.destination_socket_address.hostname.condition,
                                                conn.destination_socket_address.hostname.hostname_value))
             elif (conn.destination_socket_address.hostname.naming_system is not None and
-                      any(x.value == "DNS" for x in conn.destination_socket_address.hostname.naming_system)):
+                    any(x.value == "DNS" for x in conn.destination_socket_address.hostname.naming_system)):
                 expressions.append(create_term("network-traffic:dst_ref.value", conn.destination_socket_address.hostname.condition,
                                                conn.destination_socket_address.hostname.hostname_value))
 

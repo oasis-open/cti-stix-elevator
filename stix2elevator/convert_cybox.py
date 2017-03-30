@@ -364,7 +364,7 @@ def convert_network_connection(conn):
                 cybox_dict[index] = destination_domain
                 index += 1
             elif (conn.destination_socket_address.hostname.naming_system is not None and
-                      any(x.value == "DNS" for x in conn.destination_socket_address.hostname.naming_system)):
+                    any(x.value == "DNS" for x in conn.destination_socket_address.hostname.naming_system)):
                 destination_domain = create_domain_name_object(conn.destination_socket_address.hostname.hostname_value)
                 cybox_traffic["dst_ref"] = str(index)
                 cybox_dict[index] = destination_domain
