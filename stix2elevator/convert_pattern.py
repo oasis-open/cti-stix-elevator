@@ -784,30 +784,42 @@ def convert_network_connection_to_pattern(conn):
     if conn.source_socket_address is not None:
         if conn.source_socket_address.port is not None:
             if conn.source_socket_address.port.port_value is not None:
-                expressions.append(create_term("network-traffic:src_port", conn.source_socket_address.port.port_value.condition, int(conn.source_socket_address.port.port_value)))
+                expressions.append(create_term("network-traffic:src_port", conn.source_socket_address.port.port_value.condition,
+                                               int(conn.source_socket_address.port.port_value)))
             if conn.source_socket_address.port.layer4_protocol is not None:
-                expressions.append(create_term("network-traffic:protocols[*]", conn.source_socket_address.port.layer4_protocol.condition, text_type(conn.source_socket_address.port.layer4_protocol.value.lower())))
+                expressions.append(create_term("network-traffic:protocols[*]", conn.source_socket_address.port.layer4_protocol.condition,
+                                               text_type(conn.source_socket_address.port.layer4_protocol.value.lower())))
         if conn.source_socket_address.ip_address is not None:
-            expressions.append(create_term("network-traffic:src_ref.value", conn.source_socket_address.ip_address.address_value.condition, conn.source_socket_address.ip_address.address_value.value))
+            expressions.append(create_term("network-traffic:src_ref.value", conn.source_socket_address.ip_address.address_value.condition,
+                                           conn.source_socket_address.ip_address.address_value.value))
         elif conn.source_socket_address.hostname is not None:
             if conn.source_socket_address.hostname.is_domain_name and conn.source_socket_address.hostname.hostname_value is not None:
-                expressions.append(create_term("network-traffic:src_ref.value", conn.source_socket_address.hostname.condition, conn.source_socket_address.hostname.hostname_value))
-            elif conn.source_socket_address.hostname.naming_system is not None and any(x.value == "DNS" for x in conn.source_socket_address.hostname.naming_system):
-                expressions.append(create_term("network-traffic:src_ref.value", conn.source_socket_address.hostname.condition, conn.source_socket_address.hostname.hostname_value))
+                expressions.append(create_term("network-traffic:src_ref.value", conn.source_socket_address.hostname.condition,
+                                               conn.source_socket_address.hostname.hostname_value))
+            elif (conn.source_socket_address.hostname.naming_system is not None and
+                      any(x.value == "DNS" for x in conn.source_socket_address.hostname.naming_system)):
+                expressions.append(create_term("network-traffic:src_ref.value", conn.source_socket_address.hostname.condition,
+                                               conn.source_socket_address.hostname.hostname_value))
 
     if conn.destination_socket_address is not None:
         if conn.destination_socket_address.port is not None:
             if conn.destination_socket_address.port.port_value is not None:
-                expressions.append(create_term("network-traffic:dst_port", conn.destination_socket_address.port.port_value.condition, int(conn.destination_socket_address.port.port_value)))
+                expressions.append(create_term("network-traffic:dst_port", conn.destination_socket_address.port.port_value.condition,
+                                               int(conn.destination_socket_address.port.port_value)))
             if conn.destination_socket_address.port.layer4_protocol is not None:
-                expressions.append(create_term("network-traffic:protocols[*]", conn.destination_socket_address.port.layer4_protocol.condition, text_type(conn.destination_socket_address.port.layer4_protocol.value.lower())))
+                expressions.append(create_term("network-traffic:protocols[*]", conn.destination_socket_address.port.layer4_protocol.condition,
+                                               text_type(conn.destination_socket_address.port.layer4_protocol.value.lower())))
         if conn.destination_socket_address.ip_address is not None:
-            expressions.append(create_term("network-traffic:dst_ref.value", conn.destination_socket_address.ip_address.address_value.condition, conn.destination_socket_address.ip_address.address_value.value))
+            expressions.append(create_term("network-traffic:dst_ref.value", conn.destination_socket_address.ip_address.address_value.condition,
+                                           conn.destination_socket_address.ip_address.address_value.value))
         elif conn.destination_socket_address.hostname is not None:
             if conn.destination_socket_address.hostname.is_domain_name and conn.destination_socket_address.hostname.hostname_value is not None:
-                expressions.append(create_term("network-traffic:dst_ref.value", conn.destination_socket_address.hostname.condition, conn.destination_socket_address.hostname.hostname_value))
-            elif conn.destination_socket_address.hostname.naming_system is not None and any(x.value == "DNS" for x in conn.destination_socket_address.hostname.naming_system):
-                expressions.append(create_term("network-traffic:dst_ref.value", conn.destination_socket_address.hostname.condition, conn.destination_socket_address.hostname.hostname_value))
+                expressions.append(create_term("network-traffic:dst_ref.value", conn.destination_socket_address.hostname.condition,
+                                               conn.destination_socket_address.hostname.hostname_value))
+            elif (conn.destination_socket_address.hostname.naming_system is not None and
+                      any(x.value == "DNS" for x in conn.destination_socket_address.hostname.naming_system)):
+                expressions.append(create_term("network-traffic:dst_ref.value", conn.destination_socket_address.hostname.condition,
+                                               conn.destination_socket_address.hostname.hostname_value))
 
     if conn.layer7_connections is not None:
         if conn.layer7_connections.http_session is not None:
@@ -828,9 +840,11 @@ def convert_http_network_connection_extension(http):
     if http.http_client_request is not None:
         if http.http_client_request.http_request_line is not None:
             if http.http_client_request.http_request_line.http_method is not None:
-                expressions.append(add_comparison_expression(http.http_client_request.http_request_line.http_method, "network-traffic:extensions.http-request-ext.request_method"))
+                expressions.append(add_comparison_expression(http.http_client_request.http_request_line.http_method,
+                                                             "network-traffic:extensions.http-request-ext.request_method"))
             if http.http_client_request.http_request_line.version is not None:
-                expressions.append(add_comparison_expression(http.http_client_request.http_request_line.version, "network-traffic:extensions.http-request-ext.request_version"))
+                expressions.append(add_comparison_expression(http.http_client_request.http_request_line.version,
+                                                             "network-traffic:extensions.http-request-ext.request_version"))
 
         if http.http_client_request.http_request_header is not None:
             if http.http_client_request.http_request_header.parsed_header is not None:
