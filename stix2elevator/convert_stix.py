@@ -16,6 +16,9 @@ from stix.extensions.identity.ciq_identity_3_0 import CIQIdentity3_0Instance
 from stix.extensions.test_mechanism.open_ioc_2010_test_mechanism import OpenIOCTestMechanism
 from stix.extensions.test_mechanism.snort_test_mechanism import SnortTestMechanism
 from stix.extensions.test_mechanism.yara_test_mechanism import YaraTestMechanism
+from stix.extensions.marking.simple_marking import SimpleMarkingStructure
+from stix.extensions.marking.terms_of_use_marking import TermsOfUseMarkingStructure
+from stix.extensions.marking.tlp import TLPMarkingStructure
 from stix.incident import Incident
 from stix.indicator import Indicator
 from stix.threat_actor import ThreatActor
@@ -33,7 +36,7 @@ from stix2elevator.vocab_mappings import *
 
 if stix.__version__ >= "1.2.0.0":
     from stix.report import Report
-if "1.2.0.0" > stix.__version__ >= "1.1.1.7":
+if stix.__version__ >= "1.1.1.7":
     import stix.extensions.marking.ais
 
 # collect kill chains
@@ -155,6 +158,40 @@ def create_basic_object(stix20_type, stix1x_obj, parent_timestamp=None, parent_i
     instance["description"] = ""
     instance["external_references"] = []
     return instance
+
+
+def convert_marking_specification(marking_specification, bundle_instance, sdo_instance, parent_created_by_ref, parent_timestamp):
+    return_obj = []
+
+    if marking_specification.controlled_structure is not None:
+        pass
+
+    if marking_specification.marking_structures is not None:
+        ms = marking_specification.marking_structures
+        for mark_spec in ms:
+            marking_definition_instance = create_basic_object("marking-definition", marking_specification)
+            marking_created_by_ref = process_information_source(marking_specification.information_source,
+                                                                marking_definition_instance, bundle_instance,
+                                                                parent_created_by_ref, parent_timestamp)
+            if isinstance(mark_spec, TLPMarkingStructure):
+                marking_definition_instance["definition_type"] = "tlp"
+                if mark_spec.color is not None:
+                    marking_definition_instance["tlp"] = text_type(mark_spec.color)
+            elif isinstance(ms, TermsOfUseMarkingStructure):
+                marking_definition_instance["definition_type"] = "statement"
+                if mark_spec.terms_of_use is not None:
+                    marking_definition_instance["statement"] = text_type(mark_spec.terms_of_use)
+            elif isinstance(mark_spec, SimpleMarkingStructure):
+                marking_definition_instance["definition_type"] = "statement"
+                if mark_spec.terms_of_use is not None:
+                    marking_definition_instance["statement"] = text_type(mark_spec.statement)
+            else:
+                warn("Could not resolve Marking Structure %s", 801, marking_definition_instance["id"])
+
+            if "definition_type" in marking_definition_instance:
+                return_obj.append(marking_definition_instance)
+
+    return return_obj
 
 
 def finish_basic_object(old_id, instance, stix1x_obj):
@@ -882,6 +919,9 @@ def convert_indicator(indicator, bundle_instance, parent_created_by_ref, parent_
     indicator_created_by_ref = process_information_source(indicator.producer, indicator_instance,
                                                           bundle_instance, parent_created_by_ref,
                                                           indicator_instance["created"])
+    if indicator.handling is not None:
+        for marking in indicator.handling:
+            convert_marking_specification(marking, bundle_instance, indicator_instance, parent_created_by_ref, parent_timestamp)
     # process information source before any relationships
     if indicator.suggested_coas is not None:
         warn("Using related-to for the suggested COAs of %s", 718, indicator.id_)
@@ -1473,7 +1513,9 @@ def convert_package(stixPackage, package_created_by_ref=None, default_timestamp=
         package_created_by_ref = get_identity_from_package(stixPackage.stix_header.information_source,
                                                            bundle_instance, parent_timestamp)
 
-    # TODO: other header stuff
+    # if stixPackage.stix_header is not None and stixPackage.stix_header.handling is not None:
+    #     for marking in stixPackage.stix_header.handling:
+    #         bundle_instance["objects"].extend(convert_marking_specification(marking, bundle_instance, None, package_created_by_ref, parent_timestamp))
 
     # do observables first, especially before indicators!
 
