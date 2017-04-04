@@ -21,7 +21,7 @@ def convert_address(add):
 
 
 def convert_uri(uri):
-    return {"type": "url-object", "value": + uri.value.value}
+    return {"type": "url", "value": uri.value.value}
 
 
 def create_directory(file):
