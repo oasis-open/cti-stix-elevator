@@ -49,5 +49,6 @@ def main():
             output_file.write(json_output)
             output_file.close()
 
+
 if __name__ == "__main__":
     main()

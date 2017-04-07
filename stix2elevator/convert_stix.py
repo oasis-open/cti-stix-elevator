@@ -267,6 +267,7 @@ def add_tool_property_to_description(sdo_instance, tool):
 
 # Sightings
 
+
 def handle_sightings_observables(related_observables, bundle_instance, parent_timestamp, sighted_object_created_by_ref):
     refs = []
     for ref in related_observables:
@@ -277,10 +278,11 @@ def handle_sightings_observables(related_observables, bundle_instance, parent_ti
         else:
             refs.append(ref.item.idref)
 
+
 def process_information_source_for_sighting(information_source, sighting_instance, bundle_instance, parent_timestamp):
     if information_source:
         if information_source.identity is not None:
-            sighting_instance["where_sighted_refs"] = [ get_identity_ref(information_source.identity, bundle_instance, parent_timestamp) ]
+            sighting_instance["where_sighted_refs"] = [get_identity_ref(information_source.identity, bundle_instance, parent_timestamp)]
             if information_source.description:
                 process_description_and_short_description(sighting_instance, information_source)
             if information_source.references:
@@ -970,8 +972,8 @@ def convert_indicator(indicator, bundle_instance, parent_created_by_ref, parent_
     if indicator.sightings:
         for s in indicator.sightings:
             bundle_instance["objects"].append(handle_sighting(s, indicator_instance["id"], bundle_instance,
-                                                                indicator_instance["created"],
-                                                                indicator_created_by_ref))
+                                                              indicator_instance["created"],
+                                                              indicator_created_by_ref))
     if indicator.suggested_coas is not None:
         warn("Using related-to for the suggested COAs of %s", 718, indicator.id_)
         handle_relationship_to_refs(indicator.suggested_coas, indicator_instance["id"], bundle_instance,
@@ -1503,7 +1505,6 @@ def finalize_bundle(bundle_instance):
     bundle_instance["observed_data"] = []
     bundle_instance["objects"].extend(bundle_instance["reports"])
     bundle_instance["reports"] = []
-
 
     for entry in iterpath(bundle_instance):
         path, value = entry
