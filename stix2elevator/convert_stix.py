@@ -183,7 +183,7 @@ def convert_marking_specification(marking_specification, bundle_instance, sdo_in
                     marking_definition_instance["statement"] = text_type(mark_spec.terms_of_use)
             elif isinstance(mark_spec, SimpleMarkingStructure):
                 marking_definition_instance["definition_type"] = "statement"
-                if mark_spec.terms_of_use is not None:
+                if mark_spec.statement is not None:
                     marking_definition_instance["statement"] = text_type(mark_spec.statement)
             else:
                 warn("Could not resolve Marking Structure %s", 801, marking_definition_instance["id"])

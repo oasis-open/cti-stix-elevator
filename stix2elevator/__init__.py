@@ -30,7 +30,7 @@ log = logging.getLogger(__name__)
 
 
 def elevate_file(fn):
-    warn("Results produced by the stix2-elevator are not for production purposes.", 201)
+    print("Results produced by the stix2-elevator are not for production purposes.")
     clear_id_mapping()
     clear_pattern_mapping()
 

@@ -9,7 +9,7 @@ from six import text_type, binary_type, iteritems
 
 from stix2elevator import options
 
-log = logging.getLogger(__name__)
+log = None
 
 
 def info(fmt, ecode, *args):
@@ -33,6 +33,7 @@ def setup_logger(package_id):
             return
 
         global log
+
         output_directory = options.get_option_value("message_log_directory")
         file_directory = options.get_option_value("file_")
 
@@ -49,7 +50,7 @@ def setup_logger(package_id):
 
         destination = os.path.join(output_directory, filename)
         destination = os.path.abspath(destination)
-
+        log = logging.getLogger(filename)
         fh = logging.FileHandler(destination, mode='w')
         fh.setFormatter(logging.Formatter("[%(ecode)d] [%(levelname)-7s] [%(asctime)s] %(message)s"))
         log.addHandler(fh)
