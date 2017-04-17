@@ -15,7 +15,7 @@ from stix2validator import output
 from stix2validator import validate_string, ValidationError
 
 from stix2elevator.convert_pattern import clear_pattern_mapping
-from stix2elevator.ids import clear_id_mapping
+from stix2elevator.ids import clear_id_mapping, clear_object_id_mapping
 from stix2elevator.utils import *
 from stix2elevator.convert_stix import convert_package
 from stix2elevator.options import get_validator_options, initialize_options, get_option_value
@@ -33,6 +33,7 @@ def elevate_file(fn):
     print("Results produced by the stix2-elevator are not for production purposes.")
     clear_id_mapping()
     clear_pattern_mapping()
+    clear_object_id_mapping()
 
     validator_options = get_validator_options()
 

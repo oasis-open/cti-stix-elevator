@@ -30,6 +30,10 @@ def get_root_from_object_path(lhs):
     return path_as_parts[0]
 
 
+def escape_single_quotes(s):
+    return s.replace("'", "\\'")
+
+
 class ComparisonExpression(object):
     def __init__(self, operator, lhs, rhs, negated=False):
         self.operator = operator
@@ -39,12 +43,21 @@ class ComparisonExpression(object):
         self.root_type = get_root_from_object_path(lhs)
 
     def to_string(self):
-        return self.lhs + (" NOT" if self.negated else "") + " " + self.operator + " '" + text_type(self.rhs) + "'"
+        return self.lhs + (" NOT" if self.negated else "") + " " + self.operator + " '" + escape_single_quotes(text_type(self.rhs)) + "'"
 
     def contains_placeholder(self):
-        return False
+        return isinstance(self.rhs, IdrefPlaceHolder)
+
+    def collapse_reference(self, prefix):
+        parts_of_lhs = self.lhs.split(":")
+        new_lhs = prefix + "." + parts_of_lhs[1]
+        return ComparisonExpression(self.operator, new_lhs, self.rhs)
 
     def replace_placeholder_with_idref_pattern(self, idref):
+        if isinstance(self.rhs, IdrefPlaceHolder):
+            change_made, pattern = self.rhs.replace_placeholder_with_idref_pattern(idref)
+            if change_made:
+                return True, pattern.collapse_reference(self.lhs)
         return False, self
 
     def partition_according_to_object_path(self):
@@ -74,6 +87,12 @@ class BooleanExpression(object):
             if args.contains_placeholder():
                 return True
         return False
+
+    def collapse_reference(self, prefix):
+        operands = []
+        for arg in self.operands:
+            operands.append(arg.collapse_reference(prefix))
+        return BooleanExpression(self.operator, operands, self.negated)
 
     def replace_placeholder_with_idref_pattern(self, idref):
         new_operands = []
@@ -127,6 +146,8 @@ class IdrefPlaceHolder(object):
 
     def replace_placeholder_with_idref_pattern(self, idref):
         if idref == self.idref:
+            return True, PATTERN_CACHE[idref]
+        elif exists_object_id_key(self.idref) and idref == get_object_id_value(self.idref):
             return True, PATTERN_CACHE[idref]
         else:
             return False, self
@@ -281,6 +302,10 @@ def need_not(condition):
     return condition == "DoesNotContain"
 
 
+def is_equal_condition(cond):
+    return cond == "Equals" or cond is None
+
+
 def add_parens_if_needed(expr):
     if expr.find("AND") != -1 or expr.find("OR") != -1:
         return "(" + expr + ")"
@@ -318,6 +343,7 @@ def convert_condition(condition):
 
 
 def create_term_with_regex(lhs, condition, rhs, negated):
+    # TODO: escape characters
     if condition == "StartsWith":
         pattern = "^" + rhs
     elif condition == "EndsWith":
@@ -374,14 +400,16 @@ def create_term(lhs, condition, rhs, negated=False):
 
 
 def add_comparison_expression(prop, object_path):
-    if prop is not None:
+    if prop is not None and prop.value is not None:
         if hasattr(prop, "condition"):
             cond = prop.condition
         else:
             warn("No condition given - assume '='", 714)
             cond = None
-        return create_term(object_path, cond, prop.value)
-    return ""
+        return create_term(object_path, cond, prop.value.strip() if isinstance(prop.value, str) else prop.value)
+    if prop is not None and prop.value is None:
+        warn("No term was yielded for %s", 622, object_path)
+    return None
 
 
 def convert_custom_properties(cps, object_type_name):
@@ -396,19 +424,19 @@ def convert_custom_properties(cps, object_type_name):
 def convert_address_to_pattern(add):
     cond = add.address_value.condition
     if add.category == add.CAT_IPV4:
-        return create_term("ipv4-addr:value", cond, add.address_value.value)
+        return create_term("ipv4-addr:value", cond, add.address_value.value.strip())
     elif add.category == add.CAT_IPV6:
-        return create_term("ipv6-addr:value", cond, add.address_value.value)
+        return create_term("ipv6-addr:value", cond, add.address_value.value.strip())
     elif add.category == add.CAT_MAC:
-        return create_term("mac-addr:value", cond, add.address_value.value)
+        return create_term("mac-addr:value", cond, add.address_value.value.strip())
     elif add.category == add.CAT_EMAIL:
-        return create_term("email-addr:value", cond, add.address_value.value)
+        return create_term("email-addr:value", cond, add.address_value.value.strip())
     else:
         warn("The address type %s is not part of Cybox 3.0", 421, add.category)
 
 
 def convert_uri_to_pattern(uri):
-    return create_term("url:value", uri.value.condition, uri.value.value)
+    return create_term("url:value", uri.value.condition, uri.value.value.strip())
 
 
 # NOTICE:  The format of these PROPERTIES is different than the others in this file!!!!!!
@@ -423,17 +451,17 @@ _EMAIL_HEADER_PROPERTIES = [["email-message:subject", ["subject"]],
 
 
 _EMAIL_ADDITIONAL_HEADERS_PROPERTIES = \
-    [["email-message:additional_header_fields:Reply-To", ["reply-to*", "address_value"]],
-     ["email-message:additional_header_fields:Message-ID", ["message_id"]],
-     ["email-message:additional_header_fields:In-Reply-To", ["in_reply_to"]],
-     ["email-message:additional_header_fields:Errors-To", ["errors_to"]],
-     ["email-message:additional_header_fields:MIME-Version", ["mime_version"]],
-     ["email-message:additional_header_fields:Precedence", ["precedence"]],
-     ["email-message:additional_header_fields:User-Agent", ["user_agent"]],
-     ["email-message:additional_header_fields:Boundary", ["boundary"]],
-     ["email-message:additional_header_fields:X-Originating-IP", ["x_originating_ip", "address_value"]],
-     ["email-message:additional_header_fields:X-Priority", ["x_priority"]],
-     ["email-message:additional_header_fields:X-Mailer", ["x_mailer"]]]
+    [["email-message:additional_header_fields.Reply-To", ["reply-to*", "address_value"]],
+     ["email-message:additional_header_fields.Message-ID", ["message_id"]],
+     ["email-message:additional_header_fields.In-Reply-To", ["in_reply_to"]],
+     ["email-message:additional_header_fields.Errors-To", ["errors_to"]],
+     ["email-message:additional_header_fields.MIME-Version", ["mime_version"]],
+     ["email-message:additional_header_fields.Precedence", ["precedence"]],
+     ["email-message:additional_header_fields.User-Agent", ["user_agent"]],
+     ["email-message:additional_header_fields.Boundary", ["boundary"]],
+     ["email-message:additional_header_fields.X-Originating-IP", ["x_originating_ip", "address_value"]],
+     ["email-message:additional_header_fields.X-Priority", ["x_priority"]],
+     ["email-message:additional_header_fields.X-Mailer", ["x_mailer"]]]
 
 
 def cannonicalize_prop_name(name):
@@ -450,7 +478,9 @@ def create_terms_from_prop_list(prop_list, obj, object_path):
             if multi_valued_property(prop_1x):
                 prop_exprs = []
                 for c in getattr(obj, cannonicalize_prop_name(prop_1x)):
-                    prop_exprs.append(add_comparison_expression(c, object_path))
+                    term = add_comparison_expression(c, object_path)
+                    if term:
+                        prop_exprs.append(term)
                 # return " OR ".join(prop_exprs)
                 if prop_exprs:
                     return create_boolean_expression("OR", prop_exprs)
@@ -464,7 +494,9 @@ def create_terms_from_prop_list(prop_list, obj, object_path):
                 values = getattr(obj, cannonicalize_prop_name(prop_1x))
                 if values:
                     for c in values:
-                        prop_exprs.append(create_terms_from_prop_list(rest_of_prop_list, c, object_path))
+                        term = create_terms_from_prop_list(rest_of_prop_list, c, object_path)
+                        if term:
+                            prop_exprs.append(term)
                 # return " OR ".join(prop_exprs)
                 if prop_exprs:
                     return create_boolean_expression("OR", prop_exprs)
@@ -489,6 +521,10 @@ def convert_email_header_to_pattern(head, properties):
         return create_boolean_expression("AND", header_expressions)
 
 
+def convert_attachment_to_ref(attachment):
+    return IdrefPlaceHolder(attachment.object_reference)
+
+
 def convert_email_message_to_pattern(mess):
     expressions = []
     if mess.header is not None:
@@ -497,9 +533,13 @@ def convert_email_message_to_pattern(mess):
         if add_headers:
             expressions.append(add_headers)
     if mess.attachments is not None:
-        warn("Email attachments not handled yet", 806)
+        for attachment in mess.attachments:
+            expressions.append(ComparisonExpression("=", "email-message:body_multipart[*].body_raw_ref", convert_attachment_to_ref(attachment)))
     if mess.raw_body is not None:
-        warn("Email raw body not handled yet", 806)
+        if not mess.raw_body.value:
+            warn("%s contains no value", 621, "Email raw body")
+        else:
+            warn("Email raw body not handled yet", 806)
     if mess.links is not None:
         warn("Email links not handled yet", 806)
     if expressions:
@@ -534,8 +574,9 @@ def convert_windows_executable_file_to_pattern(file):
                 prop_1x = prop_spec[0]
                 object_path = prop_spec[1]
                 if hasattr(file_header, prop_1x) and getattr(file_header, prop_1x):
-                    file_header_expressions.append(add_comparison_expression(getattr(file_header, prop_1x),
-                                                                             object_path))
+                    term = add_comparison_expression(getattr(file_header, prop_1x), object_path)
+                    if term:
+                        file_header_expressions.append(term)
             if file_header.hashes is not None:
                 hash_expression = convert_hashes_to_pattern(file_header.hashes)
                 if hash_expression:
@@ -560,8 +601,9 @@ def convert_windows_executable_file_to_pattern(file):
                     prop_1x = prop_spec[0]
                     object_path = prop_spec[1]
                     if hasattr(s.section_header, prop_1x) and getattr(s.section_header, prop_1x):
-                        section_expressions.append(add_comparison_expression(getattr(s.section_header, prop_1x),
-                                                                             object_path))
+                        term = add_comparison_expression(getattr(s.section_header, prop_1x), object_path)
+                        if term:
+                            section_expressions.append(term)
             if s.entropy:
                 section_expressions.append(create_term("file:extended_properties.windows_pebinary_ext.section[*].entropy",
                                                        s.entropy.condition,
@@ -590,7 +632,9 @@ def convert_archive_file_to_pattern(file):
         prop_1x = prop_spec[0]
         object_path = prop_spec[1]
         if hasattr(file, prop_1x):
-            and_expressions.append(add_comparison_expression(getattr(file, prop_1x), object_path))
+            term = add_comparison_expression(getattr(file, prop_1x), object_path)
+            if term:
+                and_expressions.append(term)
     if and_expressions:
         return create_boolean_expression("AND", and_expressions)
 
@@ -602,16 +646,34 @@ def convert_hashes_to_pattern(hashes):
             hash_value = h.simple_hash_value
         else:
             hash_value = h.fuzzy_hash_value
-        hash_expressions.append(create_term("file:hashes" + ":" + text_type(h.type_).lower(),
+        hash_expressions.append(create_term("file:hashes" + "." + text_type(h.type_).lower(),
                                             hash_value.condition,
                                             hash_value.value))
     if hash_expressions:
         return create_boolean_expression("OR", hash_expressions)
 
 
+def convert_file_name_and_file_extension(file_name, file_extension):
+    if (file_extension and file_extension.value and is_equal_condition(file_name.condition) and
+        is_equal_condition(file_extension.condition) and file_name.value.endswith(file_extension.value)):
+        return create_term("file:file_name", file_name.condition, file_name.value)
+    elif (file_name.condition == "StartsWith" and file_extension and file_extension.value and
+          is_equal_condition(file_extension.condition)):
+        return ComparisonExpression("MATCHES", "file:file_name",
+                                    "^" + file_name.value + ".*" + file_extension.value + "$")
+    elif (file_name.condition == "Contains" and file_extension and file_extension.value and
+          is_equal_condition(file_extension.condition)):
+        return ComparisonExpression("MATCHES", "file:file_name",
+                                    file_name.value + ".*" + file_extension.value + "$")
+    else:
+        warn("Unable to create a pattern for file:file_name from a File object", 620)
+
+
 def convert_file_name_and_path_to_pattern(file):
     file_name_path_expressions = []
-    if file.file_name:
+    if file.file_name and file.file_extension and file.file_extension.value:
+        file_name_path_expressions.append(convert_file_name_and_file_extension(file.file_name, file.file_extension))
+    elif file.file_name:
         file_name_path_expressions.append(create_term("file:file_name", file.file_name.condition, file.file_name.value))
     if file.file_path:
         if file.device_path:
@@ -647,7 +709,9 @@ def convert_file_to_pattern(file):
         prop_1x = prop_spec[0]
         object_path = prop_spec[1]
         if hasattr(file, prop_1x) and getattr(file, prop_1x):
-            properties_expressions.append(add_comparison_expression(getattr(file, prop_1x), object_path))
+            term = add_comparison_expression(getattr(file, prop_1x), object_path)
+            if term:
+                properties_expressions.append(term)
     if properties_expressions:
         expressions.extend(properties_expressions)
     if isinstance(file, WinExecutableFile):
@@ -676,11 +740,15 @@ def convert_registry_key_to_pattern(reg_key):
     if reg_key.key:
         key_value_term = ""
         if reg_key.hive:
-            if reg_key.hive.condition is None:
+            if reg_key.hive.condition is None or is_equal_condition(reg_key.hive.condition):
                 key_value_term += reg_key.hive.value + "\\"
             else:
-                warn("Condition on a hive property not handled", 812)
-            key_value_term += reg_key.key.value
+                warn("Condition %s on a hive property not handled", 812, reg_key.hive.condition)
+            if reg_key.key.value.startswith(reg_key.hive.value):
+                warn("Hive property, %s, is already a prefix of the key property, %s", 623, reg_key.hive.value, reg_key.key.value)
+                key_value_term = reg_key.key.value
+            else:
+                key_value_term += reg_key.key.value
             expressions.append(create_term("win-registry-key:key", reg_key.key.condition,  key_value_term))
     if reg_key.values:
         values_expressions = []
@@ -690,8 +758,9 @@ def convert_registry_key_to_pattern(reg_key):
                 prop_1x = prop_spec[0]
                 object_path = prop_spec[1]
                 if hasattr(v, prop_1x) and getattr(v, prop_1x):
-                    value_expressions.append(add_comparison_expression(getattr(v, prop_1x),
-                                                                       object_path))
+                    term = add_comparison_expression(getattr(v, prop_1x), object_path)
+                    if term:
+                        value_expressions.append(term)
             if value_expressions:
                 values_expressions.append(create_boolean_expression("OR", value_expressions))
         expressions.extend(values_expressions)
@@ -742,7 +811,9 @@ def convert_windows_service_to_pattern(service):
         prop_1x = prop_spec[0]
         object_path = prop_spec[1]
         if hasattr(service, prop_1x) and getattr(service, prop_1x):
-            expressions.append(add_comparison_expression(getattr(service, prop_1x), object_path))
+            term = add_comparison_expression(getattr(service, prop_1x), object_path)
+            if term:
+                expressions.append(term)
     if hasattr(service, "description_list") and service.description_list:
         description_expressions = []
         for d in service.description_list:
@@ -840,12 +911,15 @@ def convert_http_network_connection_extension(http):
     if http.http_client_request is not None:
         if http.http_client_request.http_request_line is not None:
             if http.http_client_request.http_request_line.http_method is not None:
-                expressions.append(add_comparison_expression(http.http_client_request.http_request_line.http_method,
-                                                             "network-traffic:extensions.http-request-ext.request_method"))
+                term = add_comparison_expression(http.http_client_request.http_request_line.http_method,
+                                                 "network-traffic:extensions.http-request-ext.request_method")
+                if term:
+                    expressions.append(term)
             if http.http_client_request.http_request_line.version is not None:
-                expressions.append(add_comparison_expression(http.http_client_request.http_request_line.version,
-                                                             "network-traffic:extensions.http-request-ext.request_version"))
-
+                term = add_comparison_expression(http.http_client_request.http_request_line.version,
+                                                 "network-traffic:extensions.http-request-ext.request_version")
+                if term:
+                    expressions.append(term)
         if http.http_client_request.http_request_header is not None:
             if http.http_client_request.http_request_header.parsed_header is not None:
                 header = http.http_client_request.http_request_header.parsed_header
@@ -854,8 +928,9 @@ def convert_http_network_connection_extension(http):
                     prop_1x = prop_spec[0]
                     object_path = prop_spec[1]
                     if hasattr(header, prop_1x) and getattr(header, prop_1x):
-                        expressions.append(add_comparison_expression(getattr(header, prop_1x), object_path))
-
+                        term = add_comparison_expression(getattr(header, prop_1x), object_path)
+                        if term:
+                            expressions.append(term)
     return expressions
 
 
@@ -950,6 +1025,8 @@ def convert_object_to_pattern(obj, obs_id):
     if not expression:
         warn("No pattern term was created from %s", 422, obs_id)
         expression = UnconvertedTerm(obs_id)
+    elif obj.id_:
+        add_object_id_value(obj.id_, obs_id)
     return expression
 
 
@@ -995,6 +1072,12 @@ def convert_observable_to_pattern_without_negate(obs, bundle_instance, id_to_obs
         pattern = convert_object_to_pattern(obs.object_, obs.id_)
         if pattern:
             add_to_pattern_cache(obs.id_, pattern)
+        if obs.object_.related_objects:
+            for o in obs.object_.related_objects:
+                if o.id_:
+                    pattern = convert_object_to_pattern(o, o.id_)
+                    if pattern:
+                        add_to_pattern_cache(o.id_, pattern)
         return pattern
     elif obs.idref is not None:
         if obs.idref in PATTERN_CACHE:
@@ -1082,7 +1165,6 @@ def convert_indicator_to_pattern_without_negate(ind, bundle_instance, id_to_obse
             # resolve now if possible, and remove from observed_data
             indicator_data_instance = find_definition(ind.idref, bundle_instance["indicators"])
             if indicator_data_instance is not None:
-                indicator_data_instance["used_in_pattern"] = True
                 # TODO: remove from the report's object_refs
                 if ind.idref in id_to_observable_mapping:
                     return convert_observable_to_pattern(id_to_observable_mapping[ind.idref],

@@ -1,10 +1,10 @@
 import datetime
-from six import text_type
 
 import cybox
 
 from stix2elevator.convert_pattern import *
 from stix2elevator.vocab_mappings import *
+from stix2elevator.ids import add_object_id_value
 
 
 def convert_address(add):
@@ -57,10 +57,15 @@ def convert_file(file):
     return objs
 
 
+def convert_attachment(attachment):
+    return {"body_raw_ref": attachment.object_reference}
+
+
 def convert_email_message(email_message):
     index = 0
     cybox_dict = {}
-    email_dict = {"type": "email-message"}
+    email_dict = {"type": "email-message",
+                  "is_multipart": False}    # the default
     cybox_dict[index] = email_dict
     index += 1
     if email_message.header:
@@ -68,14 +73,14 @@ def convert_email_message(email_message):
         if header.date:
             email_dict["date"] = header, datetime.date.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
         if header.content_type:
-            email_dict["content_type"] = header.content_type
+            email_dict["content_type"] = text_type(header.content_type)
         if header.subject:
-            email_dict["subject"] = header.subject
+            email_dict["subject"] = text_type(header.subject)
         if header.from_:
             # should there ever be more than one?
             from_ref = convert_address(header.from_)
             cybox_dict[index] = from_ref
-            email_dict["from_ref"] = str(index)
+            email_dict["from_ref"] = text_type(index)
             index += 1
         if header.to:
             for t in header.to:
@@ -83,8 +88,31 @@ def convert_email_message(email_message):
                 cybox_dict[index] = to_ref
                 if "to_refs" not in email_dict:
                     email_dict["to_refs"] = []
-                email_dict["to_refs"].append(str(index))
+                email_dict["to_refs"].append(text_type(index))
                 index += 1
+        if header.cc:
+            for t in header.cc:
+                cc_ref = convert_address(t)
+                cybox_dict[index] = cc_ref
+                if "cc_refs" not in email_dict:
+                    email_dict["cc_refs"] = []
+                email_dict["cc_refs"].append(text_type(index))
+                index += 1
+        if header.bcc:
+            for t in header.bcc:
+                bcc_ref = convert_address(t)
+                cybox_dict[index] = bcc_ref
+                if "bcc_refs" not in email_dict:
+                    email_dict["bcc_refs"] = []
+                email_dict["bcc_refs"].append(text_type(index))
+                index += 1
+        # TODO: handle additional headers
+    if email_message.attachments:
+        email_dict["is_multipart"] = True
+        multiparts = []
+        for a in email_message.attachments:
+            multiparts.append(convert_attachment(a))
+        email_dict["body_multipart"] = multiparts
     return cybox_dict
 
 
@@ -449,8 +477,8 @@ def convert_network_connection(conn):
 
 def convert_cybox_object(obj):
     # TODO:  should related objects be handled on a case-by-case basis or just ignored
-    if obj.related_objects:
-        warn("Related Objects of cyber observables for %s are not handled yet", 809, obj.id_)
+    #if obj.related_objects:
+    #    warn("Related Objects of cyber observables for %s are not handled yet", 809, obj.id_)
     prop = obj.properties
     objs = {}
     if isinstance(prop, Address):
@@ -485,4 +513,68 @@ def convert_cybox_object(obj):
         if prop.custom_properties:
             for cp in prop.custom_properties.property_:
                 primary_obj["x_" + cp.name] = cp.value
+        if obj.id_:
+            add_object_id_value(obj.id_, objs)
         return objs
+
+
+def find_file_object_index(objs):
+    for k, v in objs.items():
+        if v["type"] == "file":
+            return k
+    return None
+
+
+def add_attachment_objects(o, objs_to_add):
+    o["objects"].update(objs_to_add)
+
+
+def renumber_co(co, number_mapping):
+    for k, v in co.items():
+        if k.endswith("ref"):
+            co[k] = number_mapping[co[k]]
+        if k.endswith("refs"):
+            new_refs = []
+            for ref in co[k]:
+                new_refs.append(number_mapping[ref])
+            co[k] = new_refs
+    return co
+
+
+def renumber_objs(objs, number_mapping):
+
+    new_objects = {}
+    for k, v in objs.items():
+        new_objects[number_mapping[k]] = renumber_co(v, number_mapping)
+    return new_objects
+
+
+def fix_cybox_relationships(observed_data):
+    for o in observed_data:
+        objs_to_add = {}
+        if not o["objects"]:
+            continue
+        current_largest_id = max(o["objects"].keys())
+        for co in o["objects"].values():
+            if co["type"] == "email-message":
+                if co["is_multipart"]:
+                    for mp in co["body_multipart"]:
+                        objs = get_object_id_value(mp["body_raw_ref"])
+                        if objs:
+                            file_obj_index = find_file_object_index(objs)
+                            if file_obj_index >= 0:
+                                number_mapping = {}
+                                for k in objs.keys():
+                                    current_largest_id += 1
+                                    number_mapping[k] = current_largest_id
+                                new_objs = renumber_objs(objs, number_mapping)
+                                mp["body_raw_ref"] = text_type(number_mapping[file_obj_index])
+                                objs_to_add.update(new_objs)
+                            else:
+                                pass # warn
+                        else:
+                            pass # warn mess
+        if objs_to_add:
+            add_attachment_objects(o, objs_to_add)
+
+

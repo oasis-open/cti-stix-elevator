@@ -25,7 +25,7 @@ from stix.threat_actor import ThreatActor
 from stix.ttp import TTP
 
 # internal
-from stix2elevator.convert_cybox import convert_cybox_object
+from stix2elevator.convert_cybox import convert_cybox_object, fix_cybox_relationships
 from stix2elevator.convert_pattern import (convert_indicator_to_pattern, convert_observable_to_pattern, fix_pattern,
                                            interatively_resolve_placeholder_refs, create_boolean_expression,
                                            add_to_pattern_cache, remove_pattern_objects, ComparisonExpression)
@@ -36,7 +36,7 @@ from stix2elevator.vocab_mappings import *
 
 if stix.__version__ >= "1.2.0.0":
     from stix.report import Report
-if stix.__version__ >= "1.1.1.7":
+elif stix.__version__ >= "1.1.1.7":
     import stix.extensions.marking.ais
 
 # collect kill chains
@@ -429,8 +429,11 @@ def fix_relationships(relationships, bundle_instance):
                 if new_id is None:
                     warn("Dangling source reference %s in %s", 601, ref["source_ref"], ref["id"])
                 add_id_value(ref["source_ref"], new_id)
+            mapped_ids = get_id_value(ref["source_ref"])
+            if mapped_ids[0] is None:
+                warn("Dangling source reference %s in %s", 601, ref["source_ref"], ref["id"])
             first_one = True
-            for m_id in get_id_value(ref["source_ref"]):
+            for m_id in mapped_ids:
                 if first_one:
                     ref["source_ref"] = m_id
                 else:
@@ -441,8 +444,11 @@ def fix_relationships(relationships, bundle_instance):
                 if new_id is None:
                     warn("Dangling target reference %s in %s", 602, ref["target_ref"], ref["id"])
                 add_id_value(ref["target_ref"], new_id)
+            mapped_ids = get_id_value(ref["target_ref"])
+            if mapped_ids[0] is None:
+                warn("Dangling target reference %s in %s", 602, ref["target_ref"], ref["id"])
             first_one = True
-            for m_id in get_id_value(ref["target_ref"]):
+            for m_id in mapped_ids:
                 verb = determine_appropriate_verb(ref["relationship_type"], m_id)
                 if first_one:
                     ref["target_ref"] = m_id
@@ -938,10 +944,6 @@ def convert_indicator(indicator, bundle_instance, parent_created_by_ref, parent_
         add_statement_type_to_description(indicator_instance, indicator.likely_impact, "likely_impact")
     if indicator.confidence:
         add_confidence_property_to_description(indicator_instance, indicator.confidence)
-
-    if indicator.observable and indicator.composite_indicator_expression or indicator.composite_indicator_expression:
-        warn("Indicator %s has an observable or indicator composite expression which is not supported in STIX 2.0",
-             407, indicator_instance["id"])
     if indicator.observable is not None:
         indicator_instance["pattern"] = convert_observable_to_pattern(indicator.observable, bundle_instance,
                                                                       OBSERVABLE_MAPPING)
@@ -958,6 +960,10 @@ def convert_indicator(indicator, bundle_instance, parent_created_by_ref, parent_
                 expressions.append(term)
         indicator_instance["pattern"] = create_boolean_expression(indicator.composite_indicator_expression.operator,
                                                                   expressions)
+    if indicator.observable and indicator.composite_indicator_expression or indicator.composite_indicator_expression:
+        warn("Indicator %s has an observable or indicator composite expression which may not supported \
+correctly in STIX 2.0 - please check this pattern",
+             407, indicator_instance["id"])
         # add_to_pattern_cache(indicator.id_, indicator_instance["pattern"])
     if "pattern" not in indicator_instance:
         # STIX doesn't handle multiple patterns for indicators
@@ -1000,6 +1006,13 @@ def convert_observed_data(obs, bundle_instance, parent_created_by_ref, parent_ti
     observed_data_instance = create_basic_object("observed-data", obs, parent_timestamp)
     # cybox_container = {"type": "cybox-container", "spec_version": "3.0"}
     observed_data_instance["objects"] = convert_cybox_object(obs.object_)
+    if obs.object_.related_objects:
+        for o in obs.object_.related_objects:
+            current_largest_id = max(observed_data_instance["objects"].keys())
+            related = convert_cybox_object(o)
+            if related:
+                for index, obj in related.items():
+                    observed_data_instance["objects"][index+current_largest_id] = obj
     info("'first_observed' and 'last_observed' data not available directly on %s - using timestamp", 901, obs.id_)
     observed_data_instance["first_observed"] = observed_data_instance["created"]
     observed_data_instance["last_observed"] = observed_data_instance["created"]
@@ -1469,6 +1482,9 @@ def finalize_bundle(bundle_instance):
     # ttps
 
     fix_relationships(bundle_instance["relationships"], bundle_instance)
+
+    fix_cybox_relationships(bundle_instance["observed_data"])
+    # need to remove observed-data not used at the top level
 
     if stix.__version__ >= "1.2.0.0":
         add_relationships_to_reports(bundle_instance)

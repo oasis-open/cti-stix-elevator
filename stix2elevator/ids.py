@@ -4,19 +4,18 @@ from six import text_type
 
 from stix2elevator.utils import *
 
-IDS_TO_NEW_IDS = {}
+_IDS_TO_NEW_IDS = {}
 
 SDO_WITH_NO_1X_OBJECT = []
 
-
 def clear_id_mapping():
-    global IDS_TO_NEW_IDS
-    IDS_TO_NEW_IDS = {}
+    global _IDS_TO_NEW_IDS
+    _IDS_TO_NEW_IDS = {}
 
 
 def record_ids(stix_id, new_id):
-    if stix_id in IDS_TO_NEW_IDS:
-        info("%s is already associated other ids: %s", 703, text_type(stix_id), tuple(IDS_TO_NEW_IDS[stix_id]))
+    if stix_id in _IDS_TO_NEW_IDS:
+        info("%s is already associated other ids: %s", 703, text_type(stix_id), tuple(_IDS_TO_NEW_IDS[stix_id]))
     # info("associating " + new_id + " with " + id)
     if new_id is None:
         error("Could not associate %s with None", 611, stix_id)
@@ -66,24 +65,55 @@ def generate_stix20_id(stix20_so_name, stix12_id=None, id_used=False):
 
 
 def exists_id_key(key):
-    return key in IDS_TO_NEW_IDS
+    return key in _IDS_TO_NEW_IDS
 
 
 def get_id_value(key):
     if exists_id_key(key):
-        return IDS_TO_NEW_IDS[key]
+        return _IDS_TO_NEW_IDS[key]
     else:
         return []
 
 
 def get_id_values():
-    return IDS_TO_NEW_IDS.values()
+    return _IDS_TO_NEW_IDS.values()
 
 
 def add_id_value(key, value):
+    if not value:
+        warn("Trying to associate %s with None", 610, key)
     if exists_id_key(key):
-        IDS_TO_NEW_IDS[key].append(value)
+        _IDS_TO_NEW_IDS[key].append(value)
     else:
-        IDS_TO_NEW_IDS[key] = [value]
+        _IDS_TO_NEW_IDS[key] = [value]
+
+
+_IDS_TO_CYBER_OBSERVABLES = {}
+
+def clear_object_id_mapping():
+    global _IDS_TO_CYBER_OBSERVABLES
+    _IDS_TO_CYBER_OBSERVABLES = {}
+
+
+def exists_object_id_key(key):
+    return key in _IDS_TO_CYBER_OBSERVABLES
+
+
+def get_object_id_value(key):
+    if exists_object_id_key(key):
+        return _IDS_TO_CYBER_OBSERVABLES[key]
+    else:
+        return []
+
+
+def get_object_id_values():
+    return _IDS_TO_CYBER_OBSERVABLES.values()
+
+
+def add_object_id_value(key, value):
+    if exists_object_id_key(key):
+        warn("This observable %s already is associated with cyber observables", 610, key)
+    else:
+        _IDS_TO_CYBER_OBSERVABLES[key] = value
     if not value:
         warn("Trying to associate %s with None", 610, key)
