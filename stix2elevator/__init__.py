@@ -4,7 +4,6 @@ import json
 import logging
 
 # external
-import stix
 from stix.core import STIXPackage
 from stix.utils.parser import EntityParser
 
@@ -18,7 +17,7 @@ from stix2elevator.convert_pattern import clear_pattern_mapping
 from stix2elevator.ids import clear_id_mapping, clear_object_id_mapping
 from stix2elevator.utils import *
 from stix2elevator.convert_stix import convert_package
-from stix2elevator.options import get_validator_options, initialize_options, get_option_value
+from stix2elevator.options import get_validator_options, get_option_value
 from stix2elevator.version import __version__  # noqa
 
 logging.basicConfig(

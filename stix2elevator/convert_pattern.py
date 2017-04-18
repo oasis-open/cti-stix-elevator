@@ -43,7 +43,7 @@ class ComparisonExpression(object):
         self.root_type = get_root_from_object_path(lhs)
 
     def to_string(self):
-        return self.lhs + (" NOT" if self.negated else "") + " " + self.operator + " '" + escape_single_quotes(text_type(self.rhs)) + "'"
+        return self.lhs + (" NOT" if self.negated else "") + " " + self.operator + " '" + text_type(self.rhs) + "'"
 
     def contains_placeholder(self):
         return isinstance(self.rhs, IdrefPlaceHolder)
@@ -338,7 +338,7 @@ def convert_condition(condition):
     # BitwiseAnd
     # BitwiseOr
     elif condition is None:
-        warn("No condition given for %s - assume '='", 714,  identifying_info(get_dynamic_variable("current_observable")))
+        warn("No condition given for %s - assume '='", 714, identifying_info(get_dynamic_variable("current_observable")))
         return "="
 
 
@@ -417,7 +417,9 @@ def convert_custom_properties(cps, object_type_name):
     for cp in cps.property_:
         if not re.match("[a-z0-9_]+", cp.name):
             warn("The custom property name %s does not adhere to the specification rules", 617, cp.name)
-        expressions.append(create_term(object_type_name + ":x_" + cp.name, cp.condition, cp.value))
+            if " " in cp.name:
+                warn("The custom property name %s contains whitespace, replacing it with underscores", 624, cp.name)
+        expressions.append(create_term(object_type_name + ":x_" + cp.name.replace(" ", "_"), cp.condition, cp.value))
     return create_boolean_expression("AND", expressions)
 
 
@@ -655,7 +657,7 @@ def convert_hashes_to_pattern(hashes):
 
 def convert_file_name_and_file_extension(file_name, file_extension):
     if (file_extension and file_extension.value and is_equal_condition(file_name.condition) and
-        is_equal_condition(file_extension.condition) and file_name.value.endswith(file_extension.value)):
+            is_equal_condition(file_extension.condition) and file_name.value.endswith(file_extension.value)):
         return create_term("file:file_name", file_name.condition, file_name.value)
     elif (file_name.condition == "StartsWith" and file_extension and file_extension.value and
           is_equal_condition(file_extension.condition)):
@@ -749,7 +751,7 @@ def convert_registry_key_to_pattern(reg_key):
                 key_value_term = reg_key.key.value
             else:
                 key_value_term += reg_key.key.value
-            expressions.append(create_term("win-registry-key:key", reg_key.key.condition,  key_value_term))
+            expressions.append(create_term("win-registry-key:key", reg_key.key.condition, key_value_term))
     if reg_key.values:
         values_expressions = []
         for v in reg_key.values:

@@ -8,6 +8,7 @@ _IDS_TO_NEW_IDS = {}
 
 SDO_WITH_NO_1X_OBJECT = []
 
+
 def clear_id_mapping():
     global _IDS_TO_NEW_IDS
     _IDS_TO_NEW_IDS = {}
@@ -89,6 +90,7 @@ def add_id_value(key, value):
 
 
 _IDS_TO_CYBER_OBSERVABLES = {}
+
 
 def clear_object_id_mapping():
     global _IDS_TO_CYBER_OBSERVABLES

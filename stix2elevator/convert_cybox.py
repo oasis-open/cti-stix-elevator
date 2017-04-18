@@ -477,8 +477,6 @@ def convert_network_connection(conn):
 
 def convert_cybox_object(obj):
     # TODO:  should related objects be handled on a case-by-case basis or just ignored
-    #if obj.related_objects:
-    #    warn("Related Objects of cyber observables for %s are not handled yet", 809, obj.id_)
     prop = obj.properties
     objs = {}
     if isinstance(prop, Address):
@@ -571,10 +569,8 @@ def fix_cybox_relationships(observed_data):
                                 mp["body_raw_ref"] = text_type(number_mapping[file_obj_index])
                                 objs_to_add.update(new_objs)
                             else:
-                                pass # warn
+                                pass  # warn
                         else:
-                            pass # warn mess
+                            pass  # warn mess
         if objs_to_add:
             add_attachment_objects(o, objs_to_add)
-
-
