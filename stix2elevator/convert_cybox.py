@@ -17,7 +17,7 @@ def convert_address(add):
     elif add.category == add.CAT_EMAIL:
         return {"type": "email-addr", "value": add.address_value.value}
     else:
-        warn("The address type %s is not part of Cybox 3.0", 421, add.category)
+        warn("The address type %s is not part of STIX 2.0", 421, add.category)
 
 
 def convert_uri(uri):
@@ -159,7 +159,7 @@ def convert_process(process):
             if service_properties:
                 extended_properties["windows-service-ext"] = service_properties
         if extended_properties:
-            cybox_p["extended_properties"] = extended_properties
+            cybox_p["extensions"] = extended_properties
     if cybox:
         cybox_p["type"] = "process"
     return cybox_p
@@ -169,7 +169,7 @@ def convert_windows_process(process):
     ext = {}
     if process.handle_list:
         for h in process.handle_list:
-            warn("Windows handles are not a part of CybOX 3.0", 420)
+            warn("Windows handles are not a part of STIX 2.0", 420)
     if process.aslr_enabled:
         ext["asl_enabled"] = bool(process.aslr_enabled)
     if process.dep_enabled:

@@ -30,20 +30,30 @@ def get_root_from_object_path(lhs):
     return path_as_parts[0]
 
 
-def escape_single_quotes(s):
-    return s.replace("'", "\\'")
+def escape_quotes_and_backslashes(s):
+    return s.replace(u'\\', u'\\\\').replace(u"'", u"\\'")
 
 
 class ComparisonExpression(object):
     def __init__(self, operator, lhs, rhs, negated=False):
-        self.operator = operator
+        if operator == "=" and isinstance(rhs, list):
+            self.operator = "IN"
+        else:
+            self.operator = operator
         self.lhs = lhs
         self.rhs = rhs
         self.negated = negated
         self.root_type = get_root_from_object_path(lhs)
 
     def to_string(self):
-        return self.lhs + (" NOT" if self.negated else "") + " " + self.operator + " '" + text_type(self.rhs) + "'"
+        if isinstance(self.rhs, list):
+            final_rhs = []
+            for r in self.rhs:
+                final_rhs.append("'" + escape_quotes_and_backslashes(text_type(r)) + "'")
+            rhs_string = "(" + ", ".join(final_rhs) + ")"
+        else:
+            rhs_string = "'" + escape_quotes_and_backslashes(text_type(self.rhs)) + "'"
+        return self.lhs + (" NOT" if self.negated else "") + " " + self.operator + " " + rhs_string
 
     def contains_placeholder(self):
         return isinstance(self.rhs, IdrefPlaceHolder)
@@ -274,8 +284,8 @@ _CLASS_NAME_MAPPING = {"File": "file",
                        "Process": "process",
                        "DomainName": "domain-name",
                        "Mutex": "mutex",
-                       "WinExecutableFile": "file:extended_properties.windows_pebinary_ext",
-                       "ArchiveFile": "file:extended_properties.archive_ext",
+                       "WinExecutableFile": "file:extensions.windows_pebinary_ext",
+                       "ArchiveFile": "file:extensions.archive_ext",
                        "NetworkConnection": "network-traffic"}
 
 _ADDRESS_NAME_MAPPING = {Address.CAT_IPV4: "ipv4-addr",
@@ -362,13 +372,13 @@ def create_term_with_range(lhs, condition, rhs, negated=False):
     else:
         if condition == "InclusiveBetween":
             # return "(" + lhs + " GE " + text_type(rhs[0]) + " AND " + lhs + " LE " + text_type(rhs[1]) + ")"
-            lower_bound = ComparisonExpression(">=", lhs, text_type(rhs[0]))
-            upper_bound = ComparisonExpression("<=", lhs, text_type(rhs[1]))
+            lower_bound = ComparisonExpression(">=", lhs, rhs[0])
+            upper_bound = ComparisonExpression("<=", lhs, rhs[1])
 
         else:  # "ExclusiveBetween"
             # return "(" + lhs + " GT " + text_type(rhs[0]) + " AND " + lhs + " LT " + text_type(rhs[1]) + ")"
-            lower_bound = ComparisonExpression(">", lhs, text_type(rhs[0]))
-            upper_bound = ComparisonExpression("<", lhs, text_type(rhs[1]))
+            lower_bound = ComparisonExpression(">", lhs, rhs[0])
+            upper_bound = ComparisonExpression("<", lhs, rhs[1])
         return create_boolean_expression("AND", [lower_bound, upper_bound], negated)
 
 
@@ -396,7 +406,7 @@ def create_term(lhs, condition, rhs, negated=False):
             warn("Used MATCHES operator for %s", 715, condition)
             return (create_term_with_regex(lhs, condition, rhs, not negated))
         # return lhs + " " + negate_if_needed(convert_condition(condition), negated) + " '" + convert_to_text_type(rhs) + "'"
-        return ComparisonExpression(convert_condition(condition), lhs, text_type(rhs), negated)
+        return ComparisonExpression(convert_condition(condition), lhs, rhs, negated)
 
 
 def add_comparison_expression(prop, object_path):
@@ -549,21 +559,21 @@ def convert_email_message_to_pattern(mess):
 
 
 _PE_FILE_HEADER_PROPERTIES = \
-    [["machine", "file:extended_properties.windows_pebinary_ext.file_header:machine"],
-     ["time_date_stamp", "file:extended_properties.windows_pebinary_ext.file_header.time_date_stamp"],
-     ["number_of_sections", "file:extended_properties.windows_pebinary_ext.file_header.number_of_sections"],
-     ["pointer_to_symbol_table", "file:extended_properties.windows_pebinary_ext.file_header.pointer_to_symbol_table"],
-     ["number_of_symbols", "file:extended_properties.windows_pebinary_ext.file_header.number_of_symbols"],
-     ["size_of_optional_header", "file:extended_properties.windows_pebinary_ext.file_header.size_of_optional_header"],
-     ["characteristics", "file:extended_properties.windows_pebinary_ext.file_header.characteristics"]]
+    [["machine", "file:extensions.windows_pebinary_ext.file_header:machine"],
+     ["time_date_stamp", "file:extensions.windows_pebinary_ext.file_header.time_date_stamp"],
+     ["number_of_sections", "file:extensions.windows_pebinary_ext.file_header.number_of_sections"],
+     ["pointer_to_symbol_table", "file:extensions.windows_pebinary_ext.file_header.pointer_to_symbol_table"],
+     ["number_of_symbols", "file:extensions.windows_pebinary_ext.file_header.number_of_symbols"],
+     ["size_of_optional_header", "file:extensions.windows_pebinary_ext.file_header.size_of_optional_header"],
+     ["characteristics", "file:extensions.windows_pebinary_ext.file_header.characteristics"]]
 
 
-_PE_SECTION_HEADER_PROPERTIES = [["name", "file:extended_properties.windows_pebinary_ext.section[*].name"],
-                                 ["virtual_size", "file:extended_properties.windows_pebinary_ext.section[*].size"]]
+_PE_SECTION_HEADER_PROPERTIES = [["name", "file:extensions.windows_pebinary_ext.section[*].name"],
+                                 ["virtual_size", "file:extensions.windows_pebinary_ext.section[*].size"]]
 
 
-_ARCHIVE_FILE_PROPERTIES = [["comment", "file:extended_properties.archive_ext.comment"],
-                            ["version", "file:extended_properties.archive_ext.version"]]
+_ARCHIVE_FILE_PROPERTIES = [["comment", "file:extensions.archive_ext.comment"],
+                            ["version", "file:extensions.archive_ext.version"]]
 
 
 def convert_windows_executable_file_to_pattern(file):
@@ -586,10 +596,10 @@ def convert_windows_executable_file_to_pattern(file):
             if file_header_expressions:
                 expressions.append(create_boolean_expression("AND", file_header_expressions))
         if file.headers.optional_header:
-            warn("file:extended_properties:windows_pebinary_ext:optional_header is not implemented yet", 807)
+            warn("file:extensions:windows_pebinary_ext:optional_header is not implemented yet", 807)
 
     if file.type_:
-        expressions.append(create_term("file:extended_properties.windows_pebinary_ext.pe_type",
+        expressions.append(create_term("file:extensions.windows_pebinary_ext.pe_type",
                                        file.type_.condition,
                                        map_vocabs_to_label(file.type_.value, WINDOWS_PEBINARY)))
     sections = file.sections
@@ -607,7 +617,7 @@ def convert_windows_executable_file_to_pattern(file):
                         if term:
                             section_expressions.append(term)
             if s.entropy:
-                section_expressions.append(create_term("file:extended_properties.windows_pebinary_ext.section[*].entropy",
+                section_expressions.append(create_term("file:extensions.windows_pebinary_ext.section[*].entropy",
                                                        s.entropy.condition,
                                                        s.entropy.value))
             if s.data_hashes:
@@ -619,10 +629,10 @@ def convert_windows_executable_file_to_pattern(file):
         if sections_expressions:
             expressions.append(create_boolean_expression("AND", sections_expressions))
     if file.exports:
-        warn("The exports property of WinExecutableFileObj is not part of Cybox 3.0", 418)
+        warn("The exports property of WinExecutableFileObj is not part of STIX 2.0", 418)
         expressions.append(UnconvertedTerm("WinExecutableFileObj.exports"))
     if file.imports:
-        warn("The imports property of WinExecutableFileObj is not part of Cybox 3.0", 419)
+        warn("The imports property of WinExecutableFileObj is not part of STIX 2.0", 419)
         expressions.append(UnconvertedTerm("WinExecutableFileObj.imports"))
     if expressions:
         return create_boolean_expression("AND", expressions)
@@ -794,7 +804,7 @@ def convert_windows_process_to_pattern(process):
     expression = ""
     if process.handle_list:
         for h in process.handle_list:
-            warn("Windows Handles are not a part of CybOX 3.0", 420)
+            warn("Windows Handles are not a part of STIX 2.0", 420)
     return expression
 
 

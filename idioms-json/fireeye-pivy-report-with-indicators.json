@@ -2898,7 +2898,7 @@
             ],
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "Mutex: pl,[;.]'/",
-            "pattern": "[mutex:name = 'pl,[;.]'/']",
+            "pattern": "[mutex:name = 'pl,[;.]\\'/']",
             "type": "indicator",
             "valid_from": "2015-05-15T09:00:00.000000Z"
         },
@@ -2924,7 +2924,7 @@
             ],
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "Composite Indicator (0678645e45fcd3da84ab27122d6775a9)",
-            "pattern": "[(ipv4-addr:value = '75.126.95.138' OR ipv4-addr:value = '70.39.116.226' OR ipv4-addr:value = '202.65.220.64' OR ipv4-addr:value = '113.10.246.30' OR ipv4-addr:value = '98.126.148.116' OR ipv4-addr:value = '219.90.112.203' OR ipv4-addr:value = '202.65.222.45' OR ipv4-addr:value = '174.139.20.34' OR ipv4-addr:value = '219.90.112.197' OR ipv4-addr:value = '182.16.14.150')] OR [(domain-name:value = 'voanews.proxydns.com' OR domain-name:value = 'europa.freetcp.com' OR domain-name:value = 'nyhq.wikaba.com')] OR [(file:x_ID = 'C001' OR file:x_PIVY_Password = 'admin@338' OR file:hashes.md5 = '0678645e45fcd3da84ab27122d6775a9')] OR [mutex:name = 'pl,[;.]'/']",
+            "pattern": "[(ipv4-addr:value = '75.126.95.138' OR ipv4-addr:value = '70.39.116.226' OR ipv4-addr:value = '202.65.220.64' OR ipv4-addr:value = '113.10.246.30' OR ipv4-addr:value = '98.126.148.116' OR ipv4-addr:value = '219.90.112.203' OR ipv4-addr:value = '202.65.222.45' OR ipv4-addr:value = '174.139.20.34' OR ipv4-addr:value = '219.90.112.197' OR ipv4-addr:value = '182.16.14.150')] OR [(domain-name:value = 'voanews.proxydns.com' OR domain-name:value = 'europa.freetcp.com' OR domain-name:value = 'nyhq.wikaba.com')] OR [(file:x_ID = 'C001' OR file:x_PIVY_Password = 'admin@338' OR file:hashes.md5 = '0678645e45fcd3da84ab27122d6775a9')] OR [mutex:name = 'pl,[;.]\\'/']",
             "type": "indicator",
             "valid_from": "2015-05-15T09:00:00.000000Z"
         },
@@ -3860,7 +3860,7 @@
             ],
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "Composite Indicator (070d1e5c9299afa47df25e63572a3ae8)",
-            "pattern": "[(file:x_ID = '39998.0' OR file:x_PIVY_Password = 'admin' OR file:hashes.md5 = '070d1e5c9299afa47df25e63572a3ae8')] OR [mutex:name = '7-05'rat'] OR [domain-name:value = 'antivirus-groups.com']",
+            "pattern": "[(file:x_ID = '39998.0' OR file:x_PIVY_Password = 'admin' OR file:hashes.md5 = '070d1e5c9299afa47df25e63572a3ae8')] OR [mutex:name = '7-05\\'rat'] OR [domain-name:value = 'antivirus-groups.com']",
             "type": "indicator",
             "valid_from": "2015-05-15T09:00:00.000000Z"
         },
@@ -3899,7 +3899,7 @@
             ],
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "Mutex: 7-05'rat",
-            "pattern": "[mutex:name = '7-05'rat']",
+            "pattern": "[mutex:name = '7-05\\'rat']",
             "type": "indicator",
             "valid_from": "2015-05-15T09:00:00.000000Z"
         },
@@ -3990,7 +3990,7 @@
             ],
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "Mutex: 9-15'rat",
-            "pattern": "[mutex:name = '9-15'rat']",
+            "pattern": "[mutex:name = '9-15\\'rat']",
             "type": "indicator",
             "valid_from": "2015-05-15T09:00:00.000000Z"
         },
@@ -4016,7 +4016,7 @@
             ],
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "Composite Indicator (37f70717f549f1938e5785527e56978d)",
-            "pattern": "[(ipv4-addr:value = '85.95.226.37' OR ipv4-addr:value = '199.166.4.11')] OR [domain-name:value = 'anti-virus.sytes.net'] OR [mutex:name = '9-15'rat'] OR [(file:x_ID = '40070.0' OR file:x_PIVY_Password = 'admin' OR file:hashes.md5 = '37f70717f549f1938e5785527e56978d')]",
+            "pattern": "[(ipv4-addr:value = '85.95.226.37' OR ipv4-addr:value = '199.166.4.11')] OR [domain-name:value = 'anti-virus.sytes.net'] OR [mutex:name = '9-15\\'rat'] OR [(file:x_ID = '40070.0' OR file:x_PIVY_Password = 'admin' OR file:hashes.md5 = '37f70717f549f1938e5785527e56978d')]",
             "type": "indicator",
             "valid_from": "2015-05-15T09:00:00.000000Z"
         },
@@ -4029,7 +4029,7 @@
             ],
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "Mutex: 8-16'rat",
-            "pattern": "[mutex:name = '8-16'rat']",
+            "pattern": "[mutex:name = '8-16\\'rat']",
             "type": "indicator",
             "valid_from": "2015-05-15T09:00:00.000000Z"
         },
@@ -4081,7 +4081,7 @@
             ],
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "Composite Indicator (6e99585c3fbd4f3a55bd8f604cb35f38)",
-            "pattern": "[(ipv4-addr:value = '223.25.233.230' OR ipv4-addr:value = '222.255.28.27' OR ipv4-addr:value = '223.25.233.247' OR ipv4-addr:value = '223.25.233.244' OR ipv4-addr:value = '204.74.216.146' OR ipv4-addr:value = '216.131.95.22')] OR [mutex:name = '8-16'rat'] OR [domain-name:value = 'domain.rm6.org'] OR [(file:x_ID = '40040.0' OR file:x_PIVY_Password = 'admin' OR file:hashes.md5 = '6e99585c3fbd4f3a55bd8f604cb35f38')]",
+            "pattern": "[(ipv4-addr:value = '223.25.233.230' OR ipv4-addr:value = '222.255.28.27' OR ipv4-addr:value = '223.25.233.247' OR ipv4-addr:value = '223.25.233.244' OR ipv4-addr:value = '204.74.216.146' OR ipv4-addr:value = '216.131.95.22')] OR [mutex:name = '8-16\\'rat'] OR [domain-name:value = 'domain.rm6.org'] OR [(file:x_ID = '40040.0' OR file:x_PIVY_Password = 'admin' OR file:hashes.md5 = '6e99585c3fbd4f3a55bd8f604cb35f38')]",
             "type": "indicator",
             "valid_from": "2015-05-15T09:00:00.000000Z"
         },
@@ -4107,7 +4107,7 @@
             ],
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "Composite Indicator (8d36fd85d9c7d1f4bb170a28cc23498a)",
-            "pattern": "[mutex:name = '6-22'rat'] OR [(file:x_ID = '39985.0' OR file:x_PIVY_Password = 'admin' OR file:hashes.md5 = '8d36fd85d9c7d1f4bb170a28cc23498a')] OR [domain-name:value = 'antivirus-groups.com']",
+            "pattern": "[mutex:name = '6-22\\'rat'] OR [(file:x_ID = '39985.0' OR file:x_PIVY_Password = 'admin' OR file:hashes.md5 = '8d36fd85d9c7d1f4bb170a28cc23498a')] OR [domain-name:value = 'antivirus-groups.com']",
             "type": "indicator",
             "valid_from": "2015-05-15T09:00:00.000000Z"
         },
@@ -4120,7 +4120,7 @@
             ],
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "Mutex: 6-22'rat",
-            "pattern": "[mutex:name = '6-22'rat']",
+            "pattern": "[mutex:name = '6-22\\'rat']",
             "type": "indicator",
             "valid_from": "2015-05-15T09:00:00.000000Z"
         },
@@ -4146,7 +4146,7 @@
             ],
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "Composite Indicator (ef90df225101836952ad7e91b55b30cd)",
-            "pattern": "[domain-name:value = 'antivirus-groups.com'] OR [(file:x_ID = '39985.0' OR file:x_PIVY_Password = 'admin' OR file:hashes.md5 = 'ef90df225101836952ad7e91b55b30cd')] OR [mutex:name = '6-22'rat']",
+            "pattern": "[domain-name:value = 'antivirus-groups.com'] OR [(file:x_ID = '39985.0' OR file:x_PIVY_Password = 'admin' OR file:hashes.md5 = 'ef90df225101836952ad7e91b55b30cd')] OR [mutex:name = '6-22\\'rat']",
             "type": "indicator",
             "valid_from": "2015-05-15T09:00:00.000000Z"
         },
