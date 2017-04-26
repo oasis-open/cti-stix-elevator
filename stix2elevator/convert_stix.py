@@ -11,6 +11,7 @@ from stix.campaign import Campaign
 from stix.coa import CourseOfAction
 from stix.common.identity import Identity
 from stix.common.kill_chains import KillChainPhase, KillChainPhaseReference
+from stix.data_marking import MarkingSpecification, MarkingStructure
 from stix.exploit_target import ExploitTarget
 from stix.extensions.identity.ciq_identity_3_0 import CIQIdentity3_0Instance
 from stix.extensions.test_mechanism.open_ioc_2010_test_mechanism import OpenIOCTestMechanism
@@ -23,6 +24,8 @@ from stix.incident import Incident
 from stix.indicator import Indicator
 from stix.threat_actor import ThreatActor
 from stix.ttp import TTP
+
+from stixmarx import navigator
 
 # internal
 from stix2elevator.convert_cybox import convert_cybox_object
@@ -38,6 +41,7 @@ if stix.__version__ >= "1.2.0.0":
     from stix.report import Report
 if stix.__version__ >= "1.1.1.7":
     import stix.extensions.marking.ais
+    from stix.extensions.marking.ais import AISMarkingStructure
 
 # collect kill chains
 KILL_CHAINS_PHASES = {}
@@ -91,7 +95,7 @@ def process_information_source(information_source, so, bundle_instance, parent_c
             if information_source.references:
                 for ref in information_source.references:
                     so["external_references"].append({"url": ref})
-            if not get_option_value("no_squirrel_gaps")and information_source.roles:
+            if not get_option_value("no_squirrel_gaps") and information_source.roles:
                 for role in information_source.roles:
                     # no vocab to make to in 2.0
                     so["description"] += "\n\n" + "INFORMATION SOURCE ROLE: " + role.value
@@ -163,33 +167,68 @@ def create_basic_object(stix20_type, stix1x_obj, parent_timestamp=None, parent_i
 def convert_marking_specification(marking_specification, bundle_instance, sdo_instance, parent_created_by_ref, parent_timestamp):
     return_obj = []
 
-    if marking_specification.controlled_structure is not None:
-        pass
-
     if marking_specification.marking_structures is not None:
         ms = marking_specification.marking_structures
         for mark_spec in ms:
             marking_definition_instance = create_basic_object("marking-definition", marking_specification)
-            marking_created_by_ref = process_information_source(marking_specification.information_source,
-                                                                marking_definition_instance, bundle_instance,
-                                                                parent_created_by_ref, parent_timestamp)
+            process_information_source(marking_specification.information_source,
+                                       marking_definition_instance, bundle_instance,
+                                       parent_created_by_ref, parent_timestamp)
+
+            if "modified" in marking_definition_instance:
+                del marking_definition_instance["modified"]
+
             if isinstance(mark_spec, TLPMarkingStructure):
                 marking_definition_instance["definition_type"] = "tlp"
+                definition = {}
                 if mark_spec.color is not None:
-                    marking_definition_instance["tlp"] = text_type(mark_spec.color)
-            elif isinstance(ms, TermsOfUseMarkingStructure):
+                    definition["tlp"] = text_type(mark_spec.color)
+                marking_definition_instance["definition"] = definition
+            elif isinstance(mark_spec, TermsOfUseMarkingStructure):
                 marking_definition_instance["definition_type"] = "statement"
+                definition = {}
                 if mark_spec.terms_of_use is not None:
-                    marking_definition_instance["statement"] = text_type(mark_spec.terms_of_use)
+                    definition["statement"] = text_type(mark_spec.terms_of_use)
+                marking_definition_instance["definition"] = definition
             elif isinstance(mark_spec, SimpleMarkingStructure):
                 marking_definition_instance["definition_type"] = "statement"
+                definition = {}
                 if mark_spec.statement is not None:
-                    marking_definition_instance["statement"] = text_type(mark_spec.statement)
+                    definition["statement"] = text_type(mark_spec.statement)
+                marking_definition_instance["definition"] = definition
+            elif isinstance(mark_spec, AISMarkingStructure):
+                marking_definition_instance["definition_type"] = "ais"
+                definition = {}
+                if mark_spec.is_proprietary is not None:
+                    definition["is_proprietary"] = "true"
+                    if (mark_spec.is_proprietary.ais_consent is not None and
+                                mark_spec.is_proprietary.ais_consent.consent is not None):
+                        definition["consent"] = text_type(mark_spec.is_proprietary.ais_consent.consent).lower()
+                    if (mark_spec.is_proprietary.tlp_marking is not None and
+                                mark_spec.is_proprietary.tlp_marking.color is not None):
+                        definition["tlp"] = text_type(mark_spec.is_proprietary.tlp_marking.color).lower()
+                    if mark_spec.is_proprietary.cisa_proprietary is not None:
+                        definition["is_cisa_proprietary"] = text_type(mark_spec.is_proprietary.cisa_proprietary).lower()
+                elif mark_spec.not_proprietary is not None:
+                    definition["is_proprietary"] = "false"
+                    if (mark_spec.not_proprietary.ais_consent is not None and
+                                mark_spec.not_proprietary.ais_consent.consent is not None):
+                        definition["consent"] = text_type(mark_spec.not_proprietary.ais_consent.consent).lower()
+                    if (mark_spec.not_proprietary.tlp_marking is not None and
+                                mark_spec.not_proprietary.tlp_marking.color is not None):
+                        definition["tlp"] = text_type(mark_spec.not_proprietary.tlp_marking.color).lower()
+                    if mark_spec.not_proprietary.cisa_proprietary is not None:
+                        definition["is_cisa_proprietary"] = text_type(mark_spec.not_proprietary.cisa_proprietary).lower()
+                marking_definition_instance["definition"] = definition
             else:
-                warn("Could not resolve Marking Structure %s", 801, marking_definition_instance["id"])
+                warn("Could not resolve Marking Structure %s", 425, marking_definition_instance["id"])
 
             if "definition_type" in marking_definition_instance:
-                return_obj.append(marking_definition_instance)
+                val = add_marking_map_entry(mark_spec, marking_definition_instance["id"])
+                if val is not None and not isinstance(val, MarkingStructure):
+                    info("Found duplicate marking structure %s", 620, marking_specification.id_)
+                else:
+                    return_obj.append(marking_definition_instance)
 
     return return_obj
 
@@ -203,6 +242,16 @@ def finish_basic_object(old_id, instance, stix1x_obj):
         for p in stix1x_obj.related_packages:
             warn("Related_Packages type in %s not supported in STIX 2.0", 402, stix1x_obj.id_)
 
+    container = get_option_value("marking_container")
+    markings = container.get_markings(stix1x_obj)
+    object_refs = []
+    for marking in markings:
+        for marking_spec in marking.marking_structures:
+            stix20_marking = map_1x_markings_to_20(marking_spec)
+            if not isinstance(stix20_marking, MarkingStructure):
+                object_refs.append(stix20_marking)
+    if object_refs:
+        instance["object_marking_refs"] = object_refs
 
 #
 # handle gaps
@@ -1543,89 +1592,100 @@ def get_identity_from_package(information_source, bundle_instance, parent_timest
     if information_source:
         if information_source.identity is not None:
             return get_identity_ref(information_source.identity, bundle_instance, parent_timestamp)
+        if information_source.contributing_sources is not None:
+            if information_source.contributing_sources.source is not None:
+                sources = information_source.contributing_sources.source
+
+                if len(sources) > 1:
+                    warn("Only one identity allowed - using first one.", 510)
+
+                for source in sources:
+                    if source.identity is not None:
+                        return get_identity_ref(source.identity, bundle_instance, parent_timestamp)
     return None
 
 
-def convert_package(stixPackage, package_created_by_ref=None, default_timestamp=None):
+def convert_package(stix_package, package_created_by_ref=None, default_timestamp=None):
     bundle_instance = {"type": "bundle"}
-    bundle_instance["id"] = generate_stix20_id("bundle", stixPackage.id_)
+    bundle_instance["id"] = generate_stix20_id("bundle", stix_package.id_)
     bundle_instance["spec_version"] = "2.0"
     initialize_bundle_lists(bundle_instance)
 
     if default_timestamp:
         parent_timestamp = datetime.strptime(default_timestamp, "%Y-%m-%dT%H:%M:%S.%fZ")
-    elif hasattr(stixPackage, "created"):
-        parent_timestamp = stixPackage.timestamp
+    elif hasattr(stix_package, "created"):
+        parent_timestamp = stix_package.timestamp
     else:
         parent_timestamp = None
 
     # created_by_idref from the command line is used instead of the one from the package, if given
-    if not package_created_by_ref and hasattr(stixPackage.stix_header, "information_source"):
-        package_created_by_ref = get_identity_from_package(stixPackage.stix_header.information_source,
+    if not package_created_by_ref and hasattr(stix_package.stix_header, "information_source"):
+        package_created_by_ref = get_identity_from_package(stix_package.stix_header.information_source,
                                                            bundle_instance, parent_timestamp)
 
-    # if stixPackage.stix_header is not None and stixPackage.stix_header.handling is not None:
-    #     for marking in stixPackage.stix_header.handling:
-    #         bundle_instance["objects"].extend(convert_marking_specification(marking, bundle_instance, None, package_created_by_ref, parent_timestamp))
+    # Markings are processed in the beginning for handling later for each SDO.
+    for marking_specification in navigator.iterwalk(stix_package):
+        if isinstance(marking_specification, MarkingSpecification):
+            bundle_instance["objects"].extend(convert_marking_specification(marking_specification, bundle_instance, None, package_created_by_ref, parent_timestamp))
 
     # do observables first, especially before indicators!
 
     # kill chains
-    if stixPackage.ttps and stixPackage.ttps.kill_chains:
-        for kc in stixPackage.ttps.kill_chains:
+    if stix_package.ttps and stix_package.ttps.kill_chains:
+        for kc in stix_package.ttps.kill_chains:
             process_kill_chain(kc)
 
     # observables
-    if stixPackage.observables is not None:
-        for o_d in stixPackage.observables:
+    if stix_package.observables is not None:
+        for o_d in stix_package.observables:
             o_d20 = convert_observed_data(o_d, bundle_instance, package_created_by_ref, parent_timestamp)
             bundle_instance["observed_data"].append(o_d20)
 
     # campaigns
-    if stixPackage.campaigns:
-        for camp in stixPackage.campaigns:
+    if stix_package.campaigns:
+        for camp in stix_package.campaigns:
             camp20 = convert_campaign(camp, bundle_instance, package_created_by_ref, parent_timestamp)
             bundle_instance["objects"].append(camp20)
 
     # coas
-    if stixPackage.courses_of_action:
-        for coa in stixPackage.courses_of_action:
+    if stix_package.courses_of_action:
+        for coa in stix_package.courses_of_action:
             coa20 = convert_course_of_action(coa, bundle_instance, package_created_by_ref, parent_timestamp)
             bundle_instance["objects"].append(coa20)
 
     # exploit-targets
-    if stixPackage.exploit_targets:
-        for et in stixPackage.exploit_targets:
+    if stix_package.exploit_targets:
+        for et in stix_package.exploit_targets:
             convert_exploit_target(et, bundle_instance, package_created_by_ref, parent_timestamp)
 
     # incidents
     if get_option_value("incidents"):
-        if stixPackage.incidents:
-            for i in stixPackage.incidents:
+        if stix_package.incidents:
+            for i in stix_package.incidents:
                 i20 = convert_incident(i, bundle_instance, package_created_by_ref, parent_timestamp)
                 bundle_instance["objects"].append(i20)
 
     # indicators
-    if stixPackage.indicators:
-        for i in stixPackage.indicators:
+    if stix_package.indicators:
+        for i in stix_package.indicators:
             i20 = convert_indicator(i, bundle_instance, package_created_by_ref, parent_timestamp)
             bundle_instance["indicators"].append(i20)
 
     # reports
-    if stix.__version__ >= "1.2.0.0" and stixPackage.reports:
-        for report in stixPackage.reports:
+    if stix.__version__ >= "1.2.0.0" and stix_package.reports:
+        for report in stix_package.reports:
             report20 = convert_report(report, bundle_instance, package_created_by_ref, parent_timestamp)
             bundle_instance["reports"].append(report20)
 
     # threat actors
-    if stixPackage.threat_actors:
-        for ta in stixPackage.threat_actors:
+    if stix_package.threat_actors:
+        for ta in stix_package.threat_actors:
             ta20 = convert_threat_actor(ta, bundle_instance, package_created_by_ref, parent_timestamp)
             bundle_instance["objects"].append(ta20)
 
     # ttps
-    if stixPackage.ttps:
-        for ttp in stixPackage.ttps:
+    if stix_package.ttps:
+        for ttp in stix_package.ttps:
             convert_ttp(ttp, bundle_instance, package_created_by_ref, parent_timestamp)
 
     finalize_bundle(bundle_instance)

@@ -98,6 +98,8 @@ class ElevatorOptions(object):
         else:
             self.enabled = [text_type(x) for x in CHECK_CODES]
 
+        self.marking_container = None
+
 
 def initialize_options(elevator_args=None):
     global ALL_OPTIONS

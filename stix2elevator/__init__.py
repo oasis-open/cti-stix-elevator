@@ -6,7 +6,6 @@ import logging
 # external
 import stix
 from stix.core import STIXPackage
-from stix.utils.parser import EntityParser
 
 from six import StringIO
 
@@ -14,11 +13,14 @@ from stix2validator import codes
 from stix2validator import output
 from stix2validator import validate_string, ValidationError
 
+import stixmarx
+
+# internal
 from stix2elevator.convert_pattern import clear_pattern_mapping
 from stix2elevator.ids import clear_id_mapping
 from stix2elevator.utils import *
 from stix2elevator.convert_stix import convert_package
-from stix2elevator.options import get_validator_options, initialize_options, get_option_value
+from stix2elevator.options import get_validator_options, initialize_options, get_option_value, set_option_value
 from stix2elevator.version import __version__  # noqa
 
 logging.basicConfig(
@@ -32,6 +34,7 @@ log = logging.getLogger(__name__)
 def elevate_file(fn):
     print("Results produced by the stix2-elevator are not for production purposes.")
     clear_id_mapping()
+    clear_1x_markings_map()
     clear_pattern_mapping()
 
     validator_options = get_validator_options()
@@ -39,7 +42,9 @@ def elevate_file(fn):
     try:
         output.set_level(validator_options.verbose)
 
-        stix_package = EntityParser().parse_xml(fn)
+        container = stixmarx.parse(fn)
+        stix_package = container.package
+        set_option_value("marking_container", container)
 
         if not isinstance(stix_package, STIXPackage):
             raise TypeError("Must be an instance of stix.core.STIXPackage")
@@ -63,8 +68,9 @@ def elevate_file(fn):
 
 
 def elevate_string(string):
-    warn("Results produced by the stix2-elevator are not for production purposes.", 201)
+    print("Results produced by the stix2-elevator are not for production purposes.")
     clear_id_mapping()
+    clear_1x_markings_map()
     clear_pattern_mapping()
 
     validator_options = get_validator_options()
@@ -73,7 +79,9 @@ def elevate_string(string):
         output.set_level(validator_options.verbose)
 
         io = StringIO(string)
-        stix_package = EntityParser().parse_xml(io)
+        container = stixmarx.parse(io)
+        stix_package = container.package
+        set_option_value("marking_container", container)
 
         if not isinstance(stix_package, STIXPackage):
             raise TypeError("Must be an instance of stix.core.STIXPackage")
@@ -97,8 +105,9 @@ def elevate_string(string):
 
 
 def elevate_package(package):
-    warn("Results produced by the stix2-elevator are not for production purposes.", 201)
+    print("Results produced by the stix2-elevator are not for production purposes.")
     clear_id_mapping()
+    clear_1x_markings_map()
     clear_pattern_mapping()
 
     validator_options = get_validator_options()
@@ -106,11 +115,16 @@ def elevate_package(package):
     try:
         output.set_level(validator_options.verbose)
 
-        if not isinstance(package, STIXPackage):
+        # It needs to be re-parsed.
+        container = stixmarx.parse(StringIO(package.to_xml()))
+        stix_package = container.package
+        set_option_value("marking_container", container)
+
+        if not isinstance(stix_package, STIXPackage):
             raise TypeError("Must be an instance of stix.core.STIXPackage")
 
-        setup_logger(package.id_)
-        json_string = json.dumps(convert_package(package,
+        setup_logger(stix_package.id_)
+        json_string = json.dumps(convert_package(stix_package,
                                                  get_option_value("package_created_by_id"),
                                                  get_option_value("default_timestamp")),
                                  indent=4,

@@ -28,11 +28,17 @@ def error(fmt, ecode, *args):
 
 
 def setup_logger(package_id):
+    global log
+
+    logging.basicConfig(
+        level=logging.DEBUG,
+        format="[%(ecode)d] [%(levelname)-7s] [%(asctime)s] %(message)s"
+    )
+
     if options.ALL_OPTIONS:
         if not options.get_option_value("message_log_directory"):
+            log = logging.getLogger(__name__)
             return
-
-        global log
 
         output_directory = options.get_option_value("message_log_directory")
         file_directory = options.get_option_value("file_")
@@ -50,7 +56,7 @@ def setup_logger(package_id):
 
         destination = os.path.join(output_directory, filename)
         destination = os.path.abspath(destination)
-        log = logging.getLogger(filename)
+        log = logging.getLogger(__name__)
         fh = logging.FileHandler(destination, mode='w')
         fh.setFormatter(logging.Formatter("[%(ecode)d] [%(levelname)-7s] [%(asctime)s] %(message)s"))
         log.addHandler(fh)
@@ -151,6 +157,27 @@ def map_1x_type_to_20(stix1x_type):
     if stix1x_type in _TYPE_MAP_FROM_1_x_TO_2_0:
         return _TYPE_MAP_FROM_1_x_TO_2_0[stix1x_type]
     return stix1x_type
+
+
+_MARKING_MAP_FROM_1_x_TO_2_0 = {}
+
+
+def map_1x_markings_to_20(stix1x_marking):
+    if stix1x_marking in _MARKING_MAP_FROM_1_x_TO_2_0:
+        return _MARKING_MAP_FROM_1_x_TO_2_0[stix1x_marking]
+    return stix1x_marking
+
+
+def add_marking_map_entry(stix1x_marking, stix20_marking_id):
+    if stix1x_marking not in _MARKING_MAP_FROM_1_x_TO_2_0:
+        _MARKING_MAP_FROM_1_x_TO_2_0[stix1x_marking] = stix20_marking_id
+        return
+    return map_1x_markings_to_20(stix1x_marking)
+
+
+def clear_1x_markings_map():
+    global _MARKING_MAP_FROM_1_x_TO_2_0
+    _MARKING_MAP_FROM_1_x_TO_2_0 = {}
 
 
 def iterpath(obj, path=None):
