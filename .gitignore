@@ -53,3 +53,5 @@ Temporary Items
 # project specific
 
 other_xml_files/stix-*.xml
+# stix2-validator cache
+cache.sqlite
