@@ -236,12 +236,11 @@ def convert_marking_specification(marking_specification, bundle_instance, sdo_in
 def finish_basic_object(old_id, instance, stix1x_obj):
     if old_id is not None:
         record_ids(old_id, instance["id"])
-    if hasattr(stix1x_obj, "handling") and stix1x_obj.handling is not None:
-        info("Handling not implemented, yet", 801)
     if hasattr(stix1x_obj, "related_packages") and stix1x_obj.related_packages is not None:
         for p in stix1x_obj.related_packages:
             warn("Related_Packages type in %s not supported in STIX 2.0", 402, stix1x_obj.id_)
 
+    # Attach markings to SDO if present.
     container = get_option_value("marking_container")
     markings = container.get_markings(stix1x_obj)
     object_refs = []
