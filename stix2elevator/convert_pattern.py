@@ -658,7 +658,14 @@ def convert_hashes_to_pattern(hashes):
             hash_value = h.simple_hash_value
         else:
             hash_value = h.fuzzy_hash_value
-        hash_expressions.append(create_term("file:hashes" + "." + text_type(h.type_).lower(),
+        if text_type(h.type_).startswith("SHA"):
+
+            hash_type = "'" + "SHA" + "-" + text_type(h.type_)[3:] + "'"
+        elif text_type(h.type_) == "SSDEEP":
+            hash_type = text_type(h.type_).lower()
+        else:
+            hash_type = text_type(h.type_)
+        hash_expressions.append(create_term("file:hashes" + "." + hash_type,
                                             hash_value.condition,
                                             hash_value.value))
     if hash_expressions:

@@ -39,7 +39,13 @@ def convert_file_properties(file):
     if file.hashes is not None:
         hashes = {}
         for h in file.hashes:
-            hashes[text_type(h.type_).lower()] = h.simple_hash_value.value
+            if text_type(h.type_).startswith("SHA"):
+                hash_type = "SHA" + "-" + text_type(h.type_)[3:]
+            elif text_type(h.type_) == "SSDEEP":
+                hash_type = text_type(h.type_).lower()
+            else:
+                hash_type = text_type(h.type_)
+            hashes[hash_type] = h.simple_hash_value.value
         cybox_dict["hashes"] = hashes
     if file.file_name:
         cybox_dict["file_name"] = text_type(file.file_name)

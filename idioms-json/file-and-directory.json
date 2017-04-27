@@ -11,8 +11,12 @@
             "objects": {
                 "0": {
                     "file_name": "iprip32.dll",
+                    "hashes": {
+                        "SHA-256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                    },
                     "parent_directory_ref": "1",
                     "type": "file"
+
                 },
                 "1": {
                     "path": "/usr/local",

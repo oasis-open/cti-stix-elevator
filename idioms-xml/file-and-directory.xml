@@ -7,6 +7,7 @@
     xmlns:cybox="http://cybox.mitre.org/cybox-2"
     xmlns:FileObj="http://cybox.mitre.org/objects#FileObject-2"
     xmlns:cyboxVocabs="http://cybox.mitre.org/default_vocabularies-2"
+    xmlns:cyboxCommon="http://cybox.mitre.org/common-2"
     xmlns:stixVocabs="http://stix.mitre.org/default_vocabularies-1"
     xmlns:example="http://example.com/"
     xsi:schemaLocation="
@@ -26,6 +27,12 @@
                  <cybox:Properties xsi:type="FileObj:FileObjectType">
                      <FileObj:File_Name>iprip32.dll</FileObj:File_Name>
                      <FileObj:File_Path>/usr/local</FileObj:File_Path>
+                     <FileObj:Hashes>
+                            <cyboxCommon:Hash>
+                                <cyboxCommon:Type condition="Equals" xsi:type="cyboxVocabs:HashNameVocab-1.0">SHA256</cyboxCommon:Type>
+                                <cyboxCommon:Simple_Hash_Value condition="Equals">e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855</cyboxCommon:Simple_Hash_Value>
+                            </cyboxCommon:Hash>
+                        </FileObj:Hashes>
                  </cybox:Properties>
             </cybox:Object>
         </cybox:Observable>
