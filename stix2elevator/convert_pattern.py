@@ -401,10 +401,10 @@ def create_term(lhs, condition, rhs, negated=False):
     else:
         if condition == "Contains" and not multi_valued_property(lhs):
             warn("Used MATCHES operator for %s", 715, condition)
-            return (create_term_with_regex(lhs, condition, rhs, negated))
+            return create_term_with_regex(lhs, condition, rhs, negated)
         elif condition == "DoesNotContain":
             warn("Used MATCHES operator for %s", 715, condition)
-            return (create_term_with_regex(lhs, condition, rhs, not negated))
+            return create_term_with_regex(lhs, condition, rhs, not negated)
         # return lhs + " " + negate_if_needed(convert_condition(condition), negated) + " '" + convert_to_text_type(rhs) + "'"
         return ComparisonExpression(convert_condition(condition), lhs, rhs, negated)
 
@@ -576,10 +576,10 @@ _ARCHIVE_FILE_PROPERTIES = [["comment", "file:extensions.archive_ext.comment"],
                             ["version", "file:extensions.archive_ext.version"]]
 
 
-def convert_windows_executable_file_to_pattern(file):
+def convert_windows_executable_file_to_pattern(f):
     expressions = []
-    if file.headers:
-        file_header = file.headers.file_header
+    if f.headers:
+        file_header = f.headers.file_header
         if file_header:
             file_header_expressions = []
             for prop_spec in _PE_FILE_HEADER_PROPERTIES:
@@ -595,14 +595,14 @@ def convert_windows_executable_file_to_pattern(file):
                     file_header_expressions.append(hash_expression)
             if file_header_expressions:
                 expressions.append(create_boolean_expression("AND", file_header_expressions))
-        if file.headers.optional_header:
+        if f.headers.optional_header:
             warn("file:extensions:windows_pebinary_ext:optional_header is not implemented yet", 807)
 
-    if file.type_:
+    if f.type_:
         expressions.append(create_term("file:extensions.windows_pebinary_ext.pe_type",
-                                       file.type_.condition,
-                                       map_vocabs_to_label(file.type_.value, WINDOWS_PEBINARY)))
-    sections = file.sections
+                                       f.type_.condition,
+                                       map_vocabs_to_label(f.type_.value, WINDOWS_PEBINARY)))
+    sections = f.sections
     if sections:
         sections_expressions = []
         # should order matter in patterns???
@@ -628,23 +628,23 @@ def convert_windows_executable_file_to_pattern(file):
                 sections_expressions.append(create_boolean_expression("AND", section_expressions))
         if sections_expressions:
             expressions.append(create_boolean_expression("AND", sections_expressions))
-    if file.exports:
+    if f.exports:
         warn("The exports property of WinExecutableFileObj is not part of STIX 2.0", 418)
         expressions.append(UnconvertedTerm("WinExecutableFileObj.exports"))
-    if file.imports:
+    if f.imports:
         warn("The imports property of WinExecutableFileObj is not part of STIX 2.0", 419)
         expressions.append(UnconvertedTerm("WinExecutableFileObj.imports"))
     if expressions:
         return create_boolean_expression("AND", expressions)
 
 
-def convert_archive_file_to_pattern(file):
+def convert_archive_file_to_pattern(f):
     and_expressions = []
     for prop_spec in _ARCHIVE_FILE_PROPERTIES:
         prop_1x = prop_spec[0]
         object_path = prop_spec[1]
-        if hasattr(file, prop_1x):
-            term = add_comparison_expression(getattr(file, prop_1x), object_path)
+        if hasattr(f, prop_1x):
+            term = add_comparison_expression(getattr(f, prop_1x), object_path)
             if term:
                 and_expressions.append(term)
     if and_expressions:
@@ -688,18 +688,18 @@ def convert_file_name_and_file_extension(file_name, file_extension):
         warn("Unable to create a pattern for file:file_name from a File object", 620)
 
 
-def convert_file_name_and_path_to_pattern(file):
+def convert_file_name_and_path_to_pattern(f):
     file_name_path_expressions = []
-    if file.file_name and file.file_extension and file.file_extension.value:
-        file_name_path_expressions.append(convert_file_name_and_file_extension(file.file_name, file.file_extension))
-    elif file.file_name:
-        file_name_path_expressions.append(create_term("file:file_name", file.file_name.condition, file.file_name.value))
-    if file.file_path:
-        if file.device_path:
+    if f.file_name and f.file_extension and f.file_extension.value:
+        file_name_path_expressions.append(convert_file_name_and_file_extension(f.file_name, f.file_extension))
+    elif f.file_name:
+        file_name_path_expressions.append(create_term("file:file_name", f.file_name.condition, f.file_name.value))
+    if f.file_path:
+        if f.device_path:
             file_name_path_expressions.append(create_term("file:parent_directory_ref.name",
-                                                          file.file_path.condition,
-                                                          file.device_path.value + file.file_path.value))
-    if file.full_path:
+                                                          f.file_path.condition,
+                                                          f.device_path.value + f.file_path.value))
+    if f.full_path:
         warn("1.x full file paths are not processed, yet", 802)
     if file_name_path_expressions:
         return create_boolean_expression("AND", file_name_path_expressions)
@@ -714,37 +714,37 @@ _FILE_PROPERTIES = [["size_in_bytes", "file:size"],
                     ["decryption_key", "file:decryption_key"]]
 
 
-def convert_file_to_pattern(file):
+def convert_file_to_pattern(f):
     expressions = []
-    if file.hashes is not None:
-        hash_expression = convert_hashes_to_pattern(file.hashes)
+    if f.hashes is not None:
+        hash_expression = convert_hashes_to_pattern(f.hashes)
         if hash_expression:
             expressions.append(hash_expression)
-    file_name_and_path_expression = convert_file_name_and_path_to_pattern(file)
+    file_name_and_path_expression = convert_file_name_and_path_to_pattern(f)
     if file_name_and_path_expression:
         expressions.append(file_name_and_path_expression)
     properties_expressions = []
     for prop_spec in _FILE_PROPERTIES:
         prop_1x = prop_spec[0]
         object_path = prop_spec[1]
-        if hasattr(file, prop_1x) and getattr(file, prop_1x):
-            term = add_comparison_expression(getattr(file, prop_1x), object_path)
+        if hasattr(f, prop_1x) and getattr(f, prop_1x):
+            term = add_comparison_expression(getattr(f, prop_1x), object_path)
             if term:
                 properties_expressions.append(term)
     if properties_expressions:
         expressions.extend(properties_expressions)
-    if isinstance(file, WinExecutableFile):
-        windows_executable_file_expression = convert_windows_executable_file_to_pattern(file)
+    if isinstance(f, WinExecutableFile):
+        windows_executable_file_expression = convert_windows_executable_file_to_pattern(f)
         if windows_executable_file_expression:
             expressions.append(windows_executable_file_expression)
         else:
-            warn("No WinExecutableFile properties found in %s", 613, text_type(file))
-    if isinstance(file, ArchiveFile):
-        archive_file_expressions = convert_archive_file_to_pattern(file)
+            warn("No WinExecutableFile properties found in %s", 613, text_type(f))
+    if isinstance(f, ArchiveFile):
+        archive_file_expressions = convert_archive_file_to_pattern(f)
         if archive_file_expressions:
             expressions.append(archive_file_expressions)
         else:
-            warn("No ArchiveFile properties found in %s", 614, text_type(file))
+            warn("No ArchiveFile properties found in %s", 614, text_type(f))
     if expressions:
         return create_boolean_expression("AND", expressions)
 

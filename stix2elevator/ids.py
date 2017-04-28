@@ -1,6 +1,5 @@
 import uuid
 import re
-from six import text_type
 
 from stix2elevator.utils import *
 

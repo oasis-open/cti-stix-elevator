@@ -1,7 +1,6 @@
 
 # external
 import pycountry
-from six import text_type
 
 from cybox.core import Observable
 from lxml import etree
@@ -170,7 +169,7 @@ def convert_marking_specification(marking_specification, bundle_instance, sdo_in
         ms = marking_specification.marking_structures
         for mark_spec in ms:
             marking_definition_instance = create_basic_object("marking-definition", marking_specification)
-            marking_created_by_ref = process_information_source(marking_specification.information_source,
+            marking_created_by_ref = process_information_source(marking_specification.information_source, # noqa
                                                                 marking_definition_instance, bundle_instance,
                                                                 parent_created_by_ref, parent_timestamp)
             if isinstance(mark_spec, TLPMarkingStructure):
@@ -274,9 +273,11 @@ def handle_sightings_observables(related_observables, bundle_instance, parent_ti
         if ref.item.idref is None:
             # embedded
             new20s = handle_embedded_object(ref.item, bundle_instance, sighted_object_created_by_ref, parent_timestamp)
-            refs.append(new20s["id"])
+            for new20 in new20s:
+                refs.append(new20["id"])
         else:
             refs.append(ref.item.idref)
+    return refs
 
 
 def process_information_source_for_sighting(information_source, sighting_instance, bundle_instance, parent_timestamp):
@@ -316,7 +317,7 @@ def handle_sighting(sighting, sighted_object_id, bundle_instance, parent_timesta
 # Relationships
 
 
-def create_relationship(source_ref, target_ref, verb, rel_obj, parent_timestamp, endpoint_identity_ref):
+def create_relationship(source_ref, target_ref, verb, rel_obj=None, parent_timestamp=None, endpoint_identity_ref=None):
     relationship_instance = create_basic_object("relationship", rel_obj, parent_timestamp)
     relationship_instance["source_ref"] = source_ref
     relationship_instance["target_ref"] = target_ref
@@ -679,19 +680,20 @@ def convert_vulnerability(v, et, bundle_instance, parent_created_by_ref, parent_
 
 
 def convert_exploit_target(et, bundle_instance, parent_created_by_ref, parent_timestamp):
+    ets = []
     if hasattr(et, "created") and et.timestamp:
         parent_timestamp = et.timestamp
     if et.vulnerabilities is not None:
         for v in et.vulnerabilities:
-            bundle_instance["objects"].append(convert_vulnerability(v, et, bundle_instance,
-                                                                    parent_created_by_ref,
-                                                                    parent_timestamp))
+            ets.append(convert_vulnerability(v, et, bundle_instance, parent_created_by_ref, parent_timestamp))
     if et.weaknesses is not None:
         for w in et.weaknesses:
             warn("ExploitTarget/Weaknesses type in %s not supported in STIX 2.0", 405, et.id_)
     if et.configuration is not None:
         for c in et.configuration:
             warn("ExploitTarget/Configurations type in %s not supported in STIX 2.0", 406, et.id_)
+    bundle_instance["objects"].extend(ets)
+    return ets
 
 
 # identities
@@ -912,7 +914,6 @@ def negate_indicator(indicator):
 
 
 def convert_indicator(indicator, bundle_instance, parent_created_by_ref, parent_timestamp):
-    global SUB_INDICATOR_IDS
     indicator_instance = create_basic_object("indicator", indicator, parent_timestamp)
     process_description_and_short_description(indicator_instance, indicator)
     convert_controlled_vocabs_to_open_vocabs(indicator_instance, "labels", indicator.indicator_types,
@@ -1012,7 +1013,7 @@ def convert_observed_data(obs, bundle_instance, parent_created_by_ref, parent_ti
             related = convert_cybox_object(o)
             if related:
                 for index, obj in related.items():
-                    observed_data_instance["objects"][index+current_largest_id] = obj
+                    observed_data_instance["objects"][index + current_largest_id] = obj
     info("'first_observed' and 'last_observed' data not available directly on %s - using timestamp", 901, obs.id_)
     observed_data_instance["first_observed"] = observed_data_instance["created"]
     observed_data_instance["last_observed"] = observed_data_instance["created"]

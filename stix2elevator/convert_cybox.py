@@ -1,5 +1,3 @@
-import datetime
-
 import cybox
 
 from stix2elevator.convert_pattern import *
@@ -24,21 +22,21 @@ def convert_uri(uri):
     return {"type": "url", "value": uri.value.value}
 
 
-def create_directory(file):
-    return {"type": "directory", "path": file.file_path.value}
+def create_directory(f):
+    return {"type": "directory", "path": f.file_path.value}
 
 
-def convert_file_properties(file):
+def convert_file_properties(f):
     cybox_dict = {"type": "file"}
-    if file.size is not None:
-        if isinstance(file.size.value, list):
+    if f.size is not None:
+        if isinstance(f.size.value, list):
             error("File size window not allowed in top level observable, using first value", 511)
-            cybox_dict["size"] = int(file.size.value[0])
+            cybox_dict["size"] = int(f.size.value[0])
         else:
-            cybox_dict["size"] = int(file.size)
-    if file.hashes is not None:
+            cybox_dict["size"] = int(f.size)
+    if f.hashes is not None:
         hashes = {}
-        for h in file.hashes:
+        for h in f.hashes:
             if text_type(h.type_).startswith("SHA"):
                 hash_type = "SHA" + "-" + text_type(h.type_)[3:]
             elif text_type(h.type_) == "SSDEEP":
@@ -47,18 +45,18 @@ def convert_file_properties(file):
                 hash_type = text_type(h.type_)
             hashes[hash_type] = h.simple_hash_value.value
         cybox_dict["hashes"] = hashes
-    if file.file_name:
-        cybox_dict["file_name"] = text_type(file.file_name)
-    if file.full_path:
+    if f.file_name:
+        cybox_dict["file_name"] = text_type(f.file_name)
+    if f.full_path:
         warn("1.x full file paths are not processed, yet", 802)
     return cybox_dict
 
 
-def convert_file(file):
+def convert_file(f):
     objs = {}
-    objs[0] = convert_file_properties(file)
-    if file.file_path:
-        objs[1] = create_directory(file)
+    objs[0] = convert_file_properties(f)
+    if f.file_path:
+        objs[1] = create_directory(f)
         objs[0]["parent_directory_ref"] = "1"
     return objs
 
@@ -77,7 +75,7 @@ def convert_email_message(email_message):
     if email_message.header:
         header = email_message.header
         if header.date:
-            email_dict["date"] = header, datetime.date.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
+            email_dict["date"] = header.date.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
         if header.content_type:
             email_dict["content_type"] = text_type(header.content_type)
         if header.subject:
