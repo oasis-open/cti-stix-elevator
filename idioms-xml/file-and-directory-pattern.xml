@@ -3,6 +3,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:stix="http://stix.mitre.org/stix-1"
     xmlns:stixCommon="http://stix.mitre.org/common-1"
+    xmlns:indicator="http://stix.mitre.org/Indicator-2"
     xmlns:ttp="http://stix.mitre.org/TTP-1"
     xmlns:cybox="http://cybox.mitre.org/cybox-2"
     xmlns:FileObj="http://cybox.mitre.org/objects#FileObject-2"
@@ -21,21 +22,29 @@
     version="1.2"
 
     >
-    <stix:Observables cybox_major_version="1" cybox_minor_version="1">
-        <cybox:Observable id="example:observable-c8c32b6e-2ea8-51c4-6446-7f5218072f27">
-            <cybox:Object id="example:object-d7fcce87-0e98-4537-81bf-1e7ca9ad3734">
-                 <cybox:Properties xsi:type="FileObj:FileObjectType">
-                     <FileObj:File_Path>/usr/local/iprip32.dll</FileObj:File_Path>
-                     <FileObj:Hashes>
-                            <cyboxCommon:Hash>
-                                <cyboxCommon:Type condition="Equals" xsi:type="cyboxVocabs:HashNameVocab-1.0">SHA256</cyboxCommon:Type>
-                                <cyboxCommon:Simple_Hash_Value condition="Equals">e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855</cyboxCommon:Simple_Hash_Value>
-                            </cyboxCommon:Hash>
-                        </FileObj:Hashes>
-                 </cybox:Properties>
-            </cybox:Object>
-        </cybox:Observable>
-    </stix:Observables>
+    <stix:Indicators>
+        <stix:Indicator xsi:type="indicator:IndicatorType"
+                        id="example:Indicator-53fe3b22-0201-47cf-85d0-97c02164528d"
+                        timestamp="2014-05-08T09:00:00.000000Z">
+            <indicator:Type xsi:type="stixVocabs:IndicatorTypeVocab-1.1">IP Watchlist</indicator:Type>
+            <indicator:Observable id="example:observable-c8c32b6e-2ea8-51c4-6446-7f5218072f27">
+                <cybox:Object id="example:object-d7fcce87-0e98-4537-81bf-1e7ca9ad3734">
+                     <cybox:Properties xsi:type="FileObj:FileObjectType">
+                         <FileObj:File_Path>/usr/local/iprip32.dll</FileObj:File_Path>
+                         <FileObj:Hashes>
+                                <cyboxCommon:Hash>
+                                    <cyboxCommon:Type condition="Equals" xsi:type="cyboxVocabs:HashNameVocab-1.0">SHA256</cyboxCommon:Type>
+                                    <cyboxCommon:Simple_Hash_Value condition="Equals">e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855</cyboxCommon:Simple_Hash_Value>
+                                </cyboxCommon:Hash>
+                            </FileObj:Hashes>
+                     </cybox:Properties>
+                </cybox:Object>
+            </indicator:Observable>
+            <indicator:Indicated_TTP>
+                <stixCommon:TTP idref="example:TTP-bc66360d-a7d1-4d8c-ad1a-ea3a13d62da9" />
+            </indicator:Indicated_TTP>
+        </stix:Indicator>
+    </stix:Indicators>
     <stix:TTPs>
         <stix:TTP xsi:type="ttp:TTPType" id="example:ttp-dd955e08-16d0-6f08-5064-50d9e7a3104d" timestamp="2014-05-08T09:00:00.000000Z">
             <ttp:Title>Malware C2 Channel</ttp:Title>

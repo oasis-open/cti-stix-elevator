@@ -22,18 +22,15 @@ def convert_uri(uri):
     return {"type": "url", "value": uri.value.value}
 
 
-def create_directory(f):
-    return {"type": "directory", "path": f.file_path.value}
-
-
 def convert_file_properties(f):
-    cybox_dict = {"type": "file"}
+    file_dict = {"type": "file"}
+    dir_dict = None
     if f.size is not None:
         if isinstance(f.size.value, list):
             error("File size window not allowed in top level observable, using first value", 511)
-            cybox_dict["size"] = int(f.size.value[0])
+            file_dict["size"] = int(f.size.value[0])
         else:
-            cybox_dict["size"] = int(f.size)
+            file_dict["size"] = int(f.size)
     if f.hashes is not None:
         hashes = {}
         for h in f.hashes:
@@ -44,19 +41,29 @@ def convert_file_properties(f):
             else:
                 hash_type = text_type(h.type_)
             hashes[hash_type] = h.simple_hash_value.value
-        cybox_dict["hashes"] = hashes
+        file_dict["hashes"] = hashes
     if f.file_name:
-        cybox_dict["file_name"] = text_type(f.file_name)
+        file_dict["file_name"] = text_type(f.file_name)
+    elif f.file_path and f.file_path.value:
+        index = f.file_path.value.rfind("/")
+        if index == -1:
+            index = f.file_path.value.rfind("\\")
+        if not (f.file_path.value.endswith("/") or f.file_path.value.endswith("\\")):
+            file_dict["file_name"] = f.file_path.value[index + 1:]
+        dir_path = f.file_path.value[0: index]
+        if dir_path:
+            dir_dict = {"type": "directory",
+                        "path": (f.device_path.value if f.device_path else "") + dir_path}
     if f.full_path:
         warn("1.x full file paths are not processed, yet", 802)
-    return cybox_dict
+    return file_dict, dir_dict
 
 
 def convert_file(f):
     objs = {}
-    objs[0] = convert_file_properties(f)
-    if f.file_path:
-        objs[1] = create_directory(f)
+    objs[0], dir_dict = convert_file_properties(f)
+    if dir_dict:
+        objs[1] = dir_dict
         objs[0]["parent_directory_ref"] = "1"
     return objs
 

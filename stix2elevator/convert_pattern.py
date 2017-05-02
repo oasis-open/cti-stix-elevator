@@ -694,11 +694,26 @@ def convert_file_name_and_path_to_pattern(f):
         file_name_path_expressions.append(convert_file_name_and_file_extension(f.file_name, f.file_extension))
     elif f.file_name:
         file_name_path_expressions.append(create_term("file:file_name", f.file_name.condition, f.file_name.value))
-    if f.file_path:
-        if f.device_path:
-            file_name_path_expressions.append(create_term("file:parent_directory_ref.name",
-                                                          f.file_path.condition,
-                                                          f.device_path.value + f.file_path.value))
+    if f.file_path and f.file_path.value:
+        index = f.file_path.value.rfind("/")
+        if index == -1:
+            index = f.file_path.value.rfind("\\")
+        if index == -1:
+            warn("Ambiguous file path '%s' was not processed", 816, f.file_path.value)
+        else:
+            if not (f.file_path.value.endswith("/") or f.file_path.value.endswith("\\")):
+                file_name_path_expressions.append(create_term("file:file_name",
+                                                              f.file_path.condition,
+                                                              f.file_path.value[index + 1:]))
+                file_name_path_expressions.append(create_term("file:parent_directory_ref.path",
+                                                              f.file_path.condition,
+                                                              ((f.device_path.value if f.device_path else "") +
+                                                               f.file_path.value[0: index])))
+            else:
+                file_name_path_expressions.append(create_term("directory:path",
+                                                              f.file_path.condition,
+                                                              ((f.device_path.value if f.device_path else "") +
+                                                               f.file_path.value[0: index])))
     if f.full_path:
         warn("1.x full file paths are not processed, yet", 802)
     if file_name_path_expressions:
