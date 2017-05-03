@@ -1,7 +1,6 @@
 
 # external
 import pycountry
-from six import text_type
 
 from cybox.core import Observable
 from lxml import etree
@@ -28,7 +27,7 @@ from stix.ttp import TTP
 from stixmarx import navigator
 
 # internal
-from stix2elevator.convert_cybox import convert_cybox_object
+from stix2elevator.convert_cybox import convert_cybox_object, fix_cybox_relationships
 from stix2elevator.convert_pattern import (convert_indicator_to_pattern, convert_observable_to_pattern, fix_pattern,
                                            interatively_resolve_placeholder_refs, create_boolean_expression,
                                            add_to_pattern_cache, remove_pattern_objects, ComparisonExpression)
@@ -39,7 +38,7 @@ from stix2elevator.vocab_mappings import *
 
 if stix.__version__ >= "1.2.0.0":
     from stix.report import Report
-if stix.__version__ >= "1.1.1.7":
+if stix.__version__ > "1.1.1.6" or stix.__version__ > "1.2.0.2":
     import stix.extensions.marking.ais
     from stix.extensions.marking.ais import AISMarkingStructure
 
@@ -164,13 +163,13 @@ def create_basic_object(stix20_type, stix1x_obj, parent_timestamp=None, parent_i
     return instance
 
 
-def convert_marking_specification(marking_specification, bundle_instance, sdo_instance, parent_created_by_ref, parent_timestamp):
+def convert_marking_specification(marking_specification, bundle_instance, parent_created_by_ref, parent_timestamp):
     return_obj = []
 
     if marking_specification.marking_structures is not None:
         ms = marking_specification.marking_structures
         for mark_spec in ms:
-            marking_definition_instance = create_basic_object("marking-definition", marking_specification)
+            marking_definition_instance = create_basic_object("marking-definition", mark_spec)
             process_information_source(marking_specification.information_source,
                                        marking_definition_instance, bundle_instance,
                                        parent_created_by_ref, parent_timestamp)
@@ -226,14 +225,15 @@ def convert_marking_specification(marking_specification, bundle_instance, sdo_in
             if "definition_type" in marking_definition_instance:
                 val = add_marking_map_entry(mark_spec, marking_definition_instance["id"])
                 if val is not None and not isinstance(val, MarkingStructure):
-                    info("Found duplicate marking structure %s", 620, marking_specification.id_)
+                    info("Found duplicate marking structure %s", 625, marking_specification.id_)
                 else:
+                    finish_basic_object(marking_specification.id_, marking_definition_instance, mark_spec, bundle_instance, parent_created_by_ref, parent_timestamp)
                     return_obj.append(marking_definition_instance)
 
     return return_obj
 
 
-def finish_basic_object(old_id, instance, stix1x_obj):
+def finish_basic_object(old_id, instance, stix1x_obj, bundle_instance, parent_created_by_ref, parent_timestamp):
     if old_id is not None:
         record_ids(old_id, instance["id"])
     if hasattr(stix1x_obj, "related_packages") and stix1x_obj.related_packages is not None:
@@ -247,8 +247,17 @@ def finish_basic_object(old_id, instance, stix1x_obj):
     for marking in markings:
         for marking_spec in marking.marking_structures:
             stix20_marking = map_1x_markings_to_20(marking_spec)
-            if not isinstance(stix20_marking, MarkingStructure):
+            if (not isinstance(stix20_marking, MarkingStructure) and
+                    instance["id"] != stix20_marking and
+                    stix20_marking not in object_refs):
                 object_refs.append(stix20_marking)
+            else:
+                stix20_markings = convert_marking_specification(marking, bundle_instance, parent_created_by_ref, parent_timestamp)
+                bundle_instance["objects"].extend(stix20_markings)
+                for m in stix20_markings:
+                    if instance["id"] != m["id"] and m["id"] not in object_refs:
+                        object_refs.append(m["id"])
+
     if object_refs:
         instance["object_marking_refs"] = object_refs
 
@@ -322,9 +331,11 @@ def handle_sightings_observables(related_observables, bundle_instance, parent_ti
         if ref.item.idref is None:
             # embedded
             new20s = handle_embedded_object(ref.item, bundle_instance, sighted_object_created_by_ref, parent_timestamp)
-            refs.append(new20s["id"])
+            for new20 in new20s:
+                refs.append(new20["id"])
         else:
             refs.append(ref.item.idref)
+    return refs
 
 
 def process_information_source_for_sighting(information_source, sighting_instance, bundle_instance, parent_timestamp):
@@ -364,7 +375,7 @@ def handle_sighting(sighting, sighted_object_id, bundle_instance, parent_timesta
 # Relationships
 
 
-def create_relationship(source_ref, target_ref, verb, rel_obj, parent_timestamp, endpoint_identity_ref):
+def create_relationship(source_ref, target_ref, verb, rel_obj=None, parent_timestamp=None, endpoint_identity_ref=None):
     relationship_instance = create_basic_object("relationship", rel_obj, parent_timestamp)
     relationship_instance["source_ref"] = source_ref
     relationship_instance["target_ref"] = target_ref
@@ -477,8 +488,11 @@ def fix_relationships(relationships, bundle_instance):
                 if new_id is None:
                     warn("Dangling source reference %s in %s", 601, ref["source_ref"], ref["id"])
                 add_id_value(ref["source_ref"], new_id)
+            mapped_ids = get_id_value(ref["source_ref"])
+            if mapped_ids[0] is None:
+                warn("Dangling source reference %s in %s", 601, ref["source_ref"], ref["id"])
             first_one = True
-            for m_id in get_id_value(ref["source_ref"]):
+            for m_id in mapped_ids:
                 if first_one:
                     ref["source_ref"] = m_id
                 else:
@@ -489,8 +503,11 @@ def fix_relationships(relationships, bundle_instance):
                 if new_id is None:
                     warn("Dangling target reference %s in %s", 602, ref["target_ref"], ref["id"])
                 add_id_value(ref["target_ref"], new_id)
+            mapped_ids = get_id_value(ref["target_ref"])
+            if mapped_ids[0] is None:
+                warn("Dangling target reference %s in %s", 602, ref["target_ref"], ref["id"])
             first_one = True
-            for m_id in get_id_value(ref["target_ref"]):
+            for m_id in mapped_ids:
                 verb = determine_appropriate_verb(ref["relationship_type"], m_id)
                 if first_one:
                     ref["target_ref"] = m_id
@@ -610,7 +627,7 @@ def convert_campaign(camp, bundle_instance, parent_created_by_ref, parent_timest
                                     "related-to",
                                     campaign_instance["created"],
                                     campaign_created_by_ref)
-    finish_basic_object(camp.id_, campaign_instance, camp)
+    finish_basic_object(camp.id_, campaign_instance, camp, bundle_instance, parent_created_by_ref, parent_timestamp)
     return campaign_instance
 
 
@@ -664,7 +681,7 @@ def convert_course_of_action(coa, bundle_instance, parent_created_by_ref, parent
         warn("All associated coas relationships of %s are assumed to not represent STIX 1.2 versioning", 710, coa.id_)
         handle_relationship_to_refs(coa.related_coas, coa_instance["id"], bundle_instance,
                                     "related-to", coa_instance["created"], coa_created_by_ref)
-    finish_basic_object(coa.id_, coa_instance, coa)
+    finish_basic_object(coa.id_, coa_instance, coa, bundle_instance, parent_created_by_ref, parent_timestamp)
     return coa_instance
 
 
@@ -716,24 +733,25 @@ def convert_vulnerability(v, et, bundle_instance, parent_created_by_ref, parent_
         for ref in v.references:
             vulnerability_instance["external_references"].append({"source_name": "internet_resource", "url": ref.reference})
     process_et_properties(vulnerability_instance, et, bundle_instance, parent_created_by_ref)
-    finish_basic_object(et.id_, vulnerability_instance, v)
+    finish_basic_object(et.id_, vulnerability_instance, v, bundle_instance, parent_created_by_ref, parent_timestamp)
     return vulnerability_instance
 
 
 def convert_exploit_target(et, bundle_instance, parent_created_by_ref, parent_timestamp):
+    ets = []
     if hasattr(et, "created") and et.timestamp:
         parent_timestamp = et.timestamp
     if et.vulnerabilities is not None:
         for v in et.vulnerabilities:
-            bundle_instance["objects"].append(convert_vulnerability(v, et, bundle_instance,
-                                                                    parent_created_by_ref,
-                                                                    parent_timestamp))
+            ets.append(convert_vulnerability(v, et, bundle_instance, parent_created_by_ref, parent_timestamp))
     if et.weaknesses is not None:
         for w in et.weaknesses:
             warn("ExploitTarget/Weaknesses type in %s not supported in STIX 2.0", 405, et.id_)
     if et.configuration is not None:
         for c in et.configuration:
             warn("ExploitTarget/Configurations type in %s not supported in STIX 2.0", 406, et.id_)
+    bundle_instance["objects"].extend(ets)
+    return ets
 
 
 # identities
@@ -822,7 +840,7 @@ def convert_identity(identity, bundle_instance, parent_timestamp=None, parent_id
         warn(msg, 710, identity_instance["id"])
         handle_relationship_to_refs(identity.related_identities, identity_instance["id"], bundle_instance,
                                     "related-to", parent_timestamp)
-    finish_basic_object(identity.id_, identity_instance, identity)
+    finish_basic_object(identity.id_, identity_instance, identity, bundle_instance, parent_id, parent_timestamp)
     return identity_instance
 
 
@@ -889,7 +907,7 @@ def convert_incident(incident, bundle_instance, parent_created_by_ref, parent_ti
              710, incident_instance["id"])
         handle_relationship_to_refs(incident.related_incidents, incident_instance["id"], bundle_instance,
                                     "related-to", incident_instance["created"], incident_created_by_ref)
-    finish_basic_object(incident.id_, incident_instance, incident)
+    finish_basic_object(incident.id_, incident_instance, incident, bundle_instance, parent_created_by_ref, parent_timestamp)
     return incident_instance
 
 
@@ -954,7 +972,6 @@ def negate_indicator(indicator):
 
 
 def convert_indicator(indicator, bundle_instance, parent_created_by_ref, parent_timestamp):
-    global SUB_INDICATOR_IDS
     indicator_instance = create_basic_object("indicator", indicator, parent_timestamp)
     process_description_and_short_description(indicator_instance, indicator)
     convert_controlled_vocabs_to_open_vocabs(indicator_instance, "labels", indicator.indicator_types,
@@ -986,10 +1003,6 @@ def convert_indicator(indicator, bundle_instance, parent_created_by_ref, parent_
         add_statement_type_to_description(indicator_instance, indicator.likely_impact, "likely_impact")
     if indicator.confidence:
         add_confidence_property_to_description(indicator_instance, indicator.confidence)
-
-    if indicator.observable and indicator.composite_indicator_expression or indicator.composite_indicator_expression:
-        warn("Indicator %s has an observable or indicator composite expression which is not supported in STIX 2.0",
-             407, indicator_instance["id"])
     if indicator.observable is not None:
         indicator_instance["pattern"] = convert_observable_to_pattern(indicator.observable, bundle_instance,
                                                                       OBSERVABLE_MAPPING)
@@ -1006,6 +1019,10 @@ def convert_indicator(indicator, bundle_instance, parent_created_by_ref, parent_
                 expressions.append(term)
         indicator_instance["pattern"] = create_boolean_expression(indicator.composite_indicator_expression.operator,
                                                                   expressions)
+    if indicator.observable and indicator.composite_indicator_expression or indicator.composite_indicator_expression:
+        warn("Indicator %s has an observable or indicator composite expression which may not supported \
+correctly in STIX 2.0 - please check this pattern",
+             407, indicator_instance["id"])
         # add_to_pattern_cache(indicator.id_, indicator_instance["pattern"])
     if "pattern" not in indicator_instance:
         # STIX doesn't handle multiple patterns for indicators
@@ -1013,9 +1030,6 @@ def convert_indicator(indicator, bundle_instance, parent_created_by_ref, parent_
     indicator_created_by_ref = process_information_source(indicator.producer, indicator_instance,
                                                           bundle_instance, parent_created_by_ref,
                                                           indicator_instance["created"])
-    if indicator.handling is not None:
-        for marking in indicator.handling:
-            convert_marking_specification(marking, bundle_instance, indicator_instance, parent_created_by_ref, parent_timestamp)
     # process information source before any relationships
     if indicator.sightings:
         for s in indicator.sightings:
@@ -1036,7 +1050,7 @@ def convert_indicator(indicator, bundle_instance, parent_created_by_ref, parent_
         warn("All associated indicators relationships of %s are assumed to not represent STIX 1.2 versioning", 710, indicator.id_)
         handle_relationship_to_refs(indicator.related_indicators, indicator_instance["id"], bundle_instance,
                                     "related-to", indicator_instance["created"], indicator_created_by_ref)
-    finish_basic_object(indicator.id_, indicator_instance, indicator)
+    finish_basic_object(indicator.id_, indicator_instance, indicator, bundle_instance, parent_created_by_ref, parent_timestamp)
     return indicator_instance
 
 
@@ -1048,12 +1062,19 @@ def convert_observed_data(obs, bundle_instance, parent_created_by_ref, parent_ti
     observed_data_instance = create_basic_object("observed-data", obs, parent_timestamp)
     # cybox_container = {"type": "cybox-container", "spec_version": "3.0"}
     observed_data_instance["objects"] = convert_cybox_object(obs.object_)
+    if obs.object_.related_objects:
+        for o in obs.object_.related_objects:
+            current_largest_id = max(observed_data_instance["objects"].keys())
+            related = convert_cybox_object(o)
+            if related:
+                for index, obj in related.items():
+                    observed_data_instance["objects"][index + current_largest_id] = obj
     info("'first_observed' and 'last_observed' data not available directly on %s - using timestamp", 901, obs.id_)
     observed_data_instance["first_observed"] = observed_data_instance["created"]
     observed_data_instance["last_observed"] = observed_data_instance["created"]
     observed_data_instance["number_observed"] = 1 if obs.sighting_count is None else obs.sighting_count
     # created_by
-    finish_basic_object(obs.id_, observed_data_instance, obs)
+    finish_basic_object(obs.id_, observed_data_instance, obs, bundle_instance, parent_created_by_ref, parent_timestamp)
     # remember the original 1.x observable, in case it has to be turned into a pattern later
     OBSERVABLE_MAPPING[obs.id_] = obs
     return observed_data_instance
@@ -1164,7 +1185,7 @@ def convert_report(report, bundle_instance, parent_created_by_ref, parent_timest
     if report.related_reports is not None:
         # FIXME: related reports?
         info("Report Related_Reports in %s is not handled, yet.", 815, report_instance["id"])
-    finish_basic_object(report.id_, report_instance, report.header)
+    finish_basic_object(report.id_, report_instance, report.header, bundle_instance, parent_created_by_ref, parent_timestamp)
     return report_instance
 
 
@@ -1228,7 +1249,7 @@ def convert_threat_actor(threat_actor, bundle_instance, parent_created_by_ref, p
         handle_relationship_to_refs(threat_actor.associated_actors, threat_actor_instance["id"], bundle_instance,
                                     "related-to", threat_actor_instance["created"], threat_actor_created_by_ref)
 
-    finish_basic_object(threat_actor.id_, threat_actor_instance, threat_actor)
+    finish_basic_object(threat_actor.id_, threat_actor_instance, threat_actor, bundle_instance, parent_created_by_ref, parent_timestamp)
     return threat_actor_instance
 
 
@@ -1269,7 +1290,7 @@ def convert_attack_pattern(ap, ttp, bundle_instance, ttp_id_used, parent_created
     if ap.capec_id is not None:
         attack_Pattern_instance["external_references"] = [{"source_name": "capec", "external_id": ap.capec_id}]
     process_ttp_properties(attack_Pattern_instance, ttp, bundle_instance, parent_created_by_ref)
-    finish_basic_object(ttp.id_, attack_Pattern_instance, ap)
+    finish_basic_object(ttp.id_, attack_Pattern_instance, ap, bundle_instance, parent_created_by_ref, parent_timestamp)
     return attack_Pattern_instance
 
 
@@ -1289,7 +1310,7 @@ def convert_malware_instance(mal, ttp, bundle_instance, ttp_id_used, parent_crea
                 warn("Only one name for malware is allowed for %s in STIX 2.0 - used first one", 508, malware_instance_instance["id"])
     # TODO: warning for MAEC content
     process_ttp_properties(malware_instance_instance, ttp, bundle_instance, parent_created_by_ref)
-    finish_basic_object(ttp.id_, malware_instance_instance, mal)
+    finish_basic_object(ttp.id_, malware_instance_instance, mal, bundle_instance, parent_created_by_ref, parent_timestamp)
     return malware_instance_instance
 
 
@@ -1335,7 +1356,7 @@ def convert_tool(tool, ttp, bundle_instance, first_one, parent_created_by_ref, p
     convert_controlled_vocabs_to_open_vocabs(tool_instance, "labels", tool.type_, TOOL_LABELS_MAP, False)
     tool_instance["tool_version"] = tool.version
     process_ttp_properties(tool_instance, ttp, bundle_instance, parent_created_by_ref)
-    finish_basic_object(ttp.id_, tool_instance, tool)
+    finish_basic_object(ttp.id_, tool_instance, tool, bundle_instance, parent_created_by_ref, parent_timestamp)
     return tool_instance
 
 
@@ -1352,7 +1373,7 @@ def convert_infrastructure(infra, ttp, bundle_instance, first_one, parent_create
         # FIXME: add observable_characterizations
         info("Infrastructure Observable_Characterization in %s is not handled, yet.", 815, infrastructure_instance["id"])
     process_ttp_properties(infrastructure_instance, ttp, bundle_instance, parent_created_by_ref)
-    finish_basic_object(ttp.id_, infrastructure_instance, infra)
+    finish_basic_object(ttp.id_, infrastructure_instance, infra, bundle_instance, parent_created_by_ref, parent_timestamp)
     return infrastructure_instance
 
 
@@ -1381,7 +1402,7 @@ def convert_identity_for_victim_target(identity, ttp, bundle_instance, ttp_gener
                                          ttp.id_ if not ttp_generated else None)
     bundle_instance["objects"].append(identity_instance)
     process_ttp_properties(identity_instance, ttp, bundle_instance, None, False)
-    finish_basic_object(ttp.id_, identity_instance, identity)
+    finish_basic_object(ttp.id_, identity_instance, identity, bundle_instance, identity_instance["id"], parent_timestamp)
     return identity_instance
 
 
@@ -1518,6 +1539,9 @@ def finalize_bundle(bundle_instance):
 
     fix_relationships(bundle_instance["relationships"], bundle_instance)
 
+    fix_cybox_relationships(bundle_instance["observed_data"])
+    # need to remove observed-data not used at the top level
+
     if stix.__version__ >= "1.2.0.0":
         add_relationships_to_reports(bundle_instance)
 
@@ -1625,7 +1649,7 @@ def convert_package(stix_package, package_created_by_ref=None, default_timestamp
     # Markings are processed in the beginning for handling later for each SDO.
     for marking_specification in navigator.iterwalk(stix_package):
         if isinstance(marking_specification, MarkingSpecification):
-            bundle_instance["objects"].extend(convert_marking_specification(marking_specification, bundle_instance, None, package_created_by_ref, parent_timestamp))
+            bundle_instance["objects"].extend(convert_marking_specification(marking_specification, bundle_instance, package_created_by_ref, parent_timestamp))
 
     # do observables first, especially before indicators!
 

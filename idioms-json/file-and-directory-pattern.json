@@ -1,0 +1,26 @@
+{
+    "id": "bundle--cc0ca596-70e6-4dac-9bef-603166d17db8",
+    "objects": [
+        {
+            "created": "2014-05-08T09:00:00.000Z",
+            "id": "indicator--53fe3b22-0201-47cf-85d0-97c02164528d",
+            "labels": [
+                "ip-watchlist"
+            ],
+            "modified": "2014-05-08T09:00:00.000Z",
+            "pattern": "[(file:hashes.'SHA-256' = 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855' AND (file:file_name = 'iprip32.dll' AND file:parent_directory_ref.path = '/usr/local'))]",
+            "type": "indicator",
+            "valid_from": "2014-05-08T09:00:00.000000Z"
+        },
+        {
+            "created": "2014-05-08T09:00:00.000Z",
+            "id": "relationship--73a70747-c74c-420b-9b05-c7cd2f6f07bf",
+            "modified": "2014-05-08T09:00:00.000Z",
+            "relationship_type": "indicates",
+            "source_ref": "indicator--53fe3b22-0201-47cf-85d0-97c02164528d",
+            "type": "relationship"
+        }
+    ],
+    "spec_version": "2.0",
+    "type": "bundle"
+}

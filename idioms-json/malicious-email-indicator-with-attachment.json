@@ -10,7 +10,7 @@
             ],
             "modified": "2014-10-31T15:52:13.127Z",
             "name": "Malicious E-mail",
-            "pattern": "[email-message:subject MATCHES '^[IMPORTANT] Please Review Before']",
+            "pattern": "[(email-message:subject MATCHES '^[IMPORTANT] Please Review Before' AND email-message:body_multipart[*].body_raw_ref.file_name MATCHES '^Final Report.*doc.exe$')]",
             "type": "indicator",
             "valid_from": "2014-10-31T15:52:13.127931Z"
         },
@@ -36,7 +36,7 @@
             ],
             "modified": "2014-10-31T15:52:13.127Z",
             "name": "Malicious E-mail Attachment",
-            "pattern": "unconverted_term:example:Observable-9c9869a2-f822-4682-bda4-e89d31b18704",
+            "pattern": "[file:file_name MATCHES '^Final Report.*doc.exe$']",
             "type": "indicator",
             "valid_from": "2014-10-31T15:52:13.127668Z"
         },

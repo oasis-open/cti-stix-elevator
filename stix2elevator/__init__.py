@@ -4,7 +4,6 @@ import json
 import logging
 
 # external
-import stix
 from stix.core import STIXPackage
 
 from six import StringIO
@@ -17,7 +16,7 @@ import stixmarx
 
 # internal
 from stix2elevator.convert_pattern import clear_pattern_mapping
-from stix2elevator.ids import clear_id_mapping
+from stix2elevator.ids import clear_id_mapping, clear_object_id_mapping
 from stix2elevator.utils import *
 from stix2elevator.convert_stix import convert_package
 from stix2elevator.options import get_validator_options, initialize_options, get_option_value, set_option_value
@@ -36,6 +35,7 @@ def elevate_file(fn):
     clear_id_mapping()
     clear_1x_markings_map()
     clear_pattern_mapping()
+    clear_object_id_mapping()
 
     validator_options = get_validator_options()
 
@@ -72,6 +72,7 @@ def elevate_string(string):
     clear_id_mapping()
     clear_1x_markings_map()
     clear_pattern_mapping()
+    clear_object_id_mapping()
 
     validator_options = get_validator_options()
 
@@ -109,6 +110,7 @@ def elevate_package(package):
     clear_id_mapping()
     clear_1x_markings_map()
     clear_pattern_mapping()
+    clear_object_id_mapping()
 
     validator_options = get_validator_options()
 
