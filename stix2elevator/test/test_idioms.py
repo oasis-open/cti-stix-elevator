@@ -40,9 +40,12 @@ def idiom_mappings(xml_file_path, stored_json):
         good_path, good_value = good
         last_good_field = good_path[-1]
 
-        if isinstance(good_value, (dict, list)):
+        if (isinstance(good_value, (dict, list)) or
+                any(s in (u"object_marking_refs", u"granular_markings") for s in good_path)):
             # No need to verify iterable types. Since we will deal
             # with individual values in the future.
+            # Exception: object_marking_refs and granular_markings because
+            # they contain identifiers.
             continue
 
         if last_good_field in IGNORE:
