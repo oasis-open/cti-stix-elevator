@@ -43,7 +43,8 @@ class ElevatorOptions(object):
                  no_squirrel_gaps=False, infrastructure=False,
                  package_created_by_id=None, default_timestamp=None,
                  validator_args="--strict-types", enable="", disable="",
-                 silent=False, message_log_directory=None, output_directory=None):
+                 silent=False, message_log_directory=None,
+                 output_directory=None, log_level="INFO"):
 
         if cmd_args is not None:
             if hasattr(cmd_args, "file_"):
@@ -59,6 +60,7 @@ class ElevatorOptions(object):
             self.disable = cmd_args.disable
             self.silent = cmd_args.silent
             self.message_log_directory = cmd_args.message_log_directory
+            self.log_level = cmd_args.log_level
             if hasattr(cmd_args, "output_directory"):
                 self.output_directory = cmd_args.output_directory
 
@@ -75,10 +77,11 @@ class ElevatorOptions(object):
             self.disable = disable
             self.silent = silent
             self.message_log_directory = message_log_directory
+            self.log_level = log_level
             self.output_directory = output_directory
 
         if self.silent and self.message_log_directory:
-            log.warn("Both console and output log have disabled messages.", extra={"ecode": 209})
+            warn("Both console and output log have disabled messages.", 209)
 
         # Convert string of comma-separated checks to a list,
         # and convert check code numbers to names. By default all messages are

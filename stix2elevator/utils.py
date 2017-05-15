@@ -9,7 +9,13 @@ from six import text_type, binary_type, iteritems
 
 from stix2elevator import options
 
-log = None
+# Console Handler for Elevator messages
+ch = logging.StreamHandler()
+ch.setFormatter(logging.Formatter("[%(ecode)d] [%(levelname)-7s] [%(asctime)s] %(message)s"))
+
+# Module-level logger
+log = logging.getLogger(__name__)
+log.addHandler(ch)
 
 
 def info(fmt, ecode, *args):
@@ -19,7 +25,7 @@ def info(fmt, ecode, *args):
 
 def warn(fmt, ecode, *args):
     if options.msg_id_enabled(ecode):
-        log.warn(fmt, *args, extra={'ecode': ecode})
+        log.warning(fmt, *args, extra={'ecode': ecode})
 
 
 def error(fmt, ecode, *args):
@@ -28,16 +34,10 @@ def error(fmt, ecode, *args):
 
 
 def setup_logger(package_id):
-    global log
-
-    logging.basicConfig(
-        level=logging.DEBUG,
-        format="[%(ecode)d] [%(levelname)-7s] [%(asctime)s] %(message)s"
-    )
-
     if options.ALL_OPTIONS:
+        log.setLevel(options.get_option_value("log_level"))
+
         if not options.get_option_value("message_log_directory"):
-            log = logging.getLogger(__name__)
             return
 
         output_directory = options.get_option_value("message_log_directory")
@@ -56,7 +56,7 @@ def setup_logger(package_id):
 
         destination = os.path.join(output_directory, filename)
         destination = os.path.abspath(destination)
-        log = logging.getLogger(__name__)
+
         fh = logging.FileHandler(destination, mode='w')
         fh.setFormatter(logging.Formatter("[%(ecode)d] [%(levelname)-7s] [%(asctime)s] %(message)s"))
         log.addHandler(fh)

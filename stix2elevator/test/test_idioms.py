@@ -1,6 +1,5 @@
-import os
 import json
-import pytest
+import os
 
 try:
     from itertools import izip as zip
@@ -10,7 +9,7 @@ except ImportError:
 from six import StringIO
 
 from stix2elevator import elevate_file
-from stix2elevator.options import initialize_options
+from stix2elevator.options import initialize_options, set_option_value
 from stix2elevator.utils import iterpath, find_dir
 
 
@@ -31,6 +30,7 @@ def idiom_mappings(xml_file_path, stored_json):
     print("Checking - " + xml_file_path)
 
     initialize_options()
+    set_option_value("log_level", "ERROR")
 
     converted_json = elevate_file(xml_file_path)
     io = StringIO(converted_json)
