@@ -1,12 +1,8 @@
 import json
 import os
 
-try:
-    from itertools import izip as zip
-except ImportError:
-    from itertools import zip_longest as zip
-
 from six import StringIO
+from six.moves import zip
 
 from stix2elevator import elevate_file
 from stix2elevator.options import initialize_options, set_option_value
