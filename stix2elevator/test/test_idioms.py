@@ -27,10 +27,10 @@ IGNORE = (u"id", u"idref", u"created_by_ref", u"object_refs", u"marking_ref",
 def idiom_mappings(xml_file_path, stored_json):
     """Test fresh conversion from XML to JSON matches stored JSON samples."""
     print("Checking - " + xml_file_path)
-    print("With - " + stored_json["id"])
+    print("With Master - " + stored_json["id"])
 
     initialize_options()
-    set_option_value("log_level", "ERROR")
+    set_option_value("log_level", "CRITICAL")
     set_option_value("validator_args", "--no-cache")
 
     converted_json = elevate_file(xml_file_path)

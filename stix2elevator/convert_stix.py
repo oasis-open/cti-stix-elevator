@@ -201,20 +201,20 @@ def convert_marking_specification(marking_specification, bundle_instance, parent
                 if mark_spec.is_proprietary is not None:
                     definition["is_proprietary"] = "true"
                     if (mark_spec.is_proprietary.ais_consent is not None and
-                                mark_spec.is_proprietary.ais_consent.consent is not None):
+                            mark_spec.is_proprietary.ais_consent.consent is not None):
                         definition["consent"] = text_type(mark_spec.is_proprietary.ais_consent.consent).lower()
                     if (mark_spec.is_proprietary.tlp_marking is not None and
-                                mark_spec.is_proprietary.tlp_marking.color is not None):
+                            mark_spec.is_proprietary.tlp_marking.color is not None):
                         definition["tlp"] = text_type(mark_spec.is_proprietary.tlp_marking.color).lower()
                     if mark_spec.is_proprietary.cisa_proprietary is not None:
                         definition["is_cisa_proprietary"] = text_type(mark_spec.is_proprietary.cisa_proprietary).lower()
                 elif mark_spec.not_proprietary is not None:
                     definition["is_proprietary"] = "false"
                     if (mark_spec.not_proprietary.ais_consent is not None and
-                                mark_spec.not_proprietary.ais_consent.consent is not None):
+                            mark_spec.not_proprietary.ais_consent.consent is not None):
                         definition["consent"] = text_type(mark_spec.not_proprietary.ais_consent.consent).lower()
                     if (mark_spec.not_proprietary.tlp_marking is not None and
-                                mark_spec.not_proprietary.tlp_marking.color is not None):
+                            mark_spec.not_proprietary.tlp_marking.color is not None):
                         definition["tlp"] = text_type(mark_spec.not_proprietary.tlp_marking.color).lower()
                     if mark_spec.not_proprietary.cisa_proprietary is not None:
                         definition["is_cisa_proprietary"] = text_type(mark_spec.not_proprietary.cisa_proprietary).lower()
@@ -227,7 +227,8 @@ def convert_marking_specification(marking_specification, bundle_instance, parent
                 if val is not None and not isinstance(val, MarkingStructure):
                     info("Found duplicate marking structure %s", 625, marking_specification.id_)
                 else:
-                    finish_basic_object(marking_specification.id_, marking_definition_instance, mark_spec, bundle_instance, parent_created_by_ref, parent_timestamp)
+                    finish_basic_object(marking_specification.id_, marking_definition_instance,
+                                        mark_spec, bundle_instance, parent_created_by_ref, parent_timestamp)
                     return_obj.append(marking_definition_instance)
 
     return return_obj
