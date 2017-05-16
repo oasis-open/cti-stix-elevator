@@ -11,7 +11,7 @@ def main():
 
     elevator_parser.add_argument(
         "dir_",
-        help="A directory contaning STIX 1.x documents to be elevated.",
+        help="A directory containing STIX 1.x documents to be elevated.",
         metavar="dir"
     )
 

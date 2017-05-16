@@ -43,7 +43,8 @@ class ElevatorOptions(object):
                  no_squirrel_gaps=False, infrastructure=False,
                  package_created_by_id=None, default_timestamp=None,
                  validator_args="--strict-types", enable="", disable="",
-                 silent=False, message_log_directory=None, output_directory=None):
+                 silent=False, message_log_directory=None,
+                 output_directory=None, log_level="INFO"):
 
         if cmd_args is not None:
             if hasattr(cmd_args, "file_"):
@@ -59,6 +60,7 @@ class ElevatorOptions(object):
             self.disable = cmd_args.disable
             self.silent = cmd_args.silent
             self.message_log_directory = cmd_args.message_log_directory
+            self.log_level = cmd_args.log_level
             if hasattr(cmd_args, "output_directory"):
                 self.output_directory = cmd_args.output_directory
 
@@ -75,10 +77,11 @@ class ElevatorOptions(object):
             self.disable = disable
             self.silent = silent
             self.message_log_directory = message_log_directory
+            self.log_level = log_level
             self.output_directory = output_directory
 
         if self.silent and self.message_log_directory:
-            log.warn("Both console and output log have disabled messages.", extra={"ecode": 209})
+            warn("Both console and output log have disabled messages.", 209)
 
         # Convert string of comma-separated checks to a list,
         # and convert check code numbers to names. By default all messages are
@@ -96,6 +99,8 @@ class ElevatorOptions(object):
                             for x in self.enabled]
         else:
             self.enabled = [text_type(x) for x in CHECK_CODES]
+
+        self.marking_container = None
 
 
 def initialize_options(elevator_args=None):
@@ -148,7 +153,7 @@ CHECK_CODES = [201, 202, 203, 204, 205, 206, 207, 208, 209, 210,
                301, 302, 303, 304, 305, 306,
 
                401, 402, 403, 404, 405, 406, 407, 408, 409, 410, 411, 412, 413,
-               414, 415, 416, 417, 418, 419, 420, 421, 422, 423, 424,
+               414, 415, 416, 417, 418, 419, 420, 421, 422, 423, 424, 425,
 
                501, 502, 503, 504, 505, 506, 507, 508, 509, 510, 511, 512,
 

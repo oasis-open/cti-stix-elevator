@@ -10,7 +10,7 @@ def test_structured_text_list():
         "First description",
         "Second description",
     ]
-    print(indicator.to_xml())
+    print(indicator.to_xml().decode("utf-8"))
     print(indicator.to_json())
 
     actual = convert_stix.process_structured_text_list(indicator.descriptions)

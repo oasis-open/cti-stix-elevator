@@ -490,7 +490,9 @@ def convert_cybox_object(obj):
     # TODO:  should related objects be handled on a case-by-case basis or just ignored
     prop = obj.properties
     objs = {}
-    if isinstance(prop, Address):
+    if prop is None:
+        return None
+    elif isinstance(prop, Address):
         objs[0] = convert_address(prop)
     elif isinstance(prop, URI):
         objs[0] = convert_uri(prop)

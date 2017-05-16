@@ -17,6 +17,9 @@ build/
 dist/
 *.egg-info
 
+# log folder for elevator
+/logs/
+
 .tox
 .cache
 

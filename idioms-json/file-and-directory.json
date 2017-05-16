@@ -16,7 +16,6 @@
                     },
                     "parent_directory_ref": "1",
                     "type": "file"
-
                 },
                 "1": {
                     "path": "/usr/local",
