@@ -1,3 +1,6 @@
+
+from __future__ import print_function
+
 import json
 import os
 
@@ -24,9 +27,11 @@ IGNORE = (u"id", u"idref", u"created_by_ref", u"object_refs", u"marking_ref",
 def idiom_mappings(xml_file_path, stored_json):
     """Test fresh conversion from XML to JSON matches stored JSON samples."""
     print("Checking - " + xml_file_path)
+    print("With - " + stored_json["id"])
 
     initialize_options()
     set_option_value("log_level", "ERROR")
+    set_option_value("validator_args", "--no-cache")
 
     converted_json = elevate_file(xml_file_path)
     io = StringIO(converted_json)
@@ -36,16 +41,19 @@ def idiom_mappings(xml_file_path, stored_json):
         good_path, good_value = good
         last_good_field = good_path[-1]
 
-        if (isinstance(good_value, (dict, list)) or
-                any(s in (u"object_marking_refs", u"granular_markings") for s in good_path)):
-            # No need to verify iterable types. Since we will deal
+        if isinstance(good_value, (dict, list)):
+            # Rule #1: No need to verify iterable types. Since we will deal
             # with individual values in the future.
-            # Exception: object_marking_refs and granular_markings because
-            # they contain identifiers.
+            continue
+
+        if (any(s in (u"object_marking_refs", u"granular_markings")
+                for s in good_path)):
+            # Exception to Rule #1: object_marking_refs and granular_markings
+            # are not verifiable because they contain identifiers per rule #2.
             continue
 
         if last_good_field in IGNORE:
-            # Since fresh conversion may create dynamic values.
+            # Rule #2: Since fresh conversion may create dynamic values.
             # Some fields are omitted for verification. Currently
             # fields with: identifier and timestamp values.
             continue
