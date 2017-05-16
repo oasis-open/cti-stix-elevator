@@ -62,12 +62,6 @@ def idiom_mappings(xml_file_path, stored_json):
 
 
 def setup_tests():
-    def print_tests():
-        print(XML_FILENAMES, len(XML_FILENAMES))
-        print("\n", "-" * 40, "\n")
-        print(TESTED_XML_FILES, len(TESTED_XML_FILES))
-        print("\n", "-" * 40, "\n")
-        print([j["id"] for j in MASTER_JSON_FILES], len(MASTER_JSON_FILES))
     directory = os.path.dirname(__file__)
 
     xml_idioms_dir = find_dir(directory, "idioms-xml")
@@ -77,7 +71,7 @@ def setup_tests():
     print(xml_idioms_dir)
     print(json_idioms_dir)
 
-    for json_filename in os.listdir(json_idioms_dir):
+    for json_filename in sorted(os.listdir(json_idioms_dir)):
         if json_filename.endswith(".json"):
             path = os.path.join(json_idioms_dir, json_filename)
 
@@ -88,13 +82,11 @@ def setup_tests():
 
             MASTER_JSON_FILES.append(loaded_json)
 
-    for xml_filename in os.listdir(xml_idioms_dir):
+    for xml_filename in sorted(os.listdir(xml_idioms_dir)):
         if xml_filename.endswith(".xml"):
             path = os.path.join(xml_idioms_dir, xml_filename)
             XML_FILENAMES.append(xml_filename.split(".")[0])
             TESTED_XML_FILES.append(path)
-
-    print_tests()
 
 
 def test_idiom_mapping(test_file, stored_master):
