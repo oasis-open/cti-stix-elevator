@@ -69,20 +69,21 @@ def get_simple_name_from_identity(identity, bundle_instance, sdo_instance):
         return identity.name
 
 
-def get_identity_ref(identity, bundle_instance, parent_timestamp):
+def get_identity_ref(identity, bundle_instance, parent_timestamp, temp_marking_id=None):
     if identity.idref is not None:
         # fix reference later
         return identity.idref
     else:
-        ident20 = convert_identity(identity, bundle_instance, parent_timestamp)
+        ident20 = convert_identity(identity, bundle_instance, parent_timestamp, temp_marking_id=temp_marking_id)
         bundle_instance["objects"].append(ident20)
         return ident20["id"]
 
 
-def process_information_source(information_source, so, bundle_instance, parent_created_by_ref, parent_timestamp):
+def process_information_source(information_source, so, bundle_instance, parent_created_by_ref, parent_timestamp, temp_marking_id=None):
     if information_source:
         if information_source.identity is not None:
-            so["created_by_ref"] = get_identity_ref(information_source.identity, bundle_instance, parent_timestamp)
+            so["created_by_ref"] = get_identity_ref(information_source.identity, bundle_instance,
+                                                    parent_timestamp, temp_marking_id)
         else:
             so["created_by_ref"] = parent_created_by_ref
 
@@ -172,7 +173,8 @@ def convert_marking_specification(marking_specification, bundle_instance, parent
             marking_definition_instance = create_basic_object("marking-definition", mark_spec)
             process_information_source(marking_specification.information_source,
                                        marking_definition_instance, bundle_instance,
-                                       parent_created_by_ref, parent_timestamp)
+                                       parent_created_by_ref, parent_timestamp,
+                                       temp_marking_id=marking_definition_instance["id"])
 
             if "modified" in marking_definition_instance:
                 del marking_definition_instance["modified"]
@@ -234,7 +236,7 @@ def convert_marking_specification(marking_specification, bundle_instance, parent
     return return_obj
 
 
-def finish_basic_object(old_id, instance, stix1x_obj, bundle_instance, parent_created_by_ref, parent_timestamp):
+def finish_basic_object(old_id, instance, stix1x_obj, bundle_instance, parent_created_by_ref, parent_timestamp, temp_marking_id=None):
     if old_id is not None:
         record_ids(old_id, instance["id"])
     if hasattr(stix1x_obj, "related_packages") and stix1x_obj.related_packages is not None:
@@ -244,23 +246,25 @@ def finish_basic_object(old_id, instance, stix1x_obj, bundle_instance, parent_cr
     # Attach markings to SDO if present.
     container = get_option_value("marking_container")
     markings = container.get_markings(stix1x_obj)
-    object_refs = []
+    object_marking_refs = []
     for marking in markings:
         for marking_spec in marking.marking_structures:
             stix20_marking = map_1x_markings_to_20(marking_spec)
             if (not isinstance(stix20_marking, MarkingStructure) and
                     instance["id"] != stix20_marking and
-                    stix20_marking not in object_refs):
-                object_refs.append(stix20_marking)
-            else:
+                    stix20_marking not in object_marking_refs):
+                object_marking_refs.append(stix20_marking)
+            elif temp_marking_id and not isinstance(stix20_marking, MarkingStructure):
+                object_marking_refs.append(temp_marking_id)
+            elif instance["id"] != stix20_marking:
                 stix20_markings = convert_marking_specification(marking, bundle_instance, parent_created_by_ref, parent_timestamp)
                 bundle_instance["objects"].extend(stix20_markings)
                 for m in stix20_markings:
-                    if instance["id"] != m["id"] and m["id"] not in object_refs:
-                        object_refs.append(m["id"])
+                    if instance["id"] != m["id"] and m["id"] not in object_marking_refs:
+                        object_marking_refs.append(m["id"])
 
-    if object_refs:
-        instance["object_marking_refs"] = object_refs
+    if object_marking_refs:
+        instance["object_marking_refs"] = object_marking_refs
 
 #
 # handle gaps
@@ -811,7 +815,7 @@ def convert_party_name(party_name, identity):
                 # add to description
 
 
-def convert_identity(identity, bundle_instance, parent_timestamp=None, parent_id=None):
+def convert_identity(identity, bundle_instance, parent_timestamp=None, parent_id=None, temp_marking_id=None):
     identity_instance = create_basic_object("identity", identity, parent_timestamp, parent_id)
     identity_instance["sectors"] = []
     identity_instance["identity_class"] = "unknown"
@@ -841,7 +845,8 @@ def convert_identity(identity, bundle_instance, parent_timestamp=None, parent_id
         warn(msg, 710, identity_instance["id"])
         handle_relationship_to_refs(identity.related_identities, identity_instance["id"], bundle_instance,
                                     "related-to", parent_timestamp)
-    finish_basic_object(identity.id_, identity_instance, identity, bundle_instance, parent_id, parent_timestamp)
+    finish_basic_object(identity.id_, identity_instance, identity, bundle_instance, parent_id,
+                        parent_timestamp, temp_marking_id=temp_marking_id)
     return identity_instance
 
 
