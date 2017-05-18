@@ -144,6 +144,13 @@ def _get_arg_parser(is_script=True):
     )
 
     parser.add_argument(
+        "--log-level",
+        default="INFO",
+        help="The logging output level.",
+        choices=["DEBUG", "INFO", "WARN", "ERROR", "CRITICAL"]
+    )
+
+    parser.add_argument(
         "-p",
         "--policy",
         help="The policy to dealt with errors",
