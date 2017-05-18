@@ -29,10 +29,12 @@ log = logging.getLogger(__name__)
 
 
 def elevate_file(fn):
+    global MESSAGES_GENERATED
     print("Results produced by the stix2-elevator are not for production purposes.")
     clear_id_mapping()
     clear_pattern_mapping()
     clear_object_id_mapping()
+    MESSAGES_GENERATED = False
 
     validator_options = get_validator_options()
 
@@ -52,8 +54,13 @@ def elevate_file(fn):
                                  separators=(',', ': '),
                                  sort_keys=True)
         validation_results = validate_string(json_string, validator_options)
+
         output.print_results(validation_results)
-        return json_string
+        if get_option_value("policy") == "no_policy" or (not MESSAGES_GENERATED and validation_results._is_valid):
+            print(json_string)
+            return json_string
+        else:
+            return None
 
     except ValidationError as ex:
         output.error("Validation error occurred: '%s'" % ex,
@@ -87,7 +94,10 @@ def elevate_string(string):
                                  sort_keys=True)
         validation_results = validate_string(json_string, validator_options)
         output.print_results(validation_results)
-        return json_string
+        if get_option_value("policy") == "no_policy" or (not MESSAGES_GENERATED and validation_results._is_valid):
+            return json_string
+        else:
+            return None
 
     except ValidationError as ex:
         output.error("Validation error occurred: '%s'" % ex,
@@ -118,7 +128,10 @@ def elevate_package(package):
                                  sort_keys=True)
         validation_results = validate_string(json_string, validator_options)
         output.print_results(validation_results)
-        return json_string
+        if get_option_value("policy") == "no_policy" or (not MESSAGES_GENERATED and validation_results._is_valid):
+            return json_string
+        else:
+            return None
 
     except ValidationError as ex:
         output.error("Validation error occurred: '%s'" % ex,

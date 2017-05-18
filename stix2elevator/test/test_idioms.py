@@ -1,6 +1,5 @@
 import os
 import json
-import pytest
 
 try:
     from itertools import izip as zip

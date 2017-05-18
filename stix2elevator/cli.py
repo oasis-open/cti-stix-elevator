@@ -143,6 +143,16 @@ def _get_arg_parser(is_script=True):
         default=None
     )
 
+    parser.add_argument(
+        "-p",
+        "--policy",
+        help="The policy to dealt with errors",
+        dest="policy",
+        choices=["no_policy", "strict_policy"],
+        action="store",
+        default="no_policy"
+    )
+
     return parser
 
 
@@ -152,7 +162,7 @@ def main():
     elevator_args = elevator_parser.parse_args()
 
     initialize_options(elevator_args)
-    print(elevate_file(elevator_args.file_))
+    elevate_file(elevator_args.file_)
 
 
 if __name__ == '__main__':

@@ -34,14 +34,15 @@ def main():
             set_option_value("file_", file_and_ext[0])
             result = elevate_file(path)
 
-            if elevator_args.output_directory:
-                destination = os.path.join(elevator_args.output_directory, file_and_ext[0] + ".json")
-                destination = os.path.abspath(destination)
-                output_file = open(destination, "w")
-                output_file.write(result)
-                output_file.close()
-            else:
-                print(result + "\n")
+            if result:
+                if elevator_args.output_directory:
+                    destination = os.path.join(elevator_args.output_directory, file_and_ext[0] + ".json")
+                    destination = os.path.abspath(destination)
+                    output_file = open(destination, "w")
+                    output_file.write(result)
+                    output_file.close()
+                else:
+                    print(result + "\n")
 
 
 if __name__ == '__main__':

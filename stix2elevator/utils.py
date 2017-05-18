@@ -11,20 +11,28 @@ from stix2elevator import options
 
 log = None
 
+MESSAGES_GENERATED = False
+
 
 def info(fmt, ecode, *args):
     if options.msg_id_enabled(ecode):
+        global MESSAGES_GENERATED
         log.info(fmt, *args, extra={'ecode': ecode})
+        MESSAGES_GENERATED = True
 
 
 def warn(fmt, ecode, *args):
     if options.msg_id_enabled(ecode):
+        global MESSAGES_GENERATED
         log.warn(fmt, *args, extra={'ecode': ecode})
+        MESSAGES_GENERATED = True
 
 
 def error(fmt, ecode, *args):
     if options.msg_id_enabled(ecode):
+        global MESSAGES_GENERATED
         log.error(fmt, *args, extra={'ecode': ecode})
+        MESSAGES_GENERATED = True
 
 
 def setup_logger(package_id):

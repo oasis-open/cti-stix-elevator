@@ -43,7 +43,8 @@ class ElevatorOptions(object):
                  no_squirrel_gaps=False, infrastructure=False,
                  package_created_by_id=None, default_timestamp=None,
                  validator_args="--strict-types", enable="", disable="",
-                 silent=False, message_log_directory=None, output_directory=None):
+                 silent=False, message_log_directory=None, output_directory=None,
+                 policy="no_policy"):
 
         if cmd_args is not None:
             if hasattr(cmd_args, "file_"):
@@ -58,6 +59,7 @@ class ElevatorOptions(object):
             self.enable = cmd_args.enable
             self.disable = cmd_args.disable
             self.silent = cmd_args.silent
+            self.policy = cmd_args.policy
             self.message_log_directory = cmd_args.message_log_directory
             if hasattr(cmd_args, "output_directory"):
                 self.output_directory = cmd_args.output_directory
@@ -74,11 +76,15 @@ class ElevatorOptions(object):
             self.enable = enable
             self.disable = disable
             self.silent = silent
+            self.policy = policy
             self.message_log_directory = message_log_directory
             self.output_directory = output_directory
 
         if self.silent and self.message_log_directory:
             log.warn("Both console and output log have disabled messages.", extra={"ecode": 209})
+
+        if self.silent and self.policy != "no_policy":
+            log.warn("silent option is not compatible with a policy", extra={"ecode": 211})
 
         # Convert string of comma-separated checks to a list,
         # and convert check code numbers to names. By default all messages are
@@ -143,7 +149,7 @@ def msg_id_enabled(msg_id):
 
 
 # These codes are aligned with elevator_log_messages spreadsheet.
-CHECK_CODES = [201, 202, 203, 204, 205, 206, 207, 208, 209, 210,
+CHECK_CODES = [201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211,
 
                301, 302, 303, 304, 305, 306,
 
