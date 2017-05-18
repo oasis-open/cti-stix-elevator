@@ -9,13 +9,8 @@ from six import text_type, binary_type, iteritems
 
 from stix2elevator import options
 
-# Console Handler for Elevator messages
-ch = logging.StreamHandler()
-ch.setFormatter(logging.Formatter("[%(ecode)d] [%(levelname)-7s] [%(asctime)s] %(message)s"))
-
 # Module-level logger
-log = logging.getLogger(__name__)
-log.addHandler(ch)
+log = None
 
 MESSAGES_GENERATED = False
 
@@ -42,7 +37,17 @@ def error(fmt, ecode, *args):
 
 
 def setup_logger(package_id):
+    global log
+
     if options.ALL_OPTIONS:
+        # Console Handler for Elevator messages
+        ch = logging.StreamHandler()
+        ch.setFormatter(logging.Formatter("[%(ecode)d] [%(levelname)-7s] [%(asctime)s] %(message)s"))
+
+        # Module-level logger
+        log = logging.getLogger(__name__)
+        log.addHandler(ch)
+
         log.setLevel(options.get_option_value("log_level"))
 
         if not options.get_option_value("message_log_directory"):
