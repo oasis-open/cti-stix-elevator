@@ -9,8 +9,18 @@ from six import text_type, binary_type, iteritems
 
 from stix2elevator import options
 
+formatter = logging.Formatter("[%(ecode)d] [%(levelname)-7s] [%(asctime)s] %(message)s")
+
+# Console Handler for Elevator messages
+ch = logging.StreamHandler()
+ch.setFormatter(formatter)
+
+# File Handler for Elevator logs, set individually for each file.
+fh = None
+
 # Module-level logger
-log = None
+log = logging.getLogger(__name__)
+log.addHandler(ch)
 
 
 def info(fmt, ecode, *args):
@@ -30,16 +40,9 @@ def error(fmt, ecode, *args):
 
 def setup_logger(package_id):
     global log
+    global fh
 
     if options.ALL_OPTIONS:
-        # Console Handler for Elevator messages
-        ch = logging.StreamHandler()
-        ch.setFormatter(logging.Formatter("[%(ecode)d] [%(levelname)-7s] [%(asctime)s] %(message)s"))
-
-        # Module-level logger
-        log = logging.getLogger(__name__)
-        log.addHandler(ch)
-
         log.setLevel(options.get_option_value("log_level"))
 
         if not options.get_option_value("message_log_directory"):
@@ -62,8 +65,12 @@ def setup_logger(package_id):
         destination = os.path.join(output_directory, filename)
         destination = os.path.abspath(destination)
 
+        # Remove File Handler from root logger if present.
+        if fh in log.handlers:
+            log.removeHandler(fh)
+
         fh = logging.FileHandler(destination, mode='w')
-        fh.setFormatter(logging.Formatter("[%(ecode)d] [%(levelname)-7s] [%(asctime)s] %(message)s"))
+        fh.setFormatter(formatter)
         log.addHandler(fh)
 
 
