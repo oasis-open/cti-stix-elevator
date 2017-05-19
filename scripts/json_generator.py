@@ -32,7 +32,7 @@ def main():
     if not os.path.exists(json_dir):
         os.makedirs(json_dir)
 
-    for filename in os.listdir(xml_dir):
+    for filename in sorted(os.listdir(xml_dir)):
         file_and_ext = filename.split(".")
         xml_path = os.path.join(xml_dir, filename)
 

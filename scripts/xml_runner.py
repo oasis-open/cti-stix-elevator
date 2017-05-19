@@ -25,7 +25,7 @@ def main():
     elevator_args = elevator_parser.parse_args()
     initialize_options(elevator_args)
 
-    for filename in os.listdir(elevator_args.dir_):
+    for filename in sorted(os.listdir(elevator_args.dir_)):
         path = os.path.join(elevator_args.dir_, filename)
 
         if path.endswith(".xml"):
