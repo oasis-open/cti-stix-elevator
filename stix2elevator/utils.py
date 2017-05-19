@@ -67,6 +67,7 @@ def setup_logger(package_id):
 
         # Remove File Handler from root logger if present.
         if fh in log.handlers:
+            fh.close()
             log.removeHandler(fh)
 
         fh = logging.FileHandler(destination, mode='w')
