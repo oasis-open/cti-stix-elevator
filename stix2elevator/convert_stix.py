@@ -222,12 +222,12 @@ def convert_marking_specification(marking_specification, bundle_instance, parent
                         definition["is_cisa_proprietary"] = text_type(mark_spec.not_proprietary.cisa_proprietary).lower()
                 marking_definition_instance["definition"] = definition
             else:
-                warn("Could not resolve Marking Structure %s", 425, marking_definition_instance["id"])
+                warn("Could not resolve Marking Structure %s", 425, identifying_info(marking_specification))
 
             if "definition_type" in marking_definition_instance:
                 val = add_marking_map_entry(mark_spec, marking_definition_instance["id"])
                 if val is not None and not isinstance(val, MarkingStructure):
-                    info("Found duplicate marking structure %s", 625, marking_specification.id_)
+                    info("Found same marking structure %s using %s", 625, identifying_info(marking_specification), map_1x_markings_to_20(mark_spec))
                 else:
                     finish_basic_object(marking_specification.id_, marking_definition_instance,
                                         mark_spec, bundle_instance, parent_created_by_ref, parent_timestamp)
@@ -254,9 +254,9 @@ def finish_basic_object(old_id, instance, stix1x_obj, bundle_instance, parent_cr
                     instance["id"] != stix20_marking and
                     stix20_marking not in object_marking_refs):
                 object_marking_refs.append(stix20_marking)
-            elif temp_marking_id and not isinstance(stix20_marking, MarkingStructure):
+            elif temp_marking_id:
                 object_marking_refs.append(temp_marking_id)
-            elif instance["id"] != stix20_marking:
+            elif not check_map_1x_markings_to_20(marking_spec):
                 stix20_markings = convert_marking_specification(marking, bundle_instance, parent_created_by_ref, parent_timestamp)
                 bundle_instance["objects"].extend(stix20_markings)
                 for m in stix20_markings:
