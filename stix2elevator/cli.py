@@ -8,6 +8,7 @@ to be mitigated to convert your STIX 1.x content.
 
 import argparse
 import textwrap
+import sys
 
 from stix2elevator import elevate_file
 from stix2elevator.options import initialize_options
@@ -169,7 +170,11 @@ def main():
     elevator_args = elevator_parser.parse_args()
 
     initialize_options(elevator_args)
-    elevate_file(elevator_args.file_)
+    result = elevate_file(elevator_args.file_)
+    if result:
+        print(result + "\n")
+    else:
+        sys.exit(1)
 
 
 if __name__ == '__main__':

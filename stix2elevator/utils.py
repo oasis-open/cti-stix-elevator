@@ -6,7 +6,6 @@ from datetime import datetime
 
 # external
 from six import text_type, binary_type, iteritems
-from stixmarx import navigator
 
 from stix2elevator import options
 
@@ -99,13 +98,7 @@ def identifying_info(stix1x_obj):
         elif hasattr(stix1x_obj, "item") and stix1x_obj.item:
             # Useful in Related Types.
             return "parent of object " + identifying_info(stix1x_obj.item)
-        else:
-            # The last resort is to find the ancestor path of this object and
-            # look for an ancestor that has an id set.
-            for ancestor in iterpath_objs(stix1x_obj, backwards=True):
-                if hasattr(ancestor, "id_") and ancestor.id_:
-                    return "- found within " + ancestor.id_
-    return "- no identifying information"
+    return "- no identifying information available"
 
 
 def canonicalize_label(t):
@@ -315,30 +308,3 @@ def find_dir(path, directory):
         if directory in dirs:
             found_dir = os.path.join(root, directory)
             return os.path.abspath(found_dir)
-
-
-def iterpath_objs(stix1x_obj, backwards=False):
-    """
-    Generates a path to the indicated object.
-    
-    Args:
-        stix1x_obj: A mixbox.Entity object.
-        backwards: If True, the generator will create the ancestors from
-            the nearest parent up to the root.
-
-    Returns:
-        A series of mixbox.Entity ancestor objects relative to stix1x_obj.
-    """
-    container = options.get_option_value("marking_container")
-    package = container.package
-
-    for path in navigator.iterpath(package):
-        if path[2] is stix1x_obj:
-            if not path[0]:
-                yield []
-
-            if backwards:
-                path[0].reverse()
-
-            for ancestor in path[0]:
-                yield ancestor

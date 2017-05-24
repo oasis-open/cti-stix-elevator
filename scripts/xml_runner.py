@@ -25,6 +25,8 @@ def main():
     elevator_args = elevator_parser.parse_args()
     initialize_options(elevator_args)
 
+    all_succeeded = True
+
     for filename in sorted(os.listdir(elevator_args.dir_)):
         path = os.path.join(elevator_args.dir_, filename)
 
@@ -43,6 +45,10 @@ def main():
                     output_file.close()
                 else:
                     print(result + "\n")
+            else:
+                all_succeeded = False
+    if not all_succeeded:
+        sys.exit(1)
 
 
 if __name__ == '__main__':

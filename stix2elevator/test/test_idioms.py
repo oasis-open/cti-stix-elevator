@@ -8,7 +8,7 @@ from six import StringIO
 from six.moves import zip
 
 from stix2elevator import elevate_file
-from stix2elevator.options import initialize_options, set_option_value
+from stix2elevator.options import initialize_options, set_option_value, get_option_value
 from stix2elevator.utils import iterpath, find_dir
 
 
@@ -32,6 +32,9 @@ def idiom_mappings(xml_file_path, stored_json):
     initialize_options()
     set_option_value("log_level", "CRITICAL")
     set_option_value("validator_args", "--no-cache")
+    if not get_option_value("policy") == "no_policy":
+        print("'no_policy' is not allowed for testing")
+    set_option_value("policy", "no_policy")
 
     converted_json = elevate_file(xml_file_path)
     io = StringIO(converted_json)
