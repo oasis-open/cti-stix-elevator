@@ -38,7 +38,8 @@ from stix2elevator.vocab_mappings import *
 
 if stix.__version__ >= "1.2.0.0":
     from stix.report import Report
-if stix.__version__ > "1.1.1.6" or stix.__version__ > "1.2.0.2":
+if ((stix.__version__.startswith("1.1.1") and stix.__version__ > "1.1.1.6") or
+        (stix.__version__.startswith("1.2.0") and stix.__version__ > "1.2.0.2")):
     import stix.extensions.marking.ais
     from stix.extensions.marking.ais import AISMarkingStructure
 
@@ -69,12 +70,12 @@ def get_simple_name_from_identity(identity, bundle_instance, sdo_instance):
         return identity.name
 
 
-def get_identity_ref(identity, bundle_instance, parent_timestamp, temp_marking_id=None):
+def get_identity_ref(identity, bundle_instance, parent_timestamp, temp_marking_id=None, from_package=False):
     if identity.idref is not None:
         # fix reference later
         return identity.idref
     else:
-        ident20 = convert_identity(identity, bundle_instance, parent_timestamp, temp_marking_id=temp_marking_id)
+        ident20 = convert_identity(identity, bundle_instance, parent_timestamp, temp_marking_id=temp_marking_id, from_package=from_package)
         bundle_instance["objects"].append(ident20)
         return ident20["id"]
 
@@ -815,7 +816,7 @@ def convert_party_name(party_name, identity):
                 # add to description
 
 
-def convert_identity(identity, bundle_instance, parent_timestamp=None, parent_id=None, temp_marking_id=None):
+def convert_identity(identity, bundle_instance, parent_timestamp=None, parent_id=None, temp_marking_id=None, from_package=False):
     identity_instance = create_basic_object("identity", identity, parent_timestamp, parent_id)
     identity_instance["sectors"] = []
     identity_instance["identity_class"] = "unknown"
@@ -845,7 +846,7 @@ def convert_identity(identity, bundle_instance, parent_timestamp=None, parent_id
         warn(msg, 710, identity_instance["id"])
         handle_relationship_to_refs(identity.related_identities, identity_instance["id"], bundle_instance,
                                     "related-to", parent_timestamp)
-    finish_basic_object(identity.id_, identity_instance, identity, bundle_instance, parent_id,
+    finish_basic_object(identity.id_, identity_instance, identity, bundle_instance, identity_instance["id"] if from_package else parent_id,
                         parent_timestamp, temp_marking_id=temp_marking_id)
     return identity_instance
 
@@ -1620,7 +1621,7 @@ def finalize_bundle(bundle_instance):
 def get_identity_from_package(information_source, bundle_instance, parent_timestamp):
     if information_source:
         if information_source.identity is not None:
-            return get_identity_ref(information_source.identity, bundle_instance, parent_timestamp)
+            return get_identity_ref(information_source.identity, bundle_instance, parent_timestamp, from_package=True)
         if information_source.contributing_sources is not None:
             if information_source.contributing_sources.source is not None:
                 sources = information_source.contributing_sources.source
@@ -1630,7 +1631,7 @@ def get_identity_from_package(information_source, bundle_instance, parent_timest
 
                 for source in sources:
                     if source.identity is not None:
-                        return get_identity_ref(source.identity, bundle_instance, parent_timestamp)
+                        return get_identity_ref(source.identity, bundle_instance, parent_timestamp, from_package=True)
     return None
 
 
