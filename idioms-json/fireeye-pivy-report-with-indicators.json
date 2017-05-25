@@ -3,6 +3,7 @@
     "objects": [
         {
             "created": "2017-05-03T14:09:50.684Z",
+            "created_by_ref": "identity--dfb67e12-388e-40dd-bc26-c13fdb20b1dd",
             "definition": {
                 "statement": "Copyright 2013 FireEye, Inc."
             },
