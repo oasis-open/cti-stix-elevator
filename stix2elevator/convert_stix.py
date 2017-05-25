@@ -227,7 +227,7 @@ def convert_marking_specification(marking_specification, bundle_instance, parent
             if "definition_type" in marking_definition_instance:
                 val = add_marking_map_entry(mark_spec, marking_definition_instance["id"])
                 if val is not None and not isinstance(val, MarkingStructure):
-                    info("Found same marking structure %s, using %s", 625, identifying_info(marking_specification), map_1x_markings_to_20(mark_spec))
+                    info("Found same marking structure %s, using %s", 625, identifying_info(marking_specification), val)
                 else:
                     finish_basic_object(marking_specification.id_, marking_definition_instance,
                                         mark_spec, bundle_instance, parent_created_by_ref, parent_timestamp)
