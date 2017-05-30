@@ -72,7 +72,7 @@ As A Script
 ~~~~~~~~~~~
 
 The elevator comes with a bundled script which you can use to elevate
-STIX 1.1.1 - 1.2.1 content to STIX 2.0 content:
+STIX 1.1.1 - 1.2.1 content to STIX 2.0 content::
 
     usage: stix2_elevator [-h] [--incidents] [--no-squirrel-gaps] [--infrastructure]
               [--package-created-by-id PACKAGE_CREATED_BY_ID]
