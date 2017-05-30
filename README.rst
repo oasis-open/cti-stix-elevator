@@ -40,7 +40,7 @@ Requirements
       Make sure to use either the latest version of python-stix 1.1.1.x or 
       1.2.0.x, depending on whether you want to support STIX 1.1.1 or STIX 1.2.
       
--  `stix2-validator <https://pypi.python.org/pypi/stix2-validator>`_ >= 0.1.0
+-  `stix2-validator <https://pypi.python.org/pypi/stix2-validator>`_ >= 0.4.0
    and its dependencies
 -  `pycountry <https://pypi.python.org/pypi/pycountry/>`_ >= 1.20
 
@@ -72,7 +72,7 @@ As A Script
 ~~~~~~~~~~~
 
 The elevator comes with a bundled script which you can use to elevate
-STIX 1.1.1 - 1.2.1 content to STIX 2.0 content::
+STIX 1.1.1 - 1.2.1 content to STIX 2.0 content:
 
     usage: stix2_elevator [-h] [--incidents] [--no-squirrel-gaps] [--infrastructure]
               [--package-created-by-id PACKAGE_CREATED_BY_ID]
