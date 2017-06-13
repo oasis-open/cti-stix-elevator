@@ -617,9 +617,14 @@ def convert_windows_executable_file_to_pattern(f):
                         if term:
                             section_expressions.append(term)
             if s.entropy:
-                section_expressions.append(create_term("file:extensions.windows_pebinary_ext.section[*].entropy",
-                                                       s.entropy.condition,
-                                                       s.entropy.value))
+                if s.entropy.min:
+                    warn("Entropy.min is not supported in STIX 2.0", 424)
+                if s.entropy.min:
+                    warn("Entropy.max is not supported in STIX 2.0", 424)
+                if s.entropy.value:
+                    section_expressions.append(create_term("file:extensions.windows_pebinary_ext.section[*].entropy",
+                                                           s.entropy.value.condition,
+                                                           s.entropy.value.value))
             if s.data_hashes:
                 section_expressions.append(convert_hashes_to_pattern(s.data_hashes))
             if s.header_hashes:
@@ -783,7 +788,9 @@ def convert_registry_key_to_pattern(reg_key):
                 key_value_term = reg_key.key.value
             else:
                 key_value_term += reg_key.key.value
-            expressions.append(create_term("win-registry-key:key", reg_key.key.condition, key_value_term))
+        else:
+            key_value_term = reg_key.key.value
+        expressions.append(create_term("win-registry-key:key", reg_key.key.condition, key_value_term))
     if reg_key.values:
         values_expressions = []
         for v in reg_key.values:
