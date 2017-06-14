@@ -3,15 +3,6 @@ import re
 
 from stix2elevator.utils import *
 
-_IDS_TO_NEW_IDS = {}
-
-SDO_WITH_NO_1X_OBJECT = []
-
-
-def clear_id_mapping():
-    global _IDS_TO_NEW_IDS
-    _IDS_TO_NEW_IDS = {}
-
 
 def record_ids(stix_id, new_id):
     if stix_id in _IDS_TO_NEW_IDS:
@@ -21,6 +12,24 @@ def record_ids(stix_id, new_id):
         error("Could not associate %s with None", 611, stix_id)
         return
     add_id_value(stix_id, new_id)
+
+
+_SDO_ID_WITH_NO_1X_OBJECT = []
+
+
+def clear_ids_with_no_1x_object():
+    global _SDO_ID_WITH_NO_1X_OBJECT
+    _SDO_ID_WITH_NO_1X_OBJECT = []
+
+
+def exists_ids_with_no_1x_object(sdo_id):
+    return sdo_id in _SDO_ID_WITH_NO_1X_OBJECT
+
+
+def add_ids_with_no_1x_object(sdo_id):
+    if not exists_ids_with_no_1x_object(sdo_id):
+        _SDO_ID_WITH_NO_1X_OBJECT.append(sdo_id)
+
 
 # arguments:
 #   stix20SOName - the name of the type of object in 2.0
@@ -43,7 +52,7 @@ def record_ids(stix_id, new_id):
 def generate_stix20_id(stix20_so_name, stix12_id=None, id_used=False):
     if not stix12_id or id_used:
         new_id = stix20_so_name + "--" + text_type(uuid.uuid4())
-        SDO_WITH_NO_1X_OBJECT.append(new_id)
+        add_ids_with_no_1x_object(new_id)
         return new_id
     else:
         result = re.search('^(.+)-([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})',
@@ -62,6 +71,9 @@ def generate_stix20_id(stix20_so_name, stix12_id=None, id_used=False):
         else:
             warn("Malformed id %s. Generated a new uuid", 605, stix12_id)
             return stix20_so_name + "--" + text_type(uuid.uuid4())
+
+
+_IDS_TO_NEW_IDS = {}
 
 
 def exists_id_key(key):
@@ -86,6 +98,11 @@ def add_id_value(key, value):
         _IDS_TO_NEW_IDS[key].append(value)
     else:
         _IDS_TO_NEW_IDS[key] = [value]
+
+
+def clear_id_mapping():
+    global _IDS_TO_NEW_IDS
+    _IDS_TO_NEW_IDS = {}
 
 
 _IDS_TO_CYBER_OBSERVABLES = {}

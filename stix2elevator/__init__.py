@@ -15,7 +15,7 @@ from stix2validator import validate_string, ValidationError
 import stixmarx
 
 # internal
-from stix2elevator.convert_pattern import clear_pattern_mapping
+from stix2elevator.convert_pattern import clear_pattern_cache, clear_observable_mappings
 from stix2elevator.ids import clear_id_mapping, clear_object_id_mapping
 from stix2elevator.utils import *
 from stix2elevator.convert_stix import convert_package
@@ -32,8 +32,9 @@ def elevate_file(fn):
     print("Results produced by the stix2-elevator are not for production purposes.")
     clear_id_mapping()
     clear_1x_markings_map()
-    clear_pattern_mapping()
+    clear_pattern_cache()
     clear_object_id_mapping()
+    clear_observable_mappings()
     MESSAGES_GENERATED = False
 
     validator_options = get_validator_options()

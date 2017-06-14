@@ -30,7 +30,8 @@ from stixmarx import navigator
 from stix2elevator.convert_cybox import convert_cybox_object, fix_cybox_relationships
 from stix2elevator.convert_pattern import (convert_indicator_to_pattern, convert_observable_to_pattern, fix_pattern,
                                            interatively_resolve_placeholder_refs, create_boolean_expression,
-                                           add_to_pattern_cache, remove_pattern_objects, ComparisonExpression)
+                                           add_to_pattern_cache, remove_pattern_objects, ComparisonExpression,
+                                           add_to_observable_mappings)
 from stix2elevator.ids import *
 from stix2elevator.options import get_option_value
 from stix2elevator.utils import *
@@ -45,8 +46,6 @@ if ((stix.__version__.startswith("1.1.1") and stix.__version__ > "1.1.1.6") or
 
 # collect kill chains
 KILL_CHAINS_PHASES = {}
-
-OBSERVABLE_MAPPING = {}
 
 
 def process_kill_chain(kc):
@@ -546,25 +545,25 @@ def add_relationships_to_reports(bundle_instance):
             elif "source_ref" in rel and rel["source_ref"] in refs_in_this_report:
                 # and target_ref is not in refs_in_this_report
                 if "target_ref" in rel and rel["target_ref"] and (
-                        rel["target_ref"] in new_ids or rel["target_ref"] in SDO_WITH_NO_1X_OBJECT):
+                        rel["target_ref"] in new_ids or exists_ids_with_no_1x_object(rel["target_ref"])):
                     rels_to_include.append(rel["id"])
                     rels_to_include.append(rel["target_ref"])
                     warn("Including %s in %s and added the target_ref %s to the report", 704, rel["id"], rep["id"], rel["target_ref"])
                 elif not ("target_ref" in rel and rel["target_ref"]):
                     rels_to_include.append(rel["id"])
                     warn("Including %s in %s although the target_ref is unknown", 706, rel["id"], rep["id"])
-                elif not (rel["target_ref"] in new_ids or rel["target_ref"] in SDO_WITH_NO_1X_OBJECT):
+                elif not (rel["target_ref"] in new_ids or exists_ids_with_no_1x_object(rel["target_ref"])):
                     warn("Not including %s in %s because there is no corresponding SDO for %s", 708, rel["id"], rep["id"], rel["target_ref"])
             elif "target_ref" in rel and rel["target_ref"] in refs_in_this_report:
                 if "source_ref" in rel and rel["source_ref"] and (
-                        rel["source_ref"] in new_ids or rel["source_ref"] in SDO_WITH_NO_1X_OBJECT):
+                        rel["source_ref"] in new_ids or exists_ids_with_no_1x_object(rel["source_ref"])):
                     rels_to_include.append(rel["id"])
                     rels_to_include.append(rel["source_ref"])
                     warn("Including %s in %s and added the source_ref %s to the report", 705, rel["id"], rep["id"], rel["source_ref"])
                 elif not ("source_ref" in rel and rel["source_ref"]):
                     rels_to_include.append(rel["id"])
                     warn("Including %s in %s although the source_ref is unknown", 707, rel["id"], rep["id"])
-                elif not (rel["source_ref"] in new_ids or rel["source_ref"] in SDO_WITH_NO_1X_OBJECT):
+                elif not (rel["source_ref"] in new_ids or exists_ids_with_no_1x_object(rel["source_ref"])):
                     warn("Not including %s in %s because there is no corresponding SDO for %s", 709, rel["id"], rep["id"], rel["source_ref"])
         if "object_refs" in rep:
             rep["object_refs"].extend(rels_to_include)
@@ -1011,8 +1010,7 @@ def convert_indicator(indicator, bundle_instance, parent_created_by_ref, parent_
     if indicator.confidence:
         add_confidence_property_to_description(indicator_instance, indicator.confidence)
     if indicator.observable is not None:
-        indicator_instance["pattern"] = convert_observable_to_pattern(indicator.observable, bundle_instance,
-                                                                      OBSERVABLE_MAPPING)
+        indicator_instance["pattern"] = convert_observable_to_pattern(indicator.observable, bundle_instance)
         add_to_pattern_cache(indicator.id_, indicator_instance["pattern"])
     if indicator.composite_indicator_expression is not None:
         expressions = []
@@ -1021,7 +1019,7 @@ def convert_indicator(indicator, bundle_instance, parent_created_by_ref, parent_
         else:
             sub_indicators = indicator.composite_indicator_expression
         for ind in sub_indicators:
-            term = convert_indicator_to_pattern(ind, bundle_instance, OBSERVABLE_MAPPING)
+            term = convert_indicator_to_pattern(ind, bundle_instance)
             if term:
                 expressions.append(term)
         indicator_instance["pattern"] = create_boolean_expression(indicator.composite_indicator_expression.operator,
@@ -1083,7 +1081,7 @@ def convert_observed_data(obs, bundle_instance, parent_created_by_ref, parent_ti
     # created_by
     finish_basic_object(obs.id_, observed_data_instance, obs, bundle_instance, parent_created_by_ref, parent_timestamp)
     # remember the original 1.x observable, in case it has to be turned into a pattern later
-    OBSERVABLE_MAPPING[obs.id_] = obs
+    add_to_observable_mappings(obs.id_, obs)
     return observed_data_instance
 
 
