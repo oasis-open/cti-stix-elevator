@@ -28,6 +28,7 @@ log = logging.getLogger(__name__)
 
 
 def elevate_file(fn):
+    # TODO:  combine elevate_file, elevate_string and elevate_package
     global MESSAGES_GENERATED
     print("Results produced by the stix2-elevator are not for production purposes.")
     clear_id_mapping()
@@ -74,10 +75,13 @@ def elevate_file(fn):
 
 
 def elevate_string(string):
+    global MESSAGES_GENERATED
     clear_id_mapping()
     clear_1x_markings_map()
-    clear_pattern_mapping()
+    clear_pattern_cache()
     clear_object_id_mapping()
+    clear_observable_mappings()
+    MESSAGES_GENERATED = False
 
     validator_options = get_validator_options()
 
@@ -115,10 +119,13 @@ def elevate_string(string):
 
 
 def elevate_package(package):
+    global MESSAGES_GENERATED
     clear_id_mapping()
     clear_1x_markings_map()
-    clear_pattern_mapping()
+    clear_pattern_cache()
     clear_object_id_mapping()
+    clear_observable_mappings()
+    MESSAGES_GENERATED = False
 
     validator_options = get_validator_options()
 
