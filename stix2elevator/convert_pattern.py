@@ -17,49 +17,21 @@ from stix2elevator.ids import *
 
 import re
 from six import text_type
+from stix2.pattern_expressions import ComparisonExpression, BooleanExpression, CompoundObservableExpression, ParentheticalExpression
 
 KEEP_OBSERVABLE_DATA_USED_IN_PATTERNS = False
 
 KEEP_INDICATORS_USED_IN_COMPOSITE_INDICATOR_EXPRESSION = True
 
 
-def get_root_from_object_path(lhs):
-    path_as_parts = lhs.split(":")
-    return path_as_parts[0]
-
-
-def escape_quotes_and_backslashes(s):
-    return s.replace(u'\\', u'\\\\').replace(u"'", u"\\'")
-
-
-class ComparisonExpression(object):
-    def __init__(self, operator, lhs, rhs, negated=False):
-        if operator == "=" and isinstance(rhs, list):
-            self.operator = "IN"
-        else:
-            self.operator = operator
-        self.lhs = lhs
-        self.rhs = rhs
-        self.negated = negated
-        self.root_type = get_root_from_object_path(lhs)
-
-    def to_string(self):
-        if isinstance(self.rhs, list):
-            final_rhs = []
-            for r in self.rhs:
-                final_rhs.append("'" + escape_quotes_and_backslashes(text_type(r)) + "'")
-            rhs_string = "(" + ", ".join(final_rhs) + ")"
-        else:
-            rhs_string = "'" + escape_quotes_and_backslashes(text_type(self.rhs)) + "'"
-        return self.lhs + (" NOT" if self.negated else "") + " " + self.operator + " " + rhs_string
-
+class ComparisonExpressionForElevator(ComparisonExpression):
     def contains_placeholder(self):
         return isinstance(self.rhs, IdrefPlaceHolder)
 
     def collapse_reference(self, prefix):
         parts_of_lhs = self.lhs.split(":")
         new_lhs = prefix + "." + parts_of_lhs[1]
-        return ComparisonExpression(self.operator, new_lhs, self.rhs)
+        return ComparisonExpressionForElevator(self.operator, new_lhs, self.rhs)
 
     def replace_placeholder_with_idref_pattern(self, idref):
         if isinstance(self.rhs, IdrefPlaceHolder):
@@ -75,20 +47,10 @@ class ComparisonExpression(object):
         return False
 
 
-class BooleanExpression(object):
-    def __init__(self, operator, operands, negated=False):
-        self.operator = operator
-        self.operands = operands
-        self.negated = negated
+class BooleanExpressionForElevator(BooleanExpression):
 
     def add_operand(self, operand):
         self.operands.append(operand)
-
-    def to_string(self):
-        sub_exprs = []
-        for o in self.operands:
-            sub_exprs.append(o.to_string())
-        return "(" + (" " + self.operator + " ").join(sub_exprs) + ")"
 
     def contains_placeholder(self):
         for args in self.operands:
@@ -100,13 +62,18 @@ class BooleanExpression(object):
         operands = []
         for arg in self.operands:
             operands.append(arg.collapse_reference(prefix))
-        return BooleanExpression(self.operator, operands, self.negated)
+        return BooleanExpressionForElevator(self.operator, operands)
 
     def replace_placeholder_with_idref_pattern(self, idref):
         new_operands = []
         change_made = False
         for args in self.operands:
             change_made_this_time, new_operand = args.replace_placeholder_with_idref_pattern(idref)
+            if change_made_this_time:
+                if not hasattr(self, "root_type"):
+                    self.root_type = new_operand.root_type
+                elif self.root_type and hasattr(new_operand, "root_type") and (self.root_type != new_operand.root_type):
+                    self.root_type = None
             change_made = change_made or change_made_this_time
             new_operands.append(new_operand)
         self.operands = new_operands
@@ -133,7 +100,10 @@ class BooleanExpression(object):
                 results.append(x[0])
             else:
                 results.append(create_boolean_expression(self.operator, x))
-        return ObservableExpression(self.operator, results)
+        if len(results) == 1:
+            return results[0]
+        else:
+            return ObservableExpressionForElevator(self.operator, results)
 
     def contains_unconverted_term(self):
         for args in self.operands:
@@ -146,7 +116,7 @@ class IdrefPlaceHolder(object):
     def __init__(self, idref):
         self.idref = idref
 
-    def to_string(self):
+    def __str__(self):
         return "PLACEHOLDER:" + self.idref
 
     def contains_placeholder(self):
@@ -172,8 +142,8 @@ class UnconvertedTerm(object):
     def __init__(self, term_info):
         self.term_info = term_info
 
-    def to_string(self):
-        return "unconverted_term:" + text_type(self.term_info)
+    def __str__(self):
+        return "unconverted_term:%s" % self.term_info
 
     def contains_placeholder(self):
         return False
@@ -188,17 +158,13 @@ class UnconvertedTerm(object):
         return True
 
 
-class ObservableExpression(object):
-    def __init__(self, operator, operands):
-        self.operator = operator
-        self.operands = operands
-
-    def to_string(self):
+class ObservableExpressionForElevator(CompoundObservableExpression):
+    def __str__(self):
         sub_exprs = []
         if len(self.operands) == 1:
-            return "[" + self.operands[0].to_string() + "]"
+            return "[%s]" % self.operands[0]
         for o in self.operands:
-            sub_exprs.append("[" + o.to_string() + "]")
+            sub_exprs.append("[%s]" % o)
         return (" " + self.operator + " ").join(sub_exprs)
 
     def contains_placeholder(self):
@@ -212,11 +178,38 @@ class ObservableExpression(object):
                 return True
         return False
 
+    def partition_according_to_object_path(self):
+        return self
 
-def create_boolean_expression(operator, operands, negated=False):
+
+class ParentheticalExpressionForElevator(ParentheticalExpression):
+    def contains_placeholder(self):
+        return self.expression.contains_placeholder()
+
+    def contains_unconverted_term(self):
+        return self.expression.contains_unconverted_term()
+
+    def replace_placeholder_with_idref_pattern(self, idref):
+        change_made, new_expression = self.expression.replace_placeholder_with_idref_pattern(idref)
+        self.expression = new_expression
+        if hasattr(new_expression, "root_type"):
+            self.root_type = new_expression.root_type
+        return change_made, self
+
+    def partition_according_to_object_path(self):
+        self.expression = self.expression.partition_according_to_object_path()
+        return self
+
+    def collapse_reference(self, prefix):
+        self.expression = self.expression.collapse_reference(prefix)
+        self.root_type = self.expression.root_type
+        return self
+
+
+def create_boolean_expression(operator, operands):
     if len(operands) == 1:
         return operands[0]
-    exp = BooleanExpression(operator, [], negated)
+    exp = BooleanExpressionForElevator(operator, [])
     for arg in operands:
         if not isinstance(arg, IdrefPlaceHolder) and not isinstance(arg, UnconvertedTerm) and hasattr(arg, "root_type"):
             if not hasattr(exp, "root_type"):
@@ -224,7 +217,7 @@ def create_boolean_expression(operator, operands, negated=False):
             elif exp.root_type and (exp.root_type != arg.root_type):
                 exp.root_type = None
         exp.add_operand(arg)
-    return exp
+    return ParentheticalExpressionForElevator(exp)
 
 
 ###################
@@ -398,6 +391,36 @@ def convert_condition(condition):
         return "="
 
 
+def process_boolean_negation(op, negated):
+    if not negated:
+        return op
+    elif op == "AND":
+        return "OR"
+    elif op == "OR":
+        return "AND"
+    else:
+        raise(ValueError("not a legal Boolean op: %s" % op))
+
+
+def process_comparison_negation(op, negated):
+    if not negated:
+        return op
+    elif op == "=":
+        return "!="
+    elif op == "!=":
+        return "="
+    elif op == "<":
+        return ">="
+    elif op == "<=":
+        return ">"
+    elif op == ">":
+        return "<="
+    elif op == ">=":
+        return "<"
+    else:
+        raise (ValueError("not a legal Comparison op: %s" % op))
+
+
 def create_term_with_regex(lhs, condition, rhs, negated):
     # TODO: escape characters
     if condition == "StartsWith":
@@ -407,7 +430,7 @@ def create_term_with_regex(lhs, condition, rhs, negated):
     elif condition == "Contains" or condition == "DoesNotContain":
         pattern = rhs
     # return lhs + (" NOT MATCHES " if negated else " MATCHES ") + pattern
-    return ComparisonExpression("MATCHES", lhs, pattern, negated)
+    return ComparisonExpressionForElevator("MATCHES", lhs, pattern, negated)
 
 
 def create_term_with_range(lhs, condition, rhs, negated=False):
@@ -418,14 +441,14 @@ def create_term_with_range(lhs, condition, rhs, negated=False):
     else:
         if condition == "InclusiveBetween":
             # return "(" + lhs + " GE " + text_type(rhs[0]) + " AND " + lhs + " LE " + text_type(rhs[1]) + ")"
-            lower_bound = ComparisonExpression(">=", lhs, rhs[0])
-            upper_bound = ComparisonExpression("<=", lhs, rhs[1])
+            lower_bound = ComparisonExpressionForElevator(process_comparison_negation(">=", negated), lhs, rhs[0])
+            upper_bound = ComparisonExpressionForElevator(process_comparison_negation("<=", negated), lhs, rhs[1])
 
         else:  # "ExclusiveBetween"
             # return "(" + lhs + " GT " + text_type(rhs[0]) + " AND " + lhs + " LT " + text_type(rhs[1]) + ")"
-            lower_bound = ComparisonExpression(">", lhs, rhs[0])
-            upper_bound = ComparisonExpression("<", lhs, rhs[1])
-        return create_boolean_expression("AND", [lower_bound, upper_bound], negated)
+            lower_bound = ComparisonExpressionForElevator(process_comparison_negation(">", negated), lhs, rhs[0])
+            upper_bound = ComparisonExpressionForElevator(process_comparison_negation("<", negated), lhs, rhs[1])
+        return create_boolean_expression(process_boolean_negation("AND", negated), [lower_bound, upper_bound])
 
 
 def multi_valued_property(object_path):
@@ -452,7 +475,7 @@ def create_term(lhs, condition, rhs, negated=False):
             warn("Used MATCHES operator for %s", 715, condition)
             return create_term_with_regex(lhs, condition, rhs, not negated)
         # return lhs + " " + negate_if_needed(convert_condition(condition), negated) + " '" + convert_to_text_type(rhs) + "'"
-        return ComparisonExpression(convert_condition(condition), lhs, rhs, negated)
+        return ComparisonExpressionForElevator(convert_condition(condition), lhs, rhs, negated)
 
 
 def add_comparison_expression(prop, object_path):
@@ -592,7 +615,7 @@ def convert_email_message_to_pattern(mess):
             expressions.append(add_headers)
     if mess.attachments is not None:
         for attachment in mess.attachments:
-            expressions.append(ComparisonExpression("=", "email-message:body_multipart[*].body_raw_ref", convert_attachment_to_ref(attachment)))
+            expressions.append(ComparisonExpressionForElevator("=", "email-message:body_multipart[*].body_raw_ref", convert_attachment_to_ref(attachment)))
     if mess.raw_body is not None:
         if not mess.raw_body.value:
             warn("%s contains no value", 621, "Email raw body")
@@ -729,12 +752,12 @@ def convert_file_name_and_file_extension(file_name, file_extension):
         return create_term("file:file_name", file_name.condition, file_name.value)
     elif (file_name.condition == "StartsWith" and file_extension and file_extension.value and
           is_equal_condition(file_extension.condition)):
-        return ComparisonExpression("MATCHES", "file:file_name",
-                                    "^" + file_name.value + ".*" + file_extension.value + "$")
+        return ComparisonExpressionForElevator("MATCHES", "file:file_name",
+                                               "^" + file_name.value + ".*" + file_extension.value + "$")
     elif (file_name.condition == "Contains" and file_extension and file_extension.value and
           is_equal_condition(file_extension.condition)):
-        return ComparisonExpression("MATCHES", "file:file_name",
-                                    file_name.value + ".*" + file_extension.value + "$")
+        return ComparisonExpressionForElevator("MATCHES", "file:file_name",
+                                               file_name.value + ".*" + file_extension.value + "$")
     else:
         warn("Unable to create a pattern for file:file_name from a File object", 620)
 

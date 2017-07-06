@@ -4,6 +4,7 @@ import pycountry
 
 from cybox.core import Observable
 from lxml import etree
+from six import text_type
 
 import stix
 from stix.campaign import Campaign
@@ -30,7 +31,9 @@ from stixmarx import navigator
 from stix2elevator.convert_cybox import convert_cybox_object, fix_cybox_relationships
 from stix2elevator.convert_pattern import (convert_indicator_to_pattern, convert_observable_to_pattern, fix_pattern,
                                            interatively_resolve_placeholder_refs, create_boolean_expression,
-                                           add_to_pattern_cache, remove_pattern_objects, ComparisonExpression,
+                                           add_to_pattern_cache, remove_pattern_objects,
+                                           ComparisonExpressionForElevator, ParentheticalExpressionForElevator,
+                                           ObservableExpressionForElevator,
                                            add_to_observable_mappings)
 from stix2elevator.ids import *
 from stix2elevator.options import get_option_value
@@ -1569,10 +1572,16 @@ def finalize_bundle(bundle_instance):
                         warn("At least one PLACEHOLDER idref was not resolved in %s", 205, ind["id"])
                     if final_pattern.contains_unconverted_term():
                         warn("At least one observable could not be converted in %s", 206, ind["id"])
-                    if isinstance(final_pattern, ComparisonExpression):
-                        ind["pattern"] = "[" + final_pattern.to_string() + "]"
+                    if isinstance(final_pattern, ComparisonExpressionForElevator):
+                        ind["pattern"] = "[%s]" % final_pattern
+                    elif isinstance(final_pattern, ParentheticalExpressionForElevator):
+                        result = final_pattern.expression.partition_according_to_object_path()
+                        if isinstance(result, ObservableExpressionForElevator):
+                            ind["pattern"] = "%s" % result
+                        else:
+                            ind["pattern"] = "[%s]" % result
                     else:
-                        ind["pattern"] = final_pattern.partition_according_to_object_path().to_string()
+                        ind["pattern"] = text_type(final_pattern.partition_according_to_object_path())
 
     bundle_instance["objects"].extend(bundle_instance["indicators"])
     bundle_instance["indicators"] = []
