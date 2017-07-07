@@ -1608,13 +1608,13 @@
             </cybox:Object>
         </cybox:Observable>
         <cybox:Observable id="fireeye:observable-bf5a6d06-65cb-4cfc-90ef-2cf102821db5">
-            <cybox:Title>Sample: e74d62dfdc308df3038e61dfc4e4256</cybox:Title>
+            <cybox:Title>Sample: e74d62dfdc308df3038e61dfc4e4256a</cybox:Title>
             <cybox:Object id="fireeye:object-c3eb5fee-7d18-435d-a47a-70c7ed6295b3">
                 <cybox:Properties xsi:type="FileObj:FileObjectType">
                     <FileObj:Hashes>
                         <cyboxCommon:Hash>
                             <cyboxCommon:Type>MD5</cyboxCommon:Type>
-                            <cyboxCommon:Simple_Hash_Value condition="Equals">e74d62dfdc308df3038e61dfc4e4256</cyboxCommon:Simple_Hash_Value>
+                            <cyboxCommon:Simple_Hash_Value condition="Equals">e74d62dfdc308df3038e61dfc4e4256a</cyboxCommon:Simple_Hash_Value>
                         </cyboxCommon:Hash>
                     </FileObj:Hashes>
                 </cybox:Properties>
@@ -3479,7 +3479,7 @@
             <cybox:Object id="fireeye:object-f376299f-c64b-480c-bfdd-e9db4708f7f4">
                 <cybox:Properties xsi:type="FileObj:FileObjectType">
                     <cyboxCommon:Custom_Properties>
-                        <cyboxCommon:Property condition="Equals" name="ID">pliment.3322.org  </cyboxCommon:Property>
+                        <cyboxCommon:Property condition="Equals" name="ID">pliment.3322.org</cyboxCommon:Property>
                     </cyboxCommon:Custom_Properties>
                 </cybox:Properties>
             </cybox:Object>
@@ -8192,13 +8192,13 @@
             </cybox:Object>
         </cybox:Observable>
         <cybox:Observable id="fireeye:observable-09ec7f2e-2975-4138-8ff0-a51e551cfa97">
-            <cybox:Title>Sample: 4ad286a97c82f91df3e07b101a224f5</cybox:Title>
+            <cybox:Title>Sample: 4ad286a97c82f91df3e07b101a224f56</cybox:Title>
             <cybox:Object id="fireeye:object-d2ecdb15-7567-4e6d-bb16-1aa5fb30e0ca">
                 <cybox:Properties xsi:type="FileObj:FileObjectType">
                     <FileObj:Hashes>
                         <cyboxCommon:Hash>
                             <cyboxCommon:Type>MD5</cyboxCommon:Type>
-                            <cyboxCommon:Simple_Hash_Value condition="Equals">4ad286a97c82f91df3e07b101a224f5</cyboxCommon:Simple_Hash_Value>
+                            <cyboxCommon:Simple_Hash_Value condition="Equals">4ad286a97c82f91df3e07b101a224f56</cyboxCommon:Simple_Hash_Value>
                         </cyboxCommon:Hash>
                     </FileObj:Hashes>
                 </cybox:Properties>
@@ -14427,7 +14427,7 @@
             </indicator:Suggested_COAs>
         </stix:Indicator>
         <stix:Indicator timestamp="2015-05-15T09:00:00.000000Z" id="fireeye:indicator-6250a621-6ba3-413b-af47-9598d194062d" xsi:type="indicator:IndicatorType">
-            <indicator:Title>Sample: e74d62dfdc308df3038e61dfc4e4256</indicator:Title>
+            <indicator:Title>Sample: e74d62dfdc308df3038e61dfc4e4256a</indicator:Title>
             <indicator:Type xsi:type="stixVocabs:IndicatorTypeVocab-1.1">Malware Artifacts</indicator:Type>
             <indicator:Observable idref="fireeye:observable-bf5a6d06-65cb-4cfc-90ef-2cf102821db5"/>
             <indicator:Indicated_TTP>
@@ -14440,7 +14440,7 @@
             </indicator:Suggested_COAs>
         </stix:Indicator>
         <stix:Indicator timestamp="2015-05-15T09:00:00.000000Z" id="fireeye:indicator-b32c4f99-5efd-4782-8bf4-3cc9895d909f" xsi:type="indicator:IndicatorType">
-            <indicator:Title>Composite Indicator (e74d62dfdc308df3038e61dfc4e4256)</indicator:Title>
+            <indicator:Title>Composite Indicator (e74d62dfdc308df3038e61dfc4e4256a)</indicator:Title>
             <indicator:Type xsi:type="stixVocabs:IndicatorTypeVocab-1.1">Malware Artifacts</indicator:Type>
             <indicator:Composite_Indicator_Expression operator="OR">
                 <indicator:Indicator idref="fireeye:indicator-dab86b07-7da9-482d-9554-f66301bc6f4f"/>
@@ -23318,7 +23318,7 @@
             </indicator:Suggested_COAs>
         </stix:Indicator>
         <stix:Indicator timestamp="2015-05-15T09:00:00.000000Z" id="fireeye:indicator-f859c5e2-37c6-4551-a74a-8a44871ecf95" xsi:type="indicator:IndicatorType">
-            <indicator:Title>Sample: 4ad286a97c82f91df3e07b101a224f5</indicator:Title>
+            <indicator:Title>Sample: 4ad286a97c82f91df3e07b101a224f56</indicator:Title>
             <indicator:Type xsi:type="stixVocabs:IndicatorTypeVocab-1.1">Malware Artifacts</indicator:Type>
             <indicator:Observable idref="fireeye:observable-09ec7f2e-2975-4138-8ff0-a51e551cfa97"/>
             <indicator:Indicated_TTP>
@@ -23331,7 +23331,7 @@
             </indicator:Suggested_COAs>
         </stix:Indicator>
         <stix:Indicator timestamp="2015-05-15T09:00:00.000000Z" id="fireeye:indicator-9f40a55b-c0a8-449c-abdf-604fc1ce7cd6" xsi:type="indicator:IndicatorType">
-            <indicator:Title>Composite Indicator (4ad286a97c82f91df3e07b101a224f5)</indicator:Title>
+            <indicator:Title>Composite Indicator (4ad286a97c82f91df3e07b101a224f56)</indicator:Title>
             <indicator:Type xsi:type="stixVocabs:IndicatorTypeVocab-1.1">Malware Artifacts</indicator:Type>
             <indicator:Composite_Indicator_Expression operator="OR">
                 <indicator:Indicator idref="fireeye:indicator-8069c9b6-90cc-44f6-8970-ae11ee88658c"/>
@@ -31145,11 +31145,11 @@ The content of the spear-phishing emails and the decoy documents opened after ex
             </ttp:Related_TTPs>
         </stix:TTP>
         <stix:TTP timestamp="2015-05-15T09:00:00.000000Z" id="fireeye:ttp-e55c6eaa-bf0f-4b6b-9572-5cd0d3f62134" xsi:type="ttp:TTPType">
-            <ttp:Title>PIVY Variant (e74d62dfdc308df3038e61dfc4e4256)</ttp:Title>
+            <ttp:Title>PIVY Variant (e74d62dfdc308df3038e61dfc4e4256a)</ttp:Title>
             <ttp:Behavior>
                 <ttp:Malware>
                     <ttp:Malware_Instance>
-                        <ttp:Name>e74d62dfdc308df3038e61dfc4e4256</ttp:Name>
+                        <ttp:Name>e74d62dfdc308df3038e61dfc4e4256a</ttp:Name>
                     </ttp:Malware_Instance>
                 </ttp:Malware>
             </ttp:Behavior>
@@ -32279,11 +32279,11 @@ While the attackers behind menuPass have used other RATs in their campaign, it a
             </ttp:Related_TTPs>
         </stix:TTP>
         <stix:TTP timestamp="2015-05-15T09:00:00.000000Z" id="fireeye:ttp-cb1f97b1-2919-4535-bfae-ceb396c52f44" xsi:type="ttp:TTPType">
-            <ttp:Title>PIVY Variant (4ad286a97c82f91df3e07b101a224f5)</ttp:Title>
+            <ttp:Title>PIVY Variant (4ad286a97c82f91df3e07b101a224f56)</ttp:Title>
             <ttp:Behavior>
                 <ttp:Malware>
                     <ttp:Malware_Instance>
-                        <ttp:Name>4ad286a97c82f91df3e07b101a224f5</ttp:Name>
+                        <ttp:Name>4ad286a97c82f91df3e07b101a224f56</ttp:Name>
                     </ttp:Malware_Instance>
                 </ttp:Malware>
             </ttp:Behavior>
