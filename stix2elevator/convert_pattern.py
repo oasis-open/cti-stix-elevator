@@ -18,7 +18,8 @@ from stix2elevator.ids import *
 import stixmarx
 
 from stix2.pattern_expressions import ComparisonExpression, BooleanExpression, CompoundObservableExpression, ParentheticalExpression
-from stix2.constants import (FloatConstant, HashConstant, IntegerConstant, ListConstant, StringConstant)
+from stix2.constants import (Constant, FloatConstant, HashConstant, IntegerConstant, ListConstant, StringConstant)
+from stix2.object_path import ObjectPath
 
 import re
 from six import text_type
@@ -32,12 +33,28 @@ KEEP_INDICATORS_USED_IN_COMPOSITE_INDICATOR_EXPRESSION = True
 
 
 class ComparisonExpressionForElevator(ComparisonExpression):
+    # overrides, so IdrefPlaceHolder can be handled
+    def __init__(self, operator, lhs, rhs, negated=False):
+        if operator == "=" and isinstance(rhs, ListConstant):
+            self.operator = "IN"
+        else:
+            self.operator = operator
+        if isinstance(lhs, ObjectPath):
+            self.lhs = lhs
+        else:
+            self.lhs = ObjectPath.make_object_path(lhs)
+        if isinstance(rhs, Constant) or isinstance(rhs, IdrefPlaceHolder):
+            self.rhs = rhs
+        else:
+            self.rhs = make_constant(rhs)
+        self.negated = negated
+        self.root_type = self.lhs.object_type_name
+
     def contains_placeholder(self):
         return isinstance(self.rhs, IdrefPlaceHolder)
 
     def collapse_reference(self, prefix):
-        parts_of_lhs = self.lhs.split(":")
-        new_lhs = prefix + "." + parts_of_lhs[1]
+        new_lhs = prefix.merge(self.lhs)
         return ComparisonExpressionForElevator(self.operator, new_lhs, self.rhs)
 
     def replace_placeholder_with_idref_pattern(self, idref):
