@@ -1,5 +1,6 @@
 from os.path import abspath, dirname, join
-from setuptools import setup, find_packages
+
+from setuptools import find_packages, setup
 
 CUR_DIR = dirname(abspath(__file__))
 INIT_FILE = join(CUR_DIR, 'stix2elevator', '__init__.py')
