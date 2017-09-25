@@ -1,5 +1,5 @@
-import uuid
 import re
+import uuid
 
 from stix2elevator.utils import *
 

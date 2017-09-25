@@ -1,11 +1,8 @@
-
-# built-in
+from datetime import datetime
 import logging
 import os
-from datetime import datetime
 
-# external
-from six import text_type, binary_type, iteritems
+from six import binary_type, iteritems, text_type
 
 from stix2elevator import options
 
@@ -262,7 +259,9 @@ def operation_on_path(obj, path, value, op=1):
     current = path[0]
     path = path[1:]
 
-    if "[" in current and "]" in current:
+    if isinstance(current, int):
+        current_obj = obj[current]
+    elif "[" in current and "]" in current:
         current = int(current.strip("[]"))
         current_obj = obj[current]
     else:

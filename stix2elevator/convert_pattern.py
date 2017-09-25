@@ -1,22 +1,22 @@
+import re
+
 from cybox.objects.address_object import Address
-from cybox.objects.uri_object import URI
+from cybox.objects.archive_file_object import ArchiveFile
+from cybox.objects.domain_name_object import DomainName
 from cybox.objects.email_message_object import EmailMessage
 from cybox.objects.file_object import File
-from cybox.objects.win_registry_key_object import WinRegistryKey
-from cybox.objects.win_process_object import WinProcess
-from cybox.objects.win_service_object import WinService
-from cybox.objects.process_object import Process
-from cybox.objects.domain_name_object import DomainName
 from cybox.objects.mutex_object import Mutex
 from cybox.objects.network_connection_object import NetworkConnection
+from cybox.objects.process_object import Process
+from cybox.objects.uri_object import URI
 from cybox.objects.win_executable_file_object import WinExecutableFile
-from cybox.objects.archive_file_object import ArchiveFile
-
-from stix2elevator.vocab_mappings import *
-from stix2elevator.ids import *
-
-import re
+from cybox.objects.win_process_object import WinProcess
+from cybox.objects.win_registry_key_object import WinRegistryKey
+from cybox.objects.win_service_object import WinService
 from six import text_type
+
+from stix2elevator.ids import *
+from stix2elevator.vocab_mappings import *
 
 KEEP_OBSERVABLE_DATA_USED_IN_PATTERNS = False
 
