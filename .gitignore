@@ -20,9 +20,6 @@ dist/
 # log folder for elevator
 /logs/
 
-.tox
-.cache
-
 docs/_build
 
 ### macOS template
@@ -33,6 +30,15 @@ docs/_build
 # Icon must end with two \r
 Icon
 
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*,cover
 
 # Thumbnails
 ._*

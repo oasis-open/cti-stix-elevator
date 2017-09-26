@@ -1,7 +1,8 @@
 import shlex
 
-from stix2validator.scripts import stix2_validator
 from stix2validator import ValidationOptions
+from stix2validator.scripts import stix2_validator
+
 from stix2elevator.utils import *
 
 ALL_OPTIONS = None
