@@ -1,27 +1,18 @@
-
-# built-in
 import json
-import logging
-
-# external
-from stix.core import STIXPackage
 
 from six import StringIO
-
-from stix2validator import codes
-from stix2validator import output
-from stix2validator import validate_string, ValidationError
-
+from stix2validator import ValidationError, codes, output, validate_string
+from stix.core import STIXPackage
 import stixmarx
 
-# internal
-from stix2elevator.convert_pattern import clear_pattern_cache, clear_observable_mappings
-from stix2elevator.ids import clear_id_mapping, clear_object_id_mapping
-from stix2elevator.utils import *
+from stix2elevator.convert_pattern import (clear_observable_mappings,
+                                           clear_pattern_cache)
 from stix2elevator.convert_stix import convert_package
-from stix2elevator.options import get_validator_options, get_option_value, set_option_value
+from stix2elevator.ids import clear_id_mapping, clear_object_id_mapping
+from stix2elevator.options import (get_option_value, get_validator_options,
+                                   set_option_value)
+from stix2elevator.utils import *
 from stix2elevator.version import __version__  # noqa
-
 
 # Module-level logger
 log = logging.getLogger(__name__)

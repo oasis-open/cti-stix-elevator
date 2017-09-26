@@ -1,8 +1,6 @@
-import cybox
-
 from stix2elevator.convert_pattern import *
-from stix2elevator.vocab_mappings import *
 from stix2elevator.ids import add_object_id_value
+from stix2elevator.vocab_mappings import *
 
 
 def convert_address(add):
@@ -153,7 +151,7 @@ def convert_registry_key(reg_key):
 
 
 def convert_process(process):
-    cybox_p = {}
+    cybox_p = {"type": "process"}
     if process.name:
         cybox_p["name"] = text_type(process.name)
     if process.pid:
@@ -171,8 +169,6 @@ def convert_process(process):
                 extended_properties["windows-service-ext"] = service_properties
         if extended_properties:
             cybox_p["extensions"] = extended_properties
-    if cybox:
-        cybox_p["type"] = "process"
     return cybox_p
 
 

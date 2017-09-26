@@ -1,10 +1,6 @@
-
-# external
-import pycountry
-
 from cybox.core import Observable
 from lxml import etree
-
+import pycountry
 import stix
 from stix.campaign import Campaign
 from stix.coa import CourseOfAction
@@ -13,25 +9,33 @@ from stix.common.kill_chains import KillChainPhase, KillChainPhaseReference
 from stix.data_marking import MarkingSpecification, MarkingStructure
 from stix.exploit_target import ExploitTarget
 from stix.extensions.identity.ciq_identity_3_0 import CIQIdentity3_0Instance
-from stix.extensions.test_mechanism.open_ioc_2010_test_mechanism import OpenIOCTestMechanism
-from stix.extensions.test_mechanism.snort_test_mechanism import SnortTestMechanism
-from stix.extensions.test_mechanism.yara_test_mechanism import YaraTestMechanism
 from stix.extensions.marking.simple_marking import SimpleMarkingStructure
-from stix.extensions.marking.terms_of_use_marking import TermsOfUseMarkingStructure
+from stix.extensions.marking.terms_of_use_marking import \
+    TermsOfUseMarkingStructure
 from stix.extensions.marking.tlp import TLPMarkingStructure
+from stix.extensions.test_mechanism.open_ioc_2010_test_mechanism import \
+    OpenIOCTestMechanism
+from stix.extensions.test_mechanism.snort_test_mechanism import \
+    SnortTestMechanism
+from stix.extensions.test_mechanism.yara_test_mechanism import \
+    YaraTestMechanism
 from stix.incident import Incident
 from stix.indicator import Indicator
 from stix.threat_actor import ThreatActor
 from stix.ttp import TTP
-
 from stixmarx import navigator
 
-# internal
-from stix2elevator.convert_cybox import convert_cybox_object, fix_cybox_relationships
-from stix2elevator.convert_pattern import (convert_indicator_to_pattern, convert_observable_to_pattern, fix_pattern,
-                                           interatively_resolve_placeholder_refs, create_boolean_expression,
-                                           add_to_pattern_cache, remove_pattern_objects, ComparisonExpression,
-                                           add_to_observable_mappings)
+from stix2elevator.convert_cybox import (convert_cybox_object,
+                                         fix_cybox_relationships)
+from stix2elevator.convert_pattern import (ComparisonExpression,
+                                           add_to_observable_mappings,
+                                           add_to_pattern_cache,
+                                           convert_indicator_to_pattern,
+                                           convert_observable_to_pattern,
+                                           create_boolean_expression,
+                                           fix_pattern,
+                                           interatively_resolve_placeholder_refs,
+                                           remove_pattern_objects)
 from stix2elevator.ids import *
 from stix2elevator.options import get_option_value
 from stix2elevator.utils import *

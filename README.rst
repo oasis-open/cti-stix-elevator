@@ -34,12 +34,12 @@ Requirements
 
 - Python 2.6, 2.7, or 3.3+
 - `python-stix <https://stix.readthedocs.io/en/stable/>`_ and its dependencies
-  
+
   .. note::
-  
-      Make sure to use either the latest version of python-stix 1.1.1.x or 
+
+      Make sure to use either the latest version of python-stix 1.1.1.x or
       1.2.0.x, depending on whether you want to support STIX 1.1.1 or STIX 1.2.
-      
+
 -  `stix2-validator <https://pypi.python.org/pypi/stix2-validator>`_ >= 0.4.0
    and its dependencies
 -  `pycountry <https://pypi.python.org/pypi/pycountry/>`_ >= 1.20
@@ -95,9 +95,9 @@ STIX 1.1.1 - 1.2.1 content to STIX 2.0 content::
 
     optional arguments:
       -h, --help            show this help message and exit
-    
+
       --incidents           Incidents will be included in the conversion.
-    
+
       --no-squirrel-gaps    Do not include STIX 1.x content that cannot be
                             represented directly in STIX 2.0 using the description
                             property.
@@ -170,8 +170,8 @@ Additionally, a similar method exists to accept a string as an argument::
 
       from stix2elevator import elevate_string
       from stix2elevator.options import initialize_options
-      
-      intialize_options()  
+
+      intialize_options()
       results = elevate_string("...")
       print(results)
 
