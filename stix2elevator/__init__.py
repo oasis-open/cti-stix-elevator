@@ -33,6 +33,7 @@ def elevate_file(fn):
 
     try:
         output.set_level(validator_options.verbose)
+        output.set_silent(validator_options.silent)
 
         container = stixmarx.parse(fn)
         stix_package = container.package
@@ -78,6 +79,7 @@ def elevate_string(string):
 
     try:
         output.set_level(validator_options.verbose)
+        output.set_silent(validator_options.silent)
 
         io = StringIO(string)
         container = stixmarx.parse(io)
@@ -122,6 +124,7 @@ def elevate_package(package):
 
     try:
         output.set_level(validator_options.verbose)
+        output.set_silent(validator_options.silent)
 
         # It needs to be re-parsed.
         container = stixmarx.parse(StringIO(package.to_xml()))
