@@ -7,8 +7,8 @@ to be mitigated to convert your STIX 1.x content.
 """
 
 import argparse
-import textwrap
 import sys
+import textwrap
 
 from stix2elevator import elevate_file
 from stix2elevator.options import initialize_options

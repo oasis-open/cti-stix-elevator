@@ -1,4 +1,3 @@
-
 from __future__ import print_function
 
 import json
@@ -9,9 +8,9 @@ from six import StringIO
 from six.moves import zip
 
 from stix2elevator import elevate_file
-from stix2elevator.options import initialize_options, set_option_value, get_option_value
-from stix2elevator.utils import iterpath, find_dir
-
+from stix2elevator.options import (get_option_value, initialize_options,
+                                   set_option_value)
+from stix2elevator.utils import find_dir, iterpath
 
 TESTED_XML_FILES = []
 XML_FILENAMES = []
@@ -66,6 +65,7 @@ def idiom_mappings(xml_file_path, stored_json):
 
 
 def setup_tests():
+    sys.setrecursionlimit(2000)
     directory = os.path.dirname(__file__)
 
     xml_idioms_dir = find_dir(directory, "idioms-xml")
