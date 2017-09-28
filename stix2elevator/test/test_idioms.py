@@ -3,6 +3,7 @@ from __future__ import print_function
 
 import json
 import os
+import sys
 
 from six import StringIO
 from six.moves import zip
@@ -35,7 +36,7 @@ def idiom_mappings(xml_file_path, stored_json):
     if not get_option_value("policy") == "no_policy":
         print("'no_policy' is not allowed for testing")
     set_option_value("policy", "no_policy")
-
+    sys.setrecursionlimit(5000)
     converted_json = elevate_file(xml_file_path)
     io = StringIO(converted_json)
     converted_json = json.load(io)

@@ -170,6 +170,8 @@ def main():
     elevator_args = elevator_parser.parse_args()
 
     initialize_options(elevator_args)
+    print(sys.getrecursionlimit())
+    sys.setrecursionlimit(5000)
     result = elevate_file(elevator_args.file_)
     if result:
         print(result + "\n")

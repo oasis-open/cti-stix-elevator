@@ -795,14 +795,14 @@ def convert_hashes_to_pattern(hashes):
 def convert_file_name_and_file_extension(file_name, file_extension):
     if (file_extension and file_extension.value and is_equal_condition(file_name.condition) and
             is_equal_condition(file_extension.condition) and file_name.value.endswith(file_extension.value)):
-        return create_term("file:file_name", file_name.condition, stix2.StringConstant(file_name.value))
+        return create_term("file:name", file_name.condition, stix2.StringConstant(file_name.value))
     elif (file_name.condition == "StartsWith" and file_extension and file_extension.value and
           is_equal_condition(file_extension.condition)):
-        return ComparisonExpressionForElevator("MATCHES", "file:file_name",
+        return ComparisonExpressionForElevator("MATCHES", "file:name",
                                                stix2.StringConstant("^" + file_name.value + ".*" + file_extension.value + "$"))
     elif (file_name.condition == "Contains" and file_extension and file_extension.value and
           is_equal_condition(file_extension.condition)):
-        return ComparisonExpressionForElevator("MATCHES", "file:file_name",
+        return ComparisonExpressionForElevator("MATCHES", "file:name",
                                                stix2.StringConstant(file_name.value + ".*" + file_extension.value + "$"))
     else:
         warn("Unable to create a pattern for file:file_name from a File object", 620)
@@ -813,7 +813,7 @@ def convert_file_name_and_path_to_pattern(f):
     if f.file_name and f.file_extension and f.file_extension.value:
         file_name_path_expressions.append(convert_file_name_and_file_extension(f.file_name, f.file_extension))
     elif f.file_name:
-        file_name_path_expressions.append(create_term("file:file_name",
+        file_name_path_expressions.append(create_term("file:name",
                                                       f.file_name.condition,
                                                       stix2.StringConstant(f.file_name.value)))
     if f.file_path and f.file_path.value:
@@ -824,7 +824,7 @@ def convert_file_name_and_path_to_pattern(f):
             warn("Ambiguous file path '%s' was not processed", 816, f.file_path.value)
         else:
             if not (f.file_path.value.endswith("/") or f.file_path.value.endswith("\\")):
-                file_name_path_expressions.append(create_term("file:file_name",
+                file_name_path_expressions.append(create_term("file:name",
                                                               f.file_path.condition,
                                                               stix2.StringConstant(f.file_path.value[index + 1:])))
                 path_string_constant = stix2.StringConstant(((f.device_path.value if f.device_path else "") +
