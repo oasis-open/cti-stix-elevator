@@ -35,6 +35,7 @@ setup(
         'stix2-validator>=0.1.0',
         'stixmarx>=1.0.1',
         'six>=1.10.0',
+        'stix2'
     ],
     entry_points={
         'console_scripts': [

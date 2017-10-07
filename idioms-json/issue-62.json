@@ -8,7 +8,7 @@
                 "unknown"
             ],
             "modified": "2017-06-13T11:14:09.763Z",
-            "pattern": "[((file:hashes.MD5 = '5d8129be965fab8115eca34fc84bd7f0' OR file:hashes.'SHA-1' = '2b999e7db890cc77f0098a091de756a1803a3c2b' OR file:hashes.'SHA-256' = '2c5dd8a64437cb2dd4b6747139c61d2d7f53ab3ddedbf22df3cb01bae170715b' OR file:hashes.ssdeep = '768:mvAFYk0IOqi7RKW1RD1ZCrm82+AnbaAOdoOKL70ehP:cDIOqctz2rBmbZoa71hP') AND file:file_name = 'VirusShare_5d8129be965fab8115eca34fc84bd7f0' AND file:size = '40654' AND (((file:extensions.windows_pebinary_ext.section[*].name = '.rdata' AND file:extensions.windows_pebinary_ext.section[*].entropy = '7.74202363178') AND (file:extensions.windows_pebinary_ext.section[*].name = '.data' AND file:extensions.windows_pebinary_ext.section[*].entropy = '7.89204688601') AND (file:extensions.windows_pebinary_ext.section[*].name = '.upx' AND file:extensions.windows_pebinary_ext.section[*].entropy = '7.31815613066')) AND unconverted_term:WinExecutableFileObj.exports AND unconverted_term:WinExecutableFileObj.imports))]",
+            "pattern": "[((file:hashes.MD5 = '5d8129be965fab8115eca34fc84bd7f0' OR file:hashes.'SHA-1' = '2b999e7db890cc77f0098a091de756a1803a3c2b' OR file:hashes.'SHA-256' = '2c5dd8a64437cb2dd4b6747139c61d2d7f53ab3ddedbf22df3cb01bae170715b' OR file:hashes.ssdeep = '768:mvAFYk0IOqi7RKW1RD1ZCrm82+AnbaAOdoOKL70ehP:cDIOqctz2rBmbZoa71hP') AND file:name = 'VirusShare_5d8129be965fab8115eca34fc84bd7f0' AND file:size = 40654 AND (((file:extensions.windows_pebinary_ext.section[*].name = '.rdata' AND file:extensions.windows_pebinary_ext.section[*].entropy = 7.74202363178) AND (file:extensions.windows_pebinary_ext.section[*].name = '.data' AND file:extensions.windows_pebinary_ext.section[*].entropy = 7.89204688601) AND (file:extensions.windows_pebinary_ext.section[*].name = '.upx' AND file:extensions.windows_pebinary_ext.section[*].entropy = 7.31815613066)) AND unconverted_term:WinExecutableFileObj.exports AND unconverted_term:WinExecutableFileObj.imports))]",
             "type": "indicator",
             "valid_from": "2017-06-13T11:14:09.763924Z"
         },
@@ -19,7 +19,7 @@
                 "unknown"
             ],
             "modified": "2017-06-13T11:14:09.765Z",
-            "pattern": "[((file:hashes.MD5 = 'd41d8cd98f00b204e9800998ecf8427e' OR file:hashes.'SHA-1' = 'da39a3ee5e6b4b0d3255bfef95601890afd80709' OR file:hashes.'SHA-256' = 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855') AND file:file_name = 'autoexec.bat' AND file:size = '0')]",
+            "pattern": "[((file:hashes.MD5 = 'd41d8cd98f00b204e9800998ecf8427e' OR file:hashes.'SHA-1' = 'da39a3ee5e6b4b0d3255bfef95601890afd80709' OR file:hashes.'SHA-256' = 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855') AND file:name = 'autoexec.bat' AND file:size = 0)]",
             "type": "indicator",
             "valid_from": "2017-06-13T11:14:09.765508Z"
         },

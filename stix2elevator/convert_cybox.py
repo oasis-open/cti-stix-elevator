@@ -41,13 +41,13 @@ def convert_file_properties(f):
             hashes[hash_type] = h.simple_hash_value.value
         file_dict["hashes"] = hashes
     if f.file_name:
-        file_dict["file_name"] = text_type(f.file_name)
+        file_dict["name"] = text_type(f.file_name)
     elif f.file_path and f.file_path.value:
         index = f.file_path.value.rfind("/")
         if index == -1:
             index = f.file_path.value.rfind("\\")
         if not (f.file_path.value.endswith("/") or f.file_path.value.endswith("\\")):
-            file_dict["file_name"] = f.file_path.value[index + 1:]
+            file_dict["name"] = f.file_path.value[index + 1:]
         dir_path = f.file_path.value[0: index]
         if dir_path:
             dir_dict = {"type": "directory",

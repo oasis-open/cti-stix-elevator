@@ -394,13 +394,13 @@
         {
             "created": "2017-05-03T14:09:56.981Z",
             "created_by_ref": "identity--dfb67e12-388e-40dd-bc26-c13fdb20b1dd",
-            "description": "\n\nTITLE:\n\tPIVY Variant (e74d62dfdc308df3038e61dfc4e4256)",
+            "description": "\n\nTITLE:\n\tPIVY Variant (e74d62dfdc308df3038e61dfc4e4256a)",
             "id": "malware--e55c6eaa-bf0f-4b6b-9572-5cd0d3f62134",
             "labels": [
                 "unknown"
             ],
             "modified": "2017-05-03T14:09:56.981Z",
-            "name": "e74d62dfdc308df3038e61dfc4e4256",
+            "name": "e74d62dfdc308df3038e61dfc4e4256a",
             "object_marking_refs": [
                 "marking-definition--3922d784-b1dc-4902-b69e-3307a6c8f205"
             ],
@@ -1458,13 +1458,13 @@
         {
             "created": "2017-05-03T14:09:57.153Z",
             "created_by_ref": "identity--dfb67e12-388e-40dd-bc26-c13fdb20b1dd",
-            "description": "\n\nTITLE:\n\tPIVY Variant (4ad286a97c82f91df3e07b101a224f5)",
+            "description": "\n\nTITLE:\n\tPIVY Variant (4ad286a97c82f91df3e07b101a224f56)",
             "id": "malware--cb1f97b1-2919-4535-bfae-ceb396c52f44",
             "labels": [
                 "unknown"
             ],
             "modified": "2017-05-03T14:09:57.153Z",
-            "name": "4ad286a97c82f91df3e07b101a224f5",
+            "name": "4ad286a97c82f91df3e07b101a224f56",
             "object_marking_refs": [
                 "marking-definition--3922d784-b1dc-4902-b69e-3307a6c8f205"
             ],
@@ -4702,11 +4702,11 @@
                 "malware-artifacts"
             ],
             "modified": "2015-05-15T09:00:00.000Z",
-            "name": "Sample: e74d62dfdc308df3038e61dfc4e4256",
+            "name": "Sample: e74d62dfdc308df3038e61dfc4e4256a",
             "object_marking_refs": [
                 "marking-definition--3922d784-b1dc-4902-b69e-3307a6c8f205"
             ],
-            "pattern": "[file:hashes.MD5 = 'e74d62dfdc308df3038e61dfc4e4256']",
+            "pattern": "[file:hashes.MD5 = 'e74d62dfdc308df3038e61dfc4e4256a']",
             "type": "indicator",
             "valid_from": "2015-05-15T09:00:00.000000Z"
         },
@@ -4718,11 +4718,11 @@
                 "malware-artifacts"
             ],
             "modified": "2015-05-15T09:00:00.000Z",
-            "name": "Composite Indicator (e74d62dfdc308df3038e61dfc4e4256)",
+            "name": "Composite Indicator (e74d62dfdc308df3038e61dfc4e4256a)",
             "object_marking_refs": [
                 "marking-definition--3922d784-b1dc-4902-b69e-3307a6c8f205"
             ],
-            "pattern": "[(ipv4-addr:value = '180.210.206.240' OR ipv4-addr:value = '174.139.112.137')] OR [(file:x_ID = 'javas' OR file:x_PIVY_Password = '0xfb453847cb12db0d60ce04795e3059633788f131bfc4da1b8f1a3e48d01c76a1' OR file:hashes.MD5 = 'e74d62dfdc308df3038e61dfc4e4256')] OR [mutex:name = 'adfvawae4'] OR [(domain-name:value = 'microsoftupdate.freeTCP.com' OR domain-name:value = 'microsoftupdate.ns01.biz' OR domain-name:value = 'microsoftupdate.eDNS.biz')]",
+            "pattern": "[(ipv4-addr:value = '180.210.206.240' OR ipv4-addr:value = '174.139.112.137')] OR [(file:x_ID = 'javas' OR file:x_PIVY_Password = '0xfb453847cb12db0d60ce04795e3059633788f131bfc4da1b8f1a3e48d01c76a1' OR file:hashes.MD5 = 'e74d62dfdc308df3038e61dfc4e4256a')] OR [mutex:name = 'adfvawae4'] OR [(domain-name:value = 'microsoftupdate.freeTCP.com' OR domain-name:value = 'microsoftupdate.ns01.biz' OR domain-name:value = 'microsoftupdate.eDNS.biz')]",
             "type": "indicator",
             "valid_from": "2015-05-15T09:00:00.000000Z"
         },
@@ -7682,7 +7682,7 @@
             "object_marking_refs": [
                 "marking-definition--3922d784-b1dc-4902-b69e-3307a6c8f205"
             ],
-            "pattern": "[file:x_ID = 'pliment.3322.org  ']",
+            "pattern": "[file:x_ID = 'pliment.3322.org']",
             "type": "indicator",
             "valid_from": "2015-05-15T09:00:00.000000Z"
         },
@@ -7714,7 +7714,7 @@
             "object_marking_refs": [
                 "marking-definition--3922d784-b1dc-4902-b69e-3307a6c8f205"
             ],
-            "pattern": "[file:x_ID = 'abcd100621.3322.org  ']",
+            "pattern": "[file:x_ID = 'abcd100621.3322.org']",
             "type": "indicator",
             "valid_from": "2015-05-15T09:00:00.000000Z"
         },
@@ -13614,11 +13614,11 @@
                 "malware-artifacts"
             ],
             "modified": "2015-05-15T09:00:00.000Z",
-            "name": "Sample: 4ad286a97c82f91df3e07b101a224f5",
+            "name": "Sample: 4ad286a97c82f91df3e07b101a224f56",
             "object_marking_refs": [
                 "marking-definition--3922d784-b1dc-4902-b69e-3307a6c8f205"
             ],
-            "pattern": "[file:hashes.MD5 = '4ad286a97c82f91df3e07b101a224f5']",
+            "pattern": "[file:hashes.MD5 = '4ad286a97c82f91df3e07b101a224f56']",
             "type": "indicator",
             "valid_from": "2015-05-15T09:00:00.000000Z"
         },
@@ -13630,11 +13630,11 @@
                 "malware-artifacts"
             ],
             "modified": "2015-05-15T09:00:00.000Z",
-            "name": "Composite Indicator (4ad286a97c82f91df3e07b101a224f5)",
+            "name": "Composite Indicator (4ad286a97c82f91df3e07b101a224f56)",
             "object_marking_refs": [
                 "marking-definition--3922d784-b1dc-4902-b69e-3307a6c8f205"
             ],
-            "pattern": "[ipv4-addr:value = '124.237.77.25'] OR [(file:x_ID = '6r.suibian2010.info' OR file:x_PIVY_Password = 'admin' OR file:hashes.MD5 = '4ad286a97c82f91df3e07b101a224f5')] OR [mutex:name = '&#JKJD&#A'] OR [domain-name:value = '6r.suibian2010.info']",
+            "pattern": "[ipv4-addr:value = '124.237.77.25'] OR [(file:x_ID = '6r.suibian2010.info' OR file:x_PIVY_Password = 'admin' OR file:hashes.MD5 = '4ad286a97c82f91df3e07b101a224f56')] OR [mutex:name = '&#JKJD&#A'] OR [domain-name:value = '6r.suibian2010.info']",
             "type": "indicator",
             "valid_from": "2015-05-15T09:00:00.000000Z"
         },
@@ -15458,7 +15458,7 @@
             "object_marking_refs": [
                 "marking-definition--3922d784-b1dc-4902-b69e-3307a6c8f205"
             ],
-            "pattern": "[mutex:name = ')!KEI#&^@'] OR [(file:x_ID = 'abcd100621.3322.org  ' OR file:x_PIVY_Password = 'happyyongzi' OR file:hashes.MD5 = 'abf8e40d7c99e9b3f515ec0872fe099e')] OR [unconverted_term:fireeye:observable-6e55ddf1-77f7-4f96-a462-ec9a77cbea3c] OR [domain-name:value = 'abcd100621.3322.org']",
+            "pattern": "[mutex:name = ')!KEI#&^@'] OR [(file:x_ID = 'abcd100621.3322.org' OR file:x_PIVY_Password = 'happyyongzi' OR file:hashes.MD5 = 'abf8e40d7c99e9b3f515ec0872fe099e')] OR [unconverted_term:fireeye:observable-6e55ddf1-77f7-4f96-a462-ec9a77cbea3c] OR [domain-name:value = 'abcd100621.3322.org']",
             "type": "indicator",
             "valid_from": "2015-05-15T09:00:00.000000Z"
         },
@@ -15586,7 +15586,7 @@
             "object_marking_refs": [
                 "marking-definition--3922d784-b1dc-4902-b69e-3307a6c8f205"
             ],
-            "pattern": "[(ipv4-addr:value = '199.2.137.234' OR ipv4-addr:value = '60.10.1.115' OR ipv4-addr:value = '125.77.199.30')] OR [(file:x_ID = 'pliment.3322.org  ' OR file:x_PIVY_Password = 'keaidestone' OR file:hashes.MD5 = 'aa76e01067c064a8091391759a35ef0a')] OR [mutex:name = 'K#*SJAJD^'] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [domain-name:value = 'pliment.3322.org']",
+            "pattern": "[(ipv4-addr:value = '199.2.137.234' OR ipv4-addr:value = '60.10.1.115' OR ipv4-addr:value = '125.77.199.30')] OR [(file:x_ID = 'pliment.3322.org' OR file:x_PIVY_Password = 'keaidestone' OR file:hashes.MD5 = 'aa76e01067c064a8091391759a35ef0a')] OR [mutex:name = 'K#*SJAJD^'] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [domain-name:value = 'pliment.3322.org']",
             "type": "indicator",
             "valid_from": "2015-05-15T09:00:00.000000Z"
         },
