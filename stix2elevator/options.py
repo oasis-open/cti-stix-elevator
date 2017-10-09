@@ -158,12 +158,6 @@ class ElevatorOptions(object):
             self.log_level = log_level
             self.output_directory = output_directory
 
-        if self.silent and self.message_log_directory:
-            warn("Both console and output log have disabled messages.", 209)
-
-        if self.silent and self.policy != "no_policy":
-            warn("silent option is not compatible with a policy", 211)
-
         # Convert string of comma-separated checks to a list,
         # and convert check code numbers to names. By default all messages are
         # enabled.
@@ -188,6 +182,12 @@ def initialize_options(elevator_args=None):
     global ALL_OPTIONS
     if not ALL_OPTIONS:
         ALL_OPTIONS = ElevatorOptions(elevator_args)
+
+        if ALL_OPTIONS.silent and ALL_OPTIONS.message_log_directory:
+            warn("Both console and output log have disabled messages.", 209)
+
+        if ALL_OPTIONS.silent and ALL_OPTIONS.policy != "no_policy":
+            warn("silent option is not compatible with a policy", 211)
 
 
 def get_validator_options():
