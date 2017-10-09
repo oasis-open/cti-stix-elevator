@@ -57,7 +57,7 @@ python-stix.
 If you need to support older STIX 1.1.1 content, install python-stix 1.1.1.x
 first::
 
-    $ pip install stix<1.2
+    $ pip install 'stix<1.2'
     $ pip install stix2-elevator
 
 You can also install the stix-elevator from GitHub to get the latest (unstable)
@@ -106,7 +106,7 @@ STIX 1.1.1 - 1.2.1 content to STIX 2.0 content::
 
       --package-created-by-id PACKAGE_CREATED_BY_ID
                             Use provided identifier for "created_by_ref"
-                            properties.Example: --package-created-by-id "identity
+                            properties. Example: --package-created-by-id "identity
                             --1234abcd-1a12-12a3-0ab4-1234abcd5678"
 
       --default-timestamp DEFAULT_TIMESTAMP
@@ -115,7 +115,7 @@ STIX 1.1.1 - 1.2.1 content to STIX 2.0 content::
                             "2016-11-15T13:10:35.053000Z"
 
       --validator-args VALIDATOR_ARGS
-                            Arguments to pass stix-validator. Default: --strict-
+                            Arguments to pass to stix-validator. Default: --strict-
                             types Example: stix2_elevator.py <file> --validator-
                             args "-v --strict-types -d 212"
 
@@ -130,14 +130,14 @@ STIX 1.1.1 - 1.2.1 content to STIX 2.0 content::
                             to disable. Example: stix2_elevator.py <file>
                             --disable 212,220
 
-      -s, --silent          If this flag is set. All stix2-elevator messages will
+      -s, --silent          If this flag is set, all stix2-elevator messages will
                             be disabled.
 
       --message-log-directory MESSAGE_LOG_DIRECTORY
-                            If this flag is set. All stix2-elevator messages will
+                            If this flag is set, all stix2-elevator messages will
                             be saved to file. The name of the file will be the
                             input file with extension .log in the specified
-                            directory. Note, make surethe directory already
+                            directory. Note, make sure the directory already
                             exists. Example: stix2_elevator.py <file> --message-
                             log-directory "..\logs"
 
@@ -145,13 +145,12 @@ STIX 1.1.1 - 1.2.1 content to STIX 2.0 content::
                             The logging output level.
 
       -p {no_policy,strict_policy}, --policy {no_policy,strict_policy}
-                            The policy to dealt with errors
+                            The policy to deal with errors
 
-The following table shows all stix2-elevator messages. Use the associate code number
-to --enable or --disable a message. By default, the stix2-elevator displays all
-messages. Note: disabling the message does not disable the functionality.
-
-Refer to elevator_log_messages.xlsx for error codes.
+    Refer to elevator_log_messages.xlsx for all stix2-elevator messages. Use the
+    associated code number to --enable or --disable a message. By default, the
+    stix2-elevator displays all messages. Note: disabling the message does not
+    disable the functionality.
 
 As A Library
 ~~~~~~~~~~~~
