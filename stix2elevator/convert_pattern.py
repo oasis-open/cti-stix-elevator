@@ -1,4 +1,4 @@
-import re
+import sys
 
 from cybox.objects.address_object import Address
 from cybox.objects.archive_file_object import ArchiveFile
@@ -13,22 +13,14 @@ from cybox.objects.win_executable_file_object import WinExecutableFile
 from cybox.objects.win_process_object import WinProcess
 from cybox.objects.win_registry_key_object import WinRegistryKey
 from cybox.objects.win_service_object import WinService
-from six import text_type
-
-import stix2
-from stix2.patterns import (_ComparisonExpression,
-                            _CompoundObservationExpression,
-                            _Constant,
-                            _BooleanExpression)
 import stixmarx
 
+import stix2
+from stix2.patterns import (_BooleanExpression, _ComparisonExpression,
+                            _CompoundObservationExpression, _Constant)
 from stix2elevator.ids import *
 from stix2elevator.vocab_mappings import *
 
-
-import re
-from six import text_type
-import sys
 if sys.version_info > (3,):
     long = int
 

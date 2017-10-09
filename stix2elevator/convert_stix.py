@@ -1,8 +1,6 @@
 from cybox.core import Observable
 from lxml import etree
 import pycountry
-from six import text_type
-
 import stix
 from stix.campaign import Campaign
 from stix.coa import CourseOfAction
@@ -30,8 +28,8 @@ from stixmarx import navigator
 from stix2elevator.convert_cybox import (convert_cybox_object,
                                          fix_cybox_relationships)
 from stix2elevator.convert_pattern import (ComparisonExpressionForElevator,
-                                           ParentheticalExpressionForElevator,
                                            ObservableExpressionForElevator,
+                                           ParentheticalExpressionForElevator,
                                            add_to_observable_mappings,
                                            add_to_pattern_cache,
                                            convert_indicator_to_pattern,
