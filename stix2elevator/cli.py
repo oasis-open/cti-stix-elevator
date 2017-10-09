@@ -16,11 +16,10 @@ from stix2elevator.version import __version__
 
 
 CODE_TABLE = """
-The following table shows all stix2-elevator messages. Use the associate code number
-to --enable or --disable a message. By default, the stix2-elevator displays all
-messages. Note: disabling the message does not disable the functionality.
-
-Refer to elevator_log_messages.xlsx for error codes.
+Refer to elevator_log_messages.xlsx for all stix2-elevator messages. Use the
+associated code number to --enable or --disable a message. By default, the
+stix2-elevator displays all messages. Note: disabling the message does not
+disable the functionality.
 """
 
 
@@ -79,7 +78,7 @@ def _get_arg_parser(is_script=True):
 
     parser.add_argument(
         "--package-created-by-id",
-        help="Use provided identifier for \"created_by_ref\" properties."
+        help="Use provided identifier for \"created_by_ref\" properties. "
              "Example: --package-created-by-id \"identity--1234abcd-1a12-12a3-0ab4-1234abcd5678\"",
         dest="package_created_by_id",
         action="store",
@@ -97,7 +96,7 @@ def _get_arg_parser(is_script=True):
 
     parser.add_argument(
         "--validator-args",
-        help="Arguments to pass stix-validator. Default: --strict-types\n\n"
+        help="Arguments to pass to stix-validator. Default: --strict-types\n\n"
              "Example: stix2_elevator.py <file> --validator-args \"-v --strict-types -d 212\"",
         dest="validator_args",
         action="store",
@@ -126,7 +125,7 @@ def _get_arg_parser(is_script=True):
     parser.add_argument(
         "-s",
         "--silent",
-        help="If this flag is set. All stix2-elevator messages will be disabled.",
+        help="If this flag is set, all stix2-elevator messages will be disabled.",
         dest="silent",
         action="store_true",
         default=False
@@ -134,9 +133,9 @@ def _get_arg_parser(is_script=True):
 
     parser.add_argument(
         "--message-log-directory",
-        help="If this flag is set. All stix2-elevator messages will be saved to "
+        help="If this flag is set, all stix2-elevator messages will be saved to "
              "file. The name of the file will be the input file with "
-             "extension .log in the specified directory. Note, make sure"
+             "extension .log in the specified directory. Note, make sure "
              "the directory already exists.\n\n"
              "Example: stix2_elevator.py <file> --message-log-directory \"..\logs\"",
         dest="message_log_directory",
@@ -154,7 +153,7 @@ def _get_arg_parser(is_script=True):
     parser.add_argument(
         "-p",
         "--policy",
-        help="The policy to dealt with errors",
+        help="The policy to deal with errors",
         dest="policy",
         choices=["no_policy", "strict_policy"],
         action="store",
