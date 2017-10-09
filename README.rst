@@ -1,3 +1,5 @@
+|Build_Status| |Coverage| |Version|
+
 cti-stix-elevator
 =================
 
@@ -269,3 +271,10 @@ Maintainer(s) `listed above <#currentMaintainers>`__. Please send
 general questions about Open Repository participation to OASIS Staff at
 repository-admin@oasis-open.org and any specific CLA-related questions
 to repository-cla@oasis-open.org.
+
+.. |Build_Status| image:: https://travis-ci.org/oasis-open/cti-stix-elevator.svg?branch=master
+   :target: https://travis-ci.org/oasis-open/cti-stix-elevator
+.. |Coverage| image:: https://codecov.io/gh/oasis-open/cti-stix-elevator/branch/master/graph/badge.svg
+   :target: https://codecov.io/gh/oasis-open/cti-stix-elevator
+.. |Version| image:: https://img.shields.io/pypi/v/stix2-elevator.svg?maxAge=3600
+   :target: https://pypi.python.org/pypi/stix2-elevator/
