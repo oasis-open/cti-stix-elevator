@@ -1,6 +1,23 @@
-from stix2elevator.convert_pattern import *
-from stix2elevator.ids import add_object_id_value
-from stix2elevator.vocab_mappings import *
+
+from cybox.objects.address_object import Address
+from cybox.objects.domain_name_object import DomainName
+from cybox.objects.email_message_object import EmailMessage
+from cybox.objects.file_object import File
+from cybox.objects.mutex_object import Mutex
+from cybox.objects.network_connection_object import NetworkConnection
+from cybox.objects.process_object import Process
+from cybox.objects.uri_object import URI
+from cybox.objects.win_process_object import WinProcess
+from cybox.objects.win_registry_key_object import WinRegistryKey
+from cybox.objects.win_service_object import WinService
+from six import text_type
+
+from stix2elevator.ids import add_object_id_value, get_object_id_value
+from stix2elevator.options import error, warn
+from stix2elevator.utils import (convert_timestamp, convert_timestamp_string,
+                                 map_vocabs_to_label)
+from stix2elevator.vocab_mappings import (SERVICE_START_TYPE, SERVICE_STATUS,
+                                          SERVICE_TYPE)
 
 
 def convert_address(add):

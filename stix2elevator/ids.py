@@ -1,7 +1,10 @@
 import re
 import uuid
 
-from stix2elevator.utils import *
+from six import text_type
+
+from stix2elevator.options import error, info, warn
+from stix2elevator.utils import map_1x_type_to_20
 
 
 def record_ids(stix_id, new_id):

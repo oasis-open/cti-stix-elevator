@@ -1,13 +1,88 @@
+import logging
+import os
 import shlex
 
+from six import text_type
 from stix2validator import ValidationOptions
 from stix2validator.scripts import stix2_validator
 
-from stix2elevator.utils import *
-
 ALL_OPTIONS = None
 
+formatter = logging.Formatter("[%(name)s] [%(ecode)d] [%(levelname)-7s] [%(asctime)s] %(message)s")
+
+# Console Handler for Elevator messages
+ch = logging.StreamHandler()
+ch.setFormatter(formatter)
+
+# File Handler for Elevator logs, set individually for each file.
+fh = None
+
+# Module-level logger
 log = logging.getLogger(__name__)
+log.addHandler(ch)
+
+MESSAGES_GENERATED = False
+
+
+def info(fmt, ecode, *args):
+    if msg_id_enabled(ecode):
+        global MESSAGES_GENERATED
+        log.info(fmt, *args, extra={'ecode': ecode})
+        MESSAGES_GENERATED = True
+
+
+def warn(fmt, ecode, *args):
+    if msg_id_enabled(ecode):
+        global MESSAGES_GENERATED
+        log.warning(fmt, *args, extra={'ecode': ecode})
+        MESSAGES_GENERATED = True
+
+
+def error(fmt, ecode, *args):
+    if msg_id_enabled(ecode):
+        global MESSAGES_GENERATED
+        log.error(fmt, *args, extra={'ecode': ecode})
+        MESSAGES_GENERATED = True
+
+
+def setup_logger(package_id):
+    global log
+    global fh
+    global ALL_OPTIONS
+
+    if ALL_OPTIONS:
+        log.setLevel(get_option_value("log_level"))
+
+        if not get_option_value("message_log_directory"):
+            return
+
+        output_directory = get_option_value("message_log_directory")
+        file_directory = get_option_value("file_")
+
+        if file_directory:
+            project_path, filename = os.path.split(file_directory)
+            filename = filename.split(".")[0]
+            filename += ".log"
+        else:
+            filename = package_id.split(":")[1]
+            filename += ".log"
+
+        if not os.path.exists(output_directory):
+            os.makedirs(output_directory)
+
+        destination = os.path.join(output_directory, filename)
+        destination = os.path.abspath(destination)
+
+        # Remove File Handler from root logger if present.
+        if fh in log.handlers:
+            fh.close()
+            log.removeHandler(fh)
+
+        # The delay=True should prevent the file from being opened until a
+        # message is emitted by the logger.
+        fh = logging.FileHandler(destination, mode='w', delay=True)
+        fh.setFormatter(formatter)
+        log.addHandler(fh)
 
 
 class ElevatorOptions(object):
@@ -87,7 +162,7 @@ class ElevatorOptions(object):
             warn("Both console and output log have disabled messages.", 209)
 
         if self.silent and self.policy != "no_policy":
-            log.warn("silent option is not compatible with a policy", extra={"ecode": 211})
+            warn("silent option is not compatible with a policy", 211)
 
         # Convert string of comma-separated checks to a list,
         # and convert check code numbers to names. By default all messages are
