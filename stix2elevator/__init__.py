@@ -54,7 +54,6 @@ def elevate_file(fn):
 
         output.print_results(validation_results)
         if get_option_value("policy") == "no_policy" or (not MESSAGES_GENERATED and validation_results._is_valid):
-            print(json_string)
             return json_string
         else:
             return None
