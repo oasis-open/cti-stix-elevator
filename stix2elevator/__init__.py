@@ -1,4 +1,5 @@
 import json
+import logging
 
 from six import StringIO
 from stix2validator import ValidationError, codes, output, validate_string
@@ -10,8 +11,8 @@ from stix2elevator.convert_pattern import (clear_observable_mappings,
 from stix2elevator.convert_stix import convert_package
 from stix2elevator.ids import clear_id_mapping, clear_object_id_mapping
 from stix2elevator.options import (get_option_value, get_validator_options,
-                                   set_option_value)
-from stix2elevator.utils import *
+                                   set_option_value, setup_logger, warn)
+from stix2elevator.utils import clear_1x_markings_map
 from stix2elevator.version import __version__  # noqa
 
 # Module-level logger

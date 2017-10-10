@@ -1,85 +1,9 @@
 from datetime import datetime
-import logging
 import os
 
 from six import binary_type, iteritems, text_type
 
-from stix2elevator import options
-
-formatter = logging.Formatter("[%(ecode)d] [%(levelname)-7s] [%(asctime)s] %(message)s")
-
-# Console Handler for Elevator messages
-ch = logging.StreamHandler()
-ch.setFormatter(formatter)
-
-# File Handler for Elevator logs, set individually for each file.
-fh = None
-
-# Module-level logger
-log = logging.getLogger(__name__)
-log.addHandler(ch)
-
-MESSAGES_GENERATED = False
-
-
-def info(fmt, ecode, *args):
-    if options.msg_id_enabled(ecode):
-        global MESSAGES_GENERATED
-        log.info(fmt, *args, extra={'ecode': ecode})
-        MESSAGES_GENERATED = True
-
-
-def warn(fmt, ecode, *args):
-    if options.msg_id_enabled(ecode):
-        global MESSAGES_GENERATED
-        log.warning(fmt, *args, extra={'ecode': ecode})
-        MESSAGES_GENERATED = True
-
-
-def error(fmt, ecode, *args):
-    if options.msg_id_enabled(ecode):
-        global MESSAGES_GENERATED
-        log.error(fmt, *args, extra={'ecode': ecode})
-        MESSAGES_GENERATED = True
-
-
-def setup_logger(package_id):
-    global log
-    global fh
-
-    if options.ALL_OPTIONS:
-        log.setLevel(options.get_option_value("log_level"))
-
-        if not options.get_option_value("message_log_directory"):
-            return
-
-        output_directory = options.get_option_value("message_log_directory")
-        file_directory = options.get_option_value("file_")
-
-        if file_directory:
-            project_path, filename = os.path.split(file_directory)
-            filename = filename.split(".")[0]
-            filename += ".log"
-        else:
-            filename = package_id.split(":")[1]
-            filename += ".log"
-
-        if not os.path.exists(output_directory):
-            os.makedirs(output_directory)
-
-        destination = os.path.join(output_directory, filename)
-        destination = os.path.abspath(destination)
-
-        # Remove File Handler from root logger if present.
-        if fh in log.handlers:
-            fh.close()
-            log.removeHandler(fh)
-
-        # The delay=True should prevent the file from being opened until a
-        # message is emitted by the logger.
-        fh = logging.FileHandler(destination, mode='w', delay=True)
-        fh.setFormatter(formatter)
-        log.addHandler(fh)
+from stix2elevator.options import info, warn
 
 
 def identifying_info(stix1x_obj):
