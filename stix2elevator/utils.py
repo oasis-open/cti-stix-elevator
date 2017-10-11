@@ -19,6 +19,8 @@ def identifying_info(stix1x_obj):
         elif hasattr(stix1x_obj, "item") and stix1x_obj.item:
             # Useful in Related Types.
             return "parent of object " + identifying_info(stix1x_obj.item)
+        else:
+            return stix1x_obj.__class__.__name__
     return "- no identifying information available"
 
 
