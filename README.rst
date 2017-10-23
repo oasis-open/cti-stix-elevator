@@ -120,7 +120,7 @@ STIX 1.1.1 - 1.2.1 content to STIX 2.0 content::
       --validator-args VALIDATOR_ARGS
                             Arguments to pass to stix-validator. Default: --strict-
                             types Example: stix2_elevator.py <file> --validator-
-                            args "-v --strict-types -d 212"
+                            args="-v --strict-types -d 212"
 
       -e ENABLE, --enable ENABLE
                             A comma-separated list of the stix2-elevator messages
