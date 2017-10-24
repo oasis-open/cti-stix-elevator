@@ -51,13 +51,16 @@ def elevate_file(fn):
                                  indent=4,
                                  separators=(',', ': '),
                                  sort_keys=True)
-        validation_results = validate_string(json_string, validator_options)
 
-        output.print_results(validation_results)
-        if get_option_value("policy") == "no_policy" or (not MESSAGES_GENERATED and validation_results._is_valid):
+        if get_option_value("policy") == "no_policy":
             return json_string
         else:
-            return None
+            validation_results = validate_string(json_string, validator_options)
+            output.print_results(validation_results)
+            if not MESSAGES_GENERATED and validation_results._is_valid:
+                return json_string
+            else:
+                return None
 
     except ValidationError as ex:
         output.error("Validation error occurred: '%s'" % ex,
@@ -97,12 +100,16 @@ def elevate_string(string):
                                  indent=4,
                                  separators=(',', ': '),
                                  sort_keys=True)
-        validation_results = validate_string(json_string, validator_options)
-        output.print_results(validation_results)
-        if get_option_value("policy") == "no_policy" or (not MESSAGES_GENERATED and validation_results._is_valid):
+
+        if get_option_value("policy") == "no_policy":
             return json_string
         else:
-            return None
+            validation_results = validate_string(json_string, validator_options)
+            output.print_results(validation_results)
+            if not MESSAGES_GENERATED and validation_results._is_valid:
+                return json_string
+            else:
+                return None
 
     except ValidationError as ex:
         output.error("Validation error occurred: '%s'" % ex,
@@ -142,12 +149,15 @@ def elevate_package(package):
                                  indent=4,
                                  separators=(',', ': '),
                                  sort_keys=True)
-        validation_results = validate_string(json_string, validator_options)
-        output.print_results(validation_results)
-        if get_option_value("policy") == "no_policy" or (not MESSAGES_GENERATED and validation_results._is_valid):
+        if get_option_value("policy") == "no_policy":
             return json_string
         else:
-            return None
+            validation_results = validate_string(json_string, validator_options)
+            output.print_results(validation_results)
+            if not MESSAGES_GENERATED and validation_results._is_valid:
+                return json_string
+            else:
+                return None
 
     except ValidationError as ex:
         output.error("Validation error occurred: '%s'" % ex,
