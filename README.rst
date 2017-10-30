@@ -150,7 +150,7 @@ STIX 1.1.1 - 1.2.1 content to STIX 2.0 content::
       -p {no_policy,strict_policy}, --policy {no_policy,strict_policy}
                             The policy to deal with errors
 
-    Refer to elevator_log_messages.xlsx for all stix2-elevator messages. Use the
+    Refer to elevator_log_messages.rst for all stix2-elevator messages. Use the
     associated code number to --enable or --disable a message. By default, the
     stix2-elevator displays all messages. Note: disabling the message does not
     disable the functionality.
