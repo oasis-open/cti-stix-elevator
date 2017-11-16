@@ -46,6 +46,7 @@ Requirements
 -  `stix2-validator <https://pypi.python.org/pypi/stix2-validator>`_ >= 0.4.0
    and its dependencies
 -  `pycountry <https://pypi.python.org/pypi/pycountry/>`_ >= 1.20
+-  `stixmarx <https://pypi.python.org/pypi/stixmarx>`_ >= 1.0.2
 
 Installation
 ------------
@@ -70,6 +71,9 @@ version::
 
 Usage
 -----
+
+It is recommended that you insure that the input STIX 1.x file is valid before submitting it to the elevator.
+Use the `stix2-validator <https://pypi.python.org/pypi/stix-validator>`_.
 
 As A Script
 ~~~~~~~~~~~
