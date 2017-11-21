@@ -85,6 +85,31 @@ A document from the **objects** collection:
         }
         
 A document from the **status** collection:
+
+.. code:: json
+
+        {
+              "id": "2d086da7-4bdc-4f91-900e-d77486753710",
+              "status": "pending",
+              "request_timestamp": "2016-11-02T12:34:34.12345Z",
+              "total_count": 4,
+              "success_count": 1,
+              "successes": [
+                  "indicator--a932fcc6-e032-176c-126f-cb970a5a1ade"
+              ],
+              "failure_count": 1,
+              "failures": [
+                  {
+                      "id": "malware--664fa29d-bf65-4f28-a667-bdb76f29ec98",
+                      "message": "Unable to process object"
+                  }
+              ],
+              "pending_count": 2,
+              "pendings": [
+                  "indicator--252c7c11-daf2-42bd-843b-be65edca9f61",
+                  "relationship--045585ad-a22f-4333-af33-bfd503a683b5"
+              ]
+          }
  
 A document from the **manifest** collection:
  
