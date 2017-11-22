@@ -35,7 +35,9 @@ The discovery_database contains two collections:
              ]
          }
 
-**api_root_info** contains documents that describe each api_root.  Here is a document from the example database:
+**api_root_info** contains documents that describe each api_root.  Because the "_url" and "_name" properties are not part of the TAXII specification, they will be stripped by *medallion* before any document is returned to the client.
+
+Here is a document from the example database:
 
 .. code:: json
 
@@ -45,13 +47,15 @@ The discovery_database contains two collections:
             "versions": [
                   "taxii-2.0"
             ],
-            "max_content_length": 9765625
+            "max_content_length": 9765625,
+            "_url": "http://localhost:5000/trustgroup1/",
+            "_name": "trustgroup1"
         }
         
 The api root databases
 ----------------------
         
-Each api root is contained in a separate Mongo DB database.  It has four collections:  **status**, **objects**, **manifests**, and **collections**.  To support multiple taxii collections, any document in the **status**, **objects**, and **manifests** contains an extra property, "collection_id", to link it to the taxii collection that it is contained in.  Because "collection_id" property is not part of the TAXII specification, it will be stripped by *medallion* before any document is returned to the client.
+Each api root is contained in a separate Mongo DB database.  It has four collections:  **status**, **objects**, **manifests**, and **collections**.  To support multiple taxii collections, any document in the **status**, **objects**, and **manifests** contains an extra property, "collection_id", to link it to the taxii collection that it is contained in.  Because "_collection_id" property is not part of the TAXII specification, it will be stripped by *medallion* before any document is returned to the client.
 
 A document from the **collections** collection:
 
@@ -83,7 +87,7 @@ A document from the **objects** collection:
              "pattern": "[file:hashes.'SHA-256' = 'ef537f25c895bfa782526529a9b63d97aa631564d5d789c2b765448c8635fb6c']",
              "type": "indicator",
              "valid_from": "2014-05-08T09:00:00.000000Z",
-             "collection_id": "91a7b528-80eb-42ed-a74d-c6fbd5a26116"
+             "_collection_id": "91a7b528-80eb-42ed-a74d-c6fbd5a26116"
         }
         
 A document from the **status** collection:
@@ -126,5 +130,5 @@ A document from the **manifest** collection:
             "media_types": [
                     "application/vnd.oasis.stix+json; version=2.0"
             ],
-            "collection_id": "91a7b528-80eb-42ed-a74d-c6fbd5a26116"
+            "_collection_id": "91a7b528-80eb-42ed-a74d-c6fbd5a26116"
        }
