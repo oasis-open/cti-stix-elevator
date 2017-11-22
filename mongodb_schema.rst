@@ -10,6 +10,8 @@ It is unfortunate that the term "collection" is also used to signify something u
 
 An instance of this schema can be populated via the file test/data/initialize_mongodb.py.  This instance will be used for examples below. 
 
+Utilities to initialize your own Mongo DB can be found in test/generic_initialize_mongodb.py.
+
 The discovery database
 ----------------------
 
