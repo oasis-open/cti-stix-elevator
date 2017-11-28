@@ -73,7 +73,7 @@ Usage
 -----
 
 It is recommended that you insure that the input STIX 1.x file is valid before submitting it to the elevator.
-Use the `stix2-validator <https://pypi.python.org/pypi/stix-validator>`_.
+Use the `stix-validator <https://pypi.python.org/pypi/stix-validator>`_.
 
 As A Script
 ~~~~~~~~~~~
