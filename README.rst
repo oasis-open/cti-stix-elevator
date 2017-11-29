@@ -34,7 +34,7 @@ Please enter any comments on how to improve it into the issue tracker.
 Requirements
 ------------
 
-- Python 2.7, or 3.3+
+- Python 2.7, or 3.4+
 - `python-stix <https://stix.readthedocs.io/en/stable/>`_ and its dependencies
 
   .. note::
