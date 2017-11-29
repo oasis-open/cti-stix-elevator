@@ -1,4 +1,4 @@
-# The json-generator.py is not an essential part of the stix-elevator library.
+# The json-generator.py is not an essential part of the stix2-elevator library.
 # It serves as a complimentary tool to generate "idioms-json" directory for
 # testing purposes. Which helps by automating this process.
 

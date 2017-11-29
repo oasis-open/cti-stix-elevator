@@ -164,7 +164,7 @@ def _get_arg_parser(is_script=True):
 
 
 def main():
-    # Parse stix-elevator command-line args
+    # Parse stix2-elevator command-line args
     elevator_parser = _get_arg_parser()
     elevator_args = elevator_parser.parse_args()
 

@@ -7,14 +7,14 @@ NOTE: This is an `OASIS Open
 Repository <https://www.oasis-open.org/resources/open-repositories/>`_.
 See the `Governance`_ section for more information.
 
-The stix-elevator is a software tool for converting STIX 1.x XML to STIX
+The stix2-elevator is a software tool for converting STIX 1.x XML to STIX
 2.0 JSON. Due to the differences between STIX 1.x and STIX 2.0, this
-conversion is best-effort only, and stix-elevator cannot convert from
-STIX 2.0 JSON back to STIX 1.x XML. During the conversion, stix-elevator
+conversion is best-effort only, and stix2-elevator cannot convert from
+STIX 2.0 JSON back to STIX 1.x XML. During the conversion, stix2-elevator
 provides information on the assumptions it needs to make to produce valid STIX
 2.0 JSON, and what information was not able to be converted.
 
-The stix-elevator is a work-in-progress. It should be used to explore
+The stix2-elevator is a work-in-progress. It should be used to explore
 how existing STIX 1.x would potentially be represented in STIX 2.0.
 Using the current version of the elevator will provide insight to issues
 that might need to be mitigated to convert your STIX 1.x content.
@@ -25,7 +25,7 @@ considered final.**
 **STIX 1.x Composite Indicator Expressions and CybOX 2.x Composite
 Observable Expressions allow a level of flexibility not present in STIX
 2 patterns. These composite expressions can frequently have ambiguous
-interpretations, so STIX 2 Indicators created by the stix-elevator from
+interpretations, so STIX 2 Indicators created by the stix2-elevator from
 STIX 1.x Indicators containing composite expressions should be inspected
 to ensure the STIX 2 Indicator has the intended meaning.**
 
@@ -64,7 +64,7 @@ first::
     $ pip install 'stix<1.2'
     $ pip install stix2-elevator
 
-You can also install the stix-elevator from GitHub to get the latest (unstable)
+You can also install the stix2-elevator from GitHub to get the latest (unstable)
 version::
 
     $ pip install git+https://github.com/oasis-open/cti-stix-elevator.git
