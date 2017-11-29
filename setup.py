@@ -53,5 +53,20 @@ setup(
         "Intended Audience :: Developers",
         "License :: OSI Approved :: BSD License",
         "Operating System :: OS Independent",
-    ]
+    ],
+    extras_require={
+        'dev': [
+            'bumpversion',
+            'pre-commit',
+        ],
+        'test': [
+            'coverage',
+            'pytest',
+            'pytest-cov',
+            'tox',
+        ],
+        'docs': [
+            'sphinx',
+        ],
+    },
 )
