@@ -14,7 +14,6 @@ from stix2elevator import elevate_file
 from stix2elevator.options import initialize_options
 from stix2elevator.version import __version__
 
-
 CODE_TABLE = """
 Refer to elevator_log_messages.rst for all stix2-elevator messages. Use the
 associated code number to --enable or --disable a message. By default, the
@@ -164,7 +163,7 @@ def _get_arg_parser(is_script=True):
 
 
 def main():
-    # Parse stix-elevator command-line args
+    # Parse stix2-elevator command-line args
     elevator_parser = _get_arg_parser()
     elevator_args = elevator_parser.parse_args()
 

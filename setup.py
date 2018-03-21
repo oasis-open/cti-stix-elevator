@@ -33,7 +33,7 @@ setup(
         'pycountry>=1.17.8',
         'stix>=1.1.1.9,<1.2.1.0',
         'stix2-validator>=0.1.0',
-        'stixmarx>=1.0.1',
+        'stixmarx>=1.0.3',
         'six>=1.10.0',
         'stix2'
     ],
@@ -44,10 +44,29 @@ setup(
     },
     classifiers=[
         "Programming Language :: Python :: 2",
+        "Programming Language :: Python :: 2.7",
         "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.4",
+        "Programming Language :: Python :: 3.5",
+        "Programming Language :: Python :: 3.6",
         "Development Status :: 2 - Pre-Alpha",
         "Intended Audience :: Developers",
         "License :: OSI Approved :: BSD License",
         "Operating System :: OS Independent",
-    ]
+    ],
+    extras_require={
+        'dev': [
+            'bumpversion',
+            'pre-commit',
+        ],
+        'test': [
+            'coverage',
+            'pytest',
+            'pytest-cov',
+            'tox',
+        ],
+        'docs': [
+            'sphinx',
+        ],
+    },
 )
