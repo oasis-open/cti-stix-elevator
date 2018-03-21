@@ -12,6 +12,7 @@ from stix.common.kill_chains import KillChainPhase, KillChainPhaseReference
 from stix.data_marking import MarkingSpecification, MarkingStructure
 from stix.exploit_target import ExploitTarget
 from stix.extensions.identity.ciq_identity_3_0 import CIQIdentity3_0Instance
+from stix.extensions.malware.maec_4_1_malware import MAECInstance
 from stix.extensions.marking.simple_marking import SimpleMarkingStructure
 from stix.extensions.marking.terms_of_use_marking import \
     TermsOfUseMarkingStructure
@@ -1338,7 +1339,8 @@ def convert_malware_instance(mal, ttp, bundle_instance, ttp_id_used, parent_crea
             else:
                 # TODO: add to description?
                 warn("Only one name for malware is allowed for %s in STIX 2.0 - used first one", 508, malware_instance_instance["id"])
-    # TODO: warning for MAEC content
+    if isinstance(mal, MAECInstance):
+        warn("MAEC content in %s cannot be represented in STIX 2.0", 426, ttp.id_)
     process_ttp_properties(malware_instance_instance, ttp, bundle_instance, parent_created_by_ref)
     finish_basic_object(ttp.id_, malware_instance_instance, mal, bundle_instance, parent_created_by_ref, parent_timestamp)
     return malware_instance_instance
