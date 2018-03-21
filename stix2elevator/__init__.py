@@ -1,6 +1,7 @@
 import json
 import logging
 
+import cybox.utils.caches
 from six import StringIO
 from stix2validator import ValidationError, codes, output, validate_string
 from stix.core import STIXPackage
@@ -28,6 +29,7 @@ def elevate_file(fn):
     clear_pattern_cache()
     clear_object_id_mapping()
     clear_observable_mappings()
+    cybox.utils.caches.cache_clear()
     MESSAGES_GENERATED = False
 
     validator_options = get_validator_options()
@@ -76,6 +78,7 @@ def elevate_string(string):
     clear_pattern_cache()
     clear_object_id_mapping()
     clear_observable_mappings()
+    cybox.utils.caches.cache_clear()
     MESSAGES_GENERATED = False
 
     validator_options = get_validator_options()
@@ -125,6 +128,7 @@ def elevate_package(package):
     clear_pattern_cache()
     clear_object_id_mapping()
     clear_observable_mappings()
+    cybox.utils.caches.cache_clear()
     MESSAGES_GENERATED = False
 
     validator_options = get_validator_options()
