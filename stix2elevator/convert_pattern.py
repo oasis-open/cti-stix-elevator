@@ -346,7 +346,7 @@ def pop_dynamic_variable(var):
 _CLASS_NAME_MAPPING = {"File": "file",
                        "URI": "uri",
                        "EmailMessage": "email-message",
-                       "WinRegistryKey": "win-registry-key",
+                       "WinRegistryKey": "windows-registry-key",
                        "Process": "process",
                        "DomainName": "domain-name",
                        "Mutex": "mutex",
@@ -886,9 +886,9 @@ def convert_file_to_pattern(f):
         return create_boolean_expression("AND", expressions)
 
 
-_REGISTRY_KEY_VALUES_PROPERTIES = [["data", "win-registry-key:values[*].data"],
-                                   ["name", "win-registry-key:values[*].name"],
-                                   ["datatype", "win-registry-key:values[*].data_type"]]
+_REGISTRY_KEY_VALUES_PROPERTIES = [["data", "windows-registry-key:values[*].data"],
+                                   ["name", "windows-registry-key:values[*].name"],
+                                   ["datatype", "windows-registry-key:values[*].data_type"]]
 
 
 def convert_registry_key_to_pattern(reg_key):
@@ -908,7 +908,7 @@ def convert_registry_key_to_pattern(reg_key):
                 key_value_term += reg_key.key.value
         else:
             key_value_term = reg_key.key.value
-        expressions.append(create_term("win-registry-key:key",
+        expressions.append(create_term("windows-registry-key:key",
                                        reg_key.key.condition,
                                        stix2.StringConstant(key_value_term)))
     if reg_key.values:
