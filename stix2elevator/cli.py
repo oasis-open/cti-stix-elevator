@@ -14,6 +14,7 @@ from stix2elevator import elevate_file
 from stix2elevator.options import initialize_options
 from stix2elevator.version import __version__
 
+
 CODE_TABLE = """
 Refer to elevator_log_messages.rst for all stix2-elevator messages. Use the
 associated code number to --enable or --disable a message. By default, the
