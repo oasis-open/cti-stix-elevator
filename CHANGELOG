@@ -1,0 +1,49 @@
+CHANGELOG
+=========
+
+1.1.0 - 2018-03-23
+
+    * Warn about maec content
+    * fix win-registry-key issue
+    * Bump to latest stixmarx.
+    * Drop support for Python 3.3
+    * Clear cybox caches once per elevate call
+    * Don't validate on no policy
+    * Update Tox configuration and and fix logging problem
+    * Added python-stix2 as a dependency
+    * Pattern expression classes
+    * Support silent option in validator
+    * Add support for Python 3.6
+    * Handle Constants and ObjectPaths
+    * added demorgan's rule stuff to handle boolean expression special case for ranges
+    * fix __str__ methods
+    * Clean up global variables, and made sure they were all reinitialized for each new file.
+
+
+1.0.0 - 2017-05-25
+
+    * Support for the most current version of the STIX specification (WD02)
+    * Data marking support (TLP, Statement (TOU, Simple), AIS)
+    * More complete support for:
+        - Email
+        - Sightings
+        - Files
+        - Cyber observable relationships
+        - Network Traffic
+    * More options on the command line
+        - output-directory (this option is available for running the elevator for multiple files)
+           capture output of for each conversion in a file in this directory
+        - policy
+            no_policy (default) – output converted content, regardless of correctness.
+            strict_policy – no converted content is produced if any (not disabled) log messages are produced
+             or the resulting content is not valid STIX
+        - log-level
+            DEBUG, INFO, WARN, ERROR, CRITICAL
+
+
+0.2.0 - 2017-02-03
+
+        beta release
+
+
+0.2.0 -
