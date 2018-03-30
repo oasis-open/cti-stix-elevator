@@ -13,6 +13,7 @@ provides information on the assumptions it needs to make to produce valid STIX
    :caption: Contents:
 
    log_messages
+   coverage
 
 
 Indices and tables
