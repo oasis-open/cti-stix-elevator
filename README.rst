@@ -272,7 +272,7 @@ As documented in `"Public Participation
 Invited <https://github.com/oasis-open/cti-stix-
 elevator/blob/master/CONTRIBUTING.md#public-participation-
 invited>`__",
-contributions to this TC OASIS Open Repository are invited from all
+contributions to this OASIS TC Open Repository are invited from all
 parties, whether affiliated with OASIS or not. Participants must have
 a
 GitHub account, but no fees or OASIS membership obligations are
