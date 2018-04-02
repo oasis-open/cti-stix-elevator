@@ -1,0 +1,121 @@
+<stix:STIX_Package
+	xmlns:cyboxCommon="http://cybox.mitre.org/common-2"
+	xmlns:cybox="http://cybox.mitre.org/cybox-2"
+	xmlns:cyboxVocabs="http://cybox.mitre.org/default_vocabularies-2"
+	xmlns:AccountObj="http://cybox.mitre.org/objects#AccountObject-2"
+	xmlns:AddressObj="http://cybox.mitre.org/objects#AddressObject-2"
+	xmlns:DNSQueryObj="http://cybox.mitre.org/objects#DNSQueryObject-2"
+	xmlns:DNSRecordObj="http://cybox.mitre.org/objects#DNSRecordObject-2"
+	xmlns:DomainNameObj="http://cybox.mitre.org/objects#DomainNameObject-1"
+	xmlns:FileObj="http://cybox.mitre.org/objects#FileObject-2"
+	xmlns:HTTPSessionObj="http://cybox.mitre.org/objects#HTTPSessionObject-2"
+	xmlns:NetworkConnectionObj="http://cybox.mitre.org/objects#NetworkConnectionObject-2"
+	xmlns:PortObj="http://cybox.mitre.org/objects#PortObject-2"
+	xmlns:ProcessObj="http://cybox.mitre.org/objects#ProcessObject-2"
+	xmlns:SocketAddressObj="http://cybox.mitre.org/objects#SocketAddressObject-1"
+	xmlns:URIObj="http://cybox.mitre.org/objects#URIObject-2"
+	xmlns:WinComputerAccountObj="http://cybox.mitre.org/objects#WinComputerAccountObject-2"
+	xmlns:WinExecutableFileObj="http://cybox.mitre.org/objects#WinExecutableFileObject-2"
+	xmlns:WinFileObj="http://cybox.mitre.org/objects#WinFileObject-2"
+	xmlns:WinHandleObj="http://cybox.mitre.org/objects#WinHandleObject-2"
+	xmlns:WinRegistryKeyObj="http://cybox.mitre.org/objects#WinRegistryKeyObject-2"
+	xmlns:example="http://example.com"
+	xmlns:indicator="http://stix.mitre.org/Indicator-2"
+	xmlns:stixCommon="http://stix.mitre.org/common-1"
+	xmlns:stixVocabs="http://stix.mitre.org/default_vocabularies-1"
+	xmlns:stix="http://stix.mitre.org/stix-1"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+	http://cybox.mitre.org/common-2 http://cybox.mitre.org/XMLSchema/common/2.0.1/cybox_common.xsd
+	http://cybox.mitre.org/cybox-2 http://cybox.mitre.org/XMLSchema/core/2.0.1/cybox_core.xsd
+	http://cybox.mitre.org/default_vocabularies-2 http://cybox.mitre.org/XMLSchema/default_vocabularies/2.0.1/cybox_default_vocabularies.xsd
+	http://cybox.mitre.org/objects#AccountObject-2 http://cybox.mitre.org/XMLSchema/objects/Account/2.0.1/Account_Object.xsd
+	http://cybox.mitre.org/objects#AddressObject-2 http://cybox.mitre.org/XMLSchema/objects/Address/2.0.1/Address_Object.xsd
+	http://cybox.mitre.org/objects#DNSQueryObject-2 http://cybox.mitre.org/XMLSchema/objects/DNS_Query/2.0.1/DNS_Query_Object.xsd
+	http://cybox.mitre.org/objects#DNSRecordObject-2 http://cybox.mitre.org/XMLSchema/objects/DNS_Record/2.0.1/DNS_Record_Object.xsd
+	http://cybox.mitre.org/objects#FileObject-2 http://cybox.mitre.org/XMLSchema/objects/File/2.0.1/File_Object.xsd
+	http://cybox.mitre.org/objects#HTTPSessionObject-2 http://cybox.mitre.org/XMLSchema/objects/HTTP_Session/2.0.1/HTTP_Session_Object.xsd
+	http://cybox.mitre.org/objects#NetworkConnectionObject-2 http://cybox.mitre.org/XMLSchema/objects/Network_Connection/2.0.1/Network_Connection_Object.xsd
+	http://cybox.mitre.org/objects#PortObject-2 http://cybox.mitre.org/XMLSchema/objects/Port/2.0.1/Port_Object.xsd
+	http://cybox.mitre.org/objects#ProcessObject-2 http://cybox.mitre.org/XMLSchema/objects/Process/2.0.1/Process_Object.xsd
+	http://cybox.mitre.org/objects#SocketAddressObject-1 http://cybox.mitre.org/XMLSchema/objects/Socket_Address/2.0.1/Socket_Address_Object.xsd
+	http://cybox.mitre.org/objects#URIObject-2 http://cybox.mitre.org/XMLSchema/objects/URI/2.0.1/URI_Object.xsd
+	http://cybox.mitre.org/objects#WinComputerAccountObject-2 http://cybox.mitre.org/XMLSchema/objects/Win_Computer_Account/2.0.1/Win_Computer_Account_Object.xsd
+	http://cybox.mitre.org/objects#WinExecutableFileObject-2 http://cybox.mitre.org/XMLSchema/objects/Win_Executable_File/2.0.1/Win_Executable_File_Object.xsd
+	http://cybox.mitre.org/objects#WinFileObject-2 http://cybox.mitre.org/XMLSchema/objects/Win_File/2.0.1/Win_File_Object.xsd
+	http://cybox.mitre.org/objects#WinHandleObject-2 http://cybox.mitre.org/XMLSchema/objects/Win_Handle/2.0.1/Win_Handle_Object.xsd
+	http://cybox.mitre.org/objects#WinRegistryKeyObject-2 http://cybox.mitre.org/XMLSchema/objects/Win_Registry_Key/2.0.1/Win_Registry_Key_Object.xsd
+	http://stix.mitre.org/Indicator-2 http://stix.mitre.org/XMLSchema/indicator/2.0.1/indicator.xsd
+	http://stix.mitre.org/common-1 http://stix.mitre.org/XMLSchema/common/1.2/stix_common.xsd
+	http://cybox.mitre.org/objects#DomainNameObject-1 ../../cybox/objects/Domain_Name_Object.xsd
+	http://stix.mitre.org/stix-1 http://stix.mitre.org/XMLSchema/core/1.2/stix_core.xsd" id="example:guid-6116aed6-a7e9-11e3-a82f-000c29b241af" version="1.2">
+    <stix:STIX_Header>
+        <stix:Description>IOCAware Auto-Generated STIX IOC Document for VirusShare_5d8129be965fab8115eca34fc84bd7f0</stix:Description>
+        <stix:Information_Source>
+            <stixCommon:Time>
+                <cyboxCommon:Produced_Time>2014-03-09T20:17:34.934295</cyboxCommon:Produced_Time>
+            </stixCommon:Time>
+        </stix:Information_Source>
+    </stix:STIX_Header>
+	<stix:Observables cybox_major_version="2" cybox_minor_version="1">
+		<cybox:Observable id="fireeye:observable-42f1ec7e-2a32-4ff7-84a7-fbcb6288c8c9">
+            <cybox:Title>Domain: www.dhcpserver.ns01.us</cybox:Title>
+            <cybox:Object id="fireeye:object-07e2d2f3-092d-436d-bbd6-60d2bdc36d43">
+                <cybox:Properties type="FQDN" xsi:type="DomainNameObj:DomainNameObjectType">
+                    <DomainNameObj:Value condition="Equals">www.dhcpserver.ns01.us</DomainNameObj:Value>
+                </cybox:Properties>
+                <cybox:Related_Objects>
+                    <cybox:Related_Object idref="fireeye:object-142748e8-8000-4029-8291-31cd191a48ce">
+                        <cybox:Relationship xsi:type="cyboxVocabs:ObjectRelationshipVocab-1.0">Resolved_To</cybox:Relationship>
+                    </cybox:Related_Object>
+                    <cybox:Related_Object idref="fireeye:object-78f7ea8e-18e5-4b79-9a9a-a6c3e6df7661">
+                        <cybox:Relationship xsi:type="cyboxVocabs:ObjectRelationshipVocab-1.0">Resolved_To</cybox:Relationship>
+                    </cybox:Related_Object>
+                </cybox:Related_Objects>
+            </cybox:Object>
+        </cybox:Observable>
+		<cybox:Observable id="fireeye:observable-a9579acb-62fb-4c4f-9af3-5571c0600edc">
+            <cybox:Title>IP: 219.90.112.203</cybox:Title>
+            <cybox:Object id="fireeye:object-142748e8-8000-4029-8291-31cd191a48ce">
+                <cybox:Properties category="ipv4-addr" xsi:type="AddressObj:AddressObjectType">
+                    <AddressObj:Address_Value condition="Equals">219.90.112.203</AddressObj:Address_Value>
+                </cybox:Properties>
+            </cybox:Object>
+        </cybox:Observable>
+        <cybox:Observable id="fireeye:observable-4b3b859b-d682-47e7-8e27-fbadca8e3b72">
+            <cybox:Title>IP: 202.65.220.64</cybox:Title>
+            <cybox:Object id="fireeye:object-78f7ea8e-18e5-4b79-9a9a-a6c3e6df7661">
+                <cybox:Properties category="ipv4-addr" xsi:type="AddressObj:AddressObjectType">
+                    <AddressObj:Address_Value condition="Equals">202.65.220.64</AddressObj:Address_Value>
+                </cybox:Properties>
+            </cybox:Object>
+        </cybox:Observable>
+	</stix:Observables>
+    <stix:Indicators>
+        <stix:Indicator id="example:guid-6116b44e-a7e9-11e3-a82f-000c29b241af" xmlns:indicator='http://stix.mitre.org/Indicator-2' xsi:type='indicator:IndicatorType' negate="false">
+            <indicator:Observable id="fireeye:observable-57a43ab6-2a79-4134-8812-fef3df3616e1">
+            	<cybox:Title>Domain: microsoftb.byinter.net</cybox:Title>
+            	<cybox:Object id="example:object-7671c9e2-3468-43ad-b15b-9266d7993ffe">
+					<cybox:Properties type="FQDN" xsi:type="DomainNameObj:DomainNameObjectType">
+						<DomainNameObj:Value condition="Equals">microsoftb.byinter.net</DomainNameObj:Value>
+					</cybox:Properties>
+					<cybox:Related_Objects>
+						<cybox:Related_Object id="example:object-484e0c40-2234-4652-83d7-b3be632bed8a">
+							<cybox:Properties category="ipv4-addr" xsi:type="AddressObj:AddressObjectType">
+								<AddressObj:Address_Value condition="Equals">202.65.222.45</AddressObj:Address_Value>
+							</cybox:Properties>
+							<cybox:Relationship xsi:type="cyboxVocabs:ObjectRelationshipVocab-1.0">Resolved_To</cybox:Relationship>
+						</cybox:Related_Object>
+
+					</cybox:Related_Objects>
+				</cybox:Object>
+        	</indicator:Observable>
+		</stix:Indicator>
+		<stix:Indicator timestamp="2015-05-15T09:00:00.000000Z"
+						id="fireeye:indicator-74ffca2c-5152-4f44-b8ee-bc89aaf2493b" xsi:type="indicator:IndicatorType">
+			<indicator:Title>Domain: www.dhcpserver.ns01.us</indicator:Title>
+			<indicator:Type xsi:type="stixVocabs:IndicatorTypeVocab-1.1">Domain Watchlist</indicator:Type>
+			<indicator:Observable idref="fireeye:observable-42f1ec7e-2a32-4ff7-84a7-fbcb6288c8c9"/>
+		</stix:Indicator>
+    </stix:Indicators>
+</stix:STIX_Package>

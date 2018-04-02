@@ -65,8 +65,8 @@ from stix2elevator.vocab_mappings import (ATTACK_MOTIVATION_MAP, COA_LABEL_MAP,
 
 if stix.__version__ >= "1.2.0.0":
     from stix.report import Report
-if ((stix.__version__.startswith("1.1.1") and stix.__version__ > "1.1.1.6") or
-        (stix.__version__.startswith("1.2.0") and stix.__version__ > "1.2.0.2")):
+if (stix.__version__.startswith("1.1.1") or
+        stix.__version__.startswith("1.2.0")):
     import stix.extensions.marking.ais
     from stix.extensions.marking.ais import AISMarkingStructure
 
@@ -1036,7 +1036,7 @@ def convert_indicator(indicator, bundle_instance, parent_created_by_ref, parent_
     if indicator.confidence:
         add_confidence_property_to_description(indicator_instance, indicator.confidence)
     if indicator.observable is not None:
-        indicator_instance["pattern"] = convert_observable_to_pattern(indicator.observable, bundle_instance)
+        indicator_instance["pattern"] = convert_observable_to_pattern(indicator.observable)
         add_to_pattern_cache(indicator.id_, indicator_instance["pattern"])
     if indicator.composite_indicator_expression is not None:
         expressions = []
@@ -1045,7 +1045,7 @@ def convert_indicator(indicator, bundle_instance, parent_created_by_ref, parent_
         else:
             sub_indicators = indicator.composite_indicator_expression
         for ind in sub_indicators:
-            term = convert_indicator_to_pattern(ind, bundle_instance)
+            term = convert_indicator_to_pattern(ind)
             if term:
                 expressions.append(term)
         indicator_instance["pattern"] = create_boolean_expression(indicator.composite_indicator_expression.operator,
@@ -1089,12 +1089,12 @@ correctly in STIX 2.0 - please check this pattern",
 
 
 def convert_observed_data(obs, bundle_instance, parent_created_by_ref, parent_timestamp):
-    global OBSERVABLE_MAPPING
     observed_data_instance = create_basic_object("observed-data", obs, parent_timestamp)
     # cybox_container = {"type": "cybox-container", "spec_version": "3.0"}
     observed_data_instance["objects"] = convert_cybox_object(obs.object_)
     if obs.object_.related_objects:
         for o in obs.object_.related_objects:
+            # create index for stix 2.0 cyber observable
             current_largest_id = max(observed_data_instance["objects"].keys())
             related = convert_cybox_object(o)
             if related:
@@ -1107,7 +1107,7 @@ def convert_observed_data(obs, bundle_instance, parent_created_by_ref, parent_ti
     # created_by
     finish_basic_object(obs.id_, observed_data_instance, obs, bundle_instance, parent_created_by_ref, parent_timestamp)
     # remember the original 1.x observable, in case it has to be turned into a pattern later
-    add_to_observable_mappings(obs.id_, obs)
+    add_to_observable_mappings(obs)
     return observed_data_instance
 
 

@@ -58,13 +58,17 @@ class ComparisonExpressionForElevator(_ComparisonExpression):
 
     def collapse_reference(self, prefix):
         new_lhs = prefix.merge(self.lhs)
+        new_lhs.collapsed = True
         return ComparisonExpressionForElevator(self.operator, new_lhs, self.rhs)
 
     def replace_placeholder_with_idref_pattern(self, idref):
         if isinstance(self.rhs, IdrefPlaceHolder):
             change_made, pattern = self.rhs.replace_placeholder_with_idref_pattern(idref)
             if change_made:
-                return True, pattern.collapse_reference(self.lhs)
+                if hasattr(self.lhs, "collapsed") and self.lhs.collapsed:
+                    return True, ComparisonExpressionForElevator(pattern.operator, self.lhs, pattern.rhs)
+                else:
+                    return True, pattern.collapse_reference(self.lhs)
         return False, self
 
     def partition_according_to_object_path(self):
@@ -84,12 +88,6 @@ class BooleanExpressionForElevator(_BooleanExpression):
             if args.contains_placeholder():
                 return True
         return False
-
-    def collapse_reference(self, prefix):
-        operands = []
-        for arg in self.operands:
-            operands.append(arg.collapse_reference(prefix))
-        return BooleanExpressionForElevator(self.operator, operands)
 
     def replace_placeholder_with_idref_pattern(self, idref):
         new_operands = []
@@ -227,11 +225,6 @@ class ParentheticalExpressionForElevator(stix2.ParentheticalExpression):
         self.expression = self.expression.partition_according_to_object_path()
         return self
 
-    def collapse_reference(self, prefix):
-        self.expression = self.expression.collapse_reference(prefix)
-        self.root_type = self.expression.root_type
-        return self
-
 
 def create_boolean_expression(operator, operands):
     if len(operands) == 1:
@@ -289,10 +282,11 @@ def pattern_cache_is_empty():
 _OBSERVABLE_MAPPINGS = {}
 
 
-def add_to_observable_mappings(id_, obs):
+def add_to_observable_mappings(obs):
     global _OBSERVABLE_MAPPINGS
     if obs:
-        _OBSERVABLE_MAPPINGS[id_] = obs
+        _OBSERVABLE_MAPPINGS[obs.id_] = obs
+        _OBSERVABLE_MAPPINGS[obs.object_.id_] = obs
 
 
 def id_in_observable_mappings(id_):
@@ -797,11 +791,11 @@ def convert_file_name_and_file_extension(file_name, file_extension):
     elif (file_name.condition == "StartsWith" and file_extension and file_extension.value and
           is_equal_condition(file_extension.condition)):
         return ComparisonExpressionForElevator("MATCHES", "file:name",
-                                               stix2.StringConstant("^" + file_name.value + ".*" + file_extension.value + "$"))
+                                               stix2.StringConstant("^" + file_name.value + "*." + file_extension.value + "$"))
     elif (file_name.condition == "Contains" and file_extension and file_extension.value and
           is_equal_condition(file_extension.condition)):
         return ComparisonExpressionForElevator("MATCHES", "file:name",
-                                               stix2.StringConstant(file_name.value + ".*" + file_extension.value + "$"))
+                                               stix2.StringConstant(file_name.value + "*." + file_extension.value + "$"))
     else:
         warn("Unable to create a pattern for file:file_name from a File object", 620)
 
@@ -992,8 +986,37 @@ def convert_windows_service_to_pattern(service):
         return create_boolean_expression("AND", expressions)
 
 
-def convert_domain_name_to_pattern(domain_name):
-    return create_term("domain-name:value", domain_name.value.condition, stix2.StringConstant(domain_name.value.value))
+def convert_related_object_to_pattern(ro):
+    if ro.id_:
+        new_pattern = convert_object_to_pattern(ro, ro.id_)
+        if new_pattern:
+            add_to_pattern_cache(ro.id_, new_pattern)
+            return new_pattern
+    elif ro.idref:
+        if id_in_pattern_cache(ro.idref):
+            return get_pattern_from_cache(ro.idref)
+        else:
+            if id_in_observable_mappings(ro.idref):
+                return convert_observable_to_pattern(get_obs_from_mapping(ro.idref))
+            return IdrefPlaceHolder(ro.idref)
+
+
+def convert_domain_name_to_pattern(domain_name, related_objects):
+    pattern = [create_term("domain-name:value", domain_name.value.condition, stix2.StringConstant(domain_name.value.value))]
+    if related_objects:
+        for ro in related_objects:
+            if ro.relationship == "Resolved_To":
+                new_pattern = convert_related_object_to_pattern(ro)
+                if new_pattern:
+                    if isinstance(new_pattern, IdrefPlaceHolder):
+                        pattern.append(ComparisonExpressionForElevator("=",
+                                                                       "domain_name:resolves_to_refs[*]",
+                                                                       new_pattern))
+                    else:
+                        pattern.append(new_pattern.collapse_reference(stix2.ObjectPath.make_object_path("domain_name:resolves_to_refs[*]")))
+            else:
+                warn("The %s relationship involving %s is not supported in STIX 2.0", 427, ro.relationship, identifying_info(ro))
+    return create_boolean_expression("AND", pattern)
 
 
 def convert_mutex_to_pattern(mutex):
@@ -1166,10 +1189,10 @@ _NETWORK_CONNECTION_PROPERTIES = [
 ####################################################################################################################
 
 
-def convert_observable_composition_to_pattern(obs_comp, bundle_instance):
+def convert_observable_composition_to_pattern(obs_comp):
     expressions = []
     for obs in obs_comp.observables:
-        term = convert_observable_to_pattern(obs, bundle_instance)
+        term = convert_observable_to_pattern(obs)
         if term:
             expressions.append(term)
     if expressions:
@@ -1179,6 +1202,7 @@ def convert_observable_composition_to_pattern(obs_comp, bundle_instance):
 
 
 def convert_object_to_pattern(obj, obs_id):
+    related_objects = obj.related_objects
     prop = obj.properties
     expression = None
 
@@ -1196,7 +1220,7 @@ def convert_object_to_pattern(obj, obs_id):
         elif isinstance(prop, Process):
             expression = convert_process_to_pattern(prop)
         elif isinstance(prop, DomainName):
-            expression = convert_domain_name_to_pattern(prop)
+            expression = convert_domain_name_to_pattern(prop, related_objects)
         elif isinstance(prop, Mutex):
             expression = convert_mutex_to_pattern(prop)
         elif isinstance(prop, NetworkConnection):
@@ -1239,20 +1263,19 @@ def negate_expression(obs):
     return hasattr(obs, "negate") and obs.negate
 
 
-def convert_observable_to_pattern(obs, bundle_instance):
+def convert_observable_to_pattern(obs):
     try:
         set_dynamic_variable("current_observable", obs)
         if negate_expression(obs):
             warn("Negation of %s is not handled yet", 810, obs.id_)
-        return convert_observable_to_pattern_without_negate(obs, bundle_instance)
+        return convert_observable_to_pattern_without_negate(obs)
     finally:
         pop_dynamic_variable("current_observable")
 
 
-def convert_observable_to_pattern_without_negate(obs, bundle_instance):
+def convert_observable_to_pattern_without_negate(obs):
     if obs.observable_composition is not None:
-        pattern = convert_observable_composition_to_pattern(obs.observable_composition,
-                                                            bundle_instance)
+        pattern = convert_observable_composition_to_pattern(obs.observable_composition)
         if pattern and obs.id_:
             add_to_pattern_cache(obs.id_, pattern)
         return pattern
@@ -1261,23 +1284,26 @@ def convert_observable_to_pattern_without_negate(obs, bundle_instance):
         if pattern:
             add_to_pattern_cache(obs.id_, pattern)
         if obs.object_.related_objects:
+            related_patterns = []
             for o in obs.object_.related_objects:
-                if o.id_:
-                    pattern = convert_object_to_pattern(o, o.id_)
-                    if pattern:
-                        add_to_pattern_cache(o.id_, pattern)
-        return pattern
+                # save pattern for later use
+                if o.id_ and not id_in_pattern_cache(o.id_):
+                    new_pattern = convert_object_to_pattern(o, o.id_)
+                    if new_pattern:
+                        related_patterns.append(new_pattern)
+                        add_to_pattern_cache(o.id_, new_pattern)
+                if pattern:
+                    related_patterns.append(pattern)
+                return create_boolean_expression("AND", related_patterns)
+        else:
+            return pattern
     elif obs.idref is not None:
         if id_in_pattern_cache(obs.idref):
             return get_pattern_from_cache(obs.idref)
         else:
             # resolve now if possible, and remove from observed_data
-            observable_data_instance = find_definition(obs.idref, bundle_instance["observed_data"])
-            if observable_data_instance is not None:
-                    # TODO: remove from the report's object_refs
-                if id_in_observable_mappings(obs.idref):
-                    return convert_observable_to_pattern(get_obs_from_mapping(obs.idref),
-                                                         bundle_instance,)
+            if id_in_observable_mappings(obs.idref):
+                return convert_observable_to_pattern(get_obs_from_mapping(obs.idref))
             return IdrefPlaceHolder(obs.idref)
 
 
@@ -1319,21 +1345,20 @@ def fix_pattern(pattern):
     return pattern
 
 
-def convert_indicator_to_pattern(ind, bundle_instance):
+def convert_indicator_to_pattern(ind):
     try:
         set_dynamic_variable("current_indicator", ind)
         if ind.negate:
             warn("Negation of %s is not handled yet", 810, ind.id_)
-        return convert_indicator_to_pattern_without_negate(ind, bundle_instance)
+        return convert_indicator_to_pattern_without_negate(ind)
 
     finally:
         pop_dynamic_variable("current_indicator")
 
 
-def convert_indicator_to_pattern_without_negate(ind, bundle_instance):
+def convert_indicator_to_pattern_without_negate(ind):
     if ind.composite_indicator_expression is not None:
-        pattern = convert_indicator_composition_to_pattern(ind.composite_indicator_expression,
-                                                           bundle_instance)
+        pattern = convert_indicator_composition_to_pattern(ind.composite_indicator_expression)
         if pattern and ind.id_:
             add_to_pattern_cache(ind.id_, pattern)
         return pattern
@@ -1347,19 +1372,15 @@ def convert_indicator_to_pattern_without_negate(ind, bundle_instance):
             return get_pattern_from_cache(ind.idref)
         else:
             # resolve now if possible, and remove from observed_data
-            indicator_data_instance = find_definition(ind.idref, bundle_instance["indicators"])
-            if indicator_data_instance is not None:
-                # TODO: remove from the report's object_refs
-                if id_in_observable_mappings(ind.idref):
-                    return convert_observable_to_pattern(get_obs_from_mapping(ind.idref),
-                                                         bundle_instance,)
+            if id_in_observable_mappings(ind.idref):
+                return convert_observable_to_pattern(get_obs_from_mapping(ind.idref))
             return IdrefPlaceHolder(ind.idref)
 
 
-def convert_indicator_composition_to_pattern(ind_comp, bundle_instance):
+def convert_indicator_composition_to_pattern(ind_comp):
     expressions = []
     for ind in ind_comp.indicators:
-        term = convert_indicator_to_pattern(ind, bundle_instance)
+        term = convert_indicator_to_pattern(ind)
         if term:
             expressions.append(term)
         else:
