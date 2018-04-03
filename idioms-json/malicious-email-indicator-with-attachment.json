@@ -10,7 +10,7 @@
             ],
             "modified": "2014-10-31T15:52:13.127Z",
             "name": "Malicious E-mail",
-            "pattern": "[(email-message:subject MATCHES '^[IMPORTANT] Please Review Before' AND email-message:body_multipart[*].body_raw_ref.name MATCHES '^Final Report.*doc.exe$')]",
+            "pattern": "[(email-message:subject MATCHES '^[IMPORTANT] Please Review Before' AND email-message:body_multipart[*].body_raw_ref.name MATCHES '^Final Report*.doc.exe$')]",
             "type": "indicator",
             "valid_from": "2014-10-31T15:52:13.127931Z"
         },
@@ -36,13 +36,13 @@
             ],
             "modified": "2014-10-31T15:52:13.127Z",
             "name": "Malicious E-mail Attachment",
-            "pattern": "[file:name MATCHES '^Final Report.*doc.exe$']",
+            "pattern": "[file:name MATCHES '^Final Report*.doc.exe$'] AND [email-message:body_multipart[*].body_raw_ref.name MATCHES '^Final Report*.doc.exe$']",
             "type": "indicator",
             "valid_from": "2014-10-31T15:52:13.127668Z"
         },
         {
             "created": "2014-10-31T15:52:13.127Z",
-            "id": "relationship--c3fa00e6-1d31-4137-98f5-32a1ec0d0e92",
+            "id": "relationship--e6c3a807-4a0d-4b51-a1dd-4a0862f259ee",
             "modified": "2014-10-31T15:52:13.127Z",
             "relationship_type": "indicates",
             "source_ref": "indicator--8cf9236f-1b96-493d-98be-0c1c1e8b62d7",
@@ -50,7 +50,7 @@
         },
         {
             "created": "2014-10-31T15:52:13.126Z",
-            "id": "relationship--0e5364ad-8112-4aab-911d-ea394608ecaa",
+            "id": "relationship--a72b058e-4bb9-4461-b558-7743544bc2c4",
             "modified": "2014-10-31T15:52:13.126Z",
             "relationship_type": "indicates",
             "source_ref": "indicator--b06b0eb7-61dd-4338-a094-0290c380fbd8",
@@ -58,7 +58,7 @@
         },
         {
             "created": "2014-10-31T15:52:13.127Z",
-            "id": "relationship--8e231463-6b3e-4be6-9c44-56999d8c1d80",
+            "id": "relationship--2721d480-2710-41a0-b250-2a56543ae905",
             "modified": "2014-10-31T15:52:13.127Z",
             "relationship_type": "indicates",
             "source_ref": "indicator--2e17f6fe-3a4d-438a-911a-e509ba1b9933",
