@@ -13,6 +13,8 @@ from stix.data_marking import MarkingSpecification, MarkingStructure
 from stix.exploit_target import ExploitTarget
 from stix.extensions.identity.ciq_identity_3_0 import CIQIdentity3_0Instance
 from stix.extensions.malware.maec_4_1_malware import MAECInstance
+import stix.extensions.marking.ais
+from stix.extensions.marking.ais import AISMarkingStructure
 from stix.extensions.marking.simple_marking import SimpleMarkingStructure
 from stix.extensions.marking.terms_of_use_marking import \
     TermsOfUseMarkingStructure
@@ -65,10 +67,6 @@ from stix2elevator.vocab_mappings import (ATTACK_MOTIVATION_MAP, COA_LABEL_MAP,
 
 if stix.__version__ >= "1.2.0.0":
     from stix.report import Report
-if (stix.__version__.startswith("1.1.1") or
-        stix.__version__.startswith("1.2.0")):
-    import stix.extensions.marking.ais
-    from stix.extensions.marking.ais import AISMarkingStructure
 
 # collect kill chains
 KILL_CHAINS_PHASES = {}
