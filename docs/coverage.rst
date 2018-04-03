@@ -1,10 +1,10 @@
 STIX Elevator 1.1.1 Coverage of CybOX 2.x Object Types
 ===========================================================
 
-The following table associates the CybOX 2.x object types with their STIX 2.0 cyber observable types.  
+The following table associates the CybOX 2.x object types with their STIX 2.0 cyber observable types.
 For each CybOX object the table also indicates if the elevator is able to convert the CybOX object to STIX 2.0.
 
-CybOX object types not listed have no corresponding STIX 2.0 cyber observable type, and therefore are not 
+CybOX object types not listed have no corresponding STIX 2.0 cyber observable type, and therefore are not
 converted by the Elevator
 
 =========================== ========================================= ==========================================
