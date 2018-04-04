@@ -1,3 +1,4 @@
+import datetime
 import re
 import sys
 
@@ -497,7 +498,7 @@ def create_term(lhs, condition, rhs, negated=False):
 
 
 def make_constant(obj):
-    # TODO:  handle Markable objects
+    # TODO:  handle other Markable objects?
     if isinstance(obj, int) or isinstance(obj, long):
         return stix2.IntegerConstant(obj)
     elif isinstance(obj, float):
@@ -506,7 +507,8 @@ def make_constant(obj):
         return stix2.StringConstant(obj.strip())
     elif isinstance(obj, list):
         return stix2.ListConstant([make_constant(x) for x in obj])
-    # TODO: Timestamp
+    elif isinstance(obj, datetime.datetime) or isinstance(obj, stixmarx.api.types.MarkableDateTime):
+        return stix2.TimestampConstant(obj.strftime("%Y-%m-%dT%H:%M:%S.%fZ"))
     else:
         raise ValueError("Can't make a constant from %s" % obj)
 
