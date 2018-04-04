@@ -43,20 +43,15 @@ Requirements
 ------------
 
 - Python 2.7, or 3.4+
-- `python-stix <https://stix.readthedocs.io/en/stable/>`_ and its
-dependencies
+- `python-stix <https://stix.readthedocs.io/en/stable/>`_ and its dependencies
 
   .. note::
 
-      Make sure to use either the latest version of python-stix
-      1.1.1.x or
-      1.2.0.x, depending on whether you want to support STIX 1.1.1 or
-      STIX 1.2.
+      Make sure to use either the latest version of python-stix 1.1.1.x or
+      1.2.0.x, depending on whether you want to support STIX 1.1.1 or STIX 1.2.
 
--  `python-stix2 <https://pypi.python.org/pypi/python-stix2>`_ >=
-0.5.1
--  `stix2-validator <https://pypi.python.org/pypi/stix2-validator>`_
->= 0.4.0
+-  `python-stix2 <https://pypi.python.org/pypi/python-stix2>`_ >= 0.5.1
+-  `stix2-validator <https://pypi.python.org/pypi/stix2-validator>`_ >= 0.4.0
    and its dependencies
 -  `pycountry <https://pypi.python.org/pypi/pycountry/>`_ >= 1.20
 -  `stixmarx <https://pypi.python.org/pypi/stixmarx>`_ >= 1.0.3
@@ -83,8 +78,7 @@ You can also install the stix2-elevator from GitHub to get the latest
 (unstable)
 version::
 
-    $ pip install git+https://github.com/oasis-open/cti-stix-
-    elevator.git
+    $ pip install git+https://github.com/oasis-open/cti-stix-elevator.git
 
 Usage
 -----
@@ -100,12 +94,10 @@ As A Script
 The elevator comes with a bundled script which you can use to elevate
 STIX 1.1.1 - 1.2.1 content to STIX 2.0 content::
 
-    usage: stix2_elevator [-h] [--incidents] [--no-squirrel-gaps] [--
-    infrastructure]
+    usage: stix2_elevator [-h] [--incidents] [--no-squirrel-gaps] [--infrastructure]
               [--package-created-by-id PACKAGE_CREATED_BY_ID]
               [--default-timestamp DEFAULT_TIMESTAMP]
-              [--validator-args VALIDATOR_ARGS] [-e ENABLE] [-d
-              DISABLE] [-s]
+              [--validator-args VALIDATOR_ARGS] [-e ENABLE] [-d DISABLE] [-s]
               [--message-log-directory MESSAGE_LOG_DIRECTORY]
               [--log-level {DEBUG,INFO,WARN,ERROR,CRITICAL}]
               [-p {no_policy,strict_policy}]
@@ -113,83 +105,60 @@ STIX 1.1.1 - 1.2.1 content to STIX 2.0 content::
 
     stix2-elevator v1.0.0
 
-    The stix2-elevator is a work-in-progress. It should be used to
-    explore how
-    existing STIX 1.x would potentially be represented in STIX 2.0.
-    Using the
-    current version of the stix2-elevator will provide insight to
-    issues that might need
+    The stix2-elevator is a work-in-progress. It should be used to explore how
+    existing STIX 1.x would potentially be represented in STIX 2.0. Using the
+    current version of the stix2-elevator will provide insight to issues that might need
     to be mitigated to convert your STIX 1.x content.
 
     positional arguments:
-      file                  The input STIX 1.x document to be
-      elevated.
+      file                  The input STIX 1.x document to be elevated.
 
     optional arguments:
       -h, --help            show this help message and exit
 
-      --incidents           Incidents will be included in the
-      conversion.
+      --incidents           Incidents will be included in the conversion.
 
-      --no-squirrel-gaps    Do not include STIX 1.x content that
-      cannot be
-                            represented directly in STIX 2.0 using the
-                            description
+      --no-squirrel-gaps    Do not include STIX 1.x content that cannot be
+                            represented directly in STIX 2.0 using the description
                             property.
 
-      --infrastructure      Infrastructure will be included in the
-      conversion.
+      --infrastructure      Infrastructure will be included in the conversion.
 
       --package-created-by-id PACKAGE_CREATED_BY_ID
-                            Use provided identifier for
-                            "created_by_ref"
-                            properties. Example: --package-created-by-
-                            id "identity
+                            Use provided identifier for "created_by_ref"
+                            properties. Example: --package-created-by-id "identity
                             --1234abcd-1a12-12a3-0ab4-1234abcd5678"
 
       --default-timestamp DEFAULT_TIMESTAMP
-                            Use provided timestamp for properties that
-                            require a
+                            Use provided timestamp for properties that require a
                             timestamp. Example: --default-timestamp
                             "2016-11-15T13:10:35.053000Z"
 
       --validator-args VALIDATOR_ARGS
-                            Arguments to pass to stix-validator.
-                            Default: --strict-
-                            types Example: stix2_elevator.py <file> --
-                            validator-
+                            Arguments to pass to stix-validator. Default: --strict-
+                            types Example: stix2_elevator.py <file> --validator-
                             args="-v --strict-types -d 212"
 
       -e ENABLE, --enable ENABLE
-                            A comma-separated list of the stix2-
-                            elevator messages
-                            to enable. If the --disable option is not
-                            used, no
+                            A comma-separated list of the stix2-elevator messages
+                            to enable. If the --disable option is not used, no
                             other messages will be shown. Example:
                             stix2_elevator.py <file> --enable 250
 
       -d DISABLE, --disable DISABLE
-                            A comma-separated list of the stix2-
-                            elevator messages
-                            to disable. Example: stix2_elevator.py
-                            <file>
+                            A comma-separated list of the stix2-elevator messages
+                            to disable. Example: stix2_elevator.py <file>
                             --disable 212,220
 
-      -s, --silent          If this flag is set, all stix2-elevator
-      messages will
+      -s, --silent          If this flag is set, all stix2-elevator messages will
                             be disabled.
 
       --message-log-directory MESSAGE_LOG_DIRECTORY
-                            If this flag is set, all stix2-elevator
-                            messages will
-                            be saved to file. The name of the file
-                            will be the
-                            input file with extension .log in the
-                            specified
-                            directory. Note, make sure the directory
-                            already
-                            exists. Example: stix2_elevator.py <file>
-                            --message-
+                            If this flag is set, all stix2-elevator messages will
+                            be saved to file. The name of the file will be the
+                            input file with extension .log in the specified
+                            directory. Note, make sure the directory already
+                            exists. Example: stix2_elevator.py <file> --message-
                             log-directory "..\logs"
 
       --log-level {DEBUG,INFO,WARN,ERROR,CRITICAL}
@@ -198,12 +167,9 @@ STIX 1.1.1 - 1.2.1 content to STIX 2.0 content::
       -p {no_policy,strict_policy}, --policy {no_policy,strict_policy}
                             The policy to deal with errors
 
-    Refer to elevator_log_messages.rst for all stix2-elevator
-    messages. Use the
-    associated code number to --enable or --disable a message. By
-    default, the
-    stix2-elevator displays all messages. Note: disabling the message
-    does not
+    Refer to elevator_log_messages.rst for all stix2-elevator messages. Use the
+    associated code number to --enable or --disable a message. By default, the
+    stix2-elevator displays all messages. Note: disabling the message does not
     disable the functionality.
 
 As A Library
@@ -356,13 +322,10 @@ Staff at
 repository-admin@oasis-open.org and any specific CLA-related questions
 to repository-cla@oasis-open.org.
 
-.. |Build_Status| image:: https://travis-ci.org/oasis-open/cti-stix-
-elevator.svg?branch=master
+.. |Build_Status| image:: https://travis-ci.org/oasis-open/cti-stix-elevator.svg?branch=master
    :target: https://travis-ci.org/oasis-open/cti-stix-elevator
-.. |Coverage| image:: https://codecov.io/gh/oasis-open/cti-stix-
-elevator/branch/master/graph/badge.svg
+.. |Coverage| image:: https://codecov.io/gh/oasis-open/cti-stix-elevator/branch/master/graph/badge.svg
    :target: https://codecov.io/gh/oasis-open/cti-stix-elevator
-.. |Version| image:: https://img.shields.io/pypi/v/stix2-
-elevator.svg?maxAge=3600
+.. |Version| image:: https://img.shields.io/pypi/v/stix2-elevator.svg?maxAge=3600
    :target: https://pypi.python.org/pypi/stix2-elevator/
 
