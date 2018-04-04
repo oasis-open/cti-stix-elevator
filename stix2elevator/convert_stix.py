@@ -246,7 +246,11 @@ def convert_marking_specification(marking_specification, bundle_instance, parent
                         definition["is_cisa_proprietary"] = text_type(mark_spec.not_proprietary.cisa_proprietary).lower()
                 marking_definition_instance["definition"] = definition
             else:
-                warn("Could not resolve Marking Structure %s", 425, identifying_info(marking_specification))
+                if mark_spec.__class__.__name__ in get_option_value("markings_allowed"):
+                    warn("Could not resolve Marking Structure %s", 425, identifying_info(mark_spec))
+                else:
+                    error("Could not resolve Marking Structure %s", 425, identifying_info(mark_spec))
+                    raise(NameError("Could not resolve Marking Structure %s" % identifying_info(mark_spec)))
 
             if "definition_type" in marking_definition_instance:
                 val = add_marking_map_entry(mark_spec, marking_definition_instance["id"])

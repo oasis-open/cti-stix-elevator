@@ -150,6 +150,18 @@ def _get_arg_parser(is_script=True):
     )
 
     parser.add_argument(
+        "-m",
+        "--markings-allowed",
+        help="Avoid an error exit, if these markings are in the content, but not supported by the elevator.  \n\n"
+             "Specify as a comma-separated list"
+             "Example: stix2_elevator.py < file > --markings-allowed \"ISAMarkingsAssertion,ISAMarkings\"",
+
+        dest="markings_allowed",
+        action="store",
+        default=""
+    )
+
+    parser.add_argument(
         "-p",
         "--policy",
         help="The policy to deal with errors",

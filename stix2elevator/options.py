@@ -120,7 +120,8 @@ class ElevatorOptions(object):
                  package_created_by_id=None, default_timestamp=None,
                  validator_args="--strict-types", enable="", disable="",
                  silent=False, message_log_directory=None,
-                 policy="no_policy", output_directory=None, log_level="INFO"):
+                 policy="no_policy", output_directory=None, log_level="INFO",
+                 markings_allowed=""):
 
         if cmd_args is not None:
             if hasattr(cmd_args, "file_"):
@@ -138,6 +139,7 @@ class ElevatorOptions(object):
             self.policy = cmd_args.policy
             self.message_log_directory = cmd_args.message_log_directory
             self.log_level = cmd_args.log_level
+            self.markings_allowed = cmd_args.markings_allowed
             if hasattr(cmd_args, "output_directory"):
                 self.output_directory = cmd_args.output_directory
 
@@ -157,6 +159,7 @@ class ElevatorOptions(object):
             self.message_log_directory = message_log_directory
             self.log_level = log_level
             self.output_directory = output_directory
+            self.markings_allowed = markings_allowed
 
         # Convert string of comma-separated checks to a list,
         # and convert check code numbers to names. By default all messages are
@@ -174,6 +177,9 @@ class ElevatorOptions(object):
                             for x in self.enabled]
         else:
             self.enabled = [text_type(x) for x in CHECK_CODES]
+
+        if self.markings_allowed:
+            self.markings_allowed = self.markings_allowed.split(",")
 
         self.marking_container = None
 
