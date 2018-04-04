@@ -1,6 +1,22 @@
 CHANGELOG
 =========
 
+1.1.1 - 2018-04-04
+
+
+    * Process Timestamps in make_constant
+    * Process data markings not handled by the elevator
+        - If no model is defined, elevator will error off in xml parser
+        - added option --markings_allowed.  Can be used to avoid an error exit on a defined data marking (i.e., parseable)
+            in convert_marking_specification
+    * Handle some related objects
+    * Handle multiple collapsed comparison expression
+    * Remember mappings between objects and observables
+    * Fixed REs for StartsWith and Contains
+    * No need to pass in bundle_instance when creating patterns
+    * Fixed import of AIS data markings, also made it unconditional
+    * Create coverage.rst
+
 1.1.0 - 2018-03-23
 
     * Warn about maec content
