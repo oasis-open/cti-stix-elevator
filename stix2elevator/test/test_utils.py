@@ -1,12 +1,6 @@
-from time import strftime, gmtime
-from datetime import datetime
-import os
-
-from six import binary_type, iteritems, text_type
-
-from stix2elevator.options import info, warn
-from stix2elevator import convert_stix, utils
 from stix.indicator import Indicator
+
+from stix2elevator import convert_stix, utils
 
 
 def test_strftime_with_appropriate_fractional_seconds():
@@ -25,7 +19,8 @@ def test_convert_timestamp_string():
 
     # Maybe take a v1 idiom
 
-    child_timestamp = "2017-03-29T05:05:05.555Z"
+    # child_timestamp = "2017-03-29T05:05:05.555Z"
     parent_timestamp = "2017-03-29T05:09:09.999Z"
     indicator = Indicator()
-    indicator_instace = convert_stix.create_basic_object("indicator", indicator, parent_timestamp)
+    indicator_instance = convert_stix.create_basic_object("indicator", indicator, parent_timestamp)
+    assert indicator_instance is not None
