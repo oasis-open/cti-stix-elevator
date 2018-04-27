@@ -28,6 +28,10 @@ setup(
     description="Utilities to upgrade STIX and CybOX content to 2.0",
     long_description=readme,
     url="http://stixproject.github.io/",
+    author='OASIS Cyber Threat Intelligence Technical Committee',
+    author_email='cti-users@lists.oasis-open.org',
+    maintainer='Rich Piazza',
+    maintainer_email='rpiazza@mitre.org',
     packages=find_packages(),
     install_requires=[
         'pycountry>=1.17.8',

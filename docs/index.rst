@@ -12,8 +12,13 @@ provides information on the assumptions it needs to make to produce valid STIX
    :maxdepth: 2
    :caption: Contents:
 
-   log_messages
-   coverage
+   intro
+   install
+   command-line
+   stix-mappings
+   cyber-observables
+   conversion-issues
+   warnings
 
 
 Indices and tables

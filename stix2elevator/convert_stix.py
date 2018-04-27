@@ -1092,7 +1092,6 @@ correctly in STIX 2.0 - please check this pattern",
 
 def convert_observed_data(obs, bundle_instance, parent_created_by_ref, parent_timestamp):
     observed_data_instance = create_basic_object("observed-data", obs, parent_timestamp)
-    # cybox_container = {"type": "cybox-container", "spec_version": "3.0"}
     observed_data_instance["objects"] = convert_cybox_object(obs.object_)
     if obs.object_.related_objects:
         for o in obs.object_.related_objects:
