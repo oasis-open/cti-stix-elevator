@@ -27,7 +27,7 @@ setup(
     version=get_version(),
     description="Utilities to upgrade STIX and CybOX content to 2.0",
     long_description=readme,
-    url="http://stixproject.github.io/",
+    url="https://github.com/oasis-open/cti-stix-elevator",
     author='OASIS Cyber Threat Intelligence Technical Committee',
     author_email='cti-users@lists.oasis-open.org',
     maintainer='Rich Piazza',
@@ -58,6 +58,16 @@ setup(
         "License :: OSI Approved :: BSD License",
         "Operating System :: OS Independent",
     ],
+    # keywords='',
+    packages=find_packages(),
+    install_requires=[
+        'pycountry>=1.17.8',
+        'six>=1.10.0',
+        'stix>=1.1.1.9,<1.2.1.0',
+        'stix2-validator>=0.1.0',
+        'stix2',
+        'stixmarx>=1.0.3',
+    ],
     extras_require={
         'dev': [
             'bumpversion',
@@ -71,6 +81,11 @@ setup(
         ],
         'docs': [
             'sphinx',
+        ],
+    },
+    entry_points={
+        'console_scripts': [
+            'stix2_elevator = stix2elevator.cli:main',
         ],
     },
 )
