@@ -1,5 +1,10 @@
+.. _warning_messages:
+
 Warning Messages
 =====================
+
+When the elevator makes an assumption during the conversion of some content, or is unable to convert the content, a warning message is output.
+
 
 General
 ---------------
@@ -64,11 +69,12 @@ The imports property of WinExecutableFileObj is not part of STIX 2.0            
 Windows Handles are not a part of STIX 2.0                                                                                                     420     warn
 The address type [address] is not part of STIX 2.0                                                                                             421     warn
 No pattern term was created from *[id]*                                                                                                        422     warn
-*[id]* is used as a pattern, therefore it is not included as an onbserved_data instance                                                        423     warn
-[xxx] content is not supported in STIX 2.0                                                                                                     424     warn
+*[id]* is used as a pattern, therefore it is not included as an observed_data instance                                                         423     warn
+*[xxx]* content is not supported in STIX 2.0                                                                                                   424     warn
 Could not resolve Marking Structure *[id]*                                                                                                     425     warn
 MAEC content in *[id]* cannot be represented in STIX 2.0                                                                                       426     warn
-The [relationship name] relationship involving *[id]* is not supported in STIX 2.0                                                             427     warn
+The *[relationship name]* relationship involving *[id]* is not supported in STIX 2.0                                                           427     warn
+Roles is not a property of an identity (*[id]*).  Perhaps the roles are associated with a related Threat Actor                                 428     warn
 ============================================================================================================================================== ====    =====
 
 Multiple values are not supported in STIX 2.0
@@ -87,7 +93,7 @@ Only one valid time window allowed for *[id]* in STIX 2.0 - used first one      
 Only one name for malware is allowed for *[id]* in STIX 2.0 - used first one                                                                508     warn
 No STIX 1.x vocab value given for *[property]*, using 'unknown'                                                                             509     warn
 Only one *[property]* allowed in STIX 2.0 - used first one                                                                                  510     warn
-File size window not allowed in top level observable, using first value                                                                     511     error
+File size 'window' not allowed in top level observable, using first value                                                                   511     warn
 Only one Layer7_Connections/HTTP_Request_Response used fot http-request-ext, using first value                                              512     warn
 =========================================================================================================================================== ====    =====
 
@@ -134,12 +140,12 @@ Message                                                                         
 Threat Actor identity *[id]* being used as basis of attributed-to relationship                                                              701     info
 Found STIX 1.X ID: *[old_id]* replaced by *[new_id]*                                                                                        702     info
 *[old_id]* is already associated other ids: *[tuple_of_new_ids]*                                                                            703     info
-Including rel["id"] in rep["id"] and added the target_ref rel["target_ref"] to the report                                                   704     warn
-Including rel["id"] in rep["id"] and added the source_ref rel["source_ref"] to the report                                                   705     warn
-Including rel["id"] in rep["id"] although the target_ref is unknown                                                                         706     warn
-Including rel["id"] in rep["id"] although the source_ref is unknown                                                                         707     warn
-Not including rel["id"] in rep["id"] because there is no corresponding SDO for rel["target_ref"]                                            708     warn
-Not including rel["id"] in rep["id"] because there is no corresponding SDO for rel["source_ref"]                                            709     warn
+Including *id of relationship* in *id of report* and added the target_ref *target_ref* to the report                                        704     warn
+Including *id of relationship* in *id of report* and added the source_ref *source_ref* to the report                                        705     warn
+Including *id of relationship* in *id of report* although the target_ref is unknown                                                         706     warn
+Including *id of relationship* in *id of report* although the source_ref is unknown                                                         707     warn
+Not including *id of relationship* in *id of report* because there is no corresponding SDO for *target_ref*                                 708     warn
+Not including *id of relationship* in *id of report* because there is no corresponding SDO for *source_ref*                                 709     warn
 All associated *[xxx]* relationships of *[id]* are assumed to not represent STIX 1.2 versioning                                             710     warn
 ciq name found in *[id]*, possibly overriding other name                                                                                    711     warn
 Only one type pattern can be specified in *[id]* - using cybox                                                                              712     warn
@@ -150,6 +156,7 @@ Based on CIQ information, *[id]* is assumed to be an organization               
 Threat actor *[id]* title is used for name property                                                                                         717     info
 Using related-to for the *[property]* of *[id]*                                                                                             718     warn
 Using first Threat Actor motivation as primary_motivation. If more, as secondary_motivation                                                 719     info
+The published property is required for STIX 2.0 Report *[id]*, using the created property                                                   720     info
 =========================================================================================================================================== ====    =====
 
 STIX elevator currently doesn't process this content
@@ -164,13 +171,13 @@ process:startup_info not handled yet                                            
 WinServiceObject.service_dll is not handled, yet.                                                                                           804  warn
 CybOX object *[object]* not handled yet                                                                                                     805  warn
 Email *[property]* not handled yet                                                                                                          806  warn
-`file:extended_properties:windows_pebinary_ext:optional_header` is not implemented yet                                                      807  warn
+file:extended_properties:windows_pebinary_ext:optional_header is not implemented yet                                                        807  warn
 *[object]* found in *[id]* cannot be converted to a pattern, yet.                                                                           808  warn
 Related Objects of cyber observables for *[id]* are not handled yet                                                                         809  warn
 Negation of *[id]* is not handled yet                                                                                                       810  warn
-Network Connection not implemented, yet.                                                                                                    811  error
+``NO MESSAGE ASSIGNED``                                                                                                                     811
 Condition on a hive property not handled.                                                                                                   812  warn
-Cannot convert CybOX 2.x class name *[name]* to an object_path_root_ne                                                                      813  error
+Cannot convert CybOX 2.x class name *[name]* to an object_path_root_name                                                                    813  error
 Parameter Observables in *[id]* are not handled, yet.                                                                                       814  warn
 *[property]* in *[id]* are not handled, yet.                                                                                                815  info
 Ambiguous file path *[path]* was not processed                                                                                              816  warn
