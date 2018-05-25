@@ -60,8 +60,8 @@ from stix2elevator.vocab_mappings import (ATTACK_MOTIVATION_MAP, COA_LABEL_MAP,
                                           INCIDENT_LABEL_MAP,
                                           INDICATOR_LABEL_MAP,
                                           MALWARE_LABELS_MAP,
-                                          REPORT_LABELS_MAP, ROLES_MAP,
-                                          SECTORS_MAP, THREAT_ACTOR_LABEL_MAP,
+                                          REPORT_LABELS_MAP, SECTORS_MAP,
+                                          THREAT_ACTOR_LABEL_MAP,
                                           THREAT_ACTOR_SOPHISTICATION_MAP,
                                           TOOL_LABELS_MAP)
 
@@ -300,7 +300,7 @@ def finish_basic_object(old_id, instance, stix1x_obj, bundle_instance, parent_cr
 
 
 def add_string_property_to_description(sdo_instance, property_name, property_value, is_list=False):
-    if not get_option_value("no_squirrel_gaps") and property_value is not None:
+    if not get_option_value("no_squirrel_gaps") and property_value:
         if is_list:
             sdo_instance["description"] += "\n\n" + property_name.upper() + ":\n"
             property_values = []
@@ -756,7 +756,7 @@ def convert_vulnerability(v, et, bundle_instance, parent_created_by_ref, parent_
 
     if v.discovered_datetime is not None or v.published_datetime is not None:
         # FIXME: add date times into description
-        info("Discoreved_DateTime and Published_DateTime in %s is not handled, yet.", 815, vulnerability_instance["id"])
+        info("Discovered_DateTime and Published_DateTime in %s is not handled, yet.", 815, vulnerability_instance["id"])
 
     if v.affected_software is not None:
         #  FIXME: add affected software into description
@@ -818,28 +818,30 @@ def get_name(name):
     return name.name_elements[0].value
 
 
-def convert_party_name(party_name, identity):
+def convert_party_name(party_name, obj, is_identity_obj):
     if party_name.organisation_names and party_name.person_names:
-        error("Identity %s has organization and person names", 606, identity["id"])
+        error("Identity %s has organization and person names", 606, obj["id"])
     if party_name.person_names:
-        identity["identity_class"] = "individual"
+        if is_identity_obj:
+            obj["identity_class"] = "individual"
         first_one = True
         for name in party_name.person_names:
             if first_one:
-                identity["name"] = get_name(name)
+                obj["name"] = get_name(name)
                 first_one = False
             else:
-                warn("Only one person name allowed for %s in STIX 2.0, used first one", 502, identity["id"])
+                warn("Only one person name allowed for %s in STIX 2.0, used first one", 502, obj["id"])
                 # add to description
     elif party_name.organisation_names:
-        identity["identity_class"] = "organization"
+        if is_identity_obj:
+            obj["identity_class"] = "organization"
         first_one = True
         for name in party_name.organisation_names:
             if first_one:
-                identity["name"] = get_name(name)
+                obj["name"] = get_name(name)
                 first_one = False
             else:
-                warn("Only one organization name allowed for %s in STIX 2.0, used first one", 503, identity["id"])
+                warn("Only one organization name allowed for %s in STIX 2.0, used first one", 503, obj["id"])
                 # add to description
 
 
@@ -851,11 +853,14 @@ def convert_identity(identity, bundle_instance, parent_timestamp=None, parent_id
         identity_instance["name"] = identity.name
     if isinstance(identity, CIQIdentity3_0Instance):
         if identity.roles:
-            convert_controlled_vocabs_to_open_vocabs(identity_instance, "roles", identity.roles, ROLES_MAP, False)
+            warn("Roles is not a property of an identity (%s).  Perhaps the roles are associated with a related Threat Actor",
+                 428,
+                 identity_instance["id"])
+            # convert_controlled_vocabs_to_open_vocabs(identity_instance, "roles", identity.roles, ROLES_MAP, False)
         ciq_info = identity._specification
         if ciq_info.party_name:
             warn("CIQ name found in %s, possibly overriding other name", 711, identity_instance["id"])
-            convert_party_name(ciq_info.party_name, identity_instance)
+            convert_party_name(ciq_info.party_name, identity_instance, True)
         if ciq_info.organisation_info:
             identity_instance["identity_class"] = "organization"
             warn("Based on CIQ information, %s is assumed to be an organization", 716, identity_instance["id"])
@@ -1157,7 +1162,7 @@ def process_report_contents(report, bundle_instance, report_instance, parent_cre
         for i in report.indicators:
             if i.id_ is not None:
                 i20 = convert_indicator(i, bundle_instance, parent_created_by_ref, parent_timestamp)
-                bundle_instance["objects"].append(i20)
+                bundle_instance["indicators"].append(i20)
                 report_instance["object_refs"].append(i20["id"])
             else:
                 report_instance["object_refs"].append(i.idref)
@@ -1213,7 +1218,8 @@ def convert_report(report, bundle_instance, parent_created_by_ref, parent_timest
                                              report.header.intents, REPORT_LABELS_MAP, False)
     process_report_contents(report, bundle_instance, report_instance,
                             report_created_by_def, report_instance["created"])
-
+    report_instance["published"] = report_instance["created"]
+    info("The published property is required for STIX 2.0 Report %s, using the created property", 720, report_instance["id"])
     if report.related_reports is not None:
         # FIXME: related reports?
         info("Report Related_Reports in %s is not handled, yet.", 815, report_instance["id"])
@@ -1255,6 +1261,10 @@ def convert_threat_actor(threat_actor, bundle_instance, parent_created_by_ref, p
     if threat_actor.title is not None:
         info("Threat Actor %s title is used for name property", 717, threat_actor.id_)
         threat_actor_instance["name"] = threat_actor.title
+    elif threat_actor.identity.name:
+        threat_actor_instance["name"] = threat_actor.identity.name
+    elif isinstance(threat_actor.identity, CIQIdentity3_0Instance):
+        convert_party_name(threat_actor.identity._specification.party_name, threat_actor_instance, False)
     convert_controlled_vocabs_to_open_vocabs(threat_actor_instance, "labels", threat_actor.types,
                                              THREAT_ACTOR_LABEL_MAP, False)
     add_multiple_statement_types_to_description(threat_actor_instance, threat_actor.intended_effects, "intended_effect")
