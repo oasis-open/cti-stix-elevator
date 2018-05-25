@@ -59,15 +59,6 @@ setup(
         "Operating System :: OS Independent",
     ],
     # keywords='',
-    packages=find_packages(),
-    install_requires=[
-        'pycountry>=1.17.8',
-        'six>=1.10.0',
-        'stix>=1.1.1.9,<1.2.1.0',
-        'stix2-validator>=0.1.0',
-        'stix2',
-        'stixmarx>=1.0.3',
-    ],
     extras_require={
         'dev': [
             'bumpversion',
@@ -81,11 +72,6 @@ setup(
         ],
         'docs': [
             'sphinx',
-        ],
-    },
-    entry_points={
-        'console_scripts': [
-            'stix2_elevator = stix2elevator.cli:main',
         ],
     },
 )
