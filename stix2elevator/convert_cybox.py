@@ -42,7 +42,7 @@ def convert_file_properties(f):
     dir_dict = None
     if f.size is not None:
         if isinstance(f.size.value, list):
-            error("File size window not allowed in top level observable, using first value", 511)
+            warn("File size 'window' not allowed in top level observable, using first value", 511)
             file_dict["size"] = int(f.size.value[0])
         else:
             file_dict["size"] = int(f.size)

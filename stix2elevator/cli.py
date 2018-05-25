@@ -136,7 +136,7 @@ def _get_arg_parser(is_script=True):
              "file. The name of the file will be the input file with "
              "extension .log in the specified directory. Note, make sure "
              "the directory already exists.\n\n"
-             "Example: stix2_elevator.py <file> --message-log-directory \"..\logs\"",
+             "Example: stix2_elevator.py <file> --message-log-directory \"../logs\"",
         dest="message_log_directory",
         action="store",
         default=None

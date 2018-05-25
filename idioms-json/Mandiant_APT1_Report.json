@@ -53,10 +53,6 @@
             "object_marking_refs": [
                 "marking-definition--38707174-d5c6-488b-837e-72612a3d77d3"
             ],
-            "roles": [
-                "nation-state",
-                "military"
-            ],
             "type": "identity"
         },
         {
@@ -67,6 +63,7 @@
                 "unknown"
             ],
             "modified": "2015-05-15T09:00:00.000Z",
+            "name": "People's Liberation Army",
             "object_marking_refs": [
                 "marking-definition--38707174-d5c6-488b-837e-72612a3d77d3"
             ],
@@ -106,6 +103,7 @@
                 "unknown"
             ],
             "modified": "2015-05-15T09:00:00.000Z",
+            "name": "Ugly Gorilla",
             "object_marking_refs": [
                 "marking-definition--38707174-d5c6-488b-837e-72612a3d77d3"
             ],
@@ -128,6 +126,7 @@
                 "unknown"
             ],
             "modified": "2015-05-15T09:00:00.000Z",
+            "name": "dota",
             "object_marking_refs": [
                 "marking-definition--38707174-d5c6-488b-837e-72612a3d77d3"
             ],
@@ -140,9 +139,6 @@
             "identity_class": "individual",
             "modified": "2017-05-03T14:10:22.327Z",
             "name": "SuperHard",
-            "roles": [
-                "research-and-development"
-            ],
             "type": "identity"
         },
         {
@@ -181,6 +177,7 @@
                 "unknown"
             ],
             "modified": "2015-05-15T09:00:00.000Z",
+            "name": "SuperHard",
             "object_marking_refs": [
                 "marking-definition--38707174-d5c6-488b-837e-72612a3d77d3"
             ],
@@ -206,6 +203,7 @@
                 "unknown"
             ],
             "modified": "2015-05-15T09:00:00.000Z",
+            "name": "Comment Crew",
             "object_marking_refs": [
                 "marking-definition--38707174-d5c6-488b-837e-72612a3d77d3"
             ],
@@ -231,6 +229,7 @@
                 "unknown"
             ],
             "modified": "2015-05-15T09:00:00.000Z",
+            "name": "Comment Group",
             "object_marking_refs": [
                 "marking-definition--38707174-d5c6-488b-837e-72612a3d77d3"
             ],
@@ -256,6 +255,7 @@
                 "unknown"
             ],
             "modified": "2015-05-15T09:00:00.000Z",
+            "name": "Shady Rat",
             "object_marking_refs": [
                 "marking-definition--38707174-d5c6-488b-837e-72612a3d77d3"
             ],
@@ -281,6 +281,7 @@
                 "unknown"
             ],
             "modified": "2015-05-15T09:00:00.000Z",
+            "name": "GSD 3rd Department / 2nd Bureau",
             "object_marking_refs": [
                 "marking-definition--38707174-d5c6-488b-837e-72612a3d77d3"
             ],
@@ -306,6 +307,7 @@
                 "unknown"
             ],
             "modified": "2015-05-15T09:00:00.000Z",
+            "name": "GSD 3rd Department",
             "object_marking_refs": [
                 "marking-definition--38707174-d5c6-488b-837e-72612a3d77d3"
             ],
@@ -331,6 +333,7 @@
                 "unknown"
             ],
             "modified": "2015-05-15T09:00:00.000Z",
+            "name": "PLA General Staff",
             "object_marking_refs": [
                 "marking-definition--38707174-d5c6-488b-837e-72612a3d77d3"
             ],
@@ -343,9 +346,6 @@
             "identity_class": "organization",
             "modified": "2017-05-03T14:10:22.343Z",
             "name": "Communist Part of China",
-            "roles": [
-                "nation-state"
-            ],
             "type": "identity"
         },
         {
@@ -356,6 +356,7 @@
                 "unknown"
             ],
             "modified": "2015-05-15T09:00:00.000Z",
+            "name": "Communist Part of China",
             "object_marking_refs": [
                 "marking-definition--38707174-d5c6-488b-837e-72612a3d77d3"
             ],
@@ -368,9 +369,6 @@
             "identity_class": "organization",
             "modified": "2017-05-03T14:10:22.343Z",
             "name": "China Telecom",
-            "roles": [
-                "state-influenced-commercial-entity"
-            ],
             "type": "identity"
         },
         {
@@ -381,6 +379,7 @@
                 "unknown"
             ],
             "modified": "2015-05-15T09:00:00.000Z",
+            "name": "China Telecom",
             "object_marking_refs": [
                 "marking-definition--38707174-d5c6-488b-837e-72612a3d77d3"
             ],
@@ -1288,6 +1287,7 @@
                 "attack-pattern--7151c6d0-7e97-47ce-9290-087315ea3db7",
                 "attack-pattern--0781fe70-4c94-4300-8865-4b08b98611b4"
             ],
+            "published": "2015-05-15T09:00:00.000Z",
             "type": "report"
         }
     ],
