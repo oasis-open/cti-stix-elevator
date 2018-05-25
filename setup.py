@@ -58,7 +58,6 @@ setup(
         "License :: OSI Approved :: BSD License",
         "Operating System :: OS Independent",
     ],
-    # keywords='',
     extras_require={
         'dev': [
             'bumpversion',
