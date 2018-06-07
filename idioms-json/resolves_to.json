@@ -8,7 +8,7 @@
                 "unknown"
             ],
             "modified": "2018-03-31T13:09:16.373Z",
-            "pattern": "[domain-name:value = 'microsoftb.byinter.net'] AND [domain_name:resolves_to_refs[*].value = '202.65.222.45']",
+            "pattern": "[(domain-name:value = 'microsoftb.byinter.net' AND domain-name:resolves_to_refs[*].value = '202.65.222.45')]",
             "type": "indicator",
             "valid_from": "2018-03-31T13:09:16.373896Z"
         },
@@ -20,7 +20,7 @@
             ],
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "Domain: www.dhcpserver.ns01.us",
-            "pattern": "[domain-name:value = 'www.dhcpserver.ns01.us'] AND [(domain_name:resolves_to_refs[*].value = '219.90.112.203' AND domain_name:resolves_to_refs[*].value = '202.65.220.64')]",
+            "pattern": "[(domain-name:value = 'www.dhcpserver.ns01.us' AND domain-name:resolves_to_refs[*].value = '219.90.112.203' AND domain-name:resolves_to_refs[*].value = '202.65.220.64')]",
             "type": "indicator",
             "valid_from": "2015-05-15T09:00:00.000000Z"
         }

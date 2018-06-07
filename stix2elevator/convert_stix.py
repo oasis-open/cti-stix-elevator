@@ -118,7 +118,7 @@ def process_information_source(information_source, so, bundle_instance, parent_c
                 process_description_and_short_description(so, information_source)
             if information_source.references:
                 for ref in information_source.references:
-                    so["external_references"].append({"url": ref})
+                    so["external_references"].append({"source_name": "unknown", "url": ref})
             if not get_option_value("no_squirrel_gaps") and information_source.roles:
                 for role in information_source.roles:
                     # no vocab to make to in 2.0

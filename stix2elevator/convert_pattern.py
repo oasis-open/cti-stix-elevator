@@ -345,8 +345,8 @@ _CLASS_NAME_MAPPING = {"File": "file",
                        "Process": "process",
                        "DomainName": "domain-name",
                        "Mutex": "mutex",
-                       "WinExecutableFile": "file:extensions.windows_pebinary_ext",
-                       "ArchiveFile": "file:extensions.archive_ext",
+                       "WinExecutableFile": "file:extensions.`windows-pebinary-ext`",
+                       "ArchiveFile": "file:extensions.'archive-ext'",
                        "NetworkConnection": "network-traffic"}
 
 _ADDRESS_NAME_MAPPING = {Address.CAT_IPV4: "ipv4-addr",
@@ -663,21 +663,21 @@ def convert_email_message_to_pattern(mess):
 
 
 _PE_FILE_HEADER_PROPERTIES = \
-    [["machine", "file:extensions.windows_pebinary_ext.file_header:machine"],
-     ["time_date_stamp", "file:extensions.windows_pebinary_ext.file_header.time_date_stamp"],
-     ["number_of_sections", "file:extensions.windows_pebinary_ext.file_header.number_of_sections"],
-     ["pointer_to_symbol_table", "file:extensions.windows_pebinary_ext.file_header.pointer_to_symbol_table"],
-     ["number_of_symbols", "file:extensions.windows_pebinary_ext.file_header.number_of_symbols"],
-     ["size_of_optional_header", "file:extensions.windows_pebinary_ext.file_header.size_of_optional_header"],
-     ["characteristics", "file:extensions.windows_pebinary_ext.file_header.characteristics"]]
+    [["machine", "file:extensions.'windows-pebinary-ext'.file_header:machine"],
+     ["time_date_stamp", "file:extensions.'windows-pebinary-ext'.file_header.time_date_stamp"],
+     ["number_of_sections", "file:extensions.'windows-pebinary-ext'.file_header.number_of_sections"],
+     ["pointer_to_symbol_table", "file:extensions.'windows-pebinary-ext'.file_header.pointer_to_symbol_table"],
+     ["number_of_symbols", "file:extensions.'windows-pebinary-ext'.file_header.number_of_symbols"],
+     ["size_of_optional_header", "file:extensions.'windows-pebinary-ext'.file_header.size_of_optional_header"],
+     ["characteristics", "file:extensions.'windows-pebinary-ext'.file_header.characteristics"]]
 
 
-_PE_SECTION_HEADER_PROPERTIES = [["name", "file:extensions.windows_pebinary_ext.section[*].name"],
-                                 ["virtual_size", "file:extensions.windows_pebinary_ext.section[*].size"]]
+_PE_SECTION_HEADER_PROPERTIES = [["name", "file:extensions.'windows-pebinary-ext'.section[*].name"],
+                                 ["virtual_size", "file:extensions.'windows-pebinary-ext'.section[*].size"]]
 
 
-_ARCHIVE_FILE_PROPERTIES = [["comment", "file:extensions.archive_ext.comment"],
-                            ["version", "file:extensions.archive_ext.version"]]
+_ARCHIVE_FILE_PROPERTIES = [["comment", "file:extensions.`archive-ext`.comment"],
+                            ["version", "file:extensions.`archive-ext`.version"]]
 
 
 def convert_windows_executable_file_to_pattern(f):
@@ -700,10 +700,10 @@ def convert_windows_executable_file_to_pattern(f):
             if file_header_expressions:
                 expressions.append(create_boolean_expression("AND", file_header_expressions))
         if f.headers.optional_header:
-            warn("file:extensions:windows_pebinary_ext:optional_header is not implemented yet", 807)
+            warn("file:extensions:'windows-pebinary-ext':optional_header is not implemented yet", 807)
 
     if f.type_:
-        expressions.append(create_term("file:extensions.windows_pebinary_ext.pe_type",
+        expressions.append(create_term("file:extensions.'windows-pebinary-ext'.pe_type",
                                        f.type_.condition,
                                        stix2.StringConstant(map_vocabs_to_label(f.type_.value, WINDOWS_PEBINARY))))
     sections = f.sections
@@ -726,7 +726,7 @@ def convert_windows_executable_file_to_pattern(f):
                 if s.entropy.min:
                     warn("Entropy.max is not supported in STIX 2.0", 424)
                 if s.entropy.value:
-                    section_expressions.append(create_term("file:extensions.windows_pebinary_ext.section[*].entropy",
+                    section_expressions.append(create_term("file:extensions.'windows-pebinary-ext'.section[*].entropy",
                                                            s.entropy.value.condition,
                                                            stix2.FloatConstant(s.entropy.value.value)))
             if s.data_hashes:
@@ -956,12 +956,12 @@ def convert_windows_process_to_pattern(process):
 
 
 _WINDOWS_PROCESS_PROPERTIES = \
-    [["service_name", "process:extension_data.windows_service_ext.service_name"],
-     ["display_name", "process:extension_data.windows_service_ext.display_name"],
-     ["startup_command_line", "process:extension_data.windows_service_ext.startup_command_line"],
-     ["start_type", "process:extension_data.windows_service_ext.start_type"],
-     ["service_type", "process:extension_data.windows_service_ext.service_type"],
-     ["service_status", "process:extension_data.windows_service_ext.service_status"]]
+    [["service_name", "process:extensions.'windows-service-ext'.service_name"],
+     ["display_name", "process:extensions.'windows-service-ext'.display_name"],
+     ["startup_command_line", "process:extensions.'windows-service-ext'.startup_command_line"],
+     ["start_type", "process:extensions.'windows-service-ext'.start_type"],
+     ["service_type", "process:extensions.'windows-service-ext'.service_type"],
+     ["service_status", "process:extensions.'windows-service-ext'.service_status"]]
 
 
 def convert_windows_service_to_pattern(service):
@@ -976,7 +976,7 @@ def convert_windows_service_to_pattern(service):
     if hasattr(service, "description_list") and service.description_list:
         description_expressions = []
         for d in service.description_list:
-            description_expressions.append(create_term("process:extension_data.windows_service_ext.descriptions[*]",
+            description_expressions.append(create_term("process:extensions.'windows-service-ext'.descriptions[*]",
                                                        d.condition,
                                                        stix2.StringConstant(d.value)))
         if description_expressions:
@@ -1012,10 +1012,10 @@ def convert_domain_name_to_pattern(domain_name, related_objects):
                 if new_pattern:
                     if isinstance(new_pattern, IdrefPlaceHolder):
                         pattern.append(ComparisonExpressionForElevator("=",
-                                                                       "domain_name:resolves_to_refs[*]",
+                                                                       "domain-name:resolves_to_refs[*]",
                                                                        new_pattern))
                     else:
-                        pattern.append(new_pattern.collapse_reference(stix2.ObjectPath.make_object_path("domain_name:resolves_to_refs[*]")))
+                        pattern.append(new_pattern.collapse_reference(stix2.ObjectPath.make_object_path("domain-name:resolves_to_refs[*]")))
             else:
                 warn("The %s relationship involving %s is not supported in STIX 2.0", 427, ro.relationship, identifying_info(ro))
     return create_boolean_expression("AND", pattern)
@@ -1127,12 +1127,12 @@ def convert_http_network_connection_extension(http):
         if http.http_client_request.http_request_line is not None:
             if http.http_client_request.http_request_line.http_method is not None:
                 term = add_comparison_expression(http.http_client_request.http_request_line.http_method,
-                                                 "network-traffic:extensions.http-request-ext.request_method")
+                                                 "network-traffic:extensions.'http-request-ext'.request_method")
                 if term:
                     expressions.append(term)
             if http.http_client_request.http_request_line.version is not None:
                 term = add_comparison_expression(http.http_client_request.http_request_line.version,
-                                                 "network-traffic:extensions.http-request-ext.request_version")
+                                                 "network-traffic:extensions.'http-request-ext'.request_version")
                 if term:
                     expressions.append(term)
         if http.http_client_request.http_request_header is not None:
@@ -1150,41 +1150,41 @@ def convert_http_network_connection_extension(http):
 
 
 _NETWORK_CONNECTION_PROPERTIES = [
-    ["accept", "network-traffic:extensions.http-request-ext.request_header.Accept"],
-    ["accept_charset", "network-traffic:extensions.http-request-ext.request_header.Accept-Charset"],
-    ["accept_language", "network-traffic:extensions.http-request-ext.request_header.Accept-Language"],
-    ["accept_datetime", "network-traffic:extensions.http-request-ext.request_header.Accept-Datetime"],
-    ["accept_encoding", "network-traffic:extensions.http-request-ext.request_header.Accept-Encoding"],
-    ["authorization", "network-traffic:extensions.http-request-ext.request_header.Authorization"],
-    ["cache_control", "network-traffic:extensions.http-request-ext.request_header.Cache-Control"],
-    ["connection", "network-traffic:extensions.http-request-ext.request_header.Connection"],
-    ["cookie", "network-traffic:extensions.http-request-ext.request_header.Cookie"],
-    ["content_length", "network-traffic:extensions.http-request-ext.request_header.Content-Length"],
-    ["content_md5", "network-traffic:extensions.http-request-ext.request_header.Content-MD5"],
-    ["content_type", "network-traffic:extensions.http-request-ext.request_header.Content-Type"],
-    ["date", "network-traffic:extensions.http-request-ext.request_header.Date"],
-    ["expect", "network-traffic:extensions.http-request-ext.request_header.Expect"],
-    ["from_", "network-traffic:extensions.http-request-ext.request_header.From"],
-    ["host", "network-traffic:extensions.http-request-ext.request_header.Host"],
-    ["if_match", "network-traffic:extensions.http-request-ext.request_header.If-Match"],
-    ["if_modified_since", "network-traffic:extensions.http-request-ext.request_header.If-Modified-Since"],
-    ["if_none_match", "network-traffic:extensions.http-request-ext.request_header.If-None-Match"],
-    ["if_range", "network-traffic:extensions.http-request-ext.request_header.If-Range"],
-    ["if_unmodified_since", "network-traffic:extensions.http-request-ext.request_header.If-Unmodified-Since"],
-    ["max_forwards", "network-traffic:extensions.http-request-ext.request_header.Max-Forwards"],
-    ["pragma", "network-traffic:extensions.http-request-ext.request_header.Pragma"],
-    ["proxy_authorization", "network-traffic:extensions.http-request-ext.request_header.Proxy-Authorization"],
-    ["range", "network-traffic:extensions.http-request-ext.request_header.Range"],
-    ["referer", "network-traffic:extensions.http-request-ext.request_header.Referer"],
-    ["te", "network-traffic:extensions.http-request-ext.request_header.TE"],
-    ["user_agent", "network-traffic:extensions.http-request-ext.request_header.User-Agent"],
-    ["via", "network-traffic:extensions.http-request-ext.request_header.Via"],
-    ["warning", "network-traffic:extensions.http-request-ext.request_header.Warning"],
-    ["dnt", "network-traffic:extensions.http-request-ext.request_header.DNT"],
-    ["x_requested_with", "network-traffic:extensions.http-request-ext.request_header.X-Requested-With"],
-    ["x_forwarded_for", "network-traffic:extensions.http-request-ext.request_header.X-Forwarded-For"],
-    ["x_att_deviceid", "network-traffic:extensions.http-request-ext.request_header.X-ATT-DeviceId"],
-    ["x_wap_profile", "network-traffic:extensions.http-request-ext.request_header.X-Wap-Profile"],
+    ["accept", "network-traffic:extensions.'http-request-ext'.request_header.Accept"],
+    ["accept_charset", "network-traffic:extensions.'http-request-ext'.request_header.'Accept-Charset'"],
+    ["accept_language", "network-traffic:extensions.'http-request-ext'.request_header.'Accept-Language'"],
+    ["accept_datetime", "network-traffic:extensions.'http-request-ext'.request_header.'Accept-Datetime'"],
+    ["accept_encoding", "network-traffic:extensions.'http-request-ext'.request_header.'Accept-Encoding'"],
+    ["authorization", "network-traffic:extensions.'http-request-ext'.request_header.Authorization"],
+    ["cache_control", "network-traffic:extensions.'http-request-ext'.request_header.'Cache-Control'"],
+    ["connection", "network-traffic:extensions.'http-request-ext'.request_header.Connection"],
+    ["cookie", "network-traffic:extensions.'http-request-ext'.request_header.Cookie"],
+    ["content_length", "network-traffic:extensions.'http-request-ext'.request_header.'Content-Length'"],
+    ["content_md5", "network-traffic:extensions.'http-request-ext'.request_header.'Content-MD5'"],
+    ["content_type", "network-traffic:extensions.'http-request-ext'.request_header.'Content-Type'"],
+    ["date", "network-traffic:extensions.'http-request-ext'.request_header.Date"],
+    ["expect", "network-traffic:extensions.'http-request-ext'.request_header.Expect"],
+    ["from_", "network-traffic:extensions.'http-request-ext'.request_header.From"],
+    ["host", "network-traffic:extensions.'http-request-ext'.request_header.Host"],
+    ["if_match", "network-traffic:extensions.'http-request-ext'.request_header.'If-Match'"],
+    ["if_modified_since", "network-traffic:extensions.'http-request-ext'.request_header.'If-Modified-Since'"],
+    ["if_none_match", "network-traffic:extensions.'http-request-ext'.request_header.'If-None-Match'"],
+    ["if_range", "network-traffic:extensions.'http-request-ext'.request_header.'If-Range'"],
+    ["if_unmodified_since", "network-traffic:extensions.'http-request-ext'.request_header.'If-Unmodified-Since'"],
+    ["max_forwards", "network-traffic:extensions.'http-request-ext'.request_header.'Max-Forwards'"],
+    ["pragma", "network-traffic:extensions.'http-request-ext'.request_header.Pragma"],
+    ["proxy_authorization", "network-traffic:extensions.'http-request-ext'.request_header.'Proxy-Authorization'"],
+    ["range", "network-traffic:extensions.'http-request-ext'.request_header.Range"],
+    ["referer", "network-traffic:extensions.'http-request-ext'.request_header.Referer"],
+    ["te", "network-traffic:extensions.'http-request-ext'.request_header.TE"],
+    ["user_agent", "network-traffic:extensions.'http-request-ext'.request_header.'User-Agent'"],
+    ["via", "network-traffic:extensions.'http-request-ext'.request_header.Via"],
+    ["warning", "network-traffic:extensions.'http-request-ext'.request_header.Warning"],
+    ["dnt", "network-traffic:extensions.'http-request-ext'.request_header.DNT"],
+    ["x_requested_with", "network-traffic:extensions.'http-request-ext'.request_header.'X-Requested-With'"],
+    ["x_forwarded_for", "network-traffic:extensions.'http-request-ext'.request_header.'X-Forwarded-For'"],
+    ["x_att_deviceid", "network-traffic:extensions.'http-request-ext'.request_header.'X-ATT-DeviceId'"],
+    ["x_wap_profile", "network-traffic:extensions.'http-request-ext'.request_header.'X-Wap-Profile'"],
 ]
 
 
