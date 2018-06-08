@@ -17,6 +17,7 @@
             "description": "Fred\n\nINFORMATION SOURCE ROLE: Aggregator\n\nINFORMATION SOURCE ROLE: Initial Author",
             "external_references": [
                 {
+                    "source_name": "unknown",
                     "url": "http://foo.com/bar"
                 }
             ],

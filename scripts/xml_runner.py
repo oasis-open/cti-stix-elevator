@@ -27,6 +27,8 @@ def main():
 
     all_succeeded = True
 
+    sys.setrecursionlimit(2000)
+
     for filename in sorted(os.listdir(elevator_args.dir_)):
         path = os.path.join(elevator_args.dir_, filename)
 

@@ -94,7 +94,9 @@ def setup_tests():
 
 def test_idiom_mapping(test_file, stored_master):
     for good_path, check_path in idiom_mappings(test_file, stored_master):
-        assert good_path == check_path
+        if good_path != check_path:
+            find_index_of_difference(good_path, check_path)
+            assert good_path == check_path
 
 
 def pytest_generate_tests(metafunc):
@@ -103,3 +105,26 @@ def pytest_generate_tests(metafunc):
     argvalues = [(x, y) for x, y in zip(TESTED_XML_FILES, MASTER_JSON_FILES)]
 
     metafunc.parametrize(argnames=argnames, argvalues=argvalues, ids=XML_FILENAMES, scope="function")
+
+
+def find_index_of_difference(str1, str2):
+    str1_len = len(str1[1])
+    str2_len = len(str2[1])
+    i = j = 0
+
+    while True:
+        if i < str1_len and j < str1_len:
+            if str1[1][i] != str2[1][j]:
+                print("difference at " + str(i))
+                break
+        elif i == str1_len and j == str2_len:
+            print("no difference")
+            break
+        elif i == str1_len:
+            print("str1 ended at " + str(i))
+            break
+        elif j == str2_len:
+            print("str2 ended at " + str(j))
+            break
+        i = i + 1
+        j = j + 1

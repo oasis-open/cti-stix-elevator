@@ -105,7 +105,7 @@ class ElevatorOptions(object):
             does not have a timestamp, the parent does not have a timestamp.
             When this value is not set, current time will be used instead.
         validator_args: If set, these values will be used to create a
-            ValidationOptions instance if requested.
+            ValidationOptions instance if requested.  The elevator should not produce any custom objects.
         enable: Messages to enable.
         disable: Messages to disable.
         silent: If set, no stix2-elevator log messages will be emitted.
@@ -142,6 +142,9 @@ class ElevatorOptions(object):
             self.markings_allowed = cmd_args.markings_allowed
             if hasattr(cmd_args, "output_directory"):
                 self.output_directory = cmd_args.output_directory
+            # validator arg --silent is currently broken
+            # if self.silent:
+            #    self.validator_args += " --silent"
 
         else:
             self.file_ = file_
