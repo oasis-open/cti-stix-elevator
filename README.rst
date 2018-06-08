@@ -50,11 +50,11 @@ Requirements
       Make sure to use either the latest version of python-stix 1.1.1.x or
       1.2.0.x, depending on whether you want to support STIX 1.1.1 or STIX 1.2.
 
--  `python-stix2 <https://pypi.python.org/pypi/python-stix2>`_ >= 0.5.1
--  `stix2-validator <https://pypi.python.org/pypi/stix2-validator>`_ >= 0.4.0
+-  `python-stix2 <https://pypi.org/project/stix2/>`_ >= 0.5.1
+-  `stix2-validator <https://pypi.org/project/stix2-validator/>`_ >= 0.4.0
    and its dependencies
--  `pycountry <https://pypi.python.org/pypi/pycountry/>`_ >= 1.20
--  `stixmarx <https://pypi.python.org/pypi/stixmarx>`_ >= 1.0.3
+-  `pycountry <https://pypi.org/project/pycountry/>`_ >= 1.20
+-  `stixmarx <https://pypi.org/project/stixmarx/>`_ >= 1.0.3
 
 Installation
 ------------
@@ -85,8 +85,7 @@ Usage
 
 It is recommended that you insure that the input STIX 1.x file is
 valid before submitting it to the elevator.
-Use the `stix-validator <https://pypi.python.org/pypi/stix-
-validator>`_.
+Use the `stix-validator <https://pypi.org/project/stix-validator/>`_.
 
 As A Script
 ~~~~~~~~~~~
@@ -334,5 +333,5 @@ to repository-cla@oasis-open.org.
 .. |Coverage| image:: https://codecov.io/gh/oasis-open/cti-stix-elevator/branch/master/graph/badge.svg
    :target: https://codecov.io/gh/oasis-open/cti-stix-elevator
 .. |Version| image:: https://img.shields.io/pypi/v/stix2-elevator.svg?maxAge=3600
-   :target: https://pypi.python.org/pypi/stix2-elevator/
+   :target: https://pypi.org/project/stix2-elevator/
 
