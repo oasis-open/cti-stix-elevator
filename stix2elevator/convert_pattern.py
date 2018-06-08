@@ -345,7 +345,7 @@ _CLASS_NAME_MAPPING = {"File": "file",
                        "Process": "process",
                        "DomainName": "domain-name",
                        "Mutex": "mutex",
-                       "WinExecutableFile": "file:extensions.`windows-pebinary-ext`",
+                       "WinExecutableFile": "file:extensions.'windows-pebinary-ext'",
                        "ArchiveFile": "file:extensions.'archive-ext'",
                        "NetworkConnection": "network-traffic"}
 
@@ -676,8 +676,8 @@ _PE_SECTION_HEADER_PROPERTIES = [["name", "file:extensions.'windows-pebinary-ext
                                  ["virtual_size", "file:extensions.'windows-pebinary-ext'.section[*].size"]]
 
 
-_ARCHIVE_FILE_PROPERTIES = [["comment", "file:extensions.`archive-ext`.comment"],
-                            ["version", "file:extensions.`archive-ext`.version"]]
+_ARCHIVE_FILE_PROPERTIES = [["comment", "file:extensions.'archive-ext'.comment"],
+                            ["version", "file:extensions.'archive-ext'.version"]]
 
 
 def convert_windows_executable_file_to_pattern(f):
