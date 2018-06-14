@@ -40,7 +40,6 @@
                     "protocols": [
                         "ipv4",
                         "udp",
-                        "dccp",
                         "tcp",
                         "https"
                     ],

@@ -3,7 +3,6 @@ import os
 import shlex
 
 from six import text_type
-from stix2validator import ValidationOptions
 from stix2validator.scripts import stix2_validator
 
 ALL_OPTIONS = None
@@ -202,13 +201,7 @@ def initialize_options(elevator_args=None):
 def get_validator_options():
     if ALL_OPTIONS:
         """Return a stix2validator.validators.ValidationOptions instance."""
-        # Parse stix-validator command-line args
-        validator_parser = stix2_validator._get_arg_parser(is_script=False)
-        validator_args = validator_parser.parse_args(
-            shlex.split(get_option_value("validator_args")))
-
-        validator_args.files = None
-        return ValidationOptions(validator_args)
+        return stix2_validator.parse_args(shlex.split(get_option_value("validator_args")))
 
 
 def get_option_value(option_name):

@@ -38,10 +38,6 @@
                         <SocketAddressObj:IP_Address>
                             <AddressObj:Address_Value>198.49.123.10</AddressObj:Address_Value>
                         </SocketAddressObj:IP_Address>
-                        <SocketAddressObj:Port>
-                            <PortObj:Port_Value>80</PortObj:Port_Value>
-                            <PortObj:Layer4_Protocol>DCCP</PortObj:Layer4_Protocol>
-                        </SocketAddressObj:Port>
                     </NetworkConnectionObj:Destination_Socket_Address>
                     <NetworkConnectionObj:Layer7_Connections>
                         <NetworkConnectionObj:HTTP_Session>
