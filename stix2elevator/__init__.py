@@ -4,6 +4,7 @@ import logging
 import cybox.utils.caches
 from six import StringIO
 from stix2validator import ValidationError, codes, output, validate_string
+from stix2validator.validator import FileValidationResults
 from stix.core import STIXPackage
 import stixmarx
 
@@ -18,6 +19,12 @@ from stix2elevator.version import __version__  # noqa
 
 # Module-level logger
 log = logging.getLogger(__name__)
+
+
+def validate_stix2_string(json_string, validator_options, file_path=None):
+    results = validate_string(json_string, validator_options)
+    fvr = FileValidationResults(results.is_valid, file_path, results)
+    return [fvr]
 
 
 def elevate_file(fn):
@@ -54,7 +61,7 @@ def elevate_file(fn):
                                  separators=(',', ': '),
                                  sort_keys=True)
 
-        validation_results = validate_string(json_string, validator_options)
+        validation_results = validate_stix2_string(json_string, validator_options, fn)
         output.print_results(validation_results)
 
         if get_option_value("policy") == "no_policy":
@@ -105,11 +112,13 @@ def elevate_string(string):
                                  separators=(',', ': '),
                                  sort_keys=True)
 
+        validation_results = validate_stix2_string(json_string, validator_options)
+        output.print_results(validation_results)
+
         if get_option_value("policy") == "no_policy":
             return json_string
         else:
-            validation_results = validate_string(json_string, validator_options)
-            output.print_results(validation_results)
+
             if not MESSAGES_GENERATED and validation_results._is_valid:
                 return json_string
             else:
@@ -154,11 +163,13 @@ def elevate_package(package):
                                  indent=4,
                                  separators=(',', ': '),
                                  sort_keys=True)
+
+        validation_results = validate_stix2_string(json_string, validator_options)
+        output.print_results(validation_results)
+
         if get_option_value("policy") == "no_policy":
             return json_string
         else:
-            validation_results = validate_string(json_string, validator_options)
-            output.print_results(validation_results)
             if not MESSAGES_GENERATED and validation_results._is_valid:
                 return json_string
             else:
