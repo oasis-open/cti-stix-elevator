@@ -18,6 +18,8 @@ fh = None
 
 # Module-level logger
 log = logging.getLogger(__name__)
+# temporary? hack to prevent multiple loggers from printing messages
+log.propagate = False
 log.addHandler(ch)
 
 MESSAGES_GENERATED = False
