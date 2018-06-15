@@ -2,7 +2,7 @@ import json
 import logging
 
 import cybox.utils.caches
-from six import StringIO
+from six import StringIO, binary_type
 from stix2validator import ValidationError, codes, output, validate_string
 from stix2validator.validator import FileValidationResults
 from stix.core import STIXPackage
@@ -22,6 +22,10 @@ log = logging.getLogger(__name__)
 
 
 def validate_stix2_string(json_string, validator_options, file_path=None):
+    # Ensure the json_string is a Unicode text string. json.dumps() sometimes
+    # returns a byte-"str" on Python 2.
+    if isinstance(json_string, binary_type):
+        json_string = json_string.decode("utf-8")
     results = validate_string(json_string, validator_options)
     fvr = FileValidationResults(results.is_valid, file_path, results)
     return [fvr]
@@ -57,6 +61,7 @@ def elevate_file(fn):
         json_string = json.dumps(convert_package(stix_package,
                                                  get_option_value("package_created_by_id"),
                                                  get_option_value("default_timestamp")),
+                                 ensure_ascii=False,
                                  indent=4,
                                  separators=(',', ': '),
                                  sort_keys=True)
@@ -108,6 +113,7 @@ def elevate_string(string):
         json_string = json.dumps(convert_package(stix_package,
                                                  get_option_value("package_created_by_id"),
                                                  get_option_value("default_timestamp")),
+                                 ensure_ascii=False,
                                  indent=4,
                                  separators=(',', ': '),
                                  sort_keys=True)
@@ -160,6 +166,7 @@ def elevate_package(package):
         json_string = json.dumps(convert_package(stix_package,
                                                  get_option_value("package_created_by_id"),
                                                  get_option_value("default_timestamp")),
+                                 ensure_ascii=False,
                                  indent=4,
                                  separators=(',', ': '),
                                  sort_keys=True)
