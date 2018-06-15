@@ -1,12 +1,12 @@
 CHANGELOG
 =========
 
-1.1.3 - 2018-06-08
+1.1.3 - 2018-06-15
 
     * Fix old links for Pypi in documentation
     * When running development scripts, use a higher recursion limit
     * When testing - if a difference was found find the location
-    * Rrun validator all the time, not just when the policy is strict
+    * Run validator all the time, not just when the policy is strict
     * Fix extension properties and type names - they need to use -, not _ and in patterns extension properties names should be quoted if they contain a -
     * Make sure external references had a source name, even if you use 'unknown'
 
