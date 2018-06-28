@@ -129,6 +129,7 @@ Hive property, *[hive property name]*, is already a prefix of the key property, 
 The custom property name *[id]* contains whitespace, replacing it with underscores                                                          624     warn
 Found duplicate marking structure *[id]*                                                                                                    625     info
 *[hash_string]* is not a valid *[hash_type]* hash                                                                                           626     warn
+Unable to determine the STIX 2.0 type for *[id]*, which is malformed                                                                        627     error
 =========================================================================================================================================== ====    =====
 
 STIX Elevator conversion based on assumptions
