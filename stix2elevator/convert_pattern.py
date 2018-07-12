@@ -387,6 +387,10 @@ def add_parens_if_needed(expr):
 def convert_condition(condition):
     if condition == "Equals":
         return "="
+    elif condition == "equals":
+        warn("'equals' allowed in %s - should be 'Equals'", 627,
+             identifying_info(get_dynamic_variable("current_observable")))
+        return "="
     elif condition == "DoesNotEqual":
         return "!="
     elif condition == "Contains":
@@ -409,8 +413,13 @@ def convert_condition(condition):
     # BitwiseAnd
     # BitwiseOr
     elif condition is None:
-        warn("No condition given for %s - assume '='", 714, identifying_info(get_dynamic_variable("current_observable")))
+        warn("No condition given for %s - assume '='", 714,
+             identifying_info(get_dynamic_variable("current_observable")))
         return "="
+    else:
+        warn("Unknown condition given in %s - marked as 'INVALID_CONDITION'", 628,
+             identifying_info(get_dynamic_variable("current_observable")))
+        return "INVALID-CONDITION"
 
 
 def process_boolean_negation(op, negated):
