@@ -384,27 +384,15 @@ def add_parens_if_needed(expr):
         return expr
 
 
-def convert_condition(condition):
-    if condition == "Equals":
-        return "="
-    elif condition == "equals":
-        warn("'equals' allowed in %s - should be 'Equals'", 627,
-             identifying_info(get_dynamic_variable("current_observable")))
-        return "="
-    elif condition == "DoesNotEqual":
-        return "!="
-    elif condition == "Contains":
-        return "="
-    elif condition == "DoesNotContain":
-        return "!="
-    elif condition == "GreaterThan":
-        return ">"
-    elif condition == "GreaterThanOrEqual":
-        return ">="
-    elif condition == "LessThan":
-        return "<"
-    elif condition == "LessThanOrEqual":
-        return "<="
+_CONDITION_OPERATOR_MAP = {
+    'Equals': "=",
+    "DoesNotEqual": "!=",
+    "Contains": "=",
+    "DoesNotContain": "!=",
+    "GreaterThan": ">",
+    'GreaterThanOrEqual': ">=",
+    "LessThan": "<",
+    "LessThanOrEqual": "<="
     # StartsWith - handled in create_term_with_regex
     # EndsWith  - handled in create_term_with_regex
     # InclusiveBetween - handled in create_term_with_range
@@ -412,14 +400,25 @@ def convert_condition(condition):
     # FitsPattern
     # BitwiseAnd
     # BitwiseOr
-    elif condition is None:
+}
+
+
+def convert_condition(condition):
+    if condition is None:
         warn("No condition given for %s - assume '='", 714,
              identifying_info(get_dynamic_variable("current_observable")))
         return "="
-    else:
-        warn("Unknown condition given in %s - marked as 'INVALID_CONDITION'", 628,
-             identifying_info(get_dynamic_variable("current_observable")))
-        return "INVALID-CONDITION"
+    for cond, op in _CONDITION_OPERATOR_MAP.items():
+        if cond.lower() == condition.lower():
+            if cond != condition:
+                warn("'%s' allowed in %s - should be '%s'", 627,
+                     condition,
+                     identifying_info(get_dynamic_variable("current_observable")),
+                     cond)
+            return op
+    warn("Unknown condition given in %s - marked as 'INVALID_CONDITION'", 628,
+         identifying_info(get_dynamic_variable("current_observable")))
+    return "INVALID-CONDITION"
 
 
 def process_boolean_negation(op, negated):

@@ -30,7 +30,7 @@
                                 <AddressObj:Address_Value datatype="string" condition="StartsWith">198.49</AddressObj:Address_Value>
                             </SocketAddressObj:IP_Address>
                             <SocketAddressObj:Port>
-                                <PortObj:Port_Value condition="greaterthan">80</PortObj:Port_Value>
+                                <PortObj:Port_Value condition="greaterthen">80</PortObj:Port_Value>
                             </SocketAddressObj:Port>
                         </NetworkConnectionObj:Destination_Socket_Address>
                         <NetworkConnectionObj:Source_Socket_Address>
