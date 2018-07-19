@@ -130,6 +130,8 @@ The custom property name *[id]* contains whitespace, replacing it with underscor
 Found duplicate marking structure *[id]*                                                                                                    625     info
 *[hash_string]* is not a valid *[hash_type]* hash                                                                                           626     warn
 Unable to determine the STIX 2.0 type for *[id]*, which is malformed                                                                        627     error
+'equals' allowed in *[id]* - should be 'Equals'                                                                                             627     warn
+Unknown condition given in *[id]* - marked as 'INVALID_CONDITION'                                                                           628     warn
 =========================================================================================================================================== ====    =====
 
 STIX Elevator conversion based on assumptions
