@@ -110,18 +110,27 @@ _MARKING_MAP_FROM_1_x_TO_2_0 = {}
 
 
 def check_map_1x_markings_to_20(stix1x_marking):
-    return stix1x_marking in _MARKING_MAP_FROM_1_x_TO_2_0
+    return (stix1x_marking in _MARKING_MAP_FROM_1_x_TO_2_0 or
+            stix1x_marking.id_ in _MARKING_MAP_FROM_1_x_TO_2_0 or
+            stix1x_marking.idref in _MARKING_MAP_FROM_1_x_TO_2_0)
 
 
 def map_1x_markings_to_20(stix1x_marking):
     if check_map_1x_markings_to_20(stix1x_marking):
-        return _MARKING_MAP_FROM_1_x_TO_2_0[stix1x_marking]
+        if stix1x_marking in _MARKING_MAP_FROM_1_x_TO_2_0:
+            return _MARKING_MAP_FROM_1_x_TO_2_0[stix1x_marking]
+        if stix1x_marking.id_ in _MARKING_MAP_FROM_1_x_TO_2_0:
+            return _MARKING_MAP_FROM_1_x_TO_2_0[stix1x_marking.id_]
+        if stix1x_marking.idref in _MARKING_MAP_FROM_1_x_TO_2_0:
+            return _MARKING_MAP_FROM_1_x_TO_2_0[stix1x_marking.idref]
     return stix1x_marking
 
 
 def add_marking_map_entry(stix1x_marking, stix20_marking_id):
     if stix1x_marking not in _MARKING_MAP_FROM_1_x_TO_2_0:
         _MARKING_MAP_FROM_1_x_TO_2_0[stix1x_marking] = stix20_marking_id
+        if stix1x_marking.id_:
+            _MARKING_MAP_FROM_1_x_TO_2_0[stix1x_marking.id_] = stix20_marking_id
         return
     return map_1x_markings_to_20(stix1x_marking)
 

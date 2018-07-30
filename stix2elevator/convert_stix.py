@@ -194,6 +194,11 @@ def convert_marking_specification(marking_specification, bundle_instance, parent
     if marking_specification.marking_structures is not None:
         ms = marking_specification.marking_structures
         for mark_spec in ms:
+            if mark_spec.idref or mark_spec.__class__.__name__ == "MarkingStructure":
+                warn("Could not resolve Marking Structure %s", 425, identifying_info(mark_spec))
+                # Skip empty markings or ones that use the idref approach.
+                continue
+
             marking_definition_instance = create_basic_object("marking-definition", mark_spec)
             process_information_source(marking_specification.information_source,
                                        marking_definition_instance, bundle_instance,
@@ -250,7 +255,7 @@ def convert_marking_specification(marking_specification, bundle_instance, parent
                     warn("Could not resolve Marking Structure %s", 425, identifying_info(mark_spec))
                 else:
                     error("Could not resolve Marking Structure %s", 425, identifying_info(mark_spec))
-                    raise(NameError("Could not resolve Marking Structure %s" % identifying_info(mark_spec)))
+                    raise NameError("Could not resolve Marking Structure %s" % identifying_info(mark_spec))
 
             if "definition_type" in marking_definition_instance:
                 val = add_marking_map_entry(mark_spec, marking_definition_instance["id"])
