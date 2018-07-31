@@ -233,7 +233,7 @@ def msg_id_enabled(msg_id):
 
 
 # These codes are aligned with elevator_log_messages spreadsheet.
-CHECK_CODES = [201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211,
+CHECK_CODES = [201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212,
 
                301, 302, 303, 304, 305, 306,
 
