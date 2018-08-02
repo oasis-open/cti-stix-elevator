@@ -617,7 +617,10 @@ def convert_campaign(camp, bundle_instance, parent_created_by_ref, parent_timest
     if camp.names is not None:
         campaign_instance["aliases"] = []
         for name in camp.names:
-            campaign_instance["aliases"].append(name)
+            if isinstance(name, text_type):
+                campaign_instance["aliases"].append(name)
+            else:
+                campaign_instance["aliases"].append(name.value)
     # process information source before any relationships
     campaign_created_by_ref = process_information_source(camp.information_source, campaign_instance,
                                                          bundle_instance, parent_created_by_ref,
