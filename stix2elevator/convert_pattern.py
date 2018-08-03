@@ -416,7 +416,7 @@ def convert_condition(condition):
     for cond, op in _CONDITION_OPERATOR_MAP.items():
         if cond.lower() == condition.lower():
             if cond != condition:
-                warn("'%s' allowed in %s - should be '%s'", 627,
+                warn("'%s' allowed in %s - should be '%s'", 630,
                      condition,
                      identifying_info(get_dynamic_variable("current_observable")),
                      cond)

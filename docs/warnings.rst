@@ -131,9 +131,10 @@ The custom property name *[id]* contains whitespace, replacing it with underscor
 Found duplicate marking structure *[id]*                                                                                                    625     info
 *[hash_string]* is not a valid *[hash_type]* hash                                                                                           626     warn
 *[enum_value]* in *[id]* is not a member of the *[enum_type]* enumeration                                                                   627     warn
-Unable to determine the STIX 2.0 type for *[id]*, which is malformed                                                                        627     error
-'equals' allowed in *[id]* - should be 'Equals'                                                                                             627     warn
 Unknown condition given in *[id]* - marked as 'INVALID_CONDITION'                                                                           628     warn
+Unable to determine the STIX 2.0 type for *[id]*, which is malformed                                                                        629     error
+'equals' allowed in *[id]* - should be 'Equals'                                                                                             630     warn
+
 =========================================================================================================================================== ====    =====
 
 STIX Elevator conversion based on assumptions
@@ -198,6 +199,6 @@ Message                                                                         
 ``first_observed`` and ``last_observed`` properties not available directly on *[id]* - using timestamp                                      901     info
 Using parent object timestamp on *[identifying info]*                                                                                       902     info
 No valid time position information available in *[id]*, using parent timestamp                                                              903     warn
-No ``first_seen`` property on *[id]* - using timestamp                                                                                            904     info
+No ``first_seen`` property on *[id]* - using timestamp                                                                                      904     info
 Timestamp not available for *[entity]*, using current time                                                                                  905     warn
 =========================================================================================================================================== ====    =====
