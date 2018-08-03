@@ -75,6 +75,7 @@ Could not resolve Marking Structure *[id]*                                      
 MAEC content in *[id]* cannot be represented in STIX 2.0                                                                                       426     warn
 The *[relationship name]* relationship involving *[id]* is not supported in STIX 2.0                                                           427     warn
 ``roles`` is not a property of a 2.0 identity (*[id]*).  Perhaps the roles are associated with a related Threat Actor                          428     warn
+``HTTPServerResponse`` type is not supported in STIX 2.0                                                                                       429     warn
 ============================================================================================================================================== ====    =====
 
 Multiple values are not supported in STIX 2.0
@@ -94,7 +95,7 @@ Only one name for malware is allowed for *[id]* in STIX 2.0 - used first one    
 No STIX 1.x vocab value given for *[property]*, using 'unknown'                                                                             509     warn
 Only one *[property]* allowed in STIX 2.0 - used first one                                                                                  510     warn
 File size 'window' not allowed in top level observable, using first value                                                                   511     warn
-Only one ``Layer7_Connections/HTTP_Request_Response`` used for ``http-request-ext``, using first value                                      512     warn
+Only one ``HTTP_Request_Response`` used for ``http-request-ext``, using first value                                                         512     warn
 =========================================================================================================================================== ====    =====
 
 Possible issue in original STIX 1.x content
@@ -129,6 +130,7 @@ Hive property, *[hive property name]*, is already a prefix of the key property, 
 The custom property name *[id]* contains whitespace, replacing it with underscores                                                          624     warn
 Found duplicate marking structure *[id]*                                                                                                    625     info
 *[hash_string]* is not a valid *[hash_type]* hash                                                                                           626     warn
+*[enum_value]* in *[id]* is not a member of the *[enum_type]* enumeration                                                                   627     warn
 =========================================================================================================================================== ====    =====
 
 STIX Elevator conversion based on assumptions

@@ -2,16 +2,16 @@
     "id": "bundle--e33ffe07-2f4c-48d8-b0af-ee2619d765cf",
     "objects": [
         {
-            "created": "2017-03-29T15:06:21.030Z",
+            "created": "2018-07-25T10:18:02.469Z",
             "id": "indicator--53fe3b22-0201-47cf-85d0-97c02164528d",
             "labels": [
                 "unknown"
             ],
-            "modified": "2017-03-29T15:06:21.030Z",
+            "modified": "2018-07-25T10:18:02.469Z",
             "name": "A Network Connection example",
-            "pattern": "[(network-traffic:protocols[*] = 'ipv4' AND network-traffic:protocols[*] = 'tcp' AND network-traffic:src_port = 5255 AND network-traffic:src_ref.value = '198.49.168.11' AND network-traffic:dst_port = 80 AND network-traffic:dst_ref.value MATCHES '^198.49' AND network-traffic:extensions.'http-request-ext'.request_method = 'GET' AND network-traffic:extensions.'http-request-ext'.request_version = 'HTTP/1.1' AND network-traffic:extensions.'http-request-ext'.request_header.Accept = 'text/plain' AND network-traffic:extensions.'http-request-ext'.request_header.'Accept-Charset' = 'utf-8' AND network-traffic:extensions.'http-request-ext'.request_header.'Accept-Datetime' = 'Thu, 31 May 2007 20:35:00 GMT' AND network-traffic:extensions.'http-request-ext'.request_header.'Accept-Encoding' = 'gzip, deflate' AND network-traffic:extensions.'http-request-ext'.request_header.Authorization = 'Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==' AND network-traffic:extensions.'http-request-ext'.request_header.'Cache-Control' = 'no-cache' AND network-traffic:extensions.'http-request-ext'.request_header.Connection = 'close' AND network-traffic:extensions.'http-request-ext'.request_header.Cookie = 'PHPSESSID=r2t5uvjq435r4q7ib3vtdjq120' AND network-traffic:extensions.'http-request-ext'.request_header.'User-Agent' = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.6) Gecko/20040113')]",
+            "pattern": "[(network-traffic:protocols[*] = 'ipv4' AND network-traffic:protocols[*] = 'tcp' AND network-traffic:src_port = 5255 AND network-traffic:src_ref.value = '198.49.168.11' AND network-traffic:dst_port = 80 AND network-traffic:dst_ref.value MATCHES '^198.49' AND (network-traffic:extensions.'http-request-ext'.request_method = 'GET' AND network-traffic:extensions.'http-request-ext'.request_version = 'HTTP/1.1' AND network-traffic:extensions.'http-request-ext'.request_header.Accept = 'text/plain' AND network-traffic:extensions.'http-request-ext'.request_header.'Accept-Charset' = 'utf-8' AND network-traffic:extensions.'http-request-ext'.request_header.'Accept-Datetime' = 'Thu, 31 May 2007 20:35:00 GMT' AND network-traffic:extensions.'http-request-ext'.request_header.'Accept-Encoding' = 'gzip, deflate' AND network-traffic:extensions.'http-request-ext'.request_header.Authorization = 'Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==' AND network-traffic:extensions.'http-request-ext'.request_header.'Cache-Control' = 'no-cache' AND network-traffic:extensions.'http-request-ext'.request_header.Connection = 'close' AND network-traffic:extensions.'http-request-ext'.request_header.Cookie = 'PHPSESSID=r2t5uvjq435r4q7ib3vtdjq120' AND network-traffic:extensions.'http-request-ext'.request_header.'User-Agent' = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.6) Gecko/20040113'))]",
             "type": "indicator",
-            "valid_from": "2017-03-29T15:06:21.031926Z"
+            "valid_from": "2018-07-25T10:18:02.469818Z"
         }
     ],
     "spec_version": "2.0",

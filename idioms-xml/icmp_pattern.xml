@@ -1,0 +1,41 @@
+<stix:STIX_Package
+        xmlns:URIObj="http://cybox.mitre.org/objects#URIObject-2"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        xmlns:NetworkConnectionObj="http://cybox.mitre.org/objects#NetworkConnectionObject-2"
+        xmlns:example="http://example.com"
+        xmlns:AddressObj="http://cybox.mitre.org/objects#AddressObject-2"
+        xmlns:stix="http://stix.mitre.org/stix-1"
+        xmlns:cyboxCommon="http://cybox.mitre.org/common-2"
+        xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
+        xmlns:HTTPSessionObj="http://cybox.mitre.org/objects#HTTPSessionObject-2"
+        xmlns:PacketObj="http://cybox.mitre.org/objects#PacketObject-2"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:cybox="http://cybox.mitre.org/cybox-2"
+        xmlns:HostnameObj="http://cybox.mitre.org/objects#HostnameObject-1"
+        xmlns:stixCommon="http://stix.mitre.org/common-1"
+        xmlns:stixVocabs="http://stix.mitre.org/default_vocabularies-1"
+        xmlns:SocketAddressObj="http://cybox.mitre.org/objects#SocketAddressObject-1"
+        xmlns:indicator="http://stix.mitre.org/Indicator-2"
+        id="example:STIXPackage-89762d92-e00e-471b-a3b5-c4bdc38bdde8" version="1.2">
+    <stix:Indicators cybox_major_version="2" cybox_minor_version="1" cybox_update_version="0">
+        <stix:Indicator xsi:type="indicator:IndicatorType"
+                        id="example:Indicator-53fe3b22-0201-47cf-85d0-97c02164528d"
+                        timestamp="2014-05-08T09:00:00.000000Z">
+            <indicator:Type xsi:type="stixVocabs:IndicatorTypeVocab-1.1">IP Watchlist</indicator:Type>
+            <indicator:Observable id="example:observable-9c9be28a-c514-4dc6-bfc5-12b84264a64f">
+                <cybox:Object id="example:NetworkPacket-0c7a147d-4d8d-49ad-823f-5fd533868467">
+                    <cybox:Properties xsi:type="PacketObj:NetworkPacketObjectType">
+                        <PacketObj:Internet_Layer>
+                            <PacketObj:ICMPv4>
+                                <PacketObj:ICMPv4_Header>
+                                    <PacketObj:Type>08</PacketObj:Type>
+                                    <PacketObj:Code>00</PacketObj:Code>
+                                </PacketObj:ICMPv4_Header>
+                            </PacketObj:ICMPv4>
+                        </PacketObj:Internet_Layer>
+                    </cybox:Properties>
+                </cybox:Object>
+            </indicator:Observable>
+        </stix:Indicator>
+    </stix:Indicators>
+</stix:STIX_Package>

@@ -1,0 +1,19 @@
+{
+  "id": "bundle--8005dcb9-398c-4f61-b44c-18133199d145",
+  "objects": [
+    {
+      "created": "2018-08-03T10:23:55.329Z",
+      "id": "indicator--ea31dfd9-9f9d-4580-ba03-e85afcc06b15",
+      "labels": [
+        "unknown"
+      ],
+      "modified": "2018-08-03T10:23:55.329Z",
+      "name": "A Network Socket example",
+      "pattern": "[(network-traffic:extensions.'socket_ext'.address_family = 'AF_INET' AND network-traffic:extensions.'socket_ext'.options.IP_MULTICAST_LOOP = true AND network-traffic:protocols[*] = 'TCP')]",
+      "type": "indicator",
+      "valid_from": "2018-08-03T10:23:55.330197Z"
+    }
+  ],
+  "spec_version": "2.0",
+  "type": "bundle"
+}
