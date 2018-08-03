@@ -2,8 +2,8 @@
 
 """The stix2-elevator is a work-in-progress. It should be used to explore how
 existing STIX 1.x would potentially be represented in STIX 2.0. Using the
-current version of the stix2-elevator will provide insight to issues that might need
-to be mitigated to convert your STIX 1.x content.
+current version of the stix2-elevator will provide insight to issues that might
+need to be mitigated to convert your STIX 1.x content.
 """
 
 import argparse
@@ -182,7 +182,7 @@ def main():
     initialize_options(elevator_args)
     result = elevate_file(elevator_args.file_)
     if result:
-        print(result + "\n")
+        sys.stdout.write(result + "\n")
     else:
         sys.exit(1)
 

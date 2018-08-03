@@ -1,3 +1,4 @@
+import io
 import os
 import sys
 
@@ -42,11 +43,10 @@ def main():
                 if elevator_args.output_directory:
                     destination = os.path.join(elevator_args.output_directory, file_and_ext[0] + ".json")
                     destination = os.path.abspath(destination)
-                    output_file = open(destination, "w")
-                    output_file.write(result)
-                    output_file.close()
+                    with io.open(destination, "w", encoding="utf-8") as f:
+                        f.write(result)
                 else:
-                    print(result + "\n")
+                    sys.stdout.write(result + "\n")
             else:
                 all_succeeded = False
     if not all_succeeded:

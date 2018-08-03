@@ -448,47 +448,7 @@ def convert_network_connection(conn):
                 if len(conn.layer7_connections.http_session.http_request_response) > 1:
                     warn("Only one HTTP_Request_Response used for http-request-ext, using first value", 512)
         if conn.layer7_connections.dns_query:
-            def add_resource_records(resource, index):
-                # All domain records will be included with resolves to refs if ip address is present.
-                for res in resource:
-                    has_ip = False
-                    if res.ip_address is not None:
-                        cybox_dict[index] = convert_address(res.ip_address)
-                        index += 1
-                        has_ip = True
-                    if res.domain_name is not None:
-                        domain = create_domain_name_object(res.domain_name)
-                        if has_ip:
-                            domain["resolves_to_refs"] = index - 1
-                        cybox_dict[index] = domain
-                        index += 1
-                    if res.entry_type is not None:
-                        warn("Resource_Record/Entry_Type content not supported in STIX 2.0", 424)
-                    if res.record_name is not None:
-                        warn("Resource_Record/Record_Name content not supported in STIX 2.0", 424)
-                    if res.record_type is not None:
-                        warn("Resource_Record/Record_Type content not supported in STIX 2.0", 424)
-                    if res.ttl is not None:
-                        warn("Resource_Record/TTL content not supported in STIX 2.0", 424)
-                    if res.flags is not None:
-                        warn("Resource_Record/Flags content not supported in STIX 2.0", 424)
-                    if res.data_length is not None:
-                        warn("Resource_Record/Data_Length content not supported in STIX 2.0", 424)
-
-            for dns in conn.layer7_connections.dns_query:
-                if dns.answer_resource_records is not None and dns.answer_resource_records.resource_record:
-                    add_resource_records(dns.answer_resource_records.resource_record, index)
-                if dns.authority_resource_records is not None and dns.authority_resource_records.recource_record:
-                    add_resource_records(dns.authority_resource_records.recource_record, index)
-                if dns.additional_records is not None and dns.additional_records.resource_record:
-                    add_resource_records(dns.additional_records.resource_record, index)
-                if dns.question is not None:
-                    if dns.question.qname is not None:
-                        warn("Question\QName content not supported in STIX 2.0", 424)
-                    if dns.question.qtype is not None:
-                        warn("Question\QType content not supported in STIX 2.0", 424)
-                    if dns.question.qclass is not None:
-                        warn("Question\QClass content not supported in STIX 2.0", 424)
+            warn("Layer7_Connections/DNS_Query content not supported in STIX 2.0", 424)
 
     if cybox_traffic:
         cybox_traffic["type"] = "network-traffic"
