@@ -24,8 +24,7 @@
                     <cybox:Properties xsi:type="SocketAddressObj:NetworkSocketObjectType" is_listening="true">
                         <SocketAddressObj:Address_Family>AF_INET</SocketAddressObj:Address_Family>
                         <SocketAddressObj:Options>
-                            <SocketAddressObj:IP_MULTICAST_LOOP condition="Equals">true
-                            </SocketAddressObj:IP_MULTICAST_LOOP>
+                            <SocketAddressObj:IP_MULTICAST_LOOP>true</SocketAddressObj:IP_MULTICAST_LOOP>
                         </SocketAddressObj:Options>
                         <SocketAddressObj:Protocol condition="Equals">TCP</SocketAddressObj:Protocol>
                     </cybox:Properties>

@@ -30,9 +30,7 @@
                                     <HTTPSessionObj:Referer xsi:type="URIObj:URIObjectType">
                                         <URIObj:Value>http://sensongsmp3.cc/starmusiq/kadai-kutty-singam/</URIObj:Value>
                                     </HTTPSessionObj:Referer>
-                                    <HTTPSessionObj:User_Agent>Mozilla/5.0 (Windows NT 10.0; Win64; x64)
-                                        AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36
-                                    </HTTPSessionObj:User_Agent>
+                                    <HTTPSessionObj:User_Agent>Mozilla/5.0</HTTPSessionObj:User_Agent>
                                     <HTTPSessionObj:Date>2017-01-27T13:49:41.298Z</HTTPSessionObj:Date>
                                 </HTTPSessionObj:Parsed_Header>
                             </HTTPSessionObj:HTTP_Request_Header>

@@ -9,7 +9,7 @@
       ],
       "modified": "2015-05-15T09:00:00.000Z",
       "name": "Domain: xgstonebak.3322.org",
-      "pattern": "[(network-traffic:extensions.'http-request-ext'.request_method = 'GET' AND network-traffic:extensions.'http-request-ext'.request_header.Date = t'2017-01-27T13:49:41.298Z' AND network-traffic:extensions.'http-request-ext'.request_header.Referer = 'http://sensongsmp3.cc/starmusiq/kadai-kutty-singam/' AND network-traffic:extensions.'http-request-ext'.request_header.'User-Agent' = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36')]",
+      "pattern": "[(network-traffic:extensions.'http-request-ext'.request_method = 'GET' AND network-traffic:extensions.'http-request-ext'.request_header.Date = t'2017-01-27T13:49:41.298Z' AND network-traffic:extensions.'http-request-ext'.request_header.Referer = 'http://sensongsmp3.cc/starmusiq/kadai-kutty-singam/' AND network-traffic:extensions.'http-request-ext'.request_header.'User-Agent' = 'Mozilla/5.0')]",
       "type": "indicator",
       "valid_from": "2015-05-15T09:00:00.000000Z"
     }
