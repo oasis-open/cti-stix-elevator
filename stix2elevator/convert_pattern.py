@@ -663,13 +663,13 @@ def convert_email_message_to_pattern(mess):
 
 
 _PE_FILE_HEADER_PROPERTIES = \
-    [["machine", "file:extensions.'windows-pebinary-ext'.file_header:machine"],
+    [["machine", "file:extensions.'windows-pebinary-ext'.file_header:machine_hex"],
      ["time_date_stamp", "file:extensions.'windows-pebinary-ext'.file_header.time_date_stamp"],
      ["number_of_sections", "file:extensions.'windows-pebinary-ext'.file_header.number_of_sections"],
      ["pointer_to_symbol_table", "file:extensions.'windows-pebinary-ext'.file_header.pointer_to_symbol_table"],
      ["number_of_symbols", "file:extensions.'windows-pebinary-ext'.file_header.number_of_symbols"],
      ["size_of_optional_header", "file:extensions.'windows-pebinary-ext'.file_header.size_of_optional_header"],
-     ["characteristics", "file:extensions.'windows-pebinary-ext'.file_header.characteristics"]]
+     ["characteristics", "file:extensions.'windows-pebinary-ext'.file_header.characteristics_hex"]]
 
 
 _PE_SECTION_HEADER_PROPERTIES = [["name", "file:extensions.'windows-pebinary-ext'.section[*].name"],
