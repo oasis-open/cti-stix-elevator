@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 
 from cybox.core import Observable
 from lxml import etree
@@ -747,20 +747,26 @@ def convert_vulnerability(v, et, bundle_instance, parent_created_by_ref, parent_
         vulnerability_instance["external_references"].append({"source_name": "osvdb", "external_id": v.osvdb_id})
 
     if v.source is not None:
-        # FIXME: add source.
-        info("Source in %s is not handled, yet.", 815, vulnerability_instance["id"])
+        add_string_property_to_description(vulnerability_instance, "source", v.source, False)
 
     if v.cvss_score is not None:
         # FIXME: add CVSS score into description
         info("CVSS Score in %s is not handled, yet.", 815, vulnerability_instance["id"])
 
-    if v.discovered_datetime is not None or v.published_datetime is not None:
-        # FIXME: add date times into description
-        info("Discovered_DateTime and Published_DateTime in %s is not handled, yet.", 815, vulnerability_instance["id"])
+    if v.discovered_datetime is not None:
+        add_string_property_to_description(vulnerability_instance,
+                                           "discovered_datetime",
+                                           v.discovered_datetime.value.strftime("%Y-%m-%dT%H:%M:%S.%fZ"),
+                                           False)
+
+    if v.published_datetime is not None:
+        add_string_property_to_description(vulnerability_instance,
+                                           "published_datetime",
+                                           v.published_datetime.value.strftime("%Y-%m-%dT%H:%M:%S.%fZ"),
+                                           False)
 
     if v.affected_software is not None:
-        #  FIXME: add affected software into description
-        info("Affected_Software in %s is not handled, yet.", 815, vulnerability_instance["id"])
+        info("Affected Software in %s is not handled, yet.", 815, vulnerability_instance["id"])
 
     if v.references is not None:
         for ref in v.references:
@@ -1685,7 +1691,7 @@ def convert_package(stix_package, package_created_by_ref=None, default_timestamp
 
     if default_timestamp:
         parent_timestamp = datetime.strptime(default_timestamp, "%Y-%m-%dT%H:%M:%S.%fZ")
-    elif hasattr(stix_package, "created"):
+    elif hasattr(stix_package, "timestamp"):
         parent_timestamp = stix_package.timestamp
     else:
         parent_timestamp = None
