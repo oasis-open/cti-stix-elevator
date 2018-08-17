@@ -2,15 +2,15 @@
     "id": "bundle--6116aed6-a7e9-11e3-a82f-000c29b241af",
     "objects": [
         {
-            "created": "2018-03-31T13:09:16.373Z",
+            "created": "2018-07-30T13:03:44.858Z",
             "id": "indicator--6116b44e-a7e9-11e3-a82f-000c29b241af",
             "labels": [
                 "unknown"
             ],
-            "modified": "2018-03-31T13:09:16.373Z",
+            "modified": "2018-07-30T13:03:44.858Z",
             "pattern": "[(domain-name:value = 'microsoftb.byinter.net' AND domain-name:resolves_to_refs[*].value = '202.65.222.45')]",
             "type": "indicator",
-            "valid_from": "2018-03-31T13:09:16.373896Z"
+            "valid_from": "2018-07-30T13:03:44.859286Z"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",

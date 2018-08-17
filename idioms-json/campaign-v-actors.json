@@ -13,6 +13,10 @@
             "type": "threat-actor"
         },
         {
+            "aliases": [
+                "Charming Kittens",
+                "NewsBeef"
+            ],
             "created": "2014-08-08T15:50:10.983Z",
             "description": "Fred\n\nINFORMATION SOURCE ROLE: Aggregator\n\nINFORMATION SOURCE ROLE: Initial Author",
             "external_references": [

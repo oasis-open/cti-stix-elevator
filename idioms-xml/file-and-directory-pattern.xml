@@ -34,7 +34,7 @@
                          <FileObj:Hashes>
                                 <cyboxCommon:Hash>
                                     <cyboxCommon:Type condition="Equals" xsi:type="cyboxVocabs:HashNameVocab-1.0">SHA256</cyboxCommon:Type>
-                                    <cyboxCommon:Simple_Hash_Value condition="Equals">e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855</cyboxCommon:Simple_Hash_Value>
+                                    <cyboxCommon:Simple_Hash_Value condition="equals">e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855</cyboxCommon:Simple_Hash_Value>
                                 </cyboxCommon:Hash>
                             </FileObj:Hashes>
                      </cybox:Properties>

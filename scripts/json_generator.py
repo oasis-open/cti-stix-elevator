@@ -2,7 +2,7 @@
 # It serves as a complimentary tool to generate "idioms-json" directory for
 # testing purposes. Which helps by automating this process.
 
-
+import io
 import os
 import sys
 
@@ -47,9 +47,8 @@ def main():
             sys.stdout.write(xml_path + "\n")
             json_output = elevate_file(xml_path)
 
-            output_file = open(destination, "w")
-            output_file.write(json_output)
-            output_file.close()
+            with io.open(destination, "w", encoding="utf-8") as f:
+                f.write(json_output)
 
 
 if __name__ == "__main__":

@@ -11,7 +11,7 @@ def identifying_info(stix1x_obj):
         if hasattr(stix1x_obj, "id_") and stix1x_obj.id_:
             return text_type(stix1x_obj.id_)
         elif hasattr(stix1x_obj, "idref") and stix1x_obj.idref:
-            return " with idref " + text_type(stix1x_obj.idref)
+            return "with idref " + text_type(stix1x_obj.idref)
         elif hasattr(stix1x_obj, "title") and stix1x_obj.title:
             return "'" + text_type(stix1x_obj.title) + "'"
         elif hasattr(stix1x_obj, "name") and stix1x_obj.name:
@@ -110,18 +110,27 @@ _MARKING_MAP_FROM_1_x_TO_2_0 = {}
 
 
 def check_map_1x_markings_to_20(stix1x_marking):
-    return stix1x_marking in _MARKING_MAP_FROM_1_x_TO_2_0
+    return (stix1x_marking in _MARKING_MAP_FROM_1_x_TO_2_0 or
+            stix1x_marking.id_ in _MARKING_MAP_FROM_1_x_TO_2_0 or
+            stix1x_marking.idref in _MARKING_MAP_FROM_1_x_TO_2_0)
 
 
 def map_1x_markings_to_20(stix1x_marking):
     if check_map_1x_markings_to_20(stix1x_marking):
-        return _MARKING_MAP_FROM_1_x_TO_2_0[stix1x_marking]
+        if stix1x_marking in _MARKING_MAP_FROM_1_x_TO_2_0:
+            return _MARKING_MAP_FROM_1_x_TO_2_0[stix1x_marking]
+        if stix1x_marking.id_ in _MARKING_MAP_FROM_1_x_TO_2_0:
+            return _MARKING_MAP_FROM_1_x_TO_2_0[stix1x_marking.id_]
+        if stix1x_marking.idref in _MARKING_MAP_FROM_1_x_TO_2_0:
+            return _MARKING_MAP_FROM_1_x_TO_2_0[stix1x_marking.idref]
     return stix1x_marking
 
 
 def add_marking_map_entry(stix1x_marking, stix20_marking_id):
     if stix1x_marking not in _MARKING_MAP_FROM_1_x_TO_2_0:
         _MARKING_MAP_FROM_1_x_TO_2_0[stix1x_marking] = stix20_marking_id
+        if stix1x_marking.id_:
+            _MARKING_MAP_FROM_1_x_TO_2_0[stix1x_marking.id_] = stix20_marking_id
         return
     return map_1x_markings_to_20(stix1x_marking)
 

@@ -1,10 +1,10 @@
 from __future__ import print_function
 
+import io
 import json
 import os
 import sys
 
-from six import StringIO
 from six.moves import zip
 
 from stix2elevator import elevate_file
@@ -36,8 +36,7 @@ def idiom_mappings(xml_file_path, stored_json):
         print("'no_policy' is not allowed for testing")
     set_option_value("policy", "no_policy")
     converted_json = elevate_file(xml_file_path)
-    io = StringIO(converted_json)
-    converted_json = json.load(io)
+    converted_json = json.loads(converted_json)
 
     for good, to_check in zip(iterpath(stored_json), iterpath(converted_json)):
         good_path, good_value = good
@@ -78,10 +77,8 @@ def setup_tests():
         if json_filename.endswith(".json"):
             path = os.path.join(json_idioms_dir, json_filename)
 
-            json_file = open(path, "r")
-            io = StringIO(json_file.read())
-            loaded_json = json.load(io)
-            json_file.close()
+            with io.open(path, "r", encoding="utf-8") as f:
+                loaded_json = json.load(f)
 
             MASTER_JSON_FILES.append(loaded_json)
 

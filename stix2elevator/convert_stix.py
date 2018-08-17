@@ -194,6 +194,13 @@ def convert_marking_specification(marking_specification, bundle_instance, parent
     if marking_specification.marking_structures is not None:
         ms = marking_specification.marking_structures
         for mark_spec in ms:
+            if mark_spec.idref or mark_spec.__class__.__name__ == "MarkingStructure":
+                if not check_map_1x_markings_to_20(mark_spec):
+                    # Don't print message multiple times if idref has been resolved.
+                    warn("Could not resolve Marking Structure. Skipped object %s", 425, identifying_info(mark_spec))
+                # Skip empty markings or ones that use the idref approach.
+                continue
+
             marking_definition_instance = create_basic_object("marking-definition", mark_spec)
             process_information_source(marking_specification.information_source,
                                        marking_definition_instance, bundle_instance,
@@ -250,10 +257,11 @@ def convert_marking_specification(marking_specification, bundle_instance, parent
                     warn("Could not resolve Marking Structure %s", 425, identifying_info(mark_spec))
                 else:
                     error("Could not resolve Marking Structure %s", 425, identifying_info(mark_spec))
-                    raise(NameError("Could not resolve Marking Structure %s" % identifying_info(mark_spec)))
+                    raise NameError("Could not resolve Marking Structure %s" % identifying_info(mark_spec))
 
             if "definition_type" in marking_definition_instance:
                 val = add_marking_map_entry(mark_spec, marking_definition_instance["id"])
+                info("Created Marking Structure for %s", 212, identifying_info(mark_spec))
                 if val is not None and not isinstance(val, MarkingStructure):
                     info("Found same marking structure %s, using %s", 625, identifying_info(marking_specification), val)
                 else:
@@ -609,7 +617,10 @@ def convert_campaign(camp, bundle_instance, parent_created_by_ref, parent_timest
     if camp.names is not None:
         campaign_instance["aliases"] = []
         for name in camp.names:
-            campaign_instance["aliases"].append(name)
+            if isinstance(name, text_type):
+                campaign_instance["aliases"].append(name)
+            else:
+                campaign_instance["aliases"].append(name.value)
     # process information source before any relationships
     campaign_created_by_ref = process_information_source(camp.information_source, campaign_instance,
                                                          bundle_instance, parent_created_by_ref,

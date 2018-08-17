@@ -19,6 +19,10 @@
     <stix:Campaigns>
         <stix:Campaign id="example:Campaign-e5268b6e-4931-42f1-b379-87f48eb41b1e" timestamp="2014-08-08T15:50:10.983728+00:00" xsi:type='campaign:CampaignType' version="1.2">
             <campaign:Title>Compromise of ATM Machines</campaign:Title>
+            <campaign:Names>
+                <campaign:Name>Charming Kittens</campaign:Name>
+                <campaign:Name>NewsBeef</campaign:Name>
+            </campaign:Names>
             <campaign:Related_TTPs>
                 <campaign:Related_TTP>
                     <stixCommon:TTP id="example:ttp-2d1c6ab3-5e4e-48ac-a32b-f0c01c2836a8" timestamp="2014-08-08T15:50:10.983464+00:00" xsi:type='ttp:TTPType' version="1.2">

@@ -72,8 +72,12 @@ def generate_stix20_id(stix20_so_name, stix12_id=None, id_used=False):
             else:
                 return stix20_so_name + "--" + current_uuid
         else:
-            warn("Malformed id %s. Generated a new uuid", 605, stix12_id)
-            return stix20_so_name + "--" + text_type(uuid.uuid4())
+            if stix20_so_name:
+                warn("Malformed id %s. Generated a new uuid", 605, stix12_id)
+                return stix20_so_name + "--" + text_type(uuid.uuid4())
+            else:
+                error("Unable to determine the STIX 2.0 type for %s, which is malformed", 627, stix12_id)
+                return None
 
 
 _IDS_TO_NEW_IDS = {}
