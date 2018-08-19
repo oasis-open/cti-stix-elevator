@@ -95,6 +95,29 @@
             </indicator:Confidence>
         </stix:Indicator>
     </stix:Indicators>
+    <stix:Observables cybox_major_version="" cybox_minor_version="">
+        <cybox:Observable id="example:Observable-2305f359-ab46-4932-acaf-953c31cd8b22">
+            <cybox:Object id="example:EmailMessage-c3226989-1ce3-4826-aaf9-e18046c8ce01">
+                <cybox:Properties xsi:type="EmailMessageObj:EmailMessageObjectType">
+                    <EmailMessageObj:Header>
+                        <EmailMessageObj:Subject condition="StartsWith">[IMPORTANT] Please Review Before</EmailMessageObj:Subject>
+                    </EmailMessageObj:Header>
+                    <EmailMessageObj:Attachments>
+                        <EmailMessageObj:File object_reference="example:File-11b0fb4e-9c9c-4bba-912c-e1b9353fdcde"/>
+                    </EmailMessageObj:Attachments>
+                </cybox:Properties>
+                <cybox:Related_Objects>
+                    <cybox:Related_Object id="example:File-11b0fb4e-9c9c-4bba-912c-e1b9353fdcde">
+                        <cybox:Properties xsi:type="FileObj:FileObjectType">
+                            <FileObj:File_Name condition="StartsWith">Final Report</FileObj:File_Name>
+                            <FileObj:File_Extension condition="Equals">doc.exe</FileObj:File_Extension>
+                        </cybox:Properties>
+                        <cybox:Relationship xsi:type="cyboxVocabs:ObjectRelationshipVocab-1.1">Contains</cybox:Relationship>
+                    </cybox:Related_Object>
+                </cybox:Related_Objects>
+            </cybox:Object>
+        </cybox:Observable>
+    </stix:Observables>
     <stix:TTPs>
         <stix:TTP id="example:ttp-d7b066aa-4091-4276-a142-29d5d81c3484" timestamp="2014-10-31T15:52:13.126765+00:00" xsi:type='ttp:TTPType' version="1.2">
             <ttp:Title>Phishing</ttp:Title>

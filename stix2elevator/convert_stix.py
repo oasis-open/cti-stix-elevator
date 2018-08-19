@@ -1122,7 +1122,7 @@ def convert_observed_data(obs, bundle_instance, parent_created_by_ref, parent_ti
             related = convert_cybox_object(o)
             if related:
                 for index, obj in related.items():
-                    observed_data_instance["objects"][index + current_largest_id] = obj
+                    observed_data_instance["objects"][text_type(int(index) + int(current_largest_id) + 1)] = obj
     info("'first_observed' and 'last_observed' data not available directly on %s - using timestamp", 901, obs.id_)
     observed_data_instance["first_observed"] = observed_data_instance["created"]
     observed_data_instance["last_observed"] = observed_data_instance["created"]

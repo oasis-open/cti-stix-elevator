@@ -565,13 +565,13 @@ def convert_uri_to_pattern(uri):
 
 # NOTICE:  The format of these PROPERTIES is different than the others in this file!!!!!!
 _EMAIL_HEADER_PROPERTIES = [["email-message:subject", ["subject"]],
-                            ["email-message:from_ref", ["from_", "address_value"]],
-                            ["email-message:sender_ref", ["sender", "address_value"]],
+                            ["email-message:from_ref.value", ["from_", "address_value"]],
+                            ["email-message:sender_ref.value", ["sender", "address_value"]],
                             ["email-message:date", ["date"]],
                             ["email-message:content_type", ["content_type"]],
-                            ["email-message:to_refs[*]", ["to*", "address_value"]],
-                            ["email-message:cc_refs[*]", ["cc*", "address_value"]],
-                            ["email-message:bcc_refs[*]", ["bcc*", "address_value"]]]
+                            ["email-message:to_refs[*].value", ["to*", "address_value"]],
+                            ["email-message:cc_refs[*].value", ["cc*", "address_value"]],
+                            ["email-message:bcc_refs[*].value", ["bcc*", "address_value"]]]
 
 
 _EMAIL_ADDITIONAL_HEADERS_PROPERTIES = \
@@ -933,12 +933,72 @@ def convert_registry_key_to_pattern(reg_key):
         return create_boolean_expression("AND", expressions)
 
 
+def convert_image_info_to_pattern(image_info):
+    expressions = []
+    if image_info.command_line:
+        expressions.append(add_comparison_expression(image_info.command_line, "process:command_line"))
+    if image_info.current_directory:
+        expressions.append(add_comparison_expression(image_info.current_directory, "process:cwd"))
+    if expressions:
+        return create_boolean_expression("AND", expressions)
+
+
+_PROCESS_PROPERTIES = [
+    ["is_hidden", "process:is_hidden"],
+    ["pid", "process:pid"],
+    ["name", "process:name"],
+    ["parent_pid", "process:parent_ref.pid"],
+    ["username", "process:creator_user_ref.user_id"],
+    ["creation_time", "process:created"]
+]
+
+
 def convert_process_to_pattern(process):
     expressions = []
-    if process.name:
-        expressions.append(create_term("process:name",
-                                       process.name.condition,
-                                       stix2.StringConstant(process.name.value)))
+    for prop_spec in _PROCESS_PROPERTIES:
+        prop_1x = prop_spec[0]
+        object_path = prop_spec[1]
+        if hasattr(process, prop_1x) and getattr(process, prop_1x):
+            term = add_comparison_expression(getattr(process, prop_1x), object_path)
+            if term:
+                expressions.append(term)
+    if process.image_info:
+        process_info = convert_image_info_to_pattern(process.image_info)
+        if process_info:
+            expressions.append(process_info)
+    if hasattr(process, "argument_list") and process.argument_list:
+        argument_expressions = []
+        for a in process.argument_list:
+            argument_expressions.append(create_term("process:arguments[*]",
+                                                    a.condition,
+                                                    stix2.StringConstant(a.value)))
+        if argument_expressions:
+            expressions.append(create_boolean_expression("AND", argument_expressions))
+    if hasattr(process, "environment_variable_list") and process.environment_variable_list:
+        ev_expressions = []
+        for ev in process.environment_variable_list:
+            # TODO: handle variable names with '-'
+            ev_expressions.append(create_term("process:environment_variables[*]." + str(ev.name),
+                                              ev.value.condition,
+                                              stix2.StringConstant(str(ev.value))))
+        if ev_expressions:
+            expressions.append(create_boolean_expression("AND", ev_expressions))
+    if hasattr(process, "child_pid_list") and process.child_pid_list:
+        child_pids_expressions = []
+        for cp in process.child_pid_list:
+            child_pids_expressions.append(create_term("process:child_refs[*].pid",
+                                                      cp.condition,
+                                                      stix2.IntegerConstant(cp.value)))
+        if child_pids_expressions:
+            expressions.append(create_boolean_expression("AND", child_pids_expressions))
+    if hasattr(process, "network_connection_list") and process.network_connection_list:
+        network_connection_expressions = []
+        for nc in process.network_connection_list:
+            new_pattern = convert_network_connection_to_pattern(nc)
+            network_connection_expressions.append(
+                new_pattern.collapse_reference(stix2.ObjectPath.make_object_path("process:opened_connection_refs[*]")))
+        if network_connection_expressions:
+            expressions.append(create_boolean_expression("AND", network_connection_expressions))
     if isinstance(process, WinProcess):
         win_process_expression = convert_windows_process_to_pattern(process)
         if win_process_expression:
@@ -955,15 +1015,34 @@ def convert_process_to_pattern(process):
         return create_boolean_expression("AND", expressions)
 
 
+_WINDOWS_PROCESS_PROPERTIES = [
+    ["aslr_enabled", "process:extensions.'windows-process-ext'.aslr_enabled"],
+    ["dep_enabled", "process:extensions.'windows-process-ext'.dep_enabled"],
+    ["priority", "process:extensions.'windows-process-ext'.priority"],
+    ["security_id", "process:extensions.'windows-process-ext'.owner_sid"],
+    ["window_title", "process:extensions.'windows-process-ext'.window_title"]
+]
+
+
 def convert_windows_process_to_pattern(process):
-    expression = ""
+    expressions = []
+    for prop_spec in _WINDOWS_PROCESS_PROPERTIES:
+        prop_1x = prop_spec[0]
+        object_path = prop_spec[1]
+        if hasattr(process, prop_1x) and getattr(process, prop_1x):
+            term = add_comparison_expression(getattr(process, prop_1x), object_path)
+            if term:
+                expressions.append(term)
     if process.handle_list:
         for h in process.handle_list:
             warn("Windows Handles are not a part of STIX 2.0", 420)
-    return expression
+    if process.startup_info:
+        warn("process:startup_info not handled yet", 803)
+    if expressions:
+        return create_boolean_expression("AND", expressions)
 
 
-_WINDOWS_PROCESS_PROPERTIES = \
+_WINDOWS_SERVICE_PROPERTIES = \
     [["service_name", "process:extensions.'windows-service-ext'.service_name"],
      ["display_name", "process:extensions.'windows-service-ext'.display_name"],
      ["startup_command_line", "process:extensions.'windows-service-ext'.startup_command_line"],
@@ -974,7 +1053,7 @@ _WINDOWS_PROCESS_PROPERTIES = \
 
 def convert_windows_service_to_pattern(service):
     expressions = []
-    for prop_spec in _WINDOWS_PROCESS_PROPERTIES:
+    for prop_spec in _WINDOWS_SERVICE_PROPERTIES:
         prop_1x = prop_spec[0]
         object_path = prop_spec[1]
         if hasattr(service, prop_1x) and getattr(service, prop_1x):
