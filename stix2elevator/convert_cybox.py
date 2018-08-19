@@ -576,7 +576,7 @@ def renumber_objs(objs, number_mapping):
 
 def do_renumbering(objs, next_id, root_obj_index, objs_to_add):
     number_mapping = {}
-    for k in objs.keys():
+    for k in sorted(objs.keys()):
         number_mapping[text_type(k)] = text_type(next_id)
         next_id += 1
     new_objs = renumber_objs(objs, number_mapping)

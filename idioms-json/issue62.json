@@ -84,13 +84,13 @@
                     "type": "process"
                 },
                 "3": {
-                    "dst_port": 80,
-                    "dst_ref": "4",
-                    "type": "network-traffic"
-                },
-                "4": {
                     "type": "ipv4-addr",
                     "value": "198.49.123.10"
+                },
+              "4": {
+                "dst_port": 80,
+                "dst_ref": "3",
+                "type": "network-traffic"
                 }
             },
             "type": "observed-data"
