@@ -52,10 +52,10 @@ from stix2elevator.options import error, get_option_value, info, warn
 from stix2elevator.utils import (add_marking_map_entry,
                                  check_map_1x_markings_to_20,
                                  convert_controlled_vocabs_to_open_vocabs,
-                                 convert_timestamp, convert_timestamp_string,
-                                 identifying_info, iterpath,
-                                 map_1x_markings_to_20, map_vocabs_to_label,
-                                 operation_on_path)
+                                 convert_timestamp_of_stix_object,
+                                 convert_timestamp_to_string, identifying_info,
+                                 iterpath, map_1x_markings_to_20,
+                                 map_vocabs_to_label, operation_on_path)
 from stix2elevator.vocab_mappings import (ATTACK_MOTIVATION_MAP, COA_LABEL_MAP,
                                           INCIDENT_LABEL_MAP,
                                           INDICATOR_LABEL_MAP,
@@ -179,7 +179,7 @@ def create_basic_object(stix20_type, stix1x_obj, parent_timestamp=None, parent_i
     instance["id"] = generate_stix20_id(stix20_type, stix1x_obj.id_ if (stix1x_obj and
                                                                         hasattr(stix1x_obj, "id_") and
                                                                         stix1x_obj.id_) else parent_id, id_used)
-    timestamp = convert_timestamp(stix1x_obj, parent_timestamp, True)
+    timestamp = convert_timestamp_of_stix_object(stix1x_obj, parent_timestamp, True)
     instance["created"] = timestamp
     # may need to revisit if we handle 1.x versioning.
     instance["modified"] = timestamp
@@ -1044,16 +1044,16 @@ def convert_indicator(indicator, bundle_instance, parent_created_by_ref, parent_
                     warn("No start time for the first valid time interval is available in %s, other time intervals might be more appropriate",
                          619, indicator_instance["id"])
                 indicator_instance["valid_from"] = \
-                    convert_timestamp_string(window.start_time.value, indicator, indicator_instance["created"])
+                    convert_timestamp_to_string(window.start_time.value, indicator_instance["created"])
                 indicator_instance["valid_until"] = \
-                    convert_timestamp_string(window.end_time.value, indicator, indicator_instance["created"])
+                    convert_timestamp_to_string(window.end_time.value, indicator_instance["created"])
             else:
                 warn("Only one valid time window allowed for %s in STIX 2.0 - used first one",
                      507, indicator_instance["id"])
         if "valid_from" not in indicator_instance:
             warn("No valid time position information available in %s, using parent timestamp",
                  903, indicator_instance["id"])
-            indicator_instance["valid_from"] = convert_timestamp(indicator, parent_timestamp)
+            indicator_instance["valid_from"] = convert_timestamp_of_stix_object(indicator, parent_timestamp)
     convert_kill_chains(indicator.kill_chain_phases, indicator_instance)
     if indicator.likely_impact:
         add_statement_type_to_description(indicator_instance, indicator.likely_impact, "likely_impact")
@@ -1427,7 +1427,7 @@ def convert_infrastructure(infra, ttp, bundle_instance, first_one, parent_create
     process_description_and_short_description(infrastructure_instance, infra)
     convert_controlled_vocabs_to_open_vocabs(infrastructure_instance, "labels", infra.types, {}, False)
     info("No 'first_seen' data on %s - using timestamp", 904, infra.id_ if infra.id_ else ttp.id_)
-    infrastructure_instance["first_seen"] = convert_timestamp(infra, infrastructure_instance["created"])
+    infrastructure_instance["first_seen"] = convert_timestamp_of_stix_object(infra, infrastructure_instance["created"])
 
     if infra.observable_characterization is not None:
         # FIXME: add observable_characterizations

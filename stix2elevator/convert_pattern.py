@@ -2,6 +2,7 @@ import datetime
 import re
 import sys
 
+from cybox.objects.account_object import Account
 from cybox.objects.address_object import Address
 from cybox.objects.archive_file_object import ArchiveFile
 from cybox.objects.domain_name_object import DomainName
@@ -10,7 +11,9 @@ from cybox.objects.file_object import File
 from cybox.objects.mutex_object import Mutex
 from cybox.objects.network_connection_object import NetworkConnection
 from cybox.objects.process_object import Process
+from cybox.objects.unix_user_account_object import UnixUserAccount
 from cybox.objects.uri_object import URI
+from cybox.objects.win_computer_account_object import WinComputerAccount
 from cybox.objects.win_executable_file_object import WinExecutableFile
 from cybox.objects.win_process_object import WinProcess
 from cybox.objects.win_registry_key_object import WinRegistryKey
@@ -543,6 +546,68 @@ def convert_custom_properties(cps, object_type_name):
                 warn("The custom property name %s contains whitespace, replacing it with underscores", 624, cp.name)
         expressions.append(create_term(object_type_name + ":x_" + cp.name.replace(" ", "_"), cp.condition, make_constant(cp.value)))
     return create_boolean_expression("AND", expressions)
+
+
+_ACCOUNT_PROPERTIES = [
+    ["full_name", "user-account:display_name"],
+    ["last_login", "user-account:account_last_login"],
+    ["username", "user-account:account_login"],
+    ["creation_time", "user-account:account_created"]
+]
+
+
+def convert_account_to_pattern(account):
+    expressions = []
+    if hasattr(account, "disabled") and account.disabled:
+        expressions.append(create_term("user-account:is_disabled",
+                                       "Equals",
+                                       stix2.BooleanConstant(account.disabled)))
+    for prop_spec in _ACCOUNT_PROPERTIES:
+        prop_1x = prop_spec[0]
+        object_path = prop_spec[1]
+        if hasattr(account, prop_1x) and getattr(account, prop_1x):
+            term = add_comparison_expression(getattr(account, prop_1x), object_path)
+            if term:
+                expressions.append(term)
+    if isinstance(account, UnixUserAccount):
+        win_process_expression = convert_unix_user_to_pattern(account)
+        if win_process_expression:
+            expressions.append(win_process_expression)
+        else:
+            warn("No UnixUserAccount properties found in %s", 615, text_type(account))
+    elif isinstance(account, WinComputerAccount):
+        expressions.append(create_term("user-account:account_type",
+                                       "Equals",
+                                       stix2.StringConstant("windows-domain" if account.domain else "windows-local")))
+    if expressions:
+        return create_boolean_expression("AND", expressions)
+
+
+_UNIX_ACCOUNT_PROPERTIES = [
+    ["group_id", "user-account:extensions.'unix-account-ext'.gid"],
+    ["login_shell", "user-account:extensions.'unix-account-ext'.shell"],
+    ["home_directory", "user-account:extensions.'unix-account-ext'.home_dir"],
+]
+
+
+def convert_unix_user_to_pattern(account):
+    expressions = []
+    expressions.append(create_term("user-account:account_type",
+                                   "Equals",
+                                   stix2.StringConstant("unix")))
+    if hasattr(account, "user_id") and account.user_id:
+        expressions.append(create_term("user-account:user_id",
+                                       account.user_id.condition,
+                                       stix2.StringConstant(text_type(account.user_id.value))))
+    for prop_spec in _UNIX_ACCOUNT_PROPERTIES:
+        prop_1x = prop_spec[0]
+        object_path = prop_spec[1]
+        if hasattr(account, prop_1x) and getattr(account, prop_1x):
+            term = add_comparison_expression(getattr(account, prop_1x), object_path)
+            if term:
+                expressions.append(term)
+    if expressions:
+        return create_boolean_expression("AND", expressions)
 
 
 def convert_address_to_pattern(add):
@@ -1314,6 +1379,8 @@ def convert_object_to_pattern(obj, obs_id):
             expression = convert_mutex_to_pattern(prop)
         elif isinstance(prop, NetworkConnection):
             expression = convert_network_connection_to_pattern(prop)
+        elif isinstance(prop, Account):
+            expression = convert_account_to_pattern(prop)
         else:
             warn("%s found in %s cannot be converted to a pattern, yet.", 808, text_type(obj.properties), obs_id)
             expression = UnconvertedTerm(obs_id)

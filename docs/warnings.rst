@@ -121,7 +121,7 @@ No ``WinProcess`` properties found in *[WinProcess]*                            
 No ``WinService`` properties found in *[WinService]*                                                                                        616     warn
 The custom property name *[property name]* does not adhere to the specification rules                                                       617     warn
 No ISO code for *[value]* in *[identifying info]*                                                                                           618     warn
-No start time for the first valid time interval is available in *[id]*, other time intervals might be more appropriate                      619     warn
+No *[start/end]* time for the first valid time interval is available in *[id]*, other time intervals might be more appropriate              619     warn
 Unable to create a pattern from a File object                                                                                               620     warn
 *[stix 1.x property]* contains no value                                                                                                     621     warn
 No term was yielded for *[id]*                                                                                                              622     warn

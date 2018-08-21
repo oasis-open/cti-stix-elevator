@@ -1,4 +1,4 @@
-
+from cybox.objects.account_object import Account
 from cybox.objects.address_object import Address
 from cybox.objects.domain_name_object import DomainName
 from cybox.objects.email_message_object import EmailMessage
@@ -6,7 +6,10 @@ from cybox.objects.file_object import File
 from cybox.objects.mutex_object import Mutex
 from cybox.objects.network_connection_object import NetworkConnection
 from cybox.objects.process_object import Process
+from cybox.objects.unix_user_account_object import UnixUserAccount
 from cybox.objects.uri_object import URI
+from cybox.objects.user_account_object import UserAccount
+from cybox.objects.win_computer_account_object import WinComputerAccount
 from cybox.objects.win_process_object import WinProcess
 from cybox.objects.win_registry_key_object import WinRegistryKey
 from cybox.objects.win_service_object import WinService
@@ -14,10 +17,50 @@ from six import text_type
 
 from stix2elevator.ids import add_object_id_value, get_object_id_value
 from stix2elevator.options import error, info, warn
-from stix2elevator.utils import (convert_timestamp, convert_timestamp_string,
+from stix2elevator.utils import (convert_timestamp_to_string,
                                  map_vocabs_to_label)
 from stix2elevator.vocab_mappings import (SERVICE_START_TYPE, SERVICE_STATUS,
                                           SERVICE_TYPE)
+
+
+def convert_account(acc):
+    account_dict = {"type": "user-account"}
+    if acc.creation_date:
+        account_dict["account_created"] = acc.creation_date.value
+    # if acc.last_accessed_time:
+    #    account_dict["account_last_login"] = acc.last_accessed_time
+    if acc.disabled:
+        account_dict["is_disabled"] = acc.disabled
+    if isinstance(acc, UserAccount):
+        if acc.username:
+            account_dict["account_login"] = acc.username.value
+        if acc.full_name:
+            account_dict["display_name"] = acc.full_name.value
+        if acc.last_login:
+            account_dict["account_last_login"] = convert_timestamp_to_string(acc.last_login.value)
+        if isinstance(acc, UnixUserAccount):
+            account_dict["account_type"] = "unix"
+            ext_dict = {}
+            if acc.group_id:
+                ext_dict["gid"] = acc.group_id.value
+            if acc.user_id:
+                account_dict["user_id"] = text_type(acc.user_id.value)
+            if acc.login_shell:
+                ext_dict["shell"] = acc.login_shell.value
+            if acc.home_directory:
+                ext_dict["home_dir"] = acc.home_directory.value
+            if acc.group_list:
+                ext_dict["groups"] = []
+                for g in acc.group_list:
+                    ext_dict["groups"].append(text_type(g.group_id.value))
+            if ext_dict != {}:
+                account_dict["extensions"] = {"unix-account-ext": ext_dict}
+        elif isinstance(acc, WinComputerAccount):
+            if acc.domain:
+                account_dict["account_type"] = "windows-domain"
+            else:
+                account_dict["account_type"] = "windows-local"
+    return account_dict
 
 
 def convert_address(add):
@@ -98,7 +141,7 @@ def convert_email_message(email_message):
     if email_message.header:
         header = email_message.header
         if header.date:
-            email_dict["date"] = header.date.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
+            email_dict["date"] = convert_timestamp_to_string(header.date)
         if header.content_type:
             email_dict["content_type"] = text_type(header.content_type)
         if header.subject:
@@ -165,6 +208,8 @@ def convert_registry_key(reg_key):
             if hasattr(v, "datatype") and v.datatype:
                 reg_value["data_type"] = text_type(v.datatype)
             cybox_reg["values"].append(reg_value)
+    if reg_key.modified_time:
+        cybox_reg["modified"] = convert_timestamp_to_string(reg_key.modified_time)
     return cybox_reg
 
 
@@ -190,7 +235,7 @@ def convert_process(process):
     if process.pid:
         process_dict["pid"] = process.pid.value
     if process.creation_time:
-        process_dict["created"] = convert_timestamp(process.creation_time)
+        process_dict["created"] = convert_timestamp_to_string(process.creation_time.value)
     if process.child_pid_list:
         for cp in process.child_pid_list:
             create_process_ref(cp, process_dict, cybox_dict, index, "child_refs")
@@ -405,7 +450,7 @@ def convert_network_connection(conn):
         return {"type": "domain-name", "value": text_type(dn.value)}
 
     if conn.creation_time is not None:
-        cybox_traffic["start"] = convert_timestamp_string(conn.creation_time.value, None, None)
+        cybox_traffic["start"] = convert_timestamp_to_string(conn.creation_time.value, None, None)
 
     cybox_traffic["protocols"] = []
 
@@ -526,6 +571,8 @@ def convert_cybox_object(obj1x):
     elif isinstance(prop, NetworkConnection):
         # potentially returns multiple objects
         objs = convert_network_connection(prop)
+    elif isinstance(prop, Account):
+        objs["0"] = convert_account(prop)
     else:
         warn("CybOX object %s not handled yet", 805, text_type(type(prop)))
         return None
