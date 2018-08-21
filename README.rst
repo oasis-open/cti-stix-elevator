@@ -290,7 +290,7 @@ repositories/maintainers-guide#additionalMaintainers>`__.
 
 **Current Maintainers of this TC Open Repository**
 
--  `Chris Lenk <mailto:gback@mitre.org>`__; GitHub ID:
+-  `Chris Lenk <mailto:clenk@mitre.org>`__; GitHub ID:
    https://github.com/clenk/; WWW: `MITRE <https://www.mitre.org/>`__
 -  `Rich Piazza <mailto:rpiazza@mitre.org>`__; GitHub ID:
    https://github.com/rpiazza/; WWW: `MITRE
