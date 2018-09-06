@@ -44,10 +44,11 @@ KEEP_INDICATORS_USED_IN_COMPOSITE_INDICATOR_EXPRESSION = True
 class ComparisonExpressionForElevator(_ComparisonExpression):
     # overrides, so IdrefPlaceHolder can be handled
     def __init__(self, operator, lhs, rhs, negated=False):
+        self.operator = operator
         if operator == "=" and isinstance(rhs, stix2.ListConstant):
+            warn("apply_condition assumed to be 'ANY' in %s",
+                 721, identifying_info(get_dynamic_variable("current_observable")))
             self.operator = "IN"
-        else:
-            self.operator = operator
         if isinstance(lhs, stix2.ObjectPath):
             self.lhs = lhs
         else:
@@ -556,19 +557,19 @@ def convert_custom_properties(cps, object_type_name):
 def convert_address_to_pattern(add):
     cond = add.address_value.condition
     if add.category == add.CAT_IPV4:
-        return create_term("ipv4-addr:value", cond, stix2.StringConstant(add.address_value.value.strip()))
+        return create_term("ipv4-addr:value", cond, make_constant(add.address_value.value.strip()))
     elif add.category == add.CAT_IPV6:
-        return create_term("ipv6-addr:value", cond, stix2.StringConstant(add.address_value.value.strip()))
+        return create_term("ipv6-addr:value", cond, make_constant(add.address_value.value.strip()))
     elif add.category == add.CAT_MAC:
-        return create_term("mac-addr:value", cond, stix2.StringConstant(add.address_value.value.strip()))
+        return create_term("mac-addr:value", cond, make_constant(add.address_value.value.strip()))
     elif add.category == add.CAT_EMAIL:
-        return create_term("email-addr:value", cond, stix2.StringConstant(add.address_value.value.strip()))
+        return create_term("email-addr:value", cond, make_constant(add.address_value.value.strip()))
     else:
         warn("The address type %s is not part of Cybox 3.0", 421, add.category)
 
 
 def convert_uri_to_pattern(uri):
-    return create_term("url:value", uri.value.condition, stix2.StringConstant(uri.value.value.strip()))
+    return create_term("url:value", uri.value.condition, make_constant(uri.value.value.strip()))
 
 
 # NOTICE:  The format of these PROPERTIES is different than the others in this file!!!!!!
@@ -792,7 +793,7 @@ def convert_hashes_to_pattern(hashes):
         except ValueError as err:
             # don't cause exception if hash value isn't correct
             warn(err.message, 626)
-            hc = stix2.StringConstant(hash_value.value)
+            hc = make_constant(hash_value.value)
         hash_expressions.append(create_term("file:hashes" + "." + hash_type,
                                             hash_value.condition,
                                             hc))
@@ -803,16 +804,16 @@ def convert_hashes_to_pattern(hashes):
 def convert_file_name_and_file_extension(file_name, file_extension):
     if (file_extension and file_extension.value and is_equal_condition(file_name.condition) and
             is_equal_condition(file_extension.condition) and file_name.value.endswith(file_extension.value)):
-        return create_term("file:name", file_name.condition, stix2.StringConstant(file_name.value))
+        return create_term("file:name", file_name.condition, make_constant(file_name.value))
     elif (file_name.condition == "StartsWith" and file_extension and file_extension.value and
           is_equal_condition(file_extension.condition)):
         return ComparisonExpressionForElevator("MATCHES", "file:name",
-                                               stix2.StringConstant(
+                                               make_constant(
                                                    "^" + file_name.value + "*." + file_extension.value + "$"))
     elif (file_name.condition == "Contains" and file_extension and file_extension.value and
           is_equal_condition(file_extension.condition)):
         return ComparisonExpressionForElevator("MATCHES", "file:name",
-                                               stix2.StringConstant(
+                                               make_constant(
                                                    file_name.value + "*." + file_extension.value + "$"))
     else:
         warn("Unable to create a pattern for file:file_name from a File object", 620)
@@ -825,7 +826,7 @@ def convert_file_name_and_path_to_pattern(f):
     elif f.file_name:
         file_name_path_expressions.append(create_term("file:name",
                                                       f.file_name.condition,
-                                                      stix2.StringConstant(f.file_name.value)))
+                                                      make_constant(f.file_name.value)))
     if f.file_path and f.file_path.value:
         index = f.file_path.value.rfind("/")
         if index == -1:
@@ -836,15 +837,15 @@ def convert_file_name_and_path_to_pattern(f):
             if not (f.file_path.value.endswith("/") or f.file_path.value.endswith("\\")):
                 file_name_path_expressions.append(create_term("file:name",
                                                               f.file_path.condition,
-                                                              stix2.StringConstant(f.file_path.value[index + 1:])))
-                path_string_constant = stix2.StringConstant(((f.device_path.value if f.device_path else "") +
-                                                             f.file_path.value[0: index]))
+                                                              make_constant(f.file_path.value[index + 1:])))
+                path_string_constant = make_constant(((f.device_path.value if f.device_path else "") +
+                                                      f.file_path.value[0: index]))
                 file_name_path_expressions.append(create_term("file:parent_directory_ref.path",
                                                               f.file_path.condition,
                                                               path_string_constant))
             else:
-                path_string_constant = stix2.StringConstant(((f.device_path.value if f.device_path else "") +
-                                                             f.file_path.value[0: index]))
+                path_string_constant = make_constant(((f.device_path.value if f.device_path else "") +
+                                                      f.file_path.value[0: index]))
                 file_name_path_expressions.append(create_term("directory:path",
                                                               f.file_path.condition,
                                                               path_string_constant))
@@ -922,7 +923,7 @@ def convert_registry_key_to_pattern(reg_key):
             key_value_term = reg_key.key.value
         expressions.append(create_term("windows-registry-key:key",
                                        reg_key.key.condition,
-                                       stix2.StringConstant(key_value_term)))
+                                       make_constant(key_value_term)))
     if reg_key.values:
         values_expressions = []
         for v in reg_key.values:
@@ -946,7 +947,7 @@ def convert_process_to_pattern(process):
     if process.name:
         expressions.append(create_term("process:name",
                                        process.name.condition,
-                                       stix2.StringConstant(process.name.value)))
+                                       make_constant(process.name.value)))
     if isinstance(process, WinProcess):
         win_process_expression = convert_windows_process_to_pattern(process)
         if win_process_expression:
@@ -994,7 +995,7 @@ def convert_windows_service_to_pattern(service):
         for d in service.description_list:
             description_expressions.append(create_term("process:extensions.'windows-service-ext'.descriptions[*]",
                                                        d.condition,
-                                                       stix2.StringConstant(d.value)))
+                                                       make_constant(d.value)))
         if description_expressions:
             expressions.append(create_boolean_expression("OR", description_expressions))
     if hasattr(service, "service_dll") and service.service_dll:
@@ -1021,7 +1022,7 @@ def convert_related_object_to_pattern(ro):
 
 def convert_domain_name_to_pattern(domain_name, related_objects):
     pattern = [
-        create_term("domain-name:value", domain_name.value.condition, stix2.StringConstant(domain_name.value.value))]
+        create_term("domain-name:value", domain_name.value.condition, make_constant(domain_name.value.value))]
     if related_objects:
         for ro in related_objects:
             if ro.relationship == "Resolved_To":
@@ -1042,7 +1043,7 @@ def convert_domain_name_to_pattern(domain_name, related_objects):
 
 def convert_mutex_to_pattern(mutex):
     if mutex.name:
-        return create_term("mutex:name", mutex.name.condition, stix2.StringConstant(mutex.name.value))
+        return create_term("mutex:name", mutex.name.condition, make_constant(mutex.name.value))
     else:
         return None
 
@@ -1053,17 +1054,17 @@ def convert_network_connection_to_pattern(conn):
     if conn.layer3_protocol is not None:
         expressions.append(create_term("network-traffic:protocols[*]",
                                        conn.layer3_protocol.condition,
-                                       stix2.StringConstant(conn.layer3_protocol.value.lower())))
+                                       make_constant(conn.layer3_protocol.value.lower())))
 
     if conn.layer4_protocol is not None:
         expressions.append(create_term("network-traffic:protocols[*]",
                                        conn.layer4_protocol.condition,
-                                       stix2.StringConstant(conn.layer4_protocol.value.lower())))
+                                       make_constant(conn.layer4_protocol.value.lower())))
 
     if conn.layer7_protocol is not None:
         expressions.append(create_term("network-traffic:protocols[*]",
                                        conn.layer7_protocol.condition,
-                                       stix2.StringConstant(conn.layer7_protocol.value.lower())))
+                                       make_constant(conn.layer7_protocol.value.lower())))
 
     if conn.source_socket_address is not None:
         if conn.source_socket_address.port is not None:
@@ -1075,24 +1076,24 @@ def convert_network_connection_to_pattern(conn):
                 expressions.append(
                     create_term("network-traffic:protocols[*]",
                                 conn.source_socket_address.port.layer4_protocol.condition,
-                                stix2.StringConstant(conn.source_socket_address.port.layer4_protocol.value.lower())))
+                                make_constant(conn.source_socket_address.port.layer4_protocol.value.lower())))
         if conn.source_socket_address.ip_address is not None:
             expressions.append(
                 create_term("network-traffic:src_ref.value",
                             conn.source_socket_address.ip_address.address_value.condition,
-                            stix2.StringConstant(conn.source_socket_address.ip_address.address_value.value)))
+                            make_constant(conn.source_socket_address.ip_address.address_value.value)))
         elif conn.source_socket_address.hostname is not None:
             if conn.source_socket_address.hostname.is_domain_name and conn.source_socket_address.hostname.hostname_value is not None:
                 expressions.append(
                     create_term("network-traffic:src_ref.value",
                                 conn.source_socket_address.hostname.condition,
-                                stix2.StringConstant(conn.source_socket_address.hostname.hostname_value)))
+                                make_constant(conn.source_socket_address.hostname.hostname_value)))
             elif (conn.source_socket_address.hostname.naming_system is not None and
                   any(x.value == "DNS" for x in conn.source_socket_address.hostname.naming_system)):
                 expressions.append(
                     create_term("network-traffic:src_ref.value",
                                 conn.source_socket_address.hostname.condition,
-                                stix2.StringConstant(conn.source_socket_address.hostname.hostname_value)))
+                                make_constant(conn.source_socket_address.hostname.hostname_value)))
 
     if conn.destination_socket_address is not None:
         if conn.destination_socket_address.port is not None:
@@ -1105,26 +1106,26 @@ def convert_network_connection_to_pattern(conn):
                 expressions.append(
                     create_term("network-traffic:protocols[*]",
                                 conn.destination_socket_address.port.layer4_protocol.condition,
-                                stix2.StringConstant(
+                                make_constant(
                                     conn.destination_socket_address.port.layer4_protocol.value.lower())))
         if conn.destination_socket_address.ip_address is not None:
             expressions.append(
                 create_term("network-traffic:dst_ref.value",
                             conn.destination_socket_address.ip_address.address_value.condition,
-                            stix2.StringConstant(conn.destination_socket_address.ip_address.address_value.value)))
+                            make_constant(conn.destination_socket_address.ip_address.address_value.value)))
         elif conn.destination_socket_address.hostname is not None:
             hostname = conn.destination_socket_address.hostname
             if hostname.is_domain_name and hostname.hostname_value is not None:
                 expressions.append(
                     create_term("network-traffic:dst_ref.value",
                                 conn.destination_socket_address.hostname.condition,
-                                stix2.StringConstant(conn.destination_socket_address.hostname.hostname_value)))
+                                make_constant(conn.destination_socket_address.hostname.hostname_value)))
             elif (conn.destination_socket_address.hostname.naming_system is not None and
                   any(x.value == "DNS" for x in conn.destination_socket_address.hostname.naming_system)):
                 expressions.append(
                     create_term("network-traffic:dst_ref.value",
                                 conn.destination_socket_address.hostname.condition,
-                                stix2.StringConstant(conn.destination_socket_address.hostname.hostname_value)))
+                                make_constant(conn.destination_socket_address.hostname.hostname_value)))
 
     if conn.layer7_connections is not None:
         if conn.layer7_connections.http_session is not None:

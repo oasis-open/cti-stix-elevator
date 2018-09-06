@@ -35,6 +35,7 @@ def idiom_mappings(xml_file_path, stored_json):
     if not get_option_value("policy") == "no_policy":
         print("'no_policy' is not allowed for testing")
     set_option_value("policy", "no_policy")
+    sys.setrecursionlimit(3000)
     converted_json = elevate_file(xml_file_path)
     converted_json = json.loads(converted_json)
 
@@ -63,7 +64,6 @@ def idiom_mappings(xml_file_path, stored_json):
 
 
 def setup_tests():
-    sys.setrecursionlimit(2000)
     directory = os.path.dirname(__file__)
 
     xml_idioms_dir = find_dir(directory, "idioms-xml")

@@ -163,6 +163,7 @@ Threat actor *[id]* title is used for name property                             
 Using related-to for the *[property]* of *[id]*                                                                                             718     warn
 Using first Threat Actor motivation as ``primary_motivation`` value. If more, use ``secondary_motivation``                                  719     info
 The ``published property`` is required for STIX 2.0 Report *[id]*, using the created property                                               720     info
+apply_condition assumed to be 'ANY' in *[id]*                                                                                               721     warn
 =========================================================================================================================================== ====    =====
 
 STIX elevator currently doesn't process this content
