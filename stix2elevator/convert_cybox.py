@@ -653,7 +653,7 @@ def fix_cybox_relationships(observed_data):
                             root_obj_index = find_index_of_type(objs, "file")
                             if root_obj_index is not None:  # 0 is a good value
                                 mp["content_type"] = "text/plain"
-                                info("contnet_type for body_multipart of %s is assumed to be 'text/plain'", 721,
+                                info("content_type for body_multipart of %s is assumed to be 'text/plain'", 721,
                                      o["id"])
                                 root_data = objs[root_obj_index]
                                 if root_data:
