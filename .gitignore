@@ -65,4 +65,4 @@ Temporary Items
 other_xml_files/stix-*.xml
 # stix2-validator cache
 cache.sqlite
-/stix2elevator/test/performance_test.py
+/performance_test.py

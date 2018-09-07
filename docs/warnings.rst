@@ -122,7 +122,7 @@ No ``WinProcess`` properties found in *[WinProcess]*                            
 No ``WinService`` properties found in *[WinService]*                                                                                        616     warn
 The custom property name *[property name]* does not adhere to the specification rules                                                       617     warn
 No ISO code for *[value]* in *[identifying info]*                                                                                           618     warn
-No start time for the first valid time interval is available in *[id]*, other time intervals might be more appropriate                      619     warn
+No *[start/end]* time for the first valid time interval is available in *[id]*, other time intervals might be more appropriate              619     warn
 Unable to create a pattern from a File object                                                                                               620     warn
 *[stix 1.x property]* contains no value                                                                                                     621     warn
 No term was yielded for *[id]*                                                                                                              622     warn
@@ -164,6 +164,7 @@ Using related-to for the *[property]* of *[id]*                                 
 Using first Threat Actor motivation as ``primary_motivation`` value. If more, use ``secondary_motivation``                                  719     info
 The ``published property`` is required for STIX 2.0 Report *[id]*, using the created property                                               720     info
 apply_condition assumed to be 'ANY' in *[id]*                                                                                               721     warn
+content_type for body_multipart of *[id]* is assumed to be 'text/plain'                                                                     722     info
 =========================================================================================================================================== ====    =====
 
 STIX elevator currently doesn't process this content
@@ -200,6 +201,6 @@ Message                                                                         
 ``first_observed`` and ``last_observed`` properties not available directly on *[id]* - using timestamp                                      901     info
 Using parent object timestamp on *[identifying info]*                                                                                       902     info
 No valid time position information available in *[id]*, using parent timestamp                                                              903     warn
-No ``first_seen`` property on *[id]* - using timestamp                                                                                      904     info
+No ``first_seen`` property on *[id]* - using timestamp                                                                                            904     info
 Timestamp not available for *[entity]*, using current time                                                                                  905     warn
 =========================================================================================================================================== ====    =====

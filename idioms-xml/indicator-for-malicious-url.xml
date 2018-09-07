@@ -26,7 +26,7 @@
         <stix:Handling>
             <marking:Marking>
                 <marking:Marking_Structure id="example:markingstructure-c0d0976c-76a1-4cf2-accd-19632991ac3f"
-                                           xsi:type='TOUMarking:TermsOfUseMarkingStructureType'>
+                        xsi:type='TOUMarking:TermsOfUseMarkingStructureType'>
                     <TOUMarking:Terms_Of_Use>Classification: PROTECTED</TOUMarking:Terms_Of_Use>
                 </marking:Marking_Structure>
             </marking:Marking>

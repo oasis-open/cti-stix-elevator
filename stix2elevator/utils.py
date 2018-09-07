@@ -62,15 +62,13 @@ def convert_controlled_vocabs_to_open_vocabs(new_obj, new_property_name, old_voc
 def strftime_with_appropriate_fractional_seconds(timestamp, milliseconds_only):
     if isinstance(timestamp, (text_type, binary_type)):
         timestamp = datetime.strptime(timestamp, "%Y-%m-%dT%H:%M:%S.%fZ")
-
     if milliseconds_only:
         return timestamp.strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3] + "Z"
     else:
         return timestamp.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
 
 
-def convert_timestamp_string(timestamp, entity, parent_timestamp, milliseconds_only=False):
-
+def convert_timestamp_to_string(timestamp, entity=None, parent_timestamp=None, milliseconds_only=False):
     if timestamp is not None:
         return strftime_with_appropriate_fractional_seconds(timestamp, milliseconds_only)
     elif parent_timestamp is not None:
@@ -81,7 +79,7 @@ def convert_timestamp_string(timestamp, entity, parent_timestamp, milliseconds_o
         return strftime_with_appropriate_fractional_seconds(datetime.now(), milliseconds_only)
 
 
-def convert_timestamp(entity, parent_timestamp=None, milliseconds_only=False):
+def convert_timestamp_of_stix_object(entity, parent_timestamp=None, milliseconds_only=False):
     if entity and hasattr(entity, "timestamp"):
         if entity.timestamp is not None:
             return strftime_with_appropriate_fractional_seconds(entity.timestamp, milliseconds_only)

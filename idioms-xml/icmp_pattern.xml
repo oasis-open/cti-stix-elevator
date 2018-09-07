@@ -19,8 +19,8 @@
         id="example:STIXPackage-89762d92-e00e-471b-a3b5-c4bdc38bdde8" version="1.2">
     <stix:Indicators cybox_major_version="2" cybox_minor_version="1" cybox_update_version="0">
         <stix:Indicator xsi:type="indicator:IndicatorType"
-                        id="example:Indicator-53fe3b22-0201-47cf-85d0-97c02164528d"
-                        timestamp="2014-05-08T09:00:00.000000Z">
+                id="example:Indicator-53fe3b22-0201-47cf-85d0-97c02164528d"
+                timestamp="2014-05-08T09:00:00.000000Z">
             <indicator:Type xsi:type="stixVocabs:IndicatorTypeVocab-1.1">IP Watchlist</indicator:Type>
             <indicator:Observable id="example:observable-9c9be28a-c514-4dc6-bfc5-12b84264a64f">
                 <cybox:Object id="example:NetworkPacket-0c7a147d-4d8d-49ad-823f-5fd533868467">

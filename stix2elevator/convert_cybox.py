@@ -1,3 +1,4 @@
+from cybox.objects.account_object import Account
 from cybox.objects.address_object import Address
 from cybox.objects.domain_name_object import DomainName
 from cybox.objects.email_message_object import EmailMessage
@@ -8,7 +9,10 @@ from cybox.objects.network_connection_object import NetworkConnection
 from cybox.objects.network_packet_object import NetworkPacket
 from cybox.objects.network_socket_object import NetworkSocket
 from cybox.objects.process_object import Process
+from cybox.objects.unix_user_account_object import UnixUserAccount
 from cybox.objects.uri_object import URI
+from cybox.objects.user_account_object import UserAccount
+from cybox.objects.win_computer_account_object import WinComputerAccount
 from cybox.objects.win_process_object import WinProcess
 from cybox.objects.win_registry_key_object import WinRegistryKey
 from cybox.objects.win_service_object import WinService
@@ -16,11 +20,51 @@ from six import text_type
 
 from stix2elevator.common import ADDRESS_FAMILY_ENUMERATION, SOCKET_OPTIONS
 from stix2elevator.ids import add_object_id_value, get_object_id_value
-from stix2elevator.options import error, warn
-from stix2elevator.utils import (convert_timestamp, convert_timestamp_string,
+from stix2elevator.options import error, info, warn
+from stix2elevator.utils import (convert_timestamp_to_string,
                                  map_vocabs_to_label)
 from stix2elevator.vocab_mappings import (SERVICE_START_TYPE, SERVICE_STATUS,
                                           SERVICE_TYPE)
+
+
+def convert_account(acc):
+    account_dict = {"type": "user-account"}
+    if acc.creation_date:
+        account_dict["account_created"] = acc.creation_date.value
+    # if acc.last_accessed_time:
+    #    account_dict["account_last_login"] = acc.last_accessed_time
+    if acc.disabled:
+        account_dict["is_disabled"] = acc.disabled
+    if isinstance(acc, UserAccount):
+        if acc.username:
+            account_dict["account_login"] = acc.username.value
+        if acc.full_name:
+            account_dict["display_name"] = acc.full_name.value
+        if acc.last_login:
+            account_dict["account_last_login"] = convert_timestamp_to_string(acc.last_login.value)
+        if isinstance(acc, UnixUserAccount):
+            account_dict["account_type"] = "unix"
+            ext_dict = {}
+            if acc.group_id:
+                ext_dict["gid"] = acc.group_id.value
+            if acc.user_id:
+                account_dict["user_id"] = text_type(acc.user_id.value)
+            if acc.login_shell:
+                ext_dict["shell"] = acc.login_shell.value
+            if acc.home_directory:
+                ext_dict["home_dir"] = acc.home_directory.value
+            if acc.group_list:
+                ext_dict["groups"] = []
+                for g in acc.group_list:
+                    ext_dict["groups"].append(text_type(g.group_id.value))
+            if ext_dict != {}:
+                account_dict["extensions"] = {"unix-account-ext": ext_dict}
+        elif isinstance(acc, WinComputerAccount):
+            if acc.domain:
+                account_dict["account_type"] = "windows-domain"
+            else:
+                account_dict["account_type"] = "windows-local"
+    return account_dict
 
 
 def convert_address(add):
@@ -63,6 +107,7 @@ def convert_file_properties(f):
     if f.file_name:
         file_dict["name"] = text_type(f.file_name)
     elif f.file_path and f.file_path.value:
+        # this index is an array index, not for the objects dict
         index = f.file_path.value.rfind("/")
         if index == -1:
             index = f.file_path.value.rfind("\\")
@@ -79,10 +124,10 @@ def convert_file_properties(f):
 
 def convert_file(f):
     objs = {}
-    objs[0], dir_dict = convert_file_properties(f)
+    objs["0"], dir_dict = convert_file_properties(f)
     if dir_dict:
-        objs[1] = dir_dict
-        objs[0]["parent_directory_ref"] = "1"
+        objs["1"] = dir_dict
+        objs["0"]["parent_directory_ref"] = "1"
     return objs
 
 
@@ -95,12 +140,12 @@ def convert_email_message(email_message):
     cybox_dict = {}
     email_dict = {"type": "email-message",
                   "is_multipart": False}    # the default
-    cybox_dict[index] = email_dict
+    cybox_dict[text_type(index)] = email_dict
     index += 1
     if email_message.header:
         header = email_message.header
         if header.date:
-            email_dict["date"] = header.date.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
+            email_dict["date"] = convert_timestamp_to_string(header.date)
         if header.content_type:
             email_dict["content_type"] = text_type(header.content_type)
         if header.subject:
@@ -108,13 +153,13 @@ def convert_email_message(email_message):
         if header.from_:
             # should there ever be more than one?
             from_ref = convert_address(header.from_)
-            cybox_dict[index] = from_ref
+            cybox_dict[text_type(index)] = from_ref
             email_dict["from_ref"] = text_type(index)
             index += 1
         if header.to:
             for t in header.to:
                 to_ref = convert_address(t)
-                cybox_dict[index] = to_ref
+                cybox_dict[text_type(index)] = to_ref
                 if "to_refs" not in email_dict:
                     email_dict["to_refs"] = []
                 email_dict["to_refs"].append(text_type(index))
@@ -122,7 +167,7 @@ def convert_email_message(email_message):
         if header.cc:
             for t in header.cc:
                 cc_ref = convert_address(t)
-                cybox_dict[index] = cc_ref
+                cybox_dict[text_type(index)] = cc_ref
                 if "cc_refs" not in email_dict:
                     email_dict["cc_refs"] = []
                 email_dict["cc_refs"].append(text_type(index))
@@ -130,7 +175,7 @@ def convert_email_message(email_message):
         if header.bcc:
             for t in header.bcc:
                 bcc_ref = convert_address(t)
-                cybox_dict[index] = bcc_ref
+                cybox_dict[text_type(index)] = bcc_ref
                 if "bcc_refs" not in email_dict:
                     email_dict["bcc_refs"] = []
                 email_dict["bcc_refs"].append(text_type(index))
@@ -167,17 +212,58 @@ def convert_registry_key(reg_key):
             if hasattr(v, "datatype") and v.datatype:
                 reg_value["data_type"] = text_type(v.datatype)
             cybox_reg["values"].append(reg_value)
+    if reg_key.modified_time:
+        cybox_reg["modified"] = convert_timestamp_to_string(reg_key.modified_time)
     return cybox_reg
 
 
+def create_process_ref(cp, process_dict, cybox_dict, index, prop):
+    cp_ref = {"type": "process", "pid": cp.value}
+    cybox_dict[text_type(index)] = cp_ref
+    if prop == "child_refs":
+        if prop not in process_dict:
+            process_dict["child_refs"] = []
+        process_dict[prop].append(text_type(index))
+    else:
+        process_dict[prop] = text_type(index)
+
+
 def convert_process(process):
-    cybox_p = {"type": "process"}
+    index = 0
+    cybox_dict = {}
+    process_dict = {"type": "process"}
+    cybox_dict[text_type(index)] = process_dict
+    index += 1
     if process.name:
-        cybox_p["name"] = text_type(process.name)
+        process_dict["name"] = text_type(process.name)
     if process.pid:
-        cybox_p["pid"] = text_type(process.pid)
+        process_dict["pid"] = process.pid.value
     if process.creation_time:
-        cybox_p["created"] = convert_timestamp(process.creation_time)
+        process_dict["created"] = convert_timestamp_to_string(process.creation_time.value)
+    if process.child_pid_list:
+        for cp in process.child_pid_list:
+            create_process_ref(cp, process_dict, cybox_dict, index, "child_refs")
+            index += 1
+    if process.parent_pid:
+        create_process_ref(process.parent_pid, process_dict, cybox_dict, index, "parent_ref")
+        index += 1
+    if process.argument_list:
+        process_dict["arguments"] = []
+        for a in process.argument_list:
+            process_dict["arguments"].append(a.value)
+    if process.network_connection_list:
+        renumbered_nc_dicts = {}
+        process_dict["opened_connection_refs"] = []
+        for nc in process.network_connection_list:
+            nc_dicts = convert_network_connection(nc)
+            root_obj_index = find_index_of_type(nc_dicts, "network-traffic")
+            current_largest_id, number_mapping = do_renumbering(nc_dicts,
+                                                                index,
+                                                                root_obj_index,
+                                                                renumbered_nc_dicts)
+            add_objects(cybox_dict, renumbered_nc_dicts)
+            process_dict["opened_connection_refs"].append(text_type(number_mapping[root_obj_index]))
+            index = current_largest_id
     if isinstance(process, WinProcess):
         extended_properties = {}
         process_properties = convert_windows_process(process)
@@ -188,8 +274,8 @@ def convert_process(process):
             if service_properties:
                 extended_properties["windows-service-ext"] = service_properties
         if extended_properties:
-            cybox_p["extensions"] = extended_properties
-    return cybox_p
+            process_dict["extensions"] = extended_properties
+    return cybox_dict
 
 
 def convert_windows_process(process):
@@ -203,8 +289,8 @@ def convert_windows_process(process):
         ext["dep_enabled"] = bool(process.dep_enabled)
     if process.priority:
         ext["priority"] = text_type(process.priority)
-    if process.security_type:
-        ext["owner_sid"] = text_type(process.security_type)
+    if process.security_id:
+        ext["owner_sid"] = text_type(process.security_id)
     if process.window_title:
         ext["window_title"] = text_type(process.window_title)
     if process.startup_info:
@@ -374,7 +460,7 @@ def convert_network_connection(conn):
         return {"type": "domain-name", "value": text_type(dn.value)}
 
     if conn.creation_time is not None:
-        cybox_traffic["start"] = convert_timestamp_string(conn.creation_time.value, None, None)
+        cybox_traffic["start"] = convert_timestamp_to_string(conn.creation_time.value, None, None)
 
     cybox_traffic["protocols"] = []
 
@@ -391,19 +477,19 @@ def convert_network_connection(conn):
         if conn.source_socket_address.ip_address is not None:
             source = convert_address(conn.source_socket_address.ip_address)
             cybox_traffic["src_ref"] = str(index)
-            cybox_dict[index] = source
+            cybox_dict[text_type(index)] = source
             index += 1
         elif conn.source_socket_address.hostname is not None:
             if conn.source_socket_address.hostname.is_domain_name and conn.source_socket_address.hostname.hostname_value is not None:
                 source_domain = create_domain_name_object(conn.source_socket_address.hostname.hostname_value)
                 cybox_traffic["src_ref"] = str(index)
-                cybox_dict[index] = source_domain
+                cybox_dict[text_type(index)] = source_domain
                 index += 1
             elif (conn.source_socket_address.hostname.naming_system is not None and
                     any(x.value == "DNS" for x in conn.source_socket_address.hostname.naming_system)):
                 source_domain = create_domain_name_object(conn.source_socket_address.hostname.hostname_value)
                 cybox_traffic["src_ref"] = str(index)
-                cybox_dict[index] = source_domain
+                cybox_dict[text_type(index)] = source_domain
                 index += 1
 
     if conn.destination_socket_address is not None:
@@ -416,19 +502,19 @@ def convert_network_connection(conn):
         if conn.destination_socket_address.ip_address is not None:
             destination = convert_address(conn.destination_socket_address.ip_address)
             cybox_traffic["dst_ref"] = str(index)
-            cybox_dict[index] = destination
+            cybox_dict[text_type(index)] = destination
             index += 1
         elif conn.destination_socket_address.hostname is not None:
             if conn.destination_socket_address.hostname.is_domain_name and conn.destination_socket_address.hostname.hostname_value is not None:
                 destination_domain = create_domain_name_object(conn.destination_socket_address.hostname.hostname_value)
                 cybox_traffic["dst_ref"] = str(index)
-                cybox_dict[index] = destination_domain
+                cybox_dict[text_type(index)] = destination_domain
                 index += 1
             elif (conn.destination_socket_address.hostname.naming_system is not None and
                     any(x.value == "DNS" for x in conn.destination_socket_address.hostname.naming_system)):
                 destination_domain = create_domain_name_object(conn.destination_socket_address.hostname.hostname_value)
                 cybox_traffic["dst_ref"] = str(index)
-                cybox_dict[index] = destination_domain
+                cybox_dict[text_type(index)] = destination_domain
                 index += 1
 
     if conn.layer4_protocol is not None:
@@ -452,7 +538,7 @@ def convert_network_connection(conn):
 
     if cybox_traffic:
         cybox_traffic["type"] = "network-traffic"
-        cybox_dict[index] = cybox_traffic
+        cybox_dict[text_type(index)] = cybox_traffic
 
     # cybox_traffic["end"]
     # cybox_traffic["is_active"]
@@ -559,16 +645,16 @@ def convert_network_socket(socket):
     return cybox_traffic
 
 
-def convert_cybox_object(obj):
+def convert_cybox_object(obj1x):
     # TODO:  should related objects be handled on a case-by-case basis or just ignored
-    prop = obj.properties
+    prop = obj1x.properties
     objs = {}
     if prop is None:
         return None
     elif isinstance(prop, Address):
-        objs[0] = convert_address(prop)
+        objs["0"] = convert_address(prop)
     elif isinstance(prop, URI):
-        objs[0] = convert_uri(prop)
+        objs["0"] = convert_uri(prop)
     elif isinstance(prop, EmailMessage):
         # potentially returns multiple objects
         objs = convert_email_message(prop)
@@ -576,22 +662,24 @@ def convert_cybox_object(obj):
         # potentially returns multiple objects
         objs = convert_file(prop)
     elif isinstance(prop, WinRegistryKey):
-        objs[0] = convert_registry_key(prop)
+        objs["0"] = convert_registry_key(prop)
     elif isinstance(prop, Process):
-        objs[0] = convert_process(prop)
+        objs = convert_process(prop)
     elif isinstance(prop, DomainName):
-        objs[0] = convert_domain_name(prop)
+        objs["0"] = convert_domain_name(prop)
     elif isinstance(prop, Mutex):
-        objs[0] = convert_mutex(prop)
+        objs["0"] = convert_mutex(prop)
     elif isinstance(prop, NetworkConnection):
         # potentially returns multiple objects
         objs = convert_network_connection(prop)
+    elif isinstance(prop, Account):
+        objs["0"] = convert_account(prop)
     elif isinstance(prop, HTTPSession):
-        objs[0] = convert_http_session(prop)
+        objs["0"] = convert_http_session(prop)
     elif isinstance(prop, NetworkPacket):
-        objs[0] = convert_network_packet(prop)
+        objs["0"] = convert_network_packet(prop)
     elif isinstance(prop, NetworkSocket):
-        objs[0] = convert_network_socket(prop)
+        objs["0"] = convert_network_socket(prop)
     else:
         warn("CybOX object %s not handled yet", 805, text_type(type(prop)))
         return None
@@ -599,34 +687,36 @@ def convert_cybox_object(obj):
         warn("%s did not yield any STIX 2.0 object", 417, text_type(type(prop)))
         return None
     else:
-        primary_obj = objs[0]
+        primary_obj = objs["0"]
         if prop.custom_properties:
             for cp in prop.custom_properties.property_:
                 primary_obj["x_" + cp.name] = cp.value
-        if obj.id_:
-            add_object_id_value(obj.id_, objs)
+        if obj1x.id_:
+            add_object_id_value(obj1x.id_, objs)
         return objs
 
 
-def find_file_object_index(objs):
+def find_index_of_type(objs, type):
     for k, v in objs.items():
-        if v["type"] == "file":
+        if v["type"] == type:
             return k
     return None
 
 
-def add_attachment_objects(o, objs_to_add):
-    o["objects"].update(objs_to_add)
+def add_objects(objects, objs_to_add):
+    objects.update(objs_to_add)
 
 
 def renumber_co(co, number_mapping):
     for k, v in co.items():
         if k.endswith("ref"):
-            co[k] = number_mapping[co[k]]
-        if k.endswith("refs"):
+            if co[k] in number_mapping:
+                co[k] = number_mapping[co[k]]
+        elif k.endswith("refs"):
             new_refs = []
             for ref in co[k]:
-                new_refs.append(number_mapping[ref])
+                if ref in number_mapping:
+                    new_refs.append(number_mapping[ref])
             co[k] = new_refs
     return co
 
@@ -639,30 +729,51 @@ def renumber_objs(objs, number_mapping):
     return new_objects
 
 
+def do_renumbering(objs, next_id, root_obj_index, objs_to_add):
+    number_mapping = {}
+    for k in sorted(objs.keys()):
+        number_mapping[text_type(k)] = text_type(next_id)
+        next_id += 1
+    new_objs = renumber_objs(objs, number_mapping)
+    objs_to_add.update(new_objs)
+    return next_id, number_mapping
+
+
+def find_index_of_contents(root_data, objects):
+    for index, value in objects.items():
+        if value == root_data:
+            return index
+    return None
+
+
 def fix_cybox_relationships(observed_data):
     for o in observed_data:
         objs_to_add = {}
         if not o["objects"]:
             continue
-        current_largest_id = max(o["objects"].keys())
+        next_id = int(max(o["objects"].keys())) + 1
         for co in o["objects"].values():
             if co["type"] == "email-message":
                 if co["is_multipart"]:
                     for mp in co["body_multipart"]:
                         objs = get_object_id_value(mp["body_raw_ref"])
                         if objs:
-                            file_obj_index = find_file_object_index(objs)
-                            if file_obj_index >= 0:
-                                number_mapping = {}
-                                for k in objs.keys():
-                                    current_largest_id += 1
-                                    number_mapping[k] = current_largest_id
-                                new_objs = renumber_objs(objs, number_mapping)
-                                mp["body_raw_ref"] = text_type(number_mapping[file_obj_index])
-                                objs_to_add.update(new_objs)
-                            else:
-                                pass  # warn
-                        else:
-                            pass  # warn mess
+                            root_obj_index = find_index_of_type(objs, "file")
+                            if root_obj_index is not None:  # 0 is a good value
+                                mp["content_type"] = "text/plain"
+                                info("content_type for body_multipart of %s is assumed to be 'text/plain'", 722,
+                                     o["id"])
+                                root_data = objs[root_obj_index]
+                                if root_data:
+                                    present_obj_index = find_index_of_contents(root_data, o["objects"])
+                                    if present_obj_index is None:  # 0 is a good value
+                                        next_id, number_mapping = do_renumbering(objs,
+                                                                                 next_id,
+                                                                                 root_obj_index,
+                                                                                 objs_to_add)
+                                        mp["body_raw_ref"] = text_type(number_mapping[root_obj_index])
+                                    else:
+                                        mp["body_raw_ref"] = text_type(present_obj_index)
+                        # TODO: warnings
         if objs_to_add:
-            add_attachment_objects(o, objs_to_add)
+            add_objects(o["objects"], objs_to_add)

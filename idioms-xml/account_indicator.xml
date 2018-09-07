@@ -1,0 +1,56 @@
+<stix:STIX_Package
+        xmlns:AccountObj="http://cybox.mitre.org/objects#AccountObject-2"
+        xmlns:cyboxCommon="http://cybox.mitre.org/common-2"
+        xmlns:cybox="http://cybox.mitre.org/cybox-2"
+        xmlns:cyboxVocabs="http://cybox.mitre.org/default_vocabularies-2"
+        xmlns:UnixUserAccountObj="http://cybox.mitre.org/objects#UnixUserAccountObject-2"
+        xmlns:example="http://example.com"
+        xmlns:marking="http://data-marking.mitre.org/Marking-1"
+        xmlns:TOUMarking="http://data-marking.mitre.org/extensions/MarkingStructure#Terms_Of_Use-1"
+        xmlns:indicator="http://stix.mitre.org/Indicator-2"
+        xmlns:stixCommon="http://stix.mitre.org/common-1"
+        xmlns:stixVocabs="http://stix.mitre.org/default_vocabularies-1"
+        xmlns:stix="http://stix.mitre.org/stix-1"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+	http://cybox.mitre.org/common-2 http://cybox.mitre.org/XMLSchema/common/2.1/cybox_common.xsd
+	http://cybox.mitre.org/cybox-2 http://cybox.mitre.org/XMLSchema/core/2.1/cybox_core.xsd
+	http://cybox.mitre.org/default_vocabularies-2 http://cybox.mitre.org/XMLSchema/default_vocabularies/2.1/cybox_default_vocabularies.xsd
+	http://cybox.mitre.org/objects#AccountObject-2 http://cybox.mitre.org/XMLSchema/objects/Account/2.0.1/Account_Object.xsd
+	http://cybox.mitre.org/objects#UnixUserAccountObject-2 http://cybox.mitre.org/XMLSchema/objects/Unix_User_Account/2.1/Unix_User_Account_Object.xsd
+	http://stix.mitre.org/Indicator-2 http://stix.mitre.org/XMLSchema/indicator/2.2/indicator.xsd
+	http://stix.mitre.org/common-1 http://stix.mitre.org/XMLSchema/common/1.2/stix_common.xsd
+	http://stix.mitre.org/default_vocabularies-1 http://stix.mitre.org/XMLSchema/default_vocabularies/1.2.0/stix_default_vocabularies.xsd
+	http://stix.mitre.org/stix-1 http://stix.mitre.org/XMLSchema/core/1.2/stix_core.xsd"
+
+        id="example:Package-72491bed-8922-43d5-b864-ae5acae79f8f"
+        timestamp="2013-02-09T10:17:34.934295"
+        version="1.2">
+    <stix:Indicators>
+        <stix:Indicator id="example:Indicator-504d3239-36e0-487f-aefb-db478db866d0" xsi:type='indicator:IndicatorType'>
+            <indicator:Title>Malicious site hosting downloader</indicator:Title>
+            <indicator:Type xsi:type="stixVocabs:IndicatorTypeVocab-1.0">URL Watchlist</indicator:Type>
+            <indicator:Observable id="example:Observable-3f4e3863-6e36-4ddf-816c-744518b3373d">
+                <cybox:Object id="example:unix-account-e021988d-82d2-4123-908d-857c1635d966">
+                    <cybox:Properties xsi:type="UnixUserAccountObj:UnixUserAccountObjectType" disabled="true">
+                        <Creation_Date>2000-06-09T20:17:34.934295</Creation_Date>
+                        <Username>fred</Username>
+                        <Last_Login>2010-12-09T20:17:34.934295</Last_Login>
+                        <UnixUserAccountObj:User_ID>1001</UnixUserAccountObj:User_ID>
+                    </cybox:Properties>
+                </cybox:Object>
+            </indicator:Observable>
+        </stix:Indicator>
+    </stix:Indicators>
+    <stix:Observables cybox_major_version="" cybox_minor_version="">
+        <cybox:Observable id="example:Observable-feeede8d-38c9-43b9-a6b8-db213c303223">
+            <cybox:Object id="example:unix-account-0ab6fea1-0399-4054-b845-262c81964d9e">
+                <cybox:Properties xsi:type="UnixUserAccountObj:UnixUserAccountObjectType" disabled="true">
+                    <Username>fred</Username>
+                    <Last_Login>2010-12-09T20:17:34.934295</Last_Login>
+                    <UnixUserAccountObj:User_ID>1001</UnixUserAccountObj:User_ID>
+                </cybox:Properties>
+            </cybox:Object>
+        </cybox:Observable>
+    </stix:Observables>
+</stix:STIX_Package>

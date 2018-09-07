@@ -42,7 +42,7 @@
     </stix:Observables>
     <stix:Indicators>
         <stix:Indicator timestamp="2015-05-15T09:00:00.000000Z"
-                        id="example:indicator-8cdd6268-8aaf-49f3-9175-241738fe1127" xsi:type="indicator:IndicatorType">
+                id="example:indicator-8cdd6268-8aaf-49f3-9175-241738fe1127" xsi:type="indicator:IndicatorType">
             <indicator:Title>Domain: xgstonebak.3322.org</indicator:Title>
             <indicator:Type xsi:type="stixVocabs:IndicatorTypeVocab-1.1">Domain Watchlist</indicator:Type>
             <indicator:Observable idref="example:observable-973b8552-3b78-4122-9b1e-61d69133607c"/>
