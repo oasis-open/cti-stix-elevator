@@ -540,7 +540,7 @@ def convert_network_socket(socket):
         if socket.address_family in ADDRESS_FAMILY_ENUMERATION:
             socket_extension["address_family"] = socket.address_family.value
         else:
-            warn("%s in is not a member of the %s enumeration", 627, socket.address_family, "address family")
+            warn("%s is not a member of the %s enumeration", 627, socket.address_family, "address family")
     if socket.type_:
         socket_extension["socket_type"] = socket.type_
     if socket.domain:
@@ -592,10 +592,6 @@ def convert_cybox_object(obj):
         objs[0] = convert_network_packet(prop)
     elif isinstance(prop, NetworkSocket):
         objs[0] = convert_network_socket(prop)
-    # elif isinstance(prop, HTTPRequestResponse):
-    #     cybox_traffic = {"type": "network-traffic"}
-    #     cybox_traffic["extensions"] = {"http-request-ext": create_http_request_extension(prop) }
-    #     objs[0] = cybox_traffic
     else:
         warn("CybOX object %s not handled yet", 805, text_type(type(prop)))
         return None
