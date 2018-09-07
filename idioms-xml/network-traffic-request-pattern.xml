@@ -1,0 +1,52 @@
+<stix:STIX_Package
+        xmlns:URIObj="http://cybox.mitre.org/objects#URIObject-2"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        xmlns:NetworkConnectionObj="http://cybox.mitre.org/objects#NetworkConnectionObject-2"
+        xmlns:example="http://example.com"
+        xmlns:AddressObj="http://cybox.mitre.org/objects#AddressObject-2"
+        xmlns:stix="http://stix.mitre.org/stix-1"
+        xmlns:cyboxCommon="http://cybox.mitre.org/common-2"
+        xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
+        xmlns:HTTPSessionObj="http://cybox.mitre.org/objects#HTTPSessionObject-2"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:cybox="http://cybox.mitre.org/cybox-2"
+        xmlns:HostnameObj="http://cybox.mitre.org/objects#HostnameObject-1"
+        xmlns:stixCommon="http://stix.mitre.org/common-1"
+        xmlns:stixVocabs="http://stix.mitre.org/default_vocabularies-1"
+        xmlns:SocketAddressObj="http://cybox.mitre.org/objects#SocketAddressObject-1"
+        xmlns:indicator="http://stix.mitre.org/Indicator-2"
+        id="example:STIXPackage-abfc063c-7f43-40d1-8969-647dc6d5077f" version="1.2">
+    <stix:Observables cybox_major_version="2" cybox_minor_version="1" cybox_update_version="0">
+        <cybox:Observable id="example:observable-973b8552-3b78-4122-9b1e-61d69133607c">
+            <cybox:Object id="example:HTTPSession-64cc44be-98a0-4e96-b060-b4769eb5b974">
+                <cybox:Properties xsi:type="HTTPSessionObj:HTTPSessionObjectType">
+                    <HTTPSessionObj:HTTP_Request_Response>
+                        <HTTPSessionObj:HTTP_Client_Request>
+                            <HTTPSessionObj:HTTP_Request_Line>
+                                <HTTPSessionObj:HTTP_Method>GET</HTTPSessionObj:HTTP_Method>
+                            </HTTPSessionObj:HTTP_Request_Line>
+                            <HTTPSessionObj:HTTP_Request_Header>
+                                <HTTPSessionObj:Parsed_Header>
+                                    <HTTPSessionObj:Referer xsi:type="URIObj:URIObjectType">
+                                        <URIObj:Value>http://sensongsmp3.cc/starmusiq/kadai-kutty-singam/</URIObj:Value>
+                                    </HTTPSessionObj:Referer>
+                                    <HTTPSessionObj:User_Agent>Mozilla/5.0</HTTPSessionObj:User_Agent>
+                                    <HTTPSessionObj:Date>2017-01-27T13:49:41.298Z</HTTPSessionObj:Date>
+                                </HTTPSessionObj:Parsed_Header>
+                            </HTTPSessionObj:HTTP_Request_Header>
+                        </HTTPSessionObj:HTTP_Client_Request>
+                    </HTTPSessionObj:HTTP_Request_Response>
+                </cybox:Properties>
+            </cybox:Object>
+        </cybox:Observable>
+    </stix:Observables>
+    <stix:Indicators>
+        <stix:Indicator timestamp="2015-05-15T09:00:00.000000Z"
+                id="example:indicator-8cdd6268-8aaf-49f3-9175-241738fe1127" xsi:type="indicator:IndicatorType">
+            <indicator:Title>Domain: xgstonebak.3322.org</indicator:Title>
+            <indicator:Type xsi:type="stixVocabs:IndicatorTypeVocab-1.1">Domain Watchlist</indicator:Type>
+            <indicator:Observable idref="example:observable-973b8552-3b78-4122-9b1e-61d69133607c"/>
+        </stix:Indicator>
+    </stix:Indicators>
+</stix:STIX_Package>
+
