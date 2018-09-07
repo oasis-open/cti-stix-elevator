@@ -1,0 +1,35 @@
+<stix:STIX_Package
+        xmlns:URIObj="http://cybox.mitre.org/objects#URIObject-2"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        xmlns:NetworkConnectionObj="http://cybox.mitre.org/objects#NetworkConnectionObject-2"
+        xmlns:example="http://example.com"
+        xmlns:AddressObj="http://cybox.mitre.org/objects#AddressObject-2"
+        xmlns:stix="http://stix.mitre.org/stix-1"
+        xmlns:cyboxCommon="http://cybox.mitre.org/common-2"
+        xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
+        xmlns:HTTPSessionObj="http://cybox.mitre.org/objects#HTTPSessionObject-2"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:cybox="http://cybox.mitre.org/cybox-2"
+        xmlns:HostnameObj="http://cybox.mitre.org/objects#HostnameObject-1"
+        xmlns:stixCommon="http://stix.mitre.org/common-1"
+        xmlns:stixVocabs="http://stix.mitre.org/default_vocabularies-1"
+        xmlns:SocketAddressObj="http://cybox.mitre.org/objects#SocketAddressObject-1"
+        xmlns:indicator="http://stix.mitre.org/Indicator-2"
+        id="example:STIXPackage-8005dcb9-398c-4f61-b44c-18133199d145" version="1.2">
+    <stix:Indicators>
+        <stix:Indicator xsi:type="indicator:IndicatorType" id="example:Indicator-ea31dfd9-9f9d-4580-ba03-e85afcc06b15">
+            <indicator:Title>A Network Socket example</indicator:Title>
+            <cybox:Observable id="example:observable-175e561f-3ced-4cf7-8a17-654ca651ff97">
+                <cybox:Object id="example:NetworkSocket-ed2c87bf-c0e3-4da9-873a-afa95da00459">
+                    <cybox:Properties xsi:type="SocketAddressObj:NetworkSocketObjectType" is_listening="true">
+                        <SocketAddressObj:Address_Family>AF_INET</SocketAddressObj:Address_Family>
+                        <SocketAddressObj:Options>
+                            <SocketAddressObj:IP_MULTICAST_LOOP>true</SocketAddressObj:IP_MULTICAST_LOOP>
+                        </SocketAddressObj:Options>
+                        <SocketAddressObj:Protocol condition="Equals">TCP</SocketAddressObj:Protocol>
+                    </cybox:Properties>
+                </cybox:Object>
+            </cybox:Observable>
+        </stix:Indicator>
+    </stix:Indicators>
+</stix:STIX_Package>

@@ -76,7 +76,7 @@ def generate_stix20_id(stix20_so_name, stix12_id=None, id_used=False):
                 warn("Malformed id %s. Generated a new uuid", 605, stix12_id)
                 return stix20_so_name + "--" + text_type(uuid.uuid4())
             else:
-                error("Unable to determine the STIX 2.0 type for %s, which is malformed", 627, stix12_id)
+                error("Unable to determine the STIX 2.0 type for %s, which is malformed", 629, stix12_id)
                 return None
 
 

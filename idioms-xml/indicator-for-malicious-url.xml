@@ -1,17 +1,17 @@
-<stix:STIX_Package 
-	xmlns:cyboxCommon="http://cybox.mitre.org/common-2"
-	xmlns:cybox="http://cybox.mitre.org/cybox-2"
-	xmlns:cyboxVocabs="http://cybox.mitre.org/default_vocabularies-2"
-	xmlns:URIObj="http://cybox.mitre.org/objects#URIObject-2"
-	xmlns:example="http://example.com"
-	xmlns:marking="http://data-marking.mitre.org/Marking-1"
-	xmlns:TOUMarking="http://data-marking.mitre.org/extensions/MarkingStructure#Terms_Of_Use-1"
-	xmlns:indicator="http://stix.mitre.org/Indicator-2"
-	xmlns:stixCommon="http://stix.mitre.org/common-1"
-	xmlns:stixVocabs="http://stix.mitre.org/default_vocabularies-1"
-	xmlns:stix="http://stix.mitre.org/stix-1"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="
+<stix:STIX_Package
+        xmlns:cyboxCommon="http://cybox.mitre.org/common-2"
+        xmlns:cybox="http://cybox.mitre.org/cybox-2"
+        xmlns:cyboxVocabs="http://cybox.mitre.org/default_vocabularies-2"
+        xmlns:URIObj="http://cybox.mitre.org/objects#URIObject-2"
+        xmlns:example="http://example.com"
+        xmlns:marking="http://data-marking.mitre.org/Marking-1"
+        xmlns:TOUMarking="http://data-marking.mitre.org/extensions/MarkingStructure#Terms_Of_Use-1"
+        xmlns:indicator="http://stix.mitre.org/Indicator-2"
+        xmlns:stixCommon="http://stix.mitre.org/common-1"
+        xmlns:stixVocabs="http://stix.mitre.org/default_vocabularies-1"
+        xmlns:stix="http://stix.mitre.org/stix-1"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
 	http://cybox.mitre.org/common-2 http://cybox.mitre.org/XMLSchema/common/2.1/cybox_common.xsd
 	http://cybox.mitre.org/cybox-2 http://cybox.mitre.org/XMLSchema/core/2.1/cybox_core.xsd
 	http://cybox.mitre.org/default_vocabularies-2 http://cybox.mitre.org/XMLSchema/default_vocabularies/2.1/cybox_default_vocabularies.xsd
@@ -19,18 +19,19 @@
 	http://stix.mitre.org/Indicator-2 http://stix.mitre.org/XMLSchema/indicator/2.2/indicator.xsd
 	http://stix.mitre.org/common-1 http://stix.mitre.org/XMLSchema/common/1.2/stix_common.xsd
 	http://stix.mitre.org/default_vocabularies-1 http://stix.mitre.org/XMLSchema/default_vocabularies/1.2.0/stix_default_vocabularies.xsd
-	http://stix.mitre.org/stix-1 http://stix.mitre.org/XMLSchema/core/1.2/stix_core.xsd" 
-	id="example:Package-8fab937e-b694-11e3-b71c-0800271e87d2" 
-	version="1.2">
-	<stix:STIX_Header>
-		<stix:Handling>
-			<marking:Marking>
-				<marking:Marking_Structure id="example:markingstructure-c0d0976c-76a1-4cf2-accd-19632991ac3f" xsi:type='TOUMarking:TermsOfUseMarkingStructureType'>
-					<TOUMarking:Terms_Of_Use>Classification: PROTECTED</TOUMarking:Terms_Of_Use>
-				</marking:Marking_Structure>
-			</marking:Marking>
-		</stix:Handling>
-	</stix:STIX_Header>
+	http://stix.mitre.org/stix-1 http://stix.mitre.org/XMLSchema/core/1.2/stix_core.xsd"
+        id="example:Package-8fab937e-b694-11e3-b71c-0800271e87d2"
+        version="1.2">
+    <stix:STIX_Header>
+        <stix:Handling>
+            <marking:Marking>
+                <marking:Marking_Structure id="example:markingstructure-c0d0976c-76a1-4cf2-accd-19632991ac3f"
+                                           xsi:type='TOUMarking:TermsOfUseMarkingStructureType'>
+                    <TOUMarking:Terms_Of_Use>Classification: PROTECTED</TOUMarking:Terms_Of_Use>
+                </marking:Marking_Structure>
+            </marking:Marking>
+        </stix:Handling>
+    </stix:STIX_Header>
     <stix:Indicators>
     	<stix:Indicator id="example:Indicator-d81f86b9-975b-bc0b-775e-810c5ad45a4f" xsi:type='indicator:IndicatorType'>
             <indicator:Title>Malicious site hosting downloader</indicator:Title>
@@ -42,12 +43,14 @@
                     </cybox:Properties>
                 </cybox:Object>
             </indicator:Observable>
-			<indicator:Handling>
-				<marking:Marking>
-					<marking:Controlled_Structure>../../../descendant-or-self::node() | ../../../descendant-or-self::node()/@*</marking:Controlled_Structure>
-					<marking:Marking_Structure idref="example:markingstructure-c0d0976c-76a1-4cf2-accd-19632991ac3f"/>
-				</marking:Marking>
-			</indicator:Handling>
+            <indicator:Handling>
+                <marking:Marking>
+                    <marking:Controlled_Structure>../../../descendant-or-self::node() |
+                        ../../../descendant-or-self::node()/@*
+                    </marking:Controlled_Structure>
+                    <marking:Marking_Structure idref="example:markingstructure-c0d0976c-76a1-4cf2-accd-19632991ac3f"/>
+                </marking:Marking>
+            </indicator:Handling>
         </stix:Indicator>
     </stix:Indicators>
 </stix:STIX_Package>
