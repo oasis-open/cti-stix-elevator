@@ -234,7 +234,7 @@ def find_dir(path, directory):
         msg = "Verify working directory. Only works under cti-stix-elevator"
         raise RuntimeError(msg)
 
-    working_dir = working_dir[0]
+    working_dir = os.path.join(working_dir[0], "cti-stix-elevator")
 
     for root, dirs, files in os.walk(working_dir, topdown=True):
         if directory in dirs:
