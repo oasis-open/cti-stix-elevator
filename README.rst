@@ -103,7 +103,7 @@ STIX 1.1.1 - 1.2.1 content to STIX 2.0 content::
               [-m MARKINGS_ALLOWED] [-p {no_policy,strict_policy}]
               file
 
-stix2-elevator v1.1.0
+stix2-elevator v1.2.0
 
 The stix2-elevator is a work-in-progress. It should be used to explore how
 existing STIX 1.x would potentially be represented in STIX 2.0. Using the

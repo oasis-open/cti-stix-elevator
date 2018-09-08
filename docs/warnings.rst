@@ -163,8 +163,8 @@ Threat actor *[id]* title is used for name property                             
 Using related-to for the *[property]* of *[id]*                                                                                             718     warn
 Using first Threat Actor motivation as ``primary_motivation`` value. If more, use ``secondary_motivation``                                  719     info
 The ``published property`` is required for STIX 2.0 Report *[id]*, using the created property                                               720     info
-apply_condition assumed to be 'ANY' in *[id]*                                                                                               721     warn
-content_type for body_multipart of *[id]* is assumed to be 'text/plain'                                                                     722     info
+``apply_condition`` assumed to be 'ANY' in *[id]*                                                                                           721     warn
+``content_type`` for ``body_multipart`` of *[id]* is assumed to be 'text/plain'                                                             722     info
 =========================================================================================================================================== ====    =====
 
 STIX elevator currently doesn't process this content
@@ -201,6 +201,6 @@ Message                                                                         
 ``first_observed`` and ``last_observed`` properties not available directly on *[id]* - using timestamp                                      901     info
 Using parent object timestamp on *[identifying info]*                                                                                       902     info
 No valid time position information available in *[id]*, using parent timestamp                                                              903     warn
-No ``first_seen`` property on *[id]* - using timestamp                                                                                            904     info
+No ``first_seen`` property on *[id]* - using timestamp                                                                                      904     info
 Timestamp not available for *[entity]*, using current time                                                                                  905     warn
 =========================================================================================================================================== ====    =====
