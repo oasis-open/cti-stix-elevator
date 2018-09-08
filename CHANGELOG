@@ -1,6 +1,31 @@
 CHANGELOG
 =========
 
+1.2.0 - 2018-09-10
+
+    * Close #41, #85, #87, #91, #114, #116, #117, #120, #121
+    * Handle delimited list in patterns
+    * Fix timestamps
+    * Added modified time to registry keys
+    * Handle Process object more robustly
+    * Handle Vulnerability more robustly
+    * Correctly handle renumbering of objects in ObservedData
+    * Correctly handle multi-part emails
+    * Added _hex to machine and characteristics property names for windows binary file in convert_pattern.py
+    * Handle HTTPSession(HTTPClientRequest), NetworkPacket(ICMP), NetworkSocket
+    * Handle non-String properties in convert_http_network_connection_extension
+    * Added tests for new objects
+    * Fix campaign alias
+    * Remove dns_query from stix conversion. Warn message instead.
+    * Register markings by object and id. Don't try to create markings from idref cases
+    * If markings have id re-use them instead of creating new id
+    * Added some messages to signal skipped markings.
+    * Make adjustments to handle UTF-8 content.
+    * Ignore case for STIX 1.x conditions
+    * Gracefully handle unexpected formatting in STIX 1.x IDs
+    * Make find_dir more efficient
+
+
 1.1.3 - 2018-06-15
 
     * Fix old links for Pypi in documentation
