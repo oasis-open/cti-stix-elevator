@@ -25,7 +25,6 @@ from six import text_type
 import stix2
 from stix2.patterns import (_BooleanExpression, _ComparisonExpression,
                             _CompoundObservationExpression, _Constant)
-from stix2.patterns import BooleanConstant  # needs to be "exported" from stix2
 import stixmarx
 
 from stix2elevator.common import ADDRESS_FAMILY_ENUMERATION, SOCKET_OPTIONS
@@ -113,6 +112,12 @@ class BooleanExpressionForElevator(_BooleanExpression):
             new_operands.append(new_operand)
         self.operands = new_operands
         return change_made, self
+
+    def collapse_reference(self, prefix):
+        new_operands = []
+        for operand in self.operands:
+            new_operands.append(operand.collapse_reference(prefix))
+        return BooleanExpressionForElevator(self.operator, new_operands)
 
     def partition_according_to_object_path(self):
         subexpressions = []
@@ -230,6 +235,10 @@ class ParentheticalExpressionForElevator(stix2.ParentheticalExpression):
         if hasattr(new_expression, "root_type"):
             self.root_type = new_expression.root_type
         return change_made, self
+
+    def collapse_reference(self, prefix):
+        new_expression = self.expression.collapse_reference(prefix)
+        return ParentheticalExpressionForElevator(new_expression)
 
     def partition_according_to_object_path(self):
         self.expression = self.expression.partition_according_to_object_path()
@@ -517,7 +526,7 @@ def create_term(lhs, condition, rhs, negated=False):
 def make_constant(obj):
     # TODO:  handle other Markable objects?
     if isinstance(obj, bool):
-        return BooleanConstant(obj)
+        return stix2.BooleanConstant(obj)
     elif isinstance(obj, int) or isinstance(obj, long):
         return stix2.IntegerConstant(obj)
     elif isinstance(obj, float):

@@ -28,7 +28,7 @@ def validate_stix2_string(json_string, validator_options, file_path=None):
         json_string = json_string.decode("utf-8")
     results = validate_string(json_string, validator_options)
     fvr = FileValidationResults(results.is_valid, file_path, results)
-    return [fvr]
+    return fvr
 
 
 def elevate_file(fn):
@@ -67,7 +67,7 @@ def elevate_file(fn):
                                  sort_keys=True)
 
         validation_results = validate_stix2_string(json_string, validator_options, fn)
-        output.print_results(validation_results)
+        output.print_results([validation_results])
 
         if get_option_value("policy") == "no_policy":
             return json_string
