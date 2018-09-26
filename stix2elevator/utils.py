@@ -240,3 +240,21 @@ def find_dir(path, directory):
         if directory in dirs:
             found_dir = os.path.join(root, directory)
             return os.path.abspath(found_dir)
+
+
+class Environment():
+    def __init__(self, created_by_ref=None, timestamp=None, bundle_instance=None):
+        self.created_by_ref = created_by_ref
+        self.timestamp = timestamp
+        self.bundle_instance = bundle_instance
+
+    def newEnv(self, created_by_ref=None, timestamp=None):
+        return Environment(created_by_ref if created_by_ref else self.created_by_ref,
+                           timestamp if timestamp else self.timestamp,
+                           self.bundle_instance)
+
+    def add_to_env(self, created_by_ref=None, timestamp=None):
+        if created_by_ref:
+            self.created_by_ref = created_by_ref
+        if timestamp:
+            self.timestamp = timestamp

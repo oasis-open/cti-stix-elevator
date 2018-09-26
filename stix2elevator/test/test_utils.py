@@ -1,6 +1,7 @@
 from stix.indicator import Indicator
 
 from stix2elevator import convert_stix, utils
+from stix2elevator.utils import Environment
 
 
 def test_strftime_with_appropriate_fractional_seconds():
@@ -21,6 +22,7 @@ def test_convert_timestamp_string():
 
     # child_timestamp = "2017-03-29T05:05:05.555Z"
     parent_timestamp = "2017-03-29T05:09:09.999Z"
+    env = Environment(timestamp=parent_timestamp)
     indicator = Indicator()
-    indicator_instance = convert_stix.create_basic_object("indicator", indicator, parent_timestamp)
+    indicator_instance = convert_stix.create_basic_object("indicator", indicator, env)
     assert indicator_instance is not None
