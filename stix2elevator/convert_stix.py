@@ -1648,8 +1648,7 @@ def convert_package(stix_package, env):
     env.bundle_instance = bundle_instance
     initialize_bundle_lists(bundle_instance)
 
-    if get_option_value("spec_version") == "2.0":
-        bundle_instance["spec_version"] = "2.0"
+    bundle_instance["spec_version"] = "2.0"
 
     if hasattr(stix_package, "timestamp"):
         env.timestamp = stix_package.timestamp
