@@ -1686,10 +1686,11 @@ def remove_pattern_objects(bundle_instance):
         for obj in bundle_instance["objects"]:
             if obj["type"] == "report":
                 remaining_object_refs = []
-                for ident in obj["object_refs"]:
-                    if not ident.startswith("observed-data") or ident not in all_new_ids_with_patterns:
-                        remaining_object_refs.append(ident)
-                obj["object_refs"] = remaining_object_refs
+                if "object_refs" in obj:
+                    for ident in obj["object_refs"]:
+                        if not ident.startswith("observed-data") or ident not in all_new_ids_with_patterns:
+                            remaining_object_refs.append(ident)
+                    obj["object_refs"] = remaining_object_refs
 
 # TODO: only remove indicators that were involved ONLY as sub-indicators within composite indicator expressions
 #   if not KEEP_INDICATORS_USED_IN_COMPOSITE_INDICATOR_EXPRESSION and "indicators" in bundle_instance:

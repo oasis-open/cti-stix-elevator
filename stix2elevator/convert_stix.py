@@ -1039,8 +1039,7 @@ correctly in STIX 2.0 - please check this pattern",
     # process information source before any relationships
     if indicator.sightings:
         for s in indicator.sightings:
-            env.bundle_instance["objects"].append(handle_sighting(s, indicator_instance["id"], new_env,
-                                                                  indicator_created_by_ref))
+            env.bundle_instance["objects"].append(handle_sighting(s, indicator_instance["id"], new_env))
     if indicator.suggested_coas is not None:
         warn("Using related-to for the suggested COAs of %s", 718, indicator.id_)
         handle_relationship_to_refs(indicator.suggested_coas, indicator_instance["id"], new_env,
@@ -1186,13 +1185,15 @@ def convert_report(report, env):
     report_instance = create_basic_object("report", report, env)
     process_description_and_short_description(report_instance, report.header)
     new_env = env.newEnv(timestamp=report_instance["created"])
-    new_env.add_to_env(created_by_ref=process_information_source(report.header.information_source, report_instance, new_env))
-    # process information source before any relationships
-    add_string_property_to_description(report_instance, "intent", report.header.intents, True)
-    if report.header.title is not None:
-        report_instance["name"] = report.header.title
-    convert_controlled_vocabs_to_open_vocabs(report_instance, "labels",
-                                             report.header.intents, REPORT_LABELS_MAP, False)
+    if report.header:
+        header_created_by_ref = process_information_source(report.header.information_source, report_instance, new_env)
+        new_env.add_to_env(created_by_ref=header_created_by_ref)
+        # process information source before any relationships
+        add_string_property_to_description(report_instance, "intent", report.header.intents, True)
+        if report.header.title is not None:
+            report_instance["name"] = report.header.title
+        convert_controlled_vocabs_to_open_vocabs(report_instance, "labels",
+                                                 report.header.intents, REPORT_LABELS_MAP, False)
     process_report_contents(report, new_env, report_instance)
     report_instance["published"] = report_instance["created"]
     info("The published property is required for STIX 2.0 Report %s, using the created property", 720, report_instance["id"])
