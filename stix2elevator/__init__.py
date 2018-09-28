@@ -120,8 +120,7 @@ def elevate_string(string):
         else:
             timestamp = None
         env = Environment(get_option_value("package_created_by_id"),
-                          timestamp,
-                          get_option_value("spec_version"))
+                          timestamp)
         json_string = json.dumps(convert_package(stix_package, env),
                                  ensure_ascii=False,
                                  indent=4,
@@ -129,7 +128,7 @@ def elevate_string(string):
                                  sort_keys=True)
 
         validation_results = validate_stix2_string(json_string, validator_options)
-        output.print_results(validation_results)
+        output.print_results([validation_results])
 
         if get_option_value("policy") == "no_policy":
             return json_string
@@ -178,8 +177,7 @@ def elevate_package(package):
         else:
             timestamp = None
         env = Environment(get_option_value("package_created_by_id"),
-                          timestamp,
-                          get_option_value("spec_version"))
+                          timestamp)
         json_string = json.dumps(convert_package(stix_package, env),
 
                                  ensure_ascii=False,
@@ -188,7 +186,7 @@ def elevate_package(package):
                                  sort_keys=True)
 
         validation_results = validate_stix2_string(json_string, validator_options)
-        output.print_results(validation_results)
+        output.print_results([validation_results])
 
         if get_option_value("policy") == "no_policy":
             return json_string
