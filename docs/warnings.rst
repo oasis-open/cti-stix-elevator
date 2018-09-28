@@ -26,7 +26,7 @@ silent option is not compatible with a policy                           211     
 ======================================================================= ====    =====
 
 
-Adding Content not supported in STIX 2.0 to Description
+Adding Content not supported in STIX 2.x to Description
 ----------------------------------------------------------------
 
 ============================================================================================================================== ====    =====
@@ -41,7 +41,7 @@ Appended ``Tool ``type content to description of *[id]*                         
 ============================================================================================================================== ====    =====
 
 
-Dropping Content not supported in STIX 2.0
+Dropping Content not supported in STIX 2.x
 ---------------------------------------------------
 
 ============================================================================================================================================== ====    =====
@@ -76,6 +76,9 @@ MAEC content in *[id]* cannot be represented in STIX 2.0                        
 The *[relationship name]* relationship involving *[id]* is not supported in STIX 2.0                                                           427     warn
 ``roles`` is not a property of a 2.0 identity (*[id]*).  Perhaps the roles are associated with a related Threat Actor                          428     warn
 ``HTTPServerResponse`` type is not supported in STIX 2.0                                                                                       429     warn
+The confidence value *[value]* is not found on one of the confidence scales from the specification. No confidence can be inferred              430     warn
+The confidence value *[value]* is not between 0 and 100, which is required for STIX 2.0. No confidence can be inferred                         431     warn
+The confidence value *[value]* cannot be converted                                                                                             432     warn
 ============================================================================================================================================== ====    =====
 
 Multiple values are not supported in STIX 2.0
@@ -134,7 +137,6 @@ Found duplicate marking structure *[id]*                                        
 Unknown condition given in *[id]* - marked as 'INVALID_CONDITION'                                                                           628     warn
 Unable to determine the STIX 2.0 type for *[id]*, which is malformed                                                                        629     error
 'equals' allowed in *[id]* - should be 'Equals'                                                                                             630     warn
-
 =========================================================================================================================================== ====    =====
 
 STIX Elevator conversion based on assumptions
@@ -165,6 +167,8 @@ Using first Threat Actor motivation as ``primary_motivation`` value. If more, us
 The ``published property`` is required for STIX 2.0 Report *[id]*, using the created property                                               720     info
 ``apply_condition`` assumed to be 'ANY' in *[id]*                                                                                           721     warn
 ``content_type`` for ``body_multipart`` of *[id]* is assumed to be 'text/plain'                                                             722     info
+The confidence value in *[value]* assumed to be a value on a scale between 0 and 100                                                        723     warn
+The confidence value in *[value]* has been converted to an integer so it is valid in STIX 2.0                                               724     warn
 =========================================================================================================================================== ====    =====
 
 STIX elevator currently doesn't process this content

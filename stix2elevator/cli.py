@@ -171,6 +171,15 @@ def _get_arg_parser(is_script=True):
         default="no_policy"
     )
 
+    parser.add_argument(
+        "-v",
+        "--version",
+        help="The version of stix to be produced",
+        dest="spec_version",
+        choices=["2.0", "2.1"],
+        action="store",
+        default="2.0"
+    )
     return parser
 
 

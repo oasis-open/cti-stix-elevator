@@ -63,11 +63,11 @@ def idiom_mappings(xml_file_path, stored_json):
         yield good, to_check
 
 
-def setup_tests():
+def setup_tests(version):
     directory = os.path.dirname(__file__)
 
     xml_idioms_dir = find_dir(directory, "idioms-xml")
-    json_idioms_dir = find_dir(directory, "idioms-json")
+    json_idioms_dir = find_dir(directory, "idioms-json" + "-" + version)
 
     print("Setting up tests from following directories...")
     print(xml_idioms_dir)
@@ -97,7 +97,7 @@ def test_idiom_mapping(test_file, stored_master):
 
 
 def pytest_generate_tests(metafunc):
-    setup_tests()
+    setup_tests("2.0")
     argnames = ["test_file", "stored_master"]
     argvalues = [(x, y) for x, y in zip(TESTED_XML_FILES, MASTER_JSON_FILES)]
 

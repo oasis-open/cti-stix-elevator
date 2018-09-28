@@ -1,8 +1,6 @@
-
-
-# import pycountry
 from cybox.core import Observable
 from lxml import etree
+import pycountry
 from six import text_type
 import stix
 from stix.campaign import Campaign
@@ -31,6 +29,7 @@ from stix.threat_actor import ThreatActor
 from stix.ttp import TTP
 from stixmarx import navigator
 
+from stix2elevator.confidence import convert_confidence
 from stix2elevator.convert_cybox import (convert_cybox_object,
                                          fix_cybox_relationships)
 from stix2elevator.convert_pattern import (ComparisonExpressionForElevator,
@@ -175,6 +174,8 @@ def process_description_and_short_description(so, entity, parent_info=False):
 
 def create_basic_object(stix20_type, stix1x_obj, env, parent_id=None, id_used=False):
     instance = {"type": stix20_type}
+    if get_option_value("spec_version") == "2.1":
+        instance["spec_version"] = "2.1"
     instance["id"] = generate_stix20_id(stix20_type, stix1x_obj.id_ if (stix1x_obj and
                                                                         hasattr(stix1x_obj, "id_") and
                                                                         stix1x_obj.id_) else parent_id, id_used)
@@ -593,6 +594,12 @@ def add_relationships_to_reports(bundle_instance):
             rep["object_refs"] = rels_to_include
 
 
+# confidence
+
+def add_confidence_to_object(sdo_instance, confidence):
+    sdo_instance["confidence"] = convert_confidence(confidence, id)
+
+
 # campaign
 
 
@@ -617,7 +624,10 @@ def convert_campaign(camp, env):
     add_multiple_statement_types_to_description(campaign_instance, camp.intended_effects, "intended_effect")
     add_string_property_to_description(campaign_instance, "status", camp.status)
     if hasattr(camp, "confidence"):
-        add_confidence_property_to_description(campaign_instance, camp.confidence)
+        if get_option_value("spec_version") == "2.0":
+            add_confidence_property_to_description(campaign_instance, camp.confidence)
+        else:  # 2.1
+            add_confidence_to_object(campaign_instance, camp.confidence)
 
     if camp.activity is not None:
         for a in camp.activity:
@@ -818,6 +828,71 @@ def convert_party_name(party_name, obj, is_identity_obj):
                 # add to description
 
 
+_LOCATIONS = {}
+
+
+def determine_country_code(value):
+    try:
+        iso = pycountry.countries.get(name=value)
+        return iso.alpha2
+    except KeyError:
+        warn("No ISO code for %s, therefore full name", 618, value)
+        return value
+
+
+def convert_ciq_addresses2_1(ciq_info_addresses, identity_instance, env, parent_id=None):
+    location_keys = []
+    for add in ciq_info_addresses:
+        if not add.free_text_address:
+            # only reuse if administrative area and country match, and no free text address
+            if hasattr(add, "administrative_area") and add.administrative_area and hasattr(add,
+                                                                                           "country") and add.country:
+                if len(add.country.name_elements) == 1:
+                    for aa in add.administrative_area.name_elements:
+                        location_keys.append("c:" + text_type(determine_country_code(get_name(add.country))) +
+                                             "," +
+                                             "aa:" + text_type(aa.value))
+                else:
+                    warn("Multiple administrative areas with multiple countries in %s is not handled", 0, None)
+            elif hasattr(add, "administrative_area") and add.administrative_area:
+                for aa in add.adminstrative_area.name_elements:
+                    location_keys.append("aa:" + text_type(aa.value))
+            elif hasattr(add, "country") and add.country:
+                for c in add.country.name_elements:
+                    location_keys.append("c:" + text_type(determine_country_code(c.value)))
+        else:
+            # only remember locations with no free text address
+            warn("Free text address in %s not handled yet", 0, identity_instance["id"])
+        for key in location_keys:
+            if key in _LOCATIONS:
+                location = _LOCATIONS[key]
+            else:
+                aa = None
+                c = None
+                location = create_basic_object("location", add, env)
+                location["spec_version"] = "2.1"
+                if key.find(",") != -1:
+                    both_parts = key.split(",")
+                    c = both_parts[0].split(":")[1]
+                    aa = both_parts[1].split(":")[1]
+                else:
+                    part = key.split(":")
+                    if part[0] == "c":
+                        c = part[1]
+                    elif part[0] == "aa":
+                        aa = part[1]
+                if aa:
+                    location["administrative_area"] = aa
+                if c:
+                    location["country"] = c
+                _LOCATIONS[key] = location
+                env.bundle_instance["objects"].append(location)
+            env.bundle_instance["objects"].append(create_relationship(identity_instance["id"],
+                                                                      location["id"],
+                                                                      env,
+                                                                      "located_at"))
+
+
 def convert_identity(identity, env, parent_id=None, temp_marking_id=None, from_package=False):
     identity_instance = create_basic_object("identity", identity, env, parent_id)
     identity_instance["sectors"] = []
@@ -843,7 +918,8 @@ def convert_identity(identity, env, parent_id=None, temp_marking_id=None, from_p
                 industry = industry.split(",")
                 convert_controlled_vocabs_to_open_vocabs(identity_instance, "sectors", industry, SECTORS_MAP, False)
         if ciq_info.addresses:
-            pass
+            if get_option_value("spec_version") == "2.1":
+                convert_ciq_addresses2_1(ciq_info.addresses, identity_instance, env, parent_id)
     if identity.related_identities:
         msg = "All associated identities relationships of %s are assumed to not represent STIX 1.2 versioning"
         warn(msg, 710, identity_instance["id"])
@@ -875,7 +951,10 @@ def convert_incident(incident, env):
     # process information source before any relationships
     new_env.add_to_env(created_by_ref=process_information_source(incident.information_source, incident_instance, new_env))
 
-    add_confidence_property_to_description(incident_instance, incident.confidence)
+    if get_option_value("spec_version") == "2.0":
+        add_confidence_property_to_description(incident_instance, incident.confidence)
+    else:  # 2.1
+        add_confidence_to_object(incident_instance, incident.confidence)
 
     # process information source before any relationships
     if incident.related_indicators is not None:
@@ -1010,7 +1089,10 @@ def convert_indicator(indicator, env):
     if indicator.likely_impact:
         add_statement_type_to_description(indicator_instance, indicator.likely_impact, "likely_impact")
     if indicator.confidence:
-        add_confidence_property_to_description(indicator_instance, indicator.confidence)
+        if get_option_value("spec_version") == "2.0":
+            add_confidence_property_to_description(indicator_instance, indicator.confidence)
+        else:  # 2.1
+            add_confidence_to_object(indicator_instance, indicator.confidence)
     if indicator.observable is not None:
         indicator_instance["pattern"] = convert_observable_to_pattern(indicator.observable)
         add_to_pattern_cache(indicator.id_, indicator_instance["pattern"])
@@ -1246,7 +1328,10 @@ def convert_threat_actor(threat_actor, env):
     add_multiple_statement_types_to_description(threat_actor_instance, threat_actor.planning_and_operational_supports,
                                                 "planning_and_operational_support")
     if threat_actor.confidence:
-        add_confidence_property_to_description(threat_actor_instance, threat_actor.confidence)
+        if get_option_value("spec_version") == "2.0":
+            add_confidence_property_to_description(threat_actor_instance, threat_actor.confidence)
+        else:  # 2.1
+            add_confidence_to_object(threat_actor_instance, threat_actor.confidence)
 
     if threat_actor.motivations:
         add_motivations_to_threat_actor(threat_actor_instance, threat_actor.motivations)
@@ -1649,7 +1734,8 @@ def convert_package(stix_package, env):
     env.bundle_instance = bundle_instance
     initialize_bundle_lists(bundle_instance)
 
-    bundle_instance["spec_version"] = "2.0"
+    if get_option_value("spec_version") == "2.0":
+        bundle_instance["spec_version"] = "2.0"
 
     if hasattr(stix_package, "timestamp"):
         env.timestamp = stix_package.timestamp

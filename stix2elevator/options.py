@@ -122,7 +122,7 @@ class ElevatorOptions(object):
                  validator_args="--strict-types", enable="", disable="",
                  silent=False, message_log_directory=None,
                  policy="no_policy", output_directory=None, log_level="INFO",
-                 markings_allowed=""):
+                 markings_allowed="", spec_version="2.0"):
 
         if cmd_args is not None:
             if hasattr(cmd_args, "file_"):
@@ -146,6 +146,7 @@ class ElevatorOptions(object):
             # validator arg --silent is currently broken
             # if self.silent:
             #    self.validator_args += " --silent"
+            self.spec_version = cmd_args.spec_version
 
         else:
             self.file_ = file_
@@ -164,6 +165,7 @@ class ElevatorOptions(object):
             self.log_level = log_level
             self.output_directory = output_directory
             self.markings_allowed = markings_allowed
+            self.spec_version = spec_version
 
         # Convert string of comma-separated checks to a list,
         # and convert check code numbers to names. By default all messages are
@@ -239,7 +241,7 @@ CHECK_CODES = [201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212,
 
                401, 402, 403, 404, 405, 406, 407, 408, 409, 410, 411, 412, 413,
                414, 415, 416, 417, 418, 419, 420, 421, 422, 423, 424, 425, 426,
-               427, 428, 429,
+               427, 428, 429, 430, 431, 432,
 
                501, 502, 503, 504, 505, 506, 507, 508, 509, 510, 511, 512,
 
@@ -248,7 +250,7 @@ CHECK_CODES = [201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212,
                627, 628, 629, 630,
 
                701, 702, 703, 704, 705, 706, 707, 708, 709, 710, 711, 712, 713,
-               714, 715, 716, 717, 718, 719, 720, 721, 722,
+               714, 715, 716, 717, 718, 719, 720, 721, 722, 723, 724,
 
                801, 802, 803, 804, 805, 806, 807, 808, 809, 810, 811, 812, 813,
                814, 815, 816,

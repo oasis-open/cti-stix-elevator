@@ -1,0 +1,96 @@
+{
+  "id": "bundle--8b8ed1c1-f01d-4393-ac65-97017ed15876",
+  "objects": [
+    {
+      "created": "2014-10-31T15:52:13.127Z",
+      "description": "\n\nCONFIDENCE: High",
+      "id": "indicator--8cf9236f-1b96-493d-98be-0c1c1e8b62d7",
+      "labels": [
+        "malicious-email"
+      ],
+      "modified": "2014-10-31T15:52:13.127Z",
+      "name": "Malicious E-mail",
+      "pattern": "[(email-message:subject MATCHES '^[IMPORTANT] Please Review Before' AND email-message:body_multipart[*].body_raw_ref.name MATCHES '^Final Report*.doc.exe$')]",
+      "type": "indicator",
+      "valid_from": "2014-10-31T15:52:13.127931Z"
+    },
+    {
+      "created": "2014-10-31T15:52:13.126Z",
+      "description": "\n\nCONFIDENCE: Low",
+      "id": "indicator--b06b0eb7-61dd-4338-a094-0290c380fbd8",
+      "labels": [
+        "malicious-email"
+      ],
+      "modified": "2014-10-31T15:52:13.126Z",
+      "name": "Malicious E-mail Subject Line",
+      "pattern": "[email-message:subject MATCHES '^[IMPORTANT] Please Review Before']",
+      "type": "indicator",
+      "valid_from": "2014-10-31T15:52:13.126999Z"
+    },
+    {
+      "created": "2014-10-31T15:52:13.127Z",
+      "description": "\n\nCONFIDENCE: Low",
+      "id": "indicator--2e17f6fe-3a4d-438a-911a-e509ba1b9933",
+      "labels": [
+        "malicious-email"
+      ],
+      "modified": "2014-10-31T15:52:13.127Z",
+      "name": "Malicious E-mail Attachment",
+      "pattern": "[file:name MATCHES '^Final Report*.doc.exe$'] AND [email-message:body_multipart[*].body_raw_ref.name MATCHES '^Final Report*.doc.exe$']",
+      "type": "indicator",
+      "valid_from": "2014-10-31T15:52:13.127668Z"
+    },
+    {
+      "created": "2014-10-31T15:52:13.127Z",
+      "id": "relationship--f50e63f5-fc39-481a-95e0-40eced3ae8f4",
+      "modified": "2014-10-31T15:52:13.127Z",
+      "relationship_type": "indicates",
+      "source_ref": "indicator--8cf9236f-1b96-493d-98be-0c1c1e8b62d7",
+      "type": "relationship"
+    },
+    {
+      "created": "2014-10-31T15:52:13.126Z",
+      "id": "relationship--769b61c6-859d-4461-ac37-9079c3cce0ab",
+      "modified": "2014-10-31T15:52:13.126Z",
+      "relationship_type": "indicates",
+      "source_ref": "indicator--b06b0eb7-61dd-4338-a094-0290c380fbd8",
+      "type": "relationship"
+    },
+    {
+      "created": "2014-10-31T15:52:13.127Z",
+      "id": "relationship--738a6f2f-ed06-4bfd-a1f6-0741caa41f8d",
+      "modified": "2014-10-31T15:52:13.127Z",
+      "relationship_type": "indicates",
+      "source_ref": "indicator--2e17f6fe-3a4d-438a-911a-e509ba1b9933",
+      "type": "relationship"
+    },
+    {
+      "created": "2018-08-18T14:14:42.346Z",
+      "first_observed": "2018-08-18T14:14:42.346Z",
+      "id": "observed-data--2305f359-ab46-4932-acaf-953c31cd8b22",
+      "last_observed": "2018-08-18T14:14:42.346Z",
+      "modified": "2018-08-18T14:14:42.346Z",
+      "number_observed": 1,
+      "objects": {
+        "0": {
+          "body_multipart": [
+            {
+              "body_raw_ref": "1",
+              "content_type": "text/plain"
+            }
+          ],
+          "is_multipart": true,
+          "subject": "[IMPORTANT] Please Review Before",
+          "type": "email-message"
+        },
+        "1": {
+          "name": "Final Report",
+          "type": "file"
+        }
+      },
+      "type": "observed-data"
+    }
+  ],
+  "spec_version": "2.0",
+  "type": "bundle"
+}

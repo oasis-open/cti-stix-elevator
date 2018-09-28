@@ -1,0 +1,19 @@
+{
+  "id": "bundle--ea99d4d4-1ae7-4120-9ebe-67ed4783fb36",
+  "objects": [
+    {
+      "created": "2014-06-20T15:16:56.987Z",
+      "description": "This is just an example.",
+      "id": "indicator--567b201c-4fd5-4bde-a5db-42abc340807a",
+      "labels": [
+        "unknown"
+      ],
+      "modified": "2014-06-20T15:16:56.987Z",
+      "name": "silent_banker",
+      "type": "indicator",
+      "valid_from": "2014-06-20T15:16:56.987616Z"
+    }
+  ],
+  "spec_version": "2.0",
+  "type": "bundle"
+}
