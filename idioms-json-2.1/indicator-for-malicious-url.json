@@ -8,12 +8,13 @@
       },
       "definition_type": "statement",
       "id": "marking-definition--c0d0976c-76a1-4cf2-accd-19632991ac3f",
+      "spec_version": "2.1",
       "type": "marking-definition"
     },
     {
       "created": "2018-07-30T14:10:03.827Z",
       "id": "indicator--d81f86b9-975b-bc0b-775e-810c5ad45a4f",
-      "labels": [
+      "indicator_types": [
         "url-watchlist"
       ],
       "modified": "2018-07-30T14:10:03.827Z",
@@ -22,10 +23,10 @@
         "marking-definition--c0d0976c-76a1-4cf2-accd-19632991ac3f"
       ],
       "pattern": "[url:value = 'http://x4z9arb.cn/4712']",
+      "spec_version": "2.1",
       "type": "indicator",
       "valid_from": "2018-07-30T14:10:03.827041Z"
     }
   ],
-  "spec_version": "2.0",
   "type": "bundle"
 }

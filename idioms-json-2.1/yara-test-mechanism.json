@@ -5,15 +5,15 @@
       "created": "2014-06-20T15:16:56.987Z",
       "description": "This is just an example.",
       "id": "indicator--567b201c-4fd5-4bde-a5db-42abc340807a",
-      "labels": [
+      "indicator_types": [
         "unknown"
       ],
       "modified": "2014-06-20T15:16:56.987Z",
       "name": "silent_banker",
       "type": "indicator",
+      "spec_version": "2.1",
       "valid_from": "2014-06-20T15:16:56.987616Z"
     }
   ],
-  "spec_version": "2.0",
   "type": "bundle"
 }

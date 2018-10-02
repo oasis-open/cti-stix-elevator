@@ -597,7 +597,8 @@ def add_relationships_to_reports(bundle_instance):
 # confidence
 
 def add_confidence_to_object(sdo_instance, confidence):
-    sdo_instance["confidence"] = convert_confidence(confidence, id)
+    if confidence is not None:
+        sdo_instance["confidence"] = convert_confidence(confidence, id)
 
 
 # campaign
@@ -623,11 +624,11 @@ def convert_campaign(camp, env):
 
     add_multiple_statement_types_to_description(campaign_instance, camp.intended_effects, "intended_effect")
     add_string_property_to_description(campaign_instance, "status", camp.status)
-    if hasattr(camp, "confidence"):
-        if get_option_value("spec_version") == "2.0":
-            add_confidence_property_to_description(campaign_instance, camp.confidence)
-        else:  # 2.1
-            add_confidence_to_object(campaign_instance, camp.confidence)
+
+    if get_option_value("spec_version") == "2.0":
+        add_confidence_property_to_description(campaign_instance, camp.confidence)
+    else:  # 2.1
+        add_confidence_to_object(campaign_instance, camp.confidence)
 
     if camp.activity is not None:
         for a in camp.activity:
@@ -890,7 +891,7 @@ def convert_ciq_addresses2_1(ciq_info_addresses, identity_instance, env, parent_
             env.bundle_instance["objects"].append(create_relationship(identity_instance["id"],
                                                                       location["id"],
                                                                       env,
-                                                                      "located_at"))
+                                                                      "located-at"))
 
 
 def convert_identity(identity, env, parent_id=None, temp_marking_id=None, from_package=False):
@@ -1061,7 +1062,10 @@ def convert_indicator(indicator, env):
     indicator_instance = create_basic_object("indicator", indicator, env)
     new_env = env.newEnv(timestamp=indicator_instance["created"])
     process_description_and_short_description(indicator_instance, indicator)
-    convert_controlled_vocabs_to_open_vocabs(indicator_instance, "labels", indicator.indicator_types,
+    convert_controlled_vocabs_to_open_vocabs(indicator_instance,
+                                             "labels" if get_option_value(
+                                                 "spec_version") == "2.0" else "indicator_types",
+                                             indicator.indicator_types,
                                              INDICATOR_LABEL_MAP, False)
     if indicator.title is not None:
         indicator_instance["name"] = indicator.title
@@ -1088,11 +1092,11 @@ def convert_indicator(indicator, env):
     convert_kill_chains(indicator.kill_chain_phases, indicator_instance)
     if indicator.likely_impact:
         add_statement_type_to_description(indicator_instance, indicator.likely_impact, "likely_impact")
-    if indicator.confidence:
-        if get_option_value("spec_version") == "2.0":
-            add_confidence_property_to_description(indicator_instance, indicator.confidence)
-        else:  # 2.1
-            add_confidence_to_object(indicator_instance, indicator.confidence)
+
+    if get_option_value("spec_version") == "2.0":
+        add_confidence_property_to_description(indicator_instance, indicator.confidence)
+    else:  # 2.1
+        add_confidence_to_object(indicator_instance, indicator.confidence)
     if indicator.observable is not None:
         indicator_instance["pattern"] = convert_observable_to_pattern(indicator.observable)
         add_to_pattern_cache(indicator.id_, indicator_instance["pattern"])
@@ -1274,7 +1278,9 @@ def convert_report(report, env):
         add_string_property_to_description(report_instance, "intent", report.header.intents, True)
         if report.header.title is not None:
             report_instance["name"] = report.header.title
-        convert_controlled_vocabs_to_open_vocabs(report_instance, "labels",
+        convert_controlled_vocabs_to_open_vocabs(report_instance,
+                                                 "labels" if get_option_value(
+                                                     "spec_version") == "2.0" else "report_types",
                                                  report.header.intents, REPORT_LABELS_MAP, False)
     process_report_contents(report, new_env, report_instance)
     report_instance["published"] = report_instance["created"]
@@ -1322,16 +1328,18 @@ def convert_threat_actor(threat_actor, env):
         threat_actor_instance["name"] = threat_actor.identity.name
     elif isinstance(threat_actor.identity, CIQIdentity3_0Instance):
         convert_party_name(threat_actor.identity._specification.party_name, threat_actor_instance, False)
-    convert_controlled_vocabs_to_open_vocabs(threat_actor_instance, "labels", threat_actor.types,
+    convert_controlled_vocabs_to_open_vocabs(threat_actor_instance,
+                                             "labels" if get_option_value(
+                                                 "spec_version") == "2.0" else "threat_actor_types",
+                                             threat_actor.types,
                                              THREAT_ACTOR_LABEL_MAP, False)
     add_multiple_statement_types_to_description(threat_actor_instance, threat_actor.intended_effects, "intended_effect")
     add_multiple_statement_types_to_description(threat_actor_instance, threat_actor.planning_and_operational_supports,
                                                 "planning_and_operational_support")
-    if threat_actor.confidence:
-        if get_option_value("spec_version") == "2.0":
-            add_confidence_property_to_description(threat_actor_instance, threat_actor.confidence)
-        else:  # 2.1
-            add_confidence_to_object(threat_actor_instance, threat_actor.confidence)
+    if get_option_value("spec_version") == "2.0":
+        add_confidence_property_to_description(threat_actor_instance, threat_actor.confidence)
+    else:  # 2.1
+        add_confidence_to_object(threat_actor_instance, threat_actor.confidence)
 
     if threat_actor.motivations:
         add_motivations_to_threat_actor(threat_actor_instance, threat_actor.motivations)
@@ -1397,7 +1405,11 @@ def convert_malware_instance(mal, ttp, env, ttp_id_used):
     if mal.title is not None:
         malware_instance_instance["name"] = mal.title
     process_description_and_short_description(malware_instance_instance, mal)
-    convert_controlled_vocabs_to_open_vocabs(malware_instance_instance, "labels", mal.types, MALWARE_LABELS_MAP, False)
+    convert_controlled_vocabs_to_open_vocabs(malware_instance_instance,
+                                             "labels" if get_option_value("spec_version") == "2.0" else "malware_types",
+                                             mal.types,
+                                             MALWARE_LABELS_MAP,
+                                             False)
     if mal.names is not None:
         for n in mal.names:
             if "name" not in malware_instance_instance:
@@ -1451,7 +1463,11 @@ def convert_tool(tool, ttp, env, first_one):
     # TODO: add errors to descriptor <-- Not Implemented!
     # TODO: add compensation_model to descriptor <-- Not Implemented!
     add_string_property_to_description(tool_instance, "title", tool.title)
-    convert_controlled_vocabs_to_open_vocabs(tool_instance, "labels", tool.type_, TOOL_LABELS_MAP, False)
+    convert_controlled_vocabs_to_open_vocabs(tool_instance,
+                                             "labels" if get_option_value("spec_version") == "2.0" else "tool_types",
+                                             tool.type_,
+                                             TOOL_LABELS_MAP,
+                                             False)
     tool_instance["tool_version"] = tool.version
     process_ttp_properties(tool_instance, ttp, env)
     finish_basic_object(ttp.id_, tool_instance, env, tool)

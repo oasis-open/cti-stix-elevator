@@ -6,6 +6,7 @@
       "id": "campaign--c831ab93-ff84-9cda-2bd8-b094004da969",
       "modified": "2014-05-08T09:00:00.000Z",
       "name": "Operation Alpha",
+      "spec_version": "2.1",
       "type": "campaign"
     },
     {
@@ -15,9 +16,9 @@
       "modified": "2014-05-08T09:00:00.000Z",
       "relationship_type": "uses",
       "source_ref": "campaign--c831ab93-ff84-9cda-2bd8-b094004da969",
+      "spec_version": "2.1",
       "type": "relationship"
     }
   ],
-  "spec_version": "2.0",
   "type": "bundle"
 }

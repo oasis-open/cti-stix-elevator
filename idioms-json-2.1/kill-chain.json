@@ -10,14 +10,14 @@
           "phase_name": "Actions on Objectives"
         }
       ],
-      "labels": [
+      "indicator_types": [
         "unknown"
       ],
       "modified": "2014-10-21T21:10:09.423Z",
       "type": "indicator",
+      "spec_version": "2.1",
       "valid_from": "2014-10-21T21:10:09.423000Z"
     }
   ],
-  "spec_version": "2.0",
   "type": "bundle"
 }

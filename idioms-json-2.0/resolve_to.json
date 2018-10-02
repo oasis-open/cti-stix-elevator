@@ -1,30 +1,30 @@
 {
-    "id": "bundle--6116aed6-a7e9-11e3-a82f-000c29b241af",
-    "objects": [
-        {
-          "created": "2018-07-30T13:03:44.858Z",
-            "id": "indicator--6116b44e-a7e9-11e3-a82f-000c29b241af",
-            "labels": [
-                "unknown"
-            ],
-          "modified": "2018-07-30T13:03:44.858Z",
-            "pattern": "[(domain-name:value = 'microsoftb.byinter.net' AND domain-name:resolves_to_refs[*].value = '202.65.222.45')]",
-            "type": "indicator",
-          "valid_from": "2018-07-30T13:03:44.859286Z"
-        },
-        {
-            "created": "2015-05-15T09:00:00.000Z",
-            "id": "indicator--74ffca2c-5152-4f44-b8ee-bc89aaf2493b",
-            "labels": [
-                "domain-watchlist"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
-            "name": "Domain: www.dhcpserver.ns01.us",
-            "pattern": "[(domain-name:value = 'www.dhcpserver.ns01.us' AND domain-name:resolves_to_refs[*].value = '219.90.112.203' AND domain-name:resolves_to_refs[*].value = '202.65.220.64')]",
-            "type": "indicator",
-            "valid_from": "2015-05-15T09:00:00.000000Z"
-        }
-    ],
-    "spec_version": "2.0",
-    "type": "bundle"
+  "id": "bundle--6116aed6-a7e9-11e3-a82f-000c29b241af",
+  "objects": [
+    {
+      "created": "2018-07-30T13:03:44.858Z",
+      "id": "indicator--6116b44e-a7e9-11e3-a82f-000c29b241af",
+      "labels": [
+        "unknown"
+      ],
+      "modified": "2018-07-30T13:03:44.858Z",
+      "pattern": "[(domain-name:value = 'microsoftb.byinter.net' AND domain-name:resolves_to_refs[*].value = '202.65.222.45')]",
+      "type": "indicator",
+      "valid_from": "2018-07-30T13:03:44.859286Z"
+    },
+    {
+      "created": "2015-05-15T09:00:00.000Z",
+      "id": "indicator--74ffca2c-5152-4f44-b8ee-bc89aaf2493b",
+      "labels": [
+        "domain-watchlist"
+      ],
+      "modified": "2015-05-15T09:00:00.000Z",
+      "name": "Domain: www.dhcpserver.ns01.us",
+      "pattern": "[(domain-name:value = 'www.dhcpserver.ns01.us' AND domain-name:resolves_to_refs[*].value = '219.90.112.203' AND domain-name:resolves_to_refs[*].value = '202.65.220.64')]",
+      "type": "indicator",
+      "valid_from": "2015-05-15T09:00:00.000000Z"
+    }
+  ],
+  "spec_version": "2.0",
+  "type": "bundle"
 }
