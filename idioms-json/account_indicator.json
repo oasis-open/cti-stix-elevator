@@ -31,6 +31,13 @@
         }
       },
       "type": "observed-data"
+    },
+    {
+      "created": "2018-09-12T00:00:16.906Z",
+      "id": "report--0bac3c4a-7b45-4349-989a-41a5eca0ef9b",
+      "modified": "2018-09-12T00:00:16.906Z",
+      "published": "2018-09-12T00:00:16.906Z",
+      "type": "report"
     }
   ],
   "spec_version": "2.0",
