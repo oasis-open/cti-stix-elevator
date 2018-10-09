@@ -854,7 +854,7 @@ def convert_ciq_addresses2_1(ciq_info_addresses, identity_instance, env, parent_
                                              "," +
                                              "aa:" + text_type(aa.value))
                 else:
-                    warn("Multiple administrative areas with multiple countries in %s is not handled", 0, None)
+                    warn("Multiple administrative areas with multiple countries in %s is not handled", 631, None)
             elif hasattr(add, "administrative_area") and add.administrative_area:
                 for aa in add.adminstrative_area.name_elements:
                     location_keys.append("aa:" + text_type(aa.value))
@@ -863,7 +863,7 @@ def convert_ciq_addresses2_1(ciq_info_addresses, identity_instance, env, parent_
                     location_keys.append("c:" + text_type(determine_country_code(c.value)))
         else:
             # only remember locations with no free text address
-            warn("Free text address in %s not handled yet", 0, identity_instance["id"])
+            warn("Location with free text address in %s not handled yet", 433, identity_instance["id"])
         for key in location_keys:
             if key in _LOCATIONS:
                 location = _LOCATIONS[key]

@@ -8,7 +8,7 @@ CybOX object types not listed have no corresponding STIX 2.0 cyber observable ty
 converted by the elevator.
 
 =============================== ============================================= ==============================================
-**Cybox 2.x Object Type**       **STIX 2.0 Cyber Observable Type**            **Converted in version 1.1.1 of the Elevator**
+**Cybox 2.x Object Type**       **STIX 2.0 Cyber Observable Type**            **Converted in version 1.2 of the Elevator**
 =============================== ============================================= ==============================================
 ``Address``                     ``email-addr``                                yes
 ``Address``                     ``ipv4-addr``                                 yes

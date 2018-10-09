@@ -31,7 +31,7 @@ from stix2elevator.common import ADDRESS_FAMILY_ENUMERATION, SOCKET_OPTIONS
 from stix2elevator.convert_cybox import split_into_requests_and_responses
 from stix2elevator.ids import (add_object_id_value, exists_object_id_key,
                                get_id_value, get_object_id_value)
-from stix2elevator.options import error, info, warn
+from stix2elevator.options import error, get_option_value, info, warn
 from stix2elevator.utils import identifying_info, map_vocabs_to_label
 from stix2elevator.vocab_mappings import WINDOWS_PEBINARY
 
@@ -587,6 +587,11 @@ def convert_account_to_pattern(account):
             term = add_comparison_expression(getattr(account, prop_1x), object_path)
             if term:
                 expressions.append(term)
+    if account.authentication and get_option_value("spec_version") == "2.1":
+        if account.authentication.authentication_data:
+            expressions.append(create_term("user-account:credential",
+                                           "Equals",
+                                           stix2.StringConstant(account.authentication.authentication_data)))
     if isinstance(account, UnixUserAccount):
         win_process_expression = convert_unix_user_to_pattern(account)
         if win_process_expression:
@@ -765,8 +770,17 @@ _PE_FILE_HEADER_PROPERTIES = \
 _PE_SECTION_HEADER_PROPERTIES = [["name", "file:extensions.'windows-pebinary-ext'.section[*].name"],
                                  ["virtual_size", "file:extensions.'windows-pebinary-ext'.section[*].size"]]
 
-_ARCHIVE_FILE_PROPERTIES = [["comment", "file:extensions.'archive-ext'.comment"],
-                            ["version", "file:extensions.'archive-ext'.version"]]
+_ARCHIVE_FILE_PROPERTIES_2_0 = [["comment", "file:extensions.'archive-ext'.comment"],
+                                ["version", "file:extensions.'archive-ext'.version"]]
+
+_ARCHIVE_FILE_PROPERTIES_2_1 = [["comment", "file:extensions.'archive-ext'.comment"]]
+
+
+def select_archive_file_properties():
+    if get_option_value("spec_version") == "2.1":
+        return _ARCHIVE_FILE_PROPERTIES_2_1
+    else:
+        return _ARCHIVE_FILE_PROPERTIES_2_0
 
 
 def convert_windows_executable_file_to_pattern(f):
@@ -838,7 +852,7 @@ def convert_windows_executable_file_to_pattern(f):
 
 def convert_archive_file_to_pattern(f):
     and_expressions = []
-    for prop_spec in _ARCHIVE_FILE_PROPERTIES:
+    for prop_spec in select_archive_file_properties():
         prop_1x = prop_spec[0]
         object_path = prop_spec[1]
         if hasattr(f, prop_1x):
@@ -929,13 +943,27 @@ def convert_file_name_and_path_to_pattern(f):
         return create_boolean_expression("AND", file_name_path_expressions)
 
 
-_FILE_PROPERTIES = [["size_in_bytes", "file:size"],
-                    ["magic_number", "file:magic_number_hex"],
-                    ["created_time", "file:created"],
-                    ["modified_time", "file:modified"],
-                    ["accessed_time", "file:accessed"],
-                    ["encyption_algorithm", "file:encyption_algorithm"],
-                    ["decryption_key", "file:decryption_key"]]
+_FILE_PROPERTIES_2_0 = [["size_in_bytes", "file:size"],
+                        ["magic_number", "file:magic_number_hex"],
+                        ["created_time", "file:created"],
+                        ["modified_time", "file:modified"],
+                        ["accessed_time", "file:accessed"],
+                        ["encyption_algorithm", "file:encyption_algorithm"],
+                        ["decryption_key", "file:decryption_key"]]
+# is_encrypted
+
+_FILE_PROPERTIES_2_1 = [["size_in_bytes", "file:size"],
+                        ["magic_number", "file:magic_number_hex"],
+                        ["created_time", "file:created"],
+                        ["modified_time", "file:modified"],
+                        ["accessed_time", "file:accessed"]]
+
+
+def select_file_properties():
+    if get_option_value("spec_version") == "2.1":
+        return _FILE_PROPERTIES_2_1
+    else:
+        return _FILE_PROPERTIES_2_0
 
 
 def convert_file_to_pattern(f):
@@ -948,7 +976,7 @@ def convert_file_to_pattern(f):
     if file_name_and_path_expression:
         expressions.append(file_name_and_path_expression)
     properties_expressions = []
-    for prop_spec in _FILE_PROPERTIES:
+    for prop_spec in select_file_properties():
         prop_1x = prop_spec[0]
         object_path = prop_spec[1]
         if hasattr(f, prop_1x) and getattr(f, prop_1x):
@@ -1026,7 +1054,7 @@ def convert_image_info_to_pattern(image_info):
         return create_boolean_expression("AND", expressions)
 
 
-_PROCESS_PROPERTIES = [
+_PROCESS_PROPERTIES_2_0 = [
     ["is_hidden", "process:is_hidden"],
     ["pid", "process:pid"],
     ["name", "process:name"],
@@ -1035,10 +1063,25 @@ _PROCESS_PROPERTIES = [
     ["creation_time", "process:created"]
 ]
 
+_PROCESS_PROPERTIES_2_1 = [
+    ["is_hidden", "process:is_hidden"],
+    ["pid", "process:pid"],
+    ["parent_pid", "process:parent_ref.pid"],
+    ["username", "process:creator_user_ref.user_id"],
+    ["creation_time", "process:created"]
+]
+
+
+def select_process_properties():
+    if get_option_value("spec_version") == "2.1":
+        return _PROCESS_PROPERTIES_2_1
+    else:
+        return _PROCESS_PROPERTIES_2_0
+
 
 def convert_process_to_pattern(process):
     expressions = []
-    for prop_spec in _PROCESS_PROPERTIES:
+    for prop_spec in select_process_properties():
         prop_1x = prop_spec[0]
         object_path = prop_spec[1]
         if hasattr(process, prop_1x) and getattr(process, prop_1x):
@@ -1050,13 +1093,17 @@ def convert_process_to_pattern(process):
         if process_info:
             expressions.append(process_info)
     if hasattr(process, "argument_list") and process.argument_list:
-        argument_expressions = []
-        for a in process.argument_list:
-            argument_expressions.append(create_term("process:arguments[*]",
-                                                    a.condition,
-                                                    stix2.StringConstant(a.value)))
-        if argument_expressions:
-            expressions.append(create_boolean_expression("AND", argument_expressions))
+        if get_option_value("spec_version") == "2.0":
+            argument_expressions = []
+            for a in process.argument_list:
+                argument_expressions.append(create_term("process:arguments[*]",
+                                                        a.condition,
+                                                        stix2.StringConstant(a.value)))
+            if argument_expressions:
+                expressions.append(create_boolean_expression("AND", argument_expressions))
+        else:
+            warn("The argument_list property of ProcessObj is not part of STIX 2.0", 418)
+            expressions.append(UnconvertedTerm("ProcessObj.argument_list"))
     if hasattr(process, "environment_variable_list") and process.environment_variable_list:
         ev_expressions = []
         for ev in process.environment_variable_list:

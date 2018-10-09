@@ -20,7 +20,7 @@ from six import text_type
 
 from stix2elevator.common import ADDRESS_FAMILY_ENUMERATION, SOCKET_OPTIONS
 from stix2elevator.ids import add_object_id_value, get_object_id_value
-from stix2elevator.options import error, info, warn
+from stix2elevator.options import error, get_option_value, info, warn
 from stix2elevator.utils import (convert_timestamp_to_string,
                                  map_vocabs_to_label)
 from stix2elevator.vocab_mappings import (SERVICE_START_TYPE, SERVICE_STATUS,
@@ -35,6 +35,9 @@ def convert_account(acc):
     #    account_dict["account_last_login"] = acc.last_accessed_time
     if acc.disabled:
         account_dict["is_disabled"] = acc.disabled
+    if acc.authentication and get_option_value("spec_version") == "2.1":
+        if acc.authentication.authentication_data:
+            account_dict["credential"] = acc.authentication.authentication_data
     if isinstance(acc, UserAccount):
         if acc.username:
             account_dict["account_login"] = acc.username.value
@@ -234,7 +237,7 @@ def convert_process(process):
     process_dict = {"type": "process"}
     cybox_dict[text_type(index)] = process_dict
     index += 1
-    if process.name:
+    if process.name and get_option_value("spec_version") == "2.0":
         process_dict["name"] = text_type(process.name)
     if process.pid:
         process_dict["pid"] = process.pid.value
@@ -247,7 +250,7 @@ def convert_process(process):
     if process.parent_pid:
         create_process_ref(process.parent_pid, process_dict, cybox_dict, index, "parent_ref")
         index += 1
-    if process.argument_list:
+    if process.argument_list and get_option_value("spec_version") == "2.0":
         process_dict["arguments"] = []
         for a in process.argument_list:
             process_dict["arguments"].append(a.value)
@@ -629,7 +632,7 @@ def convert_network_socket(socket):
             warn("%s is not a member of the %s enumeration", 627, socket.address_family, "address family")
     if socket.type_:
         socket_extension["socket_type"] = socket.type_
-    if socket.domain:
+    if socket.domain and get_option_value("spec_version") == "2.0":
         socket_extension["protocol_family"] = socket.domain
     if socket.options:
         socket_extension["options"] = convert_socket_options(socket.options)

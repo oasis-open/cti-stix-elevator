@@ -64,7 +64,7 @@ Victim Target in *[id]* did not yield any STIX 2.0 object                       
 TTP *[id]* did not generate any STIX 2.0 object                                                                                                415     warn
 No STIX 2.0 object generated from embedded object *[id]*                                                                                       416     warn
 [object type] did not yield any STIX 2.0 object                                                                                                417     warn
-The exports property of ``WinExecutableFileObj`` is not part of STIX 2.0                                                                       418     warn
+The *[property]* property of *[STIX 1.x object type]*` is not part of STIX 2.0                                                                 418     warn
 The imports property of ``WinExecutableFileObj`` is not part of STIX 2.0                                                                       419     warn
 Windows Handles are not a part of STIX 2.0                                                                                                     420     warn
 The address type [address] is not part of STIX 2.0                                                                                             421     warn
@@ -79,6 +79,7 @@ The *[relationship name]* relationship involving *[id]* is not supported in STIX
 The confidence value *[value]* is not found on one of the confidence scales from the specification. No confidence can be inferred              430     warn
 The confidence value *[value]* is not between 0 and 100, which is required for STIX 2.0. No confidence can be inferred                         431     warn
 The confidence value *[value]* cannot be converted                                                                                             432     warn
+Location with free text address in *[id]* not handled yet"                                                                                     433     warn
 ============================================================================================================================================== ====    =====
 
 Multiple values are not supported in STIX 2.0
@@ -137,6 +138,7 @@ Found duplicate marking structure *[id]*                                        
 Unknown condition given in *[id]* - marked as 'INVALID_CONDITION'                                                                           628     warn
 Unable to determine the STIX 2.0 type for *[id]*, which is malformed                                                                        629     error
 'equals' allowed in *[id]* - should be 'Equals'                                                                                             630     warn
+Multiple administrative areas with multiple countries in *[id]* is not handled"                                                             631     warn
 =========================================================================================================================================== ====    =====
 
 STIX Elevator conversion based on assumptions
