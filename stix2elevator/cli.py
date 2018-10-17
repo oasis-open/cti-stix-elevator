@@ -174,7 +174,7 @@ def _get_arg_parser(is_script=True):
     parser.add_argument(
         "-v",
         "--version",
-        help="The version of stix to be produced",
+        help="The version of stix 2 to be produced",
         dest="spec_version",
         choices=["2.0", "2.1"],
         action="store",

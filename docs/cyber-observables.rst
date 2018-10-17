@@ -1,14 +1,14 @@
-Mappings from CybOX 2.x to STIX 2.0
+Mappings from CybOX 2.x to STIX 2.x
 ========================================
 
-The following table associates the CybOX 2.x object types with their STIX 2.0 cyber observable types.
-For each CybOX object the table also indicates if the elevator is able to convert the CybOX object to STIX 2.0.
+The following table associates the CybOX 2.x object types with their STIX 2.x cyber observable types.
+For each CybOX object the table also indicates if the elevator is able to convert the CybOX object to STIX 2.x.
 
-CybOX object types not listed have no corresponding STIX 2.0 cyber observable type, and therefore are not
+CybOX object types not listed have no corresponding STIX 2.x cyber observable type, and therefore are not
 converted by the elevator.
 
 =============================== ============================================= ==============================================
-**Cybox 2.x Object Type**       **STIX 2.0 Cyber Observable Type**            **Converted in version 1.2 of the Elevator**
+**Cybox 2.x Object Type**       **STIX 2.x Cyber Observable Type**            **Converted in version 1.2 of the Elevator**
 =============================== ============================================= ==============================================
 ``Address``                     ``email-addr``                                yes
 ``Address``                     ``ipv4-addr``                                 yes
