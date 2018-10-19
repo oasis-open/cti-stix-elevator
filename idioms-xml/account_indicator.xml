@@ -53,4 +53,7 @@
             </cybox:Object>
         </cybox:Observable>
     </stix:Observables>
+    <stix:Reports>
+        <stix:Report timestamp="2018-09-12T00:00:16.906Z"/>
+    </stix:Reports>
 </stix:STIX_Package>
