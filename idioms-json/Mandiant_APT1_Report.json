@@ -2,62 +2,62 @@
     "id": "bundle--e33ffe07-2f4c-48d8-b0af-ee2619d765cf",
     "objects": [
         {
-          "created": "2017-05-03T14:10:22.296Z",
-          "created_by_ref": "identity--38b25d5f-86fa-4d1f-b549-dbcc442620c1",
+          "created": "2018-09-26T15:49:56.020Z",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
             "definition": {
                 "statement": "APT1: Exposing One of China's Cyber Espionage Units (the \"APT1 Report\") is copyright 2013 by Mandiant Corporation and can be downloaded at intelreport.mandiant.com.  This XML file using the STIX standard was created by The MITRE Corporation using the content of the APT1 Report with Mandiant's permission.  Mandiant is not responsible for the content of this file."
             },
             "definition_type": "statement",
-          "id": "marking-definition--38707174-d5c6-488b-837e-72612a3d77d3",
+          "id": "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1",
             "type": "marking-definition"
         },
         {
-          "created": "2017-05-03T14:10:22.296Z",
-          "id": "identity--38b25d5f-86fa-4d1f-b549-dbcc442620c1",
+          "created": "2018-09-26T15:49:56.019Z",
+          "id": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
             "identity_class": "unknown",
-          "modified": "2017-05-03T14:10:22.296Z",
+          "modified": "2018-09-26T15:49:56.019Z",
             "name": "MITRE",
             "object_marking_refs": [
-              "marking-definition--38707174-d5c6-488b-837e-72612a3d77d3"
+              "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
             ],
             "type": "identity"
         },
         {
-          "created": "2017-05-03T14:10:22.312Z",
-          "id": "identity--91de38bf-2361-4975-aae7-644761f2563c",
+          "created": "2015-05-15T09:00:00.000Z",
+          "id": "identity--1c62e9eb-bef8-4a38-ba4f-29be7ba910e6",
             "identity_class": "unknown",
-          "modified": "2017-05-03T14:10:22.312Z",
+          "modified": "2015-05-15T09:00:00.000Z",
           "name": "Harbin Institute of Technology (哈尔滨工业大学)",
             "object_marking_refs": [
-              "marking-definition--38707174-d5c6-488b-837e-72612a3d77d3"
+              "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
             ],
             "type": "identity"
         },
         {
-          "created": "2017-05-03T14:10:22.312Z",
-          "id": "identity--44df9aa7-023a-483a-a734-2aee0a24d62b",
+          "created": "2015-05-15T09:00:00.000Z",
+          "id": "identity--9a1a5860-2a36-416a-a649-b43443306c83",
             "identity_class": "unknown",
-          "modified": "2017-05-03T14:10:22.312Z",
+          "modified": "2015-05-15T09:00:00.000Z",
           "name": "Zhejiang University School of Computer Science and Technology (浙江大学计算机学院)",
             "object_marking_refs": [
-              "marking-definition--38707174-d5c6-488b-837e-72612a3d77d3"
+              "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
             ],
             "type": "identity"
         },
         {
-          "created": "2017-05-03T14:10:22.312Z",
-          "id": "identity--ec3a79f7-c36d-4b86-8b1a-00892108f376",
+          "created": "2015-05-15T09:00:00.000Z",
+          "id": "identity--e0ea3142-0c99-4b55-aaab-69fee064782c",
             "identity_class": "organization",
-          "modified": "2017-05-03T14:10:22.312Z",
+          "modified": "2015-05-15T09:00:00.000Z",
             "name": "People's Liberation Army",
             "object_marking_refs": [
-              "marking-definition--38707174-d5c6-488b-837e-72612a3d77d3"
+              "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
             ],
             "type": "identity"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-          "created_by_ref": "identity--38b25d5f-86fa-4d1f-b549-dbcc442620c1",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
             "id": "threat-actor--8dff0344-0c82-4079-8d04-6f3e4d9bd1df",
             "labels": [
                 "unknown"
@@ -65,39 +65,39 @@
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "People's Liberation Army",
             "object_marking_refs": [
-              "marking-definition--38707174-d5c6-488b-837e-72612a3d77d3"
+              "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
             ],
             "sophistication": "unknown",
             "type": "threat-actor"
         },
         {
-          "created": "2017-05-03T14:10:22.312Z",
-          "id": "identity--388b6abc-6f60-4e8a-a77d-4b3c2dd70424",
+          "created": "2015-05-15T09:00:00.000Z",
+          "id": "identity--44f11286-ab0c-49d9-95e4-2d32cab99a24",
             "identity_class": "individual",
-          "modified": "2017-05-03T14:10:22.312Z",
+          "modified": "2015-05-15T09:00:00.000Z",
             "name": "Ugly Gorilla",
             "object_marking_refs": [
-              "marking-definition--38707174-d5c6-488b-837e-72612a3d77d3"
+              "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
             ],
             "type": "identity"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-          "created_by_ref": "identity--38b25d5f-86fa-4d1f-b549-dbcc442620c1",
-          "id": "malware--d02fb81b-21e2-43c4-882a-856055f40aa9",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
+          "id": "malware--33c62563-1ada-4eb7-88e5-5b30664d7232",
             "labels": [
                 "unknown"
             ],
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "MANITSME",
             "object_marking_refs": [
-              "marking-definition--38707174-d5c6-488b-837e-72612a3d77d3"
+              "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
             ],
             "type": "malware"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-          "created_by_ref": "identity--38b25d5f-86fa-4d1f-b549-dbcc442620c1",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
             "id": "threat-actor--6d179234-61fc-40c4-ae86-3d53308d8e65",
             "labels": [
                 "unknown"
@@ -105,25 +105,25 @@
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "Ugly Gorilla",
             "object_marking_refs": [
-              "marking-definition--38707174-d5c6-488b-837e-72612a3d77d3"
+              "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
             ],
             "sophistication": "unknown",
             "type": "threat-actor"
         },
         {
-          "created": "2017-05-03T14:10:22.327Z",
-          "id": "identity--ac396fb7-cfa5-416f-80d6-4611aef12dc8",
+          "created": "2015-05-15T09:00:00.000Z",
+          "id": "identity--6e9bc554-96ea-47a3-8632-063fabc0e388",
             "identity_class": "individual",
-          "modified": "2017-05-03T14:10:22.327Z",
+          "modified": "2015-05-15T09:00:00.000Z",
             "name": "dota",
           "object_marking_refs": [
-            "marking-definition--38707174-d5c6-488b-837e-72612a3d77d3"
+            "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
           ],
             "type": "identity"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-          "created_by_ref": "identity--38b25d5f-86fa-4d1f-b549-dbcc442620c1",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
             "id": "threat-actor--d84cf283-93be-4ca7-890d-76c63eff3636",
             "labels": [
                 "unknown"
@@ -131,53 +131,53 @@
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "dota",
             "object_marking_refs": [
-              "marking-definition--38707174-d5c6-488b-837e-72612a3d77d3"
+              "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
             ],
             "sophistication": "unknown",
             "type": "threat-actor"
         },
         {
-          "created": "2017-05-03T14:10:22.327Z",
-          "id": "identity--9ddcd171-e5bc-4806-a265-e7742b6f3dc4",
+          "created": "2015-05-15T09:00:00.000Z",
+          "id": "identity--967e9101-f69f-41d6-a9b6-aa829d720778",
             "identity_class": "individual",
-          "modified": "2017-05-03T14:10:22.327Z",
+          "modified": "2015-05-15T09:00:00.000Z",
             "name": "SuperHard",
           "object_marking_refs": [
-            "marking-definition--38707174-d5c6-488b-837e-72612a3d77d3"
+            "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
           ],
             "type": "identity"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-          "created_by_ref": "identity--38b25d5f-86fa-4d1f-b549-dbcc442620c1",
-          "id": "malware--7bbcd368-a057-4b13-af1f-2be73689e29f",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
+          "id": "malware--9b8a4e12-e0a1-4cc8-a4af-91d7c579046d",
             "labels": [
                 "unknown"
             ],
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "AURIGA",
             "object_marking_refs": [
-              "marking-definition--38707174-d5c6-488b-837e-72612a3d77d3"
+              "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
             ],
             "type": "malware"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-          "created_by_ref": "identity--38b25d5f-86fa-4d1f-b549-dbcc442620c1",
-          "id": "malware--6cb2dcd4-50c6-4603-a09f-fd887f5f11a6",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
+          "id": "malware--b733ebd4-15df-49a6-9d43-974e6dec1fa1",
             "labels": [
                 "unknown"
             ],
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "BANGAT",
             "object_marking_refs": [
-              "marking-definition--38707174-d5c6-488b-837e-72612a3d77d3"
+              "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
             ],
             "type": "malware"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-          "created_by_ref": "identity--38b25d5f-86fa-4d1f-b549-dbcc442620c1",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
             "id": "threat-actor--02e7c48f-0301-4c23-b3e4-02e5a0114c21",
             "labels": [
                 "unknown"
@@ -185,25 +185,25 @@
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "SuperHard",
             "object_marking_refs": [
-              "marking-definition--38707174-d5c6-488b-837e-72612a3d77d3"
+              "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
             ],
             "sophistication": "unknown",
             "type": "threat-actor"
         },
         {
-          "created": "2017-05-03T14:10:22.327Z",
-          "id": "identity--4118a066-03b9-4c10-9e9a-d168b9b6bc1e",
+          "created": "2015-05-15T09:00:00.000Z",
+          "id": "identity--e8e676c6-3c16-4d26-ac3e-d5cf788179e6",
             "identity_class": "unknown",
-          "modified": "2017-05-03T14:10:22.327Z",
+          "modified": "2015-05-15T09:00:00.000Z",
             "name": "Comment Crew",
             "object_marking_refs": [
-              "marking-definition--38707174-d5c6-488b-837e-72612a3d77d3"
+              "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
             ],
             "type": "identity"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-          "created_by_ref": "identity--38b25d5f-86fa-4d1f-b549-dbcc442620c1",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
             "id": "threat-actor--f1ce5a9e-0fb7-465b-acb9-e7f75098eee9",
             "labels": [
                 "unknown"
@@ -211,25 +211,25 @@
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "Comment Crew",
             "object_marking_refs": [
-              "marking-definition--38707174-d5c6-488b-837e-72612a3d77d3"
+              "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
             ],
             "sophistication": "unknown",
             "type": "threat-actor"
         },
         {
-          "created": "2017-05-03T14:10:22.327Z",
-          "id": "identity--9443091c-0825-4c35-a425-ab7fa570076c",
+          "created": "2015-05-15T09:00:00.000Z",
+          "id": "identity--7de07f79-fbe5-4d63-9343-3421258b1c1f",
             "identity_class": "unknown",
-          "modified": "2017-05-03T14:10:22.327Z",
+          "modified": "2015-05-15T09:00:00.000Z",
             "name": "Comment Group",
             "object_marking_refs": [
-              "marking-definition--38707174-d5c6-488b-837e-72612a3d77d3"
+              "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
             ],
             "type": "identity"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-          "created_by_ref": "identity--38b25d5f-86fa-4d1f-b549-dbcc442620c1",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
             "id": "threat-actor--5abb4d96-e3f2-4a1a-b025-c5b63ec6eb0b",
             "labels": [
                 "unknown"
@@ -237,25 +237,25 @@
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "Comment Group",
             "object_marking_refs": [
-              "marking-definition--38707174-d5c6-488b-837e-72612a3d77d3"
+              "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
             ],
             "sophistication": "unknown",
             "type": "threat-actor"
         },
         {
-          "created": "2017-05-03T14:10:22.343Z",
-          "id": "identity--7ce1e339-c7d1-471e-a82e-ed3b26586246",
+          "created": "2015-05-15T09:00:00.000Z",
+          "id": "identity--3372fa09-3a8c-4324-8a72-f88984b27c01",
             "identity_class": "unknown",
-          "modified": "2017-05-03T14:10:22.343Z",
+          "modified": "2015-05-15T09:00:00.000Z",
             "name": "Shady Rat",
             "object_marking_refs": [
-              "marking-definition--38707174-d5c6-488b-837e-72612a3d77d3"
+              "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
             ],
             "type": "identity"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-          "created_by_ref": "identity--38b25d5f-86fa-4d1f-b549-dbcc442620c1",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
             "id": "threat-actor--d9619c21-9d4f-414e-9471-36bb8fc42bbe",
             "labels": [
                 "unknown"
@@ -263,25 +263,25 @@
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "Shady Rat",
             "object_marking_refs": [
-              "marking-definition--38707174-d5c6-488b-837e-72612a3d77d3"
+              "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
             ],
             "sophistication": "unknown",
             "type": "threat-actor"
         },
         {
-          "created": "2017-05-03T14:10:22.343Z",
-          "id": "identity--1065a3f9-3dc2-4502-a9ea-7c96e5614257",
+          "created": "2015-05-15T09:00:00.000Z",
+          "id": "identity--78f57d59-e1b7-4a78-b145-a988e321a555",
             "identity_class": "unknown",
-          "modified": "2017-05-03T14:10:22.343Z",
+          "modified": "2015-05-15T09:00:00.000Z",
             "name": "GSD 3rd Department / 2nd Bureau",
             "object_marking_refs": [
-              "marking-definition--38707174-d5c6-488b-837e-72612a3d77d3"
+              "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
             ],
             "type": "identity"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-          "created_by_ref": "identity--38b25d5f-86fa-4d1f-b549-dbcc442620c1",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
             "id": "threat-actor--94624865-2709-443f-9b4c-2891985fd69b",
             "labels": [
                 "unknown"
@@ -289,25 +289,25 @@
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "GSD 3rd Department / 2nd Bureau",
             "object_marking_refs": [
-              "marking-definition--38707174-d5c6-488b-837e-72612a3d77d3"
+              "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
             ],
             "sophistication": "unknown",
             "type": "threat-actor"
         },
         {
-          "created": "2017-05-03T14:10:22.343Z",
-          "id": "identity--338cb04f-584f-4abe-8774-10bb6a143db1",
+          "created": "2015-05-15T09:00:00.000Z",
+          "id": "identity--50616a25-78fb-4be0-b6f2-3a75993fcbfb",
             "identity_class": "unknown",
-          "modified": "2017-05-03T14:10:22.343Z",
+          "modified": "2015-05-15T09:00:00.000Z",
             "name": "GSD 3rd Department",
             "object_marking_refs": [
-              "marking-definition--38707174-d5c6-488b-837e-72612a3d77d3"
+              "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
             ],
             "type": "identity"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-          "created_by_ref": "identity--38b25d5f-86fa-4d1f-b549-dbcc442620c1",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
             "id": "threat-actor--b5d1d28c-d824-49c0-80b6-9179202e297b",
             "labels": [
                 "unknown"
@@ -315,25 +315,25 @@
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "GSD 3rd Department",
             "object_marking_refs": [
-              "marking-definition--38707174-d5c6-488b-837e-72612a3d77d3"
+              "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
             ],
             "sophistication": "unknown",
             "type": "threat-actor"
         },
         {
-          "created": "2017-05-03T14:10:22.343Z",
-          "id": "identity--421d5435-a6a8-4cd7-947d-45737d3713a9",
+          "created": "2015-05-15T09:00:00.000Z",
+          "id": "identity--490f0285-561d-4978-bd01-967e0e305051",
             "identity_class": "unknown",
-          "modified": "2017-05-03T14:10:22.343Z",
+          "modified": "2015-05-15T09:00:00.000Z",
             "name": "PLA General Staff",
             "object_marking_refs": [
-              "marking-definition--38707174-d5c6-488b-837e-72612a3d77d3"
+              "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
             ],
             "type": "identity"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-          "created_by_ref": "identity--38b25d5f-86fa-4d1f-b549-dbcc442620c1",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
             "id": "threat-actor--5ac0fd8e-5804-4849-a170-4ec0d15a5e8b",
             "labels": [
                 "unknown"
@@ -341,25 +341,25 @@
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "PLA General Staff",
             "object_marking_refs": [
-              "marking-definition--38707174-d5c6-488b-837e-72612a3d77d3"
+              "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
             ],
             "sophistication": "unknown",
             "type": "threat-actor"
         },
         {
-          "created": "2017-05-03T14:10:22.343Z",
-          "id": "identity--2ecf1ff8-59d8-4f0b-b887-1e78f9e2b992",
+          "created": "2015-05-15T09:00:00.000Z",
+          "id": "identity--9522bce3-696c-439e-bc25-973fd9b40e0a",
             "identity_class": "organization",
-          "modified": "2017-05-03T14:10:22.343Z",
+          "modified": "2015-05-15T09:00:00.000Z",
             "name": "Communist Part of China",
           "object_marking_refs": [
-            "marking-definition--38707174-d5c6-488b-837e-72612a3d77d3"
+            "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
           ],
             "type": "identity"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-          "created_by_ref": "identity--38b25d5f-86fa-4d1f-b549-dbcc442620c1",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
             "id": "threat-actor--d5b62b58-df7c-46b1-a435-4d01945fe21d",
             "labels": [
                 "unknown"
@@ -367,25 +367,25 @@
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "Communist Part of China",
             "object_marking_refs": [
-              "marking-definition--38707174-d5c6-488b-837e-72612a3d77d3"
+              "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
             ],
             "sophistication": "unknown",
             "type": "threat-actor"
         },
         {
-          "created": "2017-05-03T14:10:22.343Z",
-          "id": "identity--7909e024-feb5-4c9d-95ae-f2b2cb42b497",
+          "created": "2015-05-15T09:00:00.000Z",
+          "id": "identity--740138f4-2929-4348-9de8-8e1ff6e73ba4",
             "identity_class": "organization",
-          "modified": "2017-05-03T14:10:22.343Z",
+          "modified": "2015-05-15T09:00:00.000Z",
             "name": "China Telecom",
           "object_marking_refs": [
-            "marking-definition--38707174-d5c6-488b-837e-72612a3d77d3"
+            "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
           ],
             "type": "identity"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-          "created_by_ref": "identity--38b25d5f-86fa-4d1f-b549-dbcc442620c1",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
             "id": "threat-actor--76dd3859-31a6-43c5-9f3e-9c6ac745b61b",
             "labels": [
                 "unknown"
@@ -393,26 +393,27 @@
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "China Telecom",
             "object_marking_refs": [
-              "marking-definition--38707174-d5c6-488b-837e-72612a3d77d3"
+              "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
             ],
             "sophistication": "unknown",
             "type": "threat-actor"
         },
         {
-          "created": "2017-05-03T14:10:22.358Z",
+          "created": "2018-09-26T15:49:56.060Z",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
           "description": "\n\nINTENDED_EFFECT:<!DOCTYPE html>\n\t\t\t\t\t<html><body>\n\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tOur evidence indicates that APT1 has been stealing\n\t\t\t\t\t\t\thundreds of terabytes of data from at least 141 organizations across a diverse\n\t\t\t\t\t\t\tset of industries beginning as early as 2006. Remarkably, we have witnessed APT1\n\t\t\t\t\t\t\ttarget dozens of organizations simultaneously. Once the group establishes access\n\t\t\t\t\t\t\tto a victim’s network, they continue to access it periodically over several\n\t\t\t\t\t\t\tmonths or years to steal large volumes of valuable intellectual property,\n\t\t\t\t\t\t\tincluding technology blueprints, proprietary manufacturing processes, test\n\t\t\t\t\t\t\tresults, business plans, pricing documents, partnership agreements, emails and\n\t\t\t\t\t\t\tcontact lists from victim organizations’ leadership. We believe that the\n\t\t\t\t\t\t\textensive activity we have directly observed represents only a small fraction of\n\t\t\t\t\t\t\tthe cyber espionage that APT1 has committed. \n\t\t\t\t\t\t\t</P>\n\t\t\t\t\t</body></html>\n\nINTENDED_EFFECT:Advantage - Economic\n\nINTENDED_EFFECT:Theft - Intellectual Property\n\nINTENDED_EFFECT:Competitive Advantage\n\nINTENDED_EFFECT:Theft - Credential Theft\n\nINTENDED_EFFECT:Unauthorized Access",
             "id": "identity--c63f31ac-871b-4846-aa25-de1926f4f3c8",
             "identity_class": "unknown",
-          "modified": "2017-05-03T14:10:22.358Z",
+          "modified": "2018-09-26T15:49:56.060Z",
             "name": "APT1 Tactics, Techniques and Procedures",
           "object_marking_refs": [
-            "marking-definition--38707174-d5c6-488b-837e-72612a3d77d3"
+            "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
           ],
             "type": "identity"
         },
         {
-          "created": "2017-05-03T14:10:22.358Z",
-          "created_by_ref": "identity--38b25d5f-86fa-4d1f-b549-dbcc442620c1",
+          "created": "2018-09-26T15:49:56.063Z",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
           "description": "<!DOCTYPE html>\n\t\t\t\t\t\t\t<html><body>\n\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\tWEBC2 backdoor variants download and interpret data stored\n                            \tbetween tags in HTML pages as commands. They usually download HTML pages from a system within APT1’s hop\n                            \tinfrastructure. We have observed APT1 intruders logging in to WEBC2 servers and manually editing the HTML pages\n                            \tthat backdoors will download. Because the commands are usually encoded and difficult to spell from memory, APT1\n                            \tintruders typically do not type these strings, but instead copy and paste them into the HTML files. They likely generate\n                            \tthe encoded commands on their own systems before pasting them in to an HTML file hosted by the hop point. For\n                            \texample, we observed an APT attacker pasting the string \"czo1NA==\" into an HTML page. That string is the base64-\n                            \tencoded version of \"s:54\", meaning \"sleep for 54 minutes\" (or hours, depending on the particular backdoor). In lieu\n                            \tof manually editing an HTML file on a hop point, we have also observed APT1 intruders uploading new (already-edited)\n                            \tHTML files.\n\t\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t\t</body></html>\n\nTITLE:\n\tWEBC2 Backdoor",
             "id": "malware--0f01c5a3-f516-4450-9381-4dd9f2279411",
             "kill_chain_phases": [
@@ -424,16 +425,16 @@
             "labels": [
                 "backdoor"
             ],
-          "modified": "2017-05-03T14:10:22.358Z",
+          "modified": "2018-09-26T15:49:56.063Z",
             "name": "WEBC2",
             "object_marking_refs": [
-              "marking-definition--38707174-d5c6-488b-837e-72612a3d77d3"
+              "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
             ],
             "type": "malware"
         },
         {
-          "created": "2017-05-03T14:10:22.358Z",
-          "created_by_ref": "identity--38b25d5f-86fa-4d1f-b549-dbcc442620c1",
+          "created": "2018-09-26T15:49:56.064Z",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
           "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html>\n\t\t\t\t\t\t\t<body>\n\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\tWhen APT1 attackers are not using WEBC2, they require a \"command and control\" (C2) user interface so they can\n                    \t\t\tissue commands to the backdoor. This interface sometimes runs on their personal attack system, which is typically\n                    \t\t\tin Shanghai. In these instances, when a victim backdoor makes contact with a hop, the communications need to be\n                    \t\t\tforwarded from the hop to the intruder’s Shanghai system so the backdoor can talk to the C2 server software. We have\n                    \t\t\tobserved 767 separate instances in which APT1 intruders used the publicly available \"HUC Packet Transmit Tool\"\n                    \t\t\tor HTRAN on a hop. As always, keep in mind that these uses are confirmed uses, and likely represent only a small\n                    \t\t\tfraction of APT1’s total activity.\n\t\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\tThe HTRAN utility is merely a middle-man, facilitating connections between the victim and the attacker who is using\n                    \t\t\tthe hop point.\n\t\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\tTypical use of HTRAN is fairly simple: the attacker must specify the originating IP address (of his or her workstation in\n                    \t\t\tShanghai), and a port on which to accept connections.\n\t\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\tIn the 767 observed uses of HTRAN, APT1 intruders supplied 614 distinct routable IP addresses. In other words, they\n                    \t\t\tused their hops to function as middlemen between victim systems and 614 different addresses. Of these addresses,\n                    \t\t\t613 of 614 are part of APT1’s home networks.\n\t\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t\t</body>\n\t\t\t\t\t\t</html>\n\nTITLE:\n\tHTRAN Malware C2",
             "id": "malware--33159b98-3264-4e10-a968-d67975b6272f",
             "kill_chain_phases": [
@@ -445,16 +446,16 @@
             "labels": [
                 "relay"
             ],
-          "modified": "2017-05-03T14:10:22.358Z",
+          "modified": "2018-09-26T15:49:56.064Z",
             "name": "HUC Packet Transmit Tool (HTRAN)",
             "object_marking_refs": [
-              "marking-definition--38707174-d5c6-488b-837e-72612a3d77d3"
+              "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
             ],
             "type": "malware"
         },
         {
-          "created": "2017-05-03T14:10:22.374Z",
-          "created_by_ref": "identity--38b25d5f-86fa-4d1f-b549-dbcc442620c1",
+          "created": "2018-09-26T15:49:56.065Z",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
           "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html>\n\t\t\t\t\t\t\t<body>\n\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\tAs with most other APT groups, spear phishing is APT1’s most commonly used technique. The spear phishing emails contain\n                            \teither a malicious attachment or a hyperlink to a malicious file. The subject line and the text in the email body are\n                            \tusually relevant to the recipient. APT1 also creates webmail accounts using real peoples' names — names that are\n                            \tfamiliar to the recipient, such as a colleague, a company executive, an IT department employee, or company counsel\n                            \t— and uses these accounts to send the emails. As a real-world example, this is an email that APT1 sent to Mandiant\n                            \temployees:\n\t\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t\t\t<code>\n\t\t\t\t\t\t\t\tDate: Wed, 18 Apr 2012 06:31:41 -0700\n                            \tFrom: Kevin Mandia <kevin.mandia@rocketmail.com>\n                                Subject: Internal Discussion on the Press\n                                Release\n                                \n                                Hello,\n                                Shall we schedule a time to meet next week?\n                                We need to finalize the press release.\n                                Details click here.\n                                \n                                Kevin Mandia\n\t\t\t\t\t\t\t\t</code>\n\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\tAt first glance, the email appeared to be from Mandiant’s CEO, Kevin Mandia. However, further scrutiny shows that\n                            \tthe email was not sent from a Mandiant email account, but from \"kevin.mandia@rocketmail.com\". Rocketmail is a\n                            \tfree webmail service. The account \"kevin.mandia@rocketmail.com\" does not belong to Mr. Mandia. Rather, an APT1\n                            \tactor likely signed up for the account specifically for this spear phishing event. If anyone had clicked on the link that\n                            \tday (which no one did, thankfully), their computer would have downloaded a malicious ZIP file named \"Internal_\n                            \tDiscussion_Press_Release_In_Next_Week8.zip\". This file contained a malicious executable that installs a custom APT1\n                            \tbackdoor that we call WEBC2-TABLE.\n\t\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\tAlthough the files that APT1 actors attach or link to spear phishing emails are not always in ZIP format, this is the\n                            \tpredominant trend we have observed in the last several years.\n\t\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t\t</body>\n\t\t\t\t\t\t</html>\n\nINTENDED_EFFECT:The Initial Compromise represents the methods intruders\n\t\t\t\tuse to first penetrate a target organization’s network.",
             "id": "attack-pattern--3098c57b-d623-4c11-92f4-5905da66658b",
             "kill_chain_phases": [
@@ -463,16 +464,16 @@
                     "phase_name": "Initial Compromise"
                 }
             ],
-          "modified": "2017-05-03T14:10:22.374Z",
+          "modified": "2018-09-26T15:49:56.065Z",
             "name": "The Initial Compromise",
             "object_marking_refs": [
-              "marking-definition--38707174-d5c6-488b-837e-72612a3d77d3"
+              "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
             ],
             "type": "attack-pattern"
         },
         {
-          "created": "2017-05-03T14:10:22.374Z",
-          "created_by_ref": "identity--38b25d5f-86fa-4d1f-b549-dbcc442620c1",
+          "created": "2018-09-26T15:49:56.066Z",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
           "description": "\n\nINTENDED_EFFECT:The Initial Compromise represents the methods intruders\n\t\t\t\tuse to first penetrate a target organization’s network.",
             "external_references": [
                 {
@@ -480,23 +481,23 @@
                     "source_name": "capec"
                 }
             ],
-          "id": "attack-pattern--de3aa516-1468-4a3e-88f0-817f42f49e4a",
+          "id": "attack-pattern--34dffca4-25e7-49bc-8f39-baa09c868c57",
             "kill_chain_phases": [
                 {
                     "kill_chain_name": "APT1 Attack Lifecycle Model",
                     "phase_name": "Initial Compromise"
                 }
             ],
-          "modified": "2017-05-03T14:10:22.374Z",
+          "modified": "2018-09-26T15:49:56.066Z",
             "name": "The Initial Compromise",
             "object_marking_refs": [
-              "marking-definition--38707174-d5c6-488b-837e-72612a3d77d3"
+              "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
             ],
             "type": "attack-pattern"
         },
         {
-          "created": "2017-05-03T14:10:22.374Z",
-          "created_by_ref": "identity--38b25d5f-86fa-4d1f-b549-dbcc442620c1",
+          "created": "2018-09-26T15:49:56.067Z",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
           "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html>\n\t\t\t\t\t\t\t<body>\\\n\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\tAPT1 establishes a foothold once email recipients open a malicious file and a backdoor is subsequently installed. A\n                            \tbackdoor is software that allows an intruder to send commands to the system remotely. In almost every case, APT\n                            \tbackdoors initiate outbound connections to the intruder’s \"command and control\" (C2) server. APT intruders employ\n                            \tthis tactic because while network firewalls are generally adept at keeping malware outside the network from initiating\n                            \tcommunication with systems inside the network, they are less reliable at keeping malware that is already inside the\n                            \tnetwork from communicating to systems outside.\n\t\t\t\t\t\t\t\t</p>\n\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\tWhile APT1 intruders occasionally use publicly available backdoors such as Poison Ivy and Gh0st RAT, the vast\n                            \tmajority of the time they use what appear to be their own custom backdoors. We have documented 42 families of\n                            \tbackdoors in <a href=\"http://intelreport.mandiant.com\">Appendix C: The Malware Arsenal\"</a> that APT1 uses that\n                            \twe believe are not publicly available. In addition we have provided 1,007 MD5 hashes associated with APT1 malware\n                            \tin <a href=\"http://intelreport.mandiant.com\">Appendix E</a>. We will describe APT1’s backdoors in two categories:\n                            \t\"Beachhead Backdoors\" and \"Standard Backdoors.\"\n\t\t\t\t\t\t\t\t</p>\n\t\t\t\t\t\t\t\t<h2>Beachhead Backdoors</h2>\n\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\tBeachhead backdoors are typically minimally featured. They offer the attacker a toe-hold to perform simple tasks like retrieve files, gather\n\t\t\t\t\t\t\t\tbasic system information and trigger the execution of other more significant capabilities such as a standard backdoor.\n\t\t\t\t\t\t\t\t</p>\n\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\tAPT1’s beachhead backdoors are usually what we call WEBC2 backdoors. WEBC2 backdoors are probably the most well-known\n\t\t\t\t\t\t\t\tkind of APT1 backdoor, and are the reason why some security companies refer to APT1 as the “Comment Crew.” A WEBC2 backdoor\n\t\t\t\t\t\t\t\tis designed to retrieve a webpage from a C2 server. It expects the webpage to contain special HTML tags; the backdoor will attempt\n\t\t\t\t\t\t\t\tto interpret the data between the tags as commands. Older versions of WEBC2 read data between HTML comments, though over\n\t\t\t\t\t\t\t\ttime WEBC2 variants have evolved to read data contained within other types of tags. From direct observation, we can confirm\n\t\t\t\t\t\t\t\tthat APT1 was using WEBC2 backdoors as early as July 2006. However, the first compile time35 we have for WEBC2-KT3 is 2004-01-23, suggesting that APT1\n\t\t\t\t\t\t\t\thas been crafting WEBC2 backdoors since early 2004. Based on the 400+ samples of WEBC2 variants that we have\n\t\t\t\t\t\t\t\taccumulated, it appears that APT1 has direct access to developers who have continually released new WEBC2 variants for over six years.\n\t\t\t\t\t\t\t\t</p>\n\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\tFor example, these two build paths, which were discovered inside WEBC2-TABLE samples, help to illustrate how APT1\n\t\t\t\t\t\t\t\thas been steadily building new WEBC2 variants as part of a continuous development process:\n\t\t\t\t\t\t\t\t</p>\n\t\t\t\t\t\t\t\t<code>\n\t\t\t\t\t\t\t\t<h3>Sample A</h3>\n\t\t\t\t\t\t\t\t\tMD5: d7aa32b7465f55c368230bb52d52d885\n\t\t\t\t\t\t\t\t\tCompile date: 2012-02-23\n\t\t\t\t\t\t\t\t\t\\work\\code\\2008-7-8muma\\mywork\\winInet_winApplication2009-8-7\\mywork\\aaaaaaa2012-2-23\\Release\\aaaaaaa.pdb\n\t\t\t\t\t\t\t\t</code>\n\t\t\t\t\t\t\t\t<code>\n\t\t\t\t\t\t\t\t<h3>Sample B</h3>\n\t\t\t\t\t\t\t\t\tMD5: c1393e77773a48b1eea117a302138554\n \t\t\t\t\t\t\t\t\tCompile date: 2009-08-07\n\t\t\t\t\t\t\t\t\tD:\\work\\code\\2008-7-8muma\\mywork\\winInet_winApplication2009-8-7\\mywork\\aaaaaaa\\Release\\aaaaaaa.pdb\n\t\t\t\t\t\t\t\t</code>\n\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\tA “build path” discloses the directory from which the programmer built and compiled his source code. These samples, compiled 2.5\n\t\t\t\t\t\t\t\tyears apart, were compiled within a folder named “work\\code\\...\\mywork”. The instances of “work” suggest that working on WEBC2 is\n\t\t\t\t\t\t\t\tsomeone’s day job and not a side project or hobby. Furthermore, the Sample A build string includes “2012-2-23” — which matches Sample\n\t\t\t\t\t\t\t\tA’s compile date. The Sample B build string lacks “2012-2-23” but includes “2009-8-7” — which also matches Sample B’s compile date.\n\t\t\t\t\t\t\t\tThis suggests that the code used to compile Sample A was modified from code that was used to compile Sample B 2.5 years previously. The\n\t\t\t\t\t\t\t\texistence of “2008-7-8” suggests that the code for both samples was modified from a version that existed in July 2008, a year before Sample\n\t\t\t\t\t\t\t\tB was created. This series of dates indicates that developing and modifying the WEBC2 backdoor is an iterative and long-term process.\n\t\t\t\t\t\t\t\t</p>\n\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\tWEBC2 backdoors typically give APT1 attackers a short and rudimentary set of commands to issue to victim systems, including:\n\t\t\t\t\t\t\t\t\t\t»» Open an interactive command shell (usually Windows’ cmd.exe)\n\t\t\t\t\t\t\t\t\t\t»» Download and execute a file\n\t\t\t\t\t\t\t\t\t\t»» Sleep (i.e. remain inactive) for a specified amount of time\n\t\t\t\t\t\t\t\t</p>\n\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\tWEBC2 backdoors are often packaged with spear phishing emails. Once installed, APT1 intruders have the option to tell victim systems\n\t\t\t\t\t\t\t\tto download and execute additional malicious software of their choice. WEBC2 backdoors work for their intended purpose, but they generally\n\t\t\t\t\t\t\t\thave fewer features than the “Standard Backdoors” described below.\n\t\t\t\t\t\t\t\t</p>\n\t\t\t\t\t\t\t\t<h2>Standard Backdoors</h2>\n\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\tThe standard, non-WEBC2 APT1 backdoor typically communicates using the HTTP protocol (to blend in with legitimate web traffic) or a\n\t\t\t\t\t\t\t\tcustom protocol that the malware authors designed themselves. These backdoors give APT intruders a laundry list of ways to control victim\n\t\t\t\t\t\t\t\tsystems, including:\n\t\t\t\t\t\t\t\t\t\t»» Create/modify/delete/execute programs\n\t\t\t\t\t\t\t\t\t\t»» Upload/download files\n\t\t\t\t\t\t\t\t\t\t»» Create/delete directories\n\t\t\t\t\t\t\t\t\t\t»» List/start/stop processes\n\t\t\t\t\t\t\t\t\t\t»» Modify the system registry\n\t\t\t\t\t\t\t\t\t\t»» Take screenshots of the user’s desktop\n\t\t\t\t\t\t\t\t\t\t»» Capture keystrokes\n\t\t\t\t\t\t\t\t\t\t»» Capture mouse movement\n\t\t\t\t\t\t\t\t\t\t»» Start an interactive command shell\n\t\t\t\t\t\t\t\t\t\t»» Create a Remote desktop (i.e. graphical) interface\n\t\t\t\t\t\t\t\t\t\t»» Harvest passwords\n\t\t\t\t\t\t\t\t\t\t»» Enumerate users\n\t\t\t\t\t\t\t\t\t\t»» Enumerate other systems on the network\n\t\t\t\t\t\t\t\t\t\t»» Sleep (i.e. go inactive) for a specified amount of time\n\t\t\t\t\t\t\t\t\t\t»» Log off the current user\n\t\t\t\t\t\t\t\t\t\t»» Shut down the system\n\t\t\t\t\t\t\t\t</p>\n\t\t\t\t\t\t\t</body>\n\t\t\t\t\t\t</html>\n\nINTENDED_EFFECT:Establishing a foothold involves actions that ensure\n\t\t\t\tcontrol of the target network’s systems from outside the network.",
             "id": "attack-pattern--1e2c4237-d469-4144-9c0b-9e5c0c513c49",
             "kill_chain_phases": [
@@ -505,16 +506,16 @@
                     "phase_name": "Establish Foothold"
                 }
             ],
-          "modified": "2017-05-03T14:10:22.374Z",
+          "modified": "2018-09-26T15:49:56.067Z",
             "name": "Establishing a Foothold",
             "object_marking_refs": [
-              "marking-definition--38707174-d5c6-488b-837e-72612a3d77d3"
+              "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
             ],
             "type": "attack-pattern"
         },
         {
-          "created": "2017-05-03T14:10:22.374Z",
-          "created_by_ref": "identity--38b25d5f-86fa-4d1f-b549-dbcc442620c1",
+          "created": "2018-09-26T15:49:56.067Z",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
             "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html>\n\t\t\t\t\t\t\t<body>\n\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\tIn this and the next two stages, APT1 does not differ significantly from other APT intruders (or intruders,\n                            \tgenerally). APT1 predominantly uses publicly available tools to dump password hashes from victim systems in\n                            \torder to obtain legitimate user credentials.\n\t\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t\t</body>\n\t\t\t\t\t\t</html>\n\nINTENDED_EFFECT:Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. \n\nINTENDED_EFFECT:Unauthorized Access",
             "id": "attack-pattern--e13f3e6d-4f9c-4265-b1cf-f997a1bf7827",
             "kill_chain_phases": [
@@ -523,18 +524,18 @@
                     "phase_name": "Escalate Privileges"
                 }
             ],
-          "modified": "2017-05-03T14:10:22.374Z",
+          "modified": "2018-09-26T15:49:56.067Z",
             "name": "Privilege Escalation",
             "object_marking_refs": [
-              "marking-definition--38707174-d5c6-488b-837e-72612a3d77d3"
+              "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
             ],
             "type": "attack-pattern"
         },
         {
-          "created": "2017-05-03T14:10:22.374Z",
-          "created_by_ref": "identity--38b25d5f-86fa-4d1f-b549-dbcc442620c1",
+          "created": "2018-09-26T15:49:56.068Z",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
             "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html><body>\n\t\t\t\t\t\t\t\t<p>This program extracts cached password hashes from a system's registry.</P>\n\t\t\t\t\t\t\t\t<p>Currently packaged with fgdump</P>\n\t\t\t\t\t\t</body></html>\n\nINTENDED_EFFECT:Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. \n\nINTENDED_EFFECT:Unauthorized Access\n\nTITLE:\n\tPrivilege Escalation",
-          "id": "tool--e13f3e6d-4f9c-4265-b1cf-f997a1bf7827",
+          "id": "tool--3697a405-72f3-43d2-9d22-66eb8ffdccc7",
             "kill_chain_phases": [
                 {
                     "kill_chain_name": "APT1 Attack Lifecycle Model",
@@ -544,18 +545,18 @@
             "labels": [
                 "unknown"
             ],
-          "modified": "2017-05-03T14:10:22.374Z",
+          "modified": "2018-09-26T15:49:56.068Z",
             "name": "cachedump",
             "object_marking_refs": [
-              "marking-definition--38707174-d5c6-488b-837e-72612a3d77d3"
+              "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
             ],
             "type": "tool"
         },
         {
-          "created": "2017-05-03T14:10:22.390Z",
-          "created_by_ref": "identity--38b25d5f-86fa-4d1f-b549-dbcc442620c1",
+          "created": "2018-09-26T15:49:56.069Z",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
             "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html><body>\n\t\t\t\t\t\t\t\t<p>Windows password hash dumper.</P>\n\t\t\t\t\t\t\t\t<p>http://www.foofus.net/fizzgig/fgdump/</P>\n\t\t\t\t\t\t</body></html>\n\nINTENDED_EFFECT:Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. \n\nINTENDED_EFFECT:Unauthorized Access\n\nTITLE:\n\tPrivilege Escalation",
-          "id": "tool--c3e3931d-f2bc-4f34-9892-29515eac8e9c",
+          "id": "tool--3bc5da12-310e-428a-a0d7-3ba7dacf2c5e",
             "kill_chain_phases": [
                 {
                     "kill_chain_name": "APT1 Attack Lifecycle Model",
@@ -565,18 +566,18 @@
             "labels": [
                 "unknown"
             ],
-          "modified": "2017-05-03T14:10:22.390Z",
+          "modified": "2018-09-26T15:49:56.069Z",
             "name": "fgdump",
             "object_marking_refs": [
-              "marking-definition--38707174-d5c6-488b-837e-72612a3d77d3"
+              "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
             ],
             "type": "tool"
         },
         {
-          "created": "2017-05-03T14:10:22.390Z",
-          "created_by_ref": "identity--38b25d5f-86fa-4d1f-b549-dbcc442620c1",
+          "created": "2018-09-26T15:49:56.069Z",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
             "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html><body>\n\t\t\t\t\t\t\t\t<p>Obtains password hashes from the Windows registry, inlcuding the SAM file, cached domain credentials, and LSA secrets.</P>\n\t\t\t\t\t\t\t\t<p>http://truesec.se</P>\n\t\t\t\t\t\t</body></html>\n\nINTENDED_EFFECT:Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. \n\nINTENDED_EFFECT:Unauthorized Access\n\nTITLE:\n\tPrivilege Escalation",
-          "id": "tool--b665c95e-c43a-4d50-8510-b83018c674ae",
+          "id": "tool--75143b9c-1981-4f14-9010-086baad965fe",
             "kill_chain_phases": [
                 {
                     "kill_chain_name": "APT1 Attack Lifecycle Model",
@@ -586,18 +587,18 @@
             "labels": [
                 "unknown"
             ],
-          "modified": "2017-05-03T14:10:22.390Z",
+          "modified": "2018-09-26T15:49:56.069Z",
             "name": "gsecdump",
             "object_marking_refs": [
-              "marking-definition--38707174-d5c6-488b-837e-72612a3d77d3"
+              "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
             ],
             "type": "tool"
         },
         {
-          "created": "2017-05-03T14:10:22.390Z",
-          "created_by_ref": "identity--38b25d5f-86fa-4d1f-b549-dbcc442620c1",
+          "created": "2018-09-26T15:49:56.070Z",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
             "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html><body>\n\t\t\t\t\t\t\t\t<p>Dump active logon session password hashes from the lsass process.</P>\n\t\t\t\t\t\t\t\t<p>http://truesec.se</P>\n\t\t\t\t\t\t</body></html>\n\nINTENDED_EFFECT:Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. \n\nINTENDED_EFFECT:Unauthorized Access\n\nTITLE:\n\tPrivilege Escalation",
-          "id": "tool--002681e0-5012-42a2-a95d-1e4aea798bcc",
+          "id": "tool--7815fc08-88b6-407c-9e38-f7ef4e169ce6",
             "kill_chain_phases": [
                 {
                     "kill_chain_name": "APT1 Attack Lifecycle Model",
@@ -607,18 +608,18 @@
             "labels": [
                 "unknown"
             ],
-          "modified": "2017-05-03T14:10:22.390Z",
+          "modified": "2018-09-26T15:49:56.070Z",
             "name": "lslsass",
             "object_marking_refs": [
-              "marking-definition--38707174-d5c6-488b-837e-72612a3d77d3"
+              "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
             ],
             "type": "tool"
         },
         {
-          "created": "2017-05-03T14:10:22.390Z",
-          "created_by_ref": "identity--38b25d5f-86fa-4d1f-b549-dbcc442620c1",
+          "created": "2018-09-26T15:49:56.070Z",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
             "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html><body>\n\t\t\t\t\t\t\t\t<p>A utility primarily used for dumping password hashes.</P>\n\t\t\t\t\t\t\t\t<p>http://blog.gentilkiwi.com/mimikatz</P>\n\t\t\t\t\t\t</body></html>\n\nINTENDED_EFFECT:Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. \n\nINTENDED_EFFECT:Unauthorized Access\n\nTITLE:\n\tPrivilege Escalation",
-          "id": "tool--3126e20e-e30e-40ae-a416-2e20825aeaa7",
+          "id": "tool--05e337e7-ba60-4b48-9e24-1b50f260164a",
             "kill_chain_phases": [
                 {
                     "kill_chain_name": "APT1 Attack Lifecycle Model",
@@ -628,18 +629,18 @@
             "labels": [
                 "unknown"
             ],
-          "modified": "2017-05-03T14:10:22.390Z",
+          "modified": "2018-09-26T15:49:56.070Z",
             "name": "mimikatz",
             "object_marking_refs": [
-              "marking-definition--38707174-d5c6-488b-837e-72612a3d77d3"
+              "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
             ],
             "type": "tool"
         },
         {
-          "created": "2017-05-03T14:10:22.390Z",
-          "created_by_ref": "identity--38b25d5f-86fa-4d1f-b549-dbcc442620c1",
+          "created": "2018-09-26T15:49:56.071Z",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
             "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html><body>\n\t\t\t\t\t\t\t\t<p>Allows an intruder to \"pass\" a password hash (without knowing the original password) to log in to systems.</P>\n\t\t\t\t\t\t\t\t<p>http://oss.coresecurity.com/projects/pshtoolkit.htm</P>\n\t\t\t\t\t\t</body></html>\n\nINTENDED_EFFECT:Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. \n\nINTENDED_EFFECT:Unauthorized Access\n\nTITLE:\n\tPrivilege Escalation",
-          "id": "tool--f5e87fb3-9df7-4f99-8f9f-59f3b12ebb2b",
+          "id": "tool--19d34cb2-3027-4581-bbdf-62b273b70a82",
             "kill_chain_phases": [
                 {
                     "kill_chain_name": "APT1 Attack Lifecycle Model",
@@ -649,18 +650,18 @@
             "labels": [
                 "unknown"
             ],
-          "modified": "2017-05-03T14:10:22.390Z",
+          "modified": "2018-09-26T15:49:56.071Z",
             "name": "pass-the-hash toolkit",
             "object_marking_refs": [
-              "marking-definition--38707174-d5c6-488b-837e-72612a3d77d3"
+              "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
             ],
             "type": "tool"
         },
         {
-          "created": "2017-05-03T14:10:22.405Z",
-          "created_by_ref": "identity--38b25d5f-86fa-4d1f-b549-dbcc442620c1",
+          "created": "2018-09-26T15:49:56.072Z",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
             "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html><body>\n\t\t\t\t\t\t\t\t<p>Dumps password hashes from the Windows registry.</P>\n\t\t\t\t\t\t\t\t<p>http://www.tarasco.org/security/pwdump_7/</P>\n\t\t\t\t\t\t</body></html>\n\nINTENDED_EFFECT:Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. \n\nINTENDED_EFFECT:Unauthorized Access\n\nTITLE:\n\tPrivilege Escalation",
-          "id": "tool--2e2d5ce7-36a9-447d-9b15-05b6e5485df2",
+          "id": "tool--28e2f65f-c80b-445d-b8f8-63e21097d1a7",
             "kill_chain_phases": [
                 {
                     "kill_chain_name": "APT1 Attack Lifecycle Model",
@@ -670,18 +671,18 @@
             "labels": [
                 "unknown"
             ],
-          "modified": "2017-05-03T14:10:22.405Z",
+          "modified": "2018-09-26T15:49:56.072Z",
             "name": "pwdump7",
             "object_marking_refs": [
-              "marking-definition--38707174-d5c6-488b-837e-72612a3d77d3"
+              "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
             ],
             "type": "tool"
         },
         {
-          "created": "2017-05-03T14:10:22.405Z",
-          "created_by_ref": "identity--38b25d5f-86fa-4d1f-b549-dbcc442620c1",
+          "created": "2018-09-26T15:49:56.073Z",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
             "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html><body>\n\t\t\t\t\t\t\t\t<p>Dumps password hashes from the Windows Registry.</P>\n\t\t\t\t\t\t\t\t<p>The tool claims its origin as http://reedarvin.thearvins.com but the site is not offering this software as of the date of this report.</P>\n\t\t\t\t\t\t</body></html>\n\nINTENDED_EFFECT:Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. \n\nINTENDED_EFFECT:Unauthorized Access\n\nTITLE:\n\tPrivilege Escalation",
-          "id": "tool--02a9e44e-f869-4301-8767-de040474c3b1",
+          "id": "tool--9ca0235a-b1a8-4f0b-8920-23c4da250b9f",
             "kill_chain_phases": [
                 {
                     "kill_chain_name": "APT1 Attack Lifecycle Model",
@@ -691,17 +692,17 @@
             "labels": [
                 "unknown"
             ],
-          "modified": "2017-05-03T14:10:22.405Z",
+          "modified": "2018-09-26T15:49:56.073Z",
             "name": "pwdumpX",
             "object_marking_refs": [
-              "marking-definition--38707174-d5c6-488b-837e-72612a3d77d3"
+              "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
             ],
             "type": "tool"
         },
         {
-          "created": "2017-05-03T14:10:22.405Z",
-          "created_by_ref": "identity--38b25d5f-86fa-4d1f-b549-dbcc442620c1",
-          "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html>\n\t\t\t\t\t\t\t<body>\n\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\tLike most APT (and non-APT) intruders, APT1 primarily uses built-in operating system commands to explore a compromised system\n                            \tand its networked environment. Although they usually simply type these commands into a command shell, sometimes\n                            \tintruders may use batch scripts to speed up the process. Figure 18 below shows the contents of a batch script that\n\t\t\t\t\t\t\t\tAPT1 used on at least four victim networks.\n\t\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t\t\t<code>\n\t\t\t\t\t\t\t\t\t@echo off\n\t\t\t\t\t\t\t\t\tipconfig /all&gt;&gt;\u201dC:\\WINNT\\Debug\\1.txt\u201d\n\t\t\t\t\t\t\t\t\tnet start&gt;&gt;\u201dC:\\WINNT\\Debug\\1.txt\u201d\n\t\t\t\t\t\t\t\t\ttasklist /v&gt;&gt;\u201dC:\\WINNT\\Debug\\1.txt\u201d\n\t\t\t\t\t\t\t\t\tnet user &gt;&gt;\u201dC:\\WINNT\\Debug\\1.txt\u201d\n\t\t\t\t\t\t\t\t\tnet localgroup administrators&gt;&gt;\u201dC:\\WINNT\\Debug\\1.txt\u201d\n\t\t\t\t\t\t\t\t\tnetstat -ano&gt;&gt;\u201dC:\\WINNT\\Debug\\1.txt\u201d\n\t\t\t\t\t\t\t\t\tnet use&gt;&gt;\u201dC:\\WINNT\\Debug\\1.txt\u201d\n\t\t\t\t\t\t\t\t\tnet view&gt;&gt;\u201dC:\\WINNT\\Debug\\1.txt\u201d\n\t\t\t\t\t\t\t\t\tnet view /domain&gt;&gt;\u201dC:\\WINNT\\Debug\\1.txt\u201d\n\t\t\t\t\t\t\t\t\tnet group /domain&gt;&gt;\u201dC:\\WINNT\\Debug\\1.txt\u201d\n\t\t\t\t\t\t\t\t\tnet group \u201cdomain users\u201d /domain&gt;&gt;\u201dC:\\WINNT\\Debug\\1.txt\u201d\n\t\t\t\t\t\t\t\t\tnet group \u201cdomain admins\u201d /domain&gt;&gt;\u201dC:\\WINNT\\Debug\\1.txt\u201d\n\t\t\t\t\t\t\t\t\tnet group \u201cdomain controllers\u201d /domain&gt;&gt;\u201dC:\\WINNT\\Debug\\1.txt\u201d\n\t\t\t\t\t\t\t\t\tnet group \u201cexchange domain servers\u201d /domain&gt;&gt;\u201dC:\\WINNT\\Debug\\1.txt\u201d\n\t\t\t\t\t\t\t\t\tnet group \u201cexchange servers\u201d /domain&gt;&gt;\u201dC:\\WINNT\\Debug\\1.txt\u201d\n\t\t\t\t\t\t\t\t\tnet group \u201cdomain computers\u201d /domain&gt;&gt;\u201dC:\\WINNT\\Debug\\1.txt\u201d\n\t\t\t\t\t\t\t\t</code>\n\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\tThis script performs the following functions and saves the results to a text file:\n\t\t\t\t\t\t\t\t\t\u00bb\u00bb Display the victim\u2019s network configuration information\n\t\t\t\t\t\t\t\t\t\u00bb\u00bb List the services that have started on the victim system\n\t\t\t\t\t\t\t\t\t\u00bb\u00bb List currently running processes\n\t\t\t\t\t\t\t\t\t\u00bb\u00bb List accounts on the system\n\t\t\t\t\t\t\t\t\t\u00bb\u00bb List accounts with administrator privileges\n\t\t\t\t\t\t\t\t\t\u00bb\u00bb List current network connections\n\t\t\t\t\t\t\t\t\t\u00bb\u00bb List currently connected network shares\n\t\t\t\t\t\t\t\t\t\u00bb\u00bb List other systems on the network\n\t\t\t\t\t\t\t\t\t\u00bb\u00bb List network computers and accounts according to group (\u201cdomain controllers,\u201d \u201cdomain users,\u201d \u201cdomain admins,\u201d etc.)\n\t\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t\t</body>\n\t\t\t\t\t\t</html>\n\nINTENDED_EFFECT:In the Internal Reconnaissance stage, the intruder\n\t\t\t\tcollects information about the victim environment.\n\nINTENDED_EFFECT:Unauthorized Access\n\nINTENDED_EFFECT:Theft - Credential Theft",
+          "created": "2018-09-26T15:49:56.074Z",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
+          "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html>\n\t\t\t\t\t\t\t<body>\n\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\tLike most APT (and non-APT) intruders, APT1 primarily uses built-in operating system commands to explore a compromised system\n                            \tand its networked environment. Although they usually simply type these commands into a command shell, sometimes\n                            \tintruders may use batch scripts to speed up the process. Figure 18 below shows the contents of a batch script that\n\t\t\t\t\t\t\t\tAPT1 used on at least four victim networks.\n\t\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t\t\t<code>\n\t\t\t\t\t\t\t\t\t@echo off\n\t\t\t\t\t\t\t\t\tipconfig /all&gt;&gt;”C:\\WINNT\\Debug\\1.txt”\n\t\t\t\t\t\t\t\t\tnet start&gt;&gt;”C:\\WINNT\\Debug\\1.txt”\n\t\t\t\t\t\t\t\t\ttasklist /v&gt;&gt;”C:\\WINNT\\Debug\\1.txt”\n\t\t\t\t\t\t\t\t\tnet user &gt;&gt;”C:\\WINNT\\Debug\\1.txt”\n\t\t\t\t\t\t\t\t\tnet localgroup administrators&gt;&gt;”C:\\WINNT\\Debug\\1.txt”\n\t\t\t\t\t\t\t\t\tnetstat -ano&gt;&gt;”C:\\WINNT\\Debug\\1.txt”\n\t\t\t\t\t\t\t\t\tnet use&gt;&gt;”C:\\WINNT\\Debug\\1.txt”\n\t\t\t\t\t\t\t\t\tnet view&gt;&gt;”C:\\WINNT\\Debug\\1.txt”\n\t\t\t\t\t\t\t\t\tnet view /domain&gt;&gt;”C:\\WINNT\\Debug\\1.txt”\n\t\t\t\t\t\t\t\t\tnet group /domain&gt;&gt;”C:\\WINNT\\Debug\\1.txt”\n\t\t\t\t\t\t\t\t\tnet group “domain users” /domain&gt;&gt;”C:\\WINNT\\Debug\\1.txt”\n\t\t\t\t\t\t\t\t\tnet group “domain admins” /domain&gt;&gt;”C:\\WINNT\\Debug\\1.txt”\n\t\t\t\t\t\t\t\t\tnet group “domain controllers” /domain&gt;&gt;”C:\\WINNT\\Debug\\1.txt”\n\t\t\t\t\t\t\t\t\tnet group “exchange domain servers” /domain&gt;&gt;”C:\\WINNT\\Debug\\1.txt”\n\t\t\t\t\t\t\t\t\tnet group “exchange servers” /domain&gt;&gt;”C:\\WINNT\\Debug\\1.txt”\n\t\t\t\t\t\t\t\t\tnet group “domain computers” /domain&gt;&gt;”C:\\WINNT\\Debug\\1.txt”\n\t\t\t\t\t\t\t\t</code>\n\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\tThis script performs the following functions and saves the results to a text file:\n\t\t\t\t\t\t\t\t\t»» Display the victim’s network configuration information\n\t\t\t\t\t\t\t\t\t»» List the services that have started on the victim system\n\t\t\t\t\t\t\t\t\t»» List currently running processes\n\t\t\t\t\t\t\t\t\t»» List accounts on the system\n\t\t\t\t\t\t\t\t\t»» List accounts with administrator privileges\n\t\t\t\t\t\t\t\t\t»» List current network connections\n\t\t\t\t\t\t\t\t\t»» List currently connected network shares\n\t\t\t\t\t\t\t\t\t»» List other systems on the network\n\t\t\t\t\t\t\t\t\t»» List network computers and accounts according to group (“domain controllers,” “domain users,” “domain admins,” etc.)\n\t\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t\t</body>\n\t\t\t\t\t\t</html>\n\nINTENDED_EFFECT:In the Internal Reconnaissance stage, the intruder\n\t\t\t\tcollects information about the victim environment.\n\nINTENDED_EFFECT:Unauthorized Access\n\nINTENDED_EFFECT:Theft - Credential Theft",
             "id": "attack-pattern--5728f45b-2eca-4942-a7f6-bc4267c1ab8d",
             "kill_chain_phases": [
                 {
@@ -709,16 +710,16 @@
                     "phase_name": "Internal Recon"
                 }
             ],
-          "modified": "2017-05-03T14:10:22.405Z",
+          "modified": "2018-09-26T15:49:56.074Z",
             "name": "Internal Reconnaisance",
             "object_marking_refs": [
-              "marking-definition--38707174-d5c6-488b-837e-72612a3d77d3"
+              "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
             ],
             "type": "attack-pattern"
         },
         {
-          "created": "2017-05-03T14:10:22.405Z",
-          "created_by_ref": "identity--38b25d5f-86fa-4d1f-b549-dbcc442620c1",
+          "created": "2018-09-26T15:49:56.075Z",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
             "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html><body>\n\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tOnce an APT intruder has a foothold inside the network and a set of legitimate credentials, it is simple for the intruder\n                            to move around the network undetected.\n\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tThey can connect to shared resources on other systems.\n\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tThey can execute commands on other systems using the publicly available \"psexec\" tool from Microsoft\n                            Sysinternals or the built-in Windows Task Scheduler (\"at.exe\").\n\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tThese actions are hard to detect because legitimate system administrators also use these techniques to perform\n                            actions around the network.\n\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t</body></html>\n\nINTENDED_EFFECT:Expand foothold and access through lateral movement\n\t\t\t\twithin the target environment.\n\nINTENDED_EFFECT:Unauthorized Access",
             "id": "attack-pattern--0bea2358-c244-4905-a664-a5cdce7bb767",
             "kill_chain_phases": [
@@ -727,17 +728,17 @@
                     "phase_name": "Move Laterally"
                 }
             ],
-          "modified": "2017-05-03T14:10:22.405Z",
+          "modified": "2018-09-26T15:49:56.075Z",
             "name": "Lateral Movement",
             "object_marking_refs": [
-              "marking-definition--38707174-d5c6-488b-837e-72612a3d77d3"
+              "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
             ],
             "type": "attack-pattern"
         },
         {
-          "created": "2017-05-03T14:10:22.421Z",
-          "created_by_ref": "identity--38b25d5f-86fa-4d1f-b549-dbcc442620c1",
-          "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html><body>\n\t\t\t\t\t\t<p>\n\t\t\t\t\t\tThe APT does this (maintains presence) in three ways:\n\t\t\t\t\t\t</p>\n\t\t\t\t\t\t\t<ol>\n\t\t\t\t\t\t\t\t<li>Install new backdoors on multiple systems\n\t\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\t\tThroughout their stay in the network (which could be years), APT1 usually installs new backdoors as they claim more\n                            \t\tsystems in the environment. Then, if one backdoor is discovered and deleted, they still have other backdoors they can\n                            \t\tuse. We usually detect multiple families of APT1 backdoors scattered around a victim network when APT1 has been\n                            \t\tpresent for more than a few weeks.\n\t\t\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t\t\t</li>Use legitimate VPN credentials\n\t\t\t\t\t\t\t\t<li>\n\t\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\t\tAPT actors and hackers in general are always looking for valid credentials in order to impersonate a legitimate user.\n                            \t\tWe have observed APT1 using stolen usernames and passwords to log into victim networks\u2019 VPNs when the VPNs are\n                            \t\tonly protected by single-factor authentication. From there they are able to access whatever the impersonated users are\n                            \t\tallowed to access within the network.\n\t\t\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t\t<li>Log in to web portals\n\t\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\t\tOnce armed with stolen credentials, APT1 intruders also attempt to log into web portals that the network offers. This\n                            \t\tincludes not only restricted websites, but also web-based email systems such as Outlook Web Access.\n\t\t\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t</ol>\n\t\t\t\t\t\t</body></html>\n\nINTENDED_EFFECT:In this stage, the intruder takes actions to ensure\n\t\t\t\tcontinued, long-term control over key systems in the network environment from\n\t\t\t\toutside of the network. ",
+          "created": "2018-09-26T15:49:56.076Z",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
+          "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html><body>\n\t\t\t\t\t\t<p>\n\t\t\t\t\t\tThe APT does this (maintains presence) in three ways:\n\t\t\t\t\t\t</p>\n\t\t\t\t\t\t\t<ol>\n\t\t\t\t\t\t\t\t<li>Install new backdoors on multiple systems\n\t\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\t\tThroughout their stay in the network (which could be years), APT1 usually installs new backdoors as they claim more\n                            \t\tsystems in the environment. Then, if one backdoor is discovered and deleted, they still have other backdoors they can\n                            \t\tuse. We usually detect multiple families of APT1 backdoors scattered around a victim network when APT1 has been\n                            \t\tpresent for more than a few weeks.\n\t\t\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t\t\t</li>Use legitimate VPN credentials\n\t\t\t\t\t\t\t\t<li>\n\t\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\t\tAPT actors and hackers in general are always looking for valid credentials in order to impersonate a legitimate user.\n                            \t\tWe have observed APT1 using stolen usernames and passwords to log into victim networks’ VPNs when the VPNs are\n                            \t\tonly protected by single-factor authentication. From there they are able to access whatever the impersonated users are\n                            \t\tallowed to access within the network.\n\t\t\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t\t<li>Log in to web portals\n\t\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\t\tOnce armed with stolen credentials, APT1 intruders also attempt to log into web portals that the network offers. This\n                            \t\tincludes not only restricted websites, but also web-based email systems such as Outlook Web Access.\n\t\t\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t</ol>\n\t\t\t\t\t\t</body></html>\n\nINTENDED_EFFECT:In this stage, the intruder takes actions to ensure\n\t\t\t\tcontinued, long-term control over key systems in the network environment from\n\t\t\t\toutside of the network. ",
             "id": "attack-pattern--7151c6d0-7e97-47ce-9290-087315ea3db7",
             "kill_chain_phases": [
                 {
@@ -745,17 +746,17 @@
                     "phase_name": "Maintain Presence"
                 }
             ],
-          "modified": "2017-05-03T14:10:22.421Z",
+          "modified": "2018-09-26T15:49:56.076Z",
             "name": "Maintain Presence",
             "object_marking_refs": [
-              "marking-definition--38707174-d5c6-488b-837e-72612a3d77d3"
+              "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
             ],
             "type": "attack-pattern"
         },
         {
-          "created": "2017-05-03T14:10:22.421Z",
-          "created_by_ref": "identity--38b25d5f-86fa-4d1f-b549-dbcc442620c1",
-          "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html>\n\t\t\t\t\t\t\t<body>\n\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\tSimilar to other APT groups we track, once APT1 finds files of interest they pack them into archive files before stealing\n                            \tthem. APT intruders most commonly use the RAR archiving utility for this task and ensure that the archives are\n                            \tpassword protected. Sometimes APT1 intruders use batch scripts to assist them in the process, as depicted in Figure\n                            \t19. (The instances of \"XXXXXXXX\" obfuscate the text that was in the actual batch script.)\n\t\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t\t\t<code>\n\t\t\t\t\t\t\t\t\t@echo off\n                            \t\tcd /d c:\\windows\\tasks\n                            \t\trar.log a XXXXXXXX.rar -v200m \"C:\\Documents and Settings\\Place\\My\n                            \t\tDocuments\\XXXXXXXX\" -hpsmy123!@#\n                            \t\tdel *.vbs\n                            \t\tdel %0\n\t\t\t\t\t\t\t\t</code>\n\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\t After creating files compressed via RAR, the APT1 attackers will transfer files out of the network in ways that are\n                            \tconsistent with other APT groups, including using the File Transfer Protocol (FTP) or their existing backdoors. Many\n                            \ttimes their RAR files are so large that the attacker splits them into chunks before transferring them. Figure 19 above\n                            \tshows a RAR command with the option \"-v200m\", which means that the RAR file should be split up into 200MB\n                            \tportions.\n\t\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\tUnlike most other APT groups we track, APT1 uses two email-stealing utilities that we believe are unique to APT1. The\n                            \tfirst, GETMAIL, was designed specifically to extract email messages, attachments, and folders from within Microsoft\n                            \tOutlook archive (\"PST\") files.\n\t\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\tMicrosoft Outlook archives can be large, often storing years\u2019 worth of emails. They may be too large to transfer out\n                            \tof a network quickly, and the intruder may not be concerned about stealing every email. The GETMAIL utility allows\n                            \tAPT1 intruders the flexibility to take only the emails between dates of their choice. In one case, we observed an APT1\n                            \tintruder return to a compromised system once a week for four weeks in a row to steal only the past week\u2019s emails.\n\t\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\tWhereas GETMAIL steals email in Outlook archive files, the second utility, MAPIGET, was designed specifically to steal\n                            \temail that has not yet been archived and still resides on a Microsoft Exchange Server. In order to operate successfully,\n                            \tMAPIGET requires username/password combinations that the Exchange server will accept. MAPIGET extracts email\n                            \tfrom specified accounts into text files (for the email body) and separate attachments, if there are any.\n\t\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t\t</body>\n\t\t\t\t\t\t</html>\n\nINTENDED_EFFECT:Exfiltration information relevant to the mission.\n\nINTENDED_EFFECT:Theft - Theft of Proprietary Information\n\nINTENDED_EFFECT:Theft - Intellectual Property",
+          "created": "2018-09-26T15:49:56.076Z",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
+          "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html>\n\t\t\t\t\t\t\t<body>\n\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\tSimilar to other APT groups we track, once APT1 finds files of interest they pack them into archive files before stealing\n                            \tthem. APT intruders most commonly use the RAR archiving utility for this task and ensure that the archives are\n                            \tpassword protected. Sometimes APT1 intruders use batch scripts to assist them in the process, as depicted in Figure\n                            \t19. (The instances of \"XXXXXXXX\" obfuscate the text that was in the actual batch script.)\n\t\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t\t\t<code>\n\t\t\t\t\t\t\t\t\t@echo off\n                            \t\tcd /d c:\\windows\\tasks\n                            \t\trar.log a XXXXXXXX.rar -v200m \"C:\\Documents and Settings\\Place\\My\n                            \t\tDocuments\\XXXXXXXX\" -hpsmy123!@#\n                            \t\tdel *.vbs\n                            \t\tdel %0\n\t\t\t\t\t\t\t\t</code>\n\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\t After creating files compressed via RAR, the APT1 attackers will transfer files out of the network in ways that are\n                            \tconsistent with other APT groups, including using the File Transfer Protocol (FTP) or their existing backdoors. Many\n                            \ttimes their RAR files are so large that the attacker splits them into chunks before transferring them. Figure 19 above\n                            \tshows a RAR command with the option \"-v200m\", which means that the RAR file should be split up into 200MB\n                            \tportions.\n\t\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\tUnlike most other APT groups we track, APT1 uses two email-stealing utilities that we believe are unique to APT1. The\n                            \tfirst, GETMAIL, was designed specifically to extract email messages, attachments, and folders from within Microsoft\n                            \tOutlook archive (\"PST\") files.\n\t\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\tMicrosoft Outlook archives can be large, often storing years’ worth of emails. They may be too large to transfer out\n                            \tof a network quickly, and the intruder may not be concerned about stealing every email. The GETMAIL utility allows\n                            \tAPT1 intruders the flexibility to take only the emails between dates of their choice. In one case, we observed an APT1\n                            \tintruder return to a compromised system once a week for four weeks in a row to steal only the past week’s emails.\n\t\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\tWhereas GETMAIL steals email in Outlook archive files, the second utility, MAPIGET, was designed specifically to steal\n                            \temail that has not yet been archived and still resides on a Microsoft Exchange Server. In order to operate successfully,\n                            \tMAPIGET requires username/password combinations that the Exchange server will accept. MAPIGET extracts email\n                            \tfrom specified accounts into text files (for the email body) and separate attachments, if there are any.\n\t\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t\t</body>\n\t\t\t\t\t\t</html>\n\nINTENDED_EFFECT:Exfiltration information relevant to the mission.\n\nINTENDED_EFFECT:Theft - Theft of Proprietary Information\n\nINTENDED_EFFECT:Theft - Intellectual Property",
             "id": "attack-pattern--0781fe70-4c94-4300-8865-4b08b98611b4",
             "kill_chain_phases": [
                 {
@@ -763,18 +764,18 @@
                     "phase_name": "Complete Mission"
                 }
             ],
-          "modified": "2017-05-03T14:10:22.421Z",
+          "modified": "2018-09-26T15:49:56.076Z",
             "name": "Completing the Mission",
             "object_marking_refs": [
-              "marking-definition--38707174-d5c6-488b-837e-72612a3d77d3"
+              "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
             ],
             "type": "attack-pattern"
         },
         {
-          "created": "2017-05-03T14:10:22.421Z",
-          "created_by_ref": "identity--38b25d5f-86fa-4d1f-b549-dbcc442620c1",
+          "created": "2018-09-26T15:49:56.077Z",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
             "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html><body>\n\t\t\t\t\t\t\t<p>GETMAIL was designed specifically to extract email messages, attachments, and folders from within Microsoft Outlook archive (\"PST\") files.</P>\n\t\t\t\t\t\t</body></html>\n\nINTENDED_EFFECT:Exfiltration information relevant to the mission.\n\nINTENDED_EFFECT:Theft - Theft of Proprietary Information\n\nINTENDED_EFFECT:Theft - Intellectual Property\n\nTITLE:\n\tCompleting the Mission",
-          "id": "tool--0781fe70-4c94-4300-8865-4b08b98611b4",
+          "id": "tool--844fb162-4996-4867-a19c-78df6b7d3a75",
             "kill_chain_phases": [
                 {
                     "kill_chain_name": "APT1 Attack Lifecycle Model",
@@ -784,18 +785,18 @@
             "labels": [
                 "unknown"
             ],
-          "modified": "2017-05-03T14:10:22.421Z",
+          "modified": "2018-09-26T15:49:56.077Z",
             "name": "GETMAIL",
             "object_marking_refs": [
-              "marking-definition--38707174-d5c6-488b-837e-72612a3d77d3"
+              "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
             ],
             "type": "tool"
         },
         {
-          "created": "2017-05-03T14:10:22.421Z",
-          "created_by_ref": "identity--38b25d5f-86fa-4d1f-b549-dbcc442620c1",
+          "created": "2018-09-26T15:49:56.078Z",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
             "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html><body>\n\t\t\t\t\t\t\t<p>MAPIGET was designed specifically to steal email that has not yet been archived and still resides on a Microsoft Exchange Server.</P>\n\t\t\t\t\t\t</body></html>>\n\t\t\t\t\t\n\nINTENDED_EFFECT:Exfiltration information relevant to the mission.\n\nINTENDED_EFFECT:Theft - Theft of Proprietary Information\n\nINTENDED_EFFECT:Theft - Intellectual Property\n\nTITLE:\n\tCompleting the Mission",
-          "id": "tool--6fd1747b-3cd6-4e6d-8eda-d991c311219d",
+          "id": "tool--4ba50f14-a2eb-4f9e-b485-f3bf4ac32a91",
             "kill_chain_phases": [
                 {
                     "kill_chain_name": "APT1 Attack Lifecycle Model",
@@ -805,47 +806,49 @@
             "labels": [
                 "unknown"
             ],
-          "modified": "2017-05-03T14:10:22.421Z",
+          "modified": "2018-09-26T15:49:56.078Z",
             "name": "MAPIGET",
             "object_marking_refs": [
-              "marking-definition--38707174-d5c6-488b-837e-72612a3d77d3"
+              "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
             ],
             "type": "tool"
         },
         {
-          "created": "2017-05-03T14:10:22.312Z",
+          "created": "2015-05-15T09:00:00.000Z",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
             "description": "Recruits From",
-          "id": "relationship--5af8df6f-9384-49d9-838a-ae09b2f49ac5",
-          "modified": "2017-05-03T14:10:22.312Z",
+          "id": "relationship--ede8a765-6916-42f3-b5fc-a543b41355f4",
+          "modified": "2015-05-15T09:00:00.000Z",
             "relationship_type": "related-to",
-          "source_ref": "identity--ec3a79f7-c36d-4b86-8b1a-00892108f376",
-          "target_ref": "identity--91de38bf-2361-4975-aae7-644761f2563c",
+          "source_ref": "identity--e0ea3142-0c99-4b55-aaab-69fee064782c",
+          "target_ref": "identity--1c62e9eb-bef8-4a38-ba4f-29be7ba910e6",
             "type": "relationship"
         },
         {
-          "created": "2017-05-03T14:10:22.312Z",
+          "created": "2015-05-15T09:00:00.000Z",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
             "description": "Recruits From",
-          "id": "relationship--05ef9eb8-ea0b-41b6-a8ea-42eb6c309f5c",
-          "modified": "2017-05-03T14:10:22.312Z",
+          "id": "relationship--b8051368-23d6-486f-8c92-4e5d79bc8838",
+          "modified": "2015-05-15T09:00:00.000Z",
             "relationship_type": "related-to",
-          "source_ref": "identity--ec3a79f7-c36d-4b86-8b1a-00892108f376",
-          "target_ref": "identity--44df9aa7-023a-483a-a734-2aee0a24d62b",
+          "source_ref": "identity--e0ea3142-0c99-4b55-aaab-69fee064782c",
+          "target_ref": "identity--9a1a5860-2a36-416a-a649-b43443306c83",
             "type": "relationship"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-          "created_by_ref": "identity--38b25d5f-86fa-4d1f-b549-dbcc442620c1",
-          "id": "relationship--2bba8c36-7303-46b9-bd1f-8e71b08e19f8",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
+          "id": "relationship--41651313-fc3c-40d9-8e83-7d86a8435149",
             "modified": "2015-05-15T09:00:00.000Z",
             "relationship_type": "attributed-to",
             "source_ref": "threat-actor--8dff0344-0c82-4079-8d04-6f3e4d9bd1df",
-          "target_ref": "identity--ec3a79f7-c36d-4b86-8b1a-00892108f376",
+          "target_ref": "identity--e0ea3142-0c99-4b55-aaab-69fee064782c",
             "type": "relationship"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-          "created_by_ref": "identity--38b25d5f-86fa-4d1f-b549-dbcc442620c1",
-          "id": "relationship--627acd56-3340-4db7-9a43-088a2d486b50",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
+          "id": "relationship--897da148-dc16-4143-a9ba-23702ed5ab39",
             "modified": "2015-05-15T09:00:00.000Z",
             "relationship_type": "targets",
             "source_ref": "threat-actor--8dff0344-0c82-4079-8d04-6f3e4d9bd1df",
@@ -854,9 +857,9 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-          "created_by_ref": "identity--38b25d5f-86fa-4d1f-b549-dbcc442620c1",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
             "description": "Asserted Alias",
-          "id": "relationship--7209f3af-e132-4c2a-95dc-4279cc16fecf",
+          "id": "relationship--bf7b7f63-0aff-4685-b4b9-77f0785e3da4",
             "modified": "2015-05-15T09:00:00.000Z",
             "relationship_type": "related-to",
             "source_ref": "threat-actor--8dff0344-0c82-4079-8d04-6f3e4d9bd1df",
@@ -865,9 +868,9 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-          "created_by_ref": "identity--38b25d5f-86fa-4d1f-b549-dbcc442620c1",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
             "description": "Asserted Alias",
-          "id": "relationship--df013314-97db-4e94-9a28-9457514ed531",
+          "id": "relationship--d1f7d3ff-6b26-4790-8ed6-f2e5ecdc8595",
             "modified": "2015-05-15T09:00:00.000Z",
             "relationship_type": "related-to",
             "source_ref": "threat-actor--8dff0344-0c82-4079-8d04-6f3e4d9bd1df",
@@ -876,9 +879,9 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-          "created_by_ref": "identity--38b25d5f-86fa-4d1f-b549-dbcc442620c1",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
             "description": "Asserted Alias",
-          "id": "relationship--2b4a59e7-2db9-4f52-90f8-401c70145a7a",
+          "id": "relationship--ffd3b759-f475-46c6-a5a9-675b85752ab1",
             "modified": "2015-05-15T09:00:00.000Z",
             "relationship_type": "related-to",
             "source_ref": "threat-actor--8dff0344-0c82-4079-8d04-6f3e4d9bd1df",
@@ -887,9 +890,9 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-          "created_by_ref": "identity--38b25d5f-86fa-4d1f-b549-dbcc442620c1",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
             "description": "Asserted Alias",
-          "id": "relationship--b56f53e8-14eb-493f-a64b-050008633a85",
+          "id": "relationship--69c24455-56d5-4ccb-a027-c3a76302bcab",
             "modified": "2015-05-15T09:00:00.000Z",
             "relationship_type": "related-to",
             "source_ref": "threat-actor--8dff0344-0c82-4079-8d04-6f3e4d9bd1df",
@@ -898,9 +901,9 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-          "created_by_ref": "identity--38b25d5f-86fa-4d1f-b549-dbcc442620c1",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
             "description": "Member",
-          "id": "relationship--cf208569-56af-4555-b25f-bc27527eb005",
+          "id": "relationship--287202df-1be5-4195-8ded-3aa498f50a75",
             "modified": "2015-05-15T09:00:00.000Z",
             "relationship_type": "related-to",
             "source_ref": "threat-actor--8dff0344-0c82-4079-8d04-6f3e4d9bd1df",
@@ -909,9 +912,9 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-          "created_by_ref": "identity--38b25d5f-86fa-4d1f-b549-dbcc442620c1",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
             "description": "Member",
-          "id": "relationship--1aa39c99-0ef8-4353-8b50-b799a6860738",
+          "id": "relationship--8cfec8e5-29d9-45d4-9d62-e2b896b87c9f",
             "modified": "2015-05-15T09:00:00.000Z",
             "relationship_type": "related-to",
             "source_ref": "threat-actor--8dff0344-0c82-4079-8d04-6f3e4d9bd1df",
@@ -920,9 +923,9 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-          "created_by_ref": "identity--38b25d5f-86fa-4d1f-b549-dbcc442620c1",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
             "description": "Member",
-          "id": "relationship--984e07b9-667f-45da-88b9-27c126e5106c",
+          "id": "relationship--2c6b7ff5-d63c-466f-bd27-abc758c6ef08",
             "modified": "2015-05-15T09:00:00.000Z",
             "relationship_type": "related-to",
             "source_ref": "threat-actor--8dff0344-0c82-4079-8d04-6f3e4d9bd1df",
@@ -931,9 +934,9 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-          "created_by_ref": "identity--38b25d5f-86fa-4d1f-b549-dbcc442620c1",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
             "description": "Infrastructure Provided By",
-          "id": "relationship--2ac4cdc6-80de-4d04-8ce9-fc9a2f7fcea9",
+          "id": "relationship--aea7fde2-70af-4362-ba93-616081bb6690",
             "modified": "2015-05-15T09:00:00.000Z",
             "relationship_type": "related-to",
             "source_ref": "threat-actor--8dff0344-0c82-4079-8d04-6f3e4d9bd1df",
@@ -942,112 +945,112 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-          "created_by_ref": "identity--38b25d5f-86fa-4d1f-b549-dbcc442620c1",
-          "id": "relationship--71332634-b2b8-4c20-b3f7-125754763369",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
+          "id": "relationship--d020b00e-2627-4969-8d70-6e518d590c44",
             "modified": "2015-05-15T09:00:00.000Z",
             "relationship_type": "attributed-to",
             "source_ref": "threat-actor--6d179234-61fc-40c4-ae86-3d53308d8e65",
-          "target_ref": "identity--388b6abc-6f60-4e8a-a77d-4b3c2dd70424",
+          "target_ref": "identity--44f11286-ab0c-49d9-95e4-2d32cab99a24",
             "type": "relationship"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-          "created_by_ref": "identity--38b25d5f-86fa-4d1f-b549-dbcc442620c1",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
             "description": "Authored",
-          "id": "relationship--d765da5b-d638-43a9-8eb7-2f9eabfb4299",
+          "id": "relationship--5d0f2c5d-1cc9-4cfd-acd8-128953298af4",
             "modified": "2015-05-15T09:00:00.000Z",
             "relationship_type": "uses",
             "source_ref": "threat-actor--6d179234-61fc-40c4-ae86-3d53308d8e65",
-          "target_ref": "malware--d02fb81b-21e2-43c4-882a-856055f40aa9",
+          "target_ref": "malware--33c62563-1ada-4eb7-88e5-5b30664d7232",
             "type": "relationship"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-          "created_by_ref": "identity--38b25d5f-86fa-4d1f-b549-dbcc442620c1",
-          "id": "relationship--688e2db7-e905-4bb3-8eef-1b99c83161ea",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
+          "id": "relationship--15b141b0-e396-4231-8a46-c94d9feec633",
             "modified": "2015-05-15T09:00:00.000Z",
             "relationship_type": "attributed-to",
             "source_ref": "threat-actor--d84cf283-93be-4ca7-890d-76c63eff3636",
-          "target_ref": "identity--ac396fb7-cfa5-416f-80d6-4611aef12dc8",
+          "target_ref": "identity--6e9bc554-96ea-47a3-8632-063fabc0e388",
             "type": "relationship"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-          "created_by_ref": "identity--38b25d5f-86fa-4d1f-b549-dbcc442620c1",
-          "id": "relationship--3d3cd610-3dc5-4661-b893-8f2d88e55fa8",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
+          "id": "relationship--11bb2ba3-b77e-420e-9f0c-910a52aabc08",
             "modified": "2015-05-15T09:00:00.000Z",
             "relationship_type": "attributed-to",
             "source_ref": "threat-actor--02e7c48f-0301-4c23-b3e4-02e5a0114c21",
-          "target_ref": "identity--9ddcd171-e5bc-4806-a265-e7742b6f3dc4",
+          "target_ref": "identity--967e9101-f69f-41d6-a9b6-aa829d720778",
             "type": "relationship"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-          "created_by_ref": "identity--38b25d5f-86fa-4d1f-b549-dbcc442620c1",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
             "description": "Authored/Contributed_To",
-          "id": "relationship--ce4fb47b-1076-4da3-90f2-d2db6da42093",
+          "id": "relationship--9bd49a46-9d0b-4ac2-93e4-a3fc1eba5029",
             "modified": "2015-05-15T09:00:00.000Z",
             "relationship_type": "uses",
             "source_ref": "threat-actor--02e7c48f-0301-4c23-b3e4-02e5a0114c21",
-          "target_ref": "malware--7bbcd368-a057-4b13-af1f-2be73689e29f",
+          "target_ref": "malware--9b8a4e12-e0a1-4cc8-a4af-91d7c579046d",
             "type": "relationship"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-          "created_by_ref": "identity--38b25d5f-86fa-4d1f-b549-dbcc442620c1",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
             "description": "Authored/Contributed_To",
-          "id": "relationship--abe76529-2d76-4e21-bb5a-1338d86a2cdc",
+          "id": "relationship--5ef0affc-64dd-45f5-88e7-26c836069d99",
             "modified": "2015-05-15T09:00:00.000Z",
             "relationship_type": "uses",
             "source_ref": "threat-actor--02e7c48f-0301-4c23-b3e4-02e5a0114c21",
-          "target_ref": "malware--6cb2dcd4-50c6-4603-a09f-fd887f5f11a6",
+          "target_ref": "malware--b733ebd4-15df-49a6-9d43-974e6dec1fa1",
             "type": "relationship"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-          "created_by_ref": "identity--38b25d5f-86fa-4d1f-b549-dbcc442620c1",
-          "id": "relationship--e82e50fa-7232-4a34-835d-ea0ad6222cb2",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
+          "id": "relationship--5dc8c9f8-ab9f-4392-bf6c-ccb2e1db4219",
             "modified": "2015-05-15T09:00:00.000Z",
             "relationship_type": "attributed-to",
             "source_ref": "threat-actor--f1ce5a9e-0fb7-465b-acb9-e7f75098eee9",
-          "target_ref": "identity--4118a066-03b9-4c10-9e9a-d168b9b6bc1e",
+          "target_ref": "identity--e8e676c6-3c16-4d26-ac3e-d5cf788179e6",
             "type": "relationship"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-          "created_by_ref": "identity--38b25d5f-86fa-4d1f-b549-dbcc442620c1",
-          "id": "relationship--7bb91e50-f2e5-458c-aae4-a441e01774ab",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
+          "id": "relationship--c1ec5353-2b20-4110-b402-ada15c7fd91c",
             "modified": "2015-05-15T09:00:00.000Z",
             "relationship_type": "attributed-to",
             "source_ref": "threat-actor--5abb4d96-e3f2-4a1a-b025-c5b63ec6eb0b",
-          "target_ref": "identity--9443091c-0825-4c35-a425-ab7fa570076c",
+          "target_ref": "identity--7de07f79-fbe5-4d63-9343-3421258b1c1f",
             "type": "relationship"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-          "created_by_ref": "identity--38b25d5f-86fa-4d1f-b549-dbcc442620c1",
-          "id": "relationship--d0861167-3cbf-496f-b60c-0c1c7495640e",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
+          "id": "relationship--530ff57b-74a7-4a0e-8f8e-d6a7863883a2",
             "modified": "2015-05-15T09:00:00.000Z",
             "relationship_type": "attributed-to",
             "source_ref": "threat-actor--d9619c21-9d4f-414e-9471-36bb8fc42bbe",
-          "target_ref": "identity--7ce1e339-c7d1-471e-a82e-ed3b26586246",
+          "target_ref": "identity--3372fa09-3a8c-4324-8a72-f88984b27c01",
             "type": "relationship"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-          "created_by_ref": "identity--38b25d5f-86fa-4d1f-b549-dbcc442620c1",
-          "id": "relationship--e252914e-3790-439c-b62d-4ac314e121c2",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
+          "id": "relationship--15c36d80-23e0-424c-ab55-4253d99d3ab6",
             "modified": "2015-05-15T09:00:00.000Z",
             "relationship_type": "attributed-to",
             "source_ref": "threat-actor--94624865-2709-443f-9b4c-2891985fd69b",
-          "target_ref": "identity--1065a3f9-3dc2-4502-a9ea-7c96e5614257",
+          "target_ref": "identity--78f57d59-e1b7-4a78-b145-a988e321a555",
             "type": "relationship"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-          "created_by_ref": "identity--38b25d5f-86fa-4d1f-b549-dbcc442620c1",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
             "description": "Component_Of",
-          "id": "relationship--0d1f574b-afd3-4463-92ca-602e64f66bed",
+          "id": "relationship--fef78d2b-058a-487e-b0c9-a52f5c4bd4ef",
             "modified": "2015-05-15T09:00:00.000Z",
             "relationship_type": "related-to",
             "source_ref": "threat-actor--94624865-2709-443f-9b4c-2891985fd69b",
@@ -1056,19 +1059,19 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-          "created_by_ref": "identity--38b25d5f-86fa-4d1f-b549-dbcc442620c1",
-          "id": "relationship--d3cb90f1-5374-4e49-a26b-252ebaa6dcc7",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
+          "id": "relationship--be8fa807-4eeb-49c3-a12d-c2000a3cf13d",
             "modified": "2015-05-15T09:00:00.000Z",
             "relationship_type": "attributed-to",
             "source_ref": "threat-actor--b5d1d28c-d824-49c0-80b6-9179202e297b",
-          "target_ref": "identity--338cb04f-584f-4abe-8774-10bb6a143db1",
+          "target_ref": "identity--50616a25-78fb-4be0-b6f2-3a75993fcbfb",
             "type": "relationship"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-          "created_by_ref": "identity--38b25d5f-86fa-4d1f-b549-dbcc442620c1",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
             "description": "Component_Of",
-          "id": "relationship--ce298f3f-9d61-44fe-99ae-efd6b61505f7",
+          "id": "relationship--56ed1fcd-39d4-4742-bcf7-fca78ca3683c",
             "modified": "2015-05-15T09:00:00.000Z",
             "relationship_type": "related-to",
             "source_ref": "threat-actor--b5d1d28c-d824-49c0-80b6-9179202e297b",
@@ -1077,19 +1080,19 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-          "created_by_ref": "identity--38b25d5f-86fa-4d1f-b549-dbcc442620c1",
-          "id": "relationship--c937c60e-1b2d-4aa5-be90-b37581c8e3e9",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
+          "id": "relationship--a130afd8-e10a-4647-93da-b510a39a38b8",
             "modified": "2015-05-15T09:00:00.000Z",
             "relationship_type": "attributed-to",
             "source_ref": "threat-actor--5ac0fd8e-5804-4849-a170-4ec0d15a5e8b",
-          "target_ref": "identity--421d5435-a6a8-4cd7-947d-45737d3713a9",
+          "target_ref": "identity--490f0285-561d-4978-bd01-967e0e305051",
             "type": "relationship"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-          "created_by_ref": "identity--38b25d5f-86fa-4d1f-b549-dbcc442620c1",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
             "description": "Component_Of",
-          "id": "relationship--9d905a53-70c8-435d-ae77-ed379daec1aa",
+          "id": "relationship--c0be10ea-98e3-4ed6-9107-aa1dc864d663",
             "modified": "2015-05-15T09:00:00.000Z",
             "relationship_type": "related-to",
             "source_ref": "threat-actor--5ac0fd8e-5804-4849-a170-4ec0d15a5e8b",
@@ -1098,162 +1101,176 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-          "created_by_ref": "identity--38b25d5f-86fa-4d1f-b549-dbcc442620c1",
-          "id": "relationship--ae47527b-a4fb-4d7d-999d-c5578f82824e",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
+          "id": "relationship--c513938a-90f6-4410-bb2f-8cb00b6e2aa3",
             "modified": "2015-05-15T09:00:00.000Z",
             "relationship_type": "attributed-to",
             "source_ref": "threat-actor--d5b62b58-df7c-46b1-a435-4d01945fe21d",
-          "target_ref": "identity--2ecf1ff8-59d8-4f0b-b887-1e78f9e2b992",
+          "target_ref": "identity--9522bce3-696c-439e-bc25-973fd9b40e0a",
             "type": "relationship"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-          "created_by_ref": "identity--38b25d5f-86fa-4d1f-b549-dbcc442620c1",
-          "id": "relationship--f42ae00f-4958-4821-ae75-81001e03220c",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
+          "id": "relationship--c50bf18f-c0c0-4dac-98e5-1fe8eefe9457",
             "modified": "2015-05-15T09:00:00.000Z",
             "relationship_type": "attributed-to",
             "source_ref": "threat-actor--76dd3859-31a6-43c5-9f3e-9c6ac745b61b",
-          "target_ref": "identity--7909e024-feb5-4c9d-95ae-f2b2cb42b497",
+          "target_ref": "identity--740138f4-2929-4348-9de8-8e1ff6e73ba4",
             "type": "relationship"
         },
         {
-          "created": "2017-05-03T14:10:22.358Z",
-          "id": "relationship--d420898d-9628-459a-94ef-45425b5295f3",
-          "modified": "2017-05-03T14:10:22.358Z",
+          "created": "2018-09-26T15:49:56.060Z",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
+          "id": "relationship--4a7ba387-9b85-4f31-bd27-ad6f4148ff25",
+          "modified": "2018-09-26T15:49:56.060Z",
             "relationship_type": "related-to",
             "source_ref": "identity--c63f31ac-871b-4846-aa25-de1926f4f3c8",
             "target_ref": "malware--0f01c5a3-f516-4450-9381-4dd9f2279411",
             "type": "relationship"
         },
         {
-          "created": "2017-05-03T14:10:22.358Z",
-          "id": "relationship--6b5cc7ec-4660-40df-b359-a5975654583e",
-          "modified": "2017-05-03T14:10:22.358Z",
+          "created": "2018-09-26T15:49:56.060Z",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
+          "id": "relationship--d5e2452b-a869-408b-a4c8-ad6dc0a36c00",
+          "modified": "2018-09-26T15:49:56.060Z",
             "relationship_type": "related-to",
             "source_ref": "identity--c63f31ac-871b-4846-aa25-de1926f4f3c8",
             "target_ref": "malware--33159b98-3264-4e10-a968-d67975b6272f",
             "type": "relationship"
         },
         {
-          "created": "2017-05-03T14:10:22.358Z",
-          "id": "relationship--d17cca39-6038-4d73-90f2-1589c4810297",
-          "modified": "2017-05-03T14:10:22.358Z",
+          "created": "2018-09-26T15:49:56.060Z",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
+          "id": "relationship--ced55a7c-5aaa-4b0b-a69b-70e1637f70cb",
+          "modified": "2018-09-26T15:49:56.060Z",
             "relationship_type": "related-to",
             "source_ref": "identity--c63f31ac-871b-4846-aa25-de1926f4f3c8",
             "type": "relationship"
         },
         {
-          "created": "2017-05-03T14:10:22.358Z",
-          "id": "relationship--942b356e-4f25-40c0-a801-87f99dbc771d",
-          "modified": "2017-05-03T14:10:22.358Z",
+          "created": "2018-09-26T15:49:56.060Z",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
+          "id": "relationship--1de3b923-a270-46a2-acbf-ccdc6f6129ff",
+          "modified": "2018-09-26T15:49:56.060Z",
             "relationship_type": "related-to",
             "source_ref": "identity--c63f31ac-871b-4846-aa25-de1926f4f3c8",
             "type": "relationship"
         },
         {
-          "created": "2017-05-03T14:10:22.358Z",
-          "id": "relationship--f7bfcff7-63ca-4a8a-bd02-7839d458a9d2",
-          "modified": "2017-05-03T14:10:22.358Z",
+          "created": "2018-09-26T15:49:56.060Z",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
+          "id": "relationship--50026d2b-9374-4b40-8117-1b5e340d03ff",
+          "modified": "2018-09-26T15:49:56.060Z",
             "relationship_type": "related-to",
             "source_ref": "identity--c63f31ac-871b-4846-aa25-de1926f4f3c8",
             "type": "relationship"
         },
         {
-          "created": "2017-05-03T14:10:22.358Z",
-          "id": "relationship--17cd0f18-bd80-4bc9-b014-45650fcf9ace",
-          "modified": "2017-05-03T14:10:22.358Z",
+          "created": "2018-09-26T15:49:56.060Z",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
+          "id": "relationship--fe538862-4ceb-4496-82f6-555dc227a3e4",
+          "modified": "2018-09-26T15:49:56.060Z",
             "relationship_type": "related-to",
             "source_ref": "identity--c63f31ac-871b-4846-aa25-de1926f4f3c8",
             "type": "relationship"
         },
         {
-          "created": "2017-05-03T14:10:22.358Z",
-          "id": "relationship--5d7b2b14-ab8a-4017-9485-c80ebe4f2566",
-          "modified": "2017-05-03T14:10:22.358Z",
+          "created": "2018-09-26T15:49:56.060Z",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
+          "id": "relationship--d9a3feba-a832-49ea-951f-5fa89fb92b19",
+          "modified": "2018-09-26T15:49:56.060Z",
             "relationship_type": "related-to",
             "source_ref": "identity--c63f31ac-871b-4846-aa25-de1926f4f3c8",
             "type": "relationship"
         },
         {
-          "created": "2017-05-03T14:10:22.358Z",
-          "id": "relationship--ea5bdb7c-8e04-4a5b-b529-2754ff044309",
-          "modified": "2017-05-03T14:10:22.358Z",
+          "created": "2018-09-26T15:49:56.060Z",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
+          "id": "relationship--3ce05b89-f102-46e0-b6a6-48991ba4371b",
+          "modified": "2018-09-26T15:49:56.060Z",
             "relationship_type": "related-to",
             "source_ref": "identity--c63f31ac-871b-4846-aa25-de1926f4f3c8",
-          "target_ref": "attack-pattern--de3aa516-1468-4a3e-88f0-817f42f49e4a",
+          "target_ref": "attack-pattern--34dffca4-25e7-49bc-8f39-baa09c868c57",
             "type": "relationship"
         },
         {
-          "created": "2017-05-03T14:10:22.358Z",
-          "id": "relationship--6e9c5e9a-5984-49c5-b8ab-92cbce4a76b7",
-          "modified": "2017-05-03T14:10:22.358Z",
+          "created": "2018-09-26T15:49:56.060Z",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
+          "id": "relationship--edcb9a47-d29d-4320-b7bd-beea8efa4776",
+          "modified": "2018-09-26T15:49:56.060Z",
             "relationship_type": "related-to",
             "source_ref": "identity--c63f31ac-871b-4846-aa25-de1926f4f3c8",
             "target_ref": "attack-pattern--1e2c4237-d469-4144-9c0b-9e5c0c513c49",
             "type": "relationship"
         },
         {
-          "created": "2017-05-03T14:10:22.358Z",
-          "id": "relationship--9f59072c-d863-4548-b983-f34ea9b46815",
-          "modified": "2017-05-03T14:10:22.358Z",
+          "created": "2018-09-26T15:49:56.060Z",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
+          "id": "relationship--4fb8b064-be4c-472c-a552-31c40e38a350",
+          "modified": "2018-09-26T15:49:56.060Z",
             "relationship_type": "related-to",
             "source_ref": "identity--c63f31ac-871b-4846-aa25-de1926f4f3c8",
-          "target_ref": "tool--02a9e44e-f869-4301-8767-de040474c3b1",
+          "target_ref": "tool--9ca0235a-b1a8-4f0b-8920-23c4da250b9f",
             "type": "relationship"
         },
         {
-          "created": "2017-05-03T14:10:22.358Z",
-          "id": "relationship--4103f45d-7429-419c-af63-3c2c11c227a2",
-          "modified": "2017-05-03T14:10:22.358Z",
+          "created": "2018-09-26T15:49:56.060Z",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
+          "id": "relationship--d7a66eda-dd1b-46a8-89ce-bd5b4df52232",
+          "modified": "2018-09-26T15:49:56.060Z",
             "relationship_type": "related-to",
             "source_ref": "identity--c63f31ac-871b-4846-aa25-de1926f4f3c8",
             "target_ref": "attack-pattern--5728f45b-2eca-4942-a7f6-bc4267c1ab8d",
             "type": "relationship"
         },
         {
-          "created": "2017-05-03T14:10:22.358Z",
-          "id": "relationship--1f3e6504-aad3-44ab-b084-3539f896744f",
-          "modified": "2017-05-03T14:10:22.358Z",
+          "created": "2018-09-26T15:49:56.060Z",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
+          "id": "relationship--8483e5bf-bece-47b3-aba8-3687ddf22936",
+          "modified": "2018-09-26T15:49:56.060Z",
             "relationship_type": "related-to",
             "source_ref": "identity--c63f31ac-871b-4846-aa25-de1926f4f3c8",
             "target_ref": "attack-pattern--0bea2358-c244-4905-a664-a5cdce7bb767",
             "type": "relationship"
         },
         {
-          "created": "2017-05-03T14:10:22.358Z",
-          "id": "relationship--85ee0d94-9840-41cb-966a-ff32541b354d",
-          "modified": "2017-05-03T14:10:22.358Z",
+          "created": "2018-09-26T15:49:56.060Z",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
+          "id": "relationship--a5617c0c-4d96-434e-9613-65fb03c37d47",
+          "modified": "2018-09-26T15:49:56.060Z",
             "relationship_type": "related-to",
             "source_ref": "identity--c63f31ac-871b-4846-aa25-de1926f4f3c8",
             "target_ref": "attack-pattern--7151c6d0-7e97-47ce-9290-087315ea3db7",
             "type": "relationship"
         },
         {
-          "created": "2017-05-03T14:10:22.358Z",
-          "id": "relationship--98b2e1b8-137c-4ea0-9547-0984262096a9",
-          "modified": "2017-05-03T14:10:22.358Z",
+          "created": "2018-09-26T15:49:56.060Z",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
+          "id": "relationship--cb58c9c7-893f-414d-9be5-ee9b464f26dc",
+          "modified": "2018-09-26T15:49:56.060Z",
             "relationship_type": "related-to",
             "source_ref": "identity--c63f31ac-871b-4846-aa25-de1926f4f3c8",
-          "target_ref": "tool--6fd1747b-3cd6-4e6d-8eda-d991c311219d",
+          "target_ref": "tool--4ba50f14-a2eb-4f9e-b485-f3bf4ac32a91",
             "type": "relationship"
         },
         {
-          "created": "2017-05-03T14:10:22.374Z",
-          "created_by_ref": "identity--38b25d5f-86fa-4d1f-b549-dbcc442620c1",
+          "created": "2018-09-26T15:49:56.067Z",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
             "description": "Leverages",
-          "id": "relationship--e177e445-e419-41c3-93c1-23e13a4c871e",
-          "modified": "2017-05-03T14:10:22.374Z",
+          "id": "relationship--0d6e2f51-adc6-4046-b03d-de17f17a29a2",
+          "modified": "2018-09-26T15:49:56.067Z",
             "relationship_type": "related-to",
             "source_ref": "attack-pattern--1e2c4237-d469-4144-9c0b-9e5c0c513c49",
             "target_ref": "malware--0f01c5a3-f516-4450-9381-4dd9f2279411",
             "type": "relationship"
         },
         {
-          "created": "2017-05-03T14:10:22.374Z",
-          "created_by_ref": "identity--38b25d5f-86fa-4d1f-b549-dbcc442620c1",
+          "created": "2018-09-26T15:49:56.067Z",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
             "description": "Leverages",
-          "id": "relationship--1504ed48-31e2-42b1-9789-4f4421aa9ca2",
-          "modified": "2017-05-03T14:10:22.374Z",
+          "id": "relationship--6d0a202a-9dc4-41a7-b269-4d3c6181769e",
+          "modified": "2018-09-26T15:49:56.067Z",
             "relationship_type": "related-to",
             "source_ref": "attack-pattern--1e2c4237-d469-4144-9c0b-9e5c0c513c49",
             "target_ref": "malware--33159b98-3264-4e10-a968-d67975b6272f",
@@ -1261,7 +1278,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-          "created_by_ref": "identity--38b25d5f-86fa-4d1f-b549-dbcc442620c1",
+          "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
             "description": "&lt;!DOCTYPE html&gt;\n\t\t\t\t\t&lt;html&gt;\n\t\t\t\t\t&lt;body&gt;\n\t\t\t\t\t&lt;p&gt;\n\t\t\t\t\tSince 2004, Mandiant has investigated computer security breaches at hundreds of organizations around the world.\n\t\t\t\t\tThe majority of these security breaches are attributed to advanced threat actors referred to as the \"Advanced Persistent\n\t\t\t\t\tThreat\" (APT). We first published details about the APT in our January 2010 M-Trends report. As we stated in the\n\t\t\t\t\treport, our position was that \"The Chinese government may authorize this activity, but there&#8217;s no way to determine the\n\t\t\t\t\textent of its involvement.\" Now, three years later, we have the evidence required to change our assessment. The details\n\t\t\t\t\twe have analyzed during hundreds of investigations convince us that the groups conducting these activities are based\n\t\t\t\t\tprimarily in China and that the Chinese Government is aware of them.\n\t\t\t\t\t&lt;/P&gt;\n\t\t\t\t\t&lt;p&gt;\n\t\t\t\t\tMandiant continues to track dozens of APT groups around the world; however, this report is focused on the most\n\t\t\t\t\tprolific of these groups. We refer to this group as \"APT1\" and it is one of more than 20 APT groups with origins in\n\t\t\t\t\tChina. APT1 is a single organization of operators that has conducted a cyber espionage campaign against a broad\n\t\t\t\t\trange of victims since at least 2006. From our observations, it is one of the most prolific cyber espionage groups in\n\t\t\t\t\tterms of the sheer quantity of information stolen. The scale and impact of APT1&#8217;s operations compelled us to write this\n\t\t\t\t\treport.\n\t\t\t\t\t&lt;/P&gt;\n\t\t\t\t\t&lt;p&gt;\n\t\t\t\t\tThe activity we have directly observed likely represents only a small fraction of the cyber espionage that APT1 has\n\t\t\t\t\tconducted. Though our visibility of APT1&#8217;s activities is incomplete, we have analyzed the group&#8217;s intrusions against\n\t\t\t\t\tnearly 150 victims over seven years. From our unique vantage point responding to victims, we tracked APT1 back\n\t\t\t\t\tto four large networks in Shanghai, two of which are allocated directly to the Pudong New Area. We uncovered a\n\t\t\t\t\tsubstantial amount of APT1&#8217;s attack infrastructure, command and control, and modus operandi (tools, tactics, and\n\t\t\t\t\tprocedures). In an effort to underscore there are actual individuals behind the keyboard, Mandiant is revealing three\n\t\t\t\t\tpersonas we have attributed to APT1. These operators, like soldiers, may merely be following orders given to them by\n\t\t\t\t\tothers.\n\t\t\t\t\t&lt;/P&gt;\n\t\t\t\t\t&lt;p&gt;\n\t\t\t\t\tOur analysis has led us to conclude that APT1 is likely government-sponsored and one of the most persistent of China&#8217;s\n\t\t\t\t\tcyber threat actors. We believe that APT1 is able to wage such a long-running and extensive cyber espionage campaign\n\t\t\t\t\tin large part because it receives direct government support. In seeking to identify the organization behind this activity,\n\t\t\t\t\tour research found that People&#8217;s Liberation Army (PLA&#8217;s) Unit 61398 is similar to APT1 in its mission, capabilities, and\n\t\t\t\t\tresources. PLA Unit 61398 is also located in precisely the same area from which APT1 activity appears to originate.\n\t\t\t\t\t&lt;/P&gt;\n\t\t\t\t\t&lt;/body&gt;\n\t\t\t\t\t&lt;/html&gt;\n\nINTENT:\nThreat Actor Report",
             "id": "report--e33ffe07-2f4c-48d8-b0af-ee2619d765cf",
             "labels": [
@@ -1270,7 +1287,7 @@
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "APT1: Exposing One of China's Cyber Espionage Units",
             "object_marking_refs": [
-              "marking-definition--38707174-d5c6-488b-837e-72612a3d77d3"
+              "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
             ],
             "object_refs": [
                 "threat-actor--8dff0344-0c82-4079-8d04-6f3e4d9bd1df",

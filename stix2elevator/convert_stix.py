@@ -1,5 +1,3 @@
-
-
 # import pycountry
 from cybox.core import Observable
 from lxml import etree
@@ -873,7 +871,8 @@ def convert_incident(incident, env):
         convert_controlled_vocabs_to_open_vocabs(incident_instance, "labels", incident.categories, INCIDENT_LABEL_MAP,
                                                  False)
     # process information source before any relationships
-    new_env.add_to_env(created_by_ref=process_information_source(incident.information_source, incident_instance, new_env))
+    new_env.add_to_env(
+        created_by_ref=process_information_source(incident.information_source, incident_instance, new_env))
 
     add_confidence_property_to_description(incident_instance, incident.confidence)
 
@@ -1227,7 +1226,8 @@ def convert_threat_actor(threat_actor, env):
     threat_actor_instance = create_basic_object("threat-actor", threat_actor, env)
     process_description_and_short_description(threat_actor_instance, threat_actor)
     new_env = env.newEnv(timestamp=threat_actor_instance["created"])
-    new_env.add_to_env(created_by_ref=process_information_source(threat_actor.information_source, threat_actor_instance, new_env))
+    new_env.add_to_env(
+        created_by_ref=process_information_source(threat_actor.information_source, threat_actor_instance, new_env))
     # process information source before any relationships
     if threat_actor.identity is not None:
         if threat_actor.identity.id_:
@@ -1257,7 +1257,8 @@ def convert_threat_actor(threat_actor, env):
     if threat_actor.observed_ttps is not None:
         handle_relationship_to_refs(threat_actor.observed_ttps, threat_actor_instance["id"], new_env, "uses")
     if threat_actor.associated_campaigns is not None:
-        handle_relationship_from_refs(threat_actor.associated_campaigns, threat_actor_instance["id"], new_env, "attributed-to")
+        handle_relationship_from_refs(threat_actor.associated_campaigns, threat_actor_instance["id"], new_env,
+                                      "attributed-to")
     if threat_actor.associated_actors:
         warn("All associated actors relationships of %s are assumed to not represent STIX 1.2 versioning", 710, threat_actor.id_)
         handle_relationship_to_refs(threat_actor.associated_actors, threat_actor_instance["id"], new_env, "related-to")
