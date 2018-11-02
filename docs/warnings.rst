@@ -65,7 +65,7 @@ TTP *[id]* did not generate any STIX 2.x object                                 
 No STIX 2.x object generated from embedded object *[id]*                                                                                       416     warn
 [object type] did not yield any STIX 2.x object                                                                                                417     warn
 The *[property]* property of *[STIX 1.x object type]*` is not part of STIX 2.x                                                                 418     warn
-The imports property of ``WinExecutableFileObj`` is not part of STIX 2.x                                                                       419     warn
+``NO MESSAGE ASSIGNED``                                                                                                                        419
 Windows Handles are not a part of STIX 2.x                                                                                                     420     warn
 The address type [address] is not part of STIX 2.0                                                                                             421     warn
 No pattern term was created from *[id]*                                                                                                        422     warn
@@ -181,8 +181,8 @@ Message                                                                         
 =========================================================================================================================================== ==== =====
 Could not resolve Marking Structure *[id]*                                                                                                  801  warn
 1.x full file paths are not processed, yet                                                                                                  802  warn
-``process:startup_info`` not handled yet                                                                                                    803  warn
-``WinServiceObject.service_dll`` is not handled, yet.                                                                                       804  warn
+``NO MESSAGE ASSIGNED``                                                                                                                     803
+``NO MESSAGE ASSIGNED``                                                                                                                     804
 CybOX object *[object]* not handled yet                                                                                                     805  warn
 Email *[property]* not handled yet                                                                                                          806  warn
 ``file:extended_properties:windows_pebinary_ext:optional_header`` is not implemented yet                                                    807  warn

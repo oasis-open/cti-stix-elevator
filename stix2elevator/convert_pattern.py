@@ -841,10 +841,10 @@ def convert_windows_executable_file_to_pattern(f):
         if sections_expressions:
             expressions.append(create_boolean_expression("AND", sections_expressions))
     if f.exports:
-        warn("The exports property of WinExecutableFileObj is not part of STIX 2.0", 418)
+        warn("The exports property of WinExecutableFileObj is not part of STIX 2.x", 418)
         expressions.append(UnconvertedTerm("WinExecutableFileObj.exports"))
     if f.imports:
-        warn("The imports property of WinExecutableFileObj is not part of STIX 2.0", 419)
+        warn("The imports property of WinExecutableFileObj is not part of STIX 2.x", 418)
         expressions.append(UnconvertedTerm("WinExecutableFileObj.imports"))
     if expressions:
         return create_boolean_expression("AND", expressions)
@@ -1102,7 +1102,7 @@ def convert_process_to_pattern(process):
             if argument_expressions:
                 expressions.append(create_boolean_expression("AND", argument_expressions))
         else:
-            warn("The argument_list property of ProcessObj is not part of STIX 2.0", 418)
+            warn("The argument_list property of ProcessObj is not part of STIX 2.1", 418)
             expressions.append(UnconvertedTerm("ProcessObj.argument_list"))
     if hasattr(process, "environment_variable_list") and process.environment_variable_list:
         ev_expressions = []
@@ -1167,7 +1167,8 @@ def convert_windows_process_to_pattern(process):
         for h in process.handle_list:
             warn("Windows Handles are not a part of STIX 2.0", 420)
     if process.startup_info:
-        warn("process:startup_info not handled yet", 803)
+        warn("The startup_info property of ProcessObj is not part of STIX 2.x", 418)
+        expressions.append(UnconvertedTerm("ProcessObj.startup_info"))
     if expressions:
         return create_boolean_expression("AND", expressions)
 
@@ -1199,7 +1200,7 @@ def convert_windows_service_to_pattern(service):
         if description_expressions:
             expressions.append(create_boolean_expression("OR", description_expressions))
     if hasattr(service, "service_dll") and service.service_dll:
-        warn("WinServiceObject.service_dll is not handled, yet.", 804)
+        warn("The service_dll property of WinServiceObject is not part of STIX 2.x", 418)
         expressions.append(UnconvertedTerm("WinServiceObject.service_dll"))
     if expressions:
         return create_boolean_expression("AND", expressions)

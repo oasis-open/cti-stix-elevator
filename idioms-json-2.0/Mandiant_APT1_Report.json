@@ -116,6 +116,9 @@
             "identity_class": "individual",
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "dota",
+            "object_marking_refs": [
+                "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
+            ],
             "type": "identity"
         },
         {
@@ -139,6 +142,9 @@
             "identity_class": "individual",
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "SuperHard",
+            "object_marking_refs": [
+                "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
+            ],
             "type": "identity"
         },
         {
@@ -346,6 +352,9 @@
             "identity_class": "organization",
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "Communist Part of China",
+            "object_marking_refs": [
+                "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
+            ],
             "type": "identity"
         },
         {
@@ -369,6 +378,9 @@
             "identity_class": "organization",
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "China Telecom",
+            "object_marking_refs": [
+                "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
+            ],
             "type": "identity"
         },
         {
@@ -394,6 +406,9 @@
             "identity_class": "unknown",
             "modified": "2018-09-26T15:49:56.060Z",
             "name": "APT1 Tactics, Techniques and Procedures",
+            "object_marking_refs": [
+                "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
+            ],
             "type": "identity"
         },
         {
