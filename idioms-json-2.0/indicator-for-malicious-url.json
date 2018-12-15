@@ -10,20 +10,20 @@
           "id": "marking-definition--c0d0976c-76a1-4cf2-accd-19632991ac3f",
           "type": "marking-definition"
         },
-        {
-          "created": "2018-07-30T14:10:03.827Z",
-          "id": "indicator--d81f86b9-975b-bc0b-775e-810c5ad45a4f",
-          "labels": [
-            "url-watchlist"
-          ],
-          "modified": "2018-07-30T14:10:03.827Z",
-          "name": "Malicious site hosting downloader",
-          "object_marking_refs": [
-            "marking-definition--c0d0976c-76a1-4cf2-accd-19632991ac3f"
-          ],
-          "pattern": "[url:value = 'http://x4z9arb.cn/4712']",
-          "type": "indicator",
-          "valid_from": "2018-07-30T14:10:03.827041Z"
+      {
+        "created": "2018-07-30T14:10:03.827Z",
+        "id": "indicator--d81f86b9-975b-bc0b-775e-810c5ad45a4f",
+        "labels": [
+          "url-watchlist"
+        ],
+        "modified": "2018-07-30T14:10:03.827Z",
+        "name": "Malicious site hosting downloader",
+        "object_marking_refs": [
+          "marking-definition--c0d0976c-76a1-4cf2-accd-19632991ac3f"
+        ],
+        "pattern": "[url:value = 'http://x4z9arb.cn/4712']",
+        "type": "indicator",
+        "valid_from": "2018-07-30T14:10:03.827041Z"
         }
     ],
     "spec_version": "2.0",

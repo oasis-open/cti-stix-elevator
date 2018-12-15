@@ -37,6 +37,10 @@ STIX 1.x Indicators containing composite expressions should be
 inspected
 to ensure the STIX 2 Indicator has the intended meaning.**
 
+For more information, see `the
+documentation <https://stix2-elevator.readthedocs.io/>`__ on
+ReadTheDocs.
+
 Please enter any comments on how to improve it into the issue tracker.
 
 Requirements
