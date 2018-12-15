@@ -2,6 +2,9 @@ import io
 import json
 import sys
 
+from six import text_type
+from stix2.pattern_visitor import create_pattern_object
+
 
 def step_cyber_observable(obj):
     type_name20 = obj["type"]
@@ -19,7 +22,7 @@ def step_cyber_observable(obj):
         if "extensions" in obj:
             exts = obj["extensions"]
             if "socket-ext" in exts:
-                exts["socket-ext"].pop("protocol_family")
+                exts["socket-ext"].pop("protocol_family", None)
     elif type_name20 == "process":
         obj.pop("name", None)
         obj.pop("arguments", None)
@@ -37,14 +40,22 @@ def step_observable_data(object):
         step_cyber_observable(obj)
 
 
+def step_pattern(pattern):
+    pattern_obj = create_pattern_object(pattern, module_suffix="Elevator", module_name="stix2elevator.convert_pattern")
+    return text_type(pattern_obj.toSTIX21())
+
+
 def step_object(object):
     object["spec_version"] = "2.1"
     if (object["type"] == "indicator" or object["type"] == "malware" or
             object["type"] == "report" or object["type"] == "threat-actor" or
             object["type"] == "tool"):
         if "labels" in object:
-            object["indicator_types"] = object["labels"]
+            types_property_name = object["type"].replace("-", "_") + "_types"
+            object[types_property_name] = object["labels"]
             object.pop("labels")
+        if object["type"] == "indicator":
+            object["pattern"] = step_pattern(object["pattern"])
     elif object["type"] == "observed-data":
         step_observable_data(object)
 
@@ -59,15 +70,18 @@ def step_bundle(bundle):
 
 
 def step_file(fn, encoding="utf-8"):
+    sys.setrecursionlimit(5000)
     with io.open(fn, "r", encoding=encoding) as json_data:
         json_content = json.load(json_data)
 
     if 'spec_version' in json_content and "type" in json_content and json_content["type"] == "bundle":
-        print(json.dumps(step_bundle(json_content),
-                         ensure_ascii=False,
-                         indent=4,
-                         separators=(',', ': '),
-                         sort_keys=True))
+        json_string = json.dumps(step_bundle(json_content),
+                                 ensure_ascii=False,
+                                 indent=4,
+                                 separators=(',', ': '),
+                                 sort_keys=True)
+        print(json_string)
+        return json_string
     else:
         print("stix_step only converts STIX 2.0 to STIX 2.1")
         return

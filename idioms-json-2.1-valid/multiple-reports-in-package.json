@@ -1,0 +1,58 @@
+{
+  "id": "bundle--50578bc7-bb17-4f31-abf2-d5827d131368",
+  "objects": [
+    {
+      "created": "2018-05-25T09:27:59.238Z",
+      "id": "identity--cac8fc0e-3ecb-4e4f-aac5-5bbdf2ff49a5",
+      "identity_class": "unknown",
+      "modified": "2018-05-25T09:27:59.238Z",
+      "name": "Government Sharing Program - GSP",
+      "spec_version": "2.1",
+      "type": "identity"
+    },
+    {
+      "created": "2015-05-07T14:22:14.760Z",
+      "created_by_ref": "identity--cac8fc0e-3ecb-4e4f-aac5-5bbdf2ff49a5",
+      "id": "campaign--1855cb8a-d96c-4859-a450-abb1e7c061f2",
+      "modified": "2015-05-07T14:22:14.760Z",
+      "name": "Campaign against ICS",
+      "spec_version": "2.1",
+      "type": "campaign"
+    },
+    {
+      "created": "2015-05-07T14:22:14.760Z",
+      "created_by_ref": "identity--cac8fc0e-3ecb-4e4f-aac5-5bbdf2ff49a5",
+      "description": "Adversary Alpha has a campaign against the ICS sector!\n\nINTENT:\nCampaign Characterization",
+      "id": "report--ab11f431-4b3b-457c-835f-59920625fe65",
+      "report_types": [
+        "campaign-characterization"
+      ],
+      "modified": "2015-05-07T14:22:14.760Z",
+      "name": "Report on Adversary Alpha's Campaign against the Industrial Control Sector",
+      "object_refs": [
+        "campaign--1855cb8a-d96c-4859-a450-abb1e7c061f2"
+      ],
+      "published": "2015-05-07T14:22:14.760Z",
+      "spec_version": "2.1",
+      "type": "report"
+    },
+    {
+      "created": "2015-05-07T14:22:14.760Z",
+      "created_by_ref": "identity--cac8fc0e-3ecb-4e4f-aac5-5bbdf2ff49a5",
+      "description": "\n\nINTENT:\nIndicators - Malware Artifacts",
+      "id": "report--f14804d5-3ee1-4a0e-b0f3-f9a643855ba5",
+      "report_types": [
+        "indicator-malware-artifacts"
+      ],
+      "modified": "2015-05-07T14:22:14.760Z",
+      "name": "Indicators for Malware DrownedRat",
+      "object_refs": [
+        "example:ttp-66647c79-5766-4ca7-ab8a-a579056e3c83"
+      ],
+      "published": "2015-05-07T14:22:14.760Z",
+      "spec_version": "2.1",
+      "type": "report"
+    }
+  ],
+  "type": "bundle"
+}

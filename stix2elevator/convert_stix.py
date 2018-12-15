@@ -33,7 +33,7 @@ from stix2elevator.confidence import convert_confidence
 from stix2elevator.convert_cybox import (convert_cybox_object,
                                          fix_cybox_relationships)
 from stix2elevator.convert_pattern import (ComparisonExpressionForElevator,
-                                           ObservableExpressionForElevator,
+                                           CompoundObservationExpressionForElevator,
                                            ParentheticalExpressionForElevator,
                                            add_to_observable_mappings,
                                            add_to_pattern_cache,
@@ -1678,7 +1678,7 @@ def finalize_bundle(bundle_instance):
                         ind["pattern"] = "[%s]" % final_pattern
                     elif isinstance(final_pattern, ParentheticalExpressionForElevator):
                         result = final_pattern.expression.partition_according_to_object_path()
-                        if isinstance(result, ObservableExpressionForElevator):
+                        if isinstance(result, CompoundObservationExpressionForElevator):
                             ind["pattern"] = "%s" % result
                         else:
                             ind["pattern"] = "[%s]" % result

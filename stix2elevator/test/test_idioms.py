@@ -12,9 +12,9 @@ from stix2elevator.options import (get_option_value, initialize_options,
                                    set_option_value)
 from stix2elevator.utils import find_dir, iterpath
 
-_TESTED_XML_FILES = []
-_XML_FILENAMES = []
-_MASTER_JSON_FILES = []
+BEFORE_FILES = []
+BEFORE_FILENAMES = []
+MASTER_JSON_FILES = []
 
 _IGNORE = (u"id", u"idref", u"created_by_ref", u"object_refs", u"marking_ref",
            u"object_marking_refs", u"target_ref", u"source_ref", u"valid_until",
@@ -24,9 +24,9 @@ _IGNORE = (u"id", u"idref", u"created_by_ref", u"object_refs", u"marking_ref",
            u"external_references")
 
 
-def idiom_mappings(xml_file_path, stored_json, version):
+def idiom_elevator_mappings(before_file_path, stored_json, version):
     """Test fresh conversion from XML to JSON matches stored JSON samples."""
-    print("Checking - " + xml_file_path)
+    print("Checking - " + before_file_path)
     print("With Master - " + stored_json["id"])
 
     initialize_options()
@@ -37,8 +37,12 @@ def idiom_mappings(xml_file_path, stored_json, version):
         print("'no_policy' is not allowed for testing")
     set_option_value("policy", "no_policy")
     sys.setrecursionlimit(3000)
-    converted_json = elevate_file(xml_file_path)
+    converted_json = elevate_file(before_file_path)
     converted_json = json.loads(converted_json)
+    return idiom_mappings(converted_json, stored_json)
+
+
+def idiom_mappings(converted_json, stored_json):
 
     for good, to_check in zip(iterpath(stored_json), iterpath(converted_json)):
         good_path, good_value = good
@@ -64,34 +68,37 @@ def idiom_mappings(xml_file_path, stored_json, version):
         yield good, to_check
 
 
-def setup_tests(version):
-    directory = os.path.dirname(__file__)
-
-    xml_idioms_dir = find_dir(directory, "idioms-xml")
-    json_idioms_dir = find_dir(directory, "idioms-json" + "-" + version)
-
+def setup_tests(before_idioms_dir, after_idioms_dir, before_suffix, after_suffix):
     print("Setting up tests from following directories...")
-    print(xml_idioms_dir)
-    print(json_idioms_dir)
+    print(before_idioms_dir)
+    print(after_idioms_dir)
 
-    for json_filename in sorted(os.listdir(json_idioms_dir)):
-        if json_filename.endswith(".json"):
-            path = os.path.join(json_idioms_dir, json_filename)
+    for after_filename in sorted(os.listdir(after_idioms_dir)):
+        if after_filename.endswith(after_suffix):
+            path = os.path.join(after_idioms_dir, after_filename)
 
             with io.open(path, "r", encoding="utf-8") as f:
                 loaded_json = json.load(f)
 
-            _MASTER_JSON_FILES.append(loaded_json)
+            MASTER_JSON_FILES.append(loaded_json)
 
-    for xml_filename in sorted(os.listdir(xml_idioms_dir)):
-        if xml_filename.endswith(".xml"):
-            path = os.path.join(xml_idioms_dir, xml_filename)
-            _XML_FILENAMES.append(xml_filename.split(".")[0])
-            _TESTED_XML_FILES.append(path)
+    for before_filename in sorted(os.listdir(before_idioms_dir)):
+        if before_filename.endswith(before_suffix):
+            path = os.path.join(before_idioms_dir, before_filename)
+            BEFORE_FILENAMES.append(before_filename.split(".")[0])
+            BEFORE_FILES.append(path)
 
 
-def test_idiom_mapping(test_file, stored_master, version):
-    for good_path, check_path in idiom_mappings(test_file, stored_master, version):
+def setup_elevator_tests(version):
+    directory = os.path.dirname(__file__)
+
+    xml_idioms_dir = find_dir(directory, "idioms-xml")
+    json_idioms_dir = find_dir(directory, "idioms-json" + "-" + version)
+    setup_tests(xml_idioms_dir, json_idioms_dir, ".xml", ".json")
+
+
+def test_elevator_idiom_mapping(test_file, stored_master, version):
+    for good_path, check_path in idiom_elevator_mappings(test_file, stored_master, version):
         if good_path != check_path:
             find_index_of_difference(good_path, check_path)
             assert good_path == check_path
@@ -99,11 +106,11 @@ def test_idiom_mapping(test_file, stored_master, version):
 
 def pytest_generate_tests(metafunc):
     version = os.environ['VERSION']
-    setup_tests(version)
+    setup_elevator_tests(version)
     argnames = ["test_file", "stored_master", "version"]
-    argvalues = [(x, y, version) for x, y in zip(_TESTED_XML_FILES, _MASTER_JSON_FILES)]
+    argvalues = [(x, y, version) for x, y in zip(BEFORE_FILES, MASTER_JSON_FILES)]
 
-    metafunc.parametrize(argnames=argnames, argvalues=argvalues, ids=_XML_FILENAMES, scope="function")
+    metafunc.parametrize(argnames=argnames, argvalues=argvalues, ids=BEFORE_FILENAMES, scope="function")
 
 
 def find_index_of_difference(str1, str2):
