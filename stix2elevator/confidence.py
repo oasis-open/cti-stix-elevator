@@ -1,6 +1,8 @@
 from math import ceil
 import sys
 
+from six import text_type
+
 from stix2elevator.options import warn
 
 if sys.version_info > (3,):
@@ -90,6 +92,7 @@ def convert_confidence_value(value, id):
                  value, id)
             confidentiality2_1_value = ceil(value)
     elif isinstance(value, str):
+        value = text_type(value)
         if value.isnumeric():
             confidentiality2_1_value = convert_confidence_value(convert_numeric_string(value), id)
         else:
