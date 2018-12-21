@@ -1129,7 +1129,7 @@ def convert_hashes_to_pattern(hashes):
             hc = stix2.HashConstant(hash_value.value, text_type(h.type_))
         except ValueError as err:
             # don't cause exception if hash value isn't correct
-            warn(err.message, 626)
+            warn(err, 626)
             hc = make_constant(hash_value.value)
         hash_expressions.append(create_term("file:hashes" + "." + hash_type,
                                             hash_value.condition,
@@ -1746,6 +1746,7 @@ def convert_network_socket_to_pattern(socket):
         expressions.append(add_comparison_expression(socket.protocol,
                                                      "network-traffic:protocols[*]"))
     return create_boolean_expression("AND", expressions)
+
 
 ####################################################################################################################
 

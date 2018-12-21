@@ -4,7 +4,8 @@ import sys
 
 from stix2elevator import elevate_file
 from stix2elevator.cli import _get_arg_parser
-from stix2elevator.options import initialize_options, set_option_value
+from stix2elevator.options import (get_option_value, initialize_options,
+                                   set_option_value)
 
 
 def main():
@@ -25,6 +26,8 @@ def main():
     )
     elevator_args = elevator_parser.parse_args()
     initialize_options(elevator_args)
+    set_option_value("validator_args",
+                     get_option_value("validator_args") + " --version " + get_option_value("spec_version"))
 
     all_succeeded = True
 
