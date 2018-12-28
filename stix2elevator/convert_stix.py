@@ -35,6 +35,7 @@ from stix2elevator.convert_cybox import (convert_cybox_object,
 from stix2elevator.convert_pattern import (ComparisonExpressionForElevator,
                                            CompoundObservationExpressionForElevator,
                                            ParentheticalExpressionForElevator,
+                                           UnconvertedTerm,
                                            add_to_observable_mappings,
                                            add_to_pattern_cache,
                                            convert_indicator_to_pattern,
@@ -832,13 +833,29 @@ def convert_party_name(party_name, obj, is_identity_obj):
 _LOCATIONS = {}
 
 
-def determine_country_code(value):
-    iso = pycountry.countries.get(name=value)
-    if iso:
-        return iso.alpha_2
+def determine_country_code(geo):
+    if geo.name_code:
+        return geo.name_code
     else:
-        warn("No ISO code for %s, therefore full name", 618, value)
-        return value
+        iso = pycountry.countries.get(name=geo.value)
+        if iso:
+            return iso.alpha_2
+        else:
+            if geo.value:
+                warn("No ISO code for %s, therefore using full name", 618, geo.value)
+                return geo.value
+            else:
+                return None
+
+
+# spec doesn't indicate that code is preferred
+def determine_aa(geo):
+    if geo.name_code:
+        return geo.name_code
+    elif geo.value:
+        return geo.value
+    else:
+        return None
 
 
 def convert_ciq_addresses2_1(ciq_info_addresses, identity_instance, env, parent_id=None):
@@ -849,18 +866,19 @@ def convert_ciq_addresses2_1(ciq_info_addresses, identity_instance, env, parent_
             if hasattr(add, "administrative_area") and add.administrative_area and hasattr(add,
                                                                                            "country") and add.country:
                 if len(add.country.name_elements) == 1:
+                    cc = determine_country_code(add.country.name_elements[0])
                     for aa in add.administrative_area.name_elements:
-                        location_keys.append("c:" + text_type(determine_country_code(get_name(add.country))) +
+                        location_keys.append("c:" + text_type(cc) +
                                              "," +
-                                             "aa:" + text_type(aa.value))
+                                             "aa:" + text_type(determine_aa(aa)))
                 else:
                     warn("Multiple administrative areas with multiple countries in %s is not handled", 631, None)
             elif hasattr(add, "administrative_area") and add.administrative_area:
                 for aa in add.adminstrative_area.name_elements:
-                    location_keys.append("aa:" + text_type(aa.value))
+                    location_keys.append("aa:" + text_type(determine_aa(aa)))
             elif hasattr(add, "country") and add.country:
                 for c in add.country.name_elements:
-                    location_keys.append("c:" + text_type(determine_country_code(c.value)))
+                    location_keys.append("c:" + text_type(determine_country_code(c)))
         else:
             # only remember locations with no free text address
             warn("Location with free text address in %s not handled yet", 433, identity_instance["id"])
@@ -908,7 +926,8 @@ def convert_identity(identity, env, parent_id=None, temp_marking_id=None, from_p
             # convert_controlled_vocabs_to_open_vocabs(identity_instance, "roles", identity.roles, ROLES_MAP, False)
         ciq_info = identity._specification
         if ciq_info.party_name:
-            warn("CIQ name found in %s, possibly overriding other name", 711, identity_instance["id"])
+            if "name" in identity_instance:
+                warn("CIQ name found in %s, overriding other name", 711, identity_instance["id"])
             convert_party_name(ciq_info.party_name, identity_instance, True)
         if ciq_info.organisation_info:
             identity_instance["identity_class"] = "organization"
@@ -1674,7 +1693,8 @@ def finalize_bundle(bundle_instance):
                         warn("At least one PLACEHOLDER idref was not resolved in %s", 205, ind["id"])
                     if final_pattern.contains_unconverted_term():
                         warn("At least one observable could not be converted in %s", 206, ind["id"])
-                    if isinstance(final_pattern, ComparisonExpressionForElevator):
+                    if (isinstance(final_pattern, ComparisonExpressionForElevator) or
+                            isinstance(final_pattern, UnconvertedTerm)):
                         ind["pattern"] = "[%s]" % final_pattern
                     elif isinstance(final_pattern, ParentheticalExpressionForElevator):
                         result = final_pattern.expression.partition_according_to_object_path()

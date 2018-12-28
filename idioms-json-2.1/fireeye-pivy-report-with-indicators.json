@@ -16629,7 +16629,7 @@
       "object_marking_refs": [
         "marking-definition--842c4ae8-c090-49ad-97c0-9f1d43f05404"
       ],
-      "pattern": "unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8",
+      "pattern": "[unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8]",
       "spec_version": "2.1",
       "type": "indicator",
       "valid_from": "2015-05-15T09:00:00.000000Z"
@@ -16646,7 +16646,7 @@
       "object_marking_refs": [
         "marking-definition--842c4ae8-c090-49ad-97c0-9f1d43f05404"
       ],
-      "pattern": "unconverted_term:fireeye:observable-59127d7f-ad98-4854-ac90-f44e4ce23bd1",
+      "pattern": "[unconverted_term:fireeye:observable-59127d7f-ad98-4854-ac90-f44e4ce23bd1]",
       "spec_version": "2.1",
       "type": "indicator",
       "valid_from": "2015-05-15T09:00:00.000000Z"
@@ -16697,7 +16697,7 @@
       "object_marking_refs": [
         "marking-definition--842c4ae8-c090-49ad-97c0-9f1d43f05404"
       ],
-      "pattern": "unconverted_term:fireeye:observable-c5d4e32b-5240-4172-b3f7-8ea4906b88e2",
+      "pattern": "[unconverted_term:fireeye:observable-c5d4e32b-5240-4172-b3f7-8ea4906b88e2]",
       "spec_version": "2.1",
       "type": "indicator",
       "valid_from": "2015-05-15T09:00:00.000000Z"
@@ -16714,7 +16714,7 @@
       "object_marking_refs": [
         "marking-definition--842c4ae8-c090-49ad-97c0-9f1d43f05404"
       ],
-      "pattern": "unconverted_term:fireeye:observable-6e55ddf1-77f7-4f96-a462-ec9a77cbea3c",
+      "pattern": "[unconverted_term:fireeye:observable-6e55ddf1-77f7-4f96-a462-ec9a77cbea3c]",
       "spec_version": "2.1",
       "type": "indicator",
       "valid_from": "2015-05-15T09:00:00.000000Z"
@@ -16731,7 +16731,7 @@
       "object_marking_refs": [
         "marking-definition--842c4ae8-c090-49ad-97c0-9f1d43f05404"
       ],
-      "pattern": "unconverted_term:fireeye:observable-928e7d88-ce58-4ca2-a860-b3d4f0197b10",
+      "pattern": "[unconverted_term:fireeye:observable-928e7d88-ce58-4ca2-a860-b3d4f0197b10]",
       "spec_version": "2.1",
       "type": "indicator",
       "valid_from": "2015-05-15T09:00:00.000000Z"
@@ -16748,7 +16748,7 @@
       "object_marking_refs": [
         "marking-definition--842c4ae8-c090-49ad-97c0-9f1d43f05404"
       ],
-      "pattern": "unconverted_term:fireeye:observable-0a550bf1-087c-49ef-9ff2-d511f6621b52",
+      "pattern": "[unconverted_term:fireeye:observable-0a550bf1-087c-49ef-9ff2-d511f6621b52]",
       "spec_version": "2.1",
       "type": "indicator",
       "valid_from": "2015-05-15T09:00:00.000000Z"
@@ -16765,7 +16765,7 @@
       "object_marking_refs": [
         "marking-definition--842c4ae8-c090-49ad-97c0-9f1d43f05404"
       ],
-      "pattern": "unconverted_term:fireeye:observable-63a6addc-4e32-4569-bceb-7f7d3deb252e",
+      "pattern": "[unconverted_term:fireeye:observable-63a6addc-4e32-4569-bceb-7f7d3deb252e]",
       "spec_version": "2.1",
       "type": "indicator",
       "valid_from": "2015-05-15T09:00:00.000000Z"
@@ -16782,7 +16782,7 @@
       "object_marking_refs": [
         "marking-definition--842c4ae8-c090-49ad-97c0-9f1d43f05404"
       ],
-      "pattern": "unconverted_term:fireeye:observable-01aa884e-a950-41d4-be10-8f14d5b54714",
+      "pattern": "[unconverted_term:fireeye:observable-01aa884e-a950-41d4-be10-8f14d5b54714]",
       "spec_version": "2.1",
       "type": "indicator",
       "valid_from": "2015-05-15T09:00:00.000000Z"
@@ -16799,7 +16799,7 @@
       "object_marking_refs": [
         "marking-definition--842c4ae8-c090-49ad-97c0-9f1d43f05404"
       ],
-      "pattern": "unconverted_term:fireeye:observable-438ca35e-2d48-46fb-b3be-b8e611793a15",
+      "pattern": "[unconverted_term:fireeye:observable-438ca35e-2d48-46fb-b3be-b8e611793a15]",
       "spec_version": "2.1",
       "type": "indicator",
       "valid_from": "2015-05-15T09:00:00.000000Z"
@@ -16816,7 +16816,7 @@
       "object_marking_refs": [
         "marking-definition--842c4ae8-c090-49ad-97c0-9f1d43f05404"
       ],
-      "pattern": "unconverted_term:fireeye:observable-e7b4bb5c-eb6a-4c7f-8eef-25b6292c87ce",
+      "pattern": "[unconverted_term:fireeye:observable-e7b4bb5c-eb6a-4c7f-8eef-25b6292c87ce]",
       "spec_version": "2.1",
       "type": "indicator",
       "valid_from": "2015-05-15T09:00:00.000000Z"
