@@ -23,7 +23,11 @@ from cybox.objects.win_registry_key_object import WinRegistryKey
 from cybox.objects.win_service_object import WinService
 from six import text_type
 import stix2
-from stix2.patterns import (_BooleanExpression, _ComparisonExpression,
+from stix2.patterns import (BasicObjectPathComponent, ListObjectPathComponent,
+                            ObjectPath, ObservationExpression,
+                            QualifiedObservationExpression,
+                            ReferenceObjectPathComponent, _BooleanExpression,
+                            _ComparisonExpression,
                             _CompoundObservationExpression, _Constant)
 import stixmarx
 
@@ -31,7 +35,7 @@ from stix2elevator.common import ADDRESS_FAMILY_ENUMERATION, SOCKET_OPTIONS
 from stix2elevator.convert_cybox import split_into_requests_and_responses
 from stix2elevator.ids import (add_object_id_value, exists_object_id_key,
                                get_id_value, get_object_id_value)
-from stix2elevator.options import error, info, warn
+from stix2elevator.options import error, get_option_value, info, warn
 from stix2elevator.utils import identifying_info, map_vocabs_to_label
 from stix2elevator.vocab_mappings import WINDOWS_PEBINARY
 
@@ -41,6 +45,101 @@ if sys.version_info > (3,):
 KEEP_OBSERVABLE_DATA_USED_IN_PATTERNS = False
 
 KEEP_INDICATORS_USED_IN_COMPOSITE_INDICATOR_EXPRESSION = True
+
+
+class BasicObjectPathComponentForElevator(BasicObjectPathComponent):
+    @staticmethod
+    def create_ObjectPathComponent(component_name):
+        if component_name.endswith("_ref"):
+            return ReferenceObjectPathComponentForElevator(component_name)
+        elif component_name.find("[") != -1:
+            parse1 = component_name.split("[")
+            return ListObjectPathComponentForElevator(parse1[0], parse1[1][:-1])
+        else:
+            return BasicObjectPathComponentForElevator(component_name, False)
+
+
+class ListObjectPathComponentForElevator(ListObjectPathComponent):
+    @staticmethod
+    def create_ObjectPathComponent(component_name):
+        if component_name.endswith("_ref"):
+            return ReferenceObjectPathComponentForElevator(component_name)
+        elif component_name.find("[") != -1:
+            parse1 = component_name.split("[")
+            return ListObjectPathComponentForElevator(parse1[0], parse1[1][:-1])
+        else:
+            return BasicObjectPathComponentForElevator(component_name, False)
+
+
+class ReferenceObjectPathComponentForElevator(ReferenceObjectPathComponent):
+    @staticmethod
+    def create_ObjectPathComponent(component_name):
+        if component_name.endswith("_ref"):
+            return ReferenceObjectPathComponentForElevator(component_name)
+        elif component_name.find("[") != -1:
+            parse1 = component_name.split("[")
+            return ListObjectPathComponentForElevator(parse1[0], parse1[1][:-1])
+        else:
+            return BasicObjectPathComponentForElevator(component_name, False)
+
+
+class ObjectPathForElevator(ObjectPath):
+    def toSTIX21(self):
+        current_cyber_observable_type = self.object_type_name
+        for x in self.property_path:
+            if x.property_name == "extensions":
+                continue
+            if current_cyber_observable_type == "file":
+                if (x.property_name == "is_encrypted" or
+                        x.property_name == "encryption_algorithm" or
+                        x.property_name == "decryption_key"):
+                    print(
+                        "Expression contains the property " + x.property_name + ", for a file, which is not in STIX 2.1")
+                elif x.property_name == "archive-ext" or x.property_name == "raster-image-ext":
+                    current_cyber_observable_type = x.property_name
+                elif x.property_name == "contains_refs":
+                    current_cyber_observable_type = "file"
+                elif x.property_name == "parent_directory_ref":
+                    current_cyber_observable_type = "directory"
+            elif current_cyber_observable_type == "directory":
+                if x.property_name == "contains_refs":
+                    # TODO - what if it is a directory?
+                    current_cyber_observable_type = "file"
+            elif current_cyber_observable_type == "archive-ext":
+                if x.property_name == "version":
+                    print("Expression contains the property version, for a file.archive-ext, which is not in STIX 2.1")
+            elif current_cyber_observable_type == "raster-image-ext":
+                if x.property_name == "image_compression_algorithm":
+                    print(
+                        "Expression contains the property image_compression_algorithm, for a file.raster-image-ext, which is not in STIX 2.1")
+            elif current_cyber_observable_type == "network_traffic":
+                if x.property_name == "socket-ext":
+                    current_cyber_observable_type = x.property_name
+            elif current_cyber_observable_type == "socket-ext":
+                if x.property_name == "protocol_family":
+                    print(
+                        "Expression contains the property protocol_familys, for a network_traffic:socket-ext, which is not in STIX 2.1")
+            elif current_cyber_observable_type == "process":
+                if x.property_name == "name" or x.property_name == "arguments":
+                    print(
+                        "Expression contains the property " + x.property_name + ", for a process, which is not in STIX 2.1")
+                elif x.property_name == "binary_ref":
+                    x.property_name = "image_ref"
+                elif x.property_name == "opened_connection_refs":
+                    current_cyber_observable_type = "network_traffic"
+                elif x.property_name == 'creator_user_ref':
+                    current_cyber_observable_type = "user_account"
+                elif x.property_name == 'binary_ref':
+                    current_cyber_observable_type = "file"
+                elif x.property_name == 'windows-service-ext':
+                    current_cyber_observable_type = 'windows-service-ext'
+            elif current_cyber_observable_type == 'windows-service-ext':
+                if x.property_name == 'service_dll_refs':
+                    current_cyber_observable_type = "file"
+            elif current_cyber_observable_type == "user_account":
+                if x.property_name == "password_last_changed":
+                    x.property_name = "credential_last_changed"
+        return self
 
 
 class ComparisonExpressionForElevator(_ComparisonExpression):
@@ -86,6 +185,60 @@ class ComparisonExpressionForElevator(_ComparisonExpression):
 
     def contains_unconverted_term(self):
         return False
+
+    def toSTIX21(self):
+        self.lhs = self.lhs.toSTIX21()
+        return self
+
+
+class EqualityComparisonExpressionForElevator(ComparisonExpressionForElevator):
+    def __init__(self, lhs, rhs, negated=False):
+        super(EqualityComparisonExpressionForElevator, self).__init__("=", lhs, rhs, negated)
+
+
+class MatchesComparisonExpressionForElevator(ComparisonExpressionForElevator):
+    def __init__(self, lhs, rhs, negated=False):
+        super(MatchesComparisonExpressionForElevator, self).__init__("MATCHES", lhs, rhs, negated)
+
+
+class GreaterThanComparisonExpressionForElevator(ComparisonExpressionForElevator):
+    def __init__(self, lhs, rhs, negated=False):
+        super(GreaterThanComparisonExpressionForElevator, self).__init__(">", lhs, rhs, negated)
+
+
+class LessThanComparisonExpressionForElevator(ComparisonExpressionForElevator):
+    def __init__(self, lhs, rhs, negated=False):
+        super(LessThanComparisonExpressionForElevator, self).__init__("<", lhs, rhs, negated)
+
+
+class GreaterThanEqualComparisonExpressionForElevator(ComparisonExpressionForElevator):
+    def __init__(self, lhs, rhs, negated=False):
+        super(GreaterThanEqualComparisonExpressionForElevator, self).__init__(">=", lhs, rhs, negated)
+
+
+class LessThanEqualComparisonExpressionForElevator(ComparisonExpressionForElevator):
+    def __init__(self, lhs, rhs, negated=False):
+        super(LessThanEqualComparisonExpressionForElevator, self).__init__("<=", lhs, rhs, negated)
+
+
+class InComparisonExpressionForElevator(ComparisonExpressionForElevator):
+    def __init__(self, lhs, rhs, negated=False):
+        super(InComparisonExpressionForElevator, self).__init__("IN", lhs, rhs, negated)
+
+
+class LikeComparisonExpressionForElevator(ComparisonExpressionForElevator):
+    def __init__(self, lhs, rhs, negated=False):
+        super(LikeComparisonExpressionForElevator, self).__init__("LIKE", lhs, rhs, negated)
+
+
+class IsSubsetComparisonExpressionForElevator(ComparisonExpressionForElevator):
+    def __init__(self, lhs, rhs, negated=False):
+        super(IsSubsetComparisonExpressionForElevator, self).__init__("ISSUBSET", lhs, rhs, negated)
+
+
+class IsSupersetComparisonExpressionForElevator(ComparisonExpressionForElevator):
+    def __init__(self, lhs, rhs, negated=False):
+        super(IsSupersetComparisonExpressionForElevator, self).__init__("ISSUPERSET", lhs, rhs, negated)
 
 
 class BooleanExpressionForElevator(_BooleanExpression):
@@ -143,13 +296,41 @@ class BooleanExpressionForElevator(_BooleanExpression):
         if len(results) == 1:
             return results[0]
         else:
-            return ObservableExpressionForElevator(self.operator, results)
+            return CompoundObservationExpressionForElevator(self.operator, results)
 
     def contains_unconverted_term(self):
         for args in self.operands:
             if args.contains_unconverted_term():
                 return True
         return False
+
+    def toSTIX21(self):
+        for args in self.operands:
+            args.toSTIX21()
+        return self
+
+
+class AndBooleanExpressionForElevator(BooleanExpressionForElevator):
+    """'AND' Boolean Pattern Expression. Only use if both operands are of
+    the same root object.
+
+    Args:
+        operands (list): AND operands
+    """
+
+    def __init__(self, operands):
+        super(AndBooleanExpressionForElevator, self).__init__("AND", operands)
+
+
+class OrBooleanExpressionForElevator(BooleanExpressionForElevator):
+    """'OR' Boolean Pattern Expression. Only use if both operands are of the same root object
+
+    Args:
+        operands (list): OR operands
+    """
+
+    def __init__(self, operands):
+        super(OrBooleanExpressionForElevator, self).__init__("OR", operands)
 
 
 class IdrefPlaceHolder(object):
@@ -198,13 +379,23 @@ class UnconvertedTerm(object):
         return True
 
 
-class ObservableExpressionForElevator(_CompoundObservationExpression):
+class ObservationExpressionForElevator(ObservationExpression):
+    def toSTIX21(self):
+        self.operand.toSTIX21()
+        return self
+
+
+class CompoundObservationExpressionForElevator(_CompoundObservationExpression):
     def __str__(self):
         sub_exprs = []
         if len(self.operands) == 1:
             return "[%s]" % self.operands[0]
         for o in self.operands:
-            sub_exprs.append("[%s]" % o)
+            if isinstance(o, ObservationExpressionForElevator) or isinstance(o,
+                                                                             CompoundObservationExpressionForElevator):
+                sub_exprs.append("%s" % o)
+            else:
+                sub_exprs.append("[%s]" % o)
         return (" " + self.operator + " ").join(sub_exprs)
 
     def contains_placeholder(self):
@@ -219,6 +410,60 @@ class ObservableExpressionForElevator(_CompoundObservationExpression):
         return False
 
     def partition_according_to_object_path(self):
+        return self
+
+    def toSTIX21(self):
+        for arg in self.operands:
+            arg.toSTIX21()
+        return self
+
+
+class AndObservationExpressionForElevator(CompoundObservationExpressionForElevator):
+    """'AND' Compound Observation Pattern Expression
+
+    Args:
+        operands (str): compound observation operands
+    """
+
+    def __init__(self, operands):
+        super(AndObservationExpressionForElevator, self).__init__("AND", operands)
+
+
+class OrObservationExpressionForElevator(CompoundObservationExpressionForElevator):
+    """Pattern 'OR' Compound Observation Expression
+
+    Args:
+        operands (str): compound observation operands
+    """
+
+    def __init__(self, operands):
+        super(OrObservationExpressionForElevator, self).__init__("OR", operands)
+
+
+class FollowedByObservationExpressionForElevator(CompoundObservationExpressionForElevator):
+    """Pattern 'Followed by' Compound Observation Expression
+
+    Args:
+        operands (str): compound observation operands
+    """
+
+    def __init__(self, operands):
+        super(FollowedByObservationExpressionForElevator, self).__init__("FOLLOWEDBY", operands)
+
+
+class QualifiedObservationExpressionForElevator(QualifiedObservationExpression):
+    """Pattern Qualified Observation Expression
+
+    Args:
+        observation_expression (PatternExpression OR _CompoundObservationExpression OR ): pattern expression
+        qualifier (_ExpressionQualifier): pattern expression qualifier
+    """
+
+    def __init__(self, observation_expression, qualifier):
+        super(QualifiedObservationExpressionForElevator, self).__init__(observation_expression, qualifier)
+
+    def toSTIX21(self):
+        self.observation_expression.toSTIX21()
         return self
 
 
@@ -242,6 +487,10 @@ class ParentheticalExpressionForElevator(stix2.ParentheticalExpression):
 
     def partition_according_to_object_path(self):
         self.expression = self.expression.partition_according_to_object_path()
+        return self
+
+    def toSTIX21(self):
+        self.expression.toSTIX21()
         return self
 
 
@@ -587,6 +836,11 @@ def convert_account_to_pattern(account):
             term = add_comparison_expression(getattr(account, prop_1x), object_path)
             if term:
                 expressions.append(term)
+    if account.authentication and get_option_value("spec_version") == "2.1":
+        if account.authentication.authentication_data:
+            expressions.append(create_term("user-account:credential",
+                                           "Equals",
+                                           stix2.StringConstant(account.authentication.authentication_data)))
     if isinstance(account, UnixUserAccount):
         win_process_expression = convert_unix_user_to_pattern(account)
         if win_process_expression:
@@ -765,8 +1019,17 @@ _PE_FILE_HEADER_PROPERTIES = \
 _PE_SECTION_HEADER_PROPERTIES = [["name", "file:extensions.'windows-pebinary-ext'.section[*].name"],
                                  ["virtual_size", "file:extensions.'windows-pebinary-ext'.section[*].size"]]
 
-_ARCHIVE_FILE_PROPERTIES = [["comment", "file:extensions.'archive-ext'.comment"],
-                            ["version", "file:extensions.'archive-ext'.version"]]
+_ARCHIVE_FILE_PROPERTIES_2_0 = [["comment", "file:extensions.'archive-ext'.comment"],
+                                ["version", "file:extensions.'archive-ext'.version"]]
+
+_ARCHIVE_FILE_PROPERTIES_2_1 = [["comment", "file:extensions.'archive-ext'.comment"]]
+
+
+def select_archive_file_properties():
+    if get_option_value("spec_version") == "2.1":
+        return _ARCHIVE_FILE_PROPERTIES_2_1
+    else:
+        return _ARCHIVE_FILE_PROPERTIES_2_0
 
 
 def convert_windows_executable_file_to_pattern(f):
@@ -827,10 +1090,10 @@ def convert_windows_executable_file_to_pattern(f):
         if sections_expressions:
             expressions.append(create_boolean_expression("AND", sections_expressions))
     if f.exports:
-        warn("The exports property of WinExecutableFileObj is not part of STIX 2.0", 418)
+        warn("The exports property of WinExecutableFileObj is not part of STIX 2.x", 418)
         expressions.append(UnconvertedTerm("WinExecutableFileObj.exports"))
     if f.imports:
-        warn("The imports property of WinExecutableFileObj is not part of STIX 2.0", 419)
+        warn("The imports property of WinExecutableFileObj is not part of STIX 2.x", 418)
         expressions.append(UnconvertedTerm("WinExecutableFileObj.imports"))
     if expressions:
         return create_boolean_expression("AND", expressions)
@@ -838,7 +1101,7 @@ def convert_windows_executable_file_to_pattern(f):
 
 def convert_archive_file_to_pattern(f):
     and_expressions = []
-    for prop_spec in _ARCHIVE_FILE_PROPERTIES:
+    for prop_spec in select_archive_file_properties():
         prop_1x = prop_spec[0]
         object_path = prop_spec[1]
         if hasattr(f, prop_1x):
@@ -866,7 +1129,7 @@ def convert_hashes_to_pattern(hashes):
             hc = stix2.HashConstant(hash_value.value, text_type(h.type_))
         except ValueError as err:
             # don't cause exception if hash value isn't correct
-            warn(err.message, 626)
+            warn(err, 626)
             hc = make_constant(hash_value.value)
         hash_expressions.append(create_term("file:hashes" + "." + hash_type,
                                             hash_value.condition,
@@ -929,13 +1192,27 @@ def convert_file_name_and_path_to_pattern(f):
         return create_boolean_expression("AND", file_name_path_expressions)
 
 
-_FILE_PROPERTIES = [["size_in_bytes", "file:size"],
-                    ["magic_number", "file:magic_number_hex"],
-                    ["created_time", "file:created"],
-                    ["modified_time", "file:modified"],
-                    ["accessed_time", "file:accessed"],
-                    ["encyption_algorithm", "file:encyption_algorithm"],
-                    ["decryption_key", "file:decryption_key"]]
+_FILE_PROPERTIES_2_0 = [["size_in_bytes", "file:size"],
+                        ["magic_number", "file:magic_number_hex"],
+                        ["created_time", "file:created"],
+                        ["modified_time", "file:modified"],
+                        ["accessed_time", "file:accessed"],
+                        ["encyption_algorithm", "file:encyption_algorithm"],
+                        ["decryption_key", "file:decryption_key"]]
+# is_encrypted
+
+_FILE_PROPERTIES_2_1 = [["size_in_bytes", "file:size"],
+                        ["magic_number", "file:magic_number_hex"],
+                        ["created_time", "file:created"],
+                        ["modified_time", "file:modified"],
+                        ["accessed_time", "file:accessed"]]
+
+
+def select_file_properties():
+    if get_option_value("spec_version") == "2.1":
+        return _FILE_PROPERTIES_2_1
+    else:
+        return _FILE_PROPERTIES_2_0
 
 
 def convert_file_to_pattern(f):
@@ -948,7 +1225,7 @@ def convert_file_to_pattern(f):
     if file_name_and_path_expression:
         expressions.append(file_name_and_path_expression)
     properties_expressions = []
-    for prop_spec in _FILE_PROPERTIES:
+    for prop_spec in select_file_properties():
         prop_1x = prop_spec[0]
         object_path = prop_spec[1]
         if hasattr(f, prop_1x) and getattr(f, prop_1x):
@@ -1026,7 +1303,7 @@ def convert_image_info_to_pattern(image_info):
         return create_boolean_expression("AND", expressions)
 
 
-_PROCESS_PROPERTIES = [
+_PROCESS_PROPERTIES_2_0 = [
     ["is_hidden", "process:is_hidden"],
     ["pid", "process:pid"],
     ["name", "process:name"],
@@ -1035,10 +1312,25 @@ _PROCESS_PROPERTIES = [
     ["creation_time", "process:created"]
 ]
 
+_PROCESS_PROPERTIES_2_1 = [
+    ["is_hidden", "process:is_hidden"],
+    ["pid", "process:pid"],
+    ["parent_pid", "process:parent_ref.pid"],
+    ["username", "process:creator_user_ref.user_id"],
+    ["creation_time", "process:created"]
+]
+
+
+def select_process_properties():
+    if get_option_value("spec_version") == "2.1":
+        return _PROCESS_PROPERTIES_2_1
+    else:
+        return _PROCESS_PROPERTIES_2_0
+
 
 def convert_process_to_pattern(process):
     expressions = []
-    for prop_spec in _PROCESS_PROPERTIES:
+    for prop_spec in select_process_properties():
         prop_1x = prop_spec[0]
         object_path = prop_spec[1]
         if hasattr(process, prop_1x) and getattr(process, prop_1x):
@@ -1050,13 +1342,17 @@ def convert_process_to_pattern(process):
         if process_info:
             expressions.append(process_info)
     if hasattr(process, "argument_list") and process.argument_list:
-        argument_expressions = []
-        for a in process.argument_list:
-            argument_expressions.append(create_term("process:arguments[*]",
-                                                    a.condition,
-                                                    stix2.StringConstant(a.value)))
-        if argument_expressions:
-            expressions.append(create_boolean_expression("AND", argument_expressions))
+        if get_option_value("spec_version") == "2.0":
+            argument_expressions = []
+            for a in process.argument_list:
+                argument_expressions.append(create_term("process:arguments[*]",
+                                                        a.condition,
+                                                        stix2.StringConstant(a.value)))
+            if argument_expressions:
+                expressions.append(create_boolean_expression("AND", argument_expressions))
+        else:
+            warn("The argument_list property of ProcessObj is not part of STIX 2.1", 418)
+            expressions.append(UnconvertedTerm("ProcessObj.argument_list"))
     if hasattr(process, "environment_variable_list") and process.environment_variable_list:
         ev_expressions = []
         for ev in process.environment_variable_list:
@@ -1120,7 +1416,8 @@ def convert_windows_process_to_pattern(process):
         for h in process.handle_list:
             warn("Windows Handles are not a part of STIX 2.0", 420)
     if process.startup_info:
-        warn("process:startup_info not handled yet", 803)
+        warn("The startup_info property of ProcessObj is not part of STIX 2.x", 418)
+        expressions.append(UnconvertedTerm("ProcessObj.startup_info"))
     if expressions:
         return create_boolean_expression("AND", expressions)
 
@@ -1152,7 +1449,7 @@ def convert_windows_service_to_pattern(service):
         if description_expressions:
             expressions.append(create_boolean_expression("OR", description_expressions))
     if hasattr(service, "service_dll") and service.service_dll:
-        warn("WinServiceObject.service_dll is not handled, yet.", 804)
+        warn("The service_dll property of WinServiceObject is not part of STIX 2.x", 418)
         expressions.append(UnconvertedTerm("WinServiceObject.service_dll"))
     if expressions:
         return create_boolean_expression("AND", expressions)
@@ -1409,18 +1706,18 @@ def convert_socket_options_to_pattern(options):
     for prop_name in SOCKET_OPTIONS:
         prop = getattr(options, prop_name)
         if prop:
-            expressions.append(create_term("network-traffic:extensions.'socket_ext'.options." + prop_name.upper(),
+            expressions.append(create_term("network-traffic:extensions.'socket-ext'.options." + prop_name.upper(),
                                            "Equals",
                                            prop))
     return create_boolean_expression("AND", expressions)
 
 
 _SOCKET_MAP = {
-    "is_blocking": "network-traffic:extensions.'socket_ext'.is_blocking",
-    "is_listening": "network-traffic:extensions.'socket_ext'.is_listening",
-    "type_": "network-traffic:extensions.'socket_ext'.socket_type",
-    "domain": "network-traffic:extensions.'socket_ext'.socket_type",
-    "socket_descriptor": "network-traffic:extensions.'socket_ext'.socket_descriptor"
+    "is_blocking": "network-traffic:extensions.'socket-ext'.is_blocking",
+    "is_listening": "network-traffic:extensions.'socket-ext'.is_listening",
+    "type_": "network-traffic:extensions.'socket-ext'.socket_type",
+    "domain": "network-traffic:extensions.'socket-ext'.socket_type",
+    "socket_descriptor": "network-traffic:extensions.'socket-ext'.socket_descriptor"
 }
 
 
@@ -1436,7 +1733,7 @@ def convert_network_socket_to_pattern(socket):
     if socket.address_family:
         if socket.address_family in ADDRESS_FAMILY_ENUMERATION:
             expressions.append(add_comparison_expression(socket.address_family,
-                                                         "network-traffic:extensions.'socket_ext'.address_family"))
+                                                         "network-traffic:extensions.'socket-ext'.address_family"))
         else:
             warn("%s in is not a member of the %s enumeration", 627, socket.address_family, "address family")
     if socket.options:
@@ -1449,6 +1746,7 @@ def convert_network_socket_to_pattern(socket):
         expressions.append(add_comparison_expression(socket.protocol,
                                                      "network-traffic:protocols[*]"))
     return create_boolean_expression("AND", expressions)
+
 
 ####################################################################################################################
 

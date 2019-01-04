@@ -179,7 +179,6 @@ def elevate_package(package):
         env = Environment(get_option_value("package_created_by_id"),
                           timestamp)
         json_string = json.dumps(convert_package(stix_package, env),
-
                                  ensure_ascii=False,
                                  indent=4,
                                  separators=(',', ': '),

@@ -26,7 +26,7 @@ silent option is not compatible with a policy                           211     
 ======================================================================= ====    =====
 
 
-Adding Content not supported in STIX 2.0 to Description
+Adding Content not supported in STIX 2.x to Description
 ----------------------------------------------------------------
 
 ============================================================================================================================== ====    =====
@@ -41,59 +41,63 @@ Appended ``Tool ``type content to description of *[id]*                         
 ============================================================================================================================== ====    =====
 
 
-Dropping Content not supported in STIX 2.0
+Dropping Content not supported in STIX 2.x
 ---------------------------------------------------
 
 ============================================================================================================================================== ====    =====
 Message                                                                                                                                        Code    Level
 ============================================================================================================================================== ====    =====
 ``Information Source`` on *[id]* is not representable in STIX 2.0                                                                              401     warn
-``Related_Packages`` type in *[id]* not supported in STIX 2.0                                                                                  402     warn
-``Campaign/Activity`` type in *[id]* not supported in STIX 2.0                                                                                 403     warn
-Structured COAs type in *[id]* are not supported in STIX 2.0                                                                                   404     warn
-``ExploitTarget/Weaknesses`` type in *[id]* not supported in STIX 2.0                                                                          405     warn
-``ExploitTarget/Configurations`` type in *[id]* not supported in STIX 2.0                                                                      406     warn
-Indicator *[id]* has an observable or indicator composite expression which may not supported correctly in STIX 2.0 - please check this pattern 407     warn
-``TTP/Behavior/Exploits/Exploit`` in *[id]* not supported in STIX 2.0                                                                          408     warn
-``Infrastructure`` in *[id]* not part of STIX 2.0                                                                                              409     warn
-Targeted systems on *[id]* are not a victim target in STIX 2.0                                                                                 410     warn
-Targeted information on *[id]* is not a victim target in STIX 2.0                                                                              411     warn
-Targeted technical details on *[id]* are not a victim target in STIX 2.0                                                                       412     warn
-Kill Chains type in *[id]* not supported in STIX 2.0                                                                                           413     warn
-Victim Target in *[id]* did not yield any STIX 2.0 object                                                                                      414     warn
-TTP *[id]* did not generate any STIX 2.0 object                                                                                                415     warn
-No STIX 2.0 object generated from embedded object *[id]*                                                                                       416     warn
-[object type] did not yield any STIX 2.0 object                                                                                                417     warn
-The exports property of ``WinExecutableFileObj`` is not part of STIX 2.0                                                                       418     warn
-The imports property of ``WinExecutableFileObj`` is not part of STIX 2.0                                                                       419     warn
-Windows Handles are not a part of STIX 2.0                                                                                                     420     warn
+``Related_Packages`` type in *[id]* not supported in STIX 2.x                                                                                  402     warn
+``Campaign/Activity`` type in *[id]* not supported in STIX 2.x                                                                                 403     warn
+Structured COAs type in *[id]* are not supported in STIX 2.x                                                                                   404     warn
+``ExploitTarget/Weaknesses`` type in *[id]* not supported in STIX 2.x                                                                          405     warn
+``ExploitTarget/Configurations`` type in *[id]* not supported in STIX 2.x                                                                      406     warn
+Indicator *[id]* has an observable or indicator composite expression which may not supported correctly in STIX 2.x - please check this pattern 407     warn
+``TTP/Behavior/Exploits/Exploit`` in *[id]* not supported in STIX 2.x                                                                          408     warn
+``Infrastructure`` in *[id]* not part of STIX 2.x                                                                                              409     warn
+Targeted systems on *[id]* are not a victim target in STIX 2.x                                                                                 410     warn
+Targeted information on *[id]* is not a victim target in STIX 2.x                                                                              411     warn
+Targeted technical details on *[id]* are not a victim target in STIX 2.x                                                                       412     warn
+Kill Chains type in *[id]* not supported in STIX 2.x                                                                                           413     warn
+Victim Target in *[id]* did not yield any STIX 2.x object                                                                                      414     warn
+TTP *[id]* did not generate any STIX 2.x object                                                                                                415     warn
+No STIX 2.x object generated from embedded object *[id]*                                                                                       416     warn
+[object type] did not yield any STIX 2.x object                                                                                                417     warn
+The *[property]* property of *[STIX 1.x object type]*` is not part of STIX 2.x                                                                 418     warn
+``NO MESSAGE ASSIGNED``                                                                                                                        419
+Windows Handles are not a part of STIX 2.x                                                                                                     420     warn
 The address type [address] is not part of STIX 2.0                                                                                             421     warn
 No pattern term was created from *[id]*                                                                                                        422     warn
 *[id]* is used as a pattern, therefore it is not included as an observed_data instance                                                         423     warn
-*[xxx]* content is not supported in STIX 2.0                                                                                                   424     warn
+*[xxx]* content is not supported in STIX 2.x                                                                                                   424     warn
 Could not resolve Marking Structure *[id]*                                                                                                     425     warn
-MAEC content in *[id]* cannot be represented in STIX 2.0                                                                                       426     warn
-The *[relationship name]* relationship involving *[id]* is not supported in STIX 2.0                                                           427     warn
-``roles`` is not a property of a 2.0 identity (*[id]*).  Perhaps the roles are associated with a related Threat Actor                          428     warn
-``HTTPServerResponse`` type is not supported in STIX 2.0                                                                                       429     warn
+MAEC content in *[id]* cannot be represented in STIX 2.x                                                                                       426     warn
+The *[relationship name]* relationship involving *[id]* is not supported in STIX 2.x                                                           427     warn
+``roles`` is not a property of a 2.x identity (*[id]*).  Perhaps the roles are associated with a related Threat Actor                          428     warn
+``HTTPServerResponse`` type is not supported in STIX 2.x                                                                                       429     warn
+The confidence value *[value]* is not found on one of the confidence scales from the specification. No confidence can be inferred              430     warn
+The confidence value *[value]* is not between 0 and 100, which is required for STIX 2.1. No confidence can be inferred                         431     warn
+The confidence value *[value]* cannot be converted                                                                                             432     warn
+Location with free text address in *[id]* not handled yet"                                                                                     433     warn
 ============================================================================================================================================== ====    =====
 
-Multiple values are not supported in STIX 2.0
+Multiple values are not supported in STIX 2.x
 ----------------------------------------------------
 
 =========================================================================================================================================== ====    =====
 Message                                                                                                                                     Code    Level
 =========================================================================================================================================== ====    =====
 ``NO MESSAGE ASSIGNED``                                                                                                                     501
-Only one person name allowed for *[id]* in STIX 2.0, used first one                                                                         502     warn
-Only one organization name allowed for *[id]* in STIX 2.0, used first one                                                                   503     warn
-YARA/SNORT patterns on *[id]* not supported in STIX 2.0                                                                                     504     warn
+Only one person name allowed for *[id]* in STIX 2.x, used first one                                                                         502     warn
+Only one organization name allowed for *[id]* in STIX 2.x, used first one                                                                   503     warn
+YARA/SNORT patterns on *[id]* not supported in STIX 2.x                                                                                     504     warn
 ``NO MESSAGE ASSIGNED``                                                                                                                     505
-Only one alternative test mechanism allowed for *[id]* in STIX 2.0 - used first one, which was *[pattern_lang]*                             506     warn
-Only one valid time window allowed for *[id]* in STIX 2.0 - used first one                                                                  507     warn
-Only one name for malware is allowed for *[id]* in STIX 2.0 - used first one                                                                508     warn
+Only one alternative test mechanism allowed for *[id]* in STIX 2.x - used first one, which was *[pattern_lang]*                             506     warn
+Only one valid time window allowed for *[id]* in STIX 2.x - used first one                                                                  507     warn
+Only one name for malware is allowed for *[id]* in STIX 2.x - used first one                                                                508     warn
 No STIX 1.x vocab value given for *[property]*, using 'unknown'                                                                             509     warn
-Only one *[property]* allowed in STIX 2.0 - used first one                                                                                  510     warn
+Only one *[property]* allowed in STIX 2.x - used first one                                                                                  510     warn
 File size 'window' not allowed in top level observable, using first value                                                                   511     warn
 Only one ``HTTP_Request_Response`` used for ``http-request-ext``, using first value                                                         512     warn
 =========================================================================================================================================== ====    =====
@@ -106,8 +110,8 @@ Message                                                                         
 =========================================================================================================================================== ====    =====
 Dangling source reference *[source]* in *[id]*                                                                                              601     warn
 Dangling target reference *[target]* in *[id]*                                                                                              602     warn
-1.X ID: *[id]* was not mapped to STIX 2.0 ID                                                                                                603     warn
-Unable to determine the STIX 2.0 type for *[id]*                                                                                            604     error
+1.X ID: *[id]* was not mapped to STIX 2.x ID                                                                                                603     warn
+Unable to determine the STIX 2.x type for *[id]*                                                                                            604     error
 Malformed id *[id]*. Generated a new uuid                                                                                                   605     warn
 Identity *[id]* has organization and person names                                                                                           606     error
 Dangling kill chain phase id in indicator *[id]*                                                                                            607     error
@@ -132,9 +136,9 @@ Found duplicate marking structure *[id]*                                        
 *[hash_string]* is not a valid *[hash_type]* hash                                                                                           626     warn
 *[enum_value]* in *[id]* is not a member of the *[enum_type]* enumeration                                                                   627     warn
 Unknown condition given in *[id]* - marked as 'INVALID_CONDITION'                                                                           628     warn
-Unable to determine the STIX 2.0 type for *[id]*, which is malformed                                                                        629     error
+Unable to determine the STIX 2.x type for *[id]*, which is malformed                                                                        629     error
 'equals' allowed in *[id]* - should be 'Equals'                                                                                             630     warn
-
+Multiple administrative areas with multiple countries in *[id]* is not handled"                                                             631     warn
 =========================================================================================================================================== ====    =====
 
 STIX Elevator conversion based on assumptions
@@ -162,9 +166,11 @@ Based on CIQ information, *[id]* is assumed to be an organization               
 Threat actor *[id]* title is used for name property                                                                                         717     info
 Using related-to for the *[property]* of *[id]*                                                                                             718     warn
 Using first Threat Actor motivation as ``primary_motivation`` value. If more, use ``secondary_motivation``                                  719     info
-The ``published property`` is required for STIX 2.0 Report *[id]*, using the created property                                               720     info
+The ``published property`` is required for STIX 2.x Report *[id]*, using the created property                                               720     info
 ``apply_condition`` assumed to be 'ANY' in *[id]*                                                                                           721     warn
 ``content_type`` for ``body_multipart`` of *[id]* is assumed to be 'text/plain'                                                             722     info
+The confidence value in *[value]* assumed to be a value on a scale between 0 and 100                                                        723     warn
+The confidence value in *[value]* has been converted to an integer so it is valid in STIX 2.1                                               724     warn
 =========================================================================================================================================== ====    =====
 
 STIX elevator currently doesn't process this content
@@ -175,8 +181,8 @@ Message                                                                         
 =========================================================================================================================================== ==== =====
 Could not resolve Marking Structure *[id]*                                                                                                  801  warn
 1.x full file paths are not processed, yet                                                                                                  802  warn
-``process:startup_info`` not handled yet                                                                                                    803  warn
-``WinServiceObject.service_dll`` is not handled, yet.                                                                                       804  warn
+``NO MESSAGE ASSIGNED``                                                                                                                     803
+``NO MESSAGE ASSIGNED``                                                                                                                     804
 CybOX object *[object]* not handled yet                                                                                                     805  warn
 Email *[property]* not handled yet                                                                                                          806  warn
 ``file:extended_properties:windows_pebinary_ext:optional_header`` is not implemented yet                                                    807  warn

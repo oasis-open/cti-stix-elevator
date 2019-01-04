@@ -36,7 +36,7 @@ setup(
     install_requires=[
         'pycountry>=1.17.8',
         'stix>=1.1.1.9,<1.2.1.0',
-        'stix2-validator>=1.0.1',
+        'stix2-validator>=2.0.0.dev1',
         'stixmarx>=1.0.3',
         'six>=1.10.0',
         'stix2'

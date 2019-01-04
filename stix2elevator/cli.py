@@ -171,6 +171,15 @@ def _get_arg_parser(is_script=True):
         default="no_policy"
     )
 
+    parser.add_argument(
+        "-v",
+        "--version",
+        help="The version of stix 2 to be produced",
+        dest="spec_version",
+        choices=["2.0", "2.1"],
+        action="store",
+        default="2.0"
+    )
     return parser
 
 
@@ -178,7 +187,7 @@ def main():
     # Parse stix2-elevator command-line args
     elevator_parser = _get_arg_parser()
     elevator_args = elevator_parser.parse_args()
-
+    sys.setrecursionlimit(3000)
     initialize_options(elevator_args)
     result = elevate_file(elevator_args.file_)
     if result:

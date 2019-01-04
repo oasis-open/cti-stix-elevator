@@ -15,6 +15,7 @@ STIX 1.1.1 - 1.2.1 content to STIX 2.0 content:
               [--message-log-directory MESSAGE_LOG_DIRECTORY]
               [--log-level {DEBUG,INFO,WARN,ERROR,CRITICAL}]
               [-m MARKINGS_ALLOWED] [-p {no_policy,strict_policy}]
+              [-v --version VERSION]
               file
 
 
@@ -102,6 +103,11 @@ optional arguments:
 
   -p {no_policy,strict_policy}, --policy {no_policy,strict_policy}
                 The policy to deal with errors
+
+  -v, --version VERSION
+                The version of stix 2 to be produced
+
+                Default: 2.0
 
 
 Refer to the :ref:`warning_messages` section for all stix2-elevator messages. Use the

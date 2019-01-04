@@ -66,3 +66,4 @@ other_xml_files/stix-*.xml
 # stix2-validator cache
 cache.sqlite
 /performance_test.py
+/cyber observable changes for 2.1.xlsx

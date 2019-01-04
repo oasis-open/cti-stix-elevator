@@ -35,7 +35,7 @@
                         </NetworkConnectionObj:Destination_Socket_Address>
                         <NetworkConnectionObj:Source_Socket_Address>
                             <SocketAddressObj:IP_Address>
-                                <AddressObj:Address_Value datatype="string" condition="Equals">198.49.168.11</AddressObj:Address_Value>
+                                <AddressObj:Address_Value datatype="string" condition="equals">198.49.168.11</AddressObj:Address_Value>
                             </SocketAddressObj:IP_Address>
                             <SocketAddressObj:Port>
                                 <PortObj:Port_Value condition="Equals">5255</PortObj:Port_Value>
