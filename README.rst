@@ -215,6 +215,17 @@ argument::
 
 To set options, use set_option_value, found in options.py
 
+Using the stepper
+~~~~~~~~~~~~~~~~~
+
+The stix-stepper is a simple script that will convert STIX 2.0 content to STIX 2.1 content.
+
+You can invoke it as follows::
+
+    $ stix_stepper <2.0 file>
+
+The 2.1 content is printed to stdout
+
 Governance
 ----------
 

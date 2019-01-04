@@ -83,7 +83,7 @@ def step_file(fn, encoding="utf-8"):
         print(json_string)
         return json_string
     else:
-        print("stix_step only converts STIX 2.0 to STIX 2.1")
+        print("stix_stepper only converts STIX 2.0 to STIX 2.1")
         return
 
 
