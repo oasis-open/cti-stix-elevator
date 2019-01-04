@@ -1,6 +1,27 @@
 CHANGELOG
 =========
 
+2.0.0 - 2019-01-04
+
+    * Introduce the "stepper" to convert STIX 2.0 content to STIX 2.1 content
+    * Enable the elevator to convert from STIX 1.x content to STIX 2.0 or STIX 2.1 content
+
+    * Surround pattern with [], even if the term cannot be converted
+    * Use country code, if given
+    * Process party_name, even if name already given.
+    * Fix extension names in object paths
+    * Use stix2-validator 2.0.0, stixmarx 1.0.3, pycountry 1.17.8
+    * Add version argument for validator
+    * Issue #47: Use environment to pass options
+    * Issue #129: Handle report with no header.
+
+    Testing changes:
+         * Add stepper test. Only test stepper once per Python version
+         * Include all tests in coverage report, test both versions of STIX in all versions of Python.
+         * Travis runs tox testing both STIX 2.0 and 2.1
+         * Update all idiom files to work with STIX 2.1 elevator and stepper tests
+         * Add python37 testing.
+
 1.2.0 - 2018-09-10
 
     * Close #41, #85, #87, #91, #114, #116, #117, #120, #121
