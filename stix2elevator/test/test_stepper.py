@@ -40,4 +40,3 @@ def pytest_generate_tests(metafunc):
     argvalues = [(x, y) for x, y in zip(BEFORE_FILES, MASTER_JSON_FILES)]
 
     metafunc.parametrize(argnames=argnames, argvalues=argvalues, ids=BEFORE_FILENAMES, scope="function")
-    pass

@@ -71,7 +71,7 @@ def convert_numeric_string(value):
 
 
 def convert_confidence_value(value, id):
-    if isinstance(value, int) or isinstance(value, long):
+    if isinstance(value, (int, long)):
         # look for percentage?
         if value < 0 or value > 100:
             warn(
