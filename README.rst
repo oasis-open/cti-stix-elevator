@@ -10,16 +10,17 @@ See the `Governance`_ section for more information.
 
 The stix2-elevator is a software tool for converting STIX 1.x XML to
 STIX
-2.0 JSON. Due to the differences between STIX 1.x and STIX 2.0, this
-conversion is best-effort only, and stix2-elevator cannot convert from
-STIX 2.0 JSON back to STIX 1.x XML. During the conversion, stix2-
+2.0 or 2.1 JSON. Due to the differences between STIX 1.x and STIX 2.x, this
+conversion is best-effort only. During the conversion, stix2-
 elevator
 provides information on the assumptions it needs to make to produce
 valid STIX
-2.0 JSON, and what information was not able to be converted.
+2.x JSON, and what information was not able to be converted.
+
+To convert STIX 2.x JSON back to STIX 1.x XML use the `stix2-slider`
 
 The stix2-elevator is a work-in-progress. It should be used to explore
-how existing STIX 1.x would potentially be represented in STIX 2.0.
+how existing STIX 1.x would potentially be represented in STIX 2.x.
 Using the current version of the elevator will provide insight to
 issues
 that might need to be mitigated to convert your STIX 1.x content.
@@ -55,7 +56,7 @@ Requirements
       1.2.0.x, depending on whether you want to support STIX 1.1.1 or STIX 1.2.
 
 -  `python-stix2 <https://pypi.org/project/stix2/>`_ >= 0.5.1
--  `stix2-validator <https://pypi.org/project/stix2-validator/>`_ >= 0.4.0
+-  `stix2-validator <https://pypi.org/project/stix2-validator/>`_ >= 2.0.0.dev1
    and its dependencies
 -  `pycountry <https://pypi.org/project/pycountry/>`_ >= 1.20
 -  `stixmarx <https://pypi.org/project/stixmarx/>`_ >= 1.0.3
@@ -95,7 +96,7 @@ As A Script
 ~~~~~~~~~~~
 
 The elevator comes with a bundled script which you can use to elevate
-STIX 1.1.1 - 1.2.1 content to STIX 2.0 content::
+STIX 1.1.1 - 1.2.1 content to STIX 2.0 or 2.1 content::
 
     $ stix2_elevator
     usage: stix2_elevator [-h] [--incidents] [--no-squirrel-gaps]
@@ -105,12 +106,13 @@ STIX 1.1.1 - 1.2.1 content to STIX 2.0 content::
               [--message-log-directory MESSAGE_LOG_DIRECTORY]
               [--log-level {DEBUG,INFO,WARN,ERROR,CRITICAL}]
               [-m MARKINGS_ALLOWED] [-p {no_policy,strict_policy}]
+              [-v VERSION]
               file
 
-stix2-elevator v1.2.0
+stix2-elevator v2.0.0
 
 The stix2-elevator is a work-in-progress. It should be used to explore how
-existing STIX 1.x would potentially be represented in STIX 2.0. Using the
+existing STIX 1.x would potentially be represented in STIX 2.x. Using the
 current version of the stix2-elevator will provide insight to issues that might need
 to be mitigated to convert your STIX 1.x content.
 
@@ -123,7 +125,7 @@ optional arguments:
   --incidents           Incidents will be included in the conversion.
 
   --no-squirrel-gaps    Do not include STIX 1.x content that cannot be
-                        represented directly in STIX 2.0 using the description
+                        represented directly in STIX 2.x using the description
                         property.
 
   --infrastructure      Infrastructure will be included in the conversion.
@@ -165,7 +167,7 @@ optional arguments:
                         exists. Example: stix2_elevator.py <file> --message-
                         log-directory "..\logs"
 
-  --log-level {DEBUG,INFO,WARN,ERROR,CRITICAL}
+  --log-level  {DEBUG, INFO, WARN, ERROR, CRITICAL}
                         The logging output level.
 
   -m MARKINGS_ALLOWED, --markings-allowed MARKINGS_ALLOWED
@@ -175,8 +177,12 @@ optional arguments:
                         file > --markings-allowed
                         "ISAMarkingsAssertion,ISAMarkings"
 
-  -p {no_policy,strict_policy}, --policy {no_policy,strict_policy}
-                        The policy to deal with errors
+  -p, --policy  {no_policy,strict_policy}  The policy to deal with errors
+
+  -v, --version VERSION
+                The version of stix 2 to be produced
+
+                Default: 2.0
 
 Refer to elevator_log_messages.rst for all stix2-elevator messages. Use the
 associated code number to --enable or --disable a message. By default, the

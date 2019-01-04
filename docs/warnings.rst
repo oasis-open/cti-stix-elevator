@@ -37,7 +37,7 @@ Appended *[property_name]* to description of *[id]*                             
 Title *[title]* used for ``name``, appending ``exploit_target`` *[id]* title in description property                           303     info
 Appended ``confidence`` property content to description of *[id]*                                                              304     warn
 Appended ``Statement`` type content to description of *[id]*                                                                   305     warn
-Appended ``Tool ``type content to description of *[id]*                                                                        306     warn
+Appended ``Tool`` type content to description of *[id]*                                                                        306     warn
 ============================================================================================================================== ====    =====
 
 
@@ -64,7 +64,7 @@ Victim Target in *[id]* did not yield any STIX 2.x object                       
 TTP *[id]* did not generate any STIX 2.x object                                                                                                415     warn
 No STIX 2.x object generated from embedded object *[id]*                                                                                       416     warn
 [object type] did not yield any STIX 2.x object                                                                                                417     warn
-The *[property]* property of *[STIX 1.x object type]*` is not part of STIX 2.x                                                                 418     warn
+The *[property]* property of *[STIX 1.x object type]* is not part of STIX 2.x                                                                  418     warn
 ``NO MESSAGE ASSIGNED``                                                                                                                        419
 Windows Handles are not a part of STIX 2.x                                                                                                     420     warn
 The address type [address] is not part of STIX 2.0                                                                                             421     warn
