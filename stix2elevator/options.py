@@ -167,6 +167,9 @@ class ElevatorOptions(object):
             self.markings_allowed = markings_allowed
             self.spec_version = spec_version
 
+        if self.validator_args.find("--version") == -1:
+            self.validator_args = self.validator_args + " --version " + self.spec_version
+
         # Convert string of comma-separated checks to a list,
         # and convert check code numbers to names. By default all messages are
         # enabled.
