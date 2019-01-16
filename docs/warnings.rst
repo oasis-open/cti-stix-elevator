@@ -47,7 +47,7 @@ Dropping Content not supported in STIX 2.x
 ============================================================================================================================================== ====    =====
 Message                                                                                                                                        Code    Level
 ============================================================================================================================================== ====    =====
-``Information Source`` on *[id]* is not representable in STIX 2.0                                                                              401     warn
+``Information Source`` on *[id]* is not representable in STIX 2.x                                                                              401     warn
 ``Related_Packages`` type in *[id]* not supported in STIX 2.x                                                                                  402     warn
 ``Campaign/Activity`` type in *[id]* not supported in STIX 2.x                                                                                 403     warn
 Structured COAs type in *[id]* are not supported in STIX 2.x                                                                                   404     warn
@@ -67,7 +67,7 @@ No STIX 2.x object generated from embedded object *[id]*                        
 The *[property]* property of *[STIX 1.x object type]* is not part of STIX 2.x                                                                  418     warn
 ``NO MESSAGE ASSIGNED``                                                                                                                        419
 Windows Handles are not a part of STIX 2.x                                                                                                     420     warn
-The address type [address] is not part of STIX 2.0                                                                                             421     warn
+The address type [address] is not part of STIX 2.x                                                                                             421     warn
 No pattern term was created from *[id]*                                                                                                        422     warn
 *[id]* is used as a pattern, therefore it is not included as an observed_data instance                                                         423     warn
 *[xxx]* content is not supported in STIX 2.x                                                                                                   424     warn

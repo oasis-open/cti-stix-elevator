@@ -8,7 +8,7 @@ CybOX object types not listed have no corresponding STIX 2.x cyber observable ty
 converted by the elevator.
 
 =============================== ============================================= ==============================================
-**Cybox 2.x Object Type**       **STIX 2.x Cyber Observable Type**            **Converted in version 1.2 of the Elevator**
+**Cybox 2.x Object Type**       **STIX 2.x Cyber Observable Type**            **Converted in version 2.0.1 of the Elevator**
 =============================== ============================================= ==============================================
 ``Address``                     ``email-addr``                                yes
 ``Address``                     ``ipv4-addr``                                 yes
@@ -52,7 +52,7 @@ converted by the elevator.
 Converting Network Cyber Observables
 ------------------------------------------
 
-Most of the mappings between CybOX 2.x objects and STIX 2.0 cyber
+Most of the mappings between CybOX 2.x objects and STIX 2.x cyber
 observables are straightforward, therefore, they will not be detailed in
 this document. However, it would be advantageous to detail the mappings
 of ``network-traffic``, a "catch-all" STIX 2.0 cyber observable type for
@@ -67,7 +67,7 @@ This information is organized very differently than
 in CybOX 2.x. In addition, many CybOX 2.x properties are not available
 in the ``network-traffic`` object.
 
-Notice that although both STIX 1.x and 2.0 have object types to represent TCP packets,
+Notice that although both STIX 1.x and 2.x have object types to represent TCP packets,
 they are not compatible, so no conversion is made.
 
 +-----------------------------------------------------------+--------------------------------------+

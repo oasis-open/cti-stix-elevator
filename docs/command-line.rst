@@ -2,7 +2,7 @@
 ===========================
 
 The elevator comes with a bundled script which you can use to elevate
-STIX 1.1.1 - 1.2.1 content to STIX 2.0 content:
+STIX 1.x content to STIX 2.x content:
 
 .. code-block:: text
 
@@ -19,7 +19,7 @@ STIX 1.1.1 - 1.2.1 content to STIX 2.0 content:
               file
 
 
-stix2-elevator v1.2.0
+stix2-elevator v2.0.1
 
 The stix2-elevator is a work-in-progress. It should be used to explore how
 existing STIX 1.x would potentially be represented in STIX 2.0. Using the
@@ -41,7 +41,7 @@ optional arguments:
 
   --no-squirrel-gaps
                 Do not include STIX 1.x content that cannot be
-                represented directly in STIX 2.0 using the description
+                represented directly in STIX 2.x using the description
                 property.
 
   --package-created-by-id PACKAGE_CREATED_BY_ID

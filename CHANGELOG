@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+2.0.1 - 2019-01-16
+
+    * #145 - Pass version option given in the command line to the stix-validator
+
 2.0.0 - 2019-01-04
 
     * Introduce the "stepper" to convert STIX 2.0 content to STIX 2.1 content
