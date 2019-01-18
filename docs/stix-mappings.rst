@@ -1,4 +1,4 @@
-​Mappings from STIX 1.x to STIX 2.0
+​Mappings from STIX 1.x to STIX 2.x
 =======================================
 
 This section outlines the disposition of each property of the top-level objects when converted.
