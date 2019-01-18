@@ -193,16 +193,29 @@ def convert_marking_specification(marking_specification, env):
     return_obj = []
 
     if marking_specification.marking_structures is not None:
-        ms = marking_specification.marking_structures
-        for mark_spec in ms:
-            if mark_spec.idref or mark_spec.__class__.__name__ == "MarkingStructure":
-                if not check_map_1x_markings_to_20(mark_spec):
+        marking_structures = marking_specification.marking_structures
+        for marking_structure in marking_structures:
+            if marking_structure.idref or marking_structure.__class__.__name__ == "MarkingStructure":
+                if not check_map_1x_markings_to_20(marking_structure):
                     # Don't print message multiple times if idref has been resolved.
-                    warn("Could not resolve Marking Structure. Skipped object %s", 425, identifying_info(mark_spec))
+                    warn("Could not resolve Marking Structure. Skipped object %s", 425, identifying_info(marking_structure))
                 # Skip empty markings or ones that use the idref approach.
                 continue
 
-            marking_definition_instance = create_basic_object("marking-definition", mark_spec, env)
+            marking_definition_instance = create_basic_object("marking-definition", marking_structure, env)
+
+            if isinstance(marking_structure, TLPMarkingStructure):
+                if marking_structure.color is not None:
+                    color = text_type(marking_structure.color).lower()
+                    if color == "white":
+                        marking_definition_instance["id"] = "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
+                    elif color == "green":
+                        marking_definition_instance["id"] = "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
+                    elif color == "amber":
+                        marking_definition_instance["id"] = "marking-definition--f88d31f6-486f-44da-b317-01333bde0b82"
+                    elif color == "red":
+                        marking_definition_instance["id"] = "marking-definition--5e57c739-391a-4eb3-b6be-7d15ca92d5ed"
+
             process_information_source(marking_specification.information_source,
                                        marking_definition_instance,
                                        env,
@@ -211,62 +224,63 @@ def convert_marking_specification(marking_specification, env):
             if "modified" in marking_definition_instance:
                 del marking_definition_instance["modified"]
 
-            if isinstance(mark_spec, TLPMarkingStructure):
+            if isinstance(marking_structure, TLPMarkingStructure):
                 marking_definition_instance["definition_type"] = "tlp"
+                marking_definition_instance["created"] = "2017-01-20T00:00:00.000Z"
                 definition = {}
-                if mark_spec.color is not None:
-                    definition["tlp"] = text_type(mark_spec.color)
+                if marking_structure.color is not None:
+                    definition["tlp"] = text_type(marking_structure.color).lower()
                 marking_definition_instance["definition"] = definition
-            elif isinstance(mark_spec, TermsOfUseMarkingStructure):
+            elif isinstance(marking_structure, TermsOfUseMarkingStructure):
                 marking_definition_instance["definition_type"] = "statement"
                 definition = {}
-                if mark_spec.terms_of_use is not None:
-                    definition["statement"] = text_type(mark_spec.terms_of_use)
+                if marking_structure.terms_of_use is not None:
+                    definition["statement"] = text_type(marking_structure.terms_of_use)
                 marking_definition_instance["definition"] = definition
-            elif isinstance(mark_spec, SimpleMarkingStructure):
+            elif isinstance(marking_structure, SimpleMarkingStructure):
                 marking_definition_instance["definition_type"] = "statement"
                 definition = {}
-                if mark_spec.statement is not None:
-                    definition["statement"] = text_type(mark_spec.statement)
+                if marking_structure.statement is not None:
+                    definition["statement"] = text_type(marking_structure.statement)
                 marking_definition_instance["definition"] = definition
-            elif isinstance(mark_spec, AISMarkingStructure):
+            elif isinstance(marking_structure, AISMarkingStructure):
                 marking_definition_instance["definition_type"] = "ais"
                 definition = {}
-                if mark_spec.is_proprietary is not None:
+                if marking_structure.is_proprietary is not None:
                     definition["is_proprietary"] = "true"
-                    if (mark_spec.is_proprietary.ais_consent is not None and
-                            mark_spec.is_proprietary.ais_consent.consent is not None):
-                        definition["consent"] = text_type(mark_spec.is_proprietary.ais_consent.consent).lower()
-                    if (mark_spec.is_proprietary.tlp_marking is not None and
-                            mark_spec.is_proprietary.tlp_marking.color is not None):
-                        definition["tlp"] = text_type(mark_spec.is_proprietary.tlp_marking.color).lower()
-                    if mark_spec.is_proprietary.cisa_proprietary is not None:
-                        definition["is_cisa_proprietary"] = text_type(mark_spec.is_proprietary.cisa_proprietary).lower()
-                elif mark_spec.not_proprietary is not None:
+                    if (marking_structure.is_proprietary.ais_consent is not None and
+                            marking_structure.is_proprietary.ais_consent.consent is not None):
+                        definition["consent"] = text_type(marking_structure.is_proprietary.ais_consent.consent).lower()
+                    if (marking_structure.is_proprietary.tlp_marking is not None and
+                            marking_structure.is_proprietary.tlp_marking.color is not None):
+                        definition["tlp"] = text_type(marking_structure.is_proprietary.tlp_marking.color).lower()
+                    if marking_structure.is_proprietary.cisa_proprietary is not None:
+                        definition["is_cisa_proprietary"] = text_type(marking_structure.is_proprietary.cisa_proprietary).lower()
+                elif marking_structure.not_proprietary is not None:
                     definition["is_proprietary"] = "false"
-                    if (mark_spec.not_proprietary.ais_consent is not None and
-                            mark_spec.not_proprietary.ais_consent.consent is not None):
-                        definition["consent"] = text_type(mark_spec.not_proprietary.ais_consent.consent).lower()
-                    if (mark_spec.not_proprietary.tlp_marking is not None and
-                            mark_spec.not_proprietary.tlp_marking.color is not None):
-                        definition["tlp"] = text_type(mark_spec.not_proprietary.tlp_marking.color).lower()
-                    if mark_spec.not_proprietary.cisa_proprietary is not None:
-                        definition["is_cisa_proprietary"] = text_type(mark_spec.not_proprietary.cisa_proprietary).lower()
+                    if (marking_structure.not_proprietary.ais_consent is not None and
+                            marking_structure.not_proprietary.ais_consent.consent is not None):
+                        definition["consent"] = text_type(marking_structure.not_proprietary.ais_consent.consent).lower()
+                    if (marking_structure.not_proprietary.tlp_marking is not None and
+                            marking_structure.not_proprietary.tlp_marking.color is not None):
+                        definition["tlp"] = text_type(marking_structure.not_proprietary.tlp_marking.color).lower()
+                    if marking_structure.not_proprietary.cisa_proprietary is not None:
+                        definition["is_cisa_proprietary"] = text_type(marking_structure.not_proprietary.cisa_proprietary).lower()
                 marking_definition_instance["definition"] = definition
             else:
-                if mark_spec.__class__.__name__ in get_option_value("markings_allowed"):
-                    warn("Could not resolve Marking Structure %s", 425, identifying_info(mark_spec))
+                if marking_structure.__class__.__name__ in get_option_value("markings_allowed"):
+                    warn("Could not resolve Marking Structure %s", 425, identifying_info(marking_structure))
                 else:
-                    error("Could not resolve Marking Structure %s", 425, identifying_info(mark_spec))
-                    raise NameError("Could not resolve Marking Structure %s" % identifying_info(mark_spec))
+                    error("Could not resolve Marking Structure %s", 425, identifying_info(marking_structure))
+                    raise NameError("Could not resolve Marking Structure %s" % identifying_info(marking_structure))
 
             if "definition_type" in marking_definition_instance:
-                val = add_marking_map_entry(mark_spec, marking_definition_instance["id"])
-                info("Created Marking Structure for %s", 212, identifying_info(mark_spec))
+                val = add_marking_map_entry(marking_structure, marking_definition_instance["id"])
+                info("Created Marking Structure for %s", 212, identifying_info(marking_structure))
                 if val is not None and not isinstance(val, MarkingStructure):
                     info("Found same marking structure %s, using %s", 625, identifying_info(marking_specification), val)
                 else:
-                    finish_basic_object(marking_specification.id_, marking_definition_instance, env, mark_spec)
+                    finish_basic_object(marking_specification.id_, marking_definition_instance, env, marking_structure)
                     return_obj.append(marking_definition_instance)
 
     return return_obj
@@ -281,19 +295,19 @@ def finish_basic_object(old_id, instance, env, stix1x_obj, temp_marking_id=None)
 
     # Attach markings to SDO if present.
     container = get_option_value("marking_container")
-    markings = container.get_markings(stix1x_obj)
+    marking_specifications = container.get_markings(stix1x_obj)
     object_marking_refs = []
-    for marking in markings:
-        for marking_spec in marking.marking_structures:
-            stix20_marking = map_1x_markings_to_20(marking_spec)
+    for marking_specification in marking_specifications:
+        for marking_structure in marking_specification.marking_structures:
+            stix20_marking = map_1x_markings_to_20(marking_structure)
             if (not isinstance(stix20_marking, MarkingStructure) and
                     instance["id"] != stix20_marking and
                     stix20_marking not in object_marking_refs):
                 object_marking_refs.append(stix20_marking)
             elif temp_marking_id:
                 object_marking_refs.append(temp_marking_id)
-            elif not check_map_1x_markings_to_20(marking_spec):
-                stix20_markings = convert_marking_specification(marking, env)
+            elif not check_map_1x_markings_to_20(marking_structure):
+                stix20_markings = convert_marking_specification(marking_specification, env)
                 env.bundle_instance["objects"].extend(stix20_markings)
                 for m in stix20_markings:
                     if instance["id"] != m["id"] and m["id"] not in object_marking_refs:
@@ -1723,6 +1737,12 @@ def finalize_bundle(bundle_instance):
             to_remove.append(list(path))
 
         if isinstance(value, (list, dict)):
+            # Used to remove extra properties in TLP markings
+            if "definition_type" in value and value["definition_type"] == "tlp":
+                object_keys = list(value.keys())
+                for k in object_keys:
+                    if k not in ("type", "spec_version", "id", "created", "definition", "definition_type"):
+                        del value[k]
             continue
 
         if last_field in _TO_MAP or iter_field in _TO_MAP:
