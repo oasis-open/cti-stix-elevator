@@ -1737,12 +1737,9 @@ def finalize_bundle(bundle_instance):
             to_remove.append(list(path))
 
         if isinstance(value, (list, dict)):
-            # Used to remove extra properties in TLP markings
+            # Used to remove TLP markings from final bundle.
             if "definition_type" in value and value["definition_type"] == "tlp":
-                object_keys = list(value.keys())
-                for k in object_keys:
-                    if k not in ("type", "spec_version", "id", "created", "definition", "definition_type"):
-                        del value[k]
+                to_remove.append(list(path))
             continue
 
         if last_field in _TO_MAP or iter_field in _TO_MAP:
@@ -1758,7 +1755,7 @@ def finalize_bundle(bundle_instance):
             elif reference_needs_fixing(value) and not exists_id_key(value):
                 warn("1.X ID: %s was not mapped to STIX 2.0 ID", 603, value)
 
-    for item in to_remove:
+    for item in reversed(to_remove):
         operation_on_path(bundle_instance, item, "", op=2)
 
     if "objects" in bundle_instance:
