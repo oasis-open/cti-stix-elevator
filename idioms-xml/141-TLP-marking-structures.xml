@@ -14,7 +14,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     id="example:Package-88139233-3c7d-4913-bb5e-d2aeb079d029" version="1.2" timestamp="2015-02-26T21:00:37.453000Z">
     <stix:Indicators>
-        <stix:Indicator id="example:Indicator-d81f86b9-975b-bc0b-775e-810c5ad45a4f"  timestamp="2014-05-08T09:00:00.000000Z" xsi:type='indicator:IndicatorType'>
+        <stix:Indicator id="example:Indicator-8a822399-5d8a-44e4-abeb-15d480ea93c5"  timestamp="2014-05-08T09:00:00.000000Z" xsi:type='indicator:IndicatorType'>
             <indicator:Title>Malicious site hosting downloader</indicator:Title>
             <indicator:Type xsi:type="stixVocabs:IndicatorTypeVocab-1.1">URL Watchlist</indicator:Type>
             <indicator:Observable id="example:Observable-ee59c28e-d922-480e-9b7b-a79502696505">
