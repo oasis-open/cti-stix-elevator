@@ -13,6 +13,7 @@ from cybox.objects.mutex_object import Mutex
 from cybox.objects.network_connection_object import NetworkConnection
 from cybox.objects.network_packet_object import NetworkPacket
 from cybox.objects.network_socket_object import NetworkSocket
+from cybox.objects.port_object import Port
 from cybox.objects.process_object import Process
 from cybox.objects.unix_user_account_object import UnixUserAccount
 from cybox.objects.uri_object import URI
@@ -1498,6 +1499,19 @@ def convert_mutex_to_pattern(mutex):
         return None
 
 
+def convert_port_to_pattern(prop):
+    expressions = []
+    if prop.port_value:
+        warn("port number is assumed to be a destination port", 725)
+        expressions.append(
+            create_term("network-traffic:dst_port", prop.port_value.condition, make_constant(prop.port_value.value)))
+    if prop.layer4_protocol:
+        expressions.append(
+            create_term("network-traffic:protocols[*]", prop.layer4_protocol.condition,
+                        make_constant(prop.layer4_protocol.value)))
+    return create_boolean_expression("AND", expressions)
+
+
 def convert_network_connection_to_pattern(conn):
     expressions = []
 
@@ -1789,6 +1803,8 @@ def convert_object_to_pattern(obj, obs_id):
             expression = convert_network_connection_to_pattern(prop)
         elif isinstance(prop, Account):
             expression = convert_account_to_pattern(prop)
+        elif isinstance(prop, Port):
+            expression = convert_port_to_pattern(prop)
         elif isinstance(prop, HTTPSession):
             expression = convert_http_session_to_pattern(prop)
         elif isinstance(prop, NetworkPacket):

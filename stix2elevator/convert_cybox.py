@@ -8,6 +8,7 @@ from cybox.objects.mutex_object import Mutex
 from cybox.objects.network_connection_object import NetworkConnection
 from cybox.objects.network_packet_object import NetworkPacket
 from cybox.objects.network_socket_object import NetworkSocket
+from cybox.objects.port_object import Port
 from cybox.objects.process_object import Process
 from cybox.objects.unix_user_account_object import UnixUserAccount
 from cybox.objects.uri_object import URI
@@ -229,6 +230,16 @@ def create_process_ref(cp, process_dict, cybox_dict, index, prop):
         process_dict[prop].append(text_type(index))
     else:
         process_dict[prop] = text_type(index)
+
+
+def convert_port(prop):
+    traffic_2x = {"type": "network-traffic"}
+    if prop.port_value:
+        warn("port number is assumed to be a destination port", 725)
+        traffic_2x["dst_port"] = prop.port_value.value
+    if prop.layer4_protocol:
+        traffic_2x["protocols"] = [prop.layer4_protocol.value]
+    return traffic_2x
 
 
 def convert_process(process):
@@ -677,6 +688,8 @@ def convert_cybox_object(obj1x):
         objs = convert_network_connection(prop)
     elif isinstance(prop, Account):
         objs["0"] = convert_account(prop)
+    elif isinstance(prop, Port):
+        objs["0"] = convert_port(prop)
     elif isinstance(prop, HTTPSession):
         objs["0"] = convert_http_session(prop)
     elif isinstance(prop, NetworkPacket):
