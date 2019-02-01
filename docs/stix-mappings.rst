@@ -766,33 +766,41 @@ STIX 2.x in JSON
 .. code-block:: json
 
     {
-      "administrative_area": "California",
-      "country": "US",
-      "created": "2014-11-19T23:39:03.893Z",
-      "id": "location--c1445467-fd92-4532-9161-1c3024ab6467",
-      "modified": "2014-11-19T23:39:03.893Z",
-      "spec_version": "2.1",
-      "type": "location"
-    },
-    {
-      "created": "2014-11-19T23:39:03.893Z",
-      "id": "relationship--b1d9c097-a0ac-46e8-997b-291ea3b976f5",
-      "modified": "2014-11-19T23:39:03.893Z",
-      "relationship_type": "located-at",
-      "source_ref": "identity--733c5838-34d9-4fbf-949c-62aba761184c",
-      "spec_version": "2.1",
-      "target_ref": "location--c1445467-fd92-4532-9161-1c3024ab6467",
-      "type": "relationship"
-    },
-    {
-      "created": "2014-11-19T23:39:03.893Z",
-      "id": "identity--733c5838-34d9-4fbf-949c-62aba761184c",
-      "identity_class": "organization",
-      "modified": "2014-11-19T23:39:03.893Z",
-      "name": "Disco Tean",
-      "spec_version": "2.1",
-      "type": "identity"
+        "id": "bundle--ccd00c4a-1bdb-46ae-9898-ecaca13f1f12",
+        "objects": [
+            {
+              "administrative_area": "California",
+              "country": "US",
+              "created": "2014-11-19T23:39:03.893Z",
+              "id": "location--c1445467-fd92-4532-9161-1c3024ab6467",
+              "modified": "2014-11-19T23:39:03.893Z",
+              "spec_version": "2.1",
+              "type": "location"
+            },
+            {
+              "created": "2014-11-19T23:39:03.893Z",
+              "id": "relationship--b1d9c097-a0ac-46e8-997b-291ea3b976f5",
+              "modified": "2014-11-19T23:39:03.893Z",
+              "relationship_type": "located-at",
+              "source_ref": "identity--733c5838-34d9-4fbf-949c-62aba761184c",
+              "spec_version": "2.1",
+              "target_ref": "location--c1445467-fd92-4532-9161-1c3024ab6467",
+              "type": "relationship"
+            },
+            {
+              "created": "2014-11-19T23:39:03.893Z",
+              "id": "identity--733c5838-34d9-4fbf-949c-62aba761184c",
+              "identity_class": "organization",
+              "modified": "2014-11-19T23:39:03.893Z",
+              "name": "Disco Tean",
+              "spec_version": "2.1",
+              "type": "identity"
+            }
+        ],
+        "spec_version": "2.x",
+        "type": "bundle"
     }
+
 
 Malware
 -------------

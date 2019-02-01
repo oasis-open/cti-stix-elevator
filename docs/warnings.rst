@@ -171,6 +171,7 @@ The ``published property`` is required for STIX 2.x Report *[id]*, using the cre
 ``content_type`` for ``body_multipart`` of *[id]* is assumed to be 'text/plain'                                                             722     info
 The confidence value in *[value]* assumed to be a value on a scale between 0 and 100                                                        723     warn
 The confidence value in *[value]* has been converted to an integer so it is valid in STIX 2.1                                               724     warn
+port number is assumed to be a destination port                                                                                             725     warn
 =========================================================================================================================================== ====    =====
 
 STIX elevator currently doesn't process this content
