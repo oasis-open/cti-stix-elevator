@@ -316,6 +316,8 @@ repositories/maintainers-guide#additionalMaintainers>`__.
 -  `Rich Piazza <mailto:rpiazza@mitre.org>`__; GitHub ID:
    https://github.com/rpiazza/; WWW: `MITRE
    <https://www.mitre.org/>`__
+-  `Jason Keirstead <mailto:Jason.Keirstead@ca.ibm.com>`__; GitHub ID:
+   https://github.com/JasonKeirstead; WWW: `IBM <http://www.ibm.com/>`__
 
 About OASIS TC Open Repositories
 --------------------------------
