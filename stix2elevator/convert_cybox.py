@@ -27,9 +27,19 @@ from stix2elevator.utils import (convert_timestamp_to_string,
 from stix2elevator.vocab_mappings import (SERVICE_START_TYPE, SERVICE_STATUS,
                                           SERVICE_TYPE)
 
+def create_base_sco(obj1x, type, other_properties=None):
+    if other_properties:
+        new_dict = other_properties
+        new_dict["type"] = type
+    else:
+        new_dict = {"type": type}
+    # if obj1x.is_defanged:
+    #    new_dict["defanged"] = True
+    return new_dict
+
 
 def convert_account(acc):
-    account_dict = {"type": "user-account"}
+    account_dict = create_base_sco(acc, "user-account")
     if acc.creation_date:
         account_dict["account_created"] = acc.creation_date.value
     # if acc.last_accessed_time:
@@ -73,23 +83,23 @@ def convert_account(acc):
 
 def convert_address(add):
     if add.category == add.CAT_IPV4:
-        return {"type": "ipv4-addr", "value": add.address_value.value}
+        return create_base_sco(add, "ipv4-addr", {"value": add.address_value.value})
     elif add.category == add.CAT_IPV6:
-        return {"type": "ipv6-addr", "value": add.address_value.value}
+        return create_base_sco(add, "ipv6-addr", {"value": add.address_value.value})
     elif add.category == add.CAT_MAC:
-        return {"type": "mac-addr", "value": add.address_value.value}
+        return create_base_sco(add, "mac-addr", {"value": add.address_value.value})
     elif add.category == add.CAT_EMAIL:
-        return {"type": "email-addr", "value": add.address_value.value}
+        return create_base_sco(add, "email-addr", {"value": add.address_value.value})
     else:
-        warn("The address type %s is not part of STIX 2.0", 421, add.category)
+        warn("The address type %s is not part of STIX 2.x", 421, add.category)
 
 
 def convert_uri(uri):
-    return {"type": "url", "value": uri.value.value}
+    return create_base_sco(uri, "url", {"value": uri.value.value})
 
 
 def convert_file_properties(f):
-    file_dict = {"type": "file"}
+    file_dict = create_base_sco(f, "file")
     dir_dict = None
     if f.size is not None:
         if isinstance(f.size.value, list):
@@ -142,8 +152,7 @@ def convert_attachment(attachment):
 def convert_email_message(email_message):
     index = 0
     cybox_dict = {}
-    email_dict = {"type": "email-message",
-                  "is_multipart": False}    # the default
+    email_dict = create_base_sco(email_message, "email-message", {"is_multipart": False})    # the default
     cybox_dict[text_type(index)] = email_dict
     index += 1
     if email_message.header:
@@ -195,7 +204,7 @@ def convert_email_message(email_message):
 
 
 def convert_registry_key(reg_key):
-    cybox_reg = {"type": "windows-registry-key"}
+    cybox_reg = create_base_sco(reg_key, "windows-registry-key")
     if reg_key.key or reg_key.hive:
         full_key = ""
         if reg_key.hive:
@@ -222,7 +231,7 @@ def convert_registry_key(reg_key):
 
 
 def create_process_ref(cp, process_dict, cybox_dict, index, prop):
-    cp_ref = {"type": "process", "pid": cp.value}
+    cp_ref = create_base_sco(cp, "process", {"pid": cp.value})
     cybox_dict[text_type(index)] = cp_ref
     if prop == "child_refs":
         if prop not in process_dict:
@@ -233,7 +242,7 @@ def create_process_ref(cp, process_dict, cybox_dict, index, prop):
 
 
 def convert_port(prop):
-    traffic_2x = {"type": "network-traffic"}
+    traffic_2x = create_base_sco(prop, "network-traffic")
     if prop.port_value:
         warn("port number is assumed to be a destination port", 725)
         traffic_2x["dst_port"] = prop.port_value.value
@@ -245,7 +254,7 @@ def convert_port(prop):
 def convert_process(process):
     index = 0
     cybox_dict = {}
-    process_dict = {"type": "process"}
+    process_dict = create_base_sco(process, "process")
     cybox_dict[text_type(index)] = process_dict
     index += 1
     if process.name and get_option_value("spec_version") == "2.0":
@@ -296,7 +305,7 @@ def convert_windows_process(process):
     ext = {}
     if process.handle_list:
         for h in process.handle_list:
-            warn("Windows handles are not a part of STIX 2.0", 420)
+            warn("Windows handles are not a part of STIX 2.x", 420)
     if process.aslr_enabled:
         ext["asl_enabled"] = bool(process.aslr_enabled)
     if process.dep_enabled:
@@ -337,7 +346,7 @@ def convert_windows_service(service):
 
 
 def convert_domain_name(domain_name):
-    cybox_dm = {"type": "domain-name"}
+    cybox_dm = create_base_sco(domain_name, "domain-name")
     if domain_name.value:
         cybox_dm["value"] = text_type(domain_name.value.value)
 
@@ -346,7 +355,7 @@ def convert_domain_name(domain_name):
 
 
 def convert_mutex(mutex):
-    cybox_mutex = {"type": "mutex"}
+    cybox_mutex = create_base_sco(mutex, "mutex")
     if mutex.name:
         cybox_mutex["name"] = text_type(mutex.name.value)
 
@@ -548,7 +557,7 @@ def convert_network_connection(conn):
                 if len(conn.layer7_connections.http_session.http_request_response) > 1:
                     warn("Only one HTTP_Request_Response used for http-request-ext, using first value", 512)
         if conn.layer7_connections.dns_query:
-            warn("Layer7_Connections/DNS_Query content not supported in STIX 2.0", 424)
+            warn("Layer7_Connections/DNS_Query content not supported in STIX 2.x", 424)
 
     if cybox_traffic:
         cybox_traffic["type"] = "network-traffic"
@@ -584,7 +593,7 @@ def convert_http_session(session):
     if session.http_request_response:
         requests, responses = split_into_requests_and_responses(session.http_request_response)
         if len(responses) != 0:
-            warn("HTTPServerResponse type is not supported in STIX 2.0", 429)
+            warn("HTTPServerResponse type is not supported in STIX 2.x", 429)
         if len(requests) >= 1:
             cybox_traffic = {"type": "network-traffic"}
             cybox_traffic["extensions"] = {"http-request-ext": convert_http_client_request(requests[0])}
@@ -600,7 +609,7 @@ def create_icmp_extension(icmp_header):
     if icmp_header.code:
         imcp_extension["icmp_code_hex"] = icmp_header.code.value
     if icmp_header.checksum:
-        warn("ICMP_Packet/Checksum content not supported in STIX 2.0", 424)
+        warn("ICMP_Packet/Checksum content not supported in STIX 2.x", 424)
     return imcp_extension
 
 
@@ -608,7 +617,7 @@ def convert_network_packet(packet):
     if packet.internet_layer:
         internet_layer = packet.internet_layer
         if internet_layer.ipv4 or internet_layer.ipv6:
-            warn("Internet_Layer/IP_Packet content not supported in STIX 2.0", 424)
+            warn("Internet_Layer/IP_Packet content not supported in STIX 2.x", 424)
         else:
             if internet_layer.icmpv4:
                 icmp_header = internet_layer.icmpv4.icmpv4_header
@@ -616,7 +625,7 @@ def convert_network_packet(packet):
                 icmp_header = internet_layer.icmpv6.icmpv6_header
             else:
                 return None
-            cybox_traffic = {"type": "network-traffic"}
+            cybox_traffic = create_base_sco(packet, "network-traffic")
             cybox_traffic["extensions"] = {"icmp-ext": create_icmp_extension(icmp_header)}
             return cybox_traffic
 
@@ -630,7 +639,7 @@ def convert_socket_options(options):
 
 
 def convert_network_socket(socket):
-    cybox_traffic = {"type": "network-traffic"}
+    cybox_traffic = create_base_sco(socket, "network-traffic")
     socket_extension = {}
     if socket.is_blocking:
         socket_extension["is_blocking"] = socket.is_blocking
@@ -650,9 +659,9 @@ def convert_network_socket(socket):
     if socket.socket_descriptor:
         socket_extension["socket_descriptor"] = socket.socket_descriptor
     if socket.local_address:
-        warn("Network_Socket.local_address content not supported in STIX 2.0", 424)
+        warn("Network_Socket.local_address content not supported in STIX 2.x", 424)
     if socket.remote_address:
-        warn("Network_Socket.remote_address content not supported in STIX 2.0", 424)
+        warn("Network_Socket.remote_address content not supported in STIX 2.x", 424)
     if socket.protocol:
         cybox_traffic["protocols"] = [socket.protocol.value]
     cybox_traffic["extensions"] = {"socket-ext": socket_extension}
@@ -700,7 +709,7 @@ def convert_cybox_object(obj1x):
         warn("CybOX object %s not handled yet", 805, text_type(type(prop)))
         return None
     if not objs:
-        warn("%s did not yield any STIX 2.0 object", 417, text_type(type(prop)))
+        warn("%s did not yield any STIX 2.x object", 417, text_type(type(prop)))
         return None
     else:
         primary_obj = objs["0"]

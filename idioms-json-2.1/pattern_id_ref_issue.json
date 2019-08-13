@@ -10,6 +10,7 @@
       "modified": "2014-05-08T09:00:00.000Z",
       "name": "indicator 3",
       "pattern": "[(ipv4-addr:value = '10.0.0.0' OR ipv4-addr:value = '20.0.0.0')] AND [file:hashes.MD5 = '3340a281074fcb539967438e3fac326f']",
+      "pattern_type": "stix",
       "spec_version": "2.1",
       "type": "indicator",
       "valid_from": "2014-05-08T09:00:00.000000Z"
@@ -23,6 +24,7 @@
       "modified": "2014-05-08T09:00:00.000Z",
       "name": "indicator 2",
       "pattern": "[(ipv4-addr:value = '10.0.0.0' OR ipv4-addr:value = '20.0.0.0')]",
+      "pattern_type": "stix",
       "spec_version": "2.1",
       "type": "indicator",
       "valid_from": "2014-05-08T09:00:00.000000Z"
@@ -36,6 +38,7 @@
       "modified": "2014-05-08T09:00:00.000Z",
       "name": "IP Address for known C2 channel",
       "pattern": "[ipv4-addr:value = '10.0.0.0']",
+      "pattern_type": "stix",
       "spec_version": "2.1",
       "type": "indicator",
       "valid_from": "2014-05-08T09:00:00.000000Z"
@@ -49,6 +52,7 @@
       "modified": "2014-05-08T09:00:00.000Z",
       "name": "indicator 4",
       "pattern": "[(ipv4-addr:value = '10.0.0.0' OR ipv4-addr:value = '20.0.0.0')] AND [file:hashes.MD5 = '3340a281074fcb539967438e3fac326f']",
+      "pattern_type": "stix",
       "spec_version": "2.1",
       "type": "indicator",
       "valid_from": "2014-05-08T09:00:00.000000Z"

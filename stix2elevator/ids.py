@@ -52,9 +52,9 @@ def add_ids_with_no_1x_object(sdo_id):
 #       create the new id using stix20SOName and the new UUID
 
 
-def generate_stix20_id(stix20_so_name, stix12_id=None, id_used=False):
+def generate_stix2x_id(stix2x_so_name, stix12_id=None, id_used=False):
     if not stix12_id or id_used:
-        new_id = stix20_so_name + "--" + text_type(uuid.uuid4())
+        new_id = stix2x_so_name + "--" + text_type(uuid.uuid4())
         add_ids_with_no_1x_object(new_id)
         return new_id
     else:
@@ -62,21 +62,21 @@ def generate_stix20_id(stix20_so_name, stix12_id=None, id_used=False):
                            stix12_id)
         if result:
             current_uuid = result.group(2)
-            if stix20_so_name is None:
+            if stix2x_so_name is None:
                 stx1x_type = result.group(1).split(":")
                 if stx1x_type[1].lower() == "ttp" or stx1x_type[1].lower() == "et":
-                    error("Unable to determine the STIX 2.0 type for %s", 604, stix12_id)
+                    error("Unable to determine the STIX 2.x type for %s", 604, stix12_id)
                     return None
                 else:
                     return map_1x_type_to_20(stx1x_type[1]) + "--" + current_uuid
             else:
-                return stix20_so_name + "--" + current_uuid
+                return stix2x_so_name + "--" + current_uuid
         else:
-            if stix20_so_name:
+            if stix2x_so_name:
                 warn("Malformed id %s. Generated a new uuid", 605, stix12_id)
-                return stix20_so_name + "--" + text_type(uuid.uuid4())
+                return stix2x_so_name + "--" + text_type(uuid.uuid4())
             else:
-                error("Unable to determine the STIX 2.0 type for %s, which is malformed", 629, stix12_id)
+                error("Unable to determine the STIX 2.x type for %s, which is malformed", 629, stix12_id)
                 return None
 
 

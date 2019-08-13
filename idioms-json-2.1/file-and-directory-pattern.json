@@ -1,27 +1,51 @@
 {
-  "id": "bundle--cc0ca596-70e6-4dac-9bef-603166d17db8",
-  "objects": [
-    {
-      "created": "2014-05-08T09:00:00.000Z",
-      "id": "indicator--53fe3b22-0201-47cf-85d0-97c02164528d",
-      "indicator_types": [
-        "ip-watchlist"
-      ],
-      "modified": "2014-05-08T09:00:00.000Z",
-      "pattern": "[(file:hashes.'SHA-256' = 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855' AND (file:name = 'iprip32.dll' AND file:parent_directory_ref.path = '/usr/local'))]",
-      "spec_version": "2.1",
-      "type": "indicator",
-      "valid_from": "2014-05-08T09:00:00.000000Z"
-    },
-    {
-      "created": "2014-05-08T09:00:00.000Z",
-      "id": "relationship--fe0eaf84-eb53-4bef-a869-a08e06ce9493",
-      "modified": "2014-05-08T09:00:00.000Z",
-      "relationship_type": "indicates",
-      "source_ref": "indicator--53fe3b22-0201-47cf-85d0-97c02164528d",
-      "spec_version": "2.1",
-      "type": "relationship"
-    }
-  ],
-  "type": "bundle"
+    "id": "bundle--cc0ca596-70e6-4dac-9bef-603166d17db8",
+    "objects": [
+        {
+            "created": "2019-08-11T16:32:17.460Z",
+            "first_seen": "2019-08-11T16:32:17.460Z",
+            "id": "infrastructure--6ef96a7d-1cc1-4c68-82c2-81501c68af4a",
+            "labels": [
+                "malware-c2"
+            ],
+            "modified": "2019-08-11T16:32:17.460Z",
+            "name": "Malware C2 Channel",
+            "spec_version": "2.1",
+            "type": "infrastructure"
+        },
+        {
+            "created": "2014-05-08T09:00:00.000Z",
+            "id": "indicator--53fe3b22-0201-47cf-85d0-97c02164528d",
+            "indicator_types": [
+                "ip-watchlist"
+            ],
+            "modified": "2014-05-08T09:00:00.000Z",
+            "pattern": "[(file:hashes.'SHA-256' = 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855' AND (file:name = 'iprip32.dll' AND file:parent_directory_ref.path = '/usr/local'))]",
+            "pattern_type": "stix",
+            "spec_version": "2.1",
+            "type": "indicator",
+            "valid_from": "2014-05-08T09:00:00.000000Z"
+        },
+        {
+            "created": "2014-05-08T09:00:00.000Z",
+            "id": "relationship--24711681-d53e-4223-aedc-1ee343c150ec",
+            "modified": "2014-05-08T09:00:00.000Z",
+            "relationship_type": "indicates",
+            "source_ref": "indicator--53fe3b22-0201-47cf-85d0-97c02164528d",
+            "spec_version": "2.1",
+            "target_ref": "infrastructure--6ef96a7d-1cc1-4c68-82c2-81501c68af4a",
+            "type": "relationship"
+        },
+        {
+            "created": "2019-08-11T16:32:17.460Z",
+            "id": "relationship--62c8499c-6194-4485-befe-77fbb205d724",
+            "modified": "2019-08-11T16:32:17.460Z",
+            "relationship_type": "consists-of",
+            "source_ref": "infrastructure--6ef96a7d-1cc1-4c68-82c2-81501c68af4a",
+            "spec_version": "2.1",
+            "target_ref": "observed-data--c8c32b6e-2ea8-51c4-6446-7f5218072f27",
+            "type": "relationship"
+        }
+    ],
+    "type": "bundle"
 }

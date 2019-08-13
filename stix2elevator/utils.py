@@ -94,48 +94,48 @@ def convert_timestamp_of_stix_object(entity, parent_timestamp=None, milliseconds
     return strftime_with_appropriate_fractional_seconds(datetime.now(), milliseconds_only)
 
 
-_TYPE_MAP_FROM_1_x_TO_2_0 = {"observable": "observed-data",
+_TYPE_MAP_FROM_1_x_TO_2_x = {"observable": "observed-data",
                              "toolinformation": "tool"}
 
 
 def map_1x_type_to_20(stix1x_type):
-    if stix1x_type in _TYPE_MAP_FROM_1_x_TO_2_0:
-        return _TYPE_MAP_FROM_1_x_TO_2_0[stix1x_type]
+    if stix1x_type in _TYPE_MAP_FROM_1_x_TO_2_x:
+        return _TYPE_MAP_FROM_1_x_TO_2_x[stix1x_type]
     return stix1x_type
 
 
-_MARKING_MAP_FROM_1_x_TO_2_0 = {}
+_MARKING_MAP_FROM_1_x_TO_2_x = {}
 
 
-def check_map_1x_markings_to_20(stix1x_marking):
-    return (stix1x_marking in _MARKING_MAP_FROM_1_x_TO_2_0 or
-            stix1x_marking.id_ in _MARKING_MAP_FROM_1_x_TO_2_0 or
-            stix1x_marking.idref in _MARKING_MAP_FROM_1_x_TO_2_0)
+def check_map_1x_markings_to_2x(stix1x_marking):
+    return (stix1x_marking in _MARKING_MAP_FROM_1_x_TO_2_x or
+            stix1x_marking.id_ in _MARKING_MAP_FROM_1_x_TO_2_x or
+            stix1x_marking.idref in _MARKING_MAP_FROM_1_x_TO_2_x)
 
 
-def map_1x_markings_to_20(stix1x_marking):
-    if check_map_1x_markings_to_20(stix1x_marking):
-        if stix1x_marking in _MARKING_MAP_FROM_1_x_TO_2_0:
-            return _MARKING_MAP_FROM_1_x_TO_2_0[stix1x_marking]
-        if stix1x_marking.id_ in _MARKING_MAP_FROM_1_x_TO_2_0:
-            return _MARKING_MAP_FROM_1_x_TO_2_0[stix1x_marking.id_]
-        if stix1x_marking.idref in _MARKING_MAP_FROM_1_x_TO_2_0:
-            return _MARKING_MAP_FROM_1_x_TO_2_0[stix1x_marking.idref]
+def map_1x_markings_to_2x(stix1x_marking):
+    if check_map_1x_markings_to_2x(stix1x_marking):
+        if stix1x_marking in _MARKING_MAP_FROM_1_x_TO_2_x:
+            return _MARKING_MAP_FROM_1_x_TO_2_x[stix1x_marking]
+        if stix1x_marking.id_ in _MARKING_MAP_FROM_1_x_TO_2_x:
+            return _MARKING_MAP_FROM_1_x_TO_2_x[stix1x_marking.id_]
+        if stix1x_marking.idref in _MARKING_MAP_FROM_1_x_TO_2_x:
+            return _MARKING_MAP_FROM_1_x_TO_2_x[stix1x_marking.idref]
     return stix1x_marking
 
 
-def add_marking_map_entry(stix1x_marking, stix20_marking_id):
-    if stix1x_marking not in _MARKING_MAP_FROM_1_x_TO_2_0:
-        _MARKING_MAP_FROM_1_x_TO_2_0[stix1x_marking] = stix20_marking_id
+def add_marking_map_entry(stix1x_marking, stix2x_marking_id):
+    if stix1x_marking not in _MARKING_MAP_FROM_1_x_TO_2_x:
+        _MARKING_MAP_FROM_1_x_TO_2_x[stix1x_marking] = stix2x_marking_id
         if stix1x_marking.id_:
-            _MARKING_MAP_FROM_1_x_TO_2_0[stix1x_marking.id_] = stix20_marking_id
+            _MARKING_MAP_FROM_1_x_TO_2_x[stix1x_marking.id_] = stix2x_marking_id
         return
-    return map_1x_markings_to_20(stix1x_marking)
+    return map_1x_markings_to_2x(stix1x_marking)
 
 
 def clear_1x_markings_map():
-    global _MARKING_MAP_FROM_1_x_TO_2_0
-    _MARKING_MAP_FROM_1_x_TO_2_0 = {}
+    global _MARKING_MAP_FROM_1_x_TO_2_x
+    _MARKING_MAP_FROM_1_x_TO_2_x = {}
 
 
 def iterpath(obj, path=None):

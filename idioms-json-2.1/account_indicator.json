@@ -10,6 +10,7 @@
       "modified": "2013-02-09T10:17:34.934Z",
       "name": "Malicious site hosting downloader",
       "pattern": "[(user-account:is_disabled = true AND user-account:account_last_login = t'2010-12-09T20:17:34.934295Z' AND user-account:account_login = 'fred' AND (user-account:account_type = 'unix' AND user-account:user_id = '1001'))]",
+      "pattern_type": "stix",
       "spec_version": "2.1",
       "type": "indicator",
       "valid_from": "2013-02-09T10:17:34.934295Z"

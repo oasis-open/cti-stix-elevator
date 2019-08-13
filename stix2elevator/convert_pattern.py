@@ -1075,9 +1075,9 @@ def convert_windows_executable_file_to_pattern(f):
                             section_expressions.append(term)
             if s.entropy:
                 if s.entropy.min:
-                    warn("Entropy.min is not supported in STIX 2.0", 424)
+                    warn("Entropy.min is not supported in STIX 2.x", 424)
                 if s.entropy.min:
-                    warn("Entropy.max is not supported in STIX 2.0", 424)
+                    warn("Entropy.max is not supported in STIX 2.x", 424)
                 if s.entropy.value:
                     section_expressions.append(create_term("file:extensions.'windows-pebinary-ext'.section[*].entropy",
                                                            s.entropy.value.condition,
@@ -1415,7 +1415,7 @@ def convert_windows_process_to_pattern(process):
                 expressions.append(term)
     if process.handle_list:
         for h in process.handle_list:
-            warn("Windows Handles are not a part of STIX 2.0", 420)
+            warn("Windows Handles are not a part of STIX 2.x", 420)
     if process.startup_info:
         warn("The startup_info property of ProcessObj is not part of STIX 2.x", 418)
         expressions.append(UnconvertedTerm("ProcessObj.startup_info"))
@@ -1683,7 +1683,7 @@ def convert_network_packet_to_pattern(packet):
     if packet.internet_layer:
         internet_layer = packet.internet_layer
         if internet_layer.ipv4 or internet_layer.ipv6:
-            warn("Internet_Layer/IP_Packet content not supported in STIX 2.0", 424)
+            warn("Internet_Layer/IP_Packet content not supported in STIX 2.x", 424)
         else:
             if internet_layer.icmpv4:
                 icmp_header = internet_layer.icmpv4.icmpv4_header
@@ -1707,7 +1707,7 @@ def convert_http_session_to_pattern(session):
     if session.http_request_response:
         requests, responses = split_into_requests_and_responses(session.http_request_response)
         if len(responses) != 0:
-            warn("HTTPServerResponse type is not supported in STIX 2.0", 429)
+            warn("HTTPServerResponse type is not supported in STIX 2.x", 429)
         if len(requests) >= 1:
             expression = convert_http_client_request_to_pattern(requests[0])
             if len(requests) > 1:
@@ -1753,9 +1753,9 @@ def convert_network_socket_to_pattern(socket):
     if socket.options:
         expressions.append(convert_socket_options_to_pattern(socket.options))
     if socket.local_address:
-        warn("Network_Socket.local_address content not supported in STIX 2.0", 424)
+        warn("Network_Socket.local_address content not supported in STIX 2.x", 424)
     if socket.remote_address:
-        warn("Network_Socket.remote_address content not supported in STIX 2.0", 424)
+        warn("Network_Socket.remote_address content not supported in STIX 2.x", 424)
     if socket.protocol:
         expressions.append(add_comparison_expression(socket.protocol,
                                                      "network-traffic:protocols[*]"))
