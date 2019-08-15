@@ -180,7 +180,10 @@ def create_basic_object(stix2x_type, stix1x_obj, env, parent_id=None, id_used=Fa
     instance["id"] = generate_stix2x_id(stix2x_type, stix1x_obj.id_ if (stix1x_obj and
                                                                         hasattr(stix1x_obj, "id_") and
                                                                         stix1x_obj.id_) else parent_id, id_used)
-    timestamp = convert_timestamp_of_stix_object(stix1x_obj, env.timestamp, True)
+    if stix1x_obj:
+        timestamp = convert_timestamp_of_stix_object(stix1x_obj, env.timestamp, True)
+    else:
+        timestamp = env.timestamp
     instance["created"] = timestamp
     # may need to revisit if we handle 1.x versioning.
     instance["modified"] = timestamp
@@ -440,7 +443,8 @@ def create_relationship(source_ref, target_ref, env, verb, rel_obj=None):
     relationship_instance["source_ref"] = source_ref
     relationship_instance["target_ref"] = target_ref
     relationship_instance["relationship_type"] = verb
-    relationship_instance["created_by_ref"] = env.created_by_ref
+    if env.created_by_ref:
+        relationship_instance["created_by_ref"] = env.created_by_ref
     if rel_obj is not None and hasattr(rel_obj, "relationship") and rel_obj.relationship is not None:
         relationship_instance["description"] = rel_obj.relationship.value
     return relationship_instance
@@ -493,12 +497,11 @@ def handle_relationship_to_obs_list(obs_list, source_id, env, verb):
     for o in obs_list:
         if o.idref is None and o.object_ and not o.object_.idref:
             # embedded
-            new20s = handle_embedded_object(o, env)
-            for new20 in new20s:
-                env.bundle_instance["relationships"].append(create_relationship(source_id,
-                                                                                new20["id"] if new20 else None,
-                                                                                env,
-                                                                                verb))
+            new_od = convert_observed_data(o, env)
+            env.bundle_instance["relationships"].append(create_relationship(source_id,
+                                                                            new_od["id"] if new_od else None,
+                                                                            env,
+                                                                            verb))
         else:
             if o.idref:
                 idref = o.idref
@@ -1224,11 +1227,22 @@ correctly in STIX 2.x - please check this pattern",
 # observables
 
 
-def convert_observed_data(obs, env):
-    obj = obs
-    if not obs.id_ and obs.object_ and obs.object_.id_:
-        obj = obs.object_
-    observed_data_instance = create_basic_object("observed-data", obj, env)
+def create_scos(obs, observed_data_instance, env):
+    observed_data_instance["object_refs"] = []
+    scos = convert_cybox_object(obs.object_)
+    if obs.object_.related_objects:
+        for o in obs.object_.related_objects:
+            related = convert_cybox_object(o)
+            if related:
+                scos.append(related)
+                env.bundle_instance["objects"].append(
+                    create_relationship(scos[0]["id"], related["id"], env, "resolves_to"))
+    for obj in scos:
+        observed_data_instance["object_refs"].append(obj["id"])
+        env.bundle_instance["objects"].append(obj)
+
+
+def create_cyber_onservables(obs, observed_data_instance):
     observed_data_instance["objects"] = convert_cybox_object(obs.object_)
     if obs.object_.related_objects:
         for o in obs.object_.related_objects:
@@ -1238,6 +1252,17 @@ def convert_observed_data(obs, env):
             if related:
                 for index, obj in related.items():
                     observed_data_instance["objects"][text_type(int(index) + int(current_largest_id) + 1)] = obj
+
+
+def convert_observed_data(obs, env):
+    obj = obs
+    if not obs.id_ and obs.object_ and obs.object_.id_:
+        obj = obs.object_
+    observed_data_instance = create_basic_object("observed-data", obj, env)
+    if get_option_value("spec_version") == "2.0":
+        create_cyber_onservables()
+    else:
+        create_scos(obs, observed_data_instance, env)
     info("'first_observed' and 'last_observed' data not available directly on %s - using timestamp", 901, obs.id_)
     observed_data_instance["first_observed"] = observed_data_instance["created"]
     observed_data_instance["last_observed"] = observed_data_instance["created"]
@@ -1730,7 +1755,9 @@ def finalize_bundle(bundle_instance):
 
     fix_relationships(bundle_instance["relationships"], bundle_instance)
 
-    fix_cybox_relationships(bundle_instance["observed_data"])
+    if get_option_value("spec_version") == "2.0":
+        fix_cybox_relationships(bundle_instance["observed_data"])
+
     # need to remove observed-data not used at the top level
 
     if stix.__version__ >= "1.2.0.0":

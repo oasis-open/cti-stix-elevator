@@ -80,6 +80,11 @@ def generate_stix2x_id(stix2x_so_name, stix12_id=None, id_used=False):
                 return None
 
 
+def generate_sco_id(type):
+    # TODO:  need uuid5
+    return generate_stix2x_id(type)
+
+
 _IDS_TO_NEW_IDS = {}
 
 

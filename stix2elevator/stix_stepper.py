@@ -1,23 +1,52 @@
 import io
 import json
 import sys
+import uuid
 
 from six import text_type
 from stix2.pattern_visitor import create_pattern_object
+from stix2elevator.convert_stix import create_relationship
+from stix2elevator.ids import generate_sco_id
+from stix2elevator.utils import Environment
+
+def lookup_stix_id(obs_id, all_objects):
+    if obs_id in all_objects:
+        return all_objects[obs_id]["id"]
 
 
-def step_cyber_observable(obj):
+def step_cyber_observable(obj, observed_data):
+    all_objects = observed_data["objects"]
+    objs = []
     type_name20 = obj["type"]
     if type_name20 == "file":
         obj.pop("is_encrypted", None)
         obj.pop("encryption_algorithm", None)
         obj.pop("decryption_key", None)
+        if "created" in obj:
+            obj["ctime"] = obj["created"]
+            obj.pop("created", None)
+        if "modified" in obj:
+            obj["mtime"] = obj["modified"]
+            obj.pop("modified", None)
+        if "associated" in obj:
+            obj["atime"] = obj["associated"]
+            obj.pop("associated", None)
         if "extensions" in obj:
             exts = obj["extensions"]
             if "archive-ext" in exts:
                 exts["archive-ext"].pop("version", None)
             if "raster-image-ext" in exts:
                 exts["raster-image-ext"].pop("image_compression_algorithm", None)
+    elif type_name20 == "directory":
+        if "created" in obj:
+            obj["ctime"] = obj["created"]
+            obj.pop("created", None)
+        if "modified" in obj:
+            obj["mtime"] = obj["modified"]
+            obj.pop("modified", None)
+        if "associated" in obj:
+            obj["atime"] = obj["associated"]
+            obj.pop("associated", None)
     elif type_name20 == "network-traffic":
         if "extensions" in obj:
             exts = obj["extensions"]
@@ -33,11 +62,35 @@ def step_cyber_observable(obj):
         if "password_last_changed" in obj:
             obj["credential_last_changed"] = obj["password_last_changed"]
             obj.pop("password_last_changed", None)
+    elif type_name20 == 'ipv4-addr' or type_name20 == 'ipv6-addr':
+        env = Environment(observed_data["created_by_ref"] if "created_by_ref" in observed_data else None,
+                          observed_data["created"])
+        if "resolves_to_refs" in obj:
+            for obs_id in obj["resolves_to_refs"]:
+                objs.append(create_relationship(obj["id"], lookup_stix_id(obs_id, all_objects), env, "resolves_to"))
+            obj.pop("resolves_to_refs")
+        if "belongs_to_refs" in obj:
+            for obs_id in obj["resolves_to_refs"]:
+                objs.append(create_relationship(obj["id"], lookup_stix_id(obs_id, all_objects), env, "belongs_to"))
+            obj.pop("belongs_to_refs")
+    objs.append(obj)
+    return objs
+
+
 
 
 def step_observable_data(object):
     for key, obj in object["objects"].items():
-        step_cyber_observable(obj)
+        obj["id"] = generate_sco_id(obj["type"])
+    objs = list()
+    for key, obj in object["objects"].items():
+        objs.extend(step_cyber_observable(obj, object))
+    object.pop("objects")
+    object["object_refs"] = []
+    for obj in objs:
+        object["object_refs"].append(obj["id"])
+    objs.append(object)
+    return objs
 
 
 def step_pattern(pattern):
@@ -56,16 +109,24 @@ def step_object(object):
             object.pop("labels")
         if object["type"] == "indicator":
             object["pattern"] = step_pattern(object["pattern"])
+        return [ object ]
     elif object["type"] == "observed-data":
-        step_observable_data(object)
+        x = step_observable_data(object)
+        return x
+    else:
+        return [ object ]
 
 
 # update "in place"
 
 def step_bundle(bundle):
-    for o in bundle["objects"]:
-        step_object(o)
+    additional_objects = []
+    current_objects = bundle["objects"]
+    bundle["objects"] = []
+    for o in current_objects:
+        additional_objects.extend(step_object(o))
     bundle.pop("spec_version", None)
+    bundle["objects"].extend(additional_objects)
     return bundle
 
 

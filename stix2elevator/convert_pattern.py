@@ -102,10 +102,22 @@ class ObjectPathForElevator(ObjectPath):
                     current_cyber_observable_type = "file"
                 elif x.property_name == "parent_directory_ref":
                     current_cyber_observable_type = "directory"
+                elif x.property_name == "created":
+                    x.property_name = "ctime"
+                elif x.property_name == "modified":
+                    x.property_name = "mtime"
+                elif x.property_name == "accessed":
+                    x.property_name = "atime"
             elif current_cyber_observable_type == "directory":
                 if x.property_name == "contains_refs":
                     # TODO - what if it is a directory?
                     current_cyber_observable_type = "file"
+                elif x.property_name == "created":
+                    x.property_name = "ctime"
+                elif x.property_name == "modified":
+                    x.property_name = "mtime"
+                elif x.property_name == "accessed":
+                    x.property_name = "atime"
             elif current_cyber_observable_type == "archive-ext":
                 if x.property_name == "version":
                     print("Expression contains the property version, for a file.archive-ext, which is not in STIX 2.1")
@@ -140,6 +152,9 @@ class ObjectPathForElevator(ObjectPath):
             elif current_cyber_observable_type == "user_account":
                 if x.property_name == "password_last_changed":
                     x.property_name = "credential_last_changed"
+            elif current_cyber_observable_type == "windows-registry-key":
+                if x.property_name == "modified":
+                    x.property_name = "modified_time"
         return self
 
 
@@ -1204,9 +1219,9 @@ _FILE_PROPERTIES_2_0 = [["size_in_bytes", "file:size"],
 
 _FILE_PROPERTIES_2_1 = [["size_in_bytes", "file:size"],
                         ["magic_number", "file:magic_number_hex"],
-                        ["created_time", "file:created"],
-                        ["modified_time", "file:modified"],
-                        ["accessed_time", "file:accessed"]]
+                        ["created_time", "file:ctime"],
+                        ["modified_time", "file:mtime"],
+                        ["accessed_time", "file:atime"]]
 
 
 def select_file_properties():

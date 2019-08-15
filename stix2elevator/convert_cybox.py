@@ -20,7 +20,7 @@ from cybox.objects.win_service_object import WinService
 from six import text_type
 
 from stix2elevator.common import ADDRESS_FAMILY_ENUMERATION, SOCKET_OPTIONS
-from stix2elevator.ids import add_object_id_value, get_object_id_value
+from stix2elevator.ids import add_object_id_value, get_object_id_value, generate_sco_id
 from stix2elevator.options import error, get_option_value, info, warn
 from stix2elevator.utils import (convert_timestamp_to_string,
                                  map_vocabs_to_label)
@@ -33,6 +33,8 @@ def create_base_sco(obj1x, type, other_properties=None):
         new_dict["type"] = type
     else:
         new_dict = {"type": type}
+    if get_option_value("spec_version") == "2.1":
+        new_dict["id"] = generate_sco_id(type)
     # if obj1x.is_defanged:
     #    new_dict["defanged"] = True
     return new_dict
@@ -107,6 +109,21 @@ def convert_file_properties(f):
             file_dict["size"] = int(f.size.value[0])
         else:
             file_dict["size"] = int(f.size)
+    if f.created_time:
+        if get_option_value("spec_version") == "2.0":
+            file_dict["created"] = f.created_time
+        else:
+            file_dict["ctime"] = f.created_time
+    if f.modified_time:
+        if get_option_value("spec_version") == "2.0":
+            file_dict["modified"] = f.modified_time
+        else:
+            file_dict["mtime"] = f.modified_time
+    if f.accessed_time:
+        if get_option_value("spec_version") == "2.0":
+            file_dict["accessed"] = f.accessed_time
+        else:
+            file_dict["atime"] = f.accessed_time
     if f.hashes is not None:
         hashes = {}
         for h in f.hashes:
@@ -226,7 +243,10 @@ def convert_registry_key(reg_key):
                 reg_value["data_type"] = text_type(v.datatype)
             cybox_reg["values"].append(reg_value)
     if reg_key.modified_time:
-        cybox_reg["modified"] = convert_timestamp_to_string(reg_key.modified_time)
+        if get_option_value("spec_version") == "2.0":
+            cybox_reg["modified"] = convert_timestamp_to_string(reg_key.modified_time)
+        else:
+            cybox_reg["modified_time"] = convert_timestamp_to_string(reg_key.modified_time)
     return cybox_reg
 
 
@@ -668,7 +688,7 @@ def convert_network_socket(socket):
     return cybox_traffic
 
 
-def convert_cybox_object(obj1x):
+def convert_cybox_object20(obj1x):
     # TODO:  should related objects be handled on a case-by-case basis or just ignored
     prop = obj1x.properties
     objs = {}
@@ -713,6 +733,59 @@ def convert_cybox_object(obj1x):
         return None
     else:
         primary_obj = objs["0"]
+        if prop.custom_properties:
+            for cp in prop.custom_properties.property_:
+                primary_obj["x_" + cp.name] = cp.value
+        if obj1x.id_:
+            add_object_id_value(obj1x.id_, objs)
+        return objs
+
+
+def convert_cybox_object21(obj1x):
+    # TODO:  should related objects be handled on a case-by-case basis or just ignored
+    prop = obj1x.properties
+    objs = {}
+    if prop is None:
+        return None
+    elif isinstance(prop, Address):
+        objs = [convert_address(prop)]
+    elif isinstance(prop, URI):
+        objs= [convert_uri(prop)]
+    elif isinstance(prop, EmailMessage):
+        # potentially returns multiple objects
+        objs = convert_email_message(prop)
+    elif isinstance(prop, File):
+        # potentially returns multiple objects
+        objs = convert_file(prop)
+    elif isinstance(prop, WinRegistryKey):
+        objs = [convert_registry_key(prop)]
+    elif isinstance(prop, Process):
+        objs = convert_process(prop)
+    elif isinstance(prop, DomainName):
+        objs = [convert_domain_name(prop)]
+    elif isinstance(prop, Mutex):
+        objs = [convert_mutex(prop)]
+    elif isinstance(prop, NetworkConnection):
+        # potentially returns multiple objects
+        objs = convert_network_connection(prop)
+    elif isinstance(prop, Account):
+        objs = [convert_account(prop)]
+    elif isinstance(prop, Port):
+        objs = [convert_port(prop)]
+    elif isinstance(prop, HTTPSession):
+        objs = [convert_http_session(prop)]
+    elif isinstance(prop, NetworkPacket):
+        objs = [convert_network_packet(prop)]
+    elif isinstance(prop, NetworkSocket):
+        objs = [convert_network_socket(prop)]
+    else:
+        warn("CybOX object %s not handled yet", 805, text_type(type(prop)))
+        return None
+    if not objs:
+        warn("%s did not yield any STIX 2.x object", 417, text_type(type(prop)))
+        return None
+    else:
+        primary_obj = objs[0]
         if prop.custom_properties:
             for cp in prop.custom_properties.property_:
                 primary_obj["x_" + cp.name] = cp.value
