@@ -146,19 +146,25 @@ def convert_file_properties(f):
             file_dict["name"] = f.file_path.value[index + 1:]
         dir_path = f.file_path.value[0: index]
         if dir_path:
-            dir_dict = {"type": "directory",
-                        "path": (f.device_path.value if f.device_path else "") + dir_path}
+            dir_dict = create_base_sco(None, "directory", { "path": (f.device_path.value if f.device_path else "") + dir_path})
     if f.full_path:
         warn("1.x full file paths are not processed, yet", 802)
     return file_dict, dir_dict
 
-
-def convert_file(f):
+def convert_file20(f):
     objs = {}
     objs["0"], dir_dict = convert_file_properties(f)
     if dir_dict:
         objs["1"] = dir_dict
         objs["0"]["parent_directory_ref"] = "1"
+    return objs
+
+def convert_file21(f):
+    file_dict, dir_dict = convert_file_properties(f)
+    objs = [ file_dict ]
+    if dir_dict:
+        objs.append(dir_dict)
+        file_dict["parent_directory_ref"] = dir_dict["id"]
     return objs
 
 
@@ -250,9 +256,12 @@ def convert_registry_key(reg_key):
     return cybox_reg
 
 
-def create_process_ref(cp, process_dict, cybox_dict, index, prop):
+def create_process_ref(cp, process_dict, objs, index, prop):
     cp_ref = create_base_sco(cp, "process", {"pid": cp.value})
-    cybox_dict[text_type(index)] = cp_ref
+    if get_option_value("spec_version") == "2.0":
+        objs[text_type(index)] = cp_ref
+    else:
+        objs.append(cp_ref)
     if prop == "child_refs":
         if prop not in process_dict:
             process_dict["child_refs"] = []
@@ -271,11 +280,40 @@ def convert_port(prop):
     return traffic_2x
 
 
+def convert_opened_connection_refs20(process, process_dict, objs, index):
+    renumbered_nc_dicts = {}
+    process_dict["opened_connection_refs"] = []
+    for nc in process.network_connection_list:
+        nc_dicts = convert_network_connection(nc)
+        root_obj_index = find_index_of_type(nc_dicts, "network-traffic")
+        current_largest_id, number_mapping = do_renumbering(nc_dicts,
+                                                            index,
+                                                            root_obj_index,
+                                                            renumbered_nc_dicts)
+        add_objects(objs, renumbered_nc_dicts)
+        process_dict["opened_connection_refs"].append(text_type(number_mapping[root_obj_index]))
+        index = current_largest_id
+
+
+def convert_opened_connection_refs21(process, process_dict, objs):
+    process_dict["opened_connection_refs"] = []
+    for nc in process.network_connection_list:
+        nc_dicts = convert_network_connection(nc)
+        for k, obj in nc_dicts.items():
+            obj["id"] = generate_sco_id(obj["type"])
+            objs.append(obj)
+        # network-traffic is always the last obj
+        process_dict["opened_connection_refs"].append(obj["id"])
+
+
 def convert_process(process):
     index = 0
-    cybox_dict = {}
     process_dict = create_base_sco(process, "process")
-    cybox_dict[text_type(index)] = process_dict
+    if get_option_value("spec_version") == "2.0":
+        objs = {}
+        objs[text_type(index)] = process_dict
+    else:
+        objs = [ process_dict ]
     index += 1
     if process.name and get_option_value("spec_version") == "2.0":
         process_dict["name"] = text_type(process.name)
@@ -285,28 +323,20 @@ def convert_process(process):
         process_dict["created"] = convert_timestamp_to_string(process.creation_time.value)
     if process.child_pid_list:
         for cp in process.child_pid_list:
-            create_process_ref(cp, process_dict, cybox_dict, index, "child_refs")
+            create_process_ref(cp, process_dict, objs, index, "child_refs")
             index += 1
     if process.parent_pid:
-        create_process_ref(process.parent_pid, process_dict, cybox_dict, index, "parent_ref")
+        create_process_ref(process.parent_pid, process_dict, objs, index, "parent_ref")
         index += 1
     if process.argument_list and get_option_value("spec_version") == "2.0":
         process_dict["arguments"] = []
         for a in process.argument_list:
             process_dict["arguments"].append(a.value)
     if process.network_connection_list:
-        renumbered_nc_dicts = {}
-        process_dict["opened_connection_refs"] = []
-        for nc in process.network_connection_list:
-            nc_dicts = convert_network_connection(nc)
-            root_obj_index = find_index_of_type(nc_dicts, "network-traffic")
-            current_largest_id, number_mapping = do_renumbering(nc_dicts,
-                                                                index,
-                                                                root_obj_index,
-                                                                renumbered_nc_dicts)
-            add_objects(cybox_dict, renumbered_nc_dicts)
-            process_dict["opened_connection_refs"].append(text_type(number_mapping[root_obj_index]))
-            index = current_largest_id
+        if get_option_value("spec_version") == "2.0":
+            convert_opened_connection_refs20(process, process_dict, objs, index)
+        else:
+            convert_opened_connection_refs21(process, process_dict, objs)
     if isinstance(process, WinProcess):
         extended_properties = {}
         process_properties = convert_windows_process(process)
@@ -318,7 +348,7 @@ def convert_process(process):
                 extended_properties["windows-service-ext"] = service_properties
         if extended_properties:
             process_dict["extensions"] = extended_properties
-    return cybox_dict
+    return objs
 
 
 def convert_windows_process(process):
@@ -500,7 +530,7 @@ def convert_network_connection(conn):
     cybox_traffic = {}
 
     def create_domain_name_object(dn):
-        return {"type": "domain-name", "value": text_type(dn.value)}
+        return create_base_sco(None, "domain-name", {"value": text_type(dn.value)})
 
     if conn.creation_time is not None:
         cybox_traffic["start"] = convert_timestamp_to_string(conn.creation_time.value, None, None)
@@ -703,7 +733,7 @@ def convert_cybox_object20(obj1x):
         objs = convert_email_message(prop)
     elif isinstance(prop, File):
         # potentially returns multiple objects
-        objs = convert_file(prop)
+        objs = convert_file20(prop)
     elif isinstance(prop, WinRegistryKey):
         objs["0"] = convert_registry_key(prop)
     elif isinstance(prop, Process):
@@ -756,7 +786,7 @@ def convert_cybox_object21(obj1x):
         objs = convert_email_message(prop)
     elif isinstance(prop, File):
         # potentially returns multiple objects
-        objs = convert_file(prop)
+        objs = convert_file21(prop)
     elif isinstance(prop, WinRegistryKey):
         objs = [convert_registry_key(prop)]
     elif isinstance(prop, Process):

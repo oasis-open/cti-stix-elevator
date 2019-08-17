@@ -30,7 +30,8 @@ from stix.ttp import TTP
 from stixmarx import navigator
 
 from stix2elevator.confidence import convert_confidence
-from stix2elevator.convert_cybox import (convert_cybox_object,
+from stix2elevator.convert_cybox import (convert_cybox_object20,
+                                         convert_cybox_object21,
                                          fix_cybox_relationships)
 from stix2elevator.convert_pattern import (ComparisonExpressionForElevator,
                                            CompoundObservationExpressionForElevator,
@@ -1226,6 +1227,12 @@ correctly in STIX 2.x - please check this pattern",
 
 # observables
 
+def convert_cybox_object(o):
+    if get_option_value("spec_version") == "2.0":
+        return convert_cybox_object20(o)
+    else:
+        return convert_cybox_object21(o)
+
 
 def create_scos(obs, observed_data_instance, env):
     observed_data_instance["object_refs"] = []
@@ -1260,7 +1267,7 @@ def convert_observed_data(obs, env):
         obj = obs.object_
     observed_data_instance = create_basic_object("observed-data", obj, env)
     if get_option_value("spec_version") == "2.0":
-        create_cyber_onservables()
+        create_cyber_onservables(obs, observed_data_instance)
     else:
         create_scos(obs, observed_data_instance, env)
     info("'first_observed' and 'last_observed' data not available directly on %s - using timestamp", 901, obs.id_)

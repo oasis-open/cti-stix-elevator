@@ -8,6 +8,8 @@ from .test_idioms import (BEFORE_FILENAMES, BEFORE_FILES, MASTER_JSON_FILES,
                           find_index_of_difference, idiom_mappings,
                           setup_tests)
 
+_IGNORE = (u"id", u"object_refs")
+
 
 def idiom_stepper_mappings(before_file_path, stored_json):
     """Test fresh conversion from XML to JSON matches stored JSON samples."""
@@ -16,7 +18,7 @@ def idiom_stepper_mappings(before_file_path, stored_json):
 
     converted_json = step_file(before_file_path)
     converted_json = json.loads(converted_json)
-    return idiom_mappings(converted_json, stored_json)
+    return idiom_mappings(converted_json, stored_json, _IGNORE)
 
 
 def setup_stepper_tests():
