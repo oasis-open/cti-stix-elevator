@@ -34,7 +34,7 @@ import stixmarx
 
 from stix2elevator.common import ADDRESS_FAMILY_ENUMERATION, SOCKET_OPTIONS
 from stix2elevator.convert_cybox import split_into_requests_and_responses
-from stix2elevator.ids import (add_object_id_value, exists_object_id_key,
+from stix2elevator.ids import (add_id_value, exists_object_id_key,
                                get_id_value, get_object_id_value)
 from stix2elevator.options import error, get_option_value, info, warn
 from stix2elevator.utils import identifying_info, map_vocabs_to_label
@@ -362,7 +362,7 @@ class IdrefPlaceHolder(object):
     def replace_placeholder_with_idref_pattern(self, idref):
         if idref == self.idref:
             return True, get_pattern_from_cache(idref)
-        elif exists_object_id_key(self.idref) and idref == get_object_id_value(self.idref):
+        elif exists_object_id_key(self.idref) and idref == get_id_value(self.idref):
             return True, get_pattern_from_cache(idref)
         else:
             return False, self
@@ -1024,16 +1024,17 @@ def convert_email_message_to_pattern(mess):
 
 
 _PE_FILE_HEADER_PROPERTIES = \
-    [["machine", "file:extensions.'windows-pebinary-ext'.file_header:machine_hex"],
-     ["time_date_stamp", "file:extensions.'windows-pebinary-ext'.file_header.time_date_stamp"],
-     ["number_of_sections", "file:extensions.'windows-pebinary-ext'.file_header.number_of_sections"],
-     ["pointer_to_symbol_table", "file:extensions.'windows-pebinary-ext'.file_header.pointer_to_symbol_table"],
-     ["number_of_symbols", "file:extensions.'windows-pebinary-ext'.file_header.number_of_symbols"],
-     ["size_of_optional_header", "file:extensions.'windows-pebinary-ext'.file_header.size_of_optional_header"],
-     ["characteristics", "file:extensions.'windows-pebinary-ext'.file_header.characteristics_hex"]]
+    [["machine", "file:extensions.'windows-pebinary-ext'.machine_hex"],
+     ["time_date_stamp", "file:extensions.'windows-pebinary-ext'.time_date_stamp"],
+     ["number_of_sections", "file:extensions.'windows-pebinary-ext'.number_of_sections"],
+     ["pointer_to_symbol_table", "file:extensions.'windows-pebinary-ext'.pointer_to_symbol_table"],
+     ["number_of_symbols", "file:extensions.'windows-pebinary-ext'.number_of_symbols"],
+     ["size_of_optional_header", "file:extensions.'windows-pebinary-ext'.size_of_optional_header"],
+     ["characteristics", "file:extensions.'windows-pebinary-ext'.characteristics_hex"]]
 
 _PE_SECTION_HEADER_PROPERTIES = [["name", "file:extensions.'windows-pebinary-ext'.section[*].name"],
                                  ["virtual_size", "file:extensions.'windows-pebinary-ext'.section[*].size"]]
+
 
 _ARCHIVE_FILE_PROPERTIES_2_0 = [["comment", "file:extensions.'archive-ext'.comment"],
                                 ["version", "file:extensions.'archive-ext'.version"]]
@@ -1046,6 +1047,7 @@ def select_archive_file_properties():
         return _ARCHIVE_FILE_PROPERTIES_2_1
     else:
         return _ARCHIVE_FILE_PROPERTIES_2_0
+
 
 
 def convert_windows_executable_file_to_pattern(f):
@@ -1843,7 +1845,7 @@ def convert_object_to_pattern(obj, obs_id):
         warn("No pattern term was created from %s", 422, obs_id)
         expression = UnconvertedTerm(obs_id)
     elif obj.id_:
-        add_object_id_value(obj.id_, obs_id)
+        add_id_value(obj.id_, obs_id)
     return expression
 
 

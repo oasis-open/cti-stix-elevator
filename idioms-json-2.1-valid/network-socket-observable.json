@@ -1,33 +1,36 @@
 {
-  "id": "bundle--8005dcb9-398c-4f61-b44c-18133199d145",
-  "objects": [
-    {
-      "created": "2018-07-24T16:07:55.291Z",
-      "first_observed": "2018-07-24T16:07:55.291Z",
-      "id": "observed-data--175e561f-3ced-4cf7-8a17-654ca651ff97",
-      "last_observed": "2018-07-24T16:07:55.291Z",
-      "modified": "2018-07-24T16:07:55.291Z",
-      "number_observed": 1,
-      "objects": {
-        "0": {
-          "extensions": {
-            "socket-ext": {
-              "address_family": "AF_INET",
-              "is_listening": true,
-              "options": {
-                "IP_MULTICAST_LOOP": true
-              }
-            }
-          },
-          "protocols": [
-            "TCP"
-          ],
-          "type": "network-traffic"
+    "id": "bundle--8005dcb9-398c-4f61-b44c-18133199d145",
+    "objects": [
+        {
+            "extensions": {
+                "socket-ext": {
+                    "address_family": "AF_INET",
+                    "is_listening": true,
+                    "options": {
+                        "IP_MULTICAST_LOOP": true
+                    }
+                }
+            },
+            "id": "network-traffic--6c1327a9-9829-4024-bdc0-47c9eb8de48e",
+            "protocols": [
+                "TCP"
+            ],
+            "type": "network-traffic"
+        },
+        {
+            "created": "2018-07-24T16:07:55.291Z",
+            "first_observed": "2018-07-24T16:07:55.291Z",
+            "id": "observed-data--175e561f-3ced-4cf7-8a17-654ca651ff97",
+            "last_observed": "2018-07-24T16:07:55.291Z",
+            "modified": "2018-07-24T16:07:55.291Z",
+            "number_observed": 1,
+            "object_refs": [
+                "network-traffic--6c1327a9-9829-4024-bdc0-47c9eb8de48e"
+            ],
+            "spec_version": "2.1",
+            "type": "observed-data"
         }
-      },
-      "spec_version": "2.1",
-      "type": "observed-data"
-    }
-  ],
-  "type": "bundle"
+    ],
+    "type": "bundle"
 }
+

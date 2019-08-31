@@ -8,7 +8,10 @@ from .test_idioms import (BEFORE_FILENAMES, BEFORE_FILES, MASTER_JSON_FILES,
                           find_index_of_difference, idiom_mappings,
                           setup_tests)
 
-_IGNORE = (u"id", u"object_refs")
+_IGNORE = (u"id",
+           u"bcc_refs", u"cc_refs", u"child_refs", u"object_refs", u"opened_connection_refs", u"to_refs" 
+           u"body_raw_ref", u"dst_ref", u"from_refs", u"parent_ref", u"parent_directory_ref", u"source_ref", u"src_ref", u"target_ref"
+           )
 
 
 def idiom_stepper_mappings(before_file_path, stored_json):

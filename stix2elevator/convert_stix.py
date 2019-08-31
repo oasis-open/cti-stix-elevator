@@ -32,7 +32,8 @@ from stixmarx import navigator
 from stix2elevator.confidence import convert_confidence
 from stix2elevator.convert_cybox import (convert_cybox_object20,
                                          convert_cybox_object21,
-                                         fix_cybox_relationships)
+                                         fix_cybox_relationships,
+                                         fix_attachments_refs)
 from stix2elevator.convert_pattern import (ComparisonExpressionForElevator,
                                            CompoundObservationExpressionForElevator,
                                            ParentheticalExpressionForElevator,
@@ -65,6 +66,7 @@ from stix2elevator.vocab_mappings import (ATTACK_MOTIVATION_MAP, COA_LABEL_MAP,
                                           THREAT_ACTOR_LABEL_MAP,
                                           THREAT_ACTOR_SOPHISTICATION_MAP,
                                           TOOL_LABELS_MAP)
+
 
 if stix.__version__ >= "1.2.0.0":
     from stix.report import Report
@@ -468,7 +470,7 @@ def handle_relationship_to_objs(items, source_id, env, verb):
                                                                             item))
 
 
-def handle_relationship_to_refs(refs, source_id, env, verb, source_identity_ref=None):
+def handle_relationship_to_refs(refs, source_id, env, verb):
     for ref in refs:
         if ref.item.idref is None:
             # embedded
@@ -494,7 +496,8 @@ def handle_relationship_to_refs(refs, source_id, env, verb, source_identity_ref=
                                                                             verb,
                                                                             ref))
 
-def handle_relationship_to_obs_list(obs_list, source_id, env, verb):
+def handle_observable_characterization_list(obs_list, source_id, env):
+    verb = "consists-of"
     for o in obs_list:
         if o.idref is None and o.object_ and not o.object_.idref:
             # embedded
@@ -1040,7 +1043,7 @@ def convert_incident(incident, env):
     if incident.related_observables is not None:
         handle_relationship_from_refs(incident.related_observables, incident_instance["id"], new_env, "part-of")
     if incident.leveraged_ttps is not None:
-        warn("Using related-to for the leveraged TTPs of %s", 718, incident.id_)
+        warn("Using %s for the %s of %s", 718, "related-to", "leveraged TTPs", incident.id_)
         handle_relationship_to_refs(incident.leveraged_ttps, incident_instance["id"], new_env, "related-to")
 
     if incident.reporter is not None:
@@ -1137,7 +1140,7 @@ def negate_indicator(indicator):
 
 def convert_indicator(indicator, env):
     indicator_instance = create_basic_object("indicator", indicator, env)
-    new_env = env.newEnv(timestamp=indicator_instance["created"])
+
     process_description_and_short_description(indicator_instance, indicator)
     convert_controlled_vocabs_to_open_vocabs(indicator_instance,
                                              "labels" if get_option_value(
@@ -1201,26 +1204,28 @@ correctly in STIX 2.x - please check this pattern",
     if "pattern" not in indicator_instance:
         # STIX doesn't handle multiple patterns for indicators
         convert_test_mechanism(indicator, indicator_instance)
+    env = env.newEnv(timestamp=indicator_instance["created"])
     indicator_created_by_ref = process_information_source(indicator.producer, indicator_instance,
-                                                          env.newEnv(timestamp=indicator_instance["created"]))
+                                                          env)
+    env.add_to_env(created_by_ref=indicator_created_by_ref)
     # process information source before any relationships
     if indicator.sightings:
         for s in indicator.sightings:
-            env.bundle_instance["objects"].append(handle_sighting(s, indicator_instance["id"], new_env))
+            env.bundle_instance["objects"].append(handle_sighting(s, indicator_instance["id"], env))
     if indicator.suggested_coas is not None:
-        warn("Using related-to for the suggested COAs of %s", 718, indicator.id_)
-        handle_relationship_to_refs(indicator.suggested_coas, indicator_instance["id"], new_env,
-                                    "related-to", indicator_created_by_ref)
+        warn("Using %s for the %s of %s", 718, "investigates", "suggested COAs", indicator.id_)
+        handle_relationship_from_refs(indicator.suggested_coas, indicator_instance["id"], env,
+                                      "investigates")
     if indicator.related_campaigns is not None:
-        handle_relationship_to_refs(indicator.related_campaigns, indicator_instance["id"], new_env,
-                                    "attributed-to", indicator_created_by_ref)
+        handle_relationship_to_refs(indicator.related_campaigns, indicator_instance["id"], env,
+                                    "attributed-to")
     if indicator.indicated_ttps is not None:
-        handle_relationship_to_refs(indicator.indicated_ttps, indicator_instance["id"], new_env,
-                                    "indicates", indicator_created_by_ref)
+        handle_relationship_to_refs(indicator.indicated_ttps, indicator_instance["id"], env,
+                                    "indicates")
     if indicator.related_indicators:
         warn("All 'associated indicators' relationships of %s are assumed to not represent STIX 1.2 versioning", 710, indicator.id_)
-        handle_relationship_to_refs(indicator.related_indicators, indicator_instance["id"], new_env,
-                                    "related-to", indicator_created_by_ref)
+        handle_relationship_to_refs(indicator.related_indicators, indicator_instance["id"], env,
+                                    "related-to")
     finish_basic_object(indicator.id_, indicator_instance, env, indicator)
     return indicator_instance
 
@@ -1239,17 +1244,20 @@ def create_scos(obs, observed_data_instance, env):
     scos = convert_cybox_object(obs.object_)
     if obs.object_.related_objects:
         for o in obs.object_.related_objects:
+            # TODO: what if an idref??
             related = convert_cybox_object(o)
             if related:
-                scos.append(related)
+                scos.extend(related)
+                related[0]["id"] = get_id_value(o.id_)[0]
                 env.bundle_instance["objects"].append(
-                    create_relationship(scos[0]["id"], related["id"], env, "resolves_to"))
-    for obj in scos:
-        observed_data_instance["object_refs"].append(obj["id"])
-        env.bundle_instance["objects"].append(obj)
+                    create_relationship(scos[0]["id"], related[0]["id"], env, "resolves_to"))
+    if scos:
+        for obj in scos:
+            observed_data_instance["object_refs"].append(obj["id"])
+            env.bundle_instance["objects"].append(obj)
 
 
-def create_cyber_onservables(obs, observed_data_instance):
+def create_cyber_observables(obs, observed_data_instance):
     observed_data_instance["objects"] = convert_cybox_object(obs.object_)
     if obs.object_.related_objects:
         for o in obs.object_.related_objects:
@@ -1263,21 +1271,21 @@ def create_cyber_onservables(obs, observed_data_instance):
 
 def convert_observed_data(obs, env):
     obj = obs
-    if not obs.id_ and obs.object_ and obs.object_.id_:
-        obj = obs.object_
+    # if not obs.id_ and obs.object_ and obs.object_.id_:
+    #    obj = obs.object_
     observed_data_instance = create_basic_object("observed-data", obj, env)
     if get_option_value("spec_version") == "2.0":
-        create_cyber_onservables(obs, observed_data_instance)
+        create_cyber_observables(obj, observed_data_instance)
     else:
-        create_scos(obs, observed_data_instance, env)
+        create_scos(obj, observed_data_instance, env)
     info("'first_observed' and 'last_observed' data not available directly on %s - using timestamp", 901, obs.id_)
     observed_data_instance["first_observed"] = observed_data_instance["created"]
     observed_data_instance["last_observed"] = observed_data_instance["created"]
     observed_data_instance["number_observed"] = 1 if obs.sighting_count is None else obs.sighting_count
     # created_by
-    finish_basic_object(obs.id_, observed_data_instance, env, obs)
+    finish_basic_object(obs.id_, observed_data_instance, env, obj)
     # remember the original 1.x observable, in case it has to be turned into a pattern later
-    add_to_observable_mappings(obs)
+    add_to_observable_mappings(obj)
     return observed_data_instance
 
 
@@ -1474,6 +1482,16 @@ def convert_threat_actor(threat_actor, env):
 
 # TTPs
 
+_TTP_RELATIONSHIP_MAPPING = {
+    ("malware", "malware", "Variant Of"): "variant-of"
+}
+
+def determine_ttp_relationship_type(source_type, target_type, relationship_name):
+    if (source_type, target_type, relationship_name) in _TTP_RELATIONSHIP_MAPPING:
+        return _TTP_RELATIONSHIP_MAPPING[(source_type, target_type, relationship_name)]
+    else:
+        return "related-to"
+
 
 def process_ttp_properties(sdo_instance, ttp, env, kill_chains_in_sdo=True, victim_target=False):
     process_description_and_short_description(sdo_instance, ttp, True)
@@ -1483,18 +1501,19 @@ def process_ttp_properties(sdo_instance, ttp, env, kill_chains_in_sdo=True, vict
             sdo_instance["name"] = ttp.title
         else:
             add_string_property_to_description(sdo_instance, "title", ttp.title, False)
-    if ttp.exploit_targets is not None:
-        handle_relationship_to_refs(ttp.exploit_targets, sdo_instance["id"], env,
-                                    "targets", )
+
     # only populate kill chain phases if that is a property of the sdo_instance type, as indicated by kill_chains_in_sdo
     if kill_chains_in_sdo and hasattr(ttp, "kill_chain_phases"):
         convert_kill_chains(ttp.kill_chain_phases, sdo_instance)
-    ttp_created_by_ref = process_information_source(ttp.information_source, sdo_instance,
-                                                    env.newEnv(timestamp=sdo_instance["created"]))
+    env = env.newEnv(timestamp=sdo_instance["created"])
+    ttp_created_by_ref = process_information_source(ttp.information_source, sdo_instance, env)
+    env.add_to_env(created_by_ref=ttp_created_by_ref)
+    if ttp.exploit_targets is not None:
+        handle_relationship_to_refs(ttp.exploit_targets, sdo_instance["id"], env,
+                                    "targets")
     if ttp.related_ttps:
-        warn("All 'associated indicators' relationships of %s are assumed to not represent STIX 1.2 versioning", 710, ttp.id_)
-        handle_relationship_to_refs(ttp.related_ttps, sdo_instance["id"], env.newEnv(timestamp=sdo_instance["created"]),
-                                    "related-to", ttp_created_by_ref)
+        warn("All 'related ttps' relationships of %s are assumed to not represent STIX 1.2 versioning", 710, ttp.id_)
+        handle_relationship_to_refs(ttp.related_ttps, sdo_instance["id"], env, "related-to")
     if hasattr(ttp, "related_packages") and ttp.related_packages is not None:
         for p in ttp.related_packages:
             warn("Related_Packages type in %s not supported in STIX 2.x", 402, ttp.id_)
@@ -1596,7 +1615,7 @@ def convert_infrastructure(infra, ttp, env, first_one):
     info("No 'first_seen' data on %s - using timestamp", 904, infra.id_ if infra.id_ else ttp.id_)
     infrastructure_instance["first_seen"] = convert_timestamp_of_stix_object(infra, infrastructure_instance["created"])
     if infra.observable_characterization is not None:
-        handle_relationship_to_obs_list(infra.observable_characterization, infrastructure_instance["id"], env, "consists-of")
+        handle_observable_characterization_list(infra.observable_characterization, infrastructure_instance["id"], env)
     process_ttp_properties(infrastructure_instance, ttp, env)
     finish_basic_object(ttp.id_, infrastructure_instance, env, infra)
     return infrastructure_instance
@@ -1658,7 +1677,7 @@ def convert_victim_targeting(victim_targeting, ttp, env, ttp_generated):
 
 def convert_ttp(ttp, env):
     if hasattr(ttp, "timestamp") and ttp.timestamp:
-        new_env = env.newEnv(timestamp=ttp.timestamp)
+        new_env = env.newEnv(timestamp=str(ttp.timestamp))
     else:
         new_env = env
     generated_objs = []
@@ -1764,6 +1783,8 @@ def finalize_bundle(bundle_instance):
 
     if get_option_value("spec_version") == "2.0":
         fix_cybox_relationships(bundle_instance["observed_data"])
+    else:
+        fix_attachments_refs(bundle_instance["objects"])
 
     # need to remove observed-data not used at the top level
 

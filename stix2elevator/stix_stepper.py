@@ -157,6 +157,7 @@ def step_observable_data(object):
 
 def step_pattern(pattern):
     pattern_obj = create_pattern_object(pattern, module_suffix="Elevator", module_name="stix2elevator.convert_pattern")
+    # replacing property names performed in toSTIX21
     return text_type(pattern_obj.toSTIX21())
 
 

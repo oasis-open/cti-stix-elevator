@@ -2,13 +2,13 @@
     "id": "bundle--cc0ca596-70e6-4dac-9bef-603166d17db8",
     "objects": [
         {
-            "created": "2019-08-11T16:32:17.460Z",
-            "first_seen": "2019-08-11T16:32:17.460Z",
-            "id": "infrastructure--6ef96a7d-1cc1-4c68-82c2-81501c68af4a",
+            "created": "2019-08-21T10:53:07.214Z",
+            "first_seen": "2019-08-21T10:53:07.214Z",
+            "id": "infrastructure--dd955e08-16d0-6f08-5064-50d9e7a3104d",
             "labels": [
                 "malware-c2"
             ],
-            "modified": "2019-08-11T16:32:17.460Z",
+            "modified": "2019-08-21T10:53:07.214Z",
             "name": "Malware C2 Channel",
             "spec_version": "2.1",
             "type": "infrastructure"
@@ -28,20 +28,18 @@
         },
         {
             "created": "2014-05-08T09:00:00.000Z",
-            "id": "relationship--24711681-d53e-4223-aedc-1ee343c150ec",
+            "id": "relationship--224cd50f-8bf2-49ba-bd35-79c8edb51267",
             "modified": "2014-05-08T09:00:00.000Z",
             "relationship_type": "indicates",
             "source_ref": "indicator--53fe3b22-0201-47cf-85d0-97c02164528d",
             "spec_version": "2.1",
-            "target_ref": "infrastructure--6ef96a7d-1cc1-4c68-82c2-81501c68af4a",
+            "target_ref": "infrastructure--dd955e08-16d0-6f08-5064-50d9e7a3104d",
             "type": "relationship"
         },
         {
-            "created": "2019-08-11T16:32:17.460Z",
-            "id": "relationship--62c8499c-6194-4485-befe-77fbb205d724",
-            "modified": "2019-08-11T16:32:17.460Z",
+            "id": "relationship--e15d54a4-c7e7-4935-aa90-eef959e4e4a6",
             "relationship_type": "consists-of",
-            "source_ref": "infrastructure--6ef96a7d-1cc1-4c68-82c2-81501c68af4a",
+            "source_ref": "infrastructure--dd955e08-16d0-6f08-5064-50d9e7a3104d",
             "spec_version": "2.1",
             "target_ref": "observed-data--c8c32b6e-2ea8-51c4-6446-7f5218072f27",
             "type": "relationship"

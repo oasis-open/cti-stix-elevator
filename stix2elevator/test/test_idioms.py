@@ -16,12 +16,16 @@ BEFORE_FILES = []
 BEFORE_FILENAMES = []
 MASTER_JSON_FILES = []
 
-_IGNORE = [u"id", u"idref", u"created_by_ref", u"object_refs", u"marking_ref",
+_IGNORE = (u"id", u"idref", u"created_by_ref", u"object_refs", u"marking_ref",
            u"object_marking_refs", u"target_ref", u"source_ref", u"valid_until",
            u"sighting_of_ref", u"observed_data_refs", u"where_sighted_refs",
            u"created", u"modified", u"first_seen", u"valid_from", u"last_seen",
            u"first_observed", u"last_observed", u"published",
-           u"external_references"]
+           u"external_references",
+           u"bcc_refs", u"cc_refs", u"child_refs", u"object_refs", u"opened_connection_refs", u"to_refs",
+           u"body_raw_ref",
+           u"dst_ref", u"from_ref", u"parent_ref", u"parent_directory_ref", u"source_ref", u"src_ref", u"target_ref"
+           )
 
 
 def idiom_elevator_mappings(before_file_path, stored_json, version):
@@ -38,6 +42,7 @@ def idiom_elevator_mappings(before_file_path, stored_json, version):
     set_option_value("policy", "no_policy")
     sys.setrecursionlimit(3000)
     converted_json = elevate_file(before_file_path)
+    print(converted_json)
     converted_json = json.loads(converted_json)
     return idiom_mappings(converted_json, stored_json, _IGNORE)
 
@@ -59,7 +64,7 @@ def idiom_mappings(converted_json, stored_json, ignored_properties):
             # are not verifiable because they contain identifiers per rule #2.
             continue
 
-        if last_good_field in ignored_properties:
+        if any(x in ignored_properties for x in good_path):
             # Rule #2: Since fresh conversion may create dynamic values.
             # Some fields are omitted for verification. Currently
             # fields with: identifier and timestamp values.

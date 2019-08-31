@@ -2,92 +2,92 @@
     "id": "bundle--cc0ca596-70e6-4dac-9bef-603166d17db8",
     "objects": [
         {
-            "created": "2019-08-11T16:06:44.879Z",
-            "first_seen": "2019-08-11T16:06:44.879Z",
-            "id": "infrastructure--e27fbc01-ae69-4cae-b6a8-259551b1f9db",
+            "id": "ipv4-addr--e94b6672-172a-4311-b713-2cb470a84c04",
+            "type": "ipv4-addr",
+            "value": "198.51.100.2"
+        },
+        {
+            "id": "ipv4-addr--94920e5b-ab03-482d-a273-d561d513c833",
+            "type": "ipv4-addr",
+            "value": "198.51.100.17"
+        },
+        {
+            "id": "ipv4-addr--4e2e1be1-f468-4397-a20c-7f8fde56a444",
+            "type": "ipv4-addr",
+            "value": "203.0.113.19"
+        },
+        {
+            "created": "2019-08-21T10:53:07.182Z",
+            "first_seen": "2019-08-21T10:53:07.182Z",
+            "id": "infrastructure--dd955e08-16d0-6f08-5064-50d9e7a3104d",
             "labels": [
                 "malware-c2"
             ],
-            "modified": "2019-08-11T16:06:44.879Z",
+            "modified": "2019-08-21T10:53:07.182Z",
             "name": "Malware C2 Channel",
             "spec_version": "2.1",
             "type": "infrastructure"
         },
         {
-            "created": "2019-08-11T16:06:44.880Z",
-            "id": "relationship--b2961777-658b-4d4a-aec3-ca0a3d8980f3",
-            "modified": "2019-08-11T16:06:44.880Z",
+            "id": "relationship--4b17f0cc-cf03-4195-b190-a44228ce9feb",
             "relationship_type": "consists-of",
-            "source_ref": "infrastructure--e27fbc01-ae69-4cae-b6a8-259551b1f9db",
+            "source_ref": "infrastructure--dd955e08-16d0-6f08-5064-50d9e7a3104d",
             "spec_version": "2.1",
             "target_ref": "observed-data--c8c32b6e-2ea8-51c4-6446-7f5218072f27",
             "type": "relationship"
         },
         {
-            "created": "2019-08-11T16:06:44.880Z",
-            "id": "relationship--a6e0c4e4-9209-491c-ba7c-b193ceeaa054",
-            "modified": "2019-08-11T16:06:44.880Z",
+            "id": "relationship--b4072a57-8793-4adb-a6c6-f4682b111e6d",
             "relationship_type": "consists-of",
-            "source_ref": "infrastructure--e27fbc01-ae69-4cae-b6a8-259551b1f9db",
+            "source_ref": "infrastructure--dd955e08-16d0-6f08-5064-50d9e7a3104d",
             "spec_version": "2.1",
             "target_ref": "observed-data--b57aa65f-9598-04fb-a9d1-5094c36d5dc4",
             "type": "relationship"
         },
         {
-            "created": "2019-08-11T16:06:44.880Z",
-            "id": "relationship--4f76e89f-40a7-4130-ab66-659c8fa05924",
-            "modified": "2019-08-11T16:06:44.880Z",
+            "id": "relationship--f82831d5-1fd2-4796-a9e1-3481b06cf7fd",
             "relationship_type": "consists-of",
-            "source_ref": "infrastructure--e27fbc01-ae69-4cae-b6a8-259551b1f9db",
+            "source_ref": "infrastructure--dd955e08-16d0-6f08-5064-50d9e7a3104d",
             "spec_version": "2.1",
             "target_ref": "observed-data--19c16346-0eb4-99e2-00bb-4ec3ed174cac",
             "type": "relationship"
         },
         {
-            "created": "2019-08-11T16:06:44.879Z",
-            "first_observed": "2019-08-11T16:06:44.879Z",
+            "created": "2019-08-21T10:53:07.181Z",
+            "first_observed": "2019-08-21T10:53:07.181Z",
             "id": "observed-data--c8c32b6e-2ea8-51c4-6446-7f5218072f27",
-            "last_observed": "2019-08-11T16:06:44.879Z",
-            "modified": "2019-08-11T16:06:44.879Z",
+            "last_observed": "2019-08-21T10:53:07.181Z",
+            "modified": "2019-08-21T10:53:07.181Z",
             "number_observed": 1,
-            "objects": {
-                "0": {
-                    "type": "ipv4-addr",
-                    "value": "198.51.100.2"
-                }
-            },
+            "object_refs": [
+                "ipv4-addr--e94b6672-172a-4311-b713-2cb470a84c04"
+            ],
             "spec_version": "2.1",
             "type": "observed-data"
         },
         {
-            "created": "2019-08-11T16:06:44.879Z",
-            "first_observed": "2019-08-11T16:06:44.879Z",
+            "created": "2019-08-21T10:53:07.181Z",
+            "first_observed": "2019-08-21T10:53:07.181Z",
             "id": "observed-data--b57aa65f-9598-04fb-a9d1-5094c36d5dc4",
-            "last_observed": "2019-08-11T16:06:44.879Z",
-            "modified": "2019-08-11T16:06:44.879Z",
+            "last_observed": "2019-08-21T10:53:07.181Z",
+            "modified": "2019-08-21T10:53:07.181Z",
             "number_observed": 1,
-            "objects": {
-                "0": {
-                    "type": "ipv4-addr",
-                    "value": "198.51.100.17"
-                }
-            },
+            "object_refs": [
+                "ipv4-addr--94920e5b-ab03-482d-a273-d561d513c833"
+            ],
             "spec_version": "2.1",
             "type": "observed-data"
         },
         {
-            "created": "2019-08-11T16:06:44.879Z",
-            "first_observed": "2019-08-11T16:06:44.879Z",
+            "created": "2019-08-21T10:53:07.181Z",
+            "first_observed": "2019-08-21T10:53:07.181Z",
             "id": "observed-data--19c16346-0eb4-99e2-00bb-4ec3ed174cac",
-            "last_observed": "2019-08-11T16:06:44.879Z",
-            "modified": "2019-08-11T16:06:44.879Z",
+            "last_observed": "2019-08-21T10:53:07.181Z",
+            "modified": "2019-08-21T10:53:07.181Z",
             "number_observed": 1,
-            "objects": {
-                "0": {
-                    "type": "ipv4-addr",
-                    "value": "203.0.113.19"
-                }
-            },
+            "object_refs": [
+                "ipv4-addr--4e2e1be1-f468-4397-a20c-7f8fde56a444"
+            ],
             "spec_version": "2.1",
             "type": "observed-data"
         }

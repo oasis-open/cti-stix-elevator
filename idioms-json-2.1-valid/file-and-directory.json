@@ -5,26 +5,26 @@
             "hashes": {
                 "SHA-256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
             },
-            "id": "file--7e435fbd-2752-4d39-9008-f611b6ffddf0",
+            "id": "file--1421baeb-141f-49ed-8fea-15ea307707b1",
             "name": "iprip32.dll",
-            "parent_directory_ref": "directory--38709a73-3b8d-470d-b79f-54806c048c01",
+            "parent_directory_ref": "directory--eb16ae45-037f-4a42-9f8c-ed03593973e5",
             "type": "file"
         },
         {
-            "id": "directory--38709a73-3b8d-470d-b79f-54806c048c01",
+            "id": "directory--eb16ae45-037f-4a42-9f8c-ed03593973e5",
             "path": "/usr/local",
             "type": "directory"
         },
         {
-            "created": "2019-08-16T13:09:54.632Z",
-            "first_observed": "2019-08-16T13:09:54.632Z",
+            "created": "2017-01-27T13:49:41.345Z",
+            "first_observed": "2017-01-27T13:49:41.345Z",
             "id": "observed-data--c8c32b6e-2ea8-51c4-6446-7f5218072f27",
-            "last_observed": "2019-08-16T13:09:54.632Z",
-            "modified": "2019-08-16T13:09:54.632Z",
+            "last_observed": "2017-01-27T13:49:41.345Z",
+            "modified": "2017-01-27T13:49:41.345Z",
             "number_observed": 1,
             "object_refs": [
-                "file--7e435fbd-2752-4d39-9008-f611b6ffddf0",
-                "directory--38709a73-3b8d-470d-b79f-54806c048c01"
+                "file--1421baeb-141f-49ed-8fea-15ea307707b1",
+                "directory--eb16ae45-037f-4a42-9f8c-ed03593973e5"
             ],
             "spec_version": "2.1",
             "type": "observed-data"

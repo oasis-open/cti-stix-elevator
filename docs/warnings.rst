@@ -164,11 +164,11 @@ No condition given for *[current_observable]* - assume '='                      
 Used MATCHES operator for *[condition]*                                                                                                     715     warn
 Based on CIQ information, *[id]* is assumed to be an organization                                                                           716     warn
 Threat actor *[id]* title is used for name property                                                                                         717     info
-Using related-to for the *[property]* of *[id]*                                                                                             718     warn
+Using *[relationship name]* for the *[property]* of *[id]*                                                                                  718     warn
 Using first Threat Actor motivation as ``primary_motivation`` value. If more, use ``secondary_motivation``                                  719     info
 The ``published property`` is required for STIX 2.x Report *[id]*, using the created property                                               720     info
 ``apply_condition`` assumed to be 'ANY' in *[id]*                                                                                           721     warn
-``content_type`` for ``body_multipart`` of *[id]* is assumed to be 'text/plain'                                                             722     info
+``content_type`` for ``body_multipart`` of attachment *[id]* is assumed to be 'text/plain'                                                  722     info
 The confidence value in *[value]* assumed to be a value on a scale between 0 and 100                                                        723     warn
 The confidence value in *[value]* has been converted to an integer so it is valid in STIX 2.1                                               724     warn
 port number is assumed to be a destination port                                                                                             725     warn

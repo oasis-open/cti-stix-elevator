@@ -2,48 +2,50 @@
     "id": "bundle--cc0ca596-70e6-4dac-9bef-603166d17db8",
     "objects": [
         {
-            "created": "2019-08-11T16:10:02.727Z",
-            "first_seen": "2019-08-11T16:10:02.727Z",
-            "id": "infrastructure--935c5589-cc2c-4aea-bcac-f36f0be63b2d",
+            "hashes": {
+                "SHA-256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "id": "file--e9577149-f5c0-4ebc-848c-b3d87b8aae92",
+            "name": "iprip32.dll",
+            "parent_directory_ref": "directory--b7dd3639-bf4e-481c-9ec4-3a1d506611c5",
+            "type": "file"
+        },
+        {
+            "id": "directory--b7dd3639-bf4e-481c-9ec4-3a1d506611c5",
+            "path": "/usr/local",
+            "type": "directory"
+        },
+        {
+            "created": "2019-08-21T11:06:15.318Z",
+            "first_seen": "2019-08-21T11:06:15.318Z",
+            "id": "infrastructure--dd955e08-16d0-6f08-5064-50d9e7a3104d",
             "labels": [
                 "malware-c2"
             ],
-            "modified": "2019-08-11T16:10:02.727Z",
+            "modified": "2019-08-21T11:06:15.318Z",
             "name": "Malware C2 Channel",
             "spec_version": "2.1",
             "type": "infrastructure"
         },
         {
-            "created": "2019-08-11T16:10:02.727Z",
-            "id": "relationship--e70982b3-311b-4edf-8418-2d69a3e4169c",
-            "modified": "2019-08-11T16:10:02.727Z",
+            "id": "relationship--cae6c8ae-7104-4fc1-a309-16cf21e005bf",
             "relationship_type": "consists-of",
-            "source_ref": "infrastructure--935c5589-cc2c-4aea-bcac-f36f0be63b2d",
+            "source_ref": "infrastructure--dd955e08-16d0-6f08-5064-50d9e7a3104d",
             "spec_version": "2.1",
             "target_ref": "observed-data--c8c32b6e-2ea8-51c4-6446-7f5218072f27",
             "type": "relationship"
         },
         {
-            "created": "2019-08-11T16:10:02.727Z",
-            "first_observed": "2019-08-11T16:10:02.727Z",
+            "created": "2019-08-21T11:06:15.317Z",
+            "first_observed": "2019-08-21T11:06:15.317Z",
             "id": "observed-data--c8c32b6e-2ea8-51c4-6446-7f5218072f27",
-            "last_observed": "2019-08-11T16:10:02.727Z",
-            "modified": "2019-08-11T16:10:02.727Z",
+            "last_observed": "2019-08-21T11:06:15.317Z",
+            "modified": "2019-08-21T11:06:15.317Z",
             "number_observed": 1,
-            "objects": {
-                "0": {
-                    "hashes": {
-                        "SHA-256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-                    },
-                    "name": "iprip32.dll",
-                    "parent_directory_ref": "1",
-                    "type": "file"
-                },
-                "1": {
-                    "path": "/usr/local",
-                    "type": "directory"
-                }
-            },
+            "object_refs": [
+                "file--e9577149-f5c0-4ebc-848c-b3d87b8aae92",
+                "directory--b7dd3639-bf4e-481c-9ec4-3a1d506611c5"
+            ],
             "spec_version": "2.1",
             "type": "observed-data"
         }
