@@ -49,7 +49,7 @@ from stix2elevator.convert_pattern import (ComparisonExpressionForElevator,
 from stix2elevator.ids import (add_id_value, exists_id_key,
                                exists_ids_with_no_1x_object,
                                generate_stix2x_id, get_id_value, get_id_values,
-                               record_ids)
+                               record_ids, get_type_from_id)
 from stix2elevator.options import error, get_option_value, info, warn
 from stix2elevator.utils import (add_marking_map_entry,
                                  check_map_1x_markings_to_2x,
@@ -470,31 +470,51 @@ def handle_relationship_to_objs(items, source_id, env, verb):
                                                                             item))
 
 
-def handle_relationship_to_refs(refs, source_id, env, verb):
-    for ref in refs:
-        if ref.item.idref is None:
-            # embedded
-            new20s = handle_embedded_object(ref.item, env)
-            for new20 in new20s:
-                env.bundle_instance["relationships"].append(create_relationship(source_id,
-                                                                                new20["id"] if new20 else None,
-                                                                                env,
-                                                                                verb,
-                                                                                ref))
-        elif exists_id_key(ref.item.idref):
-            for to_ref in get_id_value(ref.item.idref):
-                env.bundle_instance["relationships"].append(create_relationship(source_id,
-                                                                                to_ref,
-                                                                                env,
-                                                                                verb,
-                                                                                ref))
-        else:
-            # a forward reference, fix later
+def handle_relationship_ref(ref, id, env, verb, to_direction=True):
+    if ref.item.idref is None:
+        # embedded
+        new20s = handle_embedded_object(ref.item, env)
+        for new20 in new20s:
+            if to_direction:
+                source_id = id
+                target_id = new20["id"] if new20 else None
+            else:
+                source_id = new20["id"] if new20 else None
+                target_id = id
             env.bundle_instance["relationships"].append(create_relationship(source_id,
-                                                                            ref.item.idref,
+                                                                            target_id,
                                                                             env,
                                                                             verb,
                                                                             ref))
+    elif exists_id_key(ref.item.idref):
+        for ref_id in get_id_value(ref.item.idref):
+            source_id = id if to_direction else ref_id
+            target_id = ref_id if to_direction else id
+            env.bundle_instance["relationships"].append(create_relationship(source_id,
+                                                                            target_id,
+                                                                            env,
+                                                                            verb,
+                                                                            ref))
+    else:
+        # a forward reference, fix later
+        source_id = id if to_direction else ref.item.idref
+        target_id = ref.item.idref if to_direction else id
+        env.bundle_instance["relationships"].append(create_relationship(source_id,
+                                                                        target_id,
+                                                                        env,
+                                                                        verb,
+                                                                        ref))
+
+
+def handle_relationship_to_refs(refs, source_id, env, verb):
+    for ref in refs:
+        handle_relationship_ref(ref, source_id, env, verb, to_direction=True)
+
+
+def handle_relationship_from_refs(refs, target_id, env, verb):
+    for ref in refs:
+        handle_relationship_ref(ref, target_id, env, verb, to_direction=False)
+
 
 def handle_observable_characterization_list(obs_list, source_id, env):
     verb = "consists-of"
@@ -523,34 +543,6 @@ def handle_observable_characterization_list(obs_list, source_id, env):
                                                                                 idref,
                                                                                 env,
                                                                                 verb))
-
-
-
-def handle_relationship_from_refs(refs, target_id, env, verb):
-    for ref in refs:
-        if ref.item.idref is None:
-            # embedded
-            new20s = handle_embedded_object(ref.item, env)
-            for new20 in new20s:
-                env.bundle_instance["relationships"].append(create_relationship(new20["id"] if new20 else None,
-                                                                                target_id,
-                                                                                env,
-                                                                                verb,
-                                                                                ref))
-        elif exists_id_key(ref.item.idref):
-            for from_ref in get_id_value(ref.item.idref):
-                env.bundle_instance["relationships"].append(create_relationship(from_ref,
-                                                                                target_id,
-                                                                                env,
-                                                                                verb,
-                                                                                ref))
-        else:
-            # a forward reference, fix later
-            env.bundle_instance["relationships"].append(create_relationship(ref.item.idref,
-                                                                            target_id,
-                                                                            env,
-                                                                            verb,
-                                                                            ref))
 
 
 def reference_needs_fixing(ref):
@@ -692,7 +684,8 @@ def convert_campaign(camp, env):
         for a in camp.activity:
             warn("Campaign/Activity type in %s not supported in STIX 2.x", 403, campaign_instance["id"])
     if camp.related_ttps is not None:
-        # victims use targets, not uses
+        # TODO: victims use targets, not uses
+        # TODO: maybe use _TTP_RELATIONSHIP_MAPPING
         handle_relationship_to_refs(camp.related_ttps,
                                     campaign_instance["id"],
                                     new_env,
@@ -1483,14 +1476,16 @@ def convert_threat_actor(threat_actor, env):
 # TTPs
 
 _TTP_RELATIONSHIP_MAPPING = {
-    ("malware", "malware", "Variant Of"): "variant-of"
+    ("malware", "malware", "Variant Of"): ("variant-of", True),
+    ("malware", "identity", "Targets"): ("targets", True),
+    ("attack-pattern", "identity", "Targets"): ("targets", True)
 }
 
-def determine_ttp_relationship_type(source_type, target_type, relationship_name):
+def determine_ttp_relationship_type_and_direction(source_type, target_type, relationship_name):
     if (source_type, target_type, relationship_name) in _TTP_RELATIONSHIP_MAPPING:
         return _TTP_RELATIONSHIP_MAPPING[(source_type, target_type, relationship_name)]
     else:
-        return "related-to"
+        return "related-to", True
 
 
 def process_ttp_properties(sdo_instance, ttp, env, kill_chains_in_sdo=True, victim_target=False):
@@ -1513,7 +1508,20 @@ def process_ttp_properties(sdo_instance, ttp, env, kill_chains_in_sdo=True, vict
                                     "targets")
     if ttp.related_ttps:
         warn("All 'related ttps' relationships of %s are assumed to not represent STIX 1.2 versioning", 710, ttp.id_)
-        handle_relationship_to_refs(ttp.related_ttps, sdo_instance["id"], env, "related-to")
+        for rel in ttp.related_ttps:
+            source_type = get_type_from_id(sdo_instance["id"])
+            if rel.item.idref is None:
+                target_id = rel.item.id_
+            else:
+                target_id = rel.item.idref
+        stix20_target_ids = get_id_value(target_id)
+        if stix20_target_ids is not None:
+            for id20 in stix20_target_ids:
+                target_type = get_type_from_id(id20)
+                verb, to_direction = determine_ttp_relationship_type_and_direction(source_type, target_type, str(rel.relationship))
+                handle_relationship_ref(rel, sdo_instance["id"], env, verb, to_direction=to_direction)
+        else:
+            handle_relationship_ref(rel, sdo_instance["id"], env, "related-to", to_direction=True)
     if hasattr(ttp, "related_packages") and ttp.related_packages is not None:
         for p in ttp.related_packages:
             warn("Related_Packages type in %s not supported in STIX 2.x", 402, ttp.id_)

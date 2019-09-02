@@ -58,6 +58,7 @@ def generate_stix2x_id(stix2x_so_name, stix12_id=None, id_used=False):
         add_ids_with_no_1x_object(new_id)
         return new_id
     else:
+        # TODO: fix this for UUIDv5
         result = re.search('^(.+)-([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})',
                            stix12_id)
         if result:
@@ -147,3 +148,13 @@ def add_object_id_value(key, value):
         _IDS_TO_CYBER_OBSERVABLES[key] = value
     if not value:
         warn("Trying to associate %s with None", 610, key)
+
+
+def get_uuid_from_id(id, separator="--"):
+    type_and_uuid = id.split(separator)
+    return type_and_uuid[1]
+
+
+def get_type_from_id(id, separator="--"):
+    type_and_uuid = id.split(separator)
+    return type_and_uuid[0]
