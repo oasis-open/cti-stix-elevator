@@ -1,5 +1,6 @@
+repos:
 -   repo: https://github.com/pre-commit/pre-commit-hooks
-    sha: v0.9.4
+    rev: v2.1.0
     hooks:
     -   id: trailing-whitespace
         exclude_types: [xml, json]
@@ -9,6 +10,8 @@
         - --ignore=F403,F405,W504
     -   id: check-merge-conflict
 -   repo: https://github.com/FalconSocial/pre-commit-python-sorter
-    sha: b57843b0b874df1d16eb0bef00b868792cb245c2
+    rev: b57843b0b874df1d16eb0bef00b868792cb245c2
     hooks:
     -   id: python-import-sorter
+        args:
+        - --diff

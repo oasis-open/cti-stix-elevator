@@ -172,8 +172,8 @@ def iterpath(obj, path=None):
 
         elif isinstance(varobj, list):
 
-            for item in varobj:
-                index = "[{0}]".format(varobj.index(item))
+            for idx, item in enumerate(varobj):
+                index = "[{0}]".format(idx)
                 path.append(index)
 
                 yield (path, item)
