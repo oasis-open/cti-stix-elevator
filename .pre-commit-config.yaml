@@ -10,7 +10,7 @@ repos:
         - --ignore=F403,F405,W504
     -   id: check-merge-conflict
 -   repo: https://github.com/FalconSocial/pre-commit-python-sorter
-    rev: 1.0.4
+    rev: b57843b0b874df1d16eb0bef00b868792cb245c2
     hooks:
     -   id: python-import-sorter
         args:
