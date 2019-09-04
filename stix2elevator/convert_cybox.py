@@ -23,7 +23,8 @@ from stix2elevator.ids import add_object_id_value, get_object_id_value
 from stix2elevator.options import error, get_option_value, info, warn
 from stix2elevator.utils import (convert_timestamp_to_string,
                                  map_vocabs_to_label)
-from stix2elevator.vocab_mappings import (SERVICE_START_TYPE, SERVICE_STATUS,
+from stix2elevator.vocab_mappings import (SERVICE_START_TYPE,
+                                          SERVICE_STATUS,
                                           SERVICE_TYPE)
 
 

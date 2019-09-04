@@ -23,18 +23,24 @@ from cybox.objects.win_registry_key_object import WinRegistryKey
 from cybox.objects.win_service_object import WinService
 from six import text_type
 import stix2
-from stix2.patterns import (BasicObjectPathComponent, ListObjectPathComponent,
-                            ObjectPath, ObservationExpression,
+from stix2.patterns import (BasicObjectPathComponent,
+                            ListObjectPathComponent,
+                            ObjectPath,
+                            ObservationExpression,
                             QualifiedObservationExpression,
-                            ReferenceObjectPathComponent, _BooleanExpression,
+                            ReferenceObjectPathComponent,
+                            _BooleanExpression,
                             _ComparisonExpression,
-                            _CompoundObservationExpression, _Constant)
+                            _CompoundObservationExpression,
+                            _Constant)
 import stixmarx
 
 from stix2elevator.common import ADDRESS_FAMILY_ENUMERATION, SOCKET_OPTIONS
 from stix2elevator.convert_cybox import split_into_requests_and_responses
-from stix2elevator.ids import (add_object_id_value, exists_object_id_key,
-                               get_id_value, get_object_id_value)
+from stix2elevator.ids import (add_object_id_value,
+                               exists_object_id_key,
+                               get_id_value,
+                               get_object_id_value)
 from stix2elevator.options import error, get_option_value, info, warn
 from stix2elevator.utils import identifying_info, map_vocabs_to_label
 from stix2elevator.vocab_mappings import WINDOWS_PEBINARY
