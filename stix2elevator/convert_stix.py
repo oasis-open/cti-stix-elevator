@@ -32,26 +32,38 @@ from stixmarx import navigator
 from stix2elevator.confidence import convert_confidence
 from stix2elevator.convert_cybox import (convert_cybox_object,
                                          fix_cybox_relationships)
-from stix2elevator.convert_pattern import (
-    ComparisonExpressionForElevator, CompoundObservationExpressionForElevator,
-    ParentheticalExpressionForElevator, UnconvertedTerm,
-    add_to_observable_mappings, add_to_pattern_cache,
-    convert_indicator_to_pattern, convert_observable_to_pattern,
-    create_boolean_expression, fix_pattern,
-    interatively_resolve_placeholder_refs, remove_pattern_objects)
-from stix2elevator.ids import (
-    add_id_value, exists_id_key, exists_ids_with_no_1x_object,
-    generate_stix20_id, get_id_value, get_id_values, record_ids)
+from stix2elevator.convert_pattern import (ComparisonExpressionForElevator,
+                                           CompoundObservationExpressionForElevator,
+                                           ParentheticalExpressionForElevator,
+                                           UnconvertedTerm,
+                                           add_to_observable_mappings,
+                                           add_to_pattern_cache,
+                                           convert_indicator_to_pattern,
+                                           convert_observable_to_pattern,
+                                           create_boolean_expression,
+                                           fix_pattern,
+                                           interatively_resolve_placeholder_refs,
+                                           remove_pattern_objects)
+from stix2elevator.ids import (add_id_value, exists_id_key,
+                               exists_ids_with_no_1x_object,
+                               generate_stix20_id, get_id_value, get_id_values,
+                               record_ids)
 from stix2elevator.options import error, get_option_value, info, warn
-from stix2elevator.utils import (
-    add_marking_map_entry, check_map_1x_markings_to_20,
-    convert_controlled_vocabs_to_open_vocabs, convert_timestamp_of_stix_object,
-    convert_timestamp_to_string, identifying_info, iterpath,
-    map_1x_markings_to_20, map_vocabs_to_label, operation_on_path)
-from stix2elevator.vocab_mappings import (
-    ATTACK_MOTIVATION_MAP, COA_LABEL_MAP, INCIDENT_LABEL_MAP,
-    INDICATOR_LABEL_MAP, MALWARE_LABELS_MAP, REPORT_LABELS_MAP, SECTORS_MAP,
-    THREAT_ACTOR_LABEL_MAP, THREAT_ACTOR_SOPHISTICATION_MAP, TOOL_LABELS_MAP)
+from stix2elevator.utils import (add_marking_map_entry,
+                                 check_map_1x_markings_to_20,
+                                 convert_controlled_vocabs_to_open_vocabs,
+                                 convert_timestamp_of_stix_object,
+                                 convert_timestamp_to_string, identifying_info,
+                                 iterpath, map_1x_markings_to_20,
+                                 map_vocabs_to_label, operation_on_path)
+from stix2elevator.vocab_mappings import (ATTACK_MOTIVATION_MAP, COA_LABEL_MAP,
+                                          INCIDENT_LABEL_MAP,
+                                          INDICATOR_LABEL_MAP,
+                                          MALWARE_LABELS_MAP,
+                                          REPORT_LABELS_MAP, SECTORS_MAP,
+                                          THREAT_ACTOR_LABEL_MAP,
+                                          THREAT_ACTOR_SOPHISTICATION_MAP,
+                                          TOOL_LABELS_MAP)
 
 if stix.__version__ >= "1.2.0.0":
     from stix.report import Report
