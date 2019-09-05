@@ -11,7 +11,8 @@ import stixmarx
 
 from stix2elevator.convert_pattern import (clear_observable_mappings,
                                            clear_pattern_cache)
-from stix2elevator.convert_stix import convert_package
+from stix2elevator.convert_stix import (convert_package,
+                                        clear_kill_chains_phases_mapping)
 from stix2elevator.ids import clear_id_mapping, clear_object_id_mapping
 from stix2elevator.options import (get_option_value,
                                    get_validator_options,
@@ -44,6 +45,7 @@ def elevate_file(fn):
     clear_pattern_cache()
     clear_object_id_mapping()
     clear_observable_mappings()
+    clear_kill_chains_phases_mapping()
     cybox.utils.caches.cache_clear()
     MESSAGES_GENERATED = False
 
