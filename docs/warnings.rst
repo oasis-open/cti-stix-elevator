@@ -139,6 +139,7 @@ Unknown condition given in *[id]* - marked as 'INVALID_CONDITION'               
 Unable to determine the STIX 2.x type for *[id]*, which is malformed                                                                        629     error
 'equals' allowed in *[id]* - should be 'Equals'                                                                                             630     warn
 Multiple administrative areas with multiple countries in *[id]* is not handled"                                                             631     warn
+Unknown phase_id *[phase_id]* in *[id]*                                                                                                     632     warn
 =========================================================================================================================================== ====    =====
 
 STIX Elevator conversion based on assumptions
