@@ -58,11 +58,13 @@ from stix2elevator.utils import (add_marking_map_entry,
                                  convert_timestamp_to_string, identifying_info,
                                  iterpath, map_1x_markings_to_2x,
                                  map_vocabs_to_label, operation_on_path)
-from stix2elevator.vocab_mappings import (ATTACK_MOTIVATION_MAP, COA_LABEL_MAP,
+from stix2elevator.vocab_mappings import (ATTACK_MOTIVATION_MAP,
+                                          COA_LABEL_MAP,
                                           INCIDENT_LABEL_MAP,
                                           INDICATOR_LABEL_MAP,
                                           MALWARE_LABELS_MAP,
-                                          REPORT_LABELS_MAP, SECTORS_MAP,
+                                          REPORT_LABELS_MAP,
+                                          SECTORS_MAP,
                                           THREAT_ACTOR_LABEL_MAP,
                                           THREAT_ACTOR_SOPHISTICATION_MAP,
                                           TOOL_LABELS_MAP)
@@ -73,6 +75,11 @@ if stix.__version__ >= "1.2.0.0":
 
 # collect kill chains
 _KILL_CHAINS_PHASES = {}
+
+
+def clear_kill_chains_phases_mapping():
+    global _KILL_CHAINS_PHASES
+    _KILL_CHAINS_PHASES = {}
 
 
 def process_kill_chain(kc):
@@ -1087,6 +1094,7 @@ def convert_kill_chains(kill_chain_phases, sdo_instance):
                     kill_chain_phases_20.append({"kill_chain_name": kill_chain_info["kill_chain_name"],
                                                  "phase_name": kill_chain_info["phase_name"]})
                 except KeyError:
+                    warn("Unknown phase_id %s in %s", 632, phase.phase_id, sdo_instance["id"])
                     kill_chain_phases_20.append(phase.phase_id)
             elif isinstance(phase, KillChainPhase):
                 kill_chain_phases_20.append({"kill_chain_name": phase.kill_chain_name, "phase_name": phase.name})
@@ -1658,7 +1666,7 @@ def convert_identity_for_victim_target(identity, ttp, env, ttp_generated):
     return identity_instance
 
 
-def convert_victim_targeting(victim_targeting, ttp, env, ttp_generated):
+def convert_victim_targeting(victim_targeting, ttp, env, ttps_generated):
     if victim_targeting.targeted_systems:
         for v in victim_targeting.targeted_systems:
             warn("Targeted systems on %s are not a victim target in STIX 2.", 410, ttp.id_)
@@ -1669,16 +1677,15 @@ def convert_victim_targeting(victim_targeting, ttp, env, ttp_generated):
         for v in victim_targeting.targeted_technical_details:
             warn("Targeted technical details on %s are not a victim target in STIX 2.x", 412, ttp.id_)
     if victim_targeting.identity:
-        identity_instance = convert_identity_for_victim_target(victim_targeting.identity, ttp, env, ttp_generated)
+        identity_instance = convert_identity_for_victim_target(victim_targeting.identity, ttp, env, ttps_generated)
         if identity_instance:
             warn("%s generated an identity associated with a victim", 713, ttp.id_)
-            if ttp_generated:
-                env.bundle_instance["relationships"].append(
-                    create_relationship(ttp.id_, identity_instance["id"], env, "targets"))
-                # the relationship has been created, so its not necessary to propagate it up
-                return None
-            else:
-                return identity_instance
+            if ttps_generated:
+                for generated_ttp in ttps_generated:
+                    env.bundle_instance["relationships"].append(
+                        create_relationship(generated_ttp["id"], identity_instance["id"], env, "targets"))
+                # the relationships has been created, so its not necessary to propagate it up
+            return identity_instance
     # nothing generated
     return None
 
@@ -1701,7 +1708,7 @@ def convert_ttp(ttp, env):
         if not victim_target:
             warn("Victim Target in %s did not generate any STIX 2.x object", 414, ttp.id_)
         else:
-            return generated_objs.append(victim_target)
+            generated_objs.append(victim_target)
     # victims weren't involved, check existing list
     if not generated_objs and ttp.id_ is not None:
         warn("TTP %s did not generate any STIX 2.x object", 415, ttp.id_)
@@ -1714,6 +1721,9 @@ def convert_ttp(ttp, env):
 def handle_embedded_object(obj, env):
     new20 = None
     new20s = None
+    if exists_id_key(obj.id_):
+        # nested embedding
+        return []
     # campaigns
     if isinstance(obj, Campaign):
         new20 = convert_campaign(obj, env)

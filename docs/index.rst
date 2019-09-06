@@ -25,6 +25,7 @@ Technical Committee.
    vocabularies
    conversion-issues
    warnings
+   contributing
 
 
 Indices and tables
