@@ -477,35 +477,46 @@ def handle_relationship_to_objs(items, source_id, env, verb):
                                                                             item))
 
 
+def handle_embedded_ref(ref, id, env, verb, to_direction):
+    new20s = handle_embedded_object(ref.item, env)
+    for new20 in new20s:
+        if to_direction:
+            source_id = id
+            target_id = new20["id"] if new20 else None
+        else:
+            source_id = new20["id"] if new20 else None
+            target_id = id
+        env.bundle_instance["relationships"].append(create_relationship(source_id,
+                                                                        target_id,
+                                                                        env,
+                                                                        verb,
+                                                                        ref))
+
+def handle_existing_ref(ref, ref_id, id, env, verb, to_direction):
+    source_id = id if to_direction else ref_id
+    target_id = ref_id if to_direction else id
+    env.bundle_instance["relationships"].append(create_relationship(source_id,
+                                                                    target_id,
+                                                                    env,
+                                                                    verb,
+                                                                    ref))
+
+
+
+def handle_existing_refs(ref, id, env, verb, to_direction):
+    for ref_id in get_id_value(ref.item.idref):
+        handle_existing_ref(ref, ref_id, id, env, verb, to_direction)
+
+
 def handle_relationship_ref(ref, id, env, verb, to_direction=True):
     if ref.item.idref is None:
-        # embedded
-        new20s = handle_embedded_object(ref.item, env)
-        for new20 in new20s:
-            if to_direction:
-                source_id = id
-                target_id = new20["id"] if new20 else None
-            else:
-                source_id = new20["id"] if new20 else None
-                target_id = id
-            env.bundle_instance["relationships"].append(create_relationship(source_id,
-                                                                            target_id,
-                                                                            env,
-                                                                            verb,
-                                                                            ref))
+        handle_embedded_ref(ref, id, env, verb, to_direction)
     elif exists_id_key(ref.item.idref):
-        for ref_id in get_id_value(ref.item.idref):
-            source_id = id if to_direction else ref_id
-            target_id = ref_id if to_direction else id
-            env.bundle_instance["relationships"].append(create_relationship(source_id,
-                                                                            target_id,
-                                                                            env,
-                                                                            verb,
-                                                                            ref))
+        handle_existing_refs(ref, id, env, verb, to_direction)
     else:
         # a forward reference, fix later
         source_id = id if to_direction else ref.item.idref
-        target_id = ref.item.idref if to_direction else id
+        target_id = str(ref.item.idref) if to_direction else id
         env.bundle_instance["relationships"].append(create_relationship(source_id,
                                                                         target_id,
                                                                         env,
@@ -529,6 +540,7 @@ def handle_observable_characterization_list(obs_list, source_id, env):
         if o.idref is None and o.object_ and not o.object_.idref:
             # embedded
             new_od = convert_observed_data(o, env)
+            env.bundle_instance["objects"].append(new_od)
             env.bundle_instance["relationships"].append(create_relationship(source_id,
                                                                             new_od["id"] if new_od else None,
                                                                             env,
@@ -565,8 +577,10 @@ def determine_appropriate_verb(current_verb, m_id):
 
 
 # for ids in source and target refs that are still 1.x ids,
-def fix_relationships(relationships, bundle_instance):
-    for ref in relationships:
+def fix_relationships(env):
+    extra_relationships = []
+    bundle_instance = env.bundle_instance
+    for ref in bundle_instance["relationships"]:
         if reference_needs_fixing(ref["source_ref"]):
             if not exists_id_key(ref["source_ref"]):
                 new_id = generate_stix2x_id(None, str.lower(ref["source_ref"]))
@@ -580,8 +594,9 @@ def fix_relationships(relationships, bundle_instance):
             for m_id in mapped_ids:
                 if first_one:
                     ref["source_ref"] = m_id
+                    first_one = False
                 else:
-                    bundle_instance["relationships"].append(create_relationship(m_id, ref["target_ref"], ref["verb"]))
+                    extra_relationships.append(create_relationship(m_id, ref["target_ref"], env, ref["verb"]))
         if reference_needs_fixing(ref["target_ref"]):
             if not exists_id_key(ref["target_ref"]):
                 new_id = generate_stix2x_id(None, str.lower(ref["target_ref"]))
@@ -597,8 +612,10 @@ def fix_relationships(relationships, bundle_instance):
                 if first_one:
                     ref["target_ref"] = m_id
                     ref["relationship_type"] = verb
+                    first_one = False
                 else:
-                    bundle_instance["relationships"].append(create_relationship(ref["source_ref"], m_id, verb))
+                    extra_relationships.append(create_relationship(ref["source_ref"], m_id, env, verb))
+    bundle_instance["relationships"].extend(extra_relationships)
 
 
 # Relationships are not in 1.x, so they must be added explicitly to reports.
@@ -1249,7 +1266,7 @@ def create_scos(obs, observed_data_instance, env):
             related = convert_cybox_object(o)
             if related:
                 scos.extend(related)
-                related[0]["id"] = get_id_value(o.id_)[0]
+                #related[0]["id"] = get_id_value(o.id_)[0]
                 env.bundle_instance["objects"].append(
                     create_relationship(scos[0]["id"], related[0]["id"], env, "resolves_to"))
     if scos:
@@ -1271,22 +1288,22 @@ def create_cyber_observables(obs, observed_data_instance):
 
 
 def convert_observed_data(obs, env):
-    obj = obs
+    # TODO: is this code necessary?
     # if not obs.id_ and obs.object_ and obs.object_.id_:
     #    obj = obs.object_
-    observed_data_instance = create_basic_object("observed-data", obj, env)
+    observed_data_instance = create_basic_object("observed-data", obs, env)
     if get_option_value("spec_version") == "2.0":
-        create_cyber_observables(obj, observed_data_instance)
+        create_cyber_observables(obs, observed_data_instance)
     else:
-        create_scos(obj, observed_data_instance, env)
+        create_scos(obs, observed_data_instance, env)
     info("'first_observed' and 'last_observed' data not available directly on %s - using timestamp", 901, obs.id_)
     observed_data_instance["first_observed"] = observed_data_instance["created"]
     observed_data_instance["last_observed"] = observed_data_instance["created"]
     observed_data_instance["number_observed"] = 1 if obs.sighting_count is None else obs.sighting_count
     # created_by
-    finish_basic_object(obs.id_, observed_data_instance, env, obj)
+    finish_basic_object(obs.id_, observed_data_instance, env, obs)
     # remember the original 1.x observable, in case it has to be turned into a pattern later
-    add_to_observable_mappings(obj)
+    add_to_observable_mappings(obs)
     return observed_data_instance
 
 
@@ -1519,17 +1536,17 @@ def process_ttp_properties(sdo_instance, ttp, env, kill_chains_in_sdo=True, vict
         for rel in ttp.related_ttps:
             source_type = get_type_from_id(sdo_instance["id"])
             if rel.item.idref is None:
-                target_id = rel.item.id_
+                handle_embedded_ref(rel, id, env, verb, to_direction)
             else:
                 target_id = rel.item.idref
-        stix20_target_ids = get_id_value(target_id)
-        if stix20_target_ids is not None:
-            for id20 in stix20_target_ids:
-                target_type = get_type_from_id(id20)
-                verb, to_direction = determine_ttp_relationship_type_and_direction(source_type, target_type, str(rel.relationship))
-                handle_relationship_ref(rel, sdo_instance["id"], env, verb, to_direction=to_direction)
-        else:
-            handle_relationship_ref(rel, sdo_instance["id"], env, "related-to", to_direction=True)
+                stix20_target_ids = get_id_value(target_id)
+                if stix20_target_ids != []:
+                    for id20 in stix20_target_ids:
+                        target_type = get_type_from_id(id20)
+                        verb, to_direction = determine_ttp_relationship_type_and_direction(source_type, target_type, str(rel.relationship))
+                        handle_existing_ref(rel, id20, sdo_instance["id"], env, verb, to_direction)
+                else:
+                    handle_relationship_ref(rel, sdo_instance["id"], env, "related-to", to_direction=True)
     if hasattr(ttp, "related_packages") and ttp.related_packages is not None:
         for p in ttp.related_packages:
             warn("Related_Packages type in %s not supported in STIX 2.x", 402, ttp.id_)
@@ -1661,7 +1678,6 @@ def convert_identity_for_victim_target(identity, ttp, env, ttp_generated):
     identity_instance = convert_identity(identity, env, parent_id=ttp.id_ if not ttp_generated else None)
     env.bundle_instance["objects"].append(identity_instance)
     process_ttp_properties(identity_instance, ttp, env, False, True)
-    identity_instance["name"] = "Victim Target " + identity_instance["id"]
     finish_basic_object(ttp.id_, identity_instance, identity, env, identity_instance["id"])
     return identity_instance
 
@@ -1692,14 +1708,14 @@ def convert_victim_targeting(victim_targeting, ttp, env, ttps_generated):
 
 def convert_ttp(ttp, env):
     if hasattr(ttp, "timestamp") and ttp.timestamp:
-        new_env = env.newEnv(timestamp=str(ttp.timestamp))
+        new_env = env.newEnv(timestamp=convert_timestamp_of_stix_object(ttp, env.timestamp, True))
     else:
         new_env = env
     generated_objs = []
     if ttp.behavior is not None:
         generated_objs.extend(convert_behavior(ttp.behavior, ttp, new_env))
     if ttp.resources is not None:
-        generated_objs.extend(convert_resources(ttp.resources, ttp, env, generated_objs))
+        generated_objs.extend(convert_resources(ttp.resources, ttp, new_env, generated_objs))
     if hasattr(ttp, "kill_chain_phases") and ttp.kill_chain_phases is not None:
         for phase in ttp.kill_chain_phases:
             warn("Kill Chains type in %s not supported in STIX 2.x", 413, ttp.id_)
@@ -1779,7 +1795,8 @@ def initialize_bundle_lists(bundle_instance):
     bundle_instance["objects"] = []
 
 
-def finalize_bundle(bundle_instance):
+def finalize_bundle(env):
+    bundle_instance = env.bundle_instance
     if _KILL_CHAINS_PHASES != {}:
         for ind20 in bundle_instance["indicators"]:
             if "kill_chain_phases" in ind20:
@@ -1797,7 +1814,7 @@ def finalize_bundle(bundle_instance):
                 ind20["kill_chain_phases"] = fixed_kill_chain_phases
     # ttps
 
-    fix_relationships(bundle_instance["relationships"], bundle_instance)
+    fix_relationships(env)
 
     if get_option_value("spec_version") == "2.0":
         fix_cybox_relationships(bundle_instance["observed_data"])
@@ -1914,7 +1931,7 @@ def convert_package(stix_package, env):
     if get_option_value("spec_version") == "2.0":
         bundle_instance["spec_version"] = "2.0"
 
-    if hasattr(stix_package, "timestamp"):
+    if hasattr(stix_package, "timestamp") and stix_package.timestamp:
         env.timestamp = stix_package.timestamp
 
     # created_by_idref from the command line is used instead of the one from the package, if given
@@ -1987,5 +2004,5 @@ def convert_package(stix_package, env):
         for ttp in stix_package.ttps:
             convert_ttp(ttp, env)
 
-    finalize_bundle(bundle_instance)
+    finalize_bundle(env)
     return bundle_instance

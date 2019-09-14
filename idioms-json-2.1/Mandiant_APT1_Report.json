@@ -109,6 +109,27 @@
             "type": "identity"
         },
         {
+            "id": "url--e57ebb91-43e9-4ca4-9037-23ed3fed00a7",
+            "type": "url",
+            "value": "hugesoft.org"
+        },
+        {
+            "created": "2015-05-15T09:00:00.000Z",
+            "first_observed": "2015-05-15T09:00:00.000Z",
+            "id": "observed-data--fc4932cb-d916-491d-9c00-37a59d4dfe87",
+            "last_observed": "2015-05-15T09:00:00.000Z",
+            "modified": "2015-05-15T09:00:00.000Z",
+            "number_observed": 1,
+            "object_marking_refs": [
+                "marking-definition--0478af95-7b89-4e17-8b72-773d3d87977d"
+            ],
+            "object_refs": [
+                "url--e57ebb91-43e9-4ca4-9037-23ed3fed00a7"
+            ],
+            "spec_version": "2.1",
+            "type": "observed-data"
+        },
+        {
             "created": "2015-05-15T09:00:00.000Z",
             "created_by_ref": "identity--b86f1a53-2cc7-4ecf-8a2d-e0928bce0d02",
             "first_seen": "2015-05-15T09:00:00.000Z",
@@ -786,7 +807,6 @@
             "id": "identity--c63f31ac-871b-4846-aa25-de1926f4f3c8",
             "identity_class": "unknown",
             "modified": "2015-05-15T09:00:00.000Z",
-            "name": "Victim Target identity--c63f31ac-871b-4846-aa25-de1926f4f3c8",
             "object_marking_refs": [
                 "marking-definition--0cda5493-87c3-4247-8438-cd6ade69206a"
             ],
@@ -838,6 +858,30 @@
             "type": "malware"
         },
         {
+            "id": "ipv4-addr--c3ecf61b-e1cb-4ed2-998c-449c00947c43",
+            "type": "ipv4-addr",
+            "value": [
+                "143.89.0.0",
+                "143.89.255.255"
+            ]
+        },
+        {
+            "created": "2019-09-10T10:04:23.112Z",
+            "first_observed": "2019-09-10T10:04:23.112Z",
+            "id": "observed-data--935cb210-1170-45b6-b4d1-a00ec2a5521d",
+            "last_observed": "2019-09-10T10:04:23.112Z",
+            "modified": "2019-09-10T10:04:23.112Z",
+            "number_observed": 1,
+            "object_marking_refs": [
+                "marking-definition--9ae67e9d-8241-4d62-af37-a54dbfa76ce3"
+            ],
+            "object_refs": [
+                "ipv4-addr--c3ecf61b-e1cb-4ed2-998c-449c00947c43"
+            ],
+            "spec_version": "2.1",
+            "type": "observed-data"
+        },
+        {
             "created": "2019-08-12T15:22:42.839Z",
             "created_by_ref": "identity--b86f1a53-2cc7-4ecf-8a2d-e0928bce0d02",
             "first_seen": "2019-08-12T15:22:42.839Z",
@@ -858,6 +902,150 @@
             ],
             "spec_version": "2.1",
             "type": "infrastructure"
+        },
+        {
+            "id": "ipv4-addr--69f87f40-78dc-4279-8c6e-8e9a0e48cfdb",
+            "type": "ipv4-addr",
+            "value": [
+                "223.166.0.0",
+                "23.167.255.255"
+            ]
+        },
+        {
+            "created": "2019-09-10T10:04:23.113Z",
+            "first_observed": "2019-09-10T10:04:23.113Z",
+            "id": "observed-data--779d7ce0-5bbb-4b9f-a949-216b9d9b7ab6",
+            "last_observed": "2019-09-10T10:04:23.113Z",
+            "modified": "2019-09-10T10:04:23.113Z",
+            "number_observed": 1,
+            "object_marking_refs": [
+                "marking-definition--9ae67e9d-8241-4d62-af37-a54dbfa76ce3"
+            ],
+            "object_refs": [
+                "ipv4-addr--69f87f40-78dc-4279-8c6e-8e9a0e48cfdb"
+            ],
+            "spec_version": "2.1",
+            "type": "observed-data"
+        },
+        {
+            "id": "ipv4-addr--5248a457-b4c8-4a59-927c-08146937580f",
+            "type": "ipv4-addr",
+            "value": [
+                "58.246.0.0",
+                "58.247.255.255"
+            ]
+        },
+        {
+            "created": "2019-09-10T10:04:23.113Z",
+            "first_observed": "2019-09-10T10:04:23.113Z",
+            "id": "observed-data--bd8cff1c-4fb5-4bc9-beb1-2b8dc230aa2c",
+            "last_observed": "2019-09-10T10:04:23.113Z",
+            "modified": "2019-09-10T10:04:23.113Z",
+            "number_observed": 1,
+            "object_marking_refs": [
+                "marking-definition--9ae67e9d-8241-4d62-af37-a54dbfa76ce3"
+            ],
+            "object_refs": [
+                "ipv4-addr--5248a457-b4c8-4a59-927c-08146937580f"
+            ],
+            "spec_version": "2.1",
+            "type": "observed-data"
+        },
+        {
+            "id": "ipv4-addr--cab7c50c-d4f8-4aec-9503-9d19f98237a8",
+            "type": "ipv4-addr",
+            "value": [
+                "112.64.0.0",
+                "112.65.255.255"
+            ]
+        },
+        {
+            "created": "2019-09-10T10:04:23.113Z",
+            "first_observed": "2019-09-10T10:04:23.113Z",
+            "id": "observed-data--ada8573b-0970-4344-8f3d-e1770cbd367d",
+            "last_observed": "2019-09-10T10:04:23.113Z",
+            "modified": "2019-09-10T10:04:23.113Z",
+            "number_observed": 1,
+            "object_marking_refs": [
+                "marking-definition--9ae67e9d-8241-4d62-af37-a54dbfa76ce3"
+            ],
+            "object_refs": [
+                "ipv4-addr--cab7c50c-d4f8-4aec-9503-9d19f98237a8"
+            ],
+            "spec_version": "2.1",
+            "type": "observed-data"
+        },
+        {
+            "id": "ipv4-addr--748735df-de0b-48cc-9537-21328835476e",
+            "type": "ipv4-addr",
+            "value": [
+                "139.226.0.0",
+                "139.227.255.255"
+            ]
+        },
+        {
+            "created": "2019-09-10T10:04:23.113Z",
+            "first_observed": "2019-09-10T10:04:23.113Z",
+            "id": "observed-data--9342a582-cd2e-44aa-80c6-b8bd4af9c7f0",
+            "last_observed": "2019-09-10T10:04:23.113Z",
+            "modified": "2019-09-10T10:04:23.113Z",
+            "number_observed": 1,
+            "object_marking_refs": [
+                "marking-definition--9ae67e9d-8241-4d62-af37-a54dbfa76ce3"
+            ],
+            "object_refs": [
+                "ipv4-addr--748735df-de0b-48cc-9537-21328835476e"
+            ],
+            "spec_version": "2.1",
+            "type": "observed-data"
+        },
+        {
+            "id": "ipv4-addr--1f3804fc-02a3-4fb5-adb8-6c49fa8146de",
+            "type": "ipv4-addr",
+            "value": [
+                "114.80.0.0",
+                "114.95.255.255"
+            ]
+        },
+        {
+            "created": "2019-09-10T10:04:23.114Z",
+            "first_observed": "2019-09-10T10:04:23.114Z",
+            "id": "observed-data--a6fc09cc-3198-416e-90f2-712929f8b575",
+            "last_observed": "2019-09-10T10:04:23.114Z",
+            "modified": "2019-09-10T10:04:23.114Z",
+            "number_observed": 1,
+            "object_marking_refs": [
+                "marking-definition--9ae67e9d-8241-4d62-af37-a54dbfa76ce3"
+            ],
+            "object_refs": [
+                "ipv4-addr--1f3804fc-02a3-4fb5-adb8-6c49fa8146de"
+            ],
+            "spec_version": "2.1",
+            "type": "observed-data"
+        },
+        {
+            "id": "ipv4-addr--37456f5a-2784-445b-8c2e-70664066a782",
+            "type": "ipv4-addr",
+            "value": [
+                "101.80.0.0",
+                "101.95.255.255"
+            ]
+        },
+        {
+            "created": "2019-09-10T10:04:23.114Z",
+            "first_observed": "2019-09-10T10:04:23.114Z",
+            "id": "observed-data--d65f3647-d1e7-4512-8419-d69a9ec744af",
+            "last_observed": "2019-09-10T10:04:23.114Z",
+            "modified": "2019-09-10T10:04:23.114Z",
+            "number_observed": 1,
+            "object_marking_refs": [
+                "marking-definition--9ae67e9d-8241-4d62-af37-a54dbfa76ce3"
+            ],
+            "object_refs": [
+                "ipv4-addr--37456f5a-2784-445b-8c2e-70664066a782"
+            ],
+            "spec_version": "2.1",
+            "type": "observed-data"
         },
         {
             "created": "2019-08-12T15:22:42.840Z",
@@ -1705,6 +1893,17 @@
             "target_ref": "malware--0f01c5a3-f516-4450-9381-4dd9f2279411",
             "type": "relationship"
         },
+	{
+            "created": "2015-05-15T09:00:00.000Z",
+            "created_by_ref": "identity--f60a29d7-ac10-4c30-8eec-28010b93ef12",
+            "id": "relationship--28a1d42c-af62-4e92-9b14-6b2e9d01f563",
+            "modified": "2015-05-15T09:00:00.000Z",
+            "relationship_type": "related-to",
+            "source_ref": "identity--c63f31ac-871b-4846-aa25-de1926f4f3c8",
+            "spec_version": "2.1",
+            "target_ref": "malware--33159b98-3264-4e10-a968-d67975b6272f",
+            "type": "relationship"
+        },
         {
             "created": "2015-05-15T09:00:00.000Z",
             "created_by_ref": "identity--b86f1a53-2cc7-4ecf-8a2d-e0928bce0d02",
@@ -1796,17 +1995,6 @@
         {
             "created": "2015-05-15T09:00:00.000Z",
             "created_by_ref": "identity--b86f1a53-2cc7-4ecf-8a2d-e0928bce0d02",
-            "id": "relationship--6d7021b4-efa7-4df0-a361-934cc7ff3050",
-            "modified": "2015-05-15T09:00:00.000Z",
-            "relationship_type": "related-to",
-            "source_ref": "identity--c63f31ac-871b-4846-aa25-de1926f4f3c8",
-            "spec_version": "2.1",
-            "target_ref": "tool--dabecad9-c8d3-4404-808d-0bb8349d32ca",
-            "type": "relationship"
-        },
-        {
-            "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--b86f1a53-2cc7-4ecf-8a2d-e0928bce0d02",
             "id": "relationship--bace0315-fad3-48de-9ab9-14d1ab466862",
             "modified": "2015-05-15T09:00:00.000Z",
             "relationship_type": "related-to",
@@ -1828,8 +2016,8 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--b86f1a53-2cc7-4ecf-8a2d-e0928bce0d02",
-            "id": "relationship--e8e246a4-a03a-4f9e-b7a4-38269caa1b56",
+            "created_by_ref": "identity--b491b34b-59c9-4f69-8381-d2af235e86a3",
+            "id": "relationship--525261e7-f428-4df5-95b8-776b924a3bea",
             "modified": "2015-05-15T09:00:00.000Z",
             "relationship_type": "related-to",
             "source_ref": "identity--c63f31ac-871b-4846-aa25-de1926f4f3c8",
@@ -1839,20 +2027,20 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--b86f1a53-2cc7-4ecf-8a2d-e0928bce0d02",
-            "id": "relationship--8279d17d-2a80-415c-9c61-6f1f703641b6",
+            "created_by_ref": "identity--10d4e0b7-9dc0-4d6a-8bfd-07f8f7b0ddbf",
+            "id": "relationship--dba8b0be-ab0d-4269-a3bf-56329feefb87",
             "modified": "2015-05-15T09:00:00.000Z",
             "relationship_type": "related-to",
             "source_ref": "identity--c63f31ac-871b-4846-aa25-de1926f4f3c8",
             "spec_version": "2.1",
-            "target_ref": "tool--1bcbaf61-e589-40de-b54b-c7209fa95e88",
+            "target_ref": "attack-pattern--0781fe70-4c94-4300-8865-4b08b98611b4",
             "type": "relationship"
         },
         {
-            "created": "2019-08-12T15:22:42.839Z",
+            "created": "2015-05-15T09:00:00.000Z",
             "created_by_ref": "identity--b86f1a53-2cc7-4ecf-8a2d-e0928bce0d02",
             "id": "relationship--8ba9f3a5-8cd4-433b-937b-6f1a81487664",
-            "modified": "2019-08-12T15:22:42.839Z",
+            "modified": "2015-05-15T09:00:00.000Z",
             "relationship_type": "consists-of",
             "source_ref": "infrastructure--8da886c4-2bff-4b0c-8474-5fd4d216fe7f",
             "spec_version": "2.1",
@@ -1860,10 +2048,10 @@
             "type": "relationship"
         },
         {
-            "created": "2019-08-12T15:22:42.839Z",
+            "created": "2015-05-15T09:00:00.000Z",
             "created_by_ref": "identity--b86f1a53-2cc7-4ecf-8a2d-e0928bce0d02",
             "id": "relationship--c399146c-4c05-4ab9-9715-b3f2bd4f4904",
-            "modified": "2019-08-12T15:22:42.839Z",
+            "modified": "2015-05-15T09:00:00.000Z",
             "relationship_type": "consists-of",
             "source_ref": "infrastructure--8da886c4-2bff-4b0c-8474-5fd4d216fe7f",
             "spec_version": "2.1",
@@ -1871,10 +2059,10 @@
             "type": "relationship"
         },
         {
-            "created": "2019-08-12T15:22:42.840Z",
+            "created": "2015-05-15T09:00:00.000Z",
             "created_by_ref": "identity--b86f1a53-2cc7-4ecf-8a2d-e0928bce0d02",
             "id": "relationship--307ad455-7dea-456a-b1d2-ff31c697d4d6",
-            "modified": "2019-08-12T15:22:42.840Z",
+            "modified": "2015-05-15T09:00:00.000Z",
             "relationship_type": "consists-of",
             "source_ref": "infrastructure--8da886c4-2bff-4b0c-8474-5fd4d216fe7f",
             "spec_version": "2.1",
@@ -1882,10 +2070,10 @@
             "type": "relationship"
         },
         {
-            "created": "2019-08-12T15:22:42.840Z",
+            "created": "2015-05-15T09:00:00.000Z",
             "created_by_ref": "identity--b86f1a53-2cc7-4ecf-8a2d-e0928bce0d02",
             "id": "relationship--9263b04c-1233-4c59-b749-a6ecd4d7b60f",
-            "modified": "2019-08-12T15:22:42.840Z",
+            "modified": "2015-05-15T09:00:00.000Z",
             "relationship_type": "consists-of",
             "source_ref": "infrastructure--8da886c4-2bff-4b0c-8474-5fd4d216fe7f",
             "spec_version": "2.1",
@@ -1893,10 +2081,10 @@
             "type": "relationship"
         },
         {
-            "created": "2019-08-12T15:22:42.840Z",
+            "created": "2015-05-15T09:00:00.000Z",
             "created_by_ref": "identity--b86f1a53-2cc7-4ecf-8a2d-e0928bce0d02",
             "id": "relationship--8c95e87e-f4b8-467f-a699-233278562324",
-            "modified": "2019-08-12T15:22:42.840Z",
+            "modified": "2015-05-15T09:00:00.000Z",
             "relationship_type": "consists-of",
             "source_ref": "infrastructure--8da886c4-2bff-4b0c-8474-5fd4d216fe7f",
             "spec_version": "2.1",
@@ -1904,10 +2092,10 @@
             "type": "relationship"
         },
         {
-            "created": "2019-08-12T15:22:42.840Z",
+            "created": "2015-05-15T09:00:00.000Z",
             "created_by_ref": "identity--b86f1a53-2cc7-4ecf-8a2d-e0928bce0d02",
             "id": "relationship--c6d3a656-e091-495c-ae90-e3e9e1eda3e2",
-            "modified": "2019-08-12T15:22:42.840Z",
+            "modified": "2015-05-15T09:00:00.000Z",
             "relationship_type": "consists-of",
             "source_ref": "infrastructure--a35bc05a-247d-49a9-b954-c5c7344c55cc",
             "spec_version": "2.1",
@@ -1915,10 +2103,10 @@
             "type": "relationship"
         },
         {
-            "created": "2019-08-12T15:22:42.841Z",
+            "created": "2015-05-15T09:00:00.000Z",
             "created_by_ref": "identity--b86f1a53-2cc7-4ecf-8a2d-e0928bce0d02",
             "id": "relationship--40aca993-957b-4e6b-b56e-466a1390016d",
-            "modified": "2019-08-12T15:22:42.841Z",
+            "modified": "2015-05-15T09:00:00.000Z",
             "relationship_type": "consists-of",
             "source_ref": "infrastructure--a35bc05a-247d-49a9-b954-c5c7344c55cc",
             "spec_version": "2.1",
@@ -1926,10 +2114,10 @@
             "type": "relationship"
         },
         {
-            "created": "2019-08-12T15:22:42.841Z",
+            "created": "2015-05-15T09:00:00.000Z",
             "created_by_ref": "identity--b86f1a53-2cc7-4ecf-8a2d-e0928bce0d02",
             "id": "relationship--70a8c071-7997-4155-9b8f-3541136d0cf3",
-            "modified": "2019-08-12T15:22:42.841Z",
+            "modified": "2015-05-15T09:00:00.000Z",
             "relationship_type": "consists-of",
             "source_ref": "infrastructure--a35bc05a-247d-49a9-b954-c5c7344c55cc",
             "spec_version": "2.1",
@@ -1937,10 +2125,10 @@
             "type": "relationship"
         },
         {
-            "created": "2019-08-12T15:22:42.841Z",
+            "created": "2015-05-15T09:00:00.000Z",
             "created_by_ref": "identity--b86f1a53-2cc7-4ecf-8a2d-e0928bce0d02",
             "id": "relationship--d1cb3c3a-2bb4-4c0b-8fa9-c83a86c544b7",
-            "modified": "2019-08-12T15:22:42.841Z",
+            "modified": "2015-05-15T09:00:00.000Z",
             "relationship_type": "consists-of",
             "source_ref": "infrastructure--a35bc05a-247d-49a9-b954-c5c7344c55cc",
             "spec_version": "2.1",
@@ -1948,10 +2136,10 @@
             "type": "relationship"
         },
         {
-            "created": "2019-08-12T15:22:42.841Z",
+            "created": "2015-05-15T09:00:00.000Z",
             "created_by_ref": "identity--b86f1a53-2cc7-4ecf-8a2d-e0928bce0d02",
             "id": "relationship--64431ab6-0409-43e3-b5b8-5c6cb5aeca32",
-            "modified": "2019-08-12T15:22:42.841Z",
+            "modified": "2015-05-15T09:00:00.000Z",
             "relationship_type": "consists-of",
             "source_ref": "infrastructure--a35bc05a-247d-49a9-b954-c5c7344c55cc",
             "spec_version": "2.1",
@@ -1959,10 +2147,10 @@
             "type": "relationship"
         },
         {
-            "created": "2019-08-12T15:22:42.841Z",
+            "created": "2015-05-15T09:00:00.000Z",
             "created_by_ref": "identity--b86f1a53-2cc7-4ecf-8a2d-e0928bce0d02",
             "id": "relationship--e704840a-9ae9-44c0-8524-74144b238d05",
-            "modified": "2019-08-12T15:22:42.841Z",
+            "modified": "2015-05-15T09:00:00.000Z",
             "relationship_type": "consists-of",
             "source_ref": "infrastructure--a35bc05a-247d-49a9-b954-c5c7344c55cc",
             "spec_version": "2.1",
@@ -2042,177 +2230,136 @@
             "type": "relationship"
         },
         {
-            "created": "2015-05-15T09:00:00.000Z",
-            "first_observed": "2015-05-15T09:00:00.000Z",
-            "id": "observed-data--87ffab8a-1da4-4386-9adf-81e32ae56b06",
-            "last_observed": "2015-05-15T09:00:00.000Z",
+            "created": "2019-09-14T16:09:17.453Z",
+            "created_by_ref": "identity--142ef637-d615-4e9f-8a67-e34de92d408d",
+            "id": "relationship--4e7ddef1-95bd-48b4-993b-ab49d51a398e",
+            "modified": "2019-09-14T16:09:17.453Z",
+            "relationship_type": "related-to",
+            "source_ref": "identity--c63f31ac-871b-4846-aa25-de1926f4f3c8",
+            "spec_version": "2.1",
+            "target_ref": "infrastructure--1d39a71e-d371-4105-aa41-24a4c0375c91",
+            "type": "relationship"
+        },
+        {
+            "created": "2019-09-13T12:37:55.956Z",
+            "created_by_ref": "identity--571c3ee0-e8b4-4fda-9944-780af1c2a848",
+            "id": "relationship--ce88b760-d70f-45fd-9b4a-3d87d5b23459",
             "modified": "2015-05-15T09:00:00.000Z",
-            "number_observed": 1,
-            "object_marking_refs": [
-                "marking-definition--0cda5493-87c3-4247-8438-cd6ade69206a"
-            ],
-            "objects": {
-                "0": {
-                    "type": "url",
-                    "value": "hugesoft.org"
-                }
-            },
+            "relationship_type": "related-to",
+            "source_ref": "identity--c63f31ac-871b-4846-aa25-de1926f4f3c8",
             "spec_version": "2.1",
-            "type": "observed-data"
+            "target_ref": "attack-pattern--e13f3e6d-4f9c-4265-b1cf-f997a1bf7827",
+            "type": "relationship"
         },
         {
-            "created": "2019-08-12T15:22:42.839Z",
-            "first_observed": "2019-08-12T15:22:42.839Z",
-            "id": "observed-data--031778a4-057f-48e6-9db9-c8d72b81ccd5",
-            "last_observed": "2019-08-12T15:22:42.839Z",
-            "modified": "2019-08-12T15:22:42.839Z",
-            "number_observed": 1,
-            "object_marking_refs": [
-                "marking-definition--0cda5493-87c3-4247-8438-cd6ade69206a"
-            ],
-            "objects": {
-                "0": {
-                    "type": "ipv4-addr",
-                    "value": [
-                        "143.89.0.0",
-                        "143.89.255.255"
-                    ]
-                }
-            },
+            "created": "2019-09-13T12:37:55.956Z",
+            "created_by_ref": "identity--571c3ee0-e8b4-4fda-9944-780af1c2a848",
+            "id": "relationship--c4afb586-b552-4ae0-9e82-d55ade984133",
+            "modified": "2019-09-13T12:37:55.956Z",
+            "relationship_type": "related-to",
+            "source_ref": "identity--c63f31ac-871b-4846-aa25-de1926f4f3c8",
             "spec_version": "2.1",
-            "type": "observed-data"
+            "target_ref": "tool--470a8794-5675-4e9b-8e2a-0f942d7a3681",
+            "type": "relationship"
         },
         {
-            "created": "2019-08-12T15:22:42.840Z",
-            "first_observed": "2019-08-12T15:22:42.840Z",
-            "id": "observed-data--232deffc-063f-4e83-9027-1b930af4a09f",
-            "last_observed": "2019-08-12T15:22:42.840Z",
-            "modified": "2019-08-12T15:22:42.840Z",
-            "number_observed": 1,
-            "object_marking_refs": [
-                "marking-definition--0cda5493-87c3-4247-8438-cd6ade69206a"
-            ],
-            "objects": {
-                "0": {
-                    "type": "ipv4-addr",
-                    "value": [
-                        "223.166.0.0",
-                        "23.167.255.255"
-                    ]
-                }
-            },
+            "created": "2019-09-13T12:37:55.956Z",
+            "created_by_ref": "identity--571c3ee0-e8b4-4fda-9944-780af1c2a848",
+            "id": "relationship--bef5c70b-6156-4d5a-b4b9-13156a5c4c5f",
+            "modified": "2019-09-13T12:37:55.956Z",
+            "relationship_type": "related-to",
+            "source_ref": "identity--c63f31ac-871b-4846-aa25-de1926f4f3c8",
             "spec_version": "2.1",
-            "type": "observed-data"
+            "target_ref": "tool--265893e4-2fde-4831-9e0a-f7d89c527c22",
+            "type": "relationship"
         },
         {
-            "created": "2019-08-12T15:22:42.840Z",
-            "first_observed": "2019-08-12T15:22:42.840Z",
-            "id": "observed-data--da1d061b-2bc9-467a-b16f-8d14f468e1f0",
-            "last_observed": "2019-08-12T15:22:42.840Z",
-            "modified": "2019-08-12T15:22:42.840Z",
-            "number_observed": 1,
-            "object_marking_refs": [
-                "marking-definition--0cda5493-87c3-4247-8438-cd6ade69206a"
-            ],
-            "objects": {
-                "0": {
-                    "type": "ipv4-addr",
-                    "value": [
-                        "58.246.0.0",
-                        "58.247.255.255"
-                    ]
-                }
-            },
+            "created": "2019-09-13T12:37:55.956Z",
+            "created_by_ref": "identity--571c3ee0-e8b4-4fda-9944-780af1c2a848",
+            "id": "relationship--00f311ac-629d-4e7d-9862-570bda6fe903",
+            "modified": "2019-09-13T12:37:55.956Z",
+            "relationship_type": "related-to",
+            "source_ref": "identity--c63f31ac-871b-4846-aa25-de1926f4f3c8",
             "spec_version": "2.1",
-            "type": "observed-data"
+            "target_ref": "tool--981035a2-6e5a-42b2-a611-39274cfdd80a",
+            "type": "relationship"
         },
         {
-            "created": "2019-08-12T15:22:42.841Z",
-            "first_observed": "2019-08-12T15:22:42.841Z",
-            "id": "observed-data--2173d108-5714-42fd-8213-4f3790259fda",
-            "last_observed": "2019-08-12T15:22:42.841Z",
-            "modified": "2019-08-12T15:22:42.841Z",
-            "number_observed": 1,
-            "object_marking_refs": [
-                "marking-definition--0cda5493-87c3-4247-8438-cd6ade69206a"
-            ],
-            "objects": {
-                "0": {
-                    "type": "ipv4-addr",
-                    "value": [
-                        "112.64.0.0",
-                        "112.65.255.255"
-                    ]
-                }
-            },
+            "created": "2019-09-13T12:37:55.956Z",
+            "created_by_ref": "identity--571c3ee0-e8b4-4fda-9944-780af1c2a848",
+            "id": "relationship--6383bd96-31db-4e8a-a928-43ce32a5e1be",
+            "modified": "2019-09-13T12:37:55.956Z",
+            "relationship_type": "related-to",
+            "source_ref": "identity--c63f31ac-871b-4846-aa25-de1926f4f3c8",
             "spec_version": "2.1",
-            "type": "observed-data"
+            "target_ref": "tool--3274e6e4-368a-41a1-bb60-64e9a4f573a9",
+            "type": "relationship"
         },
         {
-            "created": "2019-08-12T15:22:42.841Z",
-            "first_observed": "2019-08-12T15:22:42.841Z",
-            "id": "observed-data--8ce03314-dfea-4498-ac9b-136e41ab00e4",
-            "last_observed": "2019-08-12T15:22:42.841Z",
-            "modified": "2019-08-12T15:22:42.841Z",
-            "number_observed": 1,
-            "object_marking_refs": [
-                "marking-definition--0cda5493-87c3-4247-8438-cd6ade69206a"
-            ],
-            "objects": {
-                "0": {
-                    "type": "ipv4-addr",
-                    "value": [
-                        "139.226.0.0",
-                        "139.227.255.255"
-                    ]
-                }
-            },
+            "created": "2019-09-13T12:37:55.956Z",
+            "created_by_ref": "identity--571c3ee0-e8b4-4fda-9944-780af1c2a848",
+            "id": "relationship--4fdd23ed-0a0e-4884-b960-4c60ba4e062a",
+            "modified": "2019-09-13T12:37:55.956Z",
+            "relationship_type": "related-to",
+            "source_ref": "identity--c63f31ac-871b-4846-aa25-de1926f4f3c8",
             "spec_version": "2.1",
-            "type": "observed-data"
+            "target_ref": "tool--8420fdd4-3663-464c-bb52-b8b1b08600e1",
+            "type": "relationship"
         },
         {
-            "created": "2019-08-12T15:22:42.841Z",
-            "first_observed": "2019-08-12T15:22:42.841Z",
-            "id": "observed-data--ea291713-86bb-4272-ab05-23c7c79d4a6a",
-            "last_observed": "2019-08-12T15:22:42.841Z",
-            "modified": "2019-08-12T15:22:42.841Z",
-            "number_observed": 1,
-            "object_marking_refs": [
-                "marking-definition--0cda5493-87c3-4247-8438-cd6ade69206a"
-            ],
-            "objects": {
-                "0": {
-                    "type": "ipv4-addr",
-                    "value": [
-                        "114.80.0.0",
-                        "114.95.255.255"
-                    ]
-                }
-            },
+            "created": "2019-09-13T12:37:55.956Z",
+            "created_by_ref": "identity--571c3ee0-e8b4-4fda-9944-780af1c2a848",
+            "id": "relationship--47002034-8bba-46ab-9404-d736aa8cdc10",
+            "modified": "2019-09-13T12:37:55.956Z",
+            "relationship_type": "related-to",
+            "source_ref": "identity--c63f31ac-871b-4846-aa25-de1926f4f3c8",
             "spec_version": "2.1",
-            "type": "observed-data"
+            "target_ref": "tool--456e7a65-b819-4fa6-b95c-d14cb84c640e",
+            "type": "relationship"
         },
         {
-            "created": "2019-08-12T15:22:42.841Z",
-            "first_observed": "2019-08-12T15:22:42.841Z",
-            "id": "observed-data--6a8982c5-3656-4e05-9dac-ba254d32b486",
-            "last_observed": "2019-08-12T15:22:42.841Z",
-            "modified": "2019-08-12T15:22:42.841Z",
-            "number_observed": 1,
-            "object_marking_refs": [
-                "marking-definition--0cda5493-87c3-4247-8438-cd6ade69206a"
-            ],
-            "objects": {
-                "0": {
-                    "type": "ipv4-addr",
-                    "value": [
-                        "101.80.0.0",
-                        "101.95.255.255"
-                    ]
-                }
-            },
+            "created": "2019-09-13T12:37:55.956Z",
+            "created_by_ref": "identity--571c3ee0-e8b4-4fda-9944-780af1c2a848",
+            "id": "relationship--e3e1deac-8c0e-48fa-bc72-cdcc49d9fcd0",
+            "modified": "2019-09-13T12:37:55.956Z",
+            "relationship_type": "related-to",
+            "source_ref": "identity--c63f31ac-871b-4846-aa25-de1926f4f3c8",
             "spec_version": "2.1",
-            "type": "observed-data"
+            "target_ref": "tool--83353203-92b4-47e3-9c40-7dfdd9d418dc",
+            "type": "relationship"
+        },
+        {
+            "created": "2019-09-13T12:37:55.956Z",
+            "created_by_ref": "identity--571c3ee0-e8b4-4fda-9944-780af1c2a848",
+            "id": "relationship--156a7e3f-9d5e-4087-9e0e-390843f2a126",
+            "modified": "2019-09-13T12:37:55.956Z",
+            "relationship_type": "related-to",
+            "source_ref": "identity--c63f31ac-871b-4846-aa25-de1926f4f3c8",
+            "spec_version": "2.1",
+            "target_ref": "tool--2e9b37d5-332a-4bef-b8a9-e034b0c3774d",
+            "type": "relationship"
+        },
+        {
+            "created": "2019-09-13T12:37:55.956Z",
+            "created_by_ref": "identity--571c3ee0-e8b4-4fda-9944-780af1c2a848",
+            "id": "relationship--556f937c-82ea-4414-adc5-d7d3334fd0ee",
+            "modified": "2019-09-13T12:37:55.956Z",
+            "relationship_type": "related-to",
+            "source_ref": "identity--c63f31ac-871b-4846-aa25-de1926f4f3c8",
+            "spec_version": "2.1",
+            "target_ref": "tool--f39d91c4-5b65-454d-84db-56ae9bbad025",
+            "type": "relationship"
+        },
+        {
+            "created": "2019-09-13T12:37:55.956Z",
+            "created_by_ref": "identity--571c3ee0-e8b4-4fda-9944-780af1c2a848",
+            "id": "relationship--06ed0519-0211-4d7d-87a9-29059206bd04",
+            "modified": "2019-09-13T12:37:55.956Z",
+            "relationship_type": "related-to",
+            "source_ref": "identity--c63f31ac-871b-4846-aa25-de1926f4f3c8",
+            "spec_version": "2.1",
+            "target_ref": "tool--dabecad9-c8d3-4404-808d-0bb8349d32ca",
+            "type": "relationship"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",

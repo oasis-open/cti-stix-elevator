@@ -29,10 +29,10 @@
             "type": "attack-pattern"
         },
         {
-            "created": "2019-09-06T11:22:37.151Z",
-            "id": "identity--9c31e007-47fa-41ac-be8c-f8fb653e133e",
+            "created": "2019-09-06T13:59:25.084Z",
+            "id": "identity--299616bc-9129-490e-be10-0d0669e2ef37",
             "identity_class": "organization",
-            "modified": "2019-09-06T11:22:37.151Z",
+            "modified": "2019-09-06T13:59:25.084Z",
             "name": "Finance",
             "sectors": [
                 "finance"
@@ -51,6 +51,7 @@
             ],
             "modified": "2019-09-06T11:22:37.151Z",
             "pattern": "[ipv4-addr:value = '199.81.216.51']",
+            "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
             "valid_from": "2019-09-06T11:22:37.151866Z"

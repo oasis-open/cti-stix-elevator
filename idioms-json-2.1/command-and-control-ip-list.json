@@ -29,7 +29,9 @@
             "type": "infrastructure"
         },
         {
-            "id": "relationship--4b17f0cc-cf03-4195-b190-a44228ce9feb",
+            "created": "2014-05-08T09:00:00.000Z",
+            "id": "relationship--47e1177f-5b5d-44ba-b95f-d47e68b61cc7",
+            "modified": "2014-05-08T09:00:00.000Z",
             "relationship_type": "consists-of",
             "source_ref": "infrastructure--dd955e08-16d0-6f08-5064-50d9e7a3104d",
             "spec_version": "2.1",
@@ -37,7 +39,9 @@
             "type": "relationship"
         },
         {
-            "id": "relationship--b4072a57-8793-4adb-a6c6-f4682b111e6d",
+            "created": "2014-05-08T09:00:00.000Z",
+            "id": "relationship--0ebe087d-2f78-4894-af34-c1ab543af710",
+            "modified": "2014-05-08T09:00:00.000Z",
             "relationship_type": "consists-of",
             "source_ref": "infrastructure--dd955e08-16d0-6f08-5064-50d9e7a3104d",
             "spec_version": "2.1",
@@ -45,7 +49,9 @@
             "type": "relationship"
         },
         {
-            "id": "relationship--f82831d5-1fd2-4796-a9e1-3481b06cf7fd",
+            "created": "2014-05-08T09:00:00.000Z",
+            "id": "relationship--1b78bf3a-8b33-4b36-a469-81d4afc5e284",
+            "modified": "2014-05-08T09:00:00.000Z",
             "relationship_type": "consists-of",
             "source_ref": "infrastructure--dd955e08-16d0-6f08-5064-50d9e7a3104d",
             "spec_version": "2.1",

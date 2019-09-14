@@ -2,14 +2,6 @@
     "id": "bundle--0196d980-60d9-4717-b7c5-bf7bc27a35d4",
     "objects": [
         {
-            "dst_port": 337,
-            "id": "network-traffic--d456c8a2-9d79-4d06-b5bb-f2f79423bb28",
-            "protocols": [
-                "DCCP"
-            ],
-            "type": "network-traffic"
-        },
-        {
             "created": "2014-05-08T09:00:00.000Z",
             "description": "Port Numbers",
             "id": "indicator--b61d71d8-fe37-4bcd-a76d-d437156b8226",

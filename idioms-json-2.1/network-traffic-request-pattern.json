@@ -2,20 +2,6 @@
     "id": "bundle--abfc063c-7f43-40d1-8969-647dc6d5077f",
     "objects": [
         {
-            "extensions": {
-                "http-request-ext": {
-                    "request_header": {
-                        "Date": "2017-01-27T13:49:41.298000+00:00",
-                        "Referer": "http://sensongsmp3.cc/starmusiq/kadai-kutty-singam/",
-                        "User-Agent": "Mozilla/5.0"
-                    },
-                    "request_method": "get"
-                }
-            },
-            "id": "network-traffic--9b741edb-a515-4502-8948-8d80fc4094ef",
-            "type": "network-traffic"
-        },
-        {
             "created": "2015-05-15T09:00:00.000Z",
             "id": "indicator--8cdd6268-8aaf-49f3-9175-241738fe1127",
             "indicator_types": [

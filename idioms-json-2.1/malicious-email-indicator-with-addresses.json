@@ -2,31 +2,6 @@
     "id": "bundle--8b8ed1c1-f01d-4393-ac65-97017ed15876",
     "objects": [
         {
-            "from_ref": "email-addr--9278bce0-2206-4946-b661-5bbf49d02e3a",
-            "id": "email-message--12aa5ebd-3e1e-40d1-bf2e-28365d0dcba9",
-            "is_multipart": false,
-            "to_refs": [
-                "email-addr--7c6b925c-76f8-42e2-ac1a-d794bfeef585",
-                "email-addr--047e1082-1987-4019-8643-1dcfede05c45"
-            ],
-            "type": "email-message"
-        },
-        {
-            "id": "email-addr--9278bce0-2206-4946-b661-5bbf49d02e3a",
-            "type": "email-addr",
-            "value": "fred@abc.com"
-        },
-        {
-            "id": "email-addr--7c6b925c-76f8-42e2-ac1a-d794bfeef585",
-            "type": "email-addr",
-            "value": "barney@abc.com"
-        },
-        {
-            "id": "email-addr--047e1082-1987-4019-8643-1dcfede05c45",
-            "type": "email-addr",
-            "value": "wilma@abc.com"
-        },
-        {
             "confidence": 15,
             "created": "2014-10-31T15:52:13.126Z",
             "id": "indicator--b06b0eb7-61dd-4338-a094-0290c380fbd8",

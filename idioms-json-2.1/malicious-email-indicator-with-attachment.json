@@ -2,7 +2,9 @@
     "id": "bundle--8b8ed1c1-f01d-4393-ac65-97017ed15876",
     "objects": [
         {
+            "created": "2019-09-13T13:15:59.362Z",
             "id": "relationship--b3ecf2e7-fe67-4df4-b767-f321081fe912",
+            "modified": "2019-09-13T13:15:59.362Z",
             "relationship_type": "resolves_to",
             "source_ref": "email-message--bab8c54d-f27d-4982-b6b9-7f6220f4fd5d",
             "spec_version": "2.1",

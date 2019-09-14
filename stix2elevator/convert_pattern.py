@@ -1486,7 +1486,8 @@ def convert_related_object_to_pattern(ro):
             return get_pattern_from_cache(ro.idref)
         else:
             if id_in_observable_mappings(ro.idref):
-                return convert_observable_to_pattern(get_obs_from_mapping(ro.idref))
+                referenced_obs = get_obs_from_mapping(ro.idref)
+                return convert_observable_to_pattern(referenced_obs)
             return IdrefPlaceHolder(ro.idref)
 
 
@@ -1908,9 +1909,10 @@ def convert_observable_to_pattern_without_negate(obs):
         if id_in_pattern_cache(obs.idref):
             return get_pattern_from_cache(obs.idref)
         else:
-            # resolve now if possible, and remove from observed_data
+            # resolve now if possible
             if id_in_observable_mappings(obs.idref):
-                return convert_observable_to_pattern(get_obs_from_mapping(obs.idref))
+                referenced_obs = get_obs_from_mapping(obs.idref)
+                return convert_observable_to_pattern(referenced_obs)
             return IdrefPlaceHolder(obs.idref)
 
 
@@ -1980,7 +1982,8 @@ def convert_indicator_to_pattern_without_negate(ind):
         else:
             # resolve now if possible, and remove from observed_data
             if id_in_observable_mappings(ind.idref):
-                return convert_observable_to_pattern(get_obs_from_mapping(ind.idref))
+                referenced_obs = get_obs_from_mapping(ind.idref)
+                return convert_observable_to_pattern(referenced_obs)
             return IdrefPlaceHolder(ind.idref)
 
 
@@ -1999,6 +2002,7 @@ def convert_indicator_composition_to_pattern(ind_comp):
 
 
 def remove_pattern_objects(bundle_instance):
+    sco_ids_to_delete = []
     all_new_ids_with_patterns = []
     for old_id in get_ids_from_pattern_cache():
         new_id = get_id_value(old_id)
@@ -2013,7 +2017,13 @@ def remove_pattern_objects(bundle_instance):
             else:
                 warn("%s is used as a pattern, therefore it is not included as an observed_data instance", 423,
                      obj["id"])
-        bundle_instance["objects"] = remaining_objects
+                if "object_refs" in obj:
+                    sco_ids_to_delete.extend(obj["object_refs"])
+        new_remaining_objects = []
+        for obj in remaining_objects:
+            if not obj["id"] in sco_ids_to_delete:
+                new_remaining_objects.append(obj)
+        bundle_instance["objects"] = new_remaining_objects
 
     if not KEEP_OBSERVABLE_DATA_USED_IN_PATTERNS:
         for obj in bundle_instance["objects"]:
@@ -2021,7 +2031,7 @@ def remove_pattern_objects(bundle_instance):
                 remaining_object_refs = []
                 if "object_refs" in obj:
                     for ident in obj["object_refs"]:
-                        if not ident.startswith("observed-data") or ident not in all_new_ids_with_patterns:
+                        if not ident.startswith("observed-data") or ident not in all_new_ids_with_patterns and not ident in sco_ids_to_delete:
                             remaining_object_refs.append(ident)
                     obj["object_refs"] = remaining_object_refs
 

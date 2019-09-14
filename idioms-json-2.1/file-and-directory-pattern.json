@@ -37,7 +37,9 @@
             "type": "relationship"
         },
         {
-            "id": "relationship--e15d54a4-c7e7-4935-aa90-eef959e4e4a6",
+            "created": "2014-05-08T09:00:00.000Z",
+            "id": "relationship--63264a17-da63-44cf-ad91-042dd157762f",
+            "modified": "2014-05-08T09:00:00.000Z",
             "relationship_type": "consists-of",
             "source_ref": "infrastructure--dd955e08-16d0-6f08-5064-50d9e7a3104d",
             "spec_version": "2.1",

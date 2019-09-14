@@ -2,21 +2,6 @@
     "id": "bundle--6116aed6-a7e9-11e3-a82f-000c29b241af",
     "objects": [
         {
-            "id": "domain-name--7949dd76-8dcc-4f3a-8846-f76b3846847d",
-            "type": "domain-name",
-            "value": "www.dhcpserver.ns01.us"
-        },
-        {
-            "id": "ipv4-addr--b54dd4b3-d8a0-4d53-bbed-6ade0a407aaf",
-            "type": "ipv4-addr",
-            "value": "219.90.112.203"
-        },
-        {
-            "id": "ipv4-addr--7de47545-5fea-4469-9429-a4f8dd9cfcc2",
-            "type": "ipv4-addr",
-            "value": "202.65.220.64"
-        },
-        {
             "created": "2019-08-21T12:10:39.380Z",
             "id": "indicator--6116b44e-a7e9-11e3-a82f-000c29b241af",
             "indicator_types": [
