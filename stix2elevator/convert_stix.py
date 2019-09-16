@@ -1,7 +1,7 @@
 from cybox.core import Observable
 from lxml import etree
 import pycountry
-from six import text_type
+from six import string_types, text_type
 import stix
 from stix.campaign import Campaign
 from stix.coa import CourseOfAction
@@ -1849,9 +1849,9 @@ def finalize_bundle(env):
     if "indicators" in bundle_instance:
         interatively_resolve_placeholder_refs()
         for ind in bundle_instance["indicators"]:
-            if "pattern" in ind and "pattern_type" in ind and ind["pattern_type"] == "stix":
+            if "pattern" in ind:
                 pattern = ind["pattern"]
-                if isinstance(pattern, str):
+                if isinstance(pattern, string_types):
                     continue
                 final_pattern = fix_pattern(pattern)
                 if final_pattern:
