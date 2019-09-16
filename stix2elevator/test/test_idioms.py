@@ -52,7 +52,7 @@ def idiom_mappings(converted_json, stored_json, ignored_properties):
 
     for good, to_check in zip(iterpath(stored_json), iterpath(converted_json)):
         good_path, good_value = good
-        last_good_field = good_path[-1]
+        # last_good_field = good_path[-1]
 
         if isinstance(good_value, (dict, list)):
             # Rule #1: No need to verify iterable types. Since we will deal

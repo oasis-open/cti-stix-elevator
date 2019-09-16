@@ -32,8 +32,8 @@ from stixmarx import navigator
 from stix2elevator.confidence import convert_confidence
 from stix2elevator.convert_cybox import (convert_cybox_object20,
                                          convert_cybox_object21,
-                                         fix_cybox_relationships,
-                                         fix_attachments_refs)
+                                         fix_attachments_refs,
+                                         fix_cybox_relationships)
 from stix2elevator.convert_pattern import (ComparisonExpressionForElevator,
                                            CompoundObservationExpressionForElevator,
                                            ParentheticalExpressionForElevator,
@@ -46,18 +46,25 @@ from stix2elevator.convert_pattern import (ComparisonExpressionForElevator,
                                            fix_pattern,
                                            interatively_resolve_placeholder_refs,
                                            remove_pattern_objects)
-from stix2elevator.ids import (add_id_value, exists_id_key,
+from stix2elevator.ids import (add_id_value,
+                               exists_id_key,
                                exists_ids_with_no_1x_object,
-                               generate_stix2x_id, get_id_value, get_id_values,
-                               record_ids, get_type_from_id)
+                               generate_stix2x_id,
+                               get_id_value,
+                               get_id_values,
+                               get_type_from_id,
+                               record_ids)
 from stix2elevator.options import error, get_option_value, info, warn
 from stix2elevator.utils import (add_marking_map_entry,
                                  check_map_1x_markings_to_2x,
                                  convert_controlled_vocabs_to_open_vocabs,
                                  convert_timestamp_of_stix_object,
-                                 convert_timestamp_to_string, identifying_info,
-                                 iterpath, map_1x_markings_to_2x,
-                                 map_vocabs_to_label, operation_on_path)
+                                 convert_timestamp_to_string,
+                                 identifying_info,
+                                 iterpath,
+                                 map_1x_markings_to_2x,
+                                 map_vocabs_to_label,
+                                 operation_on_path)
 from stix2elevator.vocab_mappings import (ATTACK_MOTIVATION_MAP,
                                           COA_LABEL_MAP,
                                           INCIDENT_LABEL_MAP,
@@ -68,7 +75,6 @@ from stix2elevator.vocab_mappings import (ATTACK_MOTIVATION_MAP,
                                           THREAT_ACTOR_LABEL_MAP,
                                           THREAT_ACTOR_SOPHISTICATION_MAP,
                                           TOOL_LABELS_MAP)
-
 
 if stix.__version__ >= "1.2.0.0":
     from stix.report import Report
@@ -329,6 +335,7 @@ def finish_basic_object(old_id, instance, env, stix1x_obj, temp_marking_id=None)
     if object_marking_refs:
         instance["object_marking_refs"] = object_marking_refs
 
+
 #
 # handle gaps
 #
@@ -492,6 +499,7 @@ def handle_embedded_ref(ref, id, env, verb, to_direction):
                                                                         verb,
                                                                         ref))
 
+
 def handle_existing_ref(ref, ref_id, id, env, verb, to_direction):
     source_id = id if to_direction else ref_id
     target_id = ref_id if to_direction else id
@@ -500,7 +508,6 @@ def handle_existing_ref(ref, ref_id, id, env, verb, to_direction):
                                                                     env,
                                                                     verb,
                                                                     ref))
-
 
 
 def handle_existing_refs(ref, id, env, verb, to_direction):
@@ -1266,7 +1273,7 @@ def create_scos(obs, observed_data_instance, env):
             related = convert_cybox_object(o)
             if related:
                 scos.extend(related)
-                #related[0]["id"] = get_id_value(o.id_)[0]
+                # related[0]["id"] = get_id_value(o.id_)[0]
                 env.bundle_instance["objects"].append(
                     create_relationship(scos[0]["id"], related[0]["id"], env, "resolves_to"))
     if scos:
@@ -1506,6 +1513,7 @@ _TTP_RELATIONSHIP_MAPPING = {
     ("attack-pattern", "identity", "Targets"): ("targets", True)
 }
 
+
 def determine_ttp_relationship_type_and_direction(source_type, target_type, relationship_name):
     if (source_type, target_type, relationship_name) in _TTP_RELATIONSHIP_MAPPING:
         return _TTP_RELATIONSHIP_MAPPING[(source_type, target_type, relationship_name)]
@@ -1536,7 +1544,10 @@ def process_ttp_properties(sdo_instance, ttp, env, kill_chains_in_sdo=True, vict
         for rel in ttp.related_ttps:
             source_type = get_type_from_id(sdo_instance["id"])
             if rel.item.idref is None:
-                handle_embedded_ref(rel, id, env, verb, to_direction)
+                target_type = get_type_from_id(rel.item.id_)
+                verb, to_direction = determine_ttp_relationship_type_and_direction(source_type, target_type,
+                                                                                   str(rel.relationship))
+                handle_embedded_ref(rel, rel.item.id_, env, verb, to_direction)
             else:
                 target_id = rel.item.idref
                 stix20_target_ids = get_id_value(target_id)
@@ -1838,7 +1849,7 @@ def finalize_bundle(env):
     if "indicators" in bundle_instance:
         interatively_resolve_placeholder_refs()
         for ind in bundle_instance["indicators"]:
-            if "pattern" in ind:
+            if "pattern" in ind and ind["pattern_type"] == "stix":
                 pattern = ind["pattern"]
                 if isinstance(pattern, str):
                     continue

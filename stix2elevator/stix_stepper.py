@@ -1,10 +1,10 @@
 import io
 import json
 import sys
-import uuid
 
 from six import text_type
 from stix2.pattern_visitor import create_pattern_object
+
 from stix2elevator.convert_stix import create_relationship
 from stix2elevator.ids import generate_sco_id
 from stix2elevator.utils import Environment

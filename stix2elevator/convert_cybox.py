@@ -22,17 +22,18 @@ from cybox.objects.win_service_object import WinService
 from six import text_type
 
 from stix2elevator.common import ADDRESS_FAMILY_ENUMERATION, SOCKET_OPTIONS
-from stix2elevator.ids import (add_object_id_value,
-                               get_object_id_value,
+from stix2elevator.ids import (add_id_value,
+                               add_object_id_value,
                                generate_sco_id,
                                generate_stix2x_id,
-                               add_id_value,
-                               get_id_value)
+                               get_object_id_value)
 from stix2elevator.options import error, get_option_value, info, warn
 from stix2elevator.utils import (convert_timestamp_to_string,
                                  map_vocabs_to_label)
-from stix2elevator.vocab_mappings import (SERVICE_START_TYPE, SERVICE_STATUS,
-                                          SERVICE_TYPE, WINDOWS_PEBINARY)
+from stix2elevator.vocab_mappings import (SERVICE_START_TYPE,
+                                          SERVICE_STATUS,
+                                          SERVICE_TYPE,
+                                          WINDOWS_PEBINARY)
 
 
 def create_base_sco(obj1x, type, other_properties=None):
@@ -121,18 +122,18 @@ def convert_hashes(hashes):
             hash_type = text_type(h.type_).lower()
         else:
             hash_type = text_type(h.type_)
+        hash_dict[hash_type] = hash_value
     return hash_dict
 
 
 _PE_FILE_HEADER_PROPERTY_MAP = \
     [["machine", "machine_hex"],
-     ["time_date_stamp", "time_date_stamp" ],
-     ["number_of_sections",  "number_of_sections"],
+     ["time_date_stamp", "time_date_stamp"],
+     ["number_of_sections", "number_of_sections"],
      ["pointer_to_symbol_table", "pointer_to_symbol_table"],
-     ["number_of_symbols", "number_of_symbols" ],
-     ["size_of_optional_header", "size_of_optional_header" ],
-     ["characteristics", "characteristics_hex"]
-    ]
+     ["number_of_symbols", "number_of_symbols"],
+     ["size_of_optional_header", "size_of_optional_header"],
+     ["characteristics", "characteristics_hex"]]
 
 _PE_SECTION_HEADER_PROPERTY_MAP = \
     [["name", "name"],
@@ -144,7 +145,6 @@ def convert_windows_executable_file(f):
     if f.headers:
         file_header = f.headers.file_header
         if file_header:
-            file_header_dict = []
             for prop_tuple in _PE_FILE_HEADER_PROPERTY_MAP:
                 prop_name1x = prop_tuple[0]
                 prop_name2x = prop_tuple[1]
@@ -201,7 +201,7 @@ def convert_archive_file(f):
         for ar_file in f.archived_file:
             ar_file2x = convert_file(ar_file)
             file_objs.append(ar_file2x)
-        dict["contains_refs"] = [x["id"] for x in file_objs ]
+        dict["contains_refs"] = [x["id"] for x in file_objs]
     return dict, file_objs
 
 
@@ -252,7 +252,7 @@ def convert_file_properties(f):
             file_dict["name"] = f.file_path.value[index + 1:]
         dir_path = f.file_path.value[0: index]
         if dir_path:
-            dir_dict = create_base_sco(None, "directory", { "path": (f.device_path.value if f.device_path else "") + dir_path})
+            dir_dict = create_base_sco(None, "directory", {"path": (f.device_path.value if f.device_path else "") + dir_path})
     if f.full_path:
         warn("1.x full file paths are not processed, yet", 802)
     if isinstance(f, WinExecutableFile):
@@ -285,7 +285,7 @@ def convert_file20(f):
 
 def convert_file21(f):
     file_dict, dir_dict, file_objs = convert_file_properties(f)
-    objs = [ file_dict ]
+    objs = [file_dict]
     if dir_dict:
         objs.append(dir_dict)
         file_dict["parent_directory_ref"] = dir_dict["id"]
@@ -308,7 +308,7 @@ def convert_attachment(attachment):
         body_raw_ref = generate_stix2x_id("file", attachment.object_reference)
         add_id_value(attachment.object_reference, body_raw_ref)
     info("content_type for body_multipart of attachment %s is assumed to be 'text/plain'", 722, body_raw_ref)
-    return {"body_raw_ref": body_raw_ref, "content_type": "text/plain" }
+    return {"body_raw_ref": body_raw_ref, "content_type": "text/plain"}
 
 
 def convert_email_message(email_message):
@@ -475,7 +475,7 @@ def convert_process(process):
         objs = {}
         objs[text_type(index)] = process_dict
     else:
-        objs = [ process_dict ]
+        objs = [process_dict]
     index += 1
     if process.name and get_option_value("spec_version") == "2.0":
         process_dict["name"] = text_type(process.name)
@@ -693,7 +693,7 @@ def convert_network_connection(conn):
     if spec_version == "2.0":
         objs = {}
     else:
-        objs = [ ]
+        objs = []
 
     def create_domain_name_object(dn):
         return create_base_sco(None, "domain-name", {"value": text_type(dn.value)})
@@ -967,7 +967,7 @@ def convert_cybox_object21(obj1x):
     elif isinstance(prop, Address):
         objs = [convert_address(prop)]
     elif isinstance(prop, URI):
-        objs= [convert_uri(prop)]
+        objs = [convert_uri(prop)]
     elif isinstance(prop, EmailMessage):
         # potentially returns multiple objects
         objs = convert_email_message(prop)
@@ -1097,7 +1097,7 @@ def fix_cybox_relationships(observed_data):
 def fix_attachments_refs(objects):
     for obj in objects:
         if obj["type"] == "email-message":
-                if obj["is_multipart"]:
-                    for mp in obj["body_multipart"]:
-                        mp["content_type"] = "text/plain"
-                        info("content_type for body_multipart of %s is assumed to be 'text/plain'", 722, obj["id"])
+            if obj["is_multipart"]:
+                for mp in obj["body_multipart"]:
+                    mp["content_type"] = "text/plain"
+                    info("content_type for body_multipart of %s is assumed to be 'text/plain'", 722, obj["id"])

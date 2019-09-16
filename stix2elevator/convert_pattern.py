@@ -24,20 +24,21 @@ from cybox.objects.win_registry_key_object import WinRegistryKey
 from cybox.objects.win_service_object import WinService
 from six import text_type
 import stix2
-from stix2.patterns import (BasicObjectPathComponent, ListObjectPathComponent,
-                            ObjectPath, ObservationExpression,
+from stix2.patterns import (BasicObjectPathComponent,
+                            ListObjectPathComponent,
+                            ObjectPath,
+                            ObservationExpression,
                             QualifiedObservationExpression,
-                            ReferenceObjectPathComponent, _BooleanExpression,
+                            ReferenceObjectPathComponent,
+                            _BooleanExpression,
                             _ComparisonExpression,
-                            _CompoundObservationExpression, _Constant)
+                            _CompoundObservationExpression,
+                            _Constant)
 import stixmarx
 
 from stix2elevator.common import ADDRESS_FAMILY_ENUMERATION, SOCKET_OPTIONS
 from stix2elevator.convert_cybox import split_into_requests_and_responses
-from stix2elevator.ids import (add_id_value,
-                               exists_object_id_key,
-                               get_id_value,
-                               get_object_id_value)
+from stix2elevator.ids import add_id_value, exists_object_id_key, get_id_value
 from stix2elevator.options import error, get_option_value, info, warn
 from stix2elevator.utils import identifying_info, map_vocabs_to_label
 from stix2elevator.vocab_mappings import WINDOWS_PEBINARY
@@ -1034,12 +1035,14 @@ _PE_FILE_HEADER_PROPERTIES = \
      ["size_of_optional_header", "file:extensions.'windows-pebinary-ext'.size_of_optional_header"],
      ["characteristics", "file:extensions.'windows-pebinary-ext'.characteristics_hex"]]
 
+
 _PE_SECTION_HEADER_PROPERTIES = [["name", "file:extensions.'windows-pebinary-ext'.section[*].name"],
                                  ["virtual_size", "file:extensions.'windows-pebinary-ext'.section[*].size"]]
 
 
 _ARCHIVE_FILE_PROPERTIES_2_0 = [["comment", "file:extensions.'archive-ext'.comment"],
                                 ["version", "file:extensions.'archive-ext'.version"]]
+
 
 _ARCHIVE_FILE_PROPERTIES_2_1 = [["comment", "file:extensions.'archive-ext'.comment"]]
 
@@ -1049,7 +1052,6 @@ def select_archive_file_properties():
         return _ARCHIVE_FILE_PROPERTIES_2_1
     else:
         return _ARCHIVE_FILE_PROPERTIES_2_0
-
 
 
 def convert_windows_executable_file_to_pattern(f):
@@ -2021,7 +2023,7 @@ def remove_pattern_objects(bundle_instance):
                     sco_ids_to_delete.extend(obj["object_refs"])
         new_remaining_objects = []
         for obj in remaining_objects:
-            if not obj["id"] in sco_ids_to_delete:
+            if obj["id"] not in sco_ids_to_delete:
                 new_remaining_objects.append(obj)
         bundle_instance["objects"] = new_remaining_objects
 
@@ -2031,7 +2033,7 @@ def remove_pattern_objects(bundle_instance):
                 remaining_object_refs = []
                 if "object_refs" in obj:
                     for ident in obj["object_refs"]:
-                        if not ident.startswith("observed-data") or ident not in all_new_ids_with_patterns and not ident in sco_ids_to_delete:
+                        if not ident.startswith("observed-data") or ident not in all_new_ids_with_patterns and ident not in sco_ids_to_delete:
                             remaining_object_refs.append(ident)
                     obj["object_refs"] = remaining_object_refs
 

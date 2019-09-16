@@ -1,5 +1,3 @@
-from stix2elevator.options import get_option_value
-
 SOCKET_OPTIONS = [
     "ip_multicast_if",
     "ip_multicast_if2",
@@ -34,5 +32,3 @@ ADDRESS_FAMILY_ENUMERATION = [
     "AF_IRDA",
     "AF_BTH",
 ]
-
-
