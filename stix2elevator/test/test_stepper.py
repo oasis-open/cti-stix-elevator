@@ -12,7 +12,7 @@ from .test_idioms import (BEFORE_FILENAMES,
                           setup_tests)
 
 _IGNORE = (u"id",
-           u"bcc_refs", u"cc_refs", u"child_refs", u"object_refs", u"opened_connection_refs", u"to_refs" 
+           u"bcc_refs", u"cc_refs", u"child_refs", u"object_refs", u"opened_connection_refs", u"to_refs",
            u"body_raw_ref", u"dst_ref", u"from_refs", u"parent_ref", u"parent_directory_ref", u"source_ref", u"src_ref", u"target_ref"
            )
 
