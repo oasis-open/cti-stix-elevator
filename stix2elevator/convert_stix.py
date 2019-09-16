@@ -1849,7 +1849,7 @@ def finalize_bundle(env):
     if "indicators" in bundle_instance:
         interatively_resolve_placeholder_refs()
         for ind in bundle_instance["indicators"]:
-            if "pattern" in ind and ind["pattern_type"] == "stix":
+            if "pattern" in ind and "pattern_type" in ind and ind["pattern_type"] == "stix":
                 pattern = ind["pattern"]
                 if isinstance(pattern, str):
                     continue
