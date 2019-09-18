@@ -1,6 +1,7 @@
 import io
 import json
 import sys
+from collections import OrderedDict
 
 from six import text_type
 from stix2.pattern_visitor import create_pattern_object
@@ -196,10 +197,11 @@ def step_bundle(bundle):
 def step_file(fn, encoding="utf-8"):
     sys.setrecursionlimit(5000)
     with io.open(fn, "r", encoding=encoding) as json_data:
-        json_content = json.load(json_data)
+        json_content = json.load(json_data, object_pairs_hook=OrderedDict)
 
     if 'spec_version' in json_content and "type" in json_content and json_content["type"] == "bundle":
-        json_string = json.dumps(step_bundle(json_content),
+        new_json_content = step_bundle(json_content)
+        json_string = json.dumps(new_json_content,
                                  ensure_ascii=False,
                                  indent=4,
                                  separators=(',', ': '),
