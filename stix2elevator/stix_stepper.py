@@ -1,7 +1,7 @@
+from collections import OrderedDict
 import io
 import json
 import sys
-from collections import OrderedDict
 
 from six import text_type
 from stix2.pattern_visitor import create_pattern_object
