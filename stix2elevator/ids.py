@@ -1,7 +1,11 @@
 import re
 import uuid
+from stix2.base import SCO_DET_ID_NAMESPACE
+from stix2.canonicalization.Canonicalize import canonicalize
+import importlib
+import inspect
 
-from six import text_type
+from six import text_type, binary_type
 
 from stix2elevator.options import error, info, warn
 from stix2elevator.utils import map_1x_type_to_20
@@ -80,10 +84,66 @@ def generate_stix2x_id(stix2x_so_name, stix12_id=None, id_used=False):
                 error("Unable to determine the STIX 2.x type for %s, which is malformed", 629, stix12_id)
                 return None
 
+_SCO_CLASSES = {}
 
-def generate_sco_id(type):
+
+def _choose_one_hash(hash_dict):
+    if "MD5" in hash_dict:
+        return {"MD5": hash_dict["MD5"]}
+    elif "SHA-1" in hash_dict:
+        return {"SHA-1": hash_dict["SHA-1"]}
+    elif "SHA-256" in hash_dict:
+        return {"SHA-256": hash_dict["SHA-256"]}
+    elif "SHA-512" in hash_dict:
+        return {"SHA-512": hash_dict["SHA-512"]}
+    else:
+        k = next(iter(hash_dict), None)
+        if k is not None:
+            return {k: hash_dict[k]}
+
+
+def generate_sco_id(type, instance):
+    required_prefix = type + "--"
+    if not _SCO_CLASSES:
+        # compute it once
+        module = importlib.import_module("stix2.v21")
+        for k, c in inspect.getmembers(module, inspect.isclass):
+            if "type" in c._properties:
+                _SCO_CLASSES[c._properties["type"]._fixed_value] = c
     # TODO:  need uuid5
-    return generate_stix2x_id(type)
+    klass = _SCO_CLASSES[type]
+    if klass and hasattr(klass, "_id_contributing_properties") and klass._id_contributing_properties:
+        contributing_properties = klass._id_contributing_properties
+        streamlined_obj_vals = []
+        possible_hash = None
+        if "hashes" in instance and "hashes" in contributing_properties:
+            possible_hash = _choose_one_hash(instance["hashes"])
+        if possible_hash:
+            streamlined_obj_vals.append(possible_hash)
+        for key in contributing_properties:
+            if key != "hashes" and key in instance:
+                # if isinstance(kwargs[key], dict) or isinstance(kwargs[key], _STIXBase):
+                #     temp_deep_copy = copy.deepcopy(dict(kwargs[key]))
+                #     _recursive_stix_to_dict(temp_deep_copy)
+                #     streamlined_obj_vals.append(temp_deep_copy)
+                # elif isinstance(kwargs[key], list) and isinstance(kwargs[key][0], _STIXBase):
+                #     for obj in kwargs[key]:
+                #         temp_deep_copy = copy.deepcopy(dict(obj))
+                #         _recursive_stix_to_dict(temp_deep_copy)
+                #         streamlined_obj_vals.append(temp_deep_copy)
+                # else:
+                streamlined_obj_vals.append(instance[key])
+
+        if streamlined_obj_vals:
+            data = canonicalize(streamlined_obj_vals, utf8=False)
+
+            # try/except here to enable python 2 compatibility
+            try:
+                return required_prefix + text_type(uuid.uuid5(SCO_DET_ID_NAMESPACE, data))
+            except UnicodeDecodeError:
+                return required_prefix + text_type(uuid.uuid5(SCO_DET_ID_NAMESPACE, binary_type(data)))
+
+    return required_prefix + text_type(uuid.uuid4())
 
 
 _IDS_TO_NEW_IDS = {}

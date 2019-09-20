@@ -144,7 +144,7 @@ def step_cyber_observable(obj, observed_data):
 
 def step_observable_data(object):
     for key, obj in object["objects"].items():
-        obj["id"] = generate_sco_id(obj["type"])
+        obj["id"] = generate_sco_id(obj["type"], obj)
     objs = list()
     for key, obj in object["objects"].items():
         objs.extend(step_cyber_observable(obj, object))

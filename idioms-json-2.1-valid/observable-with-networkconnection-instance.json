@@ -2,18 +2,18 @@
     "id": "bundle--e33ffe07-2f4c-48d8-b0af-ee2619d765cf",
     "objects": [
         {
-            "id": "domain-name--2a35a6c4-b9c5-4aa1-b099-94955166d6ad",
+            "id": "domain-name--220a2699-5ebf-5b57-bf02-424964bb19c0",
             "type": "domain-name",
             "value": "example.com"
         },
         {
-            "id": "ipv4-addr--32f94b4d-71e4-4905-977f-b05e1236c11f",
+            "id": "ipv4-addr--c5a216ae-2184-5acd-b145-2d1321457d0b",
             "type": "ipv4-addr",
             "value": "198.49.123.10"
         },
         {
             "dst_port": 80,
-            "dst_ref": "ipv4-addr--32f94b4d-71e4-4905-977f-b05e1236c11f",
+            "dst_ref": "ipv4-addr--c5a216ae-2184-5acd-b145-2d1321457d0b",
             "extensions": {
                 "http-request-ext": {
                     "request_header": {
@@ -31,7 +31,7 @@
                     "request_version": "http/1.1"
                 }
             },
-            "id": "network-traffic--edd9c2fb-17c8-4e82-aa96-001a09bae701",
+            "id": "network-traffic--2bdbac52-ac9e-5c51-b098-dab303f772ea",
             "protocols": [
                 "ipv4",
                 "udp",
@@ -40,7 +40,7 @@
                 "https"
             ],
             "src_port": 5525,
-            "src_ref": "domain-name--2a35a6c4-b9c5-4aa1-b099-94955166d6ad",
+            "src_ref": "domain-name--220a2699-5ebf-5b57-bf02-424964bb19c0",
             "start": "2011-08-05T07:14:55.000000Z",
             "type": "network-traffic"
         },
@@ -52,9 +52,9 @@
             "modified": "2017-03-29T15:21:17.605Z",
             "number_observed": 1,
             "object_refs": [
-                "domain-name--2a35a6c4-b9c5-4aa1-b099-94955166d6ad",
-                "ipv4-addr--32f94b4d-71e4-4905-977f-b05e1236c11f",
-                "network-traffic--edd9c2fb-17c8-4e82-aa96-001a09bae701"
+                "domain-name--220a2699-5ebf-5b57-bf02-424964bb19c0",
+                "ipv4-addr--c5a216ae-2184-5acd-b145-2d1321457d0b",
+                "network-traffic--2bdbac52-ac9e-5c51-b098-dab303f772ea"
             ],
             "spec_version": "2.1",
             "type": "observed-data"

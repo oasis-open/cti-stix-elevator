@@ -5,20 +5,20 @@
             "created": "2017-01-27T13:49:41.329Z",
             "description": "",
             "external_references": [],
-            "id": "relationship--1eb0517c-00e4-42a5-b88c-63945c6ba43c",
+            "id": "relationship--83c024c1-9e16-40c6-921e-9eb432d45afa",
             "modified": "2017-01-27T13:49:41.329Z",
             "relationship_type": "resolves_to",
-            "source_ref": "ipv4-addr--4bd255f7-a35e-456b-88e0-6e8e1a030e68",
-            "target_ref": "domain-name--9eb0f822-4283-43ac-a667-2bd8293d2cb3",
+            "source_ref": "ipv4-addr--7e4a9c21-50df-5298-97ce-42044f79472e",
+            "target_ref": "domain-name--a5cb3d9e-4635-5956-8ccb-814a839a77c3",
             "type": "relationship"
         },
         {
-            "id": "ipv4-addr--4bd255f7-a35e-456b-88e0-6e8e1a030e68",
+            "id": "ipv4-addr--7e4a9c21-50df-5298-97ce-42044f79472e",
             "type": "ipv4-addr",
             "value": "198.51.100.2"
         },
         {
-            "id": "domain-name--9eb0f822-4283-43ac-a667-2bd8293d2cb3",
+            "id": "domain-name--a5cb3d9e-4635-5956-8ccb-814a839a77c3",
             "type": "domain-name",
             "value": "example.foo.com"
         },
@@ -30,15 +30,15 @@
             "modified": "2017-01-27T13:49:41.329Z",
             "number_observed": 1,
             "object_refs": [
-                "relationship--1eb0517c-00e4-42a5-b88c-63945c6ba43c",
-                "ipv4-addr--4bd255f7-a35e-456b-88e0-6e8e1a030e68",
-                "domain-name--9eb0f822-4283-43ac-a667-2bd8293d2cb3"
+                "relationship--83c024c1-9e16-40c6-921e-9eb432d45afa",
+                "ipv4-addr--7e4a9c21-50df-5298-97ce-42044f79472e",
+                "domain-name--a5cb3d9e-4635-5956-8ccb-814a839a77c3"
             ],
             "spec_version": "2.1",
             "type": "observed-data"
         },
         {
-            "id": "ipv4-addr--f671c9a2-15d0-4947-bf5f-9e3ab69a3eae",
+            "id": "ipv4-addr--aa3e1cc2-0c65-5358-82ae-9a7e508e939f",
             "type": "ipv4-addr",
             "value": "198.51.100.17"
         },
@@ -50,13 +50,13 @@
             "modified": "2017-01-27T13:49:41.329Z",
             "number_observed": 1,
             "object_refs": [
-                "ipv4-addr--f671c9a2-15d0-4947-bf5f-9e3ab69a3eae"
+                "ipv4-addr--aa3e1cc2-0c65-5358-82ae-9a7e508e939f"
             ],
             "spec_version": "2.1",
             "type": "observed-data"
         },
         {
-            "id": "ipv4-addr--aa670a1b-6812-4c17-980f-f78e47ad918e",
+            "id": "ipv4-addr--179b9f2b-745f-5421-a6d1-701872c15d4c",
             "type": "ipv4-addr",
             "value": "203.0.113.19"
         },
@@ -68,7 +68,7 @@
             "modified": "2017-01-27T13:49:41.329Z",
             "number_observed": 1,
             "object_refs": [
-                "ipv4-addr--aa670a1b-6812-4c17-980f-f78e47ad918e"
+                "ipv4-addr--179b9f2b-745f-5421-a6d1-701872c15d4c"
             ],
             "spec_version": "2.1",
             "type": "observed-data"

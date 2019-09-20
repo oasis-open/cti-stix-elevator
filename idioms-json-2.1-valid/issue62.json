@@ -51,7 +51,7 @@
         },
         {
             "child_refs": [
-                "process--558db240-f115-4878-8216-3ab41170464c"
+                "process--8aaf51b1-92ae-4c2b-9d13-4e917dc49ec8"
             ],
             "created": "2010-12-09T20:17:34.934295Z",
             "extensions": {
@@ -59,33 +59,33 @@
                     "window_title": "Some Title"
                 }
             },
-            "id": "process--bbbbe852-3b63-4090-9d5e-864187681f67",
+            "id": "process--63e1e0f5-3355-4ac5-b54a-d83eb006885a",
             "opened_connection_refs": [
-                "network-traffic--3f5b17b3-f4c1-419e-82fb-6081b1ef23c3"
+                "network-traffic--1a0fbe1b-cf6c-5bd2-9939-a6a252ff7517"
             ],
-            "parent_ref": "process--819e111f-2ae8-407d-9332-41421c82786e",
+            "parent_ref": "process--d1a4c3df-4dfc-420b-9f05-e5a208afb25d",
             "pid": 1700,
             "type": "process"
         },
         {
-            "id": "process--558db240-f115-4878-8216-3ab41170464c",
+            "id": "process--8aaf51b1-92ae-4c2b-9d13-4e917dc49ec8",
             "pid": 4567,
             "type": "process"
         },
         {
-            "id": "process--819e111f-2ae8-407d-9332-41421c82786e",
+            "id": "process--d1a4c3df-4dfc-420b-9f05-e5a208afb25d",
             "pid": 1616,
             "type": "process"
         },
         {
-            "id": "ipv4-addr--16f509b9-7b8a-4a12-99c5-9df0e64350f4",
+            "id": "ipv4-addr--c5a216ae-2184-5acd-b145-2d1321457d0b",
             "type": "ipv4-addr",
             "value": "198.49.123.10"
         },
         {
             "dst_port": 80,
-            "dst_ref": "ipv4-addr--16f509b9-7b8a-4a12-99c5-9df0e64350f4",
-            "id": "network-traffic--3f5b17b3-f4c1-419e-82fb-6081b1ef23c3",
+            "dst_ref": "ipv4-addr--c5a216ae-2184-5acd-b145-2d1321457d0b",
+            "id": "network-traffic--1a0fbe1b-cf6c-5bd2-9939-a6a252ff7517",
             "type": "network-traffic"
         },
         {
@@ -96,11 +96,11 @@
             "modified": "2018-08-21T09:30:27.964Z",
             "number_observed": 1,
             "object_refs": [
-                "process--bbbbe852-3b63-4090-9d5e-864187681f67",
-                "process--558db240-f115-4878-8216-3ab41170464c",
-                "process--819e111f-2ae8-407d-9332-41421c82786e",
-                "ipv4-addr--16f509b9-7b8a-4a12-99c5-9df0e64350f4",
-                "network-traffic--3f5b17b3-f4c1-419e-82fb-6081b1ef23c3"
+                "process--63e1e0f5-3355-4ac5-b54a-d83eb006885a",
+                "process--8aaf51b1-92ae-4c2b-9d13-4e917dc49ec8",
+                "process--d1a4c3df-4dfc-420b-9f05-e5a208afb25d",
+                "ipv4-addr--c5a216ae-2184-5acd-b145-2d1321457d0b",
+                "network-traffic--1a0fbe1b-cf6c-5bd2-9939-a6a252ff7517"
             ],
             "spec_version": "2.1",
             "type": "observed-data"

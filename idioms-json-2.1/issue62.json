@@ -3,7 +3,7 @@
     "objects": [
         {
             "child_refs": [
-                "process--b452466c-f30b-4569-b8e4-429b596e214e"
+                "process--f5904d0d-874f-45b4-91a0-2e97dbe43507"
             ],
             "created": "2010-12-09T20:17:34.934295Z",
             "extensions": {
@@ -11,100 +11,100 @@
                     "window_title": "Some Title"
                 }
             },
-            "id": "process--59f52425-f9fc-4b80-82ba-713545ceeacb",
+            "id": "process--fcf907a8-2445-42e5-a7c6-db784b510422",
             "opened_connection_refs": [
-                "network-traffic--489f0403-4a2b-4910-9472-fa4e08587c96"
+                "network-traffic--a26259f7-6c47-5ded-9c9b-2284b4522184"
             ],
-            "parent_ref": "process--4c79926d-1fc7-481c-bfe6-08799010a567",
+            "parent_ref": "process--33fd6baf-4936-41e7-8a07-95070d59ddc3",
             "pid": 1700,
             "type": "process"
         },
         {
-            "id": "process--b452466c-f30b-4569-b8e4-429b596e214e",
-            "pid": 4567,
-            "type": "process"
-        },
-        {
-            "id": "process--4c79926d-1fc7-481c-bfe6-08799010a567",
-            "pid": 1616,
-            "type": "process"
-        },
-        {
-            "id": "ipv4-addr--d3efd07c-2c2a-484a-bcea-7e5792c25185",
+            "id": "ipv4-addr--c5a216ae-2184-5acd-b145-2d1321457d0b",
             "type": "ipv4-addr",
             "value": "198.49.123.10"
         },
         {
             "dst_port": 80,
-            "dst_ref": "ipv4-addr--d3efd07c-2c2a-484a-bcea-7e5792c25185",
-            "id": "network-traffic--489f0403-4a2b-4910-9472-fa4e08587c96",
+            "dst_ref": "ipv4-addr--c5a216ae-2184-5acd-b145-2d1321457d0b",
+            "id": "network-traffic--a26259f7-6c47-5ded-9c9b-2284b4522184",
             "type": "network-traffic"
         },
         {
-            "created": "2019-08-21T11:06:25.354Z",
+            "id": "process--f5904d0d-874f-45b4-91a0-2e97dbe43507",
+            "pid": 4567,
+            "type": "process"
+        },
+        {
+            "id": "process--33fd6baf-4936-41e7-8a07-95070d59ddc3",
+            "pid": 1616,
+            "type": "process"
+        },
+        {
+            "created": "2019-09-19T14:49:52.504Z",
             "id": "indicator--6116b44e-a7e9-11e3-a82f-000c29b241af",
             "indicator_types": [
                 "unknown"
             ],
-            "modified": "2019-08-21T11:06:25.354Z",
+            "modified": "2019-09-19T14:49:52.504Z",
             "pattern": "[((file:hashes.MD5 = '5d8129be965fab8115eca34fc84bd7f0' OR file:hashes.'SHA-1' = '2b999e7db890cc77f0098a091de756a1803a3c2b' OR file:hashes.'SHA-256' = '2c5dd8a64437cb2dd4b6747139c61d2d7f53ab3ddedbf22df3cb01bae170715b' OR file:hashes.ssdeep = '768:mvAFYk0IOqi7RKW1RD1ZCrm82+AnbaAOdoOKL70ehP:cDIOqctz2rBmbZoa71hP') AND file:name = 'VirusShare_5d8129be965fab8115eca34fc84bd7f0' AND file:size = 40654 AND (((file:extensions.'windows-pebinary-ext'.section[*].name = '.rdata' AND file:extensions.'windows-pebinary-ext'.section[*].entropy = 7.74202363178) AND (file:extensions.'windows-pebinary-ext'.section[*].name = '.data' AND file:extensions.'windows-pebinary-ext'.section[*].entropy = 7.89204688601) AND (file:extensions.'windows-pebinary-ext'.section[*].name = '.upx' AND file:extensions.'windows-pebinary-ext'.section[*].entropy = 7.31815613066)) AND unconverted_term:WinExecutableFileObj.exports AND unconverted_term:WinExecutableFileObj.imports))]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
-            "valid_from": "2019-08-21T11:06:25.354567Z"
+            "valid_from": "2019-09-19T14:49:52.504Z"
         },
         {
-            "created": "2019-08-21T11:06:25.355Z",
+            "created": "2019-09-19T14:49:52.504Z",
             "id": "indicator--6116cf88-a7e9-11e3-a82f-000c29b241af",
             "indicator_types": [
                 "unknown"
             ],
-            "modified": "2019-08-21T11:06:25.355Z",
+            "modified": "2019-09-19T14:49:52.504Z",
             "pattern": "[((file:hashes.MD5 = 'd41d8cd98f00b204e9800998ecf8427e' OR file:hashes.'SHA-1' = 'da39a3ee5e6b4b0d3255bfef95601890afd80709' OR file:hashes.'SHA-256' = 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855') AND file:name = 'autoexec.bat' AND file:size = 0)]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
-            "valid_from": "2019-08-21T11:06:25.355473Z"
+            "valid_from": "2019-09-19T14:49:52.504Z"
         },
         {
-            "created": "2019-08-21T11:06:25.355Z",
+            "created": "2019-09-19T14:49:52.504Z",
             "id": "indicator--6116d730-a7e9-11e3-a82f-000c29b241af",
             "indicator_types": [
                 "unknown"
             ],
-            "modified": "2019-08-21T11:06:25.355Z",
+            "modified": "2019-09-19T14:49:52.504Z",
             "pattern": "[(process:pid = 1700 AND process:parent_ref.pid = 1616 AND process:creator_user_ref.user_id = 'admin' AND process:created = t'2010-12-09T20:17:34.934295Z' AND process:command_line = 'bash some.sh' AND process:environment_variables[*].PROXY = '123.456.0.1' AND process:child_refs[*].pid = 4567 AND process:opened_connection_refs[*].dst_ref.value = '198.49.123.10' AND process:extensions.'windows-process-ext'.window_title = 'Some Title')] AND [unconverted_term:ProcessObj.argument_list]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
-            "valid_from": "2019-08-21T11:06:25.355761Z"
+            "valid_from": "2019-09-19T14:49:52.504Z"
         },
         {
-            "created": "2019-08-21T11:06:25.356Z",
+            "created": "2019-09-19T14:49:52.504Z",
             "id": "indicator--6116dcbc-a7e9-11e3-a82f-000c29b241af",
             "indicator_types": [
                 "unknown"
             ],
-            "modified": "2019-08-21T11:06:25.356Z",
+            "modified": "2019-09-19T14:49:52.504Z",
             "pattern": "[(windows-registry-key:key = 'HKEY_CURRENT_USER\\\\Software\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Explorer\\\\User Shell Folders' AND windows-registry-key:key = 'HKEY_CURRENT_USER\\\\Software\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Explorer\\\\Shell Folders' AND windows-registry-key:key = 'HKEY_LOCAL_MACHINE\\\\Software\\\\Microsoft\\\\Tracing' AND windows-registry-key:key = 'HKEY_LOCAL_MACHINE\\\\Software\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Explorer\\\\User Shell Folders' AND windows-registry-key:key = 'Software\\\\Microsoft\\\\Windows NT\\\\CurrentVersion\\\\Winlogon' AND windows-registry-key:key = 'HKEY_LOCAL_MACHINE\\\\Software\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Explorer\\\\Shell Folders' AND windows-registry-key:key = 'Software\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Explorer\\\\User Shell Folders' AND windows-registry-key:key = 'Software\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Explorer\\\\Shell Folders' AND windows-registry-key:key = 'Software\\\\Microsoft\\\\windows\\\\CurrentVersion\\\\Internet Settings' AND windows-registry-key:key = 'Software\\\\Microsoft\\\\windows\\\\CurrentVersion\\\\Internet Settings\\\\Connections' AND windows-registry-key:key = 'HKEY_CURRENT_CONFIG\\\\Software\\\\Microsoft\\\\windows\\\\CurrentVersion\\\\Internet Settings' AND windows-registry-key:key = 'Software\\\\Microsoft\\\\SystemCertificates\\\\MY' AND windows-registry-key:key = 'HKEY_LOCAL_MACHINE\\\\System\\\\CurrentControlSet\\\\Services\\\\Tcpip\\\\Parameters')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
-            "valid_from": "2019-08-21T11:06:25.356423Z"
+            "valid_from": "2019-09-19T14:49:52.504Z"
         },
         {
-            "created": "2019-08-21T11:06:25.353Z",
-            "first_observed": "2019-08-21T11:06:25.353Z",
+            "created": "2019-09-19T14:49:52.504Z",
+            "first_observed": "2019-09-19T14:49:52.504Z",
             "id": "observed-data--65492fbc-5d48-49bf-83b8-33c965e36066",
-            "last_observed": "2019-08-21T11:06:25.353Z",
-            "modified": "2019-08-21T11:06:25.353Z",
+            "last_observed": "2019-09-19T14:49:52.504Z",
+            "modified": "2019-09-19T14:49:52.504Z",
             "number_observed": 1,
             "object_refs": [
-                "process--59f52425-f9fc-4b80-82ba-713545ceeacb",
-                "process--b452466c-f30b-4569-b8e4-429b596e214e",
-                "process--4c79926d-1fc7-481c-bfe6-08799010a567",
-                "ipv4-addr--d3efd07c-2c2a-484a-bcea-7e5792c25185",
-                "network-traffic--489f0403-4a2b-4910-9472-fa4e08587c96"
+                "process--fcf907a8-2445-42e5-a7c6-db784b510422",
+                "ipv4-addr--c5a216ae-2184-5acd-b145-2d1321457d0b",
+                "network-traffic--a26259f7-6c47-5ded-9c9b-2284b4522184",
+                "process--f5904d0d-874f-45b4-91a0-2e97dbe43507",
+                "process--33fd6baf-4936-41e7-8a07-95070d59ddc3"
             ],
             "spec_version": "2.1",
             "type": "observed-data"

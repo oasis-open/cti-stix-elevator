@@ -42,11 +42,16 @@ def create_base_sco(obj1x, type, other_properties=None):
         new_dict["type"] = type
     else:
         new_dict = {"type": type}
-    if get_option_value("spec_version") == "2.1":
-        new_dict["id"] = generate_sco_id(type)
+    # if get_option_value("spec_version") == "2.1":
+    #   new_dict["id"] = generate_sco_id(type)
     # if obj1x.is_defanged:
     #    new_dict["defanged"] = True
     return new_dict
+
+
+def finish_sco(instance):
+    if get_option_value("spec_version") == "2.1":
+        instance["id"] = generate_sco_id(instance["type"], instance)
 
 
 def convert_account(acc):
@@ -89,24 +94,30 @@ def convert_account(acc):
                 account_dict["account_type"] = "windows-domain"
             else:
                 account_dict["account_type"] = "windows-local"
+    finish_sco(account_dict)
     return account_dict
 
 
 def convert_address(add):
     if add.category == add.CAT_IPV4:
-        return create_base_sco(add, "ipv4-addr", {"value": add.address_value.value})
+        instance = create_base_sco(add, "ipv4-addr", {"value": add.address_value.value})
     elif add.category == add.CAT_IPV6:
-        return create_base_sco(add, "ipv6-addr", {"value": add.address_value.value})
+        instance = create_base_sco(add, "ipv6-addr", {"value": add.address_value.value})
     elif add.category == add.CAT_MAC:
-        return create_base_sco(add, "mac-addr", {"value": add.address_value.value})
+        instance = create_base_sco(add, "mac-addr", {"value": add.address_value.value})
     elif add.category == add.CAT_EMAIL:
-        return create_base_sco(add, "email-addr", {"value": add.address_value.value})
+        instance = create_base_sco(add, "email-addr", {"value": add.address_value.value})
     else:
         warn("The address type %s is not part of STIX 2.x", 421, add.category)
+    if instance:
+        finish_sco(instance)
+        return instance
 
 
 def convert_uri(uri):
-    return create_base_sco(uri, "url", {"value": uri.value.value})
+    instance = create_base_sco(uri, "url", {"value": uri.value.value})
+    finish_sco(instance)
+    return instance
 
 
 def convert_hashes(hashes):
@@ -253,6 +264,7 @@ def convert_file_properties(f):
         dir_path = f.file_path.value[0: index]
         if dir_path:
             dir_dict = create_base_sco(None, "directory", {"path": (f.device_path.value if f.device_path else "") + dir_path})
+            finish_sco(dir_dict)
     if f.full_path:
         warn("1.x full file paths are not processed, yet", 802)
     if isinstance(f, WinExecutableFile):
@@ -269,6 +281,7 @@ def convert_file_properties(f):
             warn("No ArchiveFile properties found in %s", 614, text_type(f))
     else:
         file_objs = None
+    finish_sco(file_dict)
     return file_dict, dir_dict, file_objs
 
 
@@ -378,6 +391,7 @@ def convert_email_message(email_message):
         for a in email_message.attachments:
             multiparts.append(convert_attachment(a))
         email_dict["body_multipart"] = multiparts
+    finish_sco(email_dict)
     return objs
 
 
@@ -408,6 +422,7 @@ def convert_registry_key(reg_key):
             cybox_reg["modified"] = convert_timestamp_to_string(reg_key.modified_time)
         else:
             cybox_reg["modified_time"] = convert_timestamp_to_string(reg_key.modified_time)
+    finish_sco(cybox_reg)
     return cybox_reg
 
 
@@ -417,6 +432,7 @@ def create_process_ref(cp, process_dict, objs, index, prop):
     if get_option_value("spec_version") == "2.0":
         objs[text_type(index)] = cp_ref
     else:
+        finish_sco(cp_ref)
         objs.append(cp_ref)
     if prop == "child_refs":
         if prop not in process_dict:
@@ -439,6 +455,7 @@ def convert_port(prop):
         traffic_2x["dst_port"] = prop.port_value.value
     if prop.layer4_protocol:
         traffic_2x["protocols"] = [prop.layer4_protocol.value]
+    finish_sco(traffic_2x)
     return traffic_2x
 
 
@@ -464,7 +481,6 @@ def convert_opened_connection_refs21(process, process_dict, objs):
         for obj in nc_dicts:
             objs.append(obj)
         # network-traffic is always the last obj
-        obj["id"] = generate_sco_id(obj["type"])
         process_dict["opened_connection_refs"].append(obj["id"])
 
 
@@ -483,13 +499,7 @@ def convert_process(process):
         process_dict["pid"] = process.pid.value
     if process.creation_time:
         process_dict["created"] = convert_timestamp_to_string(process.creation_time.value)
-    if process.child_pid_list:
-        for cp in process.child_pid_list:
-            create_process_ref(cp, process_dict, objs, index, "child_refs")
-            index += 1
-    if process.parent_pid:
-        create_process_ref(process.parent_pid, process_dict, objs, index, "parent_ref")
-        index += 1
+
     if process.argument_list and get_option_value("spec_version") == "2.0":
         process_dict["arguments"] = []
         for a in process.argument_list:
@@ -510,6 +520,14 @@ def convert_process(process):
                 extended_properties["windows-service-ext"] = service_properties
         if extended_properties:
             process_dict["extensions"] = extended_properties
+    finish_sco(process_dict)
+    if process.child_pid_list:
+        for cp in process.child_pid_list:
+            create_process_ref(cp, process_dict, objs, index, "child_refs")
+            index += 1
+    if process.parent_pid:
+        create_process_ref(process.parent_pid, process_dict, objs, index, "parent_ref")
+        index += 1
     return objs
 
 
@@ -563,6 +581,7 @@ def convert_domain_name(domain_name):
         cybox_dm["value"] = text_type(domain_name.value.value)
 
     # TODO: resolves_to_refs
+    finish_sco(cybox_dm)
     return cybox_dm
 
 
@@ -570,7 +589,7 @@ def convert_mutex(mutex):
     cybox_mutex = create_base_sco(mutex, "mutex")
     if mutex.name:
         cybox_mutex["name"] = text_type(mutex.name.value)
-
+    finish_sco(cybox_mutex)
     return cybox_mutex
 
 
@@ -696,7 +715,9 @@ def convert_network_connection(conn):
         objs = []
 
     def create_domain_name_object(dn):
-        return create_base_sco(None, "domain-name", {"value": text_type(dn.value)})
+        instance = create_base_sco(None, "domain-name", {"value": text_type(dn.value)})
+        finish_sco(instance)
+        return instance
 
     if conn.creation_time is not None:
         cybox_traffic["start"] = convert_timestamp_to_string(conn.creation_time.value, None, None)
@@ -798,7 +819,7 @@ def convert_network_connection(conn):
         if spec_version == "2.0":
             objs[text_type(index)] = cybox_traffic
         else:
-            cybox_traffic["id"] = generate_sco_id("network-traffic")
+            finish_sco(cybox_traffic)
             objs.append(cybox_traffic)
 
     # cybox_traffic["end"]
@@ -837,6 +858,7 @@ def convert_http_session(session):
             cybox_traffic["extensions"] = {"http-request-ext": convert_http_client_request(requests[0])}
             if len(requests) > 1:
                 warn("Only HTTP_Request_Response used for http-request-ext, using first value", 512)
+            finish_sco(cybox_traffic)
             return cybox_traffic
 
 
@@ -865,6 +887,7 @@ def convert_network_packet(packet):
                 return None
             cybox_traffic = create_base_sco(packet, "network-traffic")
             cybox_traffic["extensions"] = {"icmp-ext": create_icmp_extension(icmp_header)}
+            finish_sco(cybox_traffic)
             return cybox_traffic
 
 
@@ -903,6 +926,7 @@ def convert_network_socket(socket):
     if socket.protocol:
         cybox_traffic["protocols"] = [socket.protocol.value]
     cybox_traffic["extensions"] = {"socket-ext": socket_extension}
+    finish_sco(cybox_traffic)
     return cybox_traffic
 
 
