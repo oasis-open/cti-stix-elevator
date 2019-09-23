@@ -18,6 +18,7 @@ from .test_idioms import (BEFORE_FILENAMES,
 
 _IGNORE = ()
 
+
 def idiom_stepper_mappings(before_file_path, stored_json):
     """Test fresh conversion from XML to JSON matches stored JSON samples."""
     print("Checking - " + before_file_path)
@@ -47,12 +48,13 @@ def test_stepper_idiom_mapping(test_file, stored_master):
     for good_path, check_path in idiom_stepper_mappings(test_file, stored_master):
         # we want to check for ids in the stepper, especially to test deterministic ids - but the stepper MIGHT
         # add a relationship and its id will always be different from the golden one.
-        # so we skip testing for equality on relationship ids
+        # additionally, process ids are always UUIDv4 - so they will also always be different
+        # so we skip testing for equality on relationship and process ids
         if id_property(check_path) and id_property(good_path):
             type_of_good_id = good_path[1].split("--")[0]
             type_of_check_id = check_path[1].split("--")[0]
             if (type_of_good_id == 'relationship' and type_of_check_id == 'relationship' or
-                type_of_good_id == 'process' and type_of_check_id == 'process'):
+                    type_of_good_id == 'process' and type_of_check_id == 'process'):
                 continue
         if good_path != check_path:
             find_index_of_difference(good_path, check_path)

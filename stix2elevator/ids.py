@@ -1,11 +1,11 @@
-import re
-import uuid
-from stix2.base import SCO_DET_ID_NAMESPACE
-from stix2.canonicalization.Canonicalize import canonicalize
 import importlib
 import inspect
+import re
+import uuid
 
-from six import text_type, binary_type
+from six import binary_type, text_type
+from stix2.base import SCO_DET_ID_NAMESPACE
+from stix2.canonicalization.Canonicalize import canonicalize
 
 from stix2elevator.options import error, info, warn
 from stix2elevator.utils import map_1x_type_to_20
@@ -83,6 +83,7 @@ def generate_stix2x_id(stix2x_so_name, stix12_id=None, id_used=False):
             else:
                 error("Unable to determine the STIX 2.x type for %s, which is malformed", 629, stix12_id)
                 return None
+
 
 _SCO_CLASSES = {}
 
