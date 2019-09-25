@@ -70,6 +70,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
+            "description": "\n\nINFORMATION_SOURCE_ROLE:\nNation-State,\nMilitary",
             "id": "identity--1f2cc767-aee4-4482-9b36-9bf45b35d899",
             "identity_class": "organization",
             "modified": "2015-05-15T09:00:00.000Z",
@@ -205,6 +206,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
+            "description": "\n\nINFORMATION_SOURCE_ROLE:\nResearch and Development",
             "id": "identity--7622b69a-f5f5-4e36-90ac-26f8c0cd2a45",
             "identity_class": "individual",
             "modified": "2015-05-15T09:00:00.000Z",
@@ -450,6 +452,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
+            "description": "\n\nINFORMATION_SOURCE_ROLE:\nNation-State",
             "id": "identity--38ffce69-228c-4225-ba82-6affa5939ed5",
             "identity_class": "organization",
             "modified": "2015-05-15T09:00:00.000Z",
@@ -489,6 +492,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
+            "description": "\n\nINFORMATION_SOURCE_ROLE:\nState-influenced Commercial Entity",
             "id": "identity--d7c2d4a9-e981-40b7-923b-b1c04f73e3e4",
             "identity_class": "organization",
             "modified": "2015-05-15T09:00:00.000Z",

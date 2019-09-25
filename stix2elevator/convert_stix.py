@@ -134,10 +134,8 @@ def process_information_source(information_source, so, env, temp_marking_id=None
             if information_source.references:
                 for ref in information_source.references:
                     so["external_references"].append({"source_name": "unknown", "url": ref})
-            if not get_option_value("no_squirrel_gaps") and information_source.roles:
-                for role in information_source.roles:
-                    # no vocab to make to in 2.0
-                    so["description"] += "\n\n" + "INFORMATION SOURCE ROLE: " + role.value
+            if information_source.roles:
+                handle_missing_string_property(so, "information_source_role", information_source.roles, True)
             if information_source.tools:
                 for tool in information_source.tools:
                     add_tool_property_to_description(so, tool)
@@ -340,6 +338,10 @@ def finish_basic_object(old_id, instance, env, stix1x_obj, temp_marking_id=None)
 # handle gaps
 #
 
+def convert_to_custom_property_name(prop_name):
+    return "x_elevator_" + prop_name
+
+
 def add_free_text_lines_to_description(sdo_instance, free_text_lines):
     if not get_option_value("no_squirrel_gaps"):
         for line in free_text_lines:
@@ -360,6 +362,25 @@ def add_string_property_to_description(sdo_instance, property_name, property_val
         warn("Appended %s to description of %s", 302, property_name, sdo_instance["id"])
 
 
+def add_string_property_as_custom_property(sdo_instance, property_name, property_value, is_list=False):
+    if is_list:
+        property_values = list()
+        for v in property_value:
+            property_values.append(text_type(v))
+        sdo_instance[convert_to_custom_property_name(property_name)] = ",".join(property_values)
+    else:
+        sdo_instance[convert_to_custom_property_name(property_name)] = text_type(property_value)
+    warn("Used custom property for %s of %s", 0, property_name, sdo_instance["id"])
+
+
+def handle_missing_string_property(sdo_instance, property_name, property_value, is_list=False):
+    if property_value:
+        if not get_option_value("no_squirrel_gaps"):
+            add_string_property_to_description(sdo_instance, property_name, property_value, is_list)
+        else:
+            add_string_property_as_custom_property(sdo_instance, property_name, property_value, is_list)
+
+
 def add_confidence_property_to_description(sdo_instance, confidence):
     if not get_option_value("no_squirrel_gaps"):
         if confidence is not None:
@@ -371,29 +392,67 @@ def add_confidence_property_to_description(sdo_instance, confidence):
             warn("Appended Confidence type content to description of %s", 304, sdo_instance["id"])
 
 
+def add_confidence_property_as_custom_property(sdo_instance, confidence):
+    if confidence.value is not None:
+        sdo_instance[convert_to_custom_property_name("confidence")] = text_type(confidence.value)
+    if confidence.description is not None:
+        sdo_instance[convert_to_custom_property_name("confidence_description")] = text_type(confidence.description)
+    warn("Used custom properties for Confidence type content of %s", 0, sdo_instance["id"])
+
+
+def handle_missing_confidence_property(sdo_instance, confidence):
+    if confidence:
+        if not get_option_value("no_squirrel_gaps") and confidence:
+            add_confidence_property_to_description(sdo_instance, confidence)
+        else:
+            add_confidence_property_as_custom_property(sdo_instance, confidence)
+
+
 def add_statement_type_to_description(sdo_instance, statement, property_name):
-    if statement and not get_option_value("no_squirrel_gaps"):
-        sdo_instance["description"] += "\n\n" + property_name.upper() + ":"
-        if statement.value:
-            sdo_instance["description"] += text_type(statement.value)
-        if statement.descriptions:
-            descriptions = []
-            for d in statement.descriptions:
-                descriptions.append(text_type(d.value))
-            sdo_instance["description"] += "\n\n\t".join(descriptions)
-
-        if statement.source is not None:
-            # FIXME: Handle source
-            info("Source in %s is not handled, yet.", 815, sdo_instance["id"])
-        if statement.confidence:
-            add_confidence_property_to_description(sdo_instance, statement.confidence)
-        warn("Appended Statement type content to description of %s", 305, sdo_instance["id"])
+    sdo_instance["description"] += "\n\n" + property_name.upper() + ":"
+    if statement.value:
+        sdo_instance["description"] += text_type(statement.value)
+    if statement.descriptions:
+        descriptions = []
+        for d in statement.descriptions:
+            descriptions.append(text_type(d.value))
+        sdo_instance["description"] += "\n\n\t".join(descriptions)
+    if statement.source is not None:
+        # FIXME: Handle source
+        info("Source in %s is not handled, yet.", 815, sdo_instance["id"])
+    if statement.confidence:
+        handle_missing_confidence_property(sdo_instance, statement.confidence)
+    warn("Appended Statement type content to description of %s", 305, sdo_instance["id"])
 
 
-def add_multiple_statement_types_to_description(sdo_instance, statements, property_name):
-    if not get_option_value("no_squirrel_gaps"):
-        for s in statements:
-            add_statement_type_to_description(sdo_instance, s, property_name)
+def add_statement_type_as_custom_property(sdo_instance, statement, property_name):
+    sdo_instance["description"] += "\n\n" + property_name.upper() + ":"
+    if statement.value:
+        sdo_instance[convert_to_custom_property_name(property_name)] = text_type(statement.value)
+    if statement.descriptions:
+        descriptions = []
+        for d in statement.descriptions:
+            descriptions.append(text_type(d.value))
+        sdo_instance[convert_to_custom_property_name(property_name + "description")] = " ".join(descriptions)
+    if statement.source is not None:
+        # FIXME: Handle source
+        info("Source in %s is not handled, yet.", 815, sdo_instance["id"])
+    if statement.confidence:
+        handle_missing_confidence_property(sdo_instance, statement.confidence)
+    warn("Used custom properties for Statement type content of %s", 0, sdo_instance["id"])
+
+
+def handle_missing_statement_property(sdo_instance, statement, property_name):
+    if statement:
+        if not get_option_value("no_squirrel_gaps") and statement:
+            add_statement_type_to_description(sdo_instance, statement, property_name)
+        else:
+            add_statement_type_as_custom_property(sdo_instance, statement, property_name)
+
+
+def handle_multiple_missing_statement_properties(sdo_instance, statements, property_name):
+    for s in statements:
+        handle_missing_statement_property(sdo_instance, s, property_name)
 
 
 def add_tool_property_to_description(sdo_instance, tool):
@@ -402,6 +461,7 @@ def add_tool_property_to_description(sdo_instance, tool):
         if tool.name:
             sdo_instance["description"] += "\n\tname: " + text_type(tool.name)
         warn("Appended Tool type content to description of %s", 306, sdo_instance["id"])
+
 
 # Sightings
 
@@ -429,10 +489,8 @@ def process_information_source_for_sighting(sighting, sighting_instance, bundle_
             if information_source.references:
                 for ref in information_source.references:
                     sighting_instance["external_references"].append({"url": ref})
-            if not get_option_value("no_squirrel_gaps") and information_source.roles:
-                for role in information_source.roles:
-                    # no vocab to make to in 2.0
-                    sighting_instance["description"] += "\n\n" + "INFORMATION SOURCE ROLE: " + role.value
+            if information_source.roles:
+                handle_missing_string_property(sighting_instance, "information_source_role", information_source.roles, True)
             if information_source.tools:
                 for tool in information_source.tools:
                     add_tool_property_to_description(sighting_instance, tool)
@@ -703,11 +761,11 @@ def convert_campaign(camp, env):
     # process information source before any relationships
     new_env.add_to_env(created_by_ref=process_information_source(camp.information_source, campaign_instance, new_env))
 
-    add_multiple_statement_types_to_description(campaign_instance, camp.intended_effects, "intended_effect")
-    add_string_property_to_description(campaign_instance, "status", camp.status)
+    handle_multiple_missing_statement_properties(campaign_instance, camp.intended_effects, "intended_effect")
+    handle_missing_string_property(campaign_instance, "status", camp.status)
 
     if get_option_value("spec_version") == "2.0":
-        add_confidence_property_to_description(campaign_instance, camp.confidence)
+        handle_missing_confidence_property(campaign_instance, camp.confidence)
     else:  # 2.1
         add_confidence_to_object(campaign_instance, camp.confidence)
 
@@ -750,24 +808,25 @@ def convert_campaign(camp, env):
 # course of action
 
 
-def add_objective_property_to_description(sdo_instance, objective):
-    if not get_option_value("no_squirrel_gaps"):
-        if objective is not None:
+def handle_missing_objective_property(sdo_instance, objective):
+    if objective is not None:
+        all_text = []
+
+        if objective.descriptions:
+            for d in objective.descriptions:
+                all_text.append(text_type(d.value))
+
+        if objective.short_descriptions:
+            for sd in objective.short_descriptions:
+                all_text.append(text_type(sd.value))
+
+        if not get_option_value("no_squirrel_gaps"):
             sdo_instance["description"] += "\n\n" + "OBJECTIVE: "
-            all_text = []
-
-            if objective.descriptions:
-                for d in objective.descriptions:
-                    all_text.append(text_type(d.value))
-
-            if objective.short_descriptions:
-                for sd in objective.short_descriptions:
-                    all_text.append(text_type(sd.value))
-
             sdo_instance["description"] += "\n\n\t".join(all_text)
-
-            if objective.applicability_confidence:
-                add_confidence_property_to_description(sdo_instance, objective.applicability_confidence)
+        else:
+            sdo_instance[convert_to_custom_property_name("objective")] = " ".join(all_text)
+        if objective.applicability_confidence:
+            handle_missing_confidence_property(sdo_instance, objective.applicability_confidence)
 
 
 def convert_course_of_action(coa, env):
@@ -775,19 +834,19 @@ def convert_course_of_action(coa, env):
     new_env = env.newEnv(timestamp=coa_instance["created"])
     process_description_and_short_description(coa_instance, coa)
     coa_instance["name"] = coa.title
-    add_string_property_to_description(coa_instance, "stage", coa.stage)
+    handle_missing_string_property(coa_instance, "stage", coa.stage)
     if coa.type_:
         convert_controlled_vocabs_to_open_vocabs(coa_instance, "labels", [coa.type_], COA_LABEL_MAP, False)
-    add_objective_property_to_description(coa_instance, coa.objective)
+    handle_missing_objective_property(coa_instance, coa.objective)
 
     if coa.parameter_observables is not None:
         # parameter observables, maybe turn into pattern expressions and put in description???
         warn("Parameter Observables in %s are not handled, yet.", 814, coa_instance["id"])
     if coa.structured_coa:
         warn("Structured COAs type in %s are not supported in STIX 2.0", 404, coa_instance["id"])
-    add_statement_type_to_description(coa_instance, coa.impact, "impact")
-    add_statement_type_to_description(coa_instance, coa.cost, "cost")
-    add_statement_type_to_description(coa_instance, coa.efficacy, "efficacy")
+    handle_missing_statement_property(coa_instance, coa.impact, "impact")
+    handle_missing_statement_property(coa_instance, coa.cost, "cost")
+    handle_missing_statement_property(coa_instance, coa.efficacy, "efficacy")
     coa_created_by_ref = process_information_source(coa.information_source,
                                                     coa_instance,
                                                     new_env)
@@ -808,7 +867,7 @@ def process_et_properties(sdo_instance, et, env):
     if "name" in sdo_instance:
         info("Title %s used for name, appending exploit_target %s title in description property",
              303, sdo_instance["type"], sdo_instance["id"])
-        add_string_property_to_description(sdo_instance, "title", et.title, False)
+        handle_missing_string_property(sdo_instance, "title", et.title, False)
     elif et.title is not None:
         sdo_instance["name"] = et.title
     new_env = env.newEnv(timestamp=sdo_instance["created"])
@@ -830,20 +889,20 @@ def convert_vulnerability(v, et, env):
         vulnerability_instance["external_references"].append({"source_name": "osvdb", "external_id": v.osvdb_id})
 
     if v.source is not None:
-        add_string_property_to_description(vulnerability_instance, "source", v.source, False)
+        handle_missing_string_property(vulnerability_instance, "source", v.source, False)
 
     if v.cvss_score is not None:
         # FIXME: add CVSS score into description
         info("CVSS Score in %s is not handled, yet.", 815, vulnerability_instance["id"])
 
     if v.discovered_datetime is not None:
-        add_string_property_to_description(vulnerability_instance,
+        handle_missing_string_property(vulnerability_instance,
                                            "discovered_datetime",
                                            v.discovered_datetime.value.strftime("%Y-%m-%dT%H:%M:%S.%fZ"),
                                            False)
 
     if v.published_datetime is not None:
-        add_string_property_to_description(vulnerability_instance,
+        handle_missing_string_property(vulnerability_instance,
                                            "published_datetime",
                                            v.published_datetime.value.strftime("%Y-%m-%dT%H:%M:%S.%fZ"),
                                            False)
@@ -1003,6 +1062,7 @@ def convert_identity(identity, env, parent_id=None, temp_marking_id=None, from_p
         identity_instance["name"] = identity.name
     if isinstance(identity, CIQIdentity3_0Instance):
         if identity.roles:
+            handle_missing_string_property(identity_instance, "information_source_role", identity.roles, True)
             warn("Roles is not a property of an identity (%s).  Perhaps the roles are associated with a related Threat Actor",
                  428,
                  identity_instance["id"])
@@ -1057,7 +1117,7 @@ def convert_incident(incident, env):
     new_env.add_to_env(created_by_ref=process_information_source(incident.information_source, incident_instance, new_env))
 
     if get_option_value("spec_version") == "2.0":
-        add_confidence_property_to_description(incident_instance, incident.confidence)
+        handle_missing_confidence_property(incident_instance, incident.confidence)
     else:  # 2.1
         add_confidence_to_object(incident_instance, incident.confidence)
 
@@ -1093,7 +1153,7 @@ def convert_incident(incident, env):
     if incident.impact_assessment is not None:
         # FIXME: add impact_assessment to description
         info("Incident Impact Assessment in %s is not handled, yet", 815, incident_instance["id"])
-    add_string_property_to_description(incident_instance, "status", incident.status)
+    handle_missing_string_property(incident_instance, "status", incident.status)
     if incident.related_incidents:
         warn("All 'associated incidents' relationships of %s are assumed to not represent STIX 1.2 versioning",
              710, incident_instance["id"])
@@ -1196,10 +1256,10 @@ def convert_indicator(indicator, env):
             indicator_instance["valid_from"] = convert_timestamp_of_stix_object(indicator, env.timestamp)
     convert_kill_chains(indicator.kill_chain_phases, indicator_instance)
     if indicator.likely_impact:
-        add_statement_type_to_description(indicator_instance, indicator.likely_impact, "likely_impact")
+        handle_missing_statement_property(indicator_instance, indicator.likely_impact, "likely_impact")
 
     if get_option_value("spec_version") == "2.0":
-        add_confidence_property_to_description(indicator_instance, indicator.confidence)
+        handle_missing_confidence_property(indicator_instance, indicator.confidence)
     else:  # 2.1
         add_confidence_to_object(indicator_instance, indicator.confidence)
     if indicator.observable is not None:
@@ -1421,7 +1481,7 @@ def convert_report(report, env):
         header_created_by_ref = process_information_source(report.header.information_source, report_instance, new_env)
         new_env.add_to_env(created_by_ref=header_created_by_ref)
         # process information source before any relationships
-        add_string_property_to_description(report_instance, "intent", report.header.intents, True)
+        handle_missing_string_property(report_instance, "intent", report.header.intents, True)
         if report.header.title is not None:
             report_instance["name"] = report.header.title
         convert_controlled_vocabs_to_open_vocabs(report_instance,
@@ -1479,11 +1539,11 @@ def convert_threat_actor(threat_actor, env):
                                                  "spec_version") == "2.0" else "threat_actor_types",
                                              threat_actor.types,
                                              THREAT_ACTOR_LABEL_MAP, False)
-    add_multiple_statement_types_to_description(threat_actor_instance, threat_actor.intended_effects, "intended_effect")
-    add_multiple_statement_types_to_description(threat_actor_instance, threat_actor.planning_and_operational_supports,
+    handle_multiple_missing_statement_properties(threat_actor_instance, threat_actor.intended_effects, "intended_effect")
+    handle_multiple_missing_statement_properties(threat_actor_instance, threat_actor.planning_and_operational_supports,
                                                 "planning_and_operational_support")
     if get_option_value("spec_version") == "2.0":
-        add_confidence_property_to_description(threat_actor_instance, threat_actor.confidence)
+        handle_missing_confidence_property(threat_actor_instance, threat_actor.confidence)
     else:  # 2.1
         add_confidence_to_object(threat_actor_instance, threat_actor.confidence)
 
@@ -1523,12 +1583,12 @@ def determine_ttp_relationship_type_and_direction(source_type, target_type, rela
 
 def process_ttp_properties(sdo_instance, ttp, env, kill_chains_in_sdo=True, victim_target=False):
     process_description_and_short_description(sdo_instance, ttp, True)
-    add_multiple_statement_types_to_description(sdo_instance, ttp.intended_effects, "intended_effect")
+    handle_multiple_missing_statement_properties(sdo_instance, ttp.intended_effects, "intended_effect")
     if hasattr(ttp, "title"):
         if ("name" not in sdo_instance or sdo_instance["name"] is None) and not victim_target:
             sdo_instance["name"] = ttp.title
         else:
-            add_string_property_to_description(sdo_instance, "title", ttp.title, False)
+            handle_missing_string_property(sdo_instance, "title", ttp.title, False)
 
     # only populate kill chain phases if that is a property of the sdo_instance type, as indicated by kill_chains_in_sdo
     if kill_chains_in_sdo and hasattr(ttp, "kill_chain_phases"):
@@ -1626,8 +1686,8 @@ def convert_tool(tool, ttp, env, first_one):
     if tool.name is not None:
         tool_instance["name"] = tool.name
     process_description_and_short_description(tool_instance, tool)
-    add_string_property_to_description(tool_instance, "vendor", tool.vendor)
-    add_string_property_to_description(tool_instance, "service_pack", tool.service_pack)
+    handle_missing_string_property(tool_instance, "vendor", tool.vendor)
+    handle_missing_string_property(tool_instance, "service_pack", tool.service_pack)
     # TODO: add tool_specific_data to descriptor <-- Not Implemented!
 
     if tool.tool_hashes is not None:
@@ -1638,7 +1698,7 @@ def convert_tool(tool, ttp, env, first_one):
     # TODO: add execution_environment to descriptor <-- Not Implemented!
     # TODO: add errors to descriptor <-- Not Implemented!
     # TODO: add compensation_model to descriptor <-- Not Implemented!
-    add_string_property_to_description(tool_instance, "title", tool.title)
+    handle_missing_string_property(tool_instance, "title", tool.title)
     convert_controlled_vocabs_to_open_vocabs(tool_instance,
                                              "labels" if get_option_value("spec_version") == "2.0" else "tool_types",
                                              tool.type_,
