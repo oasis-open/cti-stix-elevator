@@ -35,6 +35,7 @@ def idiom_elevator_mappings(before_file_path, stored_json, version):
     print("With Master - " + stored_json["id"])
 
     initialize_options()
+    set_option_value("missing_policy", "add-to-description")
     set_option_value("log_level", "CRITICAL")
     set_option_value("spec_version", version)
     set_option_value("validator_args", "--version " + version)

@@ -117,7 +117,7 @@ class ElevatorOptions(object):
         All messages are turned on by default.
     """
     def __init__(self, cmd_args=None, file_=None, incidents=False,
-                 no_squirrel_gaps=False, infrastructure=False,
+                 missing_policy="add-to-description", infrastructure=False,
                  package_created_by_id=None, default_timestamp=None,
                  validator_args="--strict-types", enable="", disable="",
                  silent=False, message_log_directory=None,
@@ -128,7 +128,7 @@ class ElevatorOptions(object):
             if hasattr(cmd_args, "file_"):
                 self.file_ = cmd_args.file_
             self.incidents = cmd_args.incidents
-            self.no_squirrel_gaps = cmd_args.no_squirrel_gaps
+            self.missing_policy = cmd_args.missing_policy
             self.infrastructure = cmd_args.infrastructure
             self.package_created_by_id = cmd_args.package_created_by_id
             self.default_timestamp = cmd_args.default_timestamp
@@ -151,7 +151,7 @@ class ElevatorOptions(object):
         else:
             self.file_ = file_
             self.incidents = incidents
-            self.no_squirrel_gaps = no_squirrel_gaps
+            self.missing_policy = missing_policy
             self.infrastructure = infrastructure
             self.package_created_by_id = package_created_by_id
             self.default_timestamp = default_timestamp

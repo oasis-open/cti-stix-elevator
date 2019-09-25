@@ -59,12 +59,13 @@ def _get_arg_parser(is_script=True):
     )
 
     parser.add_argument(
-        "--no-squirrel-gaps",
+        "--missing-policy",
         help="Do not include STIX 1.x content that cannot be represented "
              "directly in STIX 2.0 using the description property.",
-        dest="no_squirrel_gaps",
-        action="store_true",
-        default=False
+        choices=["use-custom-properties", "add-to-description", "ignore"],
+        dest="missing-policy",
+        action="store",
+        default="add-to-description"
     )
 
     parser.add_argument(

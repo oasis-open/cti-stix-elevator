@@ -138,7 +138,7 @@ def process_information_source(information_source, so, env, temp_marking_id=None
                 handle_missing_string_property(so, "information_source_role", information_source.roles, True)
             if information_source.tools:
                 for tool in information_source.tools:
-                    add_tool_property_to_description(so, tool)
+                    handle_missing_tool_property(so, tool)
     else:
         so["created_by_ref"] = env.created_by_ref
     return so["created_by_ref"]
@@ -160,16 +160,16 @@ def process_description_and_short_description(so, entity, parent_info=False):
         description_as_text = text_type(process_structured_text_list(entity.descriptions))
         if description_as_text:
             if parent_info:
-                if not get_option_value("no_squirrel_gaps"):
+                if get_option_value("missing_policy") == "add-to-description":
                     if so["description"]:
                         so["description"] += "\nPARENT_DESCRIPTION: \n" + description_as_text
                     else:
                         so["description"] += description_as_text
             else:
                 so["description"] += description_as_text
-        if (not get_option_value("no_squirrel_gaps") and
+        if (get_option_value("missing_policy") == "add-to-description" and
                 hasattr(entity, "short_descriptions") and
-                entity.short_descriptions is not None):
+                    entity.short_descriptions is not None):
             short_description_as_text = process_structured_text_list(entity.short_descriptions)
             if short_description_as_text:
                 warn("The Short_Description property is no longer supported in STIX. The text was appended to the description property of %s", 301, so["id"])
@@ -183,7 +183,8 @@ def process_description_and_short_description(so, entity, parent_info=False):
     # could be descriptionS or description
     elif hasattr(entity, "description") and entity.description is not None:
         so["description"] += text_type(entity.description.value)
-    elif not get_option_value("no_squirrel_gaps") and hasattr(entity, "short_descriptions") and entity.short_descriptions is not None:
+    elif (get_option_value("missing_policy") == "add-to-description" and
+            hasattr(entity, "short_descriptions") and entity.short_descriptions is not None):
         so["description"] = text_type(process_structured_text_list(entity.short_descriptions))
 
 
@@ -342,24 +343,30 @@ def convert_to_custom_property_name(prop_name):
     return "x_elevator_" + prop_name
 
 
-def add_free_text_lines_to_description(sdo_instance, free_text_lines):
-    if not get_option_value("no_squirrel_gaps"):
+def handle_free_text_lines(sdo_instance, free_text_lines):
+    if get_option_value("missing_policy") == "ignore":
+        warn("Missing property free_text_lines of %s is ignored", 0, sdo_instance["id"])
+    else:
+        lines = ""
         for line in free_text_lines:
-            sdo_instance["description"] += line.value
-        warn("Appended free text lines to description of %s", 302, sdo_instance["id"])
+            lines += line.value
+        if get_option_value("missing_policy") == "add-to-description":
+            sdo_instance["description"] = lines
+            warn("Appended free text lines to description of %s", 302, sdo_instance["id"])
+        else:
+            sdo_instance[convert_to_custom_property_name("free_text_lines")] = lines
 
 
 def add_string_property_to_description(sdo_instance, property_name, property_value, is_list=False):
-    if not get_option_value("no_squirrel_gaps") and property_value:
-        if is_list:
-            sdo_instance["description"] += "\n\n" + property_name.upper() + ":\n"
-            property_values = []
-            for v in property_value:
-                property_values.append(text_type(v))
-            sdo_instance["description"] += ",\n".join(property_values)
-        else:
-            sdo_instance["description"] += "\n\n" + property_name.upper() + ":\n\t" + text_type(property_value)
-        warn("Appended %s to description of %s", 302, property_name, sdo_instance["id"])
+    if is_list:
+        sdo_instance["description"] += "\n\n" + property_name.upper() + ":\n"
+        property_values = []
+        for v in property_value:
+            property_values.append(text_type(v))
+        sdo_instance["description"] += ",\n".join(property_values)
+    else:
+        sdo_instance["description"] += "\n\n" + property_name.upper() + ":\n\t" + text_type(property_value)
+    warn("Appended %s to description of %s", 302, property_name, sdo_instance["id"])
 
 
 def add_string_property_as_custom_property(sdo_instance, property_name, property_value, is_list=False):
@@ -375,37 +382,41 @@ def add_string_property_as_custom_property(sdo_instance, property_name, property
 
 def handle_missing_string_property(sdo_instance, property_name, property_value, is_list=False):
     if property_value:
-        if not get_option_value("no_squirrel_gaps"):
+        if get_option_value("missing_policy") == "add-to-description":
             add_string_property_to_description(sdo_instance, property_name, property_value, is_list)
-        else:
+        elif get_option_value("missing_policy") == "use-custom-properties":
             add_string_property_as_custom_property(sdo_instance, property_name, property_value, is_list)
+        else:
+            warn("Missing property %s of %s is ignored", 0, property_name, sdo_instance["id"])
 
 
 def add_confidence_property_to_description(sdo_instance, confidence):
-    if not get_option_value("no_squirrel_gaps"):
-        if confidence is not None:
-            sdo_instance["description"] += "\n\n" + "CONFIDENCE: "
-            if confidence.value is not None:
-                sdo_instance["description"] += text_type(confidence.value)
-            if confidence.description is not None:
-                sdo_instance["description"] += "\n\tDESCRIPTION: " + text_type(confidence.description)
-            warn("Appended Confidence type content to description of %s", 304, sdo_instance["id"])
+    if confidence is not None:
+        sdo_instance["description"] += "\n\n" + "CONFIDENCE: "
+        if confidence.value is not None:
+            sdo_instance["description"] += text_type(confidence.value)
+        if confidence.description is not None:
+            sdo_instance["description"] += "\n\tDESCRIPTION: " + text_type(confidence.description)
+        warn("Appended Confidence type content to description of %s", 304, sdo_instance["id"])
 
 
-def add_confidence_property_as_custom_property(sdo_instance, confidence):
+def add_confidence_property_as_custom_property(sdo_instance, confidence, parent_property_name=None):
+    prefix = parent_property_name + " " if parent_property_name else ""
     if confidence.value is not None:
-        sdo_instance[convert_to_custom_property_name("confidence")] = text_type(confidence.value)
+        sdo_instance[convert_to_custom_property_name(prefix + "confidence")] = text_type(confidence.value)
     if confidence.description is not None:
-        sdo_instance[convert_to_custom_property_name("confidence_description")] = text_type(confidence.description)
+        sdo_instance[convert_to_custom_property_name(prefix + "confidence_description")] = text_type(confidence.description)
     warn("Used custom properties for Confidence type content of %s", 0, sdo_instance["id"])
 
 
 def handle_missing_confidence_property(sdo_instance, confidence):
     if confidence:
-        if not get_option_value("no_squirrel_gaps") and confidence:
+        if get_option_value("missing_policy") == "add-to-description" and confidence:
             add_confidence_property_to_description(sdo_instance, confidence)
-        else:
+        elif get_option_value("missing_policy") == "use-custom-properties":
             add_confidence_property_as_custom_property(sdo_instance, confidence)
+        else:
+            warn("Missing property confidence %s is ignored", 0, sdo_instance["id"])
 
 
 def add_statement_type_to_description(sdo_instance, statement, property_name):
@@ -421,46 +432,81 @@ def add_statement_type_to_description(sdo_instance, statement, property_name):
         # FIXME: Handle source
         info("Source in %s is not handled, yet.", 815, sdo_instance["id"])
     if statement.confidence:
-        handle_missing_confidence_property(sdo_instance, statement.confidence)
+        add_confidence_property_to_description(sdo_instance, statement.confidence)
     warn("Appended Statement type content to description of %s", 305, sdo_instance["id"])
 
 
-def add_statement_type_as_custom_property(sdo_instance, statement, property_name):
-    sdo_instance["description"] += "\n\n" + property_name.upper() + ":"
+def add_statement_type_as_custom_property(statement):
+    statement_json = {}
+    if statement.value:
+        statement_json["value"] = text_type(statement.value)
+    if statement.descriptions:
+        descriptions = []
+        for d in statement.descriptions:
+            descriptions.append(text_type(d.value))
+        statement_json["description"] = " ".join(descriptions)
+    if statement.source is not None:
+        # FIXME: Handle source
+        info("Source property in STIX 1.x statement is not handled, yet.", 815)
+    if statement.confidence:
+        add_confidence_property_as_custom_property(statement_json, statement.confidence)
+    return statement_json
+
+
+def statement_type_as_properties(sdo_instance, statement, property_name):
     if statement.value:
         sdo_instance[convert_to_custom_property_name(property_name)] = text_type(statement.value)
     if statement.descriptions:
         descriptions = []
         for d in statement.descriptions:
             descriptions.append(text_type(d.value))
-        sdo_instance[convert_to_custom_property_name(property_name + "description")] = " ".join(descriptions)
+        sdo_instance[convert_to_custom_property_name(property_name) + "_description"] = " ".join(descriptions)
     if statement.source is not None:
         # FIXME: Handle source
-        info("Source in %s is not handled, yet.", 815, sdo_instance["id"])
+        info("Source property in STIX 1.x statement is not handled, yet.", 815)
     if statement.confidence:
-        handle_missing_confidence_property(sdo_instance, statement.confidence)
-    warn("Used custom properties for Statement type content of %s", 0, sdo_instance["id"])
+        add_confidence_property_as_custom_property(sdo_instance, statement.confidence, property_name)
 
 
-def handle_missing_statement_property(sdo_instance, statement, property_name):
+def handle_missing_statement_properties(sdo_instance, statement, property_name):
     if statement:
-        if not get_option_value("no_squirrel_gaps") and statement:
+        if get_option_value("missing_policy") == "add-to-description":
             add_statement_type_to_description(sdo_instance, statement, property_name)
+        elif get_option_value("missing_policy") == "use-custom-properties":
+            statement_type_as_properties(sdo_instance, statement, property_name)
+            warn("Used custom properties for Statement type content of %s", 0, sdo_instance["id"])
         else:
-            add_statement_type_as_custom_property(sdo_instance, statement, property_name)
+            warn("Missing property %s of %s is ignored", 0, property_name, sdo_instance["id"])
 
 
 def handle_multiple_missing_statement_properties(sdo_instance, statements, property_name):
-    for s in statements:
-        handle_missing_statement_property(sdo_instance, s, property_name)
+    if statements:
+        if len(statements) == 1:
+            handle_missing_statement_properties(sdo_instance, statements[0], property_name)
+        else:
+            property_name += "s"
+            if get_option_value("missing_policy") == "add-to-description":
+                for s in statements:
+                    add_statement_type_to_description(sdo_instance, s, property_name)
+            elif get_option_value("missing_policy") == "use-custom-properties":
+                statements_json = []
+                for s in statements:
+                    statements_json.append(add_statement_type_as_custom_property(s))
+                sdo_instance[convert_to_custom_property_name(property_name)] = statements_json
+            else:
+                warn("Missing property %s of %s is ignored", 0, property_name, sdo_instance["id"])
 
 
-def add_tool_property_to_description(sdo_instance, tool):
-    if not get_option_value("no_squirrel_gaps"):
-        sdo_instance["description"] += "\n\nTOOL SOURCE:"
-        if tool.name:
+def handle_missing_tool_property(sdo_instance, tool):
+    if tool.name:
+        if get_option_value("missing_policy") == "add-to-description":
+            sdo_instance["description"] += "\n\nTOOL SOURCE:"
             sdo_instance["description"] += "\n\tname: " + text_type(tool.name)
         warn("Appended Tool type content to description of %s", 306, sdo_instance["id"])
+    elif get_option_value("missing_policy") == "use-custom-properties":
+        sdo_instance[convert_to_custom_property_name("tool_source")] = text_type(tool.name)
+    else:
+        warn("Missing property name of %s is ignored", 0, sdo_instance["id"])
 
 
 # Sightings
@@ -493,7 +539,7 @@ def process_information_source_for_sighting(sighting, sighting_instance, bundle_
                 handle_missing_string_property(sighting_instance, "information_source_role", information_source.roles, True)
             if information_source.tools:
                 for tool in information_source.tools:
-                    add_tool_property_to_description(sighting_instance, tool)
+                    handle_missing_tool_property(sighting_instance, tool)
 
 
 def handle_sighting(sighting, sighted_object_id, env):
@@ -810,23 +856,26 @@ def convert_campaign(camp, env):
 
 def handle_missing_objective_property(sdo_instance, objective):
     if objective is not None:
-        all_text = []
-
-        if objective.descriptions:
-            for d in objective.descriptions:
-                all_text.append(text_type(d.value))
-
-        if objective.short_descriptions:
-            for sd in objective.short_descriptions:
-                all_text.append(text_type(sd.value))
-
-        if not get_option_value("no_squirrel_gaps"):
-            sdo_instance["description"] += "\n\n" + "OBJECTIVE: "
-            sdo_instance["description"] += "\n\n\t".join(all_text)
+        if get_option_value("missing_policy") == "ignore":
+            warn("Missing property objective of %s is ignored", 0, sdo_instance["id"])
         else:
-            sdo_instance[convert_to_custom_property_name("objective")] = " ".join(all_text)
-        if objective.applicability_confidence:
-            handle_missing_confidence_property(sdo_instance, objective.applicability_confidence)
+            all_text = []
+
+            if objective.descriptions:
+                for d in objective.descriptions:
+                    all_text.append(text_type(d.value))
+
+            if objective.short_descriptions:
+                for sd in objective.short_descriptions:
+                    all_text.append(text_type(sd.value))
+
+            if get_option_value("missing_policy") == "add-to-description":
+                sdo_instance["description"] += "\n\n" + "OBJECTIVE: "
+                sdo_instance["description"] += "\n\n\t".join(all_text)
+            elif get_option_value("missing_policy") == "use-custom-properties":
+                sdo_instance[convert_to_custom_property_name("objective")] = " ".join(all_text)
+            if objective.applicability_confidence:
+                handle_missing_confidence_property(sdo_instance, objective.applicability_confidence)
 
 
 def convert_course_of_action(coa, env):
@@ -844,9 +893,9 @@ def convert_course_of_action(coa, env):
         warn("Parameter Observables in %s are not handled, yet.", 814, coa_instance["id"])
     if coa.structured_coa:
         warn("Structured COAs type in %s are not supported in STIX 2.0", 404, coa_instance["id"])
-    handle_missing_statement_property(coa_instance, coa.impact, "impact")
-    handle_missing_statement_property(coa_instance, coa.cost, "cost")
-    handle_missing_statement_property(coa_instance, coa.efficacy, "efficacy")
+    handle_missing_statement_properties(coa_instance, coa.impact, "impact")
+    handle_missing_statement_properties(coa_instance, coa.cost, "cost")
+    handle_missing_statement_properties(coa_instance, coa.efficacy, "efficacy")
     coa_created_by_ref = process_information_source(coa.information_source,
                                                     coa_instance,
                                                     new_env)
@@ -1084,7 +1133,7 @@ def convert_identity(identity, env, parent_id=None, temp_marking_id=None, from_p
             if get_option_value("spec_version") == "2.1":
                 convert_ciq_addresses2_1(ciq_info.addresses, identity_instance, env, parent_id)
         if ciq_info.free_text_lines:
-            add_free_text_lines_to_description(identity_instance, ciq_info.free_text_lines)
+            handle_free_text_lines(identity_instance, ciq_info.free_text_lines)
     if identity.related_identities:
         msg = "All 'associated identities' relationships of %s are assumed to not represent STIX 1.2 versioning"
         warn(msg, 710, identity_instance["id"])
@@ -1256,7 +1305,7 @@ def convert_indicator(indicator, env):
             indicator_instance["valid_from"] = convert_timestamp_of_stix_object(indicator, env.timestamp)
     convert_kill_chains(indicator.kill_chain_phases, indicator_instance)
     if indicator.likely_impact:
-        handle_missing_statement_property(indicator_instance, indicator.likely_impact, "likely_impact")
+        handle_missing_statement_properties(indicator_instance, indicator.likely_impact, "likely_impact")
 
     if get_option_value("spec_version") == "2.0":
         handle_missing_confidence_property(indicator_instance, indicator.confidence)
