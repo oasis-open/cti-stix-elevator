@@ -472,6 +472,7 @@ def convert_opened_connection_refs20(process, process_dict, objs, index):
         add_objects(objs, renumbered_nc_dicts)
         process_dict["opened_connection_refs"].append(text_type(number_mapping[root_obj_index]))
         index = current_largest_id
+    return index
 
 
 def convert_opened_connection_refs21(process, process_dict, objs):
@@ -506,7 +507,7 @@ def convert_process(process):
             process_dict["arguments"].append(a.value)
     if process.network_connection_list:
         if get_option_value("spec_version") == "2.0":
-            convert_opened_connection_refs20(process, process_dict, objs, index)
+            index = convert_opened_connection_refs20(process, process_dict, objs, index)
         else:
             convert_opened_connection_refs21(process, process_dict, objs)
     if isinstance(process, WinProcess):
