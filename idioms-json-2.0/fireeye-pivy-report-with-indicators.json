@@ -12549,7 +12549,7 @@
             "object_marking_refs": [
                 "marking-definition--ac6f5ca6-3a1d-4083-bfcf-3b7228ed6b5f"
             ],
-            "pattern": "[mutex:name = 'D*Fl#Ed*£¨'] OR [(file:x_ID = 'baby D:2013/05/02' OR file:x_PIVY_Password = 'keaidestone' OR file:hashes.MD5 = '5c5401fd7d32f481570511c73083e9a1')] OR [unconverted_term:fireeye:observable-59127d7f-ad98-4854-ac90-f44e4ce23bd1] OR [domain-name:value = 'baby.macforlinux.net']",
+            "pattern": "[mutex:name = 'D*Fl#Ed*¨'] OR [(file:x_ID = 'baby D:2013/05/02' OR file:x_PIVY_Password = 'keaidestone' OR file:hashes.MD5 = '5c5401fd7d32f481570511c73083e9a1')] OR [unconverted_term:fireeye:observable-59127d7f-ad98-4854-ac90-f44e4ce23bd1] OR [domain-name:value = 'baby.macforlinux.net']",
             "type": "indicator",
             "valid_from": "2015-05-15T09:00:00.000000Z"
         },
