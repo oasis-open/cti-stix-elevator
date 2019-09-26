@@ -60,6 +60,7 @@ from stix2elevator.utils import (add_marking_map_entry,
                                  convert_controlled_vocabs_to_open_vocabs,
                                  convert_timestamp_of_stix_object,
                                  convert_timestamp_to_string,
+                                 convert_to_custom_property_name,
                                  identifying_info,
                                  iterpath,
                                  map_1x_markings_to_2x,
@@ -339,8 +340,7 @@ def finish_basic_object(old_id, instance, env, stix1x_obj, temp_marking_id=None)
 # handle gaps
 #
 
-def convert_to_custom_property_name(prop_name):
-    return "x_elevator_" + prop_name
+
 
 
 def handle_free_text_lines(sdo_instance, free_text_lines):

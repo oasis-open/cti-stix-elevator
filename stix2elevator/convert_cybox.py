@@ -181,7 +181,7 @@ def convert_windows_executable_file(f):
             if s.entropy:
                 if s.entropy.min:
                     warn("Entropy.min is not supported in STIX 2.x", 424)
-                if s.entropy.min:
+                if s.entropy.max:
                     warn("Entropy.max is not supported in STIX 2.x", 424)
                 if s.entropy.value:
                     section_dict["entropy"] = s.entropy.value.value

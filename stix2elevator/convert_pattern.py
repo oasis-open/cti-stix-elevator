@@ -40,7 +40,7 @@ from stix2elevator.common import ADDRESS_FAMILY_ENUMERATION, SOCKET_OPTIONS
 from stix2elevator.convert_cybox import split_into_requests_and_responses
 from stix2elevator.ids import add_id_value, exists_object_id_key, get_id_value
 from stix2elevator.options import error, get_option_value, info, warn
-from stix2elevator.utils import identifying_info, map_vocabs_to_label
+from stix2elevator.utils import convert_to_custom_property_name, identifying_info, map_vocabs_to_label
 from stix2elevator.vocab_mappings import WINDOWS_PEBINARY
 
 if sys.version_info > (3,):
@@ -1111,12 +1111,32 @@ def convert_windows_executable_file_to_pattern(f):
                 sections_expressions.append(create_boolean_expression("AND", section_expressions))
         if sections_expressions:
             expressions.append(create_boolean_expression("AND", sections_expressions))
-    if f.exports:
+    if f.exports and hasattr(f.exports, "exported_functions"):
         warn("The exports property of WinExecutableFileObj is not part of STIX 2.x", 418)
-        expressions.append(UnconvertedTerm("WinExecutableFileObj.exports"))
-    if f.imports:
+        if get_option_value("missing_policy") == "use-custom-properties":
+            export_expressions = list()
+            for e in f.exports.exported_functions:
+                export_expressions.append(
+                    create_term("file:extensions.'windows-pebinary-ext'." + convert_to_custom_property_name("exports[*]"),
+                                    e.function_name.condition,
+                                        stix2.StringConstant(e.function_name.value)))
+            if export_expressions:
+                expressions.append(create_boolean_expression("AND", export_expressions))
+        else:
+            expressions.append(UnconvertedTerm("WinExecutableFileObj.exports"))
+    if f.imports and hasattr(f.imports, "imported_functions"):
         warn("The imports property of WinExecutableFileObj is not part of STIX 2.x", 418)
-        expressions.append(UnconvertedTerm("WinExecutableFileObj.imports"))
+        if get_option_value("missing_policy") == "use-custom-properties":
+            import_expressions = list()
+            for i in f.imports.imported_functions:
+                import_expressions.append(
+                    create_term("file:extensions.'windows-pebinary-ext'." + convert_to_custom_property_name("imports[*]"),
+                                    i.function_name.condition,
+                                        stix2.StringConstant(i.function_name.value)))
+            if import_expressions:
+                expressions.append(create_boolean_expression("AND", import_expressions))
+        else:
+            expressions.append(UnconvertedTerm("WinExecutableFileObj.imports"))
     if expressions:
         return create_boolean_expression("AND", expressions)
 
@@ -1364,8 +1384,8 @@ def convert_process_to_pattern(process):
         if process_info:
             expressions.append(process_info)
     if hasattr(process, "argument_list") and process.argument_list:
+        argument_expressions = []
         if get_option_value("spec_version") == "2.0":
-            argument_expressions = []
             for a in process.argument_list:
                 argument_expressions.append(create_term("process:arguments[*]",
                                                         a.condition,
@@ -1374,7 +1394,15 @@ def convert_process_to_pattern(process):
                 expressions.append(create_boolean_expression("AND", argument_expressions))
         else:
             warn("The argument_list property of ProcessObj is not part of STIX 2.1", 418)
-            expressions.append(UnconvertedTerm("ProcessObj.argument_list"))
+            if get_option_value("missing_policy") == "use-custom-properties":
+                for a in process.argument_list:
+                    argument_expressions.append(create_term("process:" + convert_to_custom_property_name("argument_list[*]"),
+                                                            a.condition,
+                                                            stix2.StringConstant(a.value)))
+                if argument_expressions:
+                    expressions.append(create_boolean_expression("AND", argument_expressions))
+            else:
+                expressions.append(UnconvertedTerm("ProcessObj.argument_list"))
     if hasattr(process, "environment_variable_list") and process.environment_variable_list:
         ev_expressions = []
         for ev in process.environment_variable_list:
@@ -1439,7 +1467,12 @@ def convert_windows_process_to_pattern(process):
             warn("Windows Handles are not a part of STIX 2.x", 420)
     if process.startup_info:
         warn("The startup_info property of ProcessObj is not part of STIX 2.x", 418)
-        expressions.append(UnconvertedTerm("ProcessObj.startup_info"))
+        if get_option_value("missing_policy") == "use-custom-properties":
+            expressions.append(create_term("process'" + convert_to_custom_property_name("startup_info"),
+                                           process.startup_info.condition,
+                                           stix2.StringConstant(process.startup_info.value)))
+        else:
+            expressions.append(UnconvertedTerm("ProcessObj.startup_info"))
     if expressions:
         return create_boolean_expression("AND", expressions)
 
@@ -1472,7 +1505,12 @@ def convert_windows_service_to_pattern(service):
             expressions.append(create_boolean_expression("OR", description_expressions))
     if hasattr(service, "service_dll") and service.service_dll:
         warn("The service_dll property of WinServiceObject is not part of STIX 2.x", 418)
-        expressions.append(UnconvertedTerm("WinServiceObject.service_dll"))
+        if get_option_value("missing_policy") == "use-custom-properties":
+            expressions.append(create_term("process:" + convert_to_custom_property_name("service_dll"),
+                                           service.service_dll.condition,
+                                           stix2.StringConstant(service.service_dll.value)))
+        else:
+            expressions.append(UnconvertedTerm("WinServiceObject.service_dll"))
     if expressions:
         return create_boolean_expression("AND", expressions)
 
