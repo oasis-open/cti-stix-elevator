@@ -6993,11 +6993,11 @@
                 "malware-artifacts"
             ],
             "modified": "2015-05-15T09:00:00.000Z",
-            "name": "Mutex: D*Fl#Ed*£¨",
+            "name": "Mutex: D*Fl#Ed*¨",
             "object_marking_refs": [
                 "marking-definition--ac6f5ca6-3a1d-4083-bfcf-3b7228ed6b5f"
             ],
-            "pattern": "[mutex:name = 'D*Fl#Ed*£¨']",
+            "pattern": "[mutex:name = 'D*Fl#Ed*¨']",
             "type": "indicator",
             "valid_from": "2015-05-15T09:00:00.000000Z"
         },
