@@ -3093,10 +3093,10 @@
             </cybox:Object>
         </cybox:Observable>
         <cybox:Observable id="fireeye:observable-843fb656-7136-45b9-9f7f-66d85f7d1387">
-            <cybox:Title>Mutex: D*Fl#Ed*£¨</cybox:Title>
+            <cybox:Title>Mutex: D*Fl#Ed*</cybox:Title>
             <cybox:Object id="fireeye:object-7fec93da-7915-405d-a423-f6c734290e30">
                 <cybox:Properties xsi:type="MutexObj:MutexObjectType">
-                    <MutexObj:Name condition="Equals">D*Fl#Ed*£¨</MutexObj:Name>
+                    <MutexObj:Name condition="Equals">D*Fl#Ed*</MutexObj:Name>
                 </cybox:Properties>
             </cybox:Object>
         </cybox:Observable>
@@ -16528,7 +16528,7 @@
             </indicator:Suggested_COAs>
         </stix:Indicator>
         <stix:Indicator timestamp="2015-05-15T09:00:00.000000Z" id="fireeye:indicator-438476d4-fb2f-4db5-9148-6f3216a61d4d" xsi:type="indicator:IndicatorType">
-            <indicator:Title>Mutex: D*Fl#Ed*£¨</indicator:Title>
+            <indicator:Title>Mutex: D*Fl#Ed*</indicator:Title>
             <indicator:Type xsi:type="stixVocabs:IndicatorTypeVocab-1.1">Malware Artifacts</indicator:Type>
             <indicator:Observable idref="fireeye:observable-843fb656-7136-45b9-9f7f-66d85f7d1387"/>
             <indicator:Indicated_TTP>

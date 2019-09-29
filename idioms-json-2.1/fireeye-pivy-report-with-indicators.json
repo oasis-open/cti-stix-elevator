@@ -7673,11 +7673,11 @@
         "malware-artifacts"
       ],
       "modified": "2015-05-15T09:00:00.000Z",
-      "name": "Mutex: D*Fl#Ed*£¨",
+      "name": "Mutex: D*Fl#Ed*",
       "object_marking_refs": [
         "marking-definition--842c4ae8-c090-49ad-97c0-9f1d43f05404"
       ],
-      "pattern": "[mutex:name = 'D*Fl#Ed*£¨']",
+      "pattern": "[mutex:name = 'D*Fl#Ed*']",
       "pattern_type": "stix",
 	  "spec_version": "2.1",
       "type": "indicator",
@@ -13923,7 +13923,7 @@
       "object_marking_refs": [
         "marking-definition--842c4ae8-c090-49ad-97c0-9f1d43f05404"
       ],
-      "pattern": "[mutex:name = 'D*Fl#Ed*£¨'] OR [(file:x_ID = 'baby D:2013/05/02' OR file:x_PIVY_Password = 'keaidestone' OR file:hashes.MD5 = '5c5401fd7d32f481570511c73083e9a1')] OR [unconverted_term:fireeye:observable-59127d7f-ad98-4854-ac90-f44e4ce23bd1] OR [domain-name:value = 'baby.macforlinux.net']",
+      "pattern": "[mutex:name = 'D*Fl#Ed*'] OR [(file:x_ID = 'baby D:2013/05/02' OR file:x_PIVY_Password = 'keaidestone' OR file:hashes.MD5 = '5c5401fd7d32f481570511c73083e9a1')] OR [unconverted_term:fireeye:observable-59127d7f-ad98-4854-ac90-f44e4ce23bd1] OR [domain-name:value = 'baby.macforlinux.net']",
       "pattern_type": "stix",
 	  "spec_version": "2.1",
       "type": "indicator",
