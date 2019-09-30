@@ -63,7 +63,7 @@ def _get_arg_parser(is_script=True):
         help="Do not include STIX 1.x content that cannot be represented "
              "directly in STIX 2.0 using the description property.",
         choices=["use-custom-properties", "add-to-description", "ignore"],
-        dest="missing-policy",
+        dest="missing_policy",
         action="store",
         default="add-to-description"
     )

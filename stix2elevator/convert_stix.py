@@ -421,13 +421,15 @@ def handle_missing_confidence_property(sdo_instance, confidence):
 
 def add_statement_type_to_description(sdo_instance, statement, property_name):
     sdo_instance["description"] += "\n\n" + property_name.upper() + ":"
+    has_value = False
     if statement.value:
         sdo_instance["description"] += text_type(statement.value)
+        has_value = True
     if statement.descriptions:
         descriptions = []
         for d in statement.descriptions:
             descriptions.append(text_type(d.value))
-        sdo_instance["description"] += "\n\n\t".join(descriptions)
+        sdo_instance["description"] += (": " if has_value else "") + "\n\n\t".join(descriptions)
     if statement.source is not None:
         # FIXME: Handle source
         info("Source in %s is not handled, yet.", 815, sdo_instance["id"])
@@ -484,7 +486,6 @@ def handle_multiple_missing_statement_properties(sdo_instance, statements, prope
         if len(statements) == 1:
             handle_missing_statement_properties(sdo_instance, statements[0], property_name)
         else:
-            property_name += "s"
             if get_option_value("missing_policy") == "add-to-description":
                 for s in statements:
                     add_statement_type_to_description(sdo_instance, s, property_name)
@@ -492,7 +493,7 @@ def handle_multiple_missing_statement_properties(sdo_instance, statements, prope
                 statements_json = []
                 for s in statements:
                     statements_json.append(add_statement_type_as_custom_property(s))
-                sdo_instance[convert_to_custom_property_name(property_name)] = statements_json
+                sdo_instance[convert_to_custom_property_name(property_name + "s")] = statements_json
             else:
                 warn("Missing property %s of %s is ignored", 0, property_name, sdo_instance["id"])
 

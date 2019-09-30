@@ -1111,32 +1111,39 @@ def convert_windows_executable_file_to_pattern(f):
                 sections_expressions.append(create_boolean_expression("AND", section_expressions))
         if sections_expressions:
             expressions.append(create_boolean_expression("AND", sections_expressions))
-    if f.exports and hasattr(f.exports, "exported_functions"):
+    if f.exports:
         warn("The exports property of WinExecutableFileObj is not part of STIX 2.x", 418)
         if get_option_value("missing_policy") == "use-custom-properties":
             export_expressions = list()
-            for e in f.exports.exported_functions:
-                export_expressions.append(
-                    create_term("file:extensions.'windows-pebinary-ext'." + convert_to_custom_property_name("exports[*]"),
-                                    e.function_name.condition,
-                                        stix2.StringConstant(e.function_name.value)))
+            if hasattr(f.exports, "exported_functions"):
+                for export_func in f.exports.exported_functions:
+                    export_expressions.append(
+                        create_term(
+                            "file:extensions.'windows-pebinary-ext'." + convert_to_custom_property_name("exports[*]"),
+                            export_func.function_name.condition,
+                            stix2.StringConstant(export_func.function_name.value)))
             if export_expressions:
                 expressions.append(create_boolean_expression("AND", export_expressions))
         else:
-            expressions.append(UnconvertedTerm("WinExecutableFileObj.exports"))
-    if f.imports and hasattr(f.imports, "imported_functions"):
+            if not get_option_value("missing_policy") == "ignore":
+                expressions.append(UnconvertedTerm("WinExecutableFileObj.exports"))
+    if f.imports:
         warn("The imports property of WinExecutableFileObj is not part of STIX 2.x", 418)
         if get_option_value("missing_policy") == "use-custom-properties":
             import_expressions = list()
-            for i in f.imports.imported_functions:
-                import_expressions.append(
-                    create_term("file:extensions.'windows-pebinary-ext'." + convert_to_custom_property_name("imports[*]"),
-                                    i.function_name.condition,
-                                        stix2.StringConstant(i.function_name.value)))
+            for i in f.imports:
+                if hasattr(i, "imported_functions"):
+                    file_name = i.file_name + ":" if hasattr(i, "file_name") and i.file_name else ""
+                    for imported_func in i.imported_functions:
+                        import_expressions.append(
+                            create_term("file:extensions.'windows-pebinary-ext'." + convert_to_custom_property_name("imports[*]"),
+                                            imported_func.function_name.condition,
+                                                stix2.StringConstant(file_name + imported_func.function_name.value)))
             if import_expressions:
                 expressions.append(create_boolean_expression("AND", import_expressions))
         else:
-            expressions.append(UnconvertedTerm("WinExecutableFileObj.imports"))
+            if not get_option_value("missing_policy") == "ignore":
+                expressions.append(UnconvertedTerm("WinExecutableFileObj.imports"))
     if expressions:
         return create_boolean_expression("AND", expressions)
 
@@ -1402,7 +1409,8 @@ def convert_process_to_pattern(process):
                 if argument_expressions:
                     expressions.append(create_boolean_expression("AND", argument_expressions))
             else:
-                expressions.append(UnconvertedTerm("ProcessObj.argument_list"))
+                if not get_option_value("missing_policy") == "ignore":
+                    expressions.append(UnconvertedTerm("ProcessObj.argument_list"))
     if hasattr(process, "environment_variable_list") and process.environment_variable_list:
         ev_expressions = []
         for ev in process.environment_variable_list:
@@ -1472,7 +1480,8 @@ def convert_windows_process_to_pattern(process):
                                            process.startup_info.condition,
                                            stix2.StringConstant(process.startup_info.value)))
         else:
-            expressions.append(UnconvertedTerm("ProcessObj.startup_info"))
+            if not get_option_value("missing_policy") == "ignore":
+                expressions.append(UnconvertedTerm("ProcessObj.startup_info"))
     if expressions:
         return create_boolean_expression("AND", expressions)
 
@@ -1510,7 +1519,8 @@ def convert_windows_service_to_pattern(service):
                                            service.service_dll.condition,
                                            stix2.StringConstant(service.service_dll.value)))
         else:
-            expressions.append(UnconvertedTerm("WinServiceObject.service_dll"))
+            if not get_option_value("missing_policy") == "ignore":
+                expressions.append(UnconvertedTerm("WinServiceObject.service_dll"))
     if expressions:
         return create_boolean_expression("AND", expressions)
 
@@ -1873,7 +1883,8 @@ def convert_object_to_pattern(obj, obs_id):
             expression = convert_network_socket_to_pattern(prop)
         else:
             warn("%s found in %s cannot be converted to a pattern, yet.", 808, text_type(obj.properties), obs_id)
-            expression = UnconvertedTerm(obs_id)
+            if not get_option_value("missing_policy") == "ignore":
+                expression = UnconvertedTerm(obs_id)
 
         if prop.custom_properties is not None:
             object_path_root = convert_cybox_class_name_to_object_path_root_name(prop)
@@ -1886,7 +1897,8 @@ def convert_object_to_pattern(obj, obs_id):
                     expression = convert_custom_properties(prop.custom_properties, object_path_root)
     if not expression:
         warn("No pattern term was created from %s", 422, obs_id)
-        expression = UnconvertedTerm(obs_id)
+        if not get_option_value("missing_policy") == "ignore":
+            expression = UnconvertedTerm(obs_id)
     elif obj.id_:
         add_id_value(obj.id_, obs_id)
     return expression
