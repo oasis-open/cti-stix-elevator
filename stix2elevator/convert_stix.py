@@ -169,8 +169,7 @@ def process_description_and_short_description(so, entity, parent_info=False):
             else:
                 so["description"] += description_as_text
         if (get_option_value("missing_policy") == "add-to-description" and
-                hasattr(entity, "short_descriptions") and
-                    entity.short_descriptions is not None):
+                hasattr(entity, "short_descriptions") and entity.short_descriptions is not None):
             short_description_as_text = process_structured_text_list(entity.short_descriptions)
             if short_description_as_text:
                 warn("The Short_Description property is no longer supported in STIX. The text was appended to the description property of %s", 301, so["id"])
@@ -341,8 +340,6 @@ def finish_basic_object(old_id, instance, env, stix1x_obj, temp_marking_id=None)
 #
 
 
-
-
 def handle_free_text_lines(sdo_instance, free_text_lines):
     if get_option_value("missing_policy") == "ignore":
         warn("Missing property free_text_lines of %s is ignored", 0, sdo_instance["id"])
@@ -390,18 +387,19 @@ def handle_missing_string_property(sdo_instance, property_name, property_value, 
             warn("Missing property %s of %s is ignored", 0, property_name, sdo_instance["id"])
 
 
-def add_confidence_property_to_description(sdo_instance, confidence):
+def add_confidence_property_to_description(sdo_instance, confidence, parent_property_name):
+    prefix = parent_property_name.upper() + " " if parent_property_name else ""
     if confidence is not None:
-        sdo_instance["description"] += "\n\n" + "CONFIDENCE: "
+        sdo_instance["description"] += "\n\n" + prefix + "CONFIDENCE: "
         if confidence.value is not None:
             sdo_instance["description"] += text_type(confidence.value)
         if confidence.description is not None:
-            sdo_instance["description"] += "\n\tDESCRIPTION: " + text_type(confidence.description)
+            sdo_instance["description"] += "\n\t" + prefix + "DESCRIPTION: " + text_type(confidence.description)
         warn("Appended Confidence type content to description of %s", 304, sdo_instance["id"])
 
 
 def add_confidence_property_as_custom_property(sdo_instance, confidence, parent_property_name=None):
-    prefix = parent_property_name + " " if parent_property_name else ""
+    prefix = parent_property_name + "_" if parent_property_name else ""
     if confidence.value is not None:
         sdo_instance[convert_to_custom_property_name(prefix + "confidence")] = text_type(confidence.value)
     if confidence.description is not None:
@@ -409,12 +407,12 @@ def add_confidence_property_as_custom_property(sdo_instance, confidence, parent_
     warn("Used custom properties for Confidence type content of %s", 0, sdo_instance["id"])
 
 
-def handle_missing_confidence_property(sdo_instance, confidence):
+def handle_missing_confidence_property(sdo_instance, confidence, parent_property_name=None):
     if confidence:
         if get_option_value("missing_policy") == "add-to-description" and confidence:
-            add_confidence_property_to_description(sdo_instance, confidence)
+            add_confidence_property_to_description(sdo_instance, confidence, parent_property_name)
         elif get_option_value("missing_policy") == "use-custom-properties":
-            add_confidence_property_as_custom_property(sdo_instance, confidence)
+            add_confidence_property_as_custom_property(sdo_instance, confidence, parent_property_name)
         else:
             warn("Missing property confidence %s is ignored", 0, sdo_instance["id"])
 
@@ -434,7 +432,7 @@ def add_statement_type_to_description(sdo_instance, statement, property_name):
         # FIXME: Handle source
         info("Source in %s is not handled, yet.", 815, sdo_instance["id"])
     if statement.confidence:
-        add_confidence_property_to_description(sdo_instance, statement.confidence)
+        add_confidence_property_to_description(sdo_instance, statement.confidence, property_name)
     warn("Appended Statement type content to description of %s", 305, sdo_instance["id"])
 
 
@@ -876,7 +874,7 @@ def handle_missing_objective_property(sdo_instance, objective):
             elif get_option_value("missing_policy") == "use-custom-properties":
                 sdo_instance[convert_to_custom_property_name("objective")] = " ".join(all_text)
             if objective.applicability_confidence:
-                handle_missing_confidence_property(sdo_instance, objective.applicability_confidence)
+                handle_missing_confidence_property(sdo_instance, objective.applicability_confidence, "objective")
 
 
 def convert_course_of_action(coa, env):
@@ -947,15 +945,15 @@ def convert_vulnerability(v, et, env):
 
     if v.discovered_datetime is not None:
         handle_missing_string_property(vulnerability_instance,
-                                           "discovered_datetime",
-                                           v.discovered_datetime.value.strftime("%Y-%m-%dT%H:%M:%S.%fZ"),
-                                           False)
+                                       "discovered_datetime",
+                                       v.discovered_datetime.value.strftime("%Y-%m-%dT%H:%M:%S.%fZ"),
+                                       False)
 
     if v.published_datetime is not None:
         handle_missing_string_property(vulnerability_instance,
-                                           "published_datetime",
-                                           v.published_datetime.value.strftime("%Y-%m-%dT%H:%M:%S.%fZ"),
-                                           False)
+                                       "published_datetime",
+                                       v.published_datetime.value.strftime("%Y-%m-%dT%H:%M:%S.%fZ"),
+                                       False)
 
     if v.affected_software is not None:
         info("Affected Software in %s is not handled, yet.", 815, vulnerability_instance["id"])
@@ -1591,7 +1589,7 @@ def convert_threat_actor(threat_actor, env):
                                              THREAT_ACTOR_LABEL_MAP, False)
     handle_multiple_missing_statement_properties(threat_actor_instance, threat_actor.intended_effects, "intended_effect")
     handle_multiple_missing_statement_properties(threat_actor_instance, threat_actor.planning_and_operational_supports,
-                                                "planning_and_operational_support")
+                                                 "planning_and_operational_support")
     if get_option_value("spec_version") == "2.0":
         handle_missing_confidence_property(threat_actor_instance, threat_actor.confidence)
     else:  # 2.1

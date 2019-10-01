@@ -1217,7 +1217,7 @@
         {
             "created": "2015-05-15T09:00:00.000Z",
             "created_by_ref": "identity--b86f1a53-2cc7-4ecf-8a2d-e0928bce0d02",
-            "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html>\n\t\t\t\t\t\t\t<body>\n\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\tIn this and the next two stages, APT1 does not differ significantly from other APT intruders (or intruders,\n                            \tgenerally). APT1 predominantly uses publicly available tools to dump password hashes from victim systems in\n                            \torder to obtain legitimate user credentials.\n\t\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t\t</body>\n\t\t\t\t\t\t</html>\n\nINTENDED_EFFECT:Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. \n\nINTENDED_EFFECT:Unauthorized Access",
+            "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html>\n\t\t\t\t\t\t\t<body>\n\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\tIn this and the next two stages, APT1 does not differ significantly from other APT intruders (or intruders,\n                            \tgenerally). APT1 predominantly uses publicly available tools to dump password hashes from victim systems in\n                            \torder to obtain legitimate user credentials.\n\t\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t\t</body>\n\t\t\t\t\t\t</html>\n\nINTENDED_EFFECT:Unauthorized Access: Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. ",
             "id": "attack-pattern--e13f3e6d-4f9c-4265-b1cf-f997a1bf7827",
             "kill_chain_phases": [
                 {
@@ -1236,7 +1236,7 @@
         {
             "created": "2019-08-12T15:22:42.843Z",
             "created_by_ref": "identity--b86f1a53-2cc7-4ecf-8a2d-e0928bce0d02",
-            "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html><body>\n\t\t\t\t\t\t\t\t<p>This program extracts cached password hashes from a system's registry.</P>\n\t\t\t\t\t\t\t\t<p>Currently packaged with fgdump</P>\n\t\t\t\t\t\t</body></html>\n\nINTENDED_EFFECT:Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. \n\nINTENDED_EFFECT:Unauthorized Access\n\nTITLE:\n\tPrivilege Escalation",
+            "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html><body>\n\t\t\t\t\t\t\t\t<p>This program extracts cached password hashes from a system's registry.</P>\n\t\t\t\t\t\t\t\t<p>Currently packaged with fgdump</P>\n\t\t\t\t\t\t</body></html>\n\nINTENDED_EFFECT:Unauthorized Access: Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. \n\nTITLE:\n\tPrivilege Escalation",
             "id": "tool--470a8794-5675-4e9b-8e2a-0f942d7a3681",
             "kill_chain_phases": [
                 {
@@ -1258,7 +1258,7 @@
         {
             "created": "2019-08-12T15:22:42.843Z",
             "created_by_ref": "identity--b86f1a53-2cc7-4ecf-8a2d-e0928bce0d02",
-            "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html><body>\n\t\t\t\t\t\t\t\t<p>Windows password hash dumper.</P>\n\t\t\t\t\t\t\t\t<p>http://www.foofus.net/fizzgig/fgdump/</P>\n\t\t\t\t\t\t</body></html>\n\nINTENDED_EFFECT:Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. \n\nINTENDED_EFFECT:Unauthorized Access\n\nTITLE:\n\tPrivilege Escalation",
+            "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html><body>\n\t\t\t\t\t\t\t\t<p>Windows password hash dumper.</P>\n\t\t\t\t\t\t\t\t<p>http://www.foofus.net/fizzgig/fgdump/</P>\n\t\t\t\t\t\t</body></html>\n\nINTENDED_EFFECT:Unauthorized Access: Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. \n\nTITLE:\n\tPrivilege Escalation",
             "id": "tool--265893e4-2fde-4831-9e0a-f7d89c527c22",
             "kill_chain_phases": [
                 {
@@ -1280,7 +1280,7 @@
         {
             "created": "2019-08-12T15:22:42.843Z",
             "created_by_ref": "identity--b86f1a53-2cc7-4ecf-8a2d-e0928bce0d02",
-            "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html><body>\n\t\t\t\t\t\t\t\t<p>Obtains password hashes from the Windows registry, inlcuding the SAM file, cached domain credentials, and LSA secrets.</P>\n\t\t\t\t\t\t\t\t<p>http://truesec.se</P>\n\t\t\t\t\t\t</body></html>\n\nINTENDED_EFFECT:Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. \n\nINTENDED_EFFECT:Unauthorized Access\n\nTITLE:\n\tPrivilege Escalation",
+            "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html><body>\n\t\t\t\t\t\t\t\t<p>Obtains password hashes from the Windows registry, inlcuding the SAM file, cached domain credentials, and LSA secrets.</P>\n\t\t\t\t\t\t\t\t<p>http://truesec.se</P>\n\t\t\t\t\t\t</body></html>\n\nINTENDED_EFFECT:Unauthorized Access: Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. \n\nTITLE:\n\tPrivilege Escalation",
             "id": "tool--8420fdd4-3663-464c-bb52-b8b1b08600e1",
             "kill_chain_phases": [
                 {
@@ -1302,7 +1302,7 @@
         {
             "created": "2019-08-12T15:22:42.843Z",
             "created_by_ref": "identity--b86f1a53-2cc7-4ecf-8a2d-e0928bce0d02",
-            "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html><body>\n\t\t\t\t\t\t\t\t<p>Dump active logon session password hashes from the lsass process.</P>\n\t\t\t\t\t\t\t\t<p>http://truesec.se</P>\n\t\t\t\t\t\t</body></html>\n\nINTENDED_EFFECT:Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. \n\nINTENDED_EFFECT:Unauthorized Access\n\nTITLE:\n\tPrivilege Escalation",
+            "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html><body>\n\t\t\t\t\t\t\t\t<p>Dump active logon session password hashes from the lsass process.</P>\n\t\t\t\t\t\t\t\t<p>http://truesec.se</P>\n\t\t\t\t\t\t</body></html>\n\nINTENDED_EFFECT:Unauthorized Access: Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. \n\nTITLE:\n\tPrivilege Escalation",
             "id": "tool--456e7a65-b819-4fa6-b95c-d14cb84c640e",
             "kill_chain_phases": [
                 {
@@ -1324,7 +1324,7 @@
         {
             "created": "2019-08-12T15:22:42.843Z",
             "created_by_ref": "identity--b86f1a53-2cc7-4ecf-8a2d-e0928bce0d02",
-            "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html><body>\n\t\t\t\t\t\t\t\t<p>A utility primarily used for dumping password hashes.</P>\n\t\t\t\t\t\t\t\t<p>http://blog.gentilkiwi.com/mimikatz</P>\n\t\t\t\t\t\t</body></html>\n\nINTENDED_EFFECT:Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. \n\nINTENDED_EFFECT:Unauthorized Access\n\nTITLE:\n\tPrivilege Escalation",
+            "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html><body>\n\t\t\t\t\t\t\t\t<p>A utility primarily used for dumping password hashes.</P>\n\t\t\t\t\t\t\t\t<p>http://blog.gentilkiwi.com/mimikatz</P>\n\t\t\t\t\t\t</body></html>\n\nINTENDED_EFFECT:Unauthorized Access: Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. \n\nTITLE:\n\tPrivilege Escalation",
             "id": "tool--83353203-92b4-47e3-9c40-7dfdd9d418dc",
             "kill_chain_phases": [
                 {
@@ -1346,7 +1346,7 @@
         {
             "created": "2019-08-12T15:22:42.844Z",
             "created_by_ref": "identity--b86f1a53-2cc7-4ecf-8a2d-e0928bce0d02",
-            "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html><body>\n\t\t\t\t\t\t\t\t<p>Allows an intruder to \"pass\" a password hash (without knowing the original password) to log in to systems.</P>\n\t\t\t\t\t\t\t\t<p>http://oss.coresecurity.com/projects/pshtoolkit.htm</P>\n\t\t\t\t\t\t</body></html>\n\nINTENDED_EFFECT:Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. \n\nINTENDED_EFFECT:Unauthorized Access\n\nTITLE:\n\tPrivilege Escalation",
+            "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html><body>\n\t\t\t\t\t\t\t\t<p>Allows an intruder to \"pass\" a password hash (without knowing the original password) to log in to systems.</P>\n\t\t\t\t\t\t\t\t<p>http://oss.coresecurity.com/projects/pshtoolkit.htm</P>\n\t\t\t\t\t\t</body></html>\n\nINTENDED_EFFECT:Unauthorized Access: Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. \n\nTITLE:\n\tPrivilege Escalation",
             "id": "tool--2e9b37d5-332a-4bef-b8a9-e034b0c3774d",
             "kill_chain_phases": [
                 {
@@ -1368,7 +1368,7 @@
         {
             "created": "2019-08-12T15:22:42.844Z",
             "created_by_ref": "identity--b86f1a53-2cc7-4ecf-8a2d-e0928bce0d02",
-            "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html><body>\n\t\t\t\t\t\t\t\t<p>Dumps password hashes from the Windows registry.</P>\n\t\t\t\t\t\t\t\t<p>http://www.tarasco.org/security/pwdump_7/</P>\n\t\t\t\t\t\t</body></html>\n\nINTENDED_EFFECT:Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. \n\nINTENDED_EFFECT:Unauthorized Access\n\nTITLE:\n\tPrivilege Escalation",
+            "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html><body>\n\t\t\t\t\t\t\t\t<p>Dumps password hashes from the Windows registry.</P>\n\t\t\t\t\t\t\t\t<p>http://www.tarasco.org/security/pwdump_7/</P>\n\t\t\t\t\t\t</body></html>\n\nINTENDED_EFFECT:Unauthorized Access: Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. \n\nTITLE:\n\tPrivilege Escalation",
             "id": "tool--f39d91c4-5b65-454d-84db-56ae9bbad025",
             "kill_chain_phases": [
                 {
@@ -1390,7 +1390,7 @@
         {
             "created": "2019-08-12T15:22:42.844Z",
             "created_by_ref": "identity--b86f1a53-2cc7-4ecf-8a2d-e0928bce0d02",
-            "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html><body>\n\t\t\t\t\t\t\t\t<p>Dumps password hashes from the Windows Registry.</P>\n\t\t\t\t\t\t\t\t<p>The tool claims its origin as http://reedarvin.thearvins.com but the site is not offering this software as of the date of this report.</P>\n\t\t\t\t\t\t</body></html>\n\nINTENDED_EFFECT:Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. \n\nINTENDED_EFFECT:Unauthorized Access\n\nTITLE:\n\tPrivilege Escalation",
+            "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html><body>\n\t\t\t\t\t\t\t\t<p>Dumps password hashes from the Windows Registry.</P>\n\t\t\t\t\t\t\t\t<p>The tool claims its origin as http://reedarvin.thearvins.com but the site is not offering this software as of the date of this report.</P>\n\t\t\t\t\t\t</body></html>\n\nINTENDED_EFFECT:Unauthorized Access: Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. \n\nTITLE:\n\tPrivilege Escalation",
             "id": "tool--dabecad9-c8d3-4404-808d-0bb8349d32ca",
             "kill_chain_phases": [
                 {

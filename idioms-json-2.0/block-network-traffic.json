@@ -2,13 +2,13 @@
     "id": "bundle--495c4c04-b5d8-11e3-b7bb-000c29789db9",
     "objects": [
         {
-            "created": "2017-01-27T13:49:41.298Z",
-            "description": "\n\nSTAGE:\n\tResponse\n\nOBJECTIVE: Block communication between the PIVY agents and the C2 Server\n\nCONFIDENCE: High\n\nIMPACT:Low: This IP address is not used for legitimate hosting so there should be no operational impact.\n\nCOST:Low\n\nEFFICACY:High",
+            "created": "2019-10-01T13:18:12.663Z",
+            "description": "\n\nSTAGE:\n\tResponse\n\nOBJECTIVE: Block communication between the PIVY agents and the C2 Server\n\nOBJECTIVE CONFIDENCE: High\n\nIMPACT:Low: This IP address is not used for legitimate hosting so there should be no operational impact.\n\nCOST:Low\n\nEFFICACY:High",
             "id": "course-of-action--495c9b28-b5d8-11e3-b7bb-000c29789db9",
             "labels": [
                 "perimeter-blocking"
             ],
-            "modified": "2017-01-27T13:49:41.298Z",
+            "modified": "2019-10-01T13:18:12.663Z",
             "name": "Block traffic to PIVY C2 Server (10.10.10.10)",
             "type": "course-of-action"
         }
