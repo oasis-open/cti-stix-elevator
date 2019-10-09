@@ -29,13 +29,13 @@ _IGNORE = (u"id", u"idref", u"created_by_ref", u"object_refs", u"marking_ref",
            )
 
 
-def idiom_elevator_mappings(before_file_path, stored_json, version):
+def idiom_elevator_mappings(before_file_path, stored_json, version, missing_policy):
     """Test fresh conversion from XML to JSON matches stored JSON samples."""
     print("Checking - " + before_file_path)
     print("With Master - " + stored_json["id"])
 
     initialize_options()
-    set_option_value("missing_policy", "add-to-description")
+    set_option_value("missing_policy", missing_policy)
     set_option_value("log_level", "CRITICAL")
     set_option_value("spec_version", version)
     set_option_value("validator_args", "--version " + version)
@@ -96,16 +96,17 @@ def setup_tests(before_idioms_dir, after_idioms_dir, before_suffix, after_suffix
             BEFORE_FILES.append(path)
 
 
-def setup_elevator_tests(version):
+def setup_elevator_tests(version, missing_policy):
     directory = os.path.dirname(__file__)
 
     xml_idioms_dir = find_dir(directory, "idioms-xml")
-    json_idioms_dir = find_dir(directory, "idioms-json" + "-" + version)
+    json_idioms_dir = find_dir(directory, "idioms-json" + "-" + version +
+                               ("-custom" if missing_policy == "use-custom-properties" else ""))
     setup_tests(xml_idioms_dir, json_idioms_dir, ".xml", ".json")
 
 
-def test_elevator_idiom_mapping(test_file, stored_master, version):
-    for good_path, check_path in idiom_elevator_mappings(test_file, stored_master, version):
+def test_elevator_idiom_mapping(test_file, stored_master, version, missing_policy):
+    for good_path, check_path in idiom_elevator_mappings(test_file, stored_master, version, missing_policy):
         if good_path != check_path:
             find_index_of_difference(good_path, check_path)
             assert good_path == check_path
@@ -113,9 +114,10 @@ def test_elevator_idiom_mapping(test_file, stored_master, version):
 
 def pytest_generate_tests(metafunc):
     version = os.environ['VERSION']
-    setup_elevator_tests(version)
-    argnames = ["test_file", "stored_master", "version"]
-    argvalues = [(x, y, version) for x, y in zip(BEFORE_FILES, MASTER_JSON_FILES)]
+    missing_policy = os.environ["MISSING_POLICY"]
+    setup_elevator_tests(version, missing_policy)
+    argnames = ["test_file", "stored_master", "version", "missing_policy"]
+    argvalues = [(x, y, version, missing_policy) for x, y in zip(BEFORE_FILES, MASTER_JSON_FILES)]
 
     metafunc.parametrize(argnames=argnames, argvalues=argvalues, ids=BEFORE_FILENAMES, scope="function")
 

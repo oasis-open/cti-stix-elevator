@@ -1,0 +1,20 @@
+{
+  "id": "bundle--e33ffe07-2f4c-48d8-b0af-ee2619d765cf",
+  "objects": [
+    {
+      "created": "2017-03-29T15:21:52.293Z",
+      "id": "indicator--53fe3b22-0201-47cf-85d0-97c02164528d",
+      "indicator_types": [
+        "unknown"
+      ],
+      "modified": "2017-03-29T15:21:52.293Z",
+      "name": "A Network Connection example",
+      "pattern": "[(network-traffic:protocols[*] = 'ipv4' AND network-traffic:protocols[*] = 'tcp' AND network-traffic:src_port = 5255 AND network-traffic:src_ref.value = '198.49.168.11' AND network-traffic:dst_port INVALID-CONDITION 80 AND network-traffic:dst_ref.value MATCHES '^198.49')]",
+      "pattern_type": "stix",
+      "spec_version": "2.1",
+      "type": "indicator",
+      "valid_from": "2017-03-29T15:21:52.293788Z"
+    }
+  ],
+  "type": "bundle"
+}

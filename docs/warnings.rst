@@ -9,25 +9,27 @@ When the elevator makes an assumption during the conversion of some content, or 
 General
 ---------------
 
-======================================================================= ====    =====
-Message                                                                 Code    Level
-======================================================================= ====    =====
-Results produced by the stix2-elevator are not for production purposes. 201     warn
-Observable Expressions should not contain placeholders                  202     error
-Placeholder *[id]* should be resolved                                   203     error
-Found definition for *[id]*                                             204     info
-At least one PLACEHOLDER idref was not resolved in *[id]*               205     warn
-At least one observable could not be converted in *[id]*                206     warn
-Options not initialized                                                 207     error
-EMPTY BUNDLE -- No objects created from 1.x input document!             208     warn
-Both console and output log have disabled messages.                     209     warn
-OSError *[message]*                                                     210     error
-silent option is not compatible with a policy                           211     warn
-======================================================================= ====    =====
+=============================================================================================================== ====    =====
+Message                                                                                                         Code    Level
+=============================================================================================================== ====    =====
+Results produced by the stix2-elevator are not for production purposes.                                         201     warn
+Observable Expressions should not contain placeholders                                                          202     error
+Placeholder *[id]* should be resolved                                                                           203     error
+Found definition for *[id]*                                                                                     204     info
+At least one PLACEHOLDER idref was not resolved in *[id]*                                                       205     warn
+At least one observable could not be converted in *[id]*                                                        206     warn
+Options not initialized                                                                                         207     error
+EMPTY BUNDLE -- No objects created from 1.x input document!                                                     208     warn
+Both console and output log have disabled messages.                                                             209     warn
+OSError *[message]*                                                                                             210     error
+silent option is not compatible with a policy                                                                   211     warn
+Created Marking Structure for *[id]*                                                                            212     warn
+custom_property_prefix is provided, but the mssing policy is not 'use-custom-properies'.  It will be ignored.   213     warn
+=============================================================================================================== ====    =====
 
 
-Adding Content not supported in STIX 2.x to Description
-----------------------------------------------------------------
+Handle STIX 1.x Content not supported in STIX 2.x
+-------------------------------------------------
 
 ============================================================================================================================== ====    =====
 Message                                                                                                                        Code    Level
@@ -38,6 +40,8 @@ Title *[title]* used for ``name``, appending ``exploit_target`` *[id]* title in 
 Appended ``confidence`` property content to description of *[id]*                                                              304     warn
 Appended ``Statement`` type content to description of *[id]*                                                                   305     warn
 Appended ``Tool`` type content to description of *[id]*                                                                        306     warn
+Missing property *[property_name]* of *[id]* is ignored                                                                        307     warn
+Used custom property for *[property_name]* of *[id]*                                                                           308     warn
 ============================================================================================================================== ====    =====
 
 

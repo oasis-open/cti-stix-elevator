@@ -1,0 +1,64 @@
+{
+    "id": "bundle--e33ffe07-2f4c-48d8-b0af-ee2619d765cf",
+    "objects": [
+        {
+            "id": "domain-name--63dede3a-54f2-4ba6-8147-899e2ca9dabe",
+            "type": "domain-name",
+            "value": "example.com"
+        },
+        {
+            "id": "ipv4-addr--23d46e55-e20c-471e-b42f-59e379a47760",
+            "type": "ipv4-addr",
+            "value": "198.49.123.10"
+        },
+        {
+            "dst_port": 80,
+            "dst_ref": "ipv4-addr--23d46e55-e20c-471e-b42f-59e379a47760",
+            "extensions": {
+                "http-request-ext": {
+                    "request_header": {
+                        "Accept": "text/plain",
+                        "Accept-Charset": "utf-8",
+                        "Accept-Datetime": "Thu, 31 May 2007 20:35:00 GMT",
+                        "Accept-Encoding": "gzip, deflate",
+                        "Authorization": "Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==",
+                        "Cache-Control": "no-cache",
+                        "Connection": "close",
+                        "Cookie": "PHPSESSID=r2t5uvjq435r4q7ib3vtdjq120",
+                        "User-Agent": "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.6) Gecko/20040113"
+                    },
+                    "request_method": "get",
+                    "request_version": "http/1.1"
+                }
+            },
+            "id": "network-traffic--0d8cdfe2-c9ea-4661-8c42-9f6fd93fed41",
+            "protocols": [
+                "ipv4",
+                "udp",
+                "dccp",
+                "tcp",
+                "https"
+            ],
+            "src_port": 5525,
+            "src_ref": "domain-name--63dede3a-54f2-4ba6-8147-899e2ca9dabe",
+            "start": "2011-08-05T07:14:55.000000Z",
+            "type": "network-traffic"
+        },
+        {
+            "created": "2019-08-21T13:10:48.439Z",
+            "first_observed": "2019-08-21T13:10:48.439Z",
+            "id": "observed-data--1aec7752-29e1-4018-806c-7a9a21ddb20e",
+            "last_observed": "2019-08-21T13:10:48.439Z",
+            "modified": "2019-08-21T13:10:48.439Z",
+            "number_observed": 1,
+            "object_refs": [
+                "domain-name--63dede3a-54f2-4ba6-8147-899e2ca9dabe",
+                "ipv4-addr--23d46e55-e20c-471e-b42f-59e379a47760",
+                "network-traffic--0d8cdfe2-c9ea-4661-8c42-9f6fd93fed41"
+            ],
+            "spec_version": "2.1",
+            "type": "observed-data"
+        }
+    ],
+    "type": "bundle"
+}

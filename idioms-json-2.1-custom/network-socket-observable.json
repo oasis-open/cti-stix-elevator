@@ -1,0 +1,36 @@
+{
+    "id": "bundle--8005dcb9-398c-4f61-b44c-18133199d145",
+    "objects": [
+        {
+            "extensions": {
+                "socket-ext": {
+                    "address_family": "AF_INET",
+                    "is_listening": true,
+                    "options": {
+                        "IP_MULTICAST_LOOP": true
+                    }
+                }
+            },
+            "id": "network-traffic--2222e5de-5004-499d-bbb4-411e42d72dd1",
+            "protocols": [
+                "TCP"
+            ],
+            "type": "network-traffic"
+        },
+        {
+            "created": "2019-08-21T11:45:07.854Z",
+            "first_observed": "2019-08-21T11:45:07.854Z",
+            "id": "observed-data--175e561f-3ced-4cf7-8a17-654ca651ff97",
+            "last_observed": "2019-08-21T11:45:07.854Z",
+            "modified": "2019-08-21T11:45:07.854Z",
+            "number_observed": 1,
+            "object_refs": [
+                "network-traffic--2222e5de-5004-499d-bbb4-411e42d72dd1"
+            ],
+            "spec_version": "2.1",
+            "type": "observed-data"
+        }
+    ],
+    "type": "bundle"
+}
+

@@ -3,7 +3,7 @@ import os
 
 from six import binary_type, iteritems, text_type
 
-from stix2elevator.options import info, warn
+from stix2elevator.options import info, warn, get_option_value
 
 
 def identifying_info(stix1x_obj):
@@ -41,7 +41,7 @@ def map_vocabs_to_label(t, vocab_map):
 
 
 def convert_to_custom_property_name(prop_name):
-    return "x_elevator_" + prop_name
+    return "x_" + get_option_value("custom_property_prefix") + "_" + prop_name
 
 
 def convert_controlled_vocabs_to_open_vocabs(new_obj, new_property_name, old_vocabs, vocab_mapping, only_one, required=True):

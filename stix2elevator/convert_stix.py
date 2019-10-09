@@ -160,32 +160,31 @@ def process_description_and_short_description(so, entity, parent_info=False):
     if hasattr(entity, "descriptions") and entity.descriptions is not None:
         description_as_text = text_type(process_structured_text_list(entity.descriptions))
         if description_as_text:
-            if parent_info:
-                if get_option_value("missing_policy") == "add-to-description":
-                    if so["description"]:
-                        so["description"] += "\nPARENT_DESCRIPTION: \n" + description_as_text
-                    else:
-                        so["description"] += description_as_text
+            if parent_info and so["description"]:
+                so["description"] += "\nPARENT_DESCRIPTION: \n" + description_as_text
             else:
                 so["description"] += description_as_text
-        if (get_option_value("missing_policy") == "add-to-description" and
-                hasattr(entity, "short_descriptions") and entity.short_descriptions is not None):
-            short_description_as_text = process_structured_text_list(entity.short_descriptions)
-            if short_description_as_text:
-                warn("The Short_Description property is no longer supported in STIX. The text was appended to the description property of %s", 301, so["id"])
-                if parent_info:
-                    if so["description"]:
-                        so["description"] += "\nPARENT_SHORT_DESCRIPTION: \n" + short_description_as_text
-                    else:
-                        so["description"] += short_description_as_text
-                else:
-                    so["description"] += short_description_as_text
-    # could be descriptionS or description
+
+    # could be short_description or description (in STIX 1.1.1)
+    # seems like in STIX 2.x - description and descriptionS are both populated with the same content
     elif hasattr(entity, "description") and entity.description is not None:
         so["description"] += text_type(entity.description.value)
-    elif (get_option_value("missing_policy") == "add-to-description" and
-            hasattr(entity, "short_descriptions") and entity.short_descriptions is not None):
-        so["description"] = text_type(process_structured_text_list(entity.short_descriptions))
+    if hasattr(entity, "short_description") and entity.short_description is not None:
+        short_description_as_text = text_type(entity.short_description)
+        if short_description_as_text:
+            warn("The Short_Description property in %s is not supported in STIX 2.x.", 0, so["id"])
+            if get_option_value("missing_policy") == "add-to-description":
+                warn("The text was appended to the description property of %s", 301, so["id"])
+                if parent_info and so["description"]:
+                    so["description"] += "\nPARENT_SHORT_DESCRIPTION: \n" + short_description_as_text
+                else:
+                    so["description"] += short_description_as_text
+            elif get_option_value("missing_policy") == "use_custom_properties":
+                warn("Used custom property for short_description of %s", 308, so["id"])
+                so[convert_to_custom_property_name("short_description")] = short_description_as_text
+            else:
+                warn("Missing property short_description of %s is ignored", 307, so["id"])
+
 
 
 def create_basic_object(stix2x_type, stix1x_obj, env, parent_id=None, id_used=False):
@@ -342,7 +341,7 @@ def finish_basic_object(old_id, instance, env, stix1x_obj, temp_marking_id=None)
 
 def handle_free_text_lines(sdo_instance, free_text_lines):
     if get_option_value("missing_policy") == "ignore":
-        warn("Missing property free_text_lines of %s is ignored", 0, sdo_instance["id"])
+        warn("Missing property free_text_lines of %s is ignored", 307, sdo_instance["id"])
     else:
         lines = ""
         for line in free_text_lines:
@@ -374,7 +373,7 @@ def add_string_property_as_custom_property(sdo_instance, property_name, property
         sdo_instance[convert_to_custom_property_name(property_name)] = ",".join(property_values)
     else:
         sdo_instance[convert_to_custom_property_name(property_name)] = text_type(property_value)
-    warn("Used custom property for %s of %s", 0, property_name, sdo_instance["id"])
+    warn("Used custom property for %s of %s", 308, property_name, sdo_instance["id"])
 
 
 def handle_missing_string_property(sdo_instance, property_name, property_value, is_list=False):
@@ -384,7 +383,7 @@ def handle_missing_string_property(sdo_instance, property_name, property_value, 
         elif get_option_value("missing_policy") == "use-custom-properties":
             add_string_property_as_custom_property(sdo_instance, property_name, property_value, is_list)
         else:
-            warn("Missing property %s of %s is ignored", 0, property_name, sdo_instance["id"])
+            warn("Missing property %s of %s is ignored", 307, property_name, sdo_instance["id"])
 
 
 def add_confidence_property_to_description(sdo_instance, confidence, parent_property_name):
@@ -404,7 +403,7 @@ def add_confidence_property_as_custom_property(sdo_instance, confidence, parent_
         sdo_instance[convert_to_custom_property_name(prefix + "confidence")] = text_type(confidence.value)
     if confidence.description is not None:
         sdo_instance[convert_to_custom_property_name(prefix + "confidence_description")] = text_type(confidence.description)
-    warn("Used custom properties for Confidence type content of %s", 0, sdo_instance["id"])
+    warn("Used custom properties for Confidence type content of %s", 308, sdo_instance["id"])
 
 
 def handle_missing_confidence_property(sdo_instance, confidence, parent_property_name=None):
@@ -414,7 +413,7 @@ def handle_missing_confidence_property(sdo_instance, confidence, parent_property
         elif get_option_value("missing_policy") == "use-custom-properties":
             add_confidence_property_as_custom_property(sdo_instance, confidence, parent_property_name)
         else:
-            warn("Missing property confidence %s is ignored", 0, sdo_instance["id"])
+            warn("Missing property confidence %s is ignored", 307, sdo_instance["id"])
 
 
 def add_statement_type_to_description(sdo_instance, statement, property_name):
@@ -474,9 +473,9 @@ def handle_missing_statement_properties(sdo_instance, statement, property_name):
             add_statement_type_to_description(sdo_instance, statement, property_name)
         elif get_option_value("missing_policy") == "use-custom-properties":
             statement_type_as_properties(sdo_instance, statement, property_name)
-            warn("Used custom properties for Statement type content of %s", 0, sdo_instance["id"])
+            warn("Used custom properties for Statement type content of %s", 308, sdo_instance["id"])
         else:
-            warn("Missing property %s of %s is ignored", 0, property_name, sdo_instance["id"])
+            warn("Missing property %s of %s is ignored", 307, property_name, sdo_instance["id"])
 
 
 def handle_multiple_missing_statement_properties(sdo_instance, statements, property_name):
@@ -493,7 +492,7 @@ def handle_multiple_missing_statement_properties(sdo_instance, statements, prope
                     statements_json.append(add_statement_type_as_custom_property(s))
                 sdo_instance[convert_to_custom_property_name(property_name + "s")] = statements_json
             else:
-                warn("Missing property %s of %s is ignored", 0, property_name, sdo_instance["id"])
+                warn("Missing property %s of %s is ignored", 307, property_name, sdo_instance["id"])
 
 
 def handle_missing_tool_property(sdo_instance, tool):
@@ -505,7 +504,7 @@ def handle_missing_tool_property(sdo_instance, tool):
     elif get_option_value("missing_policy") == "use-custom-properties":
         sdo_instance[convert_to_custom_property_name("tool_source")] = text_type(tool.name)
     else:
-        warn("Missing property name of %s is ignored", 0, sdo_instance["id"])
+        warn("Missing property name of %s is ignored", 307, sdo_instance["id"])
 
 
 # Sightings
@@ -856,7 +855,7 @@ def convert_campaign(camp, env):
 def handle_missing_objective_property(sdo_instance, objective):
     if objective is not None:
         if get_option_value("missing_policy") == "ignore":
-            warn("Missing property objective of %s is ignored", 0, sdo_instance["id"])
+            warn("Missing property objective of %s is ignored", 307, sdo_instance["id"])
         else:
             all_text = []
 
@@ -873,6 +872,7 @@ def handle_missing_objective_property(sdo_instance, objective):
                 sdo_instance["description"] += "\n\n\t".join(all_text)
             elif get_option_value("missing_policy") == "use-custom-properties":
                 sdo_instance[convert_to_custom_property_name("objective")] = " ".join(all_text)
+                warn("Used custom property for objective of %s", 308, sdo_instance["id"])
             if objective.applicability_confidence:
                 handle_missing_confidence_property(sdo_instance, objective.applicability_confidence, "objective")
 
@@ -1794,7 +1794,10 @@ def convert_resources(resources, ttp, env, generated_ttps):
 
 
 def convert_identity_for_victim_target(identity, ttp, env, ttp_generated):
-    identity_instance = convert_identity(identity, env, parent_id=ttp.id_ if not ttp_generated else None)
+    if identity:
+        identity_instance = convert_identity(identity, env, parent_id=ttp.id_ if not ttp_generated else None)
+    else:
+        identity_instance = create_basic_object("identity", None, env, ttp.id_)
     env.bundle_instance["objects"].append(identity_instance)
     process_ttp_properties(identity_instance, ttp, env, False, True)
     finish_basic_object(ttp.id_, identity_instance, identity, env, identity_instance["id"])
@@ -1811,18 +1814,22 @@ def convert_victim_targeting(victim_targeting, ttp, env, ttps_generated):
     if hasattr(victim_targeting, "technical_details") and victim_targeting.targeted_technical_details is not None:
         for v in victim_targeting.targeted_technical_details:
             warn("Targeted technical details on %s are not a victim target in STIX 2.x", 412, ttp.id_)
-    if victim_targeting.identity:
-        identity_instance = convert_identity_for_victim_target(victim_targeting.identity, ttp, env, ttps_generated)
-        if identity_instance:
-            warn("%s generated an identity associated with a victim", 713, ttp.id_)
-            if ttps_generated:
-                for generated_ttp in ttps_generated:
-                    env.bundle_instance["relationships"].append(
-                        create_relationship(generated_ttp["id"], identity_instance["id"], env, "targets"))
-                # the relationships has been created, so its not necessary to propagate it up
-            return identity_instance
+    identity_instance = convert_identity_for_victim_target(victim_targeting.identity, ttp, env, ttps_generated)
+    warn("%s generated an identity associated with a victim", 713, ttp.id_)
+    if victim_targeting.targeted_systems:
+        handle_missing_string_property(identity_instance, "targeted_systems", victim_targeting.targeted_systems,
+                                       True)
+    if victim_targeting.targeted_information:
+        handle_missing_string_property(identity_instance, "targeted_information",
+                                       victim_targeting.targeted_information, True)
+    if ttps_generated:
+        for generated_ttp in ttps_generated:
+            env.bundle_instance["relationships"].append(
+                create_relationship(generated_ttp["id"], identity_instance["id"], env, "targets"))
+        # the relationships has been created, so its not necessary to propagate it up
+    return identity_instance
     # nothing generated
-    return None
+    # return None
 
 
 def convert_ttp(ttp, env):
@@ -2007,7 +2014,7 @@ def finalize_bundle(env):
                 stix20_id = get_id_value(value)
 
                 if stix20_id[0] is None:
-                    warn("1.X ID: %s was not mapped to STIX 2.x ID", 603, value)
+                    warn("STIX 1.X ID: %s was not mapped to STIX 2.x ID", 603, value)
                     continue
 
                 operation_on_path(bundle_instance, path, stix20_id[0])

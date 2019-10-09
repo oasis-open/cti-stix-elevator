@@ -1,0 +1,45 @@
+{
+  "id": "bundle--72491bed-8922-43d5-b864-ae5acae79f8f",
+  "objects": [
+    {
+      "created": "2018-08-20T15:27:19.592Z",
+      "id": "indicator--504d3239-36e0-487f-aefb-db478db866d0",
+      "labels": [
+        "url-watchlist"
+      ],
+      "modified": "2018-08-20T15:27:19.592Z",
+      "name": "Malicious site hosting downloader",
+      "pattern": "[(user-account:is_disabled = true AND user-account:account_last_login = t'2010-12-09T20:17:34.934295Z' AND user-account:account_login = 'fred' AND (user-account:account_type = 'unix' AND user-account:user_id = '1001'))]",
+      "type": "indicator",
+      "valid_from": "2018-08-20T15:27:19.592919Z"
+    },
+    {
+      "created": "2018-08-20T15:27:19.592Z",
+      "first_observed": "2018-08-20T15:27:19.592Z",
+      "id": "observed-data--feeede8d-38c9-43b9-a6b8-db213c303223",
+      "last_observed": "2018-08-20T15:27:19.592Z",
+      "modified": "2018-08-20T15:27:19.592Z",
+      "number_observed": 1,
+      "objects": {
+        "0": {
+          "account_last_login": "2010-12-09T20:17:34.934295Z",
+          "account_login": "fred",
+          "account_type": "unix",
+          "is_disabled": true,
+          "type": "user-account",
+          "user_id": "1001"
+        }
+      },
+      "type": "observed-data"
+    },
+    {
+      "created": "2018-09-12T00:00:16.906Z",
+      "id": "report--0bac3c4a-7b45-4349-989a-41a5eca0ef9b",
+      "modified": "2018-09-12T00:00:16.906Z",
+      "published": "2018-09-12T00:00:16.906Z",
+      "type": "report"
+    }
+  ],
+  "spec_version": "2.0",
+  "type": "bundle"
+}
