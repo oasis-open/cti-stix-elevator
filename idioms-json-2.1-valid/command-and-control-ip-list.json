@@ -1,54 +1,78 @@
 {
-  "id": "bundle--cc0ca596-70e6-4dac-9bef-603166d17db8",
-  "objects": [
-    {
-      "created": "2018-10-01T11:50:05.250Z",
-      "first_observed": "2018-10-01T11:50:05.250Z",
-      "id": "observed-data--c8c32b6e-2ea8-51c4-6446-7f5218072f27",
-      "last_observed": "2018-10-01T11:50:05.250Z",
-      "modified": "2018-10-01T11:50:05.250Z",
-      "number_observed": 1,
-      "objects": {
-        "0": {
-          "type": "ipv4-addr",
-          "value": "198.51.100.2"
+    "id": "bundle--cc0ca596-70e6-4dac-9bef-603166d17db8",
+    "objects": [
+        {
+            "created": "2017-01-27T13:49:41.329Z",
+            "description": "",
+            "external_references": [],
+            "id": "relationship--83c024c1-9e16-40c6-921e-9eb432d45afa",
+            "modified": "2017-01-27T13:49:41.329Z",
+            "relationship_type": "resolves_to",
+            "source_ref": "ipv4-addr--7e4a9c21-50df-5298-97ce-42044f79472e",
+            "target_ref": "domain-name--a5cb3d9e-4635-5956-8ccb-814a839a77c3",
+            "type": "relationship"
+        },
+        {
+            "id": "ipv4-addr--7e4a9c21-50df-5298-97ce-42044f79472e",
+            "type": "ipv4-addr",
+            "value": "198.51.100.2"
+        },
+        {
+            "id": "domain-name--a5cb3d9e-4635-5956-8ccb-814a839a77c3",
+            "type": "domain-name",
+            "value": "example.foo.com"
+        },
+        {
+            "created": "2017-01-27T13:49:41.329Z",
+            "first_observed": "2017-01-27T13:49:41.329Z",
+            "id": "observed-data--c8c32b6e-2ea8-51c4-6446-7f5218072f27",
+            "last_observed": "2017-01-27T13:49:41.329Z",
+            "modified": "2017-01-27T13:49:41.329Z",
+            "number_observed": 1,
+            "object_refs": [
+                "relationship--83c024c1-9e16-40c6-921e-9eb432d45afa",
+                "ipv4-addr--7e4a9c21-50df-5298-97ce-42044f79472e",
+                "domain-name--a5cb3d9e-4635-5956-8ccb-814a839a77c3"
+            ],
+            "spec_version": "2.1",
+            "type": "observed-data"
+        },
+        {
+            "id": "ipv4-addr--aa3e1cc2-0c65-5358-82ae-9a7e508e939f",
+            "type": "ipv4-addr",
+            "value": "198.51.100.17"
+        },
+        {
+            "created": "2017-01-27T13:49:41.329Z",
+            "first_observed": "2017-01-27T13:49:41.329Z",
+            "id": "observed-data--b57aa65f-9598-04fb-a9d1-5094c36d5dc4",
+            "last_observed": "2017-01-27T13:49:41.329Z",
+            "modified": "2017-01-27T13:49:41.329Z",
+            "number_observed": 1,
+            "object_refs": [
+                "ipv4-addr--aa3e1cc2-0c65-5358-82ae-9a7e508e939f"
+            ],
+            "spec_version": "2.1",
+            "type": "observed-data"
+        },
+        {
+            "id": "ipv4-addr--179b9f2b-745f-5421-a6d1-701872c15d4c",
+            "type": "ipv4-addr",
+            "value": "203.0.113.19"
+        },
+        {
+            "created": "2017-01-27T13:49:41.329Z",
+            "first_observed": "2017-01-27T13:49:41.329Z",
+            "id": "observed-data--19c16346-0eb4-99e2-00bb-4ec3ed174cac",
+            "last_observed": "2017-01-27T13:49:41.329Z",
+            "modified": "2017-01-27T13:49:41.329Z",
+            "number_observed": 1,
+            "object_refs": [
+                "ipv4-addr--179b9f2b-745f-5421-a6d1-701872c15d4c"
+            ],
+            "spec_version": "2.1",
+            "type": "observed-data"
         }
-      },
-      "spec_version": "2.1",
-      "type": "observed-data"
-    },
-    {
-      "created": "2018-10-01T11:50:05.250Z",
-      "first_observed": "2018-10-01T11:50:05.250Z",
-      "id": "observed-data--b57aa65f-9598-04fb-a9d1-5094c36d5dc4",
-      "last_observed": "2018-10-01T11:50:05.250Z",
-      "modified": "2018-10-01T11:50:05.250Z",
-      "number_observed": 1,
-      "objects": {
-        "0": {
-          "type": "ipv4-addr",
-          "value": "198.51.100.17"
-        }
-      },
-      "spec_version": "2.1",
-      "type": "observed-data"
-    },
-    {
-      "created": "2018-10-01T11:50:05.250Z",
-      "first_observed": "2018-10-01T11:50:05.250Z",
-      "id": "observed-data--19c16346-0eb4-99e2-00bb-4ec3ed174cac",
-      "last_observed": "2018-10-01T11:50:05.250Z",
-      "modified": "2018-10-01T11:50:05.250Z",
-      "number_observed": 1,
-      "objects": {
-        "0": {
-          "type": "ipv4-addr",
-          "value": "203.0.113.19"
-        }
-      },
-      "spec_version": "2.1",
-      "type": "observed-data"
-    }
-  ],
-  "type": "bundle"
+    ],
+    "type": "bundle"
 }

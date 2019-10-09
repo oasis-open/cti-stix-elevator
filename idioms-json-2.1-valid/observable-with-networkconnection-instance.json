@@ -1,58 +1,64 @@
 {
-  "id": "bundle--e33ffe07-2f4c-48d8-b0af-ee2619d765cf",
-  "objects": [
-    {
-      "created": "2017-03-29T15:21:17.605Z",
-      "first_observed": "2017-03-29T15:21:17.605Z",
-      "id": "observed-data--1aec7752-29e1-4018-806c-7a9a21ddb20e",
-      "last_observed": "2017-03-29T15:21:17.605Z",
-      "modified": "2017-03-29T15:21:17.605Z",
-      "number_observed": 1,
-      "objects": {
-        "0": {
-          "type": "domain-name",
-          "value": "example.com"
+    "id": "bundle--e33ffe07-2f4c-48d8-b0af-ee2619d765cf",
+    "objects": [
+        {
+            "id": "domain-name--220a2699-5ebf-5b57-bf02-424964bb19c0",
+            "type": "domain-name",
+            "value": "example.com"
         },
-        "1": {
-          "type": "ipv4-addr",
-          "value": "198.49.123.10"
+        {
+            "id": "ipv4-addr--c5a216ae-2184-5acd-b145-2d1321457d0b",
+            "type": "ipv4-addr",
+            "value": "198.49.123.10"
         },
-        "2": {
-          "dst_port": 80,
-          "dst_ref": "1",
-          "extensions": {
-            "http-request-ext": {
-              "request_header": {
-                "Accept": "text/plain",
-                "Accept-Charset": "utf-8",
-                "Accept-Datetime": "Thu, 31 May 2007 20:35:00 GMT",
-                "Accept-Encoding": "gzip, deflate",
-                "Authorization": "Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==",
-                "Cache-Control": "no-cache",
-                "Connection": "close",
-                "Cookie": "PHPSESSID=r2t5uvjq435r4q7ib3vtdjq120",
-                "User-Agent": "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.6) Gecko/20040113"
-              },
-              "request_method": "get",
-              "request_version": "http/1.1"
-            }
-          },
-          "protocols": [
-            "ipv4",
-            "udp",
-            "dccp",
-            "tcp",
-            "https"
-          ],
-          "src_port": 5525,
-          "src_ref": "0",
-          "start": "2011-08-05T07:14:55.000000Z",
-          "type": "network-traffic"
+        {
+            "dst_port": 80,
+            "dst_ref": "ipv4-addr--c5a216ae-2184-5acd-b145-2d1321457d0b",
+            "extensions": {
+                "http-request-ext": {
+                    "request_header": {
+                        "Accept": "text/plain",
+                        "Accept-Charset": "utf-8",
+                        "Accept-Datetime": "Thu, 31 May 2007 20:35:00 GMT",
+                        "Accept-Encoding": "gzip, deflate",
+                        "Authorization": "Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==",
+                        "Cache-Control": "no-cache",
+                        "Connection": "close",
+                        "Cookie": "PHPSESSID=r2t5uvjq435r4q7ib3vtdjq120",
+                        "User-Agent": "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.6) Gecko/20040113"
+                    },
+                    "request_method": "get",
+                    "request_version": "http/1.1"
+                }
+            },
+            "id": "network-traffic--2bdbac52-ac9e-5c51-b098-dab303f772ea",
+            "protocols": [
+                "ipv4",
+                "udp",
+                "dccp",
+                "tcp",
+                "https"
+            ],
+            "src_port": 5525,
+            "src_ref": "domain-name--220a2699-5ebf-5b57-bf02-424964bb19c0",
+            "start": "2011-08-05T07:14:55.000000Z",
+            "type": "network-traffic"
+        },
+        {
+            "created": "2017-03-29T15:21:17.605Z",
+            "first_observed": "2017-03-29T15:21:17.605Z",
+            "id": "observed-data--1aec7752-29e1-4018-806c-7a9a21ddb20e",
+            "last_observed": "2017-03-29T15:21:17.605Z",
+            "modified": "2017-03-29T15:21:17.605Z",
+            "number_observed": 1,
+            "object_refs": [
+                "domain-name--220a2699-5ebf-5b57-bf02-424964bb19c0",
+                "ipv4-addr--c5a216ae-2184-5acd-b145-2d1321457d0b",
+                "network-traffic--2bdbac52-ac9e-5c51-b098-dab303f772ea"
+            ],
+            "spec_version": "2.1",
+            "type": "observed-data"
         }
-      },
-      "spec_version": "2.1",
-      "type": "observed-data"
-    }
-  ],
-  "type": "bundle"
+    ],
+    "type": "bundle"
 }

@@ -1,30 +1,34 @@
 {
-  "id": "bundle--cc0ca596-70e6-4dac-9bef-603166d17db8",
-  "objects": [
-    {
-      "created": "2018-10-01T11:55:55.301Z",
-      "first_observed": "2018-10-01T11:55:55.301Z",
-      "id": "observed-data--c8c32b6e-2ea8-51c4-6446-7f5218072f27",
-      "last_observed": "2018-10-01T11:55:55.301Z",
-      "modified": "2018-10-01T11:55:55.301Z",
-      "number_observed": 1,
-      "objects": {
-        "0": {
-          "hashes": {
-            "SHA-256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-          },
-          "name": "iprip32.dll",
-          "parent_directory_ref": "1",
-          "type": "file"
+    "id": "bundle--cc0ca596-70e6-4dac-9bef-603166d17db8",
+    "objects": [
+        {
+            "hashes": {
+                "SHA-256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "id": "file--49959589-27c4-5873-8e23-82f6c909d4ca",
+            "name": "iprip32.dll",
+            "parent_directory_ref": "directory--4aa982e3-4aac-5d5b-a699-d08c8c11f5f3",
+            "type": "file"
         },
-        "1": {
-          "path": "/usr/local",
-          "type": "directory"
+        {
+            "id": "directory--4aa982e3-4aac-5d5b-a699-d08c8c11f5f3",
+            "path": "/usr/local",
+            "type": "directory"
+        },
+        {
+            "created": "2017-01-27T13:49:41.345Z",
+            "first_observed": "2017-01-27T13:49:41.345Z",
+            "id": "observed-data--c8c32b6e-2ea8-51c4-6446-7f5218072f27",
+            "last_observed": "2017-01-27T13:49:41.345Z",
+            "modified": "2017-01-27T13:49:41.345Z",
+            "number_observed": 1,
+            "object_refs": [
+                "file--49959589-27c4-5873-8e23-82f6c909d4ca",
+                "directory--4aa982e3-4aac-5d5b-a699-d08c8c11f5f3"
+            ],
+            "spec_version": "2.1",
+            "type": "observed-data"
         }
-      },
-      "spec_version": "2.1",
-      "type": "observed-data"
-    }
-  ],
-  "type": "bundle"
+    ],
+    "type": "bundle"
 }

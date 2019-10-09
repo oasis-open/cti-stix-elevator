@@ -1,7 +1,11 @@
+import importlib
+import inspect
 import re
 import uuid
 
-from six import text_type
+from six import binary_type, text_type
+from stix2.base import SCO_DET_ID_NAMESPACE
+from stix2.canonicalization.Canonicalize import canonicalize
 
 from stix2elevator.options import error, info, warn
 from stix2elevator.utils import map_1x_type_to_20
@@ -52,32 +56,95 @@ def add_ids_with_no_1x_object(sdo_id):
 #       create the new id using stix20SOName and the new UUID
 
 
-def generate_stix20_id(stix20_so_name, stix12_id=None, id_used=False):
+def generate_stix2x_id(stix2x_so_name, stix12_id=None, id_used=False):
     if not stix12_id or id_used:
-        new_id = stix20_so_name + "--" + text_type(uuid.uuid4())
+        new_id = stix2x_so_name + "--" + text_type(uuid.uuid4())
         add_ids_with_no_1x_object(new_id)
         return new_id
     else:
+        # TODO: fix this for UUIDv5
         result = re.search('^(.+)-([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})',
                            stix12_id)
         if result:
             current_uuid = result.group(2)
-            if stix20_so_name is None:
+            if stix2x_so_name is None:
                 stx1x_type = result.group(1).split(":")
                 if stx1x_type[1].lower() == "ttp" or stx1x_type[1].lower() == "et":
-                    error("Unable to determine the STIX 2.0 type for %s", 604, stix12_id)
+                    error("Unable to determine the STIX 2.x type for %s", 604, stix12_id)
                     return None
                 else:
                     return map_1x_type_to_20(stx1x_type[1]) + "--" + current_uuid
             else:
-                return stix20_so_name + "--" + current_uuid
+                return stix2x_so_name + "--" + current_uuid
         else:
-            if stix20_so_name:
+            if stix2x_so_name:
                 warn("Malformed id %s. Generated a new uuid", 605, stix12_id)
-                return stix20_so_name + "--" + text_type(uuid.uuid4())
+                return stix2x_so_name + "--" + text_type(uuid.uuid4())
             else:
-                error("Unable to determine the STIX 2.0 type for %s, which is malformed", 629, stix12_id)
+                error("Unable to determine the STIX 2.x type for %s, which is malformed", 629, stix12_id)
                 return None
+
+
+_SCO_CLASSES = {}
+
+
+def _choose_one_hash(hash_dict):
+    if "MD5" in hash_dict:
+        return {"MD5": hash_dict["MD5"]}
+    elif "SHA-1" in hash_dict:
+        return {"SHA-1": hash_dict["SHA-1"]}
+    elif "SHA-256" in hash_dict:
+        return {"SHA-256": hash_dict["SHA-256"]}
+    elif "SHA-512" in hash_dict:
+        return {"SHA-512": hash_dict["SHA-512"]}
+    else:
+        k = next(iter(hash_dict), None)
+        if k is not None:
+            return {k: hash_dict[k]}
+
+
+def generate_sco_id(type, instance):
+    required_prefix = type + "--"
+    if not _SCO_CLASSES:
+        # compute it once
+        module = importlib.import_module("stix2.v21")
+        for k, c in inspect.getmembers(module, inspect.isclass):
+            if "type" in c._properties:
+                _SCO_CLASSES[c._properties["type"]._fixed_value] = c
+    # TODO:  need uuid5
+    klass = _SCO_CLASSES[type]
+    if klass and hasattr(klass, "_id_contributing_properties") and klass._id_contributing_properties:
+        contributing_properties = klass._id_contributing_properties
+        streamlined_obj_vals = []
+        possible_hash = None
+        if "hashes" in instance and "hashes" in contributing_properties:
+            possible_hash = _choose_one_hash(instance["hashes"])
+        if possible_hash:
+            streamlined_obj_vals.append(possible_hash)
+        for key in contributing_properties:
+            if key != "hashes" and key in instance:
+                # if isinstance(kwargs[key], dict) or isinstance(kwargs[key], _STIXBase):
+                #     temp_deep_copy = copy.deepcopy(dict(kwargs[key]))
+                #     _recursive_stix_to_dict(temp_deep_copy)
+                #     streamlined_obj_vals.append(temp_deep_copy)
+                # elif isinstance(kwargs[key], list) and isinstance(kwargs[key][0], _STIXBase):
+                #     for obj in kwargs[key]:
+                #         temp_deep_copy = copy.deepcopy(dict(obj))
+                #         _recursive_stix_to_dict(temp_deep_copy)
+                #         streamlined_obj_vals.append(temp_deep_copy)
+                # else:
+                streamlined_obj_vals.append(instance[key])
+
+        if streamlined_obj_vals:
+            data = canonicalize(streamlined_obj_vals, utf8=False)
+
+            # try/except here to enable python 2 compatibility
+            try:
+                return required_prefix + text_type(uuid.uuid5(SCO_DET_ID_NAMESPACE, data))
+            except UnicodeDecodeError:
+                return required_prefix + text_type(uuid.uuid5(SCO_DET_ID_NAMESPACE, binary_type(data)))
+
+    return required_prefix + text_type(uuid.uuid4())
 
 
 _IDS_TO_NEW_IDS = {}
@@ -142,3 +209,13 @@ def add_object_id_value(key, value):
         _IDS_TO_CYBER_OBSERVABLES[key] = value
     if not value:
         warn("Trying to associate %s with None", 610, key)
+
+
+def get_uuid_from_id(id, separator="--"):
+    type_and_uuid = id.split(separator)
+    return type_and_uuid[1]
+
+
+def get_type_from_id(id, separator="--"):
+    type_and_uuid = id.split(separator)
+    return type_and_uuid[0]

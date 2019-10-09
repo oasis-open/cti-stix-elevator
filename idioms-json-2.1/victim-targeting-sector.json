@@ -1,19 +1,19 @@
 {
-  "id": "bundle--e5114ee8-303f-4428-98ff-9499f099c961",
-  "objects": [
-    {
-      "created": "2017-01-27T13:49:54.341Z",
-      "id": "identity--dfd23353-167f-411c-a258-e08ec9d284af",
-      "identity_class": "organization",
-      "modified": "2017-01-27T13:49:54.341Z",
-      "name": "Victim Targeting: Electricity Sector and Industrial Control System Sector",
-      "sectors": [
-        "electricity",
-        "industrial-control-systems"
-      ],
-      "spec_version": "2.1",
-      "type": "identity"
-    }
-  ],
-  "type": "bundle"
+    "id": "bundle--e5114ee8-303f-4428-98ff-9499f099c961",
+    "objects": [
+        {
+            "created": "2014-09-09T14:38:08.678Z",
+            "description": "\n\nTITLE:\n\tVictim Targeting: Electricity Sector and Industrial Control System Sector",
+            "id": "identity--dfd23353-167f-411c-a258-e08ec9d284af",
+            "identity_class": "organization",
+            "modified": "2014-09-09T14:38:08.678Z",
+            "sectors": [
+                "electricity",
+                "industrial-control-systems"
+            ],
+            "spec_version": "2.1",
+            "type": "identity"
+        }
+    ],
+    "type": "bundle"
 }

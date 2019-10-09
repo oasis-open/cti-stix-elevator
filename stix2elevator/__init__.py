@@ -19,7 +19,9 @@ from stix2elevator.options import (get_option_value,
                                    set_option_value,
                                    setup_logger,
                                    warn)
-from stix2elevator.utils import Environment, clear_1x_markings_map
+from stix2elevator.utils import (Environment,
+                                 clear_1x_markings_map,
+                                 strftime_with_appropriate_fractional_seconds)
 from stix2elevator.version import __version__  # noqa
 
 # Module-level logger
@@ -67,7 +69,8 @@ def elevate_file(fn):
         if get_option_value("default_timestamp"):
             timestamp = datetime.strptime(get_option_value("default_timestamp"), "%Y-%m-%dT%H:%M:%S.%fZ"),
         else:
-            timestamp = None
+            warn("Timestamp not available for stix 1x package, using current time", 905)
+            timestamp = strftime_with_appropriate_fractional_seconds(datetime.now(), True)
         env = Environment(get_option_value("package_created_by_id"),
                           timestamp)
         json_string = json.dumps(convert_package(stix_package, env),

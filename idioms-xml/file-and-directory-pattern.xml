@@ -41,7 +41,7 @@
                 </cybox:Object>
             </indicator:Observable>
             <indicator:Indicated_TTP>
-                <stixCommon:TTP idref="example:TTP-bc66360d-a7d1-4d8c-ad1a-ea3a13d62da9" />
+                <stixCommon:TTP idref="example:ttp-dd955e08-16d0-6f08-5064-50d9e7a3104d" />
             </indicator:Indicated_TTP>
         </stix:Indicator>
     </stix:Indicators>

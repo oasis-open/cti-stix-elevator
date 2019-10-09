@@ -38,10 +38,7 @@ import stixmarx
 
 from stix2elevator.common import ADDRESS_FAMILY_ENUMERATION, SOCKET_OPTIONS
 from stix2elevator.convert_cybox import split_into_requests_and_responses
-from stix2elevator.ids import (add_object_id_value,
-                               exists_object_id_key,
-                               get_id_value,
-                               get_object_id_value)
+from stix2elevator.ids import add_id_value, exists_object_id_key, get_id_value
 from stix2elevator.options import error, get_option_value, info, warn
 from stix2elevator.utils import identifying_info, map_vocabs_to_label
 from stix2elevator.vocab_mappings import WINDOWS_PEBINARY
@@ -108,10 +105,22 @@ class ObjectPathForElevator(ObjectPath):
                     current_cyber_observable_type = "file"
                 elif x.property_name == "parent_directory_ref":
                     current_cyber_observable_type = "directory"
+                elif x.property_name == "created":
+                    x.property_name = "ctime"
+                elif x.property_name == "modified":
+                    x.property_name = "mtime"
+                elif x.property_name == "accessed":
+                    x.property_name = "atime"
             elif current_cyber_observable_type == "directory":
                 if x.property_name == "contains_refs":
                     # TODO - what if it is a directory?
                     current_cyber_observable_type = "file"
+                elif x.property_name == "created":
+                    x.property_name = "ctime"
+                elif x.property_name == "modified":
+                    x.property_name = "mtime"
+                elif x.property_name == "accessed":
+                    x.property_name = "atime"
             elif current_cyber_observable_type == "archive-ext":
                 if x.property_name == "version":
                     print("Expression contains the property version, for a file.archive-ext, which is not in STIX 2.1")
@@ -146,6 +155,9 @@ class ObjectPathForElevator(ObjectPath):
             elif current_cyber_observable_type == "user_account":
                 if x.property_name == "password_last_changed":
                     x.property_name = "credential_last_changed"
+            elif current_cyber_observable_type == "windows-registry-key":
+                if x.property_name == "modified":
+                    x.property_name = "modified_time"
         return self
 
 
@@ -353,7 +365,7 @@ class IdrefPlaceHolder(object):
     def replace_placeholder_with_idref_pattern(self, idref):
         if idref == self.idref:
             return True, get_pattern_from_cache(idref)
-        elif exists_object_id_key(self.idref) and idref == get_object_id_value(self.idref):
+        elif exists_object_id_key(self.idref) and idref == get_id_value(self.idref):
             return True, get_pattern_from_cache(idref)
         else:
             return False, self
@@ -1015,19 +1027,22 @@ def convert_email_message_to_pattern(mess):
 
 
 _PE_FILE_HEADER_PROPERTIES = \
-    [["machine", "file:extensions.'windows-pebinary-ext'.file_header:machine_hex"],
-     ["time_date_stamp", "file:extensions.'windows-pebinary-ext'.file_header.time_date_stamp"],
-     ["number_of_sections", "file:extensions.'windows-pebinary-ext'.file_header.number_of_sections"],
-     ["pointer_to_symbol_table", "file:extensions.'windows-pebinary-ext'.file_header.pointer_to_symbol_table"],
-     ["number_of_symbols", "file:extensions.'windows-pebinary-ext'.file_header.number_of_symbols"],
-     ["size_of_optional_header", "file:extensions.'windows-pebinary-ext'.file_header.size_of_optional_header"],
-     ["characteristics", "file:extensions.'windows-pebinary-ext'.file_header.characteristics_hex"]]
+    [["machine", "file:extensions.'windows-pebinary-ext'.machine_hex"],
+     ["time_date_stamp", "file:extensions.'windows-pebinary-ext'.time_date_stamp"],
+     ["number_of_sections", "file:extensions.'windows-pebinary-ext'.number_of_sections"],
+     ["pointer_to_symbol_table", "file:extensions.'windows-pebinary-ext'.pointer_to_symbol_table"],
+     ["number_of_symbols", "file:extensions.'windows-pebinary-ext'.number_of_symbols"],
+     ["size_of_optional_header", "file:extensions.'windows-pebinary-ext'.size_of_optional_header"],
+     ["characteristics", "file:extensions.'windows-pebinary-ext'.characteristics_hex"]]
+
 
 _PE_SECTION_HEADER_PROPERTIES = [["name", "file:extensions.'windows-pebinary-ext'.section[*].name"],
                                  ["virtual_size", "file:extensions.'windows-pebinary-ext'.section[*].size"]]
 
+
 _ARCHIVE_FILE_PROPERTIES_2_0 = [["comment", "file:extensions.'archive-ext'.comment"],
                                 ["version", "file:extensions.'archive-ext'.version"]]
+
 
 _ARCHIVE_FILE_PROPERTIES_2_1 = [["comment", "file:extensions.'archive-ext'.comment"]]
 
@@ -1081,9 +1096,9 @@ def convert_windows_executable_file_to_pattern(f):
                             section_expressions.append(term)
             if s.entropy:
                 if s.entropy.min:
-                    warn("Entropy.min is not supported in STIX 2.0", 424)
+                    warn("Entropy.min is not supported in STIX 2.x", 424)
                 if s.entropy.min:
-                    warn("Entropy.max is not supported in STIX 2.0", 424)
+                    warn("Entropy.max is not supported in STIX 2.x", 424)
                 if s.entropy.value:
                     section_expressions.append(create_term("file:extensions.'windows-pebinary-ext'.section[*].entropy",
                                                            s.entropy.value.condition,
@@ -1210,9 +1225,9 @@ _FILE_PROPERTIES_2_0 = [["size_in_bytes", "file:size"],
 
 _FILE_PROPERTIES_2_1 = [["size_in_bytes", "file:size"],
                         ["magic_number", "file:magic_number_hex"],
-                        ["created_time", "file:created"],
-                        ["modified_time", "file:modified"],
-                        ["accessed_time", "file:accessed"]]
+                        ["created_time", "file:ctime"],
+                        ["modified_time", "file:mtime"],
+                        ["accessed_time", "file:atime"]]
 
 
 def select_file_properties():
@@ -1421,7 +1436,7 @@ def convert_windows_process_to_pattern(process):
                 expressions.append(term)
     if process.handle_list:
         for h in process.handle_list:
-            warn("Windows Handles are not a part of STIX 2.0", 420)
+            warn("Windows Handles are not a part of STIX 2.x", 420)
     if process.startup_info:
         warn("The startup_info property of ProcessObj is not part of STIX 2.x", 418)
         expressions.append(UnconvertedTerm("ProcessObj.startup_info"))
@@ -1473,7 +1488,8 @@ def convert_related_object_to_pattern(ro):
             return get_pattern_from_cache(ro.idref)
         else:
             if id_in_observable_mappings(ro.idref):
-                return convert_observable_to_pattern(get_obs_from_mapping(ro.idref))
+                referenced_obs = get_obs_from_mapping(ro.idref)
+                return convert_observable_to_pattern(referenced_obs)
             return IdrefPlaceHolder(ro.idref)
 
 
@@ -1689,7 +1705,7 @@ def convert_network_packet_to_pattern(packet):
     if packet.internet_layer:
         internet_layer = packet.internet_layer
         if internet_layer.ipv4 or internet_layer.ipv6:
-            warn("Internet_Layer/IP_Packet content not supported in STIX 2.0", 424)
+            warn("Internet_Layer/IP_Packet content not supported in STIX 2.x", 424)
         else:
             if internet_layer.icmpv4:
                 icmp_header = internet_layer.icmpv4.icmpv4_header
@@ -1713,7 +1729,7 @@ def convert_http_session_to_pattern(session):
     if session.http_request_response:
         requests, responses = split_into_requests_and_responses(session.http_request_response)
         if len(responses) != 0:
-            warn("HTTPServerResponse type is not supported in STIX 2.0", 429)
+            warn("HTTPServerResponse type is not supported in STIX 2.x", 429)
         if len(requests) >= 1:
             expression = convert_http_client_request_to_pattern(requests[0])
             if len(requests) > 1:
@@ -1759,9 +1775,9 @@ def convert_network_socket_to_pattern(socket):
     if socket.options:
         expressions.append(convert_socket_options_to_pattern(socket.options))
     if socket.local_address:
-        warn("Network_Socket.local_address content not supported in STIX 2.0", 424)
+        warn("Network_Socket.local_address content not supported in STIX 2.x", 424)
     if socket.remote_address:
-        warn("Network_Socket.remote_address content not supported in STIX 2.0", 424)
+        warn("Network_Socket.remote_address content not supported in STIX 2.x", 424)
     if socket.protocol:
         expressions.append(add_comparison_expression(socket.protocol,
                                                      "network-traffic:protocols[*]"))
@@ -1834,7 +1850,7 @@ def convert_object_to_pattern(obj, obs_id):
         warn("No pattern term was created from %s", 422, obs_id)
         expression = UnconvertedTerm(obs_id)
     elif obj.id_:
-        add_object_id_value(obj.id_, obs_id)
+        add_id_value(obj.id_, obs_id)
     return expression
 
 
@@ -1895,9 +1911,10 @@ def convert_observable_to_pattern_without_negate(obs):
         if id_in_pattern_cache(obs.idref):
             return get_pattern_from_cache(obs.idref)
         else:
-            # resolve now if possible, and remove from observed_data
+            # resolve now if possible
             if id_in_observable_mappings(obs.idref):
-                return convert_observable_to_pattern(get_obs_from_mapping(obs.idref))
+                referenced_obs = get_obs_from_mapping(obs.idref)
+                return convert_observable_to_pattern(referenced_obs)
             return IdrefPlaceHolder(obs.idref)
 
 
@@ -1967,7 +1984,8 @@ def convert_indicator_to_pattern_without_negate(ind):
         else:
             # resolve now if possible, and remove from observed_data
             if id_in_observable_mappings(ind.idref):
-                return convert_observable_to_pattern(get_obs_from_mapping(ind.idref))
+                referenced_obs = get_obs_from_mapping(ind.idref)
+                return convert_observable_to_pattern(referenced_obs)
             return IdrefPlaceHolder(ind.idref)
 
 
@@ -1986,6 +2004,7 @@ def convert_indicator_composition_to_pattern(ind_comp):
 
 
 def remove_pattern_objects(bundle_instance):
+    sco_ids_to_delete = []
     all_new_ids_with_patterns = []
     for old_id in get_ids_from_pattern_cache():
         new_id = get_id_value(old_id)
@@ -2000,7 +2019,13 @@ def remove_pattern_objects(bundle_instance):
             else:
                 warn("%s is used as a pattern, therefore it is not included as an observed_data instance", 423,
                      obj["id"])
-        bundle_instance["objects"] = remaining_objects
+                if "object_refs" in obj:
+                    sco_ids_to_delete.extend(obj["object_refs"])
+        new_remaining_objects = []
+        for obj in remaining_objects:
+            if obj["id"] not in sco_ids_to_delete:
+                new_remaining_objects.append(obj)
+        bundle_instance["objects"] = new_remaining_objects
 
     if not KEEP_OBSERVABLE_DATA_USED_IN_PATTERNS:
         for obj in bundle_instance["objects"]:
@@ -2008,7 +2033,7 @@ def remove_pattern_objects(bundle_instance):
                 remaining_object_refs = []
                 if "object_refs" in obj:
                     for ident in obj["object_refs"]:
-                        if not ident.startswith("observed-data") or ident not in all_new_ids_with_patterns:
+                        if not ident.startswith("observed-data") or ident not in all_new_ids_with_patterns and ident not in sco_ids_to_delete:
                             remaining_object_refs.append(ident)
                     obj["object_refs"] = remaining_object_refs
 
