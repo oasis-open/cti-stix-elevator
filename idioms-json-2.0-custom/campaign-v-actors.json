@@ -3,6 +3,14 @@
     "objects": [
         {
             "created": "2014-08-08T15:50:10.983Z",
+            "id": "identity--2d1c6ab3-5e4e-48ac-a32b-f0c01c2836a8",
+            "modified": "2014-08-08T15:50:10.983Z",
+            "type": "identity",
+            "x_elevator_targeted_information": "Information Assets - Financial Data",
+            "x_elevator_title": "Victim Targeting: Customer PII and Financial Data"
+        },
+        {
+            "created": "2014-08-08T15:50:10.983Z",
             "id": "threat-actor--56f3f0db-b5d5-431c-ae56-c18f02caf500",
             "labels": [
                 "unknown"
@@ -13,12 +21,12 @@
             "type": "threat-actor"
         },
         {
-          "aliases": [
-            "Charming Kittens",
-            "NewsBeef"
-          ],
+            "aliases": [
+                "Charming Kittens",
+                "NewsBeef"
+            ],
             "created": "2014-08-08T15:50:10.983Z",
-            "description": "Fred\n\nINFORMATION_SOURCE_ROLE:\nAggregator,\nInitial Author",
+            "description": "Fred",
             "external_references": [
                 {
                     "source_name": "unknown",
@@ -28,9 +36,18 @@
             "id": "campaign--e5268b6e-4931-42f1-b379-87f48eb41b1e",
             "modified": "2014-08-08T15:50:10.983Z",
             "name": "Compromise of ATM Machines",
-            "type": "campaign"
+            "type": "campaign",
+            "x_elevator_information_source_role": "Aggregator,Initial Author"
         },
         {
+            "created": "2014-08-08T15:50:10.983Z",
+            "id": "relationship--fd297788-9c1f-4701-ab1e-9a35f11e6dd9",
+            "modified": "2014-08-08T15:50:10.983Z",
+            "relationship_type": "uses",
+            "source_ref": "campaign--e5268b6e-4931-42f1-b379-87f48eb41b1e",
+            "target_ref": "identity--2d1c6ab3-5e4e-48ac-a32b-f0c01c2836a8",
+            "type": "relationship"
+        },{
             "created": "2014-08-08T15:50:10.983Z",
             "id": "relationship--2ae13256-e6bb-4960-903a-63683c1df05a",
             "modified": "2014-08-08T15:50:10.983Z",
