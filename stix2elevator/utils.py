@@ -3,7 +3,7 @@ import os
 
 from six import binary_type, iteritems, text_type
 
-from stix2elevator.options import info, warn, get_option_value
+from stix2elevator.options import info, warn
 
 
 def identifying_info(stix1x_obj):
@@ -38,9 +38,6 @@ def map_vocabs_to_label(t, vocab_map):
         return vocab_map[t]
     else:
         return canonicalize_label(t)
-
-
-
 
 
 def convert_controlled_vocabs_to_open_vocabs(new_obj, new_property_name, old_vocabs, vocab_mapping, only_one, required=True):

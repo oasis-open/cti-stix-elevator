@@ -1,5 +1,6 @@
 from six import text_type
-from stix2elevator.options import error, get_option_value, info, warn
+
+from stix2elevator.options import get_option_value, info, warn
 
 
 def convert_to_custom_property_name(prop_name):

@@ -41,8 +41,7 @@ from stix2elevator.convert_cybox import split_into_requests_and_responses
 from stix2elevator.ids import add_id_value, exists_object_id_key, get_id_value
 from stix2elevator.missing_policy import convert_to_custom_property_name
 from stix2elevator.options import error, get_option_value, info, warn
-from stix2elevator.utils import (identifying_info,
-                                 map_vocabs_to_label)
+from stix2elevator.utils import identifying_info, map_vocabs_to_label
 from stix2elevator.vocab_mappings import WINDOWS_PEBINARY
 
 if sys.version_info > (3,):

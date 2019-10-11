@@ -21,7 +21,6 @@ from cybox.objects.win_registry_key_object import WinRegistryKey
 from cybox.objects.win_service_object import WinService
 from six import text_type
 
-
 from stix2elevator.common import ADDRESS_FAMILY_ENUMERATION, SOCKET_OPTIONS
 from stix2elevator.ids import (add_id_value,
                                add_object_id_value,
@@ -182,7 +181,7 @@ def convert_windows_executable_file(f):
                     section_dict[prop_name2x] = getattr(s.section_header, prop_name1x)
             if s.entropy:
                 if s.entropy.min:
-                    handle_missing_string_property(section_dict,  "entropy_min", s.entropy.min, is_sco=True)
+                    handle_missing_string_property(section_dict, "entropy_min", s.entropy.min, is_sco=True)
                 if s.entropy.max:
                     handle_missing_string_property(section_dict, "entropy_max", s.entropy.min, is_sco=True)
                 if s.entropy.value:

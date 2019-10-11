@@ -59,14 +59,13 @@ from stix2elevator.missing_policy import (convert_to_custom_property_name,
                                           handle_missing_statement_properties,
                                           handle_missing_string_property,
                                           handle_missing_tool_property,
-                                          handle_multiple_missing_statement_properties,)
+                                          handle_multiple_missing_statement_properties)
 from stix2elevator.options import error, get_option_value, info, warn
 from stix2elevator.utils import (add_marking_map_entry,
                                  check_map_1x_markings_to_2x,
                                  convert_controlled_vocabs_to_open_vocabs,
                                  convert_timestamp_of_stix_object,
                                  convert_timestamp_to_string,
-
                                  identifying_info,
                                  iterpath,
                                  map_1x_markings_to_2x,
@@ -82,7 +81,6 @@ from stix2elevator.vocab_mappings import (ATTACK_MOTIVATION_MAP,
                                           THREAT_ACTOR_LABEL_MAP,
                                           THREAT_ACTOR_SOPHISTICATION_MAP,
                                           TOOL_LABELS_MAP)
-
 
 if stix.__version__ >= "1.2.0.0":
     from stix.report import Report
@@ -191,7 +189,6 @@ def process_description_and_short_description(so, entity, parent_info=False):
                 so[convert_to_custom_property_name("short_description")] = short_description_as_text
             else:
                 warn("Missing property short_description of %s is ignored", 307, so["id"])
-
 
 
 def create_basic_object(stix2x_type, stix1x_obj, env, parent_id=None, id_used=False):
@@ -358,8 +355,6 @@ def handle_free_text_lines(sdo_instance, free_text_lines):
             warn("Appended free text lines to description of %s", 302, sdo_instance["id"])
         else:
             sdo_instance[convert_to_custom_property_name("free_text_lines")] = lines
-
-
 
 
 # Sightings
