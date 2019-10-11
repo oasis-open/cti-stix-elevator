@@ -7,9 +7,9 @@ For each CybOX object the table also indicates if the elevator is able to conver
 CybOX object types not listed have no corresponding STIX 2.x cyber observable type, and therefore are not
 converted by the elevator.
 
-=============================== ============================================= ==============================================
-**Cybox 2.x Object Type**       **STIX 2.x Cyber Observable Type**            **Converted in version 2.0.1 of the Elevator**
-=============================== ============================================= ==============================================
+=============================== ============================================= ============================================
+**Cybox 2.x Object Type**       **STIX 2.x Cyber Observable Type**            **Converted in version 2.1 of the Elevator**
+=============================== ============================================= ============================================
 ``Address``                     ``email-addr``                                yes
 ``Address``                     ``ipv4-addr``                                 yes
 ``Address``                     ``ipv6-addr``                                 yes

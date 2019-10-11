@@ -6,7 +6,8 @@ STIX 1.x content to STIX 2.x content:
 
 .. code-block:: text
 
-    usage: stix2_elevator [-h] [--incidents] [--no-squirrel-gaps]
+    usage: stix2_elevator [-h] [--incidents]
+              [--missing-policy {use-custom-properties, add-to-description, ignore}]
               [--infrastructure]
               [--package-created-by-id PACKAGE_CREATED_BY_ID]
               [--default-timestamp DEFAULT_TIMESTAMP]
@@ -19,10 +20,10 @@ STIX 1.x content to STIX 2.x content:
               file
 
 
-stix2-elevator v2.0.1
+stix2-elevator v2.1
 
 The stix2-elevator is a work-in-progress. It should be used to explore how
-existing STIX 1.x would potentially be represented in STIX 2.0. Using the
+existing STIX 1.x would potentially be represented in STIX 2.x. Using the
 current version of the stix2-elevator will provide insight to issues that might need
 to be mitigated to convert your STIX 1.x content.
 
@@ -39,10 +40,13 @@ optional arguments:
   -h, --help
                 Show this help message and exit
 
-  --no-squirrel-gaps
-                Do not include STIX 1.x content that cannot be
-                represented directly in STIX 2.x using the description
-                property.
+  --missing-policy {use-custom-properties,add-to-description,ignore}
+                Policy for including STIX 1.x content that cannot be
+                represented directly in STIX 2.x.
+
+  --custom-property-prefix CUSTOM_PROPERTY_PREFIX
+                Prefix to use for custom property names when missing
+                policy is 'use-custom-properties'.
 
   --package-created-by-id PACKAGE_CREATED_BY_ID
                 Use provided identifier for "created_by_ref"
