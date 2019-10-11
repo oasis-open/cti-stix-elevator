@@ -21,12 +21,14 @@ from cybox.objects.win_registry_key_object import WinRegistryKey
 from cybox.objects.win_service_object import WinService
 from six import text_type
 
+
 from stix2elevator.common import ADDRESS_FAMILY_ENUMERATION, SOCKET_OPTIONS
 from stix2elevator.ids import (add_id_value,
                                add_object_id_value,
                                generate_sco_id,
                                generate_stix2x_id,
                                get_object_id_value)
+from stix2elevator.missing_policy import handle_missing_string_property
 from stix2elevator.options import error, get_option_value, info, warn
 from stix2elevator.utils import (convert_timestamp_to_string,
                                  map_vocabs_to_label)
@@ -180,9 +182,9 @@ def convert_windows_executable_file(f):
                     section_dict[prop_name2x] = getattr(s.section_header, prop_name1x)
             if s.entropy:
                 if s.entropy.min:
-                    warn("Entropy.min is not supported in STIX 2.x", 424)
+                    handle_missing_string_property(section_dict,  "entropy_min", s.entropy.min, is_sco=True)
                 if s.entropy.max:
-                    warn("Entropy.max is not supported in STIX 2.x", 424)
+                    handle_missing_string_property(section_dict, "entropy_max", s.entropy.min, is_sco=True)
                 if s.entropy.value:
                     section_dict["entropy"] = s.entropy.value.value
             # need to merge hash lists - worry about duplicate keys

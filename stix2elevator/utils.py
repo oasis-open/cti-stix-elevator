@@ -40,8 +40,7 @@ def map_vocabs_to_label(t, vocab_map):
         return canonicalize_label(t)
 
 
-def convert_to_custom_property_name(prop_name):
-    return "x_" + get_option_value("custom_property_prefix") + "_" + prop_name
+
 
 
 def convert_controlled_vocabs_to_open_vocabs(new_obj, new_property_name, old_vocabs, vocab_mapping, only_one, required=True):
