@@ -181,9 +181,9 @@ def convert_windows_executable_file(f):
                     section_dict[prop_name2x] = getattr(s.section_header, prop_name1x)
             if s.entropy:
                 if s.entropy.min:
-                    handle_missing_string_property(section_dict, "entropy_min", s.entropy.min, is_sco=True)
+                    handle_missing_string_property(section_dict, "entropy_min", s.entropy.min)
                 if s.entropy.max:
-                    handle_missing_string_property(section_dict, "entropy_max", s.entropy.min, is_sco=True)
+                    handle_missing_string_property(section_dict, "entropy_max", s.entropy.min)
                 if s.entropy.value:
                     section_dict["entropy"] = s.entropy.value.value
             # need to merge hash lists - worry about duplicate keys
@@ -922,9 +922,9 @@ def convert_network_socket(socket):
     if socket.socket_descriptor:
         socket_extension["socket_descriptor"] = socket.socket_descriptor
     if socket.local_address:
-        warn("Network_Socket.local_address content not supported in STIX 2.x", 424)
+        handle_missing_string_property(socket_extension, "local_address", socket.local_address.ip_address)
     if socket.remote_address:
-        warn("Network_Socket.remote_address content not supported in STIX 2.x", 424)
+        handle_missing_string_property(socket_extension, "remote_address", socket.remote_address.ip_address)
     if socket.protocol:
         cybox_traffic["protocols"] = [socket.protocol.value]
     cybox_traffic["extensions"] = {"socket-ext": socket_extension}

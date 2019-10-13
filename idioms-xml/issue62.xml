@@ -119,6 +119,7 @@
                                 </WinExecutableFileObj:Section_Header>
                                 <WinExecutableFileObj:Entropy>
                                     <WinExecutableFileObj:Value condition="Equals">7.74202363178</WinExecutableFileObj:Value>
+                                    <WinExecutableFileObj:Min condition="LessThan">10.0</WinExecutableFileObj:Min>
                                 </WinExecutableFileObj:Entropy>
                             </WinExecutableFileObj:Section>
                             <WinExecutableFileObj:Section>

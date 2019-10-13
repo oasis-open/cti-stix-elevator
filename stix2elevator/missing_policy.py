@@ -27,17 +27,16 @@ def add_string_property_as_custom_property(sdo_instance, property_name, property
         sdo_instance[convert_to_custom_property_name(property_name)] = ",".join(property_values)
     else:
         sdo_instance[convert_to_custom_property_name(property_name)] = text_type(property_value)
-    warn("Used custom property for %s of %s", 308, property_name, sdo_instance["id"])
+    warn("Used custom property for %s", 308, property_name +  (" of " + sdo_instance["id"] if "id" in sdo_instance else ""))
 
-
-def handle_missing_string_property(sdo_instance, property_name, property_value, is_list=False, is_sco=False):
+def handle_missing_string_property(sdo_instance, property_name, property_value, is_list=False):
     if property_value:
-        if not is_sco and get_option_value("missing_policy") == "add-to-description":
+        if get_option_value("missing_policy") == "add-to-description" and "description" in sdo_instance:
             add_string_property_to_description(sdo_instance, property_name, property_value, is_list)
         elif get_option_value("missing_policy") == "use-custom-properties":
             add_string_property_as_custom_property(sdo_instance, property_name, property_value, is_list)
         else:
-            warn("Missing property %s of %s is ignored", 307, property_name, sdo_instance["id"])
+            warn("Missing property %s is ignored", 307, property_name + (" of " + sdo_instance["id"] if "id" in sdo_instance else ""))
 
 
 def add_confidence_property_to_description(sdo_instance, confidence, parent_property_name):

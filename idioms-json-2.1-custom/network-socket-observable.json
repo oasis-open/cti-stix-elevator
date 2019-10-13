@@ -8,7 +8,8 @@
                     "is_listening": true,
                     "options": {
                         "IP_MULTICAST_LOOP": true
-                    }
+                    },
+                    "x_elevator_local_address": "198.51.100.2"
                 }
             },
             "id": "network-traffic--2222e5de-5004-499d-bbb4-411e42d72dd1",

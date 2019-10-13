@@ -14,6 +14,7 @@
         xmlns:stixCommon="http://stix.mitre.org/common-1"
         xmlns:stixVocabs="http://stix.mitre.org/default_vocabularies-1"
         xmlns:SocketAddressObj="http://cybox.mitre.org/objects#SocketAddressObject-1"
+        xmlns:AddressObject="http://cybox.mitre.org/objects#AddressObject-2"
         xmlns:indicator="http://stix.mitre.org/Indicator-2"
         id="example:STIXPackage-8005dcb9-398c-4f61-b44c-18133199d145" version="1.2">
     <stix:Observables cybox_major_version="2" cybox_minor_version="1" cybox_update_version="0">
@@ -21,10 +22,16 @@
             <cybox:Object id="example:NetworkSocket-ed2c87bf-c0e3-4da9-873a-afa95da00459">
                 <cybox:Properties xsi:type="SocketAddressObj:NetworkSocketObjectType" is_listening="true">
                     <SocketAddressObj:Address_Family>AF_INET</SocketAddressObj:Address_Family>
+                    <SocketAddressObj:Local_Address>
+                        <SocketAddressObj:IP_Address>
+                            <AddressObject:Address_Value>198.51.100.2</AddressObject:Address_Value>
+                        </SocketAddressObj:IP_Address>
+                    </SocketAddressObj:Local_Address>
                     <SocketAddressObj:Options>
                         <SocketAddressObj:IP_MULTICAST_LOOP>true</SocketAddressObj:IP_MULTICAST_LOOP>
                     </SocketAddressObj:Options>
                     <SocketAddressObj:Protocol>TCP</SocketAddressObj:Protocol>
+
                 </cybox:Properties>
             </cybox:Object>
         </cybox:Observable>

@@ -1097,9 +1097,23 @@ def convert_windows_executable_file_to_pattern(f):
                             section_expressions.append(term)
             if s.entropy:
                 if s.entropy.min:
-                    warn("Entropy.min is not supported in STIX 2.x", 424)
-                if s.entropy.min:
-                    warn("Entropy.max is not supported in STIX 2.x", 424)
+                    if get_option_value("missing_policy") == "use-custom-properties":
+                        section_expressions.append(
+                            create_term("file:extensions.'windows-pebinary-ext'.section[*]." +
+                                            convert_to_custom_property_name("entropy_min"),
+                                        s.entropy.min.condition,
+                                        stix2.FloatConstant(s.entropy.min.value)))
+                    else:
+                        warn("Entropy.min is not supported in STIX 2.x", 424)
+                if s.entropy.max:
+                    if get_option_value("missing_policy") == "use-custom-properties":
+                        section_expressions.append(
+                            create_term("file:extensions.'windows-pebinary-ext'.section[*]." +
+                                            convert_to_custom_property_name("entropy_max"),
+                                        s.entropy.max.condition,
+                                        stix2.FloatConstant(s.entropy.max.value)))
+                    else:
+                        warn("Entropy.max is not supported in STIX 2.x", 424)
                 if s.entropy.value:
                     section_expressions.append(create_term("file:extensions.'windows-pebinary-ext'.section[*].entropy",
                                                            s.entropy.value.condition,
@@ -1824,9 +1838,23 @@ def convert_network_socket_to_pattern(socket):
     if socket.options:
         expressions.append(convert_socket_options_to_pattern(socket.options))
     if socket.local_address:
-        warn("Network_Socket.local_address content not supported in STIX 2.x", 424)
+        if get_option_value("missing_policy") == "use-custom-properties":
+            expressions.append(
+                create_term("network-traffic:extensions.'socket-ext'." +
+                            convert_to_custom_property_name("local_address"),
+                            socket.local_address.ip_address.condition,
+                            stix2.StringConstant(socket.local_address.ip_address.address_value.value)))
+        else:
+            warn("Network_Socket.local_address content not supported in STIX 2.x", 424)
     if socket.remote_address:
-        warn("Network_Socket.remote_address content not supported in STIX 2.x", 424)
+        if get_option_value("missing_policy") == "use-custom-properties":
+            expressions.append(
+                create_term("network-traffic:extensions.'socket-ext'." +
+                            convert_to_custom_property_name("remote_address"),
+                            socket.remote_address.ip_address.condition,
+                            stix2.StringConstant(socket.remote_address.ip_address.address_value.value)))
+        else:
+            warn("Network_Socket.remote_address content not supported in STIX 2.x", 424)
     if socket.protocol:
         expressions.append(add_comparison_expression(socket.protocol,
                                                      "network-traffic:protocols[*]"))

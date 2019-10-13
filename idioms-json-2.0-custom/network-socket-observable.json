@@ -16,7 +16,8 @@
               "is_listening": true,
               "options": {
                 "IP_MULTICAST_LOOP": true
-              }
+              },
+              "x_elevator_local_address": "198.51.100.2"
             }
           },
           "protocols": [
