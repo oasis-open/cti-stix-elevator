@@ -1100,7 +1100,7 @@ def convert_windows_executable_file_to_pattern(f):
                     if get_option_value("missing_policy") == "use-custom-properties":
                         section_expressions.append(
                             create_term("file:extensions.'windows-pebinary-ext'.section[*]." +
-                                            convert_to_custom_property_name("entropy_min"),
+                                        convert_to_custom_property_name("entropy_min"),
                                         s.entropy.min.condition,
                                         stix2.FloatConstant(s.entropy.min.value)))
                     else:
@@ -1109,7 +1109,7 @@ def convert_windows_executable_file_to_pattern(f):
                     if get_option_value("missing_policy") == "use-custom-properties":
                         section_expressions.append(
                             create_term("file:extensions.'windows-pebinary-ext'.section[*]." +
-                                            convert_to_custom_property_name("entropy_max"),
+                                        convert_to_custom_property_name("entropy_max"),
                                         s.entropy.max.condition,
                                         stix2.FloatConstant(s.entropy.max.value)))
                     else:

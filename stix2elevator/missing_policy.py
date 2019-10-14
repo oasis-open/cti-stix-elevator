@@ -27,7 +27,8 @@ def add_string_property_as_custom_property(sdo_instance, property_name, property
         sdo_instance[convert_to_custom_property_name(property_name)] = ",".join(property_values)
     else:
         sdo_instance[convert_to_custom_property_name(property_name)] = text_type(property_value)
-    warn("Used custom property for %s", 308, property_name +  (" of " + sdo_instance["id"] if "id" in sdo_instance else ""))
+    warn("Used custom property for %s", 308, property_name + (" of " + sdo_instance["id"] if "id" in sdo_instance else ""))
+
 
 def handle_missing_string_property(sdo_instance, property_name, property_value, is_list=False):
     if property_value:
