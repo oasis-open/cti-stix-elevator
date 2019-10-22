@@ -199,7 +199,7 @@ tools. You can elevate a STIX 1.x file::
       from stix2elevator import elevate_file
       from stix2elevator.options import initialize_options
 
-      intialize_options()
+      initialize_options()
       results = elevate_file("stix_file.xml")
       print(results)
 
@@ -209,7 +209,7 @@ argument::
       from stix2elevator import elevate_string
       from stix2elevator.options import initialize_options
 
-      intialize_options()
+      initialize_options()
       results = elevate_string("...")
       print(results)
 
