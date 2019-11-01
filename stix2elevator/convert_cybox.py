@@ -483,7 +483,7 @@ def convert_opened_connection_refs20(process, process_dict, objs, index):
     renumbered_nc_dicts = {}
     process_dict["opened_connection_refs"] = []
     for nc in process.network_connection_list:
-        nc_dicts = convert_network_connection(nc)
+        nc_dicts = convert_network_connection(nc, None)
         root_obj_index = find_index_of_type(nc_dicts, "network-traffic")
         current_largest_id, number_mapping = do_renumbering(nc_dicts,
                                                             index,
