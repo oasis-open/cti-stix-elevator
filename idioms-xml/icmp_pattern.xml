@@ -30,6 +30,7 @@
                                 <PacketObj:ICMPv4_Header>
                                     <PacketObj:Type>08</PacketObj:Type>
                                     <PacketObj:Code>00</PacketObj:Code>
+                                    <PacketObj:Checksum>97c02164528d</PacketObj:Checksum>
                                 </PacketObj:ICMPv4_Header>
                             </PacketObj:ICMPv4>
                         </PacketObj:Internet_Layer>

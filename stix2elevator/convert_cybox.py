@@ -26,8 +26,9 @@ from stix2elevator.ids import (add_id_value,
                                add_object_id_value,
                                generate_sco_id,
                                generate_stix2x_id,
+                               get_id_value,
                                get_object_id_value)
-from stix2elevator.missing_policy import handle_missing_string_property
+from stix2elevator.missing_policy import handle_missing_string_property, convert_to_custom_property_name
 from stix2elevator.options import error, get_option_value, info, warn
 from stix2elevator.utils import (convert_timestamp_to_string,
                                  map_vocabs_to_label)
@@ -50,12 +51,14 @@ def create_base_sco(obj1x, type, other_properties=None):
     return new_dict
 
 
-def finish_sco(instance):
+def finish_sco(instance, stix1x_id):
     if get_option_value("spec_version") == "2.1":
         instance["id"] = generate_sco_id(instance["type"], instance)
+        if stix1x_id:
+            add_id_value(stix1x_id, instance["id"])
 
 
-def convert_account(acc):
+def convert_account(acc, obj1x_id):
     account_dict = create_base_sco(acc, "user-account")
     if acc.creation_date:
         account_dict["account_created"] = acc.creation_date.value
@@ -95,11 +98,11 @@ def convert_account(acc):
                 account_dict["account_type"] = "windows-domain"
             else:
                 account_dict["account_type"] = "windows-local"
-    finish_sco(account_dict)
+    finish_sco(account_dict, obj1x_id)
     return account_dict
 
 
-def convert_address(add):
+def convert_address(add, obj1x_id):
     if add.category == add.CAT_IPV4:
         instance = create_base_sco(add, "ipv4-addr", {"value": add.address_value.value})
     elif add.category == add.CAT_IPV6:
@@ -111,13 +114,13 @@ def convert_address(add):
     else:
         warn("The address type %s is not part of STIX 2.x", 421, add.category)
     if instance:
-        finish_sco(instance)
+        finish_sco(instance, obj1x_id)
         return instance
 
 
-def convert_uri(uri):
+def convert_uri(uri, obj1x_id):
     instance = create_base_sco(uri, "url", {"value": uri.value.value})
-    finish_sco(instance)
+    finish_sco(instance, obj1x_id)
     return instance
 
 
@@ -202,7 +205,7 @@ def convert_windows_executable_file(f):
     return dict
 
 
-def convert_archive_file(f):
+def convert_archive_file(f, obj1x_id):
     dict = {}
     file_objs = []
     if f.comment:
@@ -211,13 +214,13 @@ def convert_archive_file(f):
         dict["version"] = f.version
     if f.archived_file:
         for ar_file in f.archived_file:
-            ar_file2x = convert_file(ar_file)
+            ar_file2x = convert_file(ar_file, obj1x_id)
             file_objs.append(ar_file2x)
         dict["contains_refs"] = [x["id"] for x in file_objs]
     return dict, file_objs
 
 
-def convert_file_properties(f):
+def convert_file_properties(f, obj1x_id):
     file_dict = create_base_sco(f, "file")
     extended_properties = {}
     dir_dict = None
@@ -265,7 +268,7 @@ def convert_file_properties(f):
         dir_path = f.file_path.value[0: index]
         if dir_path:
             dir_dict = create_base_sco(None, "directory", {"path": (f.device_path.value if f.device_path else "") + dir_path})
-            finish_sco(dir_dict)
+            finish_sco(dir_dict, None)
     if f.full_path:
         warn("1.x full file paths are not processed, yet", 802)
     if isinstance(f, WinExecutableFile):
@@ -275,20 +278,20 @@ def convert_file_properties(f):
         else:
             warn("No WinExecutableFile properties found in %s", 613, text_type(f))
     if isinstance(f, ArchiveFile):
-        archive_file_dict, file_objs = convert_archive_file(f)
+        archive_file_dict, file_objs = convert_archive_file(f, obj1x_id)
         if archive_file_dict:
             extended_properties["archive-ext"] = archive_file_dict
         else:
             warn("No ArchiveFile properties found in %s", 614, text_type(f))
     else:
         file_objs = None
-    finish_sco(file_dict)
+    finish_sco(file_dict, obj1x_id)
     return file_dict, dir_dict, file_objs
 
 
-def convert_file20(f):
+def convert_file20(f, obj1x_id):
     objs = {}
-    objs["0"], dir_dict, file_objs = convert_file_properties(f)
+    objs["0"], dir_dict, file_objs = convert_file_properties(f, obj1x_id)
     if dir_dict:
         objs["1"] = dir_dict
         objs["0"]["parent_directory_ref"] = "1"
@@ -297,8 +300,8 @@ def convert_file20(f):
     return objs
 
 
-def convert_file21(f):
-    file_dict, dir_dict, file_objs = convert_file_properties(f)
+def convert_file21(f, obj1x_id):
+    file_dict, dir_dict, file_objs = convert_file_properties(f, obj1x_id)
     objs = [file_dict]
     if dir_dict:
         objs.append(dir_dict)
@@ -308,11 +311,11 @@ def convert_file21(f):
     return objs
 
 
-def convert_file(f):
+def convert_file(f, obj1x_id):
     if get_option_value("spec_version") == "2.0":
-        return convert_file20(f)
+        return convert_file20(f, obj1x_id)
     else:
-        return convert_file21(f)
+        return convert_file21(f, obj1x_id)
 
 
 def convert_attachment(attachment):
@@ -325,7 +328,7 @@ def convert_attachment(attachment):
     return {"body_raw_ref": body_raw_ref, "content_type": "text/plain"}
 
 
-def convert_email_message(email_message):
+def convert_email_message(email_message, obj1x_id):
     index = 0
     spec_version = get_option_value("spec_version")
     email_dict = create_base_sco(email_message, "email-message", {"is_multipart": False})  # the default
@@ -345,7 +348,7 @@ def convert_email_message(email_message):
             email_dict["subject"] = text_type(header.subject)
         if header.from_:
             # should there ever be more than one?
-            from_ref = convert_address(header.from_)
+            from_ref = convert_address(header.from_, None)
             if spec_version == "2.0":
                 objs[text_type(index)] = from_ref
             else:
@@ -354,7 +357,7 @@ def convert_email_message(email_message):
             index += 1
         if header.to:
             for t in header.to:
-                to_ref = convert_address(t)
+                to_ref = convert_address(t, None)
                 if spec_version == "2.0":
                     objs[text_type(index)] = to_ref
                 else:
@@ -365,7 +368,7 @@ def convert_email_message(email_message):
                 index += 1
         if header.cc:
             for t in header.cc:
-                cc_ref = convert_address(t)
+                cc_ref = convert_address(t, None)
                 if spec_version == "2.0":
                     objs[text_type(index)] = cc_ref
                 else:
@@ -376,7 +379,7 @@ def convert_email_message(email_message):
                 index += 1
         if header.bcc:
             for t in header.bcc:
-                bcc_ref = convert_address(t)
+                bcc_ref = convert_address(t, None)
                 if spec_version == "2.0":
                     objs[text_type(index)] = bcc_ref
                 else:
@@ -392,11 +395,26 @@ def convert_email_message(email_message):
         for a in email_message.attachments:
             multiparts.append(convert_attachment(a))
         email_dict["body_multipart"] = multiparts
-    finish_sco(email_dict)
+    if email_message.links:
+        if get_option_value("missing_policy") == "use-custom-properties":
+            # this would be to another observable - which is not allowed in 2.0
+            if get_option_value("spec_version") == "2.1":
+                property_name = convert_to_custom_property_name("link_refs")
+                email_dict[property_name] = list()
+                for l in email_message.links:
+                    sco_id = get_id_value(l.object_reference)
+                    email_dict[property_name].append(sco_id)
+                warn("Used custom property for %s", 308, "links")
+            else:
+                warn("Observed Data objects cannot refer to other external objects (in STIX 2.0): %s in %s",
+                     434, "links", "email-message")
+        else:
+            warn("Missing property %s is ignored", 307, "links")
+    finish_sco(email_dict, obj1x_id)
     return objs
 
 
-def convert_registry_key(reg_key):
+def convert_registry_key(reg_key, obj1x_id):
     cybox_reg = create_base_sco(reg_key, "windows-registry-key")
     if reg_key.key or reg_key.hive:
         full_key = ""
@@ -423,7 +441,7 @@ def convert_registry_key(reg_key):
             cybox_reg["modified"] = convert_timestamp_to_string(reg_key.modified_time)
         else:
             cybox_reg["modified_time"] = convert_timestamp_to_string(reg_key.modified_time)
-    finish_sco(cybox_reg)
+    finish_sco(cybox_reg, obj1x_id)
     return cybox_reg
 
 
@@ -433,7 +451,7 @@ def create_process_ref(cp, process_dict, objs, index, prop):
     if get_option_value("spec_version") == "2.0":
         objs[text_type(index)] = cp_ref
     else:
-        finish_sco(cp_ref)
+        finish_sco(cp_ref, None)
         objs.append(cp_ref)
     if prop == "child_refs":
         if prop not in process_dict:
@@ -449,14 +467,14 @@ def create_process_ref(cp, process_dict, objs, index, prop):
             process_dict[prop] = cp_ref["id"]
 
 
-def convert_port(prop):
+def convert_port(prop, obj1x_id):
     traffic_2x = create_base_sco(prop, "network-traffic")
     if prop.port_value:
         warn("port number is assumed to be a destination port", 725)
         traffic_2x["dst_port"] = prop.port_value.value
     if prop.layer4_protocol:
         traffic_2x["protocols"] = [prop.layer4_protocol.value]
-    finish_sco(traffic_2x)
+    finish_sco(traffic_2x, obj1x_id)
     return traffic_2x
 
 
@@ -479,14 +497,14 @@ def convert_opened_connection_refs20(process, process_dict, objs, index):
 def convert_opened_connection_refs21(process, process_dict, objs):
     process_dict["opened_connection_refs"] = []
     for nc in process.network_connection_list:
-        nc_dicts = convert_network_connection(nc)
+        nc_dicts = convert_network_connection(nc, None)
         for obj in nc_dicts:
             objs.append(obj)
         # network-traffic is always the last obj
         process_dict["opened_connection_refs"].append(obj["id"])
 
 
-def convert_process(process):
+def convert_process(process, obj1x_id):
     index = 0
     process_dict = create_base_sco(process, "process")
     if get_option_value("spec_version") == "2.0":
@@ -522,7 +540,7 @@ def convert_process(process):
                 extended_properties["windows-service-ext"] = service_properties
         if extended_properties:
             process_dict["extensions"] = extended_properties
-    finish_sco(process_dict)
+    finish_sco(process_dict, obj1x_id)
     if process.child_pid_list:
         for cp in process.child_pid_list:
             create_process_ref(cp, process_dict, objs, index, "child_refs")
@@ -549,7 +567,7 @@ def convert_windows_process(process):
     if process.window_title:
         ext["window_title"] = text_type(process.window_title)
     if process.startup_info:
-        warn("process:startup_info not handled yet", 803)
+        warn("CybOX object %s not handled yet not handled yet", 805, "process:startup_info")
     return ext
 
 
@@ -573,25 +591,25 @@ def convert_windows_service(service):
     if hasattr(service, "service_status") and service.service_status:
         cybox_ws["service_status"] = map_vocabs_to_label(service.service_status, SERVICE_STATUS)
     if hasattr(service, "service_dll") and service.service_dll:
-        warn("WinServiceObject.service_dll is not handled, yet.", 804)
+        handle_missing_string_property(cybox_ws, "service_dll", service.service_dll)
     return cybox_ws
 
 
-def convert_domain_name(domain_name):
+def convert_domain_name(domain_name, obj1x_id):
     cybox_dm = create_base_sco(domain_name, "domain-name")
     if domain_name.value:
         cybox_dm["value"] = text_type(domain_name.value.value)
 
     # TODO: resolves_to_refs
-    finish_sco(cybox_dm)
+    finish_sco(cybox_dm, obj1x_id)
     return cybox_dm
 
 
-def convert_mutex(mutex):
+def convert_mutex(mutex, obj1x_id):
     cybox_mutex = create_base_sco(mutex, "mutex")
     if mutex.name:
         cybox_mutex["name"] = text_type(mutex.name.value)
-    finish_sco(cybox_mutex)
+    finish_sco(cybox_mutex, obj1x_id)
     return cybox_mutex
 
 
@@ -707,7 +725,7 @@ def convert_http_network_connection_extension(http):
         return convert_http_client_request(http.http_client_request)
 
 
-def convert_network_connection(conn):
+def convert_network_connection(conn, obj1x_id):
     index = 0
     spec_version = get_option_value("spec_version")
     cybox_traffic = {}
@@ -716,9 +734,9 @@ def convert_network_connection(conn):
     else:
         objs = []
 
-    def create_domain_name_object(dn):
+    def create_domain_name_object(dn, obj1x_id):
         instance = create_base_sco(None, "domain-name", {"value": text_type(dn.value)})
-        finish_sco(instance)
+        finish_sco(instance, obj1x_id)
         return instance
 
     if conn.creation_time is not None:
@@ -746,7 +764,7 @@ def convert_network_connection(conn):
             index += 1
         elif conn.source_socket_address.hostname is not None:
             if conn.source_socket_address.hostname.is_domain_name and conn.source_socket_address.hostname.hostname_value is not None:
-                source_domain = create_domain_name_object(conn.source_socket_address.hostname.hostname_value)
+                source_domain = create_domain_name_object(conn.source_socket_address.hostname.hostname_value, None)
                 cybox_traffic["src_ref"] = str(index) if spec_version == "2.0" else source_domain["id"]
                 if spec_version == "2.0":
                     objs[text_type(index)] = source_domain
@@ -755,7 +773,7 @@ def convert_network_connection(conn):
                 index += 1
             elif (conn.source_socket_address.hostname.naming_system is not None and
                     any(x.value == "DNS" for x in conn.source_socket_address.hostname.naming_system)):
-                source_domain = create_domain_name_object(conn.source_socket_address.hostname.hostname_value)
+                source_domain = create_domain_name_object(conn.source_socket_address.hostname.hostname_value, None)
                 cybox_traffic["src_ref"] = str(index) if spec_version == "2.0" else source_domain["id"]
                 if spec_version == "2.0":
                     objs[text_type(index)] = source_domain
@@ -771,7 +789,7 @@ def convert_network_connection(conn):
             if conn.destination_socket_address.port.layer4_protocol is not None:
                 cybox_traffic["protocols"].append(text_type(conn.destination_socket_address.port.layer4_protocol.value.lower()))
         if conn.destination_socket_address.ip_address is not None:
-            destination = convert_address(conn.destination_socket_address.ip_address)
+            destination = convert_address(conn.destination_socket_address.ip_address, None)
             cybox_traffic["dst_ref"] = str(index) if spec_version == "2.0" else destination["id"]
             if spec_version == "2.0":
                 objs[text_type(index)] = destination
@@ -780,7 +798,7 @@ def convert_network_connection(conn):
             index += 1
         elif conn.destination_socket_address.hostname is not None:
             if conn.destination_socket_address.hostname.is_domain_name and conn.destination_socket_address.hostname.hostname_value is not None:
-                destination_domain = create_domain_name_object(conn.destination_socket_address.hostname.hostname_value)
+                destination_domain = create_domain_name_object(conn.destination_socket_address.hostname.hostname_value, None)
                 cybox_traffic["dst_ref"] = str(index) if spec_version == "2.0" else destination_domain["id"]
                 if spec_version == "2.0":
                     objs[text_type(index)] = destination_domain
@@ -789,7 +807,7 @@ def convert_network_connection(conn):
                 index += 1
             elif (conn.destination_socket_address.hostname.naming_system is not None and
                     any(x.value == "DNS" for x in conn.destination_socket_address.hostname.naming_system)):
-                destination_domain = create_domain_name_object(conn.destination_socket_address.hostname.hostname_value)
+                destination_domain = create_domain_name_object(conn.destination_socket_address.hostname.hostname_value, None)
                 cybox_traffic["dst_ref"] = str(index) if spec_version == "2.0" else destination_domain["id"]
                 if spec_version == "2.0":
                     objs[text_type(index)] = destination_domain
@@ -821,7 +839,7 @@ def convert_network_connection(conn):
         if spec_version == "2.0":
             objs[text_type(index)] = cybox_traffic
         else:
-            finish_sco(cybox_traffic)
+            finish_sco(cybox_traffic, obj1x_id)
             objs.append(cybox_traffic)
 
     # cybox_traffic["end"]
@@ -850,7 +868,7 @@ def split_into_requests_and_responses(req_resp_list):
     return requests, responses
 
 
-def convert_http_session(session):
+def convert_http_session(session, obj1x_id):
     if session.http_request_response:
         requests, responses = split_into_requests_and_responses(session.http_request_response)
         if len(responses) != 0:
@@ -860,7 +878,7 @@ def convert_http_session(session):
             cybox_traffic["extensions"] = {"http-request-ext": convert_http_client_request(requests[0])}
             if len(requests) > 1:
                 warn("Only HTTP_Request_Response used for http-request-ext, using first value", 512)
-            finish_sco(cybox_traffic)
+            finish_sco(cybox_traffic, obj1x_id)
             return cybox_traffic
 
 
@@ -871,11 +889,11 @@ def create_icmp_extension(icmp_header):
     if icmp_header.code:
         imcp_extension["icmp_code_hex"] = icmp_header.code.value
     if icmp_header.checksum:
-        warn("ICMP_Packet/Checksum content not supported in STIX 2.x", 424)
+        handle_missing_string_property(imcp_extension, "checksum", icmp_header.checksum)
     return imcp_extension
 
 
-def convert_network_packet(packet):
+def convert_network_packet(packet, obj1x_id):
     if packet.internet_layer:
         internet_layer = packet.internet_layer
         if internet_layer.ipv4 or internet_layer.ipv6:
@@ -889,7 +907,7 @@ def convert_network_packet(packet):
                 return None
             cybox_traffic = create_base_sco(packet, "network-traffic")
             cybox_traffic["extensions"] = {"icmp-ext": create_icmp_extension(icmp_header)}
-            finish_sco(cybox_traffic)
+            finish_sco(cybox_traffic, obj1x_id)
             return cybox_traffic
 
 
@@ -901,7 +919,7 @@ def convert_socket_options(options):
     return socket_options
 
 
-def convert_network_socket(socket):
+def convert_network_socket(socket, obj1x_id):
     cybox_traffic = create_base_sco(socket, "network-traffic")
     socket_extension = {}
     if socket.is_blocking:
@@ -928,7 +946,7 @@ def convert_network_socket(socket):
     if socket.protocol:
         cybox_traffic["protocols"] = [socket.protocol.value]
     cybox_traffic["extensions"] = {"socket-ext": socket_extension}
-    finish_sco(cybox_traffic)
+    finish_sco(cybox_traffic, obj1x_id)
     return cybox_traffic
 
 
@@ -939,36 +957,36 @@ def convert_cybox_object20(obj1x):
     if prop is None:
         return None
     elif isinstance(prop, Address):
-        objs["0"] = convert_address(prop)
+        objs["0"] = convert_address(prop, obj1x.id_)
     elif isinstance(prop, URI):
-        objs["0"] = convert_uri(prop)
+        objs["0"] = convert_uri(prop, obj1x.id_)
     elif isinstance(prop, EmailMessage):
         # potentially returns multiple objects
-        objs = convert_email_message(prop)
+        objs = convert_email_message(prop, obj1x.id_)
     elif isinstance(prop, File):
         # potentially returns multiple objects
-        objs = convert_file20(prop)
+        objs = convert_file20(prop, obj1x.id_)
     elif isinstance(prop, WinRegistryKey):
-        objs["0"] = convert_registry_key(prop)
+        objs["0"] = convert_registry_key(prop, obj1x.id_)
     elif isinstance(prop, Process):
-        objs = convert_process(prop)
+        objs = convert_process(prop, obj1x.id_)
     elif isinstance(prop, DomainName):
-        objs["0"] = convert_domain_name(prop)
+        objs["0"] = convert_domain_name(prop, obj1x.id_)
     elif isinstance(prop, Mutex):
-        objs["0"] = convert_mutex(prop)
+        objs["0"] = convert_mutex(prop, obj1x.id_)
     elif isinstance(prop, NetworkConnection):
         # potentially returns multiple objects
-        objs = convert_network_connection(prop)
+        objs = convert_network_connection(prop, obj1x.id_)
     elif isinstance(prop, Account):
-        objs["0"] = convert_account(prop)
+        objs["0"] = convert_account(prop, obj1x.id_)
     elif isinstance(prop, Port):
-        objs["0"] = convert_port(prop)
+        objs["0"] = convert_port(prop, obj1x.id_)
     elif isinstance(prop, HTTPSession):
-        objs["0"] = convert_http_session(prop)
+        objs["0"] = convert_http_session(prop, obj1x.id_)
     elif isinstance(prop, NetworkPacket):
-        objs["0"] = convert_network_packet(prop)
+        objs["0"] = convert_network_packet(prop, obj1x.id_)
     elif isinstance(prop, NetworkSocket):
-        objs["0"] = convert_network_socket(prop)
+        objs["0"] = convert_network_socket(prop, obj1x.id_)
     else:
         warn("CybOX object %s not handled yet", 805, text_type(type(prop)))
         return None
@@ -991,36 +1009,36 @@ def convert_cybox_object21(obj1x):
     if prop is None:
         return None
     elif isinstance(prop, Address):
-        objs = [convert_address(prop)]
+        objs = [convert_address(prop, obj1x.id_)]
     elif isinstance(prop, URI):
-        objs = [convert_uri(prop)]
+        objs = [convert_uri(prop, obj1x.id_)]
     elif isinstance(prop, EmailMessage):
         # potentially returns multiple objects
-        objs = convert_email_message(prop)
+        objs = convert_email_message(prop, obj1x.id_)
     elif isinstance(prop, File):
         # potentially returns multiple objects
-        objs = convert_file21(prop)
+        objs = convert_file21(prop, obj1x.id_)
     elif isinstance(prop, WinRegistryKey):
-        objs = [convert_registry_key(prop)]
+        objs = [convert_registry_key(prop, obj1x.id_)]
     elif isinstance(prop, Process):
-        objs = convert_process(prop)
+        objs = convert_process(prop, obj1x.id_)
     elif isinstance(prop, DomainName):
-        objs = [convert_domain_name(prop)]
+        objs = [convert_domain_name(prop, obj1x.id_)]
     elif isinstance(prop, Mutex):
-        objs = [convert_mutex(prop)]
+        objs = [convert_mutex(prop, obj1x.id_)]
     elif isinstance(prop, NetworkConnection):
         # potentially returns multiple objects
-        objs = convert_network_connection(prop)
+        objs = convert_network_connection(prop, obj1x.id_)
     elif isinstance(prop, Account):
-        objs = [convert_account(prop)]
+        objs = [convert_account(prop, obj1x.id_)]
     elif isinstance(prop, Port):
-        objs = [convert_port(prop)]
+        objs = [convert_port(prop, obj1x.id_)]
     elif isinstance(prop, HTTPSession):
-        objs = [convert_http_session(prop)]
+        objs = [convert_http_session(prop, obj1x.id_)]
     elif isinstance(prop, NetworkPacket):
-        objs = [convert_network_packet(prop)]
+        objs = [convert_network_packet(prop, obj1x.id_)]
     elif isinstance(prop, NetworkSocket):
-        objs = [convert_network_socket(prop)]
+        objs = [convert_network_socket(prop, obj1x.id_)]
     else:
         warn("CybOX object %s not handled yet", 805, text_type(type(prop)))
         return None

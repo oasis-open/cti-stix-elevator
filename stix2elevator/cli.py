@@ -108,7 +108,7 @@ def _get_arg_parser(is_script=True):
              "Example: stix2_elevator.py <file> --validator-args=\"-v --strict-types -d 212\"",
         dest="validator_args",
         action="store",
-        default="--strict-types"
+        default=""
     )
 
     parser.add_argument(

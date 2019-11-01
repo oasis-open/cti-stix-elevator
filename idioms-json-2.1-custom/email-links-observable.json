@@ -1,0 +1,55 @@
+{
+    "id": "bundle--7d188f68-9b6d-40d8-96a6-667ce3677874",
+    "objects": [
+        {
+            "id": "url--c784e9dc-6559-5d6c-8d97-06ff2113d14c",
+            "type": "url",
+            "value": "http://thereelin.com/mac/htm"
+        },
+        {
+            "from_ref": "email-addr--f09c1287-7a14-51c2-bc89-f83ef944dd01",
+            "id": "email-message--feb2c5bf-dd52-5bc2-a355-ad7e7498583e",
+            "is_multipart": false,
+            "subject": "Fix The Error On Your Account.",
+            "type": "email-message",
+            "x_elevator_link_refs": [
+                [
+                    "url--c784e9dc-6559-5d6c-8d97-06ff2113d14c"
+                ]
+            ]
+        },
+        {
+            "id": "email-addr--f09c1287-7a14-51c2-bc89-f83ef944dd01",
+            "type": "email-addr",
+            "value": "chase@ee.duke.edu"
+        },
+        {
+            "created": "2019-11-01T13:27:07.144Z",
+            "first_observed": "2019-11-01T13:27:07.144Z",
+            "id": "observed-data--6355649f-ad9a-4cc1-8edc-28effcf451c5",
+            "last_observed": "2019-11-01T13:27:07.144Z",
+            "modified": "2019-11-01T13:27:07.144Z",
+            "number_observed": 1,
+            "object_refs": [
+                "url--c784e9dc-6559-5d6c-8d97-06ff2113d14c"
+            ],
+            "spec_version": "2.1",
+            "type": "observed-data"
+        },
+        {
+            "created": "2019-11-01T13:27:07.144Z",
+            "first_observed": "2019-11-01T13:27:07.144Z",
+            "id": "observed-data--5e1bff77-0150-4deb-8e17-1ae29588b501",
+            "last_observed": "2019-11-01T13:27:07.144Z",
+            "modified": "2019-11-01T13:27:07.144Z",
+            "number_observed": 1,
+            "object_refs": [
+                "email-message--feb2c5bf-dd52-5bc2-a355-ad7e7498583e",
+                "email-addr--f09c1287-7a14-51c2-bc89-f83ef944dd01"
+            ],
+            "spec_version": "2.1",
+            "type": "observed-data"
+        }
+    ],
+    "type": "bundle"
+}

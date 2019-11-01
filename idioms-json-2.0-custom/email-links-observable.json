@@ -1,0 +1,43 @@
+{
+    "id": "bundle--7d188f68-9b6d-40d8-96a6-667ce3677874",
+    "objects": [
+        {
+            "created": "2019-11-01T12:42:24.471Z",
+            "first_observed": "2019-11-01T12:42:24.471Z",
+            "id": "observed-data--6355649f-ad9a-4cc1-8edc-28effcf451c5",
+            "last_observed": "2019-11-01T12:42:24.471Z",
+            "modified": "2019-11-01T12:42:24.471Z",
+            "number_observed": 1,
+            "objects": {
+                "0": {
+                    "type": "url",
+                    "value": "http://thereelin.com/mac/htm"
+                }
+            },
+            "type": "observed-data"
+        },
+        {
+            "created": "2019-11-01T12:42:24.471Z",
+            "first_observed": "2019-11-01T12:42:24.471Z",
+            "id": "observed-data--5e1bff77-0150-4deb-8e17-1ae29588b501",
+            "last_observed": "2019-11-01T12:42:24.471Z",
+            "modified": "2019-11-01T12:42:24.471Z",
+            "number_observed": 1,
+            "objects": {
+                "0": {
+                    "from_ref": "1",
+                    "is_multipart": false,
+                    "subject": "Fix The Error On Your Account.",
+                    "type": "email-message"
+                },
+                "1": {
+                    "type": "email-addr",
+                    "value": "chase@ee.duke.edu"
+                }
+            },
+            "type": "observed-data"
+        }
+    ],
+    "spec_version": "2.0",
+    "type": "bundle"
+}

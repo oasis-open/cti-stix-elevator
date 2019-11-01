@@ -16,8 +16,8 @@ Results produced by the stix2-elevator are not for production purposes.         
 Observable Expressions should not contain placeholders                                                          202     error
 Placeholder *[id]* should be resolved                                                                           203     error
 Found definition for *[id]*                                                                                     204     info
-At least one PLACEHOLDER idref was not resolved in *[id]*                                                       205     warn
-At least one observable could not be converted in *[id]*                                                        206     warn
+At least one PLACEHOLDER idref was not resolved in *[id]*                                                       205     error
+At least one observable could not be converted in *[id]*                                                        206     error
 Options not initialized                                                                                         207     error
 EMPTY BUNDLE -- No objects created from 1.x input document!                                                     208     warn
 Both console and output log have disabled messages.                                                             209     warn
@@ -59,13 +59,13 @@ Structured COAs type in *[id]* are not supported in STIX 2.x                    
 ``ExploitTarget/Configurations`` type in *[id]* not supported in STIX 2.x                                                                      406     warn
 Indicator *[id]* has an observable or indicator composite expression which may not supported correctly in STIX 2.x - please check this pattern 407     warn
 ``TTP/Behavior/Exploits/Exploit`` in *[id]* not supported in STIX 2.x                                                                          408     warn
-``Infrastructure`` in *[id]* not part of STIX 2.x                                                                                              409     warn
+``Infrastructure`` in *[id]* not part of STIX 2.0                                                                                              409     warn
 Targeted systems on *[id]* are not a victim target in STIX 2.x                                                                                 410     warn
 Targeted information on *[id]* is not a victim target in STIX 2.x                                                                              411     warn
 Targeted technical details on *[id]* are not a victim target in STIX 2.x                                                                       412     warn
 Kill Chains type in *[id]* not supported in STIX 2.x                                                                                           413     warn
 Victim Target in *[id]* did not yield any STIX 2.x object                                                                                      414     warn
-TTP *[id]* did not generate any STIX 2.x object                                                                                                415     warn
+TTP *[id]* did not generate any STIX 2.x object                                                                                                415     error
 No STIX 2.x object generated from embedded object *[id]*                                                                                       416     warn
 [object type] did not yield any STIX 2.x object                                                                                                417     warn
 The *[property]* property of *[STIX 1.x object type]* is not part of STIX 2.x                                                                  418     warn
@@ -84,6 +84,7 @@ The confidence value *[value]* is not found on one of the confidence scales from
 The confidence value *[value]* is not between 0 and 100, which is required for STIX 2.1. No confidence can be inferred                         431     warn
 The confidence value *[value]* cannot be converted                                                                                             432     warn
 Location with free text address in *[id]* not handled yet"                                                                                     433     warn
+Observed Data objects cannot refer to other external objects: *[property name]* in *[type]*"                                                   434     warn
 ============================================================================================================================================== ====    =====
 
 Multiple values are not supported in STIX 2.x
@@ -112,8 +113,8 @@ Possible issue in original STIX 1.x content
 =========================================================================================================================================== ====    =====
 Message                                                                                                                                     Code    Level
 =========================================================================================================================================== ====    =====
-Dangling source reference *[source]* in *[id]*                                                                                              601     warn
-Dangling target reference *[target]* in *[id]*                                                                                              602     warn
+Dangling source reference *[source]* in *[id]*                                                                                              601     error
+Dangling target reference *[target]* in *[id]*                                                                                              602     error
 1.X ID: *[id]* was not mapped to STIX 2.x ID                                                                                                603     warn
 Unable to determine the STIX 2.x type for *[id]*                                                                                            604     error
 Malformed id *[id]*. Generated a new uuid                                                                                                   605     warn
@@ -161,10 +162,10 @@ Including *id of relationship* in *id of report* although the target_ref is unkn
 Including *id of relationship* in *id of report* although the source_ref is unknown                                                         707     warn
 Not including *id of relationship* in *id of report* because there is no corresponding SDO for *target_ref*                                 708     warn
 Not including *id of relationship* in *id of report* because there is no corresponding SDO for *source_ref*                                 709     warn
-All associated *[xxx]* relationships of *[id]* are assumed to not represent STIX 1.2 versioning                                             710     warn
+All associated *[xxx]* relationships of *[id]* are assumed to not represent STIX 1.2 versioning                                             710     info
 ciq name found in *[id]*, possibly overriding other name                                                                                    711     warn
-Only one type pattern can be specified in *[id]* - using cybox                                                                              712     warn
-*[id]* generated an identity associated with a victim                                                                                       713     warn
+Only one type pattern can be specified in *[id]* - using 'stix'                                                                             712     warn
+*[id]* generated an identity associated with a victim                                                                                       713     info
 No condition given for *[current_observable]* - assume '='                                                                                  714     warn
 Used MATCHES operator for *[condition]*                                                                                                     715     warn
 Based on CIQ information, *[id]* is assumed to be an organization                                                                           716     warn

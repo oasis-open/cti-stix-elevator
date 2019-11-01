@@ -1,0 +1,41 @@
+{
+    "id": "bundle--43fe3b22-0201-47cf-85d0-97c02164528d",
+    "objects": [
+        {
+            "created": "2019-11-01T13:49:47.072Z",
+            "id": "indicator--6116b44e-a7e9-11e3-a82f-000c29b241af",
+            "labels": [
+                "ip-watchlist"
+            ],
+            "modified": "2019-11-01T13:49:47.072Z",
+            "pattern": "[(domain-name:value = 'microsoftb.byinter.net' AND domain-name:resolves_to_refs[*].value = '202.65.222.45')]",
+            "type": "indicator",
+            "valid_from": "2019-11-01T13:49:47.072Z"
+        },
+        {
+            "created": "2019-11-01T13:49:47.072Z",
+            "first_observed": "2019-11-01T13:49:47.072Z",
+            "id": "observed-data--c8c32b6e-2ea8-51c4-6446-7f5218072f27",
+            "last_observed": "2019-11-01T13:49:47.072Z",
+            "modified": "2019-11-01T13:49:47.072Z",
+            "number_observed": 1,
+            "objects": {
+                "0": {
+                    "hashes": {
+                        "SHA-256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                    },
+                    "name": "iprip32.dll",
+                    "parent_directory_ref": "1",
+                    "type": "file"
+                },
+                "1": {
+                    "path": "/usr/local",
+                    "type": "directory"
+                }
+            },
+            "type": "observed-data"
+        }
+    ],
+    "spec_version": "2.0",
+    "type": "bundle"
+}
