@@ -28,7 +28,8 @@ from stix2elevator.ids import (add_id_value,
                                generate_stix2x_id,
                                get_id_value,
                                get_object_id_value)
-from stix2elevator.missing_policy import handle_missing_string_property, convert_to_custom_property_name
+from stix2elevator.missing_policy import (convert_to_custom_property_name,
+                                          handle_missing_string_property)
 from stix2elevator.options import error, get_option_value, info, warn
 from stix2elevator.utils import (convert_timestamp_to_string,
                                  map_vocabs_to_label)
