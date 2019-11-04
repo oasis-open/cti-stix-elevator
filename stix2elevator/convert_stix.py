@@ -202,7 +202,7 @@ def create_basic_object(stix2x_type, stix1x_obj, env, parent_id=None, id_used=Fa
     if stix1x_obj:
         timestamp = convert_timestamp_of_stix_object(stix1x_obj, env.timestamp, True)
     else:
-        timestamp = strftime_with_appropriate_fractional_seconds(env.timestamp, False)
+        timestamp = strftime_with_appropriate_fractional_seconds(env.timestamp, True)
     instance["created"] = timestamp
     # may need to revisit if we handle 1.x versioning.
     instance["modified"] = timestamp
@@ -1802,7 +1802,7 @@ def finalize_bundle(env):
     if stix.__version__ >= "1.2.0.0":
         add_relationships_to_reports(bundle_instance)
 
-    # source and target_ref are taken care in fix_relationships(...)
+    # source and target_ref are taken care of in fix_relationships(...)
     _TO_MAP = ("id", "idref", "created_by_ref", "external_references",
                "marking_ref", "object_marking_refs", "object_refs",
                "sighting_of_ref", "observed_data_refs", "where_sighted_refs",
