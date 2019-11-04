@@ -125,8 +125,16 @@ Certain STIX 1.x properties cannot be converted to a STIX 2.x property defined i
 provides a command line option to determine how to handle these STIX 1.x properties.
 
 - ``add-to-description``:  Add the value of the property to the ``description`` property.
-- ``use-custom-properties``: STIX 2.x provides the ability to add *custom* properties to any STIX object.  Missing properties can be included using this facility.  Note, that custom property names will have a prefix of ``x_<CUSTOM_PROPERTY_PREFIX>``, where ``CUSTOM_PROPERTY_PREFIX`` is provided as a command line option.  It defaults to ``elevator``.
+- ``use-custom-properties``: STIX 2.x provides the ability to add *custom* properties to any STIX object.
+  Missing properties can be included using this facility.  Note, that custom property names will have a prefix of ``x_<CUSTOM_PROPERTY_PREFIX>``, where ``CUSTOM_PROPERTY_PREFIX`` is provided as a command line option.  It defaults to ``elevator``.
 - ``ignore``: The content is dropped, and does not appear in the STIX 2.x object
+
+Note that the handling of missing properties is not complete - not every STIX 1.x property is handled.
+The disposition of all missing properties is usually presented in warning messages.
+
+Additionally, the coverage is generally limited to missing *properties*.  Missing *object types* are not handled.
+For instance, ``Incident`` is a object type in STIX 1.x, but it is not representable in STIX 2.x.  The missing policy does
+not alter this.
 
 **An Example**
 

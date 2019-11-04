@@ -47,7 +47,7 @@ converted by the elevator.
 ``WinService``                  ``process:windows-service-ext``               yes
 ``X509Certificate``             ``x509-certificate``                          no
 ``X509V3Extensions``            ``x509-certificate:x509-v3-extensions-type``  no
-=============================== ============================================= ==============================================
+=============================== ============================================= ============================================
 
 Converting Network Cyber Observables
 ------------------------------------------
