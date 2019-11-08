@@ -188,7 +188,7 @@ def _get_arg_parser(is_script=True):
         dest="spec_version",
         choices=["2.0", "2.1"],
         action="store",
-        default="2.0"
+        default="2.1"
     )
     return parser
 

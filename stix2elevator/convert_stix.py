@@ -355,6 +355,7 @@ def handle_free_text_lines(sdo_instance, free_text_lines):
             sdo_instance["description"] = lines
             warn("Appended free text lines to description of %s", 302, sdo_instance["id"])
         else:
+            warn("Used custom property for free_text_lines of %s", 308, sdo_instance["id"])
             sdo_instance[convert_to_custom_property_name("free_text_lines")] = lines
 
 
@@ -395,7 +396,7 @@ def handle_sighting(sighting, sighted_object_id, env):
     sighting_instance = create_basic_object("sighting", sighting, env)
     sighting_instance["count"] = 1
     sighting_instance["sighting_of_ref"] = sighted_object_id
-    sighting_instance["description"] = process_description_and_short_description(sighting_instance, sighting)
+    process_description_and_short_description(sighting_instance, sighting)
     if sighting.related_observables:
         sighting_instance["observed_data_refs"] = handle_sightings_observables(sighting.related_observables, env)
     if sighting.source:
@@ -527,6 +528,7 @@ def reference_needs_fixing(ref):
     return ref and ref.find("--") == -1
 
 
+# this is very simplistic - because STIX 1.x verbs are not consistent.
 def determine_appropriate_verb(current_verb, m_id):
     if m_id is not None and current_verb == "uses":
         type_and_uuid = m_id.split("--")
@@ -667,13 +669,13 @@ def convert_campaign(camp, env):
         for a in camp.activity:
             warn("Campaign/Activity type in %s not supported in STIX 2.x", 403, campaign_instance["id"])
     if camp.related_ttps is not None:
-        # TODO: victims use targets, not uses
+        # TODO: victims (identity) use targets, not uses
         # TODO: maybe use _TTP_RELATIONSHIP_MAPPING
         handle_relationship_to_refs(camp.related_ttps,
                                     campaign_instance["id"],
                                     new_env,
                                     "uses")
-    if camp.related_incidents is not None:
+    if camp.related_incidents is not None and get_option_value("incidents"):
         handle_relationship_from_refs(camp.related_incidents,
                                       campaign_instance["id"],
                                       new_env,
@@ -741,7 +743,7 @@ def convert_course_of_action(coa, env):
         # parameter observables, maybe turn into pattern expressions and put in description???
         warn("Parameter Observables in %s are not handled, yet.", 814, coa_instance["id"])
     if coa.structured_coa:
-        warn("Structured COAs type in %s are not supported in STIX 2.0", 404, coa_instance["id"])
+        warn("Structured COAs type in %s are not supported in STIX 2.x", 404, coa_instance["id"])
     handle_missing_statement_properties(coa_instance, coa.impact, "impact")
     handle_missing_statement_properties(coa_instance, coa.cost, "cost")
     handle_missing_statement_properties(coa_instance, coa.efficacy, "efficacy")
@@ -1253,7 +1255,7 @@ def create_cyber_observables(obs, observed_data_instance):
 
 
 def convert_observed_data(obs, env):
-    # TODO: is this code necessary?
+    # TODO: is this commented out code necessary?
     # if not obs.id_ and obs.object_ and obs.object_.id_:
     #    obj = obs.object_
     observed_data_instance = create_basic_object("observed-data", obs, env)

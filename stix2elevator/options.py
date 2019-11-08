@@ -207,7 +207,7 @@ def initialize_options(elevator_args=None):
             warn("silent option is not compatible with a policy", 211)
 
         if ALL_OPTIONS.custom_property_prefix and not ALL_OPTIONS.missing_policy == "use-custom-properties":
-            warn("custom_property_prefix is provided, but the mssing policy is not 'use-custom-properies'.  It will be ignored.", 213)
+            warn("custom_property_prefix option is provided, but the mssing policy option is not 'use-custom-properies'.  It will be ignored.", 213)
 
 
 def get_validator_options():
@@ -255,7 +255,7 @@ CHECK_CODES = [201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213,
 
                601, 602, 603, 604, 605, 606, 607, 608, 609, 610, 611, 612, 613,
                614, 615, 616, 617, 618, 619, 620, 621, 622, 623, 624, 625, 626,
-               627, 628, 629, 630, 631, 632,
+               627, 628, 629, 630, 631, 632, 633,
 
                701, 702, 703, 704, 705, 706, 707, 708, 709, 710, 711, 712, 713,
                714, 715, 716, 717, 718, 719, 720, 721, 722, 723, 724, 725, 726,

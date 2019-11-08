@@ -45,10 +45,6 @@ def create_base_sco(obj1x, type, other_properties=None):
         new_dict["type"] = type
     else:
         new_dict = {"type": type}
-    # if get_option_value("spec_version") == "2.1":
-    #   new_dict["id"] = generate_sco_id(type)
-    # if obj1x.is_defanged:
-    #    new_dict["defanged"] = True
     return new_dict
 
 
@@ -63,8 +59,8 @@ def convert_account(acc, obj1x_id):
     account_dict = create_base_sco(acc, "user-account")
     if acc.creation_date:
         account_dict["account_created"] = acc.creation_date.value
-    # if acc.last_accessed_time:
-    #    account_dict["account_last_login"] = acc.last_accessed_time
+    if acc.last_accessed_time:
+        account_dict["account_last_login"] = acc.last_accessed_time
     if acc.disabled:
         account_dict["is_disabled"] = acc.disabled
     if acc.authentication and get_option_value("spec_version") == "2.1":
@@ -213,6 +209,10 @@ def convert_archive_file(f, obj1x_id):
         dict["comment"] = f.comment
     if f.version and get_option_value("spec_version") == "2.0":
         dict["version"] = f.version
+    else:
+        if get_option_value("missing_policy") == "use-custom-properties":
+            property_name = convert_to_custom_property_name("version")
+            dict[property_name] = f.version
     if f.archived_file:
         for ar_file in f.archived_file:
             ar_file2x = convert_file(ar_file, obj1x_id)
@@ -334,7 +334,7 @@ def convert_email_message(email_message, obj1x_id):
     spec_version = get_option_value("spec_version")
     email_dict = create_base_sco(email_message, "email-message", {"is_multipart": False})  # the default
     if spec_version == "2.0":
-        objs = {}
+        objs = dict()
         objs[text_type(index)] = email_dict
     else:
         objs = [email_dict]
@@ -531,14 +531,20 @@ def convert_process(process, obj1x_id):
         else:
             convert_opened_connection_refs21(process, process_dict, objs)
     if isinstance(process, WinProcess):
-        extended_properties = {}
+        extended_properties = dict()
         process_properties = convert_windows_process(process)
         if process_properties:
             extended_properties["windows-process-ext"] = process_properties
         if isinstance(process, WinService):
-            service_properties = convert_windows_service(process)
+            service_properties, dll_file_obj = convert_windows_service(process)
             if service_properties:
                 extended_properties["windows-service-ext"] = service_properties
+            if dll_file_obj:
+                if get_option_value("spec_version") == "2.0":
+                    objs[text_type(index)] = dll_file_obj
+                else:
+                    objs.append(dll_file_obj)
+                index += 1
         if extended_properties:
             process_dict["extensions"] = extended_properties
     finish_sco(process_dict, obj1x_id)
@@ -592,8 +598,12 @@ def convert_windows_service(service):
     if hasattr(service, "service_status") and service.service_status:
         cybox_ws["service_status"] = map_vocabs_to_label(service.service_status, SERVICE_STATUS)
     if hasattr(service, "service_dll") and service.service_dll:
-        handle_missing_string_property(cybox_ws, "service_dll", service.service_dll)
-    return cybox_ws
+        ddl_file2x = create_base_sco(None, "file", {"name": text_type(service.service_dll)})
+        finish_sco(ddl_file2x, None)
+        if get_option_value("spec_version") == "2.1":
+            cybox_ws["service_dll_refs"] = [ddl_file2x["id"]]
+        return cybox_ws, ddl_file2x
+    return cybox_ws, None
 
 
 def convert_domain_name(domain_name, obj1x_id):

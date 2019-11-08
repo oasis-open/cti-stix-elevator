@@ -145,6 +145,7 @@ Unable to determine the STIX 2.x type for *[id]*, which is malformed            
 'equals' allowed in *[id]* - should be 'Equals'                                                                                             630     warn
 Multiple administrative areas with multiple countries in *[id]* is not handled"                                                             631     warn
 Unknown phase_id *[phase_id]* in *[id]*                                                                                                     632     warn
+File path directory is empty *[file_path]*                                                                                                  633     warn
 =========================================================================================================================================== ====    =====
 
 STIX Elevator conversion based on assumptions

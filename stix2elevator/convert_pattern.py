@@ -25,6 +25,7 @@ from cybox.objects.win_service_object import WinService
 from six import text_type
 import stix2
 from stix2.patterns import (BasicObjectPathComponent,
+                            ListConstant,
                             ListObjectPathComponent,
                             ObjectPath,
                             ObservationExpression,
@@ -743,7 +744,7 @@ def create_term_with_regex(lhs, condition, rhs, negated):
     if condition == "StartsWith":
         rhs.value = "^%s" % rhs.value
     elif condition == "EndsWith":
-        rhs.value = "$%s" % rhs.value
+        rhs.value = "%s$" % rhs.value
     return ComparisonExpressionForElevator("MATCHES", lhs, rhs, negated)
 
 
@@ -782,7 +783,7 @@ def create_term(lhs, condition, rhs, negated=False):
     elif condition == "InclusiveBetween" or condition == "ExclusiveBetween":
         return create_term_with_range(lhs, condition, rhs, negated)
     else:
-        if condition == "Contains" and not multi_valued_property(lhs):
+        if condition == "Contains" and not isinstance(rhs, ListConstant):
             warn("Used MATCHES operator for %s", 715, condition)
             return create_term_with_regex(lhs, condition, rhs, negated)
         elif condition == "DoesNotContain":
@@ -1229,6 +1230,7 @@ def convert_file_name_and_file_extension(file_name, file_extension):
         return ComparisonExpressionForElevator("MATCHES", "file:name",
                                                make_constant(
                                                    file_name.value + "*." + file_extension.value + "$"))
+    # TODO: do we need to handle "EndsWith"
     else:
         warn("Unable to create a pattern for file:file_name from a File object", 620)
 
@@ -1254,6 +1256,8 @@ def convert_file_name_and_path_to_pattern(f):
                                                               make_constant(f.file_path.value[index + 1:])))
                 path_string_constant = make_constant(((f.device_path.value if f.device_path else "") +
                                                       f.file_path.value[0: index]))
+                if path_string_constant == '':
+                    warn("File path directory is empty %s", 633, f.file_path.value)
                 file_name_path_expressions.append(create_term("file:parent_directory_ref.path",
                                                               f.file_path.condition,
                                                               path_string_constant))
@@ -1535,17 +1539,12 @@ def convert_windows_service_to_pattern(service):
                                                        d.condition,
                                                        make_constant(d.value)))
         if description_expressions:
-            expressions.append(create_boolean_expression("OR", description_expressions))
+            expressions.append(create_boolean_expression("AND", description_expressions))
     if hasattr(service, "service_dll") and service.service_dll:
-        warn("The service_dll property of WinServiceObject is not part of STIX 2.x", 418)
-        if get_option_value("missing_policy") == "use-custom-properties":
-            expressions.append(create_term("process:" + convert_to_custom_property_name("service_dll"),
-                                           service.service_dll.condition,
-                                           stix2.StringConstant(service.service_dll.value)))
-            warn("Used custom property for %s", 308, "service_dll")
-        else:
-            if not get_option_value("missing_policy") == "ignore":
-                expressions.append(UnconvertedTerm("WinServiceObject.service_dll"))
+        # assuming its not a path
+        expressions.append(create_term("process:" + "service_dll_refs[*].name",
+                                       service.service_dll.condition,
+                                       stix2.StringConstant(service.service_dll.value)))
     if expressions:
         return create_boolean_expression("AND", expressions)
 
@@ -2004,9 +2003,9 @@ def convert_observable_to_pattern_without_negate(obs):
                     if new_pattern:
                         related_patterns.append(new_pattern)
                         add_to_pattern_cache(o.id_, new_pattern)
-                if pattern:
-                    related_patterns.append(pattern)
-                return create_boolean_expression("AND", related_patterns)
+            if pattern:
+                related_patterns.append(pattern)
+            return create_boolean_expression("AND", related_patterns)
         else:
             return pattern
     elif obs.idref is not None:
@@ -2106,14 +2105,14 @@ def convert_indicator_composition_to_pattern(ind_comp):
 
 
 def remove_pattern_objects(bundle_instance):
-    sco_ids_to_delete = []
-    all_new_ids_with_patterns = []
-    for old_id in get_ids_from_pattern_cache():
-        new_id = get_id_value(old_id)
-        if new_id and len(new_id) == 1:
-            all_new_ids_with_patterns.append(new_id[0])
-
     if not KEEP_OBSERVABLE_DATA_USED_IN_PATTERNS:
+        sco_ids_to_delete = []
+        all_new_ids_with_patterns = []
+        for old_id in get_ids_from_pattern_cache():
+            new_id = get_id_value(old_id)
+            if new_id and len(new_id) == 1:
+                all_new_ids_with_patterns.append(new_id[0])
+
         remaining_objects = []
         for obj in bundle_instance["objects"]:
             if obj["type"] != "observed-data" or obj["id"] not in all_new_ids_with_patterns:
@@ -2133,7 +2132,6 @@ def remove_pattern_objects(bundle_instance):
                     new_remaining_objects.append(obj)
         bundle_instance["objects"] = new_remaining_objects
 
-    if not KEEP_OBSERVABLE_DATA_USED_IN_PATTERNS:
         for obj in bundle_instance["objects"]:
             if obj["type"] == "report":
                 remaining_object_refs = []
