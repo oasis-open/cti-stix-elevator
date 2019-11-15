@@ -5,6 +5,7 @@ from six import binary_type, iteritems, text_type
 
 from stix2elevator.options import info, warn
 
+
 def id_property(path):
     name = path[0][-1]
     if name.find('[') != -1:

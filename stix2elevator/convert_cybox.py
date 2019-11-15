@@ -25,7 +25,6 @@ from stix2elevator.common import ADDRESS_FAMILY_ENUMERATION, SOCKET_OPTIONS
 from stix2elevator.ids import (add_id_value,
                                add_object_id_value,
                                generate_sco_id,
-                               generate_stix2x_id,
                                get_id_value,
                                get_object_id_value)
 from stix2elevator.missing_policy import (convert_to_custom_property_name,
