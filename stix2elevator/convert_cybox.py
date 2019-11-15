@@ -320,13 +320,8 @@ def convert_file(f, obj1x_id):
 
 
 def convert_attachment(attachment):
-    if get_option_value("spec_version") == "2.0":
-        body_raw_ref = attachment.object_reference
-    else:
-        body_raw_ref = generate_stix2x_id("file", attachment.object_reference)
-        add_id_value(attachment.object_reference, body_raw_ref)
-    info("content_type for body_multipart of attachment %s is assumed to be 'text/plain'", 722, body_raw_ref)
-    return {"body_raw_ref": body_raw_ref, "content_type": "text/plain"}
+    info("content_type for body_multipart of attachment %s is assumed to be 'text/plain'", 722, attachment.object_reference)
+    return {"body_raw_ref": attachment.object_reference, "content_type": "text/plain"}
 
 
 def convert_email_message(email_message, obj1x_id):
@@ -1154,5 +1149,6 @@ def fix_attachments_refs(objects):
         if obj["type"] == "email-message":
             if obj["is_multipart"]:
                 for mp in obj["body_multipart"]:
+                    mp["body_raw_ref"] = get_id_value(mp["body_raw_ref"])[0]
                     mp["content_type"] = "text/plain"
                     info("content_type for body_multipart of %s is assumed to be 'text/plain'", 722, obj["id"])

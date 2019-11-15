@@ -2,12 +2,12 @@
     "id": "bundle--75bcecfe-c577-4ce5-8ec6-5e04b6ec8067",
     "objects": [
         {
-            "id": "file--16f0f7e7-44c1-4990-9685-791b5cadc11e",
+            "id": "file--5956efbb-a7b0-566d-a7f9-a202eb05c70f",
             "name": "foo.exe",
             "type": "file"
         },
         {
-            "id": "file--e74ef8f3-0117-487e-a96a-c436b3f74f91",
+            "id": "file--51f1be98-e988-5af2-8894-1be0a0d8ba6d",
             "name": "foo",
             "size": 1896000,
             "type": "file"
@@ -59,7 +59,7 @@
             "modified": "2019-08-21T13:13:48.359Z",
             "number_observed": 1,
             "object_refs": [
-                "file--16f0f7e7-44c1-4990-9685-791b5cadc11e"
+                "file--5956efbb-a7b0-566d-a7f9-a202eb05c70f"
             ],
             "spec_version": "2.1",
             "type": "observed-data"
@@ -72,7 +72,7 @@
             "modified": "2019-08-21T13:13:48.360Z",
             "number_observed": 1,
             "object_refs": [
-                "file--e74ef8f3-0117-487e-a96a-c436b3f74f91"
+                "file--51f1be98-e988-5af2-8894-1be0a0d8ba6d"
             ],
             "spec_version": "2.1",
             "type": "observed-data"

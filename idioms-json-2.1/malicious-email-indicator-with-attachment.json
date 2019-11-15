@@ -8,23 +8,23 @@
             "relationship_type": "resolves_to",
             "source_ref": "email-message--bab8c54d-f27d-4982-b6b9-7f6220f4fd5d",
             "spec_version": "2.1",
-            "target_ref": "file--11b0fb4e-9c9c-4bba-912c-e1b9353fdcde",
+            "target_ref": "file--46a9b360-48bf-54d6-9802-5496e6fa4c27",
             "type": "relationship"
         },
         {
             "body_multipart": [
                 {
-                    "body_raw_ref": "file--11b0fb4e-9c9c-4bba-912c-e1b9353fdcde",
+                    "body_raw_ref": "file--46a9b360-48bf-54d6-9802-5496e6fa4c27",
                     "content_type": "text/plain"
                 }
             ],
-            "id": "email-message--bab8c54d-f27d-4982-b6b9-7f6220f4fd5d",
+            "id": "email-message--3ccde5f8-82e1-5781-b354-26b800df3692",
             "is_multipart": true,
             "subject": "[IMPORTANT] Please Review Before",
             "type": "email-message"
         },
         {
-            "id": "file--11b0fb4e-9c9c-4bba-912c-e1b9353fdcde",
+            "id": "file--46a9b360-48bf-54d6-9802-5496e6fa4c27",
             "name": "Final Report",
             "type": "file"
         },
@@ -108,8 +108,8 @@
             "modified": "2019-08-21T11:45:07.751Z",
             "number_observed": 1,
             "object_refs": [
-                "email-message--bab8c54d-f27d-4982-b6b9-7f6220f4fd5d",
-                "file--11b0fb4e-9c9c-4bba-912c-e1b9353fdcde"
+                "email-message--3ccde5f8-82e1-5781-b354-26b800df3692",
+                "file--46a9b360-48bf-54d6-9802-5496e6fa4c27"
             ],
             "spec_version": "2.1",
             "type": "observed-data"

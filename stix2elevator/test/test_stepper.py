@@ -2,7 +2,7 @@ import json
 import os
 
 from stix2elevator.stix_stepper import step_file
-from stix2elevator.utils import find_dir
+from stix2elevator.utils import find_dir, id_property
 
 from .test_idioms import (BEFORE_FILENAMES,
                           BEFORE_FILES,
@@ -35,13 +35,6 @@ def setup_stepper_tests():
     before_idioms_dir = find_dir(directory, "idioms-json-2.0-valid")
     after_idioms_dir = find_dir(directory, "idioms-json-2.1-valid")
     setup_tests(before_idioms_dir, after_idioms_dir, ".json", ".json")
-
-
-def id_property(path):
-    name = path[0][-1]
-    if name.find('[') != -1:
-        name = path[0][-2]
-    return name == "id" or name.endswith("ref") or name.endswith("refs")
 
 
 def test_stepper_idiom_mapping(test_file, stored_master):

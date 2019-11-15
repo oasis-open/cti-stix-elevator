@@ -5,6 +5,12 @@ from six import binary_type, iteritems, text_type
 
 from stix2elevator.options import info, warn
 
+def id_property(path):
+    name = path[0][-1]
+    if name.find('[') != -1:
+        name = path[0][-2]
+    return name == "id" or name.endswith("ref") or name.endswith("refs")
+
 
 def identifying_info(stix1x_obj):
     if stix1x_obj:

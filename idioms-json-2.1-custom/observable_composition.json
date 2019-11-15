@@ -7,7 +7,7 @@
             "type": "file"
         },
         {
-            "id": "file--e74ef8f3-0117-487e-a96a-c436b3f74f91",
+            "id": "file--51f1be98-e988-5af2-8894-1be0a0d8ba6d",
             "name": "foo",
             "size": 1896000,
             "type": "file"
@@ -72,7 +72,7 @@
             "modified": "2019-08-21T13:13:48.360Z",
             "number_observed": 1,
             "object_refs": [
-                "file--e74ef8f3-0117-487e-a96a-c436b3f74f91"
+                "file--51f1be98-e988-5af2-8894-1be0a0d8ba6d"
             ],
             "spec_version": "2.1",
             "type": "observed-data"

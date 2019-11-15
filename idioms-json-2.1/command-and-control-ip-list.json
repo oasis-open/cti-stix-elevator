@@ -2,17 +2,17 @@
     "id": "bundle--cc0ca596-70e6-4dac-9bef-603166d17db8",
     "objects": [
         {
-            "id": "ipv4-addr--e94b6672-172a-4311-b713-2cb470a84c04",
+            "id": "ipv4-addr--7e4a9c21-50df-5298-97ce-42044f79472e",
             "type": "ipv4-addr",
             "value": "198.51.100.2"
         },
         {
-            "id": "ipv4-addr--94920e5b-ab03-482d-a273-d561d513c833",
+            "id": "ipv4-addr--aa3e1cc2-0c65-5358-82ae-9a7e508e939f",
             "type": "ipv4-addr",
             "value": "198.51.100.17"
         },
         {
-            "id": "ipv4-addr--4e2e1be1-f468-4397-a20c-7f8fde56a444",
+            "id": "ipv4-addr--179b9f2b-745f-5421-a6d1-701872c15d4c",
             "type": "ipv4-addr",
             "value": "203.0.113.19"
         },
@@ -66,7 +66,7 @@
             "modified": "2019-08-21T10:53:07.181Z",
             "number_observed": 1,
             "object_refs": [
-                "ipv4-addr--e94b6672-172a-4311-b713-2cb470a84c04"
+                "ipv4-addr--7e4a9c21-50df-5298-97ce-42044f79472e"
             ],
             "spec_version": "2.1",
             "type": "observed-data"
@@ -79,7 +79,7 @@
             "modified": "2019-08-21T10:53:07.181Z",
             "number_observed": 1,
             "object_refs": [
-                "ipv4-addr--94920e5b-ab03-482d-a273-d561d513c833"
+                "ipv4-addr--aa3e1cc2-0c65-5358-82ae-9a7e508e939f"
             ],
             "spec_version": "2.1",
             "type": "observed-data"
@@ -92,7 +92,7 @@
             "modified": "2019-08-21T10:53:07.181Z",
             "number_observed": 1,
             "object_refs": [
-                "ipv4-addr--4e2e1be1-f468-4397-a20c-7f8fde56a444"
+                "ipv4-addr--179b9f2b-745f-5421-a6d1-701872c15d4c"
             ],
             "spec_version": "2.1",
             "type": "observed-data"
