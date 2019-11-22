@@ -885,7 +885,7 @@
             "x_elevator_title": "HTRAN Malware C2"
         },
         {
-            "id": "ipv4-addr--c3ecf61b-e1cb-4ed2-998c-449c00947c43",
+            "id": "ipv4-addr--65bdb3e0-95f1-5fca-a137-3e1e04e5a5f7",
             "type": "ipv4-addr",
             "value": [
                 "143.89.0.0",
@@ -903,7 +903,7 @@
                 "marking-definition--9ae67e9d-8241-4d62-af37-a54dbfa76ce3"
             ],
             "object_refs": [
-                "ipv4-addr--c3ecf61b-e1cb-4ed2-998c-449c00947c43"
+                "ipv4-addr--65bdb3e0-95f1-5fca-a137-3e1e04e5a5f7"
             ],
             "spec_version": "2.1",
             "type": "observed-data"

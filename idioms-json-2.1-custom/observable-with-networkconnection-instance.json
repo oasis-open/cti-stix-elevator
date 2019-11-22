@@ -7,13 +7,13 @@
             "value": "example.com"
         },
         {
-            "id": "ipv4-addr--23d46e55-e20c-471e-b42f-59e379a47760",
+            "id": "ipv4-addr--c5a216ae-2184-5acd-b145-2d1321457d0b",
             "type": "ipv4-addr",
             "value": "198.49.123.10"
         },
         {
             "dst_port": 80,
-            "dst_ref": "ipv4-addr--23d46e55-e20c-471e-b42f-59e379a47760",
+            "dst_ref": "ipv4-addr--c5a216ae-2184-5acd-b145-2d1321457d0b",
             "extensions": {
                 "http-request-ext": {
                     "request_header": {
@@ -53,7 +53,7 @@
             "number_observed": 1,
             "object_refs": [
                 "domain-name--220a2699-5ebf-5b57-bf02-424964bb19c0",
-                "ipv4-addr--23d46e55-e20c-471e-b42f-59e379a47760",
+                "ipv4-addr--c5a216ae-2184-5acd-b145-2d1321457d0b",
                 "network-traffic--d6c8c747-f552-5525-b498-ac02312d556c"
             ],
             "spec_version": "2.1",

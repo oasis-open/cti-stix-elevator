@@ -116,6 +116,7 @@ def ignorable_id_types(type):
 def ignore_this_id(uuid_of_good_id, uuid_of_check_id):
     parts_of_good = uuid_of_good_id.split("-")
     parts_of_check = uuid_of_check_id.split("-")
+    # look at first digit of second group to see if what version of uuid it is
     return (parts_of_good[2].startswith("4") and parts_of_check[2].startswith("4"))
 
 

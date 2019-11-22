@@ -182,7 +182,7 @@ def convert_windows_executable_file(f):
                 if s.entropy.min:
                     handle_missing_string_property(section_dict, "entropy_min", s.entropy.min)
                 if s.entropy.max:
-                    handle_missing_string_property(section_dict, "entropy_max", s.entropy.min)
+                    handle_missing_string_property(section_dict, "entropy_max", s.entropy.max)
                 if s.entropy.value:
                     section_dict["entropy"] = s.entropy.value.value
             # need to merge hash lists - worry about duplicate keys
