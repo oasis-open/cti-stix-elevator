@@ -62,7 +62,7 @@ def generate_stix2x_id(stix2x_so_name, stix12_id=None, id_used=False):
         add_ids_with_no_1x_object(new_id)
         return new_id
     else:
-        # TODO: fix this for UUIDv5
+        # this works for all versions of UUID
         result = re.search('^(.+)-([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})',
                            stix12_id)
         if result:

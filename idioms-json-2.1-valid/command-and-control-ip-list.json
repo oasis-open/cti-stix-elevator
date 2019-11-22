@@ -3,8 +3,6 @@
     "objects": [
         {
             "created": "2017-01-27T13:49:41.329Z",
-            "description": "",
-            "external_references": [],
             "id": "relationship--83c024c1-9e16-40c6-921e-9eb432d45afa",
             "modified": "2017-01-27T13:49:41.329Z",
             "relationship_type": "resolves_to",

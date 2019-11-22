@@ -70,6 +70,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
+            "description": "\n\nINFORMATION_SOURCE_ROLE:\nNation-State,\nMilitary",
             "id": "identity--1f2cc767-aee4-4482-9b36-9bf45b35d899",
             "identity_class": "organization",
             "modified": "2015-05-15T09:00:00.000Z",
@@ -109,7 +110,7 @@
             "type": "identity"
         },
         {
-            "id": "url--e57ebb91-43e9-4ca4-9037-23ed3fed00a7",
+            "id": "url--7638df5b-415e-53ea-80eb-ee8507ea3616",
             "type": "url",
             "value": "hugesoft.org"
         },
@@ -124,7 +125,7 @@
                 "marking-definition--0478af95-7b89-4e17-8b72-773d3d87977d"
             ],
             "object_refs": [
-                "url--e57ebb91-43e9-4ca4-9037-23ed3fed00a7"
+                "url--7638df5b-415e-53ea-80eb-ee8507ea3616"
             ],
             "spec_version": "2.1",
             "type": "observed-data"
@@ -205,6 +206,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
+            "description": "\n\nINFORMATION_SOURCE_ROLE:\nResearch and Development",
             "id": "identity--7622b69a-f5f5-4e36-90ac-26f8c0cd2a45",
             "identity_class": "individual",
             "modified": "2015-05-15T09:00:00.000Z",
@@ -450,6 +452,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
+            "description": "\n\nINFORMATION_SOURCE_ROLE:\nNation-State",
             "id": "identity--38ffce69-228c-4225-ba82-6affa5939ed5",
             "identity_class": "organization",
             "modified": "2015-05-15T09:00:00.000Z",
@@ -489,6 +492,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
+            "description": "\n\nINFORMATION_SOURCE_ROLE:\nState-influenced Commercial Entity",
             "id": "identity--d7c2d4a9-e981-40b7-923b-b1c04f73e3e4",
             "identity_class": "organization",
             "modified": "2015-05-15T09:00:00.000Z",
@@ -858,7 +862,7 @@
             "type": "malware"
         },
         {
-            "id": "ipv4-addr--c3ecf61b-e1cb-4ed2-998c-449c00947c43",
+            "id": "ipv4-addr--65bdb3e0-95f1-5fca-a137-3e1e04e5a5f7",
             "type": "ipv4-addr",
             "value": [
                 "143.89.0.0",
@@ -876,7 +880,7 @@
                 "marking-definition--9ae67e9d-8241-4d62-af37-a54dbfa76ce3"
             ],
             "object_refs": [
-                "ipv4-addr--c3ecf61b-e1cb-4ed2-998c-449c00947c43"
+                "ipv4-addr--65bdb3e0-95f1-5fca-a137-3e1e04e5a5f7"
             ],
             "spec_version": "2.1",
             "type": "observed-data"
@@ -904,7 +908,7 @@
             "type": "infrastructure"
         },
         {
-            "id": "ipv4-addr--69f87f40-78dc-4279-8c6e-8e9a0e48cfdb",
+            "id": "ipv4-addr--d0cbda3e-955b-5c3c-afc2-547759c67867",
             "type": "ipv4-addr",
             "value": [
                 "223.166.0.0",
@@ -922,13 +926,13 @@
                 "marking-definition--9ae67e9d-8241-4d62-af37-a54dbfa76ce3"
             ],
             "object_refs": [
-                "ipv4-addr--69f87f40-78dc-4279-8c6e-8e9a0e48cfdb"
+                "ipv4-addr--d0cbda3e-955b-5c3c-afc2-547759c67867"
             ],
             "spec_version": "2.1",
             "type": "observed-data"
         },
         {
-            "id": "ipv4-addr--5248a457-b4c8-4a59-927c-08146937580f",
+            "id": "ipv4-addr--c0612854-2522-56a4-aa6f-bb8dbc59b510",
             "type": "ipv4-addr",
             "value": [
                 "58.246.0.0",
@@ -946,13 +950,13 @@
                 "marking-definition--9ae67e9d-8241-4d62-af37-a54dbfa76ce3"
             ],
             "object_refs": [
-                "ipv4-addr--5248a457-b4c8-4a59-927c-08146937580f"
+                "ipv4-addr--c0612854-2522-56a4-aa6f-bb8dbc59b510"
             ],
             "spec_version": "2.1",
             "type": "observed-data"
         },
         {
-            "id": "ipv4-addr--cab7c50c-d4f8-4aec-9503-9d19f98237a8",
+            "id": "ipv4-addr--6ec00480-6fd2-52fa-8144-baf188ad4625",
             "type": "ipv4-addr",
             "value": [
                 "112.64.0.0",
@@ -970,13 +974,13 @@
                 "marking-definition--9ae67e9d-8241-4d62-af37-a54dbfa76ce3"
             ],
             "object_refs": [
-                "ipv4-addr--cab7c50c-d4f8-4aec-9503-9d19f98237a8"
+                "ipv4-addr--6ec00480-6fd2-52fa-8144-baf188ad4625"
             ],
             "spec_version": "2.1",
             "type": "observed-data"
         },
         {
-            "id": "ipv4-addr--748735df-de0b-48cc-9537-21328835476e",
+            "id": "ipv4-addr--648c2501-21c6-52eb-a359-4f0a3f0bcb3f",
             "type": "ipv4-addr",
             "value": [
                 "139.226.0.0",
@@ -994,13 +998,13 @@
                 "marking-definition--9ae67e9d-8241-4d62-af37-a54dbfa76ce3"
             ],
             "object_refs": [
-                "ipv4-addr--748735df-de0b-48cc-9537-21328835476e"
+                "ipv4-addr--648c2501-21c6-52eb-a359-4f0a3f0bcb3f"
             ],
             "spec_version": "2.1",
             "type": "observed-data"
         },
         {
-            "id": "ipv4-addr--1f3804fc-02a3-4fb5-adb8-6c49fa8146de",
+            "id": "ipv4-addr--8b1a1c09-b82d-5236-b4c1-eac4cb0112aa",
             "type": "ipv4-addr",
             "value": [
                 "114.80.0.0",
@@ -1018,13 +1022,13 @@
                 "marking-definition--9ae67e9d-8241-4d62-af37-a54dbfa76ce3"
             ],
             "object_refs": [
-                "ipv4-addr--1f3804fc-02a3-4fb5-adb8-6c49fa8146de"
+                "ipv4-addr--8b1a1c09-b82d-5236-b4c1-eac4cb0112aa"
             ],
             "spec_version": "2.1",
             "type": "observed-data"
         },
         {
-            "id": "ipv4-addr--37456f5a-2784-445b-8c2e-70664066a782",
+            "id": "ipv4-addr--c45344af-f3ae-5299-a128-78ed1fd18af2",
             "type": "ipv4-addr",
             "value": [
                 "101.80.0.0",
@@ -1042,7 +1046,7 @@
                 "marking-definition--9ae67e9d-8241-4d62-af37-a54dbfa76ce3"
             ],
             "object_refs": [
-                "ipv4-addr--37456f5a-2784-445b-8c2e-70664066a782"
+                "ipv4-addr--c45344af-f3ae-5299-a128-78ed1fd18af2"
             ],
             "spec_version": "2.1",
             "type": "observed-data"
@@ -1213,7 +1217,7 @@
         {
             "created": "2015-05-15T09:00:00.000Z",
             "created_by_ref": "identity--b86f1a53-2cc7-4ecf-8a2d-e0928bce0d02",
-            "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html>\n\t\t\t\t\t\t\t<body>\n\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\tIn this and the next two stages, APT1 does not differ significantly from other APT intruders (or intruders,\n                            \tgenerally). APT1 predominantly uses publicly available tools to dump password hashes from victim systems in\n                            \torder to obtain legitimate user credentials.\n\t\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t\t</body>\n\t\t\t\t\t\t</html>\n\nINTENDED_EFFECT:Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. \n\nINTENDED_EFFECT:Unauthorized Access",
+            "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html>\n\t\t\t\t\t\t\t<body>\n\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\tIn this and the next two stages, APT1 does not differ significantly from other APT intruders (or intruders,\n                            \tgenerally). APT1 predominantly uses publicly available tools to dump password hashes from victim systems in\n                            \torder to obtain legitimate user credentials.\n\t\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t\t</body>\n\t\t\t\t\t\t</html>\n\nINTENDED_EFFECT:Unauthorized Access: Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. ",
             "id": "attack-pattern--e13f3e6d-4f9c-4265-b1cf-f997a1bf7827",
             "kill_chain_phases": [
                 {
@@ -1232,7 +1236,7 @@
         {
             "created": "2019-08-12T15:22:42.843Z",
             "created_by_ref": "identity--b86f1a53-2cc7-4ecf-8a2d-e0928bce0d02",
-            "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html><body>\n\t\t\t\t\t\t\t\t<p>This program extracts cached password hashes from a system's registry.</P>\n\t\t\t\t\t\t\t\t<p>Currently packaged with fgdump</P>\n\t\t\t\t\t\t</body></html>\n\nINTENDED_EFFECT:Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. \n\nINTENDED_EFFECT:Unauthorized Access\n\nTITLE:\n\tPrivilege Escalation",
+            "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html><body>\n\t\t\t\t\t\t\t\t<p>This program extracts cached password hashes from a system's registry.</P>\n\t\t\t\t\t\t\t\t<p>Currently packaged with fgdump</P>\n\t\t\t\t\t\t</body></html>\n\nINTENDED_EFFECT:Unauthorized Access: Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. \n\nTITLE:\n\tPrivilege Escalation",
             "id": "tool--470a8794-5675-4e9b-8e2a-0f942d7a3681",
             "kill_chain_phases": [
                 {
@@ -1254,7 +1258,7 @@
         {
             "created": "2019-08-12T15:22:42.843Z",
             "created_by_ref": "identity--b86f1a53-2cc7-4ecf-8a2d-e0928bce0d02",
-            "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html><body>\n\t\t\t\t\t\t\t\t<p>Windows password hash dumper.</P>\n\t\t\t\t\t\t\t\t<p>http://www.foofus.net/fizzgig/fgdump/</P>\n\t\t\t\t\t\t</body></html>\n\nINTENDED_EFFECT:Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. \n\nINTENDED_EFFECT:Unauthorized Access\n\nTITLE:\n\tPrivilege Escalation",
+            "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html><body>\n\t\t\t\t\t\t\t\t<p>Windows password hash dumper.</P>\n\t\t\t\t\t\t\t\t<p>http://www.foofus.net/fizzgig/fgdump/</P>\n\t\t\t\t\t\t</body></html>\n\nINTENDED_EFFECT:Unauthorized Access: Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. \n\nTITLE:\n\tPrivilege Escalation",
             "id": "tool--265893e4-2fde-4831-9e0a-f7d89c527c22",
             "kill_chain_phases": [
                 {
@@ -1276,7 +1280,7 @@
         {
             "created": "2019-08-12T15:22:42.843Z",
             "created_by_ref": "identity--b86f1a53-2cc7-4ecf-8a2d-e0928bce0d02",
-            "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html><body>\n\t\t\t\t\t\t\t\t<p>Obtains password hashes from the Windows registry, inlcuding the SAM file, cached domain credentials, and LSA secrets.</P>\n\t\t\t\t\t\t\t\t<p>http://truesec.se</P>\n\t\t\t\t\t\t</body></html>\n\nINTENDED_EFFECT:Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. \n\nINTENDED_EFFECT:Unauthorized Access\n\nTITLE:\n\tPrivilege Escalation",
+            "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html><body>\n\t\t\t\t\t\t\t\t<p>Obtains password hashes from the Windows registry, inlcuding the SAM file, cached domain credentials, and LSA secrets.</P>\n\t\t\t\t\t\t\t\t<p>http://truesec.se</P>\n\t\t\t\t\t\t</body></html>\n\nINTENDED_EFFECT:Unauthorized Access: Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. \n\nTITLE:\n\tPrivilege Escalation",
             "id": "tool--8420fdd4-3663-464c-bb52-b8b1b08600e1",
             "kill_chain_phases": [
                 {
@@ -1298,7 +1302,7 @@
         {
             "created": "2019-08-12T15:22:42.843Z",
             "created_by_ref": "identity--b86f1a53-2cc7-4ecf-8a2d-e0928bce0d02",
-            "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html><body>\n\t\t\t\t\t\t\t\t<p>Dump active logon session password hashes from the lsass process.</P>\n\t\t\t\t\t\t\t\t<p>http://truesec.se</P>\n\t\t\t\t\t\t</body></html>\n\nINTENDED_EFFECT:Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. \n\nINTENDED_EFFECT:Unauthorized Access\n\nTITLE:\n\tPrivilege Escalation",
+            "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html><body>\n\t\t\t\t\t\t\t\t<p>Dump active logon session password hashes from the lsass process.</P>\n\t\t\t\t\t\t\t\t<p>http://truesec.se</P>\n\t\t\t\t\t\t</body></html>\n\nINTENDED_EFFECT:Unauthorized Access: Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. \n\nTITLE:\n\tPrivilege Escalation",
             "id": "tool--456e7a65-b819-4fa6-b95c-d14cb84c640e",
             "kill_chain_phases": [
                 {
@@ -1320,7 +1324,7 @@
         {
             "created": "2019-08-12T15:22:42.843Z",
             "created_by_ref": "identity--b86f1a53-2cc7-4ecf-8a2d-e0928bce0d02",
-            "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html><body>\n\t\t\t\t\t\t\t\t<p>A utility primarily used for dumping password hashes.</P>\n\t\t\t\t\t\t\t\t<p>http://blog.gentilkiwi.com/mimikatz</P>\n\t\t\t\t\t\t</body></html>\n\nINTENDED_EFFECT:Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. \n\nINTENDED_EFFECT:Unauthorized Access\n\nTITLE:\n\tPrivilege Escalation",
+            "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html><body>\n\t\t\t\t\t\t\t\t<p>A utility primarily used for dumping password hashes.</P>\n\t\t\t\t\t\t\t\t<p>http://blog.gentilkiwi.com/mimikatz</P>\n\t\t\t\t\t\t</body></html>\n\nINTENDED_EFFECT:Unauthorized Access: Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. \n\nTITLE:\n\tPrivilege Escalation",
             "id": "tool--83353203-92b4-47e3-9c40-7dfdd9d418dc",
             "kill_chain_phases": [
                 {
@@ -1342,7 +1346,7 @@
         {
             "created": "2019-08-12T15:22:42.844Z",
             "created_by_ref": "identity--b86f1a53-2cc7-4ecf-8a2d-e0928bce0d02",
-            "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html><body>\n\t\t\t\t\t\t\t\t<p>Allows an intruder to \"pass\" a password hash (without knowing the original password) to log in to systems.</P>\n\t\t\t\t\t\t\t\t<p>http://oss.coresecurity.com/projects/pshtoolkit.htm</P>\n\t\t\t\t\t\t</body></html>\n\nINTENDED_EFFECT:Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. \n\nINTENDED_EFFECT:Unauthorized Access\n\nTITLE:\n\tPrivilege Escalation",
+            "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html><body>\n\t\t\t\t\t\t\t\t<p>Allows an intruder to \"pass\" a password hash (without knowing the original password) to log in to systems.</P>\n\t\t\t\t\t\t\t\t<p>http://oss.coresecurity.com/projects/pshtoolkit.htm</P>\n\t\t\t\t\t\t</body></html>\n\nINTENDED_EFFECT:Unauthorized Access: Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. \n\nTITLE:\n\tPrivilege Escalation",
             "id": "tool--2e9b37d5-332a-4bef-b8a9-e034b0c3774d",
             "kill_chain_phases": [
                 {
@@ -1364,7 +1368,7 @@
         {
             "created": "2019-08-12T15:22:42.844Z",
             "created_by_ref": "identity--b86f1a53-2cc7-4ecf-8a2d-e0928bce0d02",
-            "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html><body>\n\t\t\t\t\t\t\t\t<p>Dumps password hashes from the Windows registry.</P>\n\t\t\t\t\t\t\t\t<p>http://www.tarasco.org/security/pwdump_7/</P>\n\t\t\t\t\t\t</body></html>\n\nINTENDED_EFFECT:Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. \n\nINTENDED_EFFECT:Unauthorized Access\n\nTITLE:\n\tPrivilege Escalation",
+            "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html><body>\n\t\t\t\t\t\t\t\t<p>Dumps password hashes from the Windows registry.</P>\n\t\t\t\t\t\t\t\t<p>http://www.tarasco.org/security/pwdump_7/</P>\n\t\t\t\t\t\t</body></html>\n\nINTENDED_EFFECT:Unauthorized Access: Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. \n\nTITLE:\n\tPrivilege Escalation",
             "id": "tool--f39d91c4-5b65-454d-84db-56ae9bbad025",
             "kill_chain_phases": [
                 {
@@ -1386,7 +1390,7 @@
         {
             "created": "2019-08-12T15:22:42.844Z",
             "created_by_ref": "identity--b86f1a53-2cc7-4ecf-8a2d-e0928bce0d02",
-            "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html><body>\n\t\t\t\t\t\t\t\t<p>Dumps password hashes from the Windows Registry.</P>\n\t\t\t\t\t\t\t\t<p>The tool claims its origin as http://reedarvin.thearvins.com but the site is not offering this software as of the date of this report.</P>\n\t\t\t\t\t\t</body></html>\n\nINTENDED_EFFECT:Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. \n\nINTENDED_EFFECT:Unauthorized Access\n\nTITLE:\n\tPrivilege Escalation",
+            "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html><body>\n\t\t\t\t\t\t\t\t<p>Dumps password hashes from the Windows Registry.</P>\n\t\t\t\t\t\t\t\t<p>The tool claims its origin as http://reedarvin.thearvins.com but the site is not offering this software as of the date of this report.</P>\n\t\t\t\t\t\t</body></html>\n\nINTENDED_EFFECT:Unauthorized Access: Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. \n\nTITLE:\n\tPrivilege Escalation",
             "id": "tool--dabecad9-c8d3-4404-808d-0bb8349d32ca",
             "kill_chain_phases": [
                 {

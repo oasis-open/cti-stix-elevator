@@ -3,6 +3,14 @@
     "objects": [
         {
             "created": "2014-08-08T15:50:10.983Z",
+            "description": "\n\nTITLE:\n\tVictim Targeting: Customer PII and Financial Data\n\nTARGETED_INFORMATION:\nInformation Assets - Financial Data",
+            "id": "identity--2d1c6ab3-5e4e-48ac-a32b-f0c01c2836a8",
+            "modified": "2014-08-08T15:50:10.983Z",
+            "spec_version": "2.1",
+            "type": "identity"
+        },
+        {
+            "created": "2014-08-08T15:50:10.983Z",
             "id": "threat-actor--56f3f0db-b5d5-431c-ae56-c18f02caf500",
             "modified": "2014-08-08T15:50:10.983Z",
             "name": "People behind the intrusion",
@@ -19,7 +27,7 @@
                 "NewsBeef"
             ],
             "created": "2014-08-08T15:50:10.983Z",
-            "description": "Fred\n\nINFORMATION SOURCE ROLE: Aggregator\n\nINFORMATION SOURCE ROLE: Initial Author",
+            "description": "Fred\n\nINFORMATION_SOURCE_ROLE:\nAggregator,\nInitial Author",
             "external_references": [
                 {
                     "source_name": "unknown",
@@ -34,7 +42,17 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
-            "id": "relationship--eb53d2c2-6f26-470c-b6f4-d2134403377e",
+            "id": "relationship--18ddeacb-fb7e-498c-89ad-22713695e028",
+            "modified": "2014-08-08T15:50:10.983Z",
+            "relationship_type": "uses",
+            "source_ref": "campaign--e5268b6e-4931-42f1-b379-87f48eb41b1e",
+            "spec_version": "2.1",
+            "target_ref": "identity--2d1c6ab3-5e4e-48ac-a32b-f0c01c2836a8",
+            "type": "relationship"
+        },
+        {
+            "created": "2014-08-08T15:50:10.983Z",
+            "id": "relationship--a290cd87-2367-4926-a9bc-2e573188efc9",
             "modified": "2014-08-08T15:50:10.983Z",
             "relationship_type": "attributed-to",
             "source_ref": "incident--229ab6ba-0eb2-415b-bdf2-079e6b42f51e",
@@ -44,7 +62,7 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
-            "id": "relationship--3267254b-0519-452a-b9a0-bce48ad1c95a",
+            "id": "relationship--e8c5e230-e13d-4ac7-beaa-fa5f7d5e8633",
             "modified": "2014-08-08T15:50:10.983Z",
             "relationship_type": "attributed-to",
             "source_ref": "incident--517cf274-038d-4ed4-a3ec-3ac18ad9db8a",
@@ -54,7 +72,7 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
-            "id": "relationship--d5055934-d517-480f-a562-98eec1feb2f5",
+            "id": "relationship--f98626fe-a6fa-4edf-b9af-2941e7e1ba2e",
             "modified": "2014-08-08T15:50:10.983Z",
             "relationship_type": "attributed-to",
             "source_ref": "incident--7d8cf96f-91cb-42d0-a1e0-bfa38ea08621",
@@ -64,7 +82,7 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
-            "id": "relationship--a8e4f93c-c484-4b8a-85b6-633f5c65bdb8",
+            "id": "relationship--6361dc86-4db0-4362-b70c-deaabbc0fb6b",
             "modified": "2014-08-08T15:50:10.983Z",
             "relationship_type": "attributed-to",
             "source_ref": "campaign--e5268b6e-4931-42f1-b379-87f48eb41b1e",

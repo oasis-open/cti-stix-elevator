@@ -1,0 +1,57 @@
+<stix:STIX_Package
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:stix="http://stix.mitre.org/stix-1"
+    xmlns:indicator="http://stix.mitre.org/Indicator-2"
+    xmlns:cyboxCommon="http://cybox.mitre.org/common-2"
+    xmlns:cybox="http://cybox.mitre.org/cybox-2"
+    xmlns:AddressObj="http://cybox.mitre.org/objects#AddressObject-2"
+    xmlns:DomainNameObj="http://cybox.mitre.org/objects#DomainNameObject-1"
+    xmlns:FileObj="http://cybox.mitre.org/objects#FileObject-2"
+    xmlns:stixVocabs="http://stix.mitre.org/default_vocabularies-1"
+    xmlns:example="http://example.com/"
+    xsi:schemaLocation="
+    http://stix.mitre.org/stix-1 http://stix.mitre.org/XMLSchema/core/1.2/stix_core.xsd
+    http://stix.mitre.org/Indicator-2 http://stix.mitre.org/XMLSchema/indicator/2.2/indicator.xsd
+    http://cybox.mitre.org/objects#AddressObject-2 http://cybox.mitre.org/XMLSchema/objects/Address/2.0.1/Address_Object.xsd
+	http://cybox.mitre.org/objects#DomainNameObject-1 http://cybox.mitre.org/XMLSchema/Domain_Name_Object.xsd"
+    id="example:STIXPackage-43fe3b22-0201-47cf-85d0-97c02164528d"
+    version="1.2">
+    <stix:Indicators>
+        <stix:Indicator id="example:guid-6116b44e-a7e9-11e3-a82f-000c29b241af" xmlns:indicator='http://stix.mitre.org/Indicator-2' xsi:type='indicator:IndicatorType' negate="false">
+            <indicator:Type xsi:type="stixVocabs:IndicatorTypeVocab-1.1">IP Watchlist</indicator:Type>
+            <indicator:Observable idref="fireeye:observable-57a43ab6-2a79-4134-8812-fef3df3616e1"/>
+		</stix:Indicator>
+    </stix:Indicators>
+    <stix:Observables cybox_major_version="1" cybox_minor_version="1">
+        <cybox:Observable id="example:observable-c8c32b6e-2ea8-51c4-6446-7f5218072f27">
+            <cybox:Object id="example:object-d7fcce87-0e98-4537-81bf-1e7ca9ad3734">
+                 <cybox:Properties xsi:type="FileObj:FileObjectType">
+                     <FileObj:File_Path>/usr/local/iprip32.dll</FileObj:File_Path>
+                     <FileObj:Hashes>
+                            <cyboxCommon:Hash>
+                                <cyboxCommon:Type condition="Equals" xsi:type="cyboxVocabs:HashNameVocab-1.0">SHA256</cyboxCommon:Type>
+                                <cyboxCommon:Simple_Hash_Value condition="Equals">e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855</cyboxCommon:Simple_Hash_Value>
+                            </cyboxCommon:Hash>
+                        </FileObj:Hashes>
+                 </cybox:Properties>
+            </cybox:Object>
+        </cybox:Observable>
+        <cybox:Observable id="fireeye:observable-57a43ab6-2a79-4134-8812-fef3df3616e1">
+            	<cybox:Title>Domain: microsoftb.byinter.net</cybox:Title>
+            	<cybox:Object id="example:object-7671c9e2-3468-43ad-b15b-9266d7993ffe">
+					<cybox:Properties type="FQDN" xsi:type="DomainNameObj:DomainNameObjectType">
+						<DomainNameObj:Value condition="Equals">microsoftb.byinter.net</DomainNameObj:Value>
+					</cybox:Properties>
+					<cybox:Related_Objects>
+						<cybox:Related_Object id="example:object-484e0c40-2234-4652-83d7-b3be632bed8a">
+							<cybox:Properties category="ipv4-addr" xsi:type="AddressObj:AddressObjectType">
+								<AddressObj:Address_Value condition="Equals">202.65.222.45</AddressObj:Address_Value>
+							</cybox:Properties>
+							<cybox:Relationship xsi:type="cyboxVocabs:ObjectRelationshipVocab-1.0">Resolved_To</cybox:Relationship>
+						</cybox:Related_Object>
+
+					</cybox:Related_Objects>
+				</cybox:Object>
+        	</cybox:Observable>
+    </stix:Observables>
+</stix:STIX_Package>

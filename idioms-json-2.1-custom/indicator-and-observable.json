@@ -1,0 +1,47 @@
+{
+    "id": "bundle--43fe3b22-0201-47cf-85d0-97c02164528d",
+    "objects": [
+        {
+            "hashes": {
+                "SHA-256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "id": "file--49959589-27c4-5873-8e23-82f6c909d4ca",
+            "name": "iprip32.dll",
+            "parent_directory_ref": "directory--4aa982e3-4aac-5d5b-a699-d08c8c11f5f3",
+            "type": "file"
+        },
+        {
+            "id": "directory--4aa982e3-4aac-5d5b-a699-d08c8c11f5f3",
+            "path": "/usr/local",
+            "type": "directory"
+        },
+        {
+            "created": "2019-11-01T13:47:16.401Z",
+            "id": "indicator--6116b44e-a7e9-11e3-a82f-000c29b241af",
+            "indicator_types": [
+                "ip-watchlist"
+            ],
+            "modified": "2019-11-01T13:47:16.401Z",
+            "pattern": "[(domain-name:value = 'microsoftb.byinter.net' AND domain-name:resolves_to_refs[*].value = '202.65.222.45')]",
+            "pattern_type": "stix",
+            "spec_version": "2.1",
+            "type": "indicator",
+            "valid_from": "2019-11-01T13:47:16.401Z"
+        },
+        {
+            "created": "2019-11-01T13:47:16.401Z",
+            "first_observed": "2019-11-01T13:47:16.401Z",
+            "id": "observed-data--c8c32b6e-2ea8-51c4-6446-7f5218072f27",
+            "last_observed": "2019-11-01T13:47:16.401Z",
+            "modified": "2019-11-01T13:47:16.401Z",
+            "number_observed": 1,
+            "object_refs": [
+                "file--49959589-27c4-5873-8e23-82f6c909d4ca",
+                "directory--4aa982e3-4aac-5d5b-a699-d08c8c11f5f3"
+            ],
+            "spec_version": "2.1",
+            "type": "observed-data"
+        }
+    ],
+    "type": "bundle"
+}

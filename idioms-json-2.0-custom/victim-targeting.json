@@ -1,0 +1,32 @@
+{
+    "id": "bundle--bf35a4b5-e102-463d-9105-4d7a6e2d78bc",
+    "objects": [
+        {
+            "created": "2014-05-08T09:00:00.000Z",
+            "id": "campaign--c831ab93-ff84-9cda-2bd8-b094004da969",
+            "modified": "2014-05-08T09:00:00.000Z",
+            "name": "Operation Alpha",
+            "type": "campaign"
+        },
+        {
+            "created": "2014-05-08T09:00:00.000Z",
+            "id": "identity--4fde045a-b25f-f035-e8d0-29c9d5130cd9",
+            "modified": "2014-05-08T09:00:00.000Z",
+            "type": "identity",
+            "x_elevator_targeted_information": "Information Assets - Customer PII,Information Assets - Financial Data",
+            "x_elevator_title": "Victim Targeting: Customer PII and Financial Data"
+        },
+        {
+            "created": "2014-05-08T09:00:00.000Z",
+            "description": "Targets",
+            "id": "relationship--09ae7018-6967-4436-8599-d9f9cbffc58f",
+            "modified": "2014-05-08T09:00:00.000Z",
+            "relationship_type": "targets",
+            "source_ref": "campaign--c831ab93-ff84-9cda-2bd8-b094004da969",
+            "target_ref": "identity--4fde045a-b25f-f035-e8d0-29c9d5130cd9",
+            "type": "relationship"
+        }
+    ],
+    "spec_version": "2.0",
+    "type": "bundle"
+}

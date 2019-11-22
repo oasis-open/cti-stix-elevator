@@ -54,6 +54,12 @@ from stix2elevator.ids import (add_id_value,
                                get_id_values,
                                get_type_from_id,
                                record_ids)
+from stix2elevator.missing_policy import (convert_to_custom_property_name,
+                                          handle_missing_confidence_property,
+                                          handle_missing_statement_properties,
+                                          handle_missing_string_property,
+                                          handle_missing_tool_property,
+                                          handle_multiple_missing_statement_properties)
 from stix2elevator.options import error, get_option_value, info, warn
 from stix2elevator.utils import (add_marking_map_entry,
                                  check_map_1x_markings_to_2x,
@@ -64,7 +70,8 @@ from stix2elevator.utils import (add_marking_map_entry,
                                  iterpath,
                                  map_1x_markings_to_2x,
                                  map_vocabs_to_label,
-                                 operation_on_path)
+                                 operation_on_path,
+                                 strftime_with_appropriate_fractional_seconds)
 from stix2elevator.vocab_mappings import (ATTACK_MOTIVATION_MAP,
                                           COA_LABEL_MAP,
                                           INCIDENT_LABEL_MAP,
@@ -134,13 +141,11 @@ def process_information_source(information_source, so, env, temp_marking_id=None
             if information_source.references:
                 for ref in information_source.references:
                     so["external_references"].append({"source_name": "unknown", "url": ref})
-            if not get_option_value("no_squirrel_gaps") and information_source.roles:
-                for role in information_source.roles:
-                    # no vocab to make to in 2.0
-                    so["description"] += "\n\n" + "INFORMATION SOURCE ROLE: " + role.value
+            if information_source.roles:
+                handle_missing_string_property(so, "information_source_role", information_source.roles, True)
             if information_source.tools:
                 for tool in information_source.tools:
-                    add_tool_property_to_description(so, tool)
+                    handle_missing_tool_property(so, tool)
     else:
         so["created_by_ref"] = env.created_by_ref
     return so["created_by_ref"]
@@ -161,32 +166,30 @@ def process_description_and_short_description(so, entity, parent_info=False):
     if hasattr(entity, "descriptions") and entity.descriptions is not None:
         description_as_text = text_type(process_structured_text_list(entity.descriptions))
         if description_as_text:
-            if parent_info:
-                if not get_option_value("no_squirrel_gaps"):
-                    if so["description"]:
-                        so["description"] += "\nPARENT_DESCRIPTION: \n" + description_as_text
-                    else:
-                        so["description"] += description_as_text
+            if parent_info and so["description"]:
+                so["description"] += "\nPARENT_DESCRIPTION: \n" + description_as_text
             else:
                 so["description"] += description_as_text
-        if (not get_option_value("no_squirrel_gaps") and
-                hasattr(entity, "short_descriptions") and
-                entity.short_descriptions is not None):
-            short_description_as_text = process_structured_text_list(entity.short_descriptions)
-            if short_description_as_text:
-                warn("The Short_Description property is no longer supported in STIX. The text was appended to the description property of %s", 301, so["id"])
-                if parent_info:
-                    if so["description"]:
-                        so["description"] += "\nPARENT_SHORT_DESCRIPTION: \n" + short_description_as_text
-                    else:
-                        so["description"] += short_description_as_text
-                else:
-                    so["description"] += short_description_as_text
-    # could be descriptionS or description
+
+    # could be short_description or description (in STIX 1.1.1)
+    # seems like in STIX 2.x - description and descriptionS are both populated with the same content
     elif hasattr(entity, "description") and entity.description is not None:
         so["description"] += text_type(entity.description.value)
-    elif not get_option_value("no_squirrel_gaps") and hasattr(entity, "short_descriptions") and entity.short_descriptions is not None:
-        so["description"] = text_type(process_structured_text_list(entity.short_descriptions))
+    if hasattr(entity, "short_description") and entity.short_description is not None:
+        short_description_as_text = text_type(entity.short_description)
+        if short_description_as_text:
+            warn("The Short_Description property in %s is not supported in STIX 2.x.", 0, so["id"])
+            if get_option_value("missing_policy") == "add-to-description":
+                warn("The text was appended to the description property of %s", 301, so["id"])
+                if parent_info and so["description"]:
+                    so["description"] += "\nPARENT_SHORT_DESCRIPTION: \n" + short_description_as_text
+                else:
+                    so["description"] += short_description_as_text
+            elif get_option_value("missing_policy") == "use_custom_properties":
+                warn("Used custom property for short_description of %s", 308, so["id"])
+                so[convert_to_custom_property_name("short_description")] = short_description_as_text
+            else:
+                warn("Missing property short_description of %s is ignored", 307, so["id"])
 
 
 def create_basic_object(stix2x_type, stix1x_obj, env, parent_id=None, id_used=False):
@@ -199,7 +202,7 @@ def create_basic_object(stix2x_type, stix1x_obj, env, parent_id=None, id_used=Fa
     if stix1x_obj:
         timestamp = convert_timestamp_of_stix_object(stix1x_obj, env.timestamp, True)
     else:
-        timestamp = env.timestamp
+        timestamp = strftime_with_appropriate_fractional_seconds(env.timestamp, True)
     instance["created"] = timestamp
     # may need to revisit if we handle 1.x versioning.
     instance["modified"] = timestamp
@@ -340,68 +343,21 @@ def finish_basic_object(old_id, instance, env, stix1x_obj, temp_marking_id=None)
 # handle gaps
 #
 
-def add_free_text_lines_to_description(sdo_instance, free_text_lines):
-    if not get_option_value("no_squirrel_gaps"):
+
+def handle_free_text_lines(sdo_instance, free_text_lines):
+    if get_option_value("missing_policy") == "ignore":
+        warn("Missing property free_text_lines of %s is ignored", 307, sdo_instance["id"])
+    else:
+        lines = ""
         for line in free_text_lines:
-            sdo_instance["description"] += line.value
-        warn("Appended free text lines to description of %s", 302, sdo_instance["id"])
-
-
-def add_string_property_to_description(sdo_instance, property_name, property_value, is_list=False):
-    if not get_option_value("no_squirrel_gaps") and property_value:
-        if is_list:
-            sdo_instance["description"] += "\n\n" + property_name.upper() + ":\n"
-            property_values = []
-            for v in property_value:
-                property_values.append(text_type(v))
-            sdo_instance["description"] += ",\n".join(property_values)
+            lines += line.value
+        if get_option_value("missing_policy") == "add-to-description":
+            sdo_instance["description"] = lines
+            warn("Appended free text lines to description of %s", 302, sdo_instance["id"])
         else:
-            sdo_instance["description"] += "\n\n" + property_name.upper() + ":\n\t" + text_type(property_value)
-        warn("Appended %s to description of %s", 302, property_name, sdo_instance["id"])
+            warn("Used custom property for free_text_lines of %s", 308, sdo_instance["id"])
+            sdo_instance[convert_to_custom_property_name("free_text_lines")] = lines
 
-
-def add_confidence_property_to_description(sdo_instance, confidence):
-    if not get_option_value("no_squirrel_gaps"):
-        if confidence is not None:
-            sdo_instance["description"] += "\n\n" + "CONFIDENCE: "
-            if confidence.value is not None:
-                sdo_instance["description"] += text_type(confidence.value)
-            if confidence.description is not None:
-                sdo_instance["description"] += "\n\tDESCRIPTION: " + text_type(confidence.description)
-            warn("Appended Confidence type content to description of %s", 304, sdo_instance["id"])
-
-
-def add_statement_type_to_description(sdo_instance, statement, property_name):
-    if statement and not get_option_value("no_squirrel_gaps"):
-        sdo_instance["description"] += "\n\n" + property_name.upper() + ":"
-        if statement.value:
-            sdo_instance["description"] += text_type(statement.value)
-        if statement.descriptions:
-            descriptions = []
-            for d in statement.descriptions:
-                descriptions.append(text_type(d.value))
-            sdo_instance["description"] += "\n\n\t".join(descriptions)
-
-        if statement.source is not None:
-            # FIXME: Handle source
-            info("Source in %s is not handled, yet.", 815, sdo_instance["id"])
-        if statement.confidence:
-            add_confidence_property_to_description(sdo_instance, statement.confidence)
-        warn("Appended Statement type content to description of %s", 305, sdo_instance["id"])
-
-
-def add_multiple_statement_types_to_description(sdo_instance, statements, property_name):
-    if not get_option_value("no_squirrel_gaps"):
-        for s in statements:
-            add_statement_type_to_description(sdo_instance, s, property_name)
-
-
-def add_tool_property_to_description(sdo_instance, tool):
-    if not get_option_value("no_squirrel_gaps"):
-        sdo_instance["description"] += "\n\nTOOL SOURCE:"
-        if tool.name:
-            sdo_instance["description"] += "\n\tname: " + text_type(tool.name)
-        warn("Appended Tool type content to description of %s", 306, sdo_instance["id"])
 
 # Sightings
 
@@ -429,20 +385,18 @@ def process_information_source_for_sighting(sighting, sighting_instance, bundle_
             if information_source.references:
                 for ref in information_source.references:
                     sighting_instance["external_references"].append({"url": ref})
-            if not get_option_value("no_squirrel_gaps") and information_source.roles:
-                for role in information_source.roles:
-                    # no vocab to make to in 2.0
-                    sighting_instance["description"] += "\n\n" + "INFORMATION SOURCE ROLE: " + role.value
+            if information_source.roles:
+                handle_missing_string_property(sighting_instance, "information_source_role", information_source.roles, True)
             if information_source.tools:
                 for tool in information_source.tools:
-                    add_tool_property_to_description(sighting_instance, tool)
+                    handle_missing_tool_property(sighting_instance, tool)
 
 
 def handle_sighting(sighting, sighted_object_id, env):
     sighting_instance = create_basic_object("sighting", sighting, env)
     sighting_instance["count"] = 1
     sighting_instance["sighting_of_ref"] = sighted_object_id
-    sighting_instance["description"] = process_description_and_short_description(sighting_instance, sighting)
+    process_description_and_short_description(sighting_instance, sighting)
     if sighting.related_observables:
         sighting_instance["observed_data_refs"] = handle_sightings_observables(sighting.related_observables, env)
     if sighting.source:
@@ -524,11 +478,10 @@ def handle_relationship_ref(ref, id, env, verb, to_direction=True):
         # a forward reference, fix later
         source_id = id if to_direction else ref.item.idref
         target_id = str(ref.item.idref) if to_direction else id
-        env.bundle_instance["relationships"].append(create_relationship(source_id,
-                                                                        target_id,
-                                                                        env,
-                                                                        verb,
-                                                                        ref))
+        rel_obj = create_relationship(source_id, target_id, env, verb, ref.item)
+        if hasattr(ref, "relationship") and ref.relationship is not None:
+            rel_obj["description"] = ref.relationship.value
+        env.bundle_instance["relationships"].append(rel_obj)
 
 
 def handle_relationship_to_refs(refs, source_id, env, verb):
@@ -575,6 +528,7 @@ def reference_needs_fixing(ref):
     return ref and ref.find("--") == -1
 
 
+# this is very simplistic - because STIX 1.x verbs are not consistent.
 def determine_appropriate_verb(current_verb, m_id):
     if m_id is not None and current_verb == "uses":
         type_and_uuid = m_id.split("--")
@@ -592,11 +546,11 @@ def fix_relationships(env):
             if not exists_id_key(ref["source_ref"]):
                 new_id = generate_stix2x_id(None, str.lower(ref["source_ref"]))
                 if new_id is None:
-                    warn("Dangling source reference %s in %s", 601, ref["source_ref"], ref["id"])
+                    error("Dangling source reference %s in %s", 601, ref["source_ref"], ref["id"])
                 add_id_value(ref["source_ref"], new_id)
             mapped_ids = get_id_value(ref["source_ref"])
             if mapped_ids[0] is None:
-                warn("Dangling source reference %s in %s", 601, ref["source_ref"], ref["id"])
+                error("Dangling source reference %s in %s", 601, ref["source_ref"], ref["id"])
             first_one = True
             for m_id in mapped_ids:
                 if first_one:
@@ -608,11 +562,11 @@ def fix_relationships(env):
             if not exists_id_key(ref["target_ref"]):
                 new_id = generate_stix2x_id(None, str.lower(ref["target_ref"]))
                 if new_id is None:
-                    warn("Dangling target reference %s in %s", 602, ref["target_ref"], ref["id"])
+                    error("Dangling target reference %s in %s", 602, ref["target_ref"], ref["id"])
                 add_id_value(ref["target_ref"], new_id)
             mapped_ids = get_id_value(ref["target_ref"])
             if mapped_ids[0] is None:
-                warn("Dangling target reference %s in %s", 602, ref["target_ref"], ref["id"])
+                error("Dangling target reference %s in %s", 602, ref["target_ref"], ref["id"])
             first_one = True
             for m_id in mapped_ids:
                 verb = determine_appropriate_verb(ref["relationship_type"], m_id)
@@ -703,11 +657,11 @@ def convert_campaign(camp, env):
     # process information source before any relationships
     new_env.add_to_env(created_by_ref=process_information_source(camp.information_source, campaign_instance, new_env))
 
-    add_multiple_statement_types_to_description(campaign_instance, camp.intended_effects, "intended_effect")
-    add_string_property_to_description(campaign_instance, "status", camp.status)
+    handle_multiple_missing_statement_properties(campaign_instance, camp.intended_effects, "intended_effect")
+    handle_missing_string_property(campaign_instance, "status", camp.status)
 
     if get_option_value("spec_version") == "2.0":
-        add_confidence_property_to_description(campaign_instance, camp.confidence)
+        handle_missing_confidence_property(campaign_instance, camp.confidence)
     else:  # 2.1
         add_confidence_to_object(campaign_instance, camp.confidence)
 
@@ -715,13 +669,13 @@ def convert_campaign(camp, env):
         for a in camp.activity:
             warn("Campaign/Activity type in %s not supported in STIX 2.x", 403, campaign_instance["id"])
     if camp.related_ttps is not None:
-        # TODO: victims use targets, not uses
+        # TODO: victims (identity) use targets, not uses
         # TODO: maybe use _TTP_RELATIONSHIP_MAPPING
         handle_relationship_to_refs(camp.related_ttps,
                                     campaign_instance["id"],
                                     new_env,
                                     "uses")
-    if camp.related_incidents is not None:
+    if camp.related_incidents is not None and get_option_value("incidents"):
         handle_relationship_from_refs(camp.related_incidents,
                                       campaign_instance["id"],
                                       new_env,
@@ -738,7 +692,7 @@ def convert_campaign(camp, env):
                                         new_env,
                                         "attributed-to")
     if camp.associated_campaigns:
-        warn("All 'associated campaigns' relationships of %s are assumed to not represent STIX 1.2 versioning", 710, camp.id_)
+        info("All 'associated campaigns' relationships of %s are assumed to not represent STIX 1.2 versioning", 710, camp.id_)
         handle_relationship_to_refs(camp.related_coas,
                                     campaign_instance["id"],
                                     new_env,
@@ -750,10 +704,11 @@ def convert_campaign(camp, env):
 # course of action
 
 
-def add_objective_property_to_description(sdo_instance, objective):
-    if not get_option_value("no_squirrel_gaps"):
-        if objective is not None:
-            sdo_instance["description"] += "\n\n" + "OBJECTIVE: "
+def handle_missing_objective_property(sdo_instance, objective):
+    if objective is not None:
+        if get_option_value("missing_policy") == "ignore":
+            warn("Missing property objective of %s is ignored", 307, sdo_instance["id"])
+        else:
             all_text = []
 
             if objective.descriptions:
@@ -764,10 +719,14 @@ def add_objective_property_to_description(sdo_instance, objective):
                 for sd in objective.short_descriptions:
                     all_text.append(text_type(sd.value))
 
-            sdo_instance["description"] += "\n\n\t".join(all_text)
-
+            if get_option_value("missing_policy") == "add-to-description":
+                sdo_instance["description"] += "\n\n" + "OBJECTIVE: "
+                sdo_instance["description"] += "\n\n\t".join(all_text)
+            elif get_option_value("missing_policy") == "use-custom-properties":
+                sdo_instance[convert_to_custom_property_name("objective")] = " ".join(all_text)
+                warn("Used custom property for objective of %s", 308, sdo_instance["id"])
             if objective.applicability_confidence:
-                add_confidence_property_to_description(sdo_instance, objective.applicability_confidence)
+                handle_missing_confidence_property(sdo_instance, objective.applicability_confidence, "objective")
 
 
 def convert_course_of_action(coa, env):
@@ -775,25 +734,25 @@ def convert_course_of_action(coa, env):
     new_env = env.newEnv(timestamp=coa_instance["created"])
     process_description_and_short_description(coa_instance, coa)
     coa_instance["name"] = coa.title
-    add_string_property_to_description(coa_instance, "stage", coa.stage)
+    handle_missing_string_property(coa_instance, "stage", coa.stage)
     if coa.type_:
         convert_controlled_vocabs_to_open_vocabs(coa_instance, "labels", [coa.type_], COA_LABEL_MAP, False)
-    add_objective_property_to_description(coa_instance, coa.objective)
+    handle_missing_objective_property(coa_instance, coa.objective)
 
     if coa.parameter_observables is not None:
         # parameter observables, maybe turn into pattern expressions and put in description???
         warn("Parameter Observables in %s are not handled, yet.", 814, coa_instance["id"])
     if coa.structured_coa:
-        warn("Structured COAs type in %s are not supported in STIX 2.0", 404, coa_instance["id"])
-    add_statement_type_to_description(coa_instance, coa.impact, "impact")
-    add_statement_type_to_description(coa_instance, coa.cost, "cost")
-    add_statement_type_to_description(coa_instance, coa.efficacy, "efficacy")
+        warn("Structured COAs type in %s are not supported in STIX 2.x", 404, coa_instance["id"])
+    handle_missing_statement_properties(coa_instance, coa.impact, "impact")
+    handle_missing_statement_properties(coa_instance, coa.cost, "cost")
+    handle_missing_statement_properties(coa_instance, coa.efficacy, "efficacy")
     coa_created_by_ref = process_information_source(coa.information_source,
                                                     coa_instance,
                                                     new_env)
     # process information source before any relationships
     if coa.related_coas:
-        warn("All 'associated coas' relationships of %s are assumed to not represent STIX 1.2 versioning", 710, coa.id_)
+        info("All 'associated coas' relationships of %s are assumed to not represent STIX 1.2 versioning", 710, coa.id_)
         handle_relationship_to_refs(coa.related_coas, coa_instance["id"], new_env,
                                     coa_created_by_ref, "related-to")
     finish_basic_object(coa.id_, coa_instance, env, coa)
@@ -808,7 +767,7 @@ def process_et_properties(sdo_instance, et, env):
     if "name" in sdo_instance:
         info("Title %s used for name, appending exploit_target %s title in description property",
              303, sdo_instance["type"], sdo_instance["id"])
-        add_string_property_to_description(sdo_instance, "title", et.title, False)
+        handle_missing_string_property(sdo_instance, "title", et.title, False)
     elif et.title is not None:
         sdo_instance["name"] = et.title
     new_env = env.newEnv(timestamp=sdo_instance["created"])
@@ -830,23 +789,23 @@ def convert_vulnerability(v, et, env):
         vulnerability_instance["external_references"].append({"source_name": "osvdb", "external_id": v.osvdb_id})
 
     if v.source is not None:
-        add_string_property_to_description(vulnerability_instance, "source", v.source, False)
+        handle_missing_string_property(vulnerability_instance, "source", v.source, False)
 
     if v.cvss_score is not None:
         # FIXME: add CVSS score into description
         info("CVSS Score in %s is not handled, yet.", 815, vulnerability_instance["id"])
 
     if v.discovered_datetime is not None:
-        add_string_property_to_description(vulnerability_instance,
-                                           "discovered_datetime",
-                                           v.discovered_datetime.value.strftime("%Y-%m-%dT%H:%M:%S.%fZ"),
-                                           False)
+        handle_missing_string_property(vulnerability_instance,
+                                       "discovered_datetime",
+                                       v.discovered_datetime.value.strftime("%Y-%m-%dT%H:%M:%S.%fZ"),
+                                       False)
 
     if v.published_datetime is not None:
-        add_string_property_to_description(vulnerability_instance,
-                                           "published_datetime",
-                                           v.published_datetime.value.strftime("%Y-%m-%dT%H:%M:%S.%fZ"),
-                                           False)
+        handle_missing_string_property(vulnerability_instance,
+                                       "published_datetime",
+                                       v.published_datetime.value.strftime("%Y-%m-%dT%H:%M:%S.%fZ"),
+                                       False)
 
     if v.affected_software is not None:
         info("Affected Software in %s is not handled, yet.", 815, vulnerability_instance["id"])
@@ -1003,6 +962,7 @@ def convert_identity(identity, env, parent_id=None, temp_marking_id=None, from_p
         identity_instance["name"] = identity.name
     if isinstance(identity, CIQIdentity3_0Instance):
         if identity.roles:
+            handle_missing_string_property(identity_instance, "information_source_role", identity.roles, True)
             warn("Roles is not a property of an identity (%s).  Perhaps the roles are associated with a related Threat Actor",
                  428,
                  identity_instance["id"])
@@ -1024,10 +984,10 @@ def convert_identity(identity, env, parent_id=None, temp_marking_id=None, from_p
             if get_option_value("spec_version") == "2.1":
                 convert_ciq_addresses2_1(ciq_info.addresses, identity_instance, env, parent_id)
         if ciq_info.free_text_lines:
-            add_free_text_lines_to_description(identity_instance, ciq_info.free_text_lines)
+            handle_free_text_lines(identity_instance, ciq_info.free_text_lines)
     if identity.related_identities:
         msg = "All 'associated identities' relationships of %s are assumed to not represent STIX 1.2 versioning"
-        warn(msg, 710, identity_instance["id"])
+        info(msg, 710, identity_instance["id"])
         handle_relationship_to_refs(identity.related_identities, identity_instance["id"], env, "related-to")
     finish_basic_object(identity.id_, identity_instance,
                         env.newEnv(created_by_ref=identity_instance["id"] if from_package else parent_id),
@@ -1057,7 +1017,7 @@ def convert_incident(incident, env):
     new_env.add_to_env(created_by_ref=process_information_source(incident.information_source, incident_instance, new_env))
 
     if get_option_value("spec_version") == "2.0":
-        add_confidence_property_to_description(incident_instance, incident.confidence)
+        handle_missing_confidence_property(incident_instance, incident.confidence)
     else:  # 2.1
         add_confidence_to_object(incident_instance, incident.confidence)
 
@@ -1093,9 +1053,9 @@ def convert_incident(incident, env):
     if incident.impact_assessment is not None:
         # FIXME: add impact_assessment to description
         info("Incident Impact Assessment in %s is not handled, yet", 815, incident_instance["id"])
-    add_string_property_to_description(incident_instance, "status", incident.status)
+    handle_missing_string_property(incident_instance, "status", incident.status)
     if incident.related_incidents:
-        warn("All 'associated incidents' relationships of %s are assumed to not represent STIX 1.2 versioning",
+        info("All 'associated incidents' relationships of %s are assumed to not represent STIX 1.2 versioning",
              710, incident_instance["id"])
         handle_relationship_to_refs(incident.related_incidents, incident_instance["id"], new_env, "related-to")
     finish_basic_object(incident.id_, incident_instance, env, incident)
@@ -1136,7 +1096,7 @@ def convert_test_mechanism(indicator, indicator_instance):
             return
         if hasattr(indicator_instance, "pattern"):
             # TODO: maybe put in description
-            warn("Only one type pattern can be specified in %s - using cybox", 712, indicator_instance["id"])
+            warn("Only one type pattern can be specified in %s - using 'stix'", 712, indicator_instance["id"])
         else:
             for tm in indicator.test_mechanisms:
                 if hasattr(indicator_instance, "pattern"):
@@ -1196,10 +1156,10 @@ def convert_indicator(indicator, env):
             indicator_instance["valid_from"] = convert_timestamp_of_stix_object(indicator, env.timestamp)
     convert_kill_chains(indicator.kill_chain_phases, indicator_instance)
     if indicator.likely_impact:
-        add_statement_type_to_description(indicator_instance, indicator.likely_impact, "likely_impact")
+        handle_missing_statement_properties(indicator_instance, indicator.likely_impact, "likely_impact")
 
     if get_option_value("spec_version") == "2.0":
-        add_confidence_property_to_description(indicator_instance, indicator.confidence)
+        handle_missing_confidence_property(indicator_instance, indicator.confidence)
     else:  # 2.1
         add_confidence_to_object(indicator_instance, indicator.confidence)
     if indicator.observable is not None:
@@ -1248,7 +1208,7 @@ correctly in STIX 2.x - please check this pattern",
         handle_relationship_to_refs(indicator.indicated_ttps, indicator_instance["id"], env,
                                     "indicates")
     if indicator.related_indicators:
-        warn("All 'associated indicators' relationships of %s are assumed to not represent STIX 1.2 versioning", 710, indicator.id_)
+        info("All 'associated indicators' relationships of %s are assumed to not represent STIX 1.2 versioning", 710, indicator.id_)
         handle_relationship_to_refs(indicator.related_indicators, indicator_instance["id"], env,
                                     "related-to")
     finish_basic_object(indicator.id_, indicator_instance, env, indicator)
@@ -1295,7 +1255,7 @@ def create_cyber_observables(obs, observed_data_instance):
 
 
 def convert_observed_data(obs, env):
-    # TODO: is this code necessary?
+    # TODO: is this commented out code necessary?
     # if not obs.id_ and obs.object_ and obs.object_.id_:
     #    obj = obs.object_
     observed_data_instance = create_basic_object("observed-data", obs, env)
@@ -1421,7 +1381,7 @@ def convert_report(report, env):
         header_created_by_ref = process_information_source(report.header.information_source, report_instance, new_env)
         new_env.add_to_env(created_by_ref=header_created_by_ref)
         # process information source before any relationships
-        add_string_property_to_description(report_instance, "intent", report.header.intents, True)
+        handle_missing_string_property(report_instance, "intent", report.header.intents, True)
         if report.header.title is not None:
             report_instance["name"] = report.header.title
         convert_controlled_vocabs_to_open_vocabs(report_instance,
@@ -1479,11 +1439,11 @@ def convert_threat_actor(threat_actor, env):
                                                  "spec_version") == "2.0" else "threat_actor_types",
                                              threat_actor.types,
                                              THREAT_ACTOR_LABEL_MAP, False)
-    add_multiple_statement_types_to_description(threat_actor_instance, threat_actor.intended_effects, "intended_effect")
-    add_multiple_statement_types_to_description(threat_actor_instance, threat_actor.planning_and_operational_supports,
-                                                "planning_and_operational_support")
+    handle_multiple_missing_statement_properties(threat_actor_instance, threat_actor.intended_effects, "intended_effect")
+    handle_multiple_missing_statement_properties(threat_actor_instance, threat_actor.planning_and_operational_supports,
+                                                 "planning_and_operational_support")
     if get_option_value("spec_version") == "2.0":
-        add_confidence_property_to_description(threat_actor_instance, threat_actor.confidence)
+        handle_missing_confidence_property(threat_actor_instance, threat_actor.confidence)
     else:  # 2.1
         add_confidence_to_object(threat_actor_instance, threat_actor.confidence)
 
@@ -1498,7 +1458,7 @@ def convert_threat_actor(threat_actor, env):
     if threat_actor.associated_campaigns is not None:
         handle_relationship_from_refs(threat_actor.associated_campaigns, threat_actor_instance["id"], new_env, "attributed-to")
     if threat_actor.associated_actors:
-        warn("All 'associated actors' relationships of %s are assumed to not represent STIX 1.2 versioning", 710, threat_actor.id_)
+        info("All 'associated actors' relationships of %s are assumed to not represent STIX 1.2 versioning", 710, threat_actor.id_)
         handle_relationship_to_refs(threat_actor.associated_actors, threat_actor_instance["id"], new_env, "related-to")
 
     finish_basic_object(threat_actor.id_, threat_actor_instance, env, threat_actor)
@@ -1523,12 +1483,12 @@ def determine_ttp_relationship_type_and_direction(source_type, target_type, rela
 
 def process_ttp_properties(sdo_instance, ttp, env, kill_chains_in_sdo=True, victim_target=False):
     process_description_and_short_description(sdo_instance, ttp, True)
-    add_multiple_statement_types_to_description(sdo_instance, ttp.intended_effects, "intended_effect")
+    handle_multiple_missing_statement_properties(sdo_instance, ttp.intended_effects, "intended_effect")
     if hasattr(ttp, "title"):
         if ("name" not in sdo_instance or sdo_instance["name"] is None) and not victim_target:
             sdo_instance["name"] = ttp.title
         else:
-            add_string_property_to_description(sdo_instance, "title", ttp.title, False)
+            handle_missing_string_property(sdo_instance, "title", ttp.title, False)
 
     # only populate kill chain phases if that is a property of the sdo_instance type, as indicated by kill_chains_in_sdo
     if kill_chains_in_sdo and hasattr(ttp, "kill_chain_phases"):
@@ -1540,7 +1500,7 @@ def process_ttp_properties(sdo_instance, ttp, env, kill_chains_in_sdo=True, vict
         handle_relationship_to_refs(ttp.exploit_targets, sdo_instance["id"], env,
                                     "targets")
     if ttp.related_ttps:
-        warn("All 'related ttps' relationships of %s are assumed to not represent STIX 1.2 versioning", 710, ttp.id_)
+        info("All 'related ttps' relationships of %s are assumed to not represent STIX 1.2 versioning", 710, ttp.id_)
         for rel in ttp.related_ttps:
             source_type = get_type_from_id(sdo_instance["id"])
             if rel.item.idref is None:
@@ -1626,8 +1586,8 @@ def convert_tool(tool, ttp, env, first_one):
     if tool.name is not None:
         tool_instance["name"] = tool.name
     process_description_and_short_description(tool_instance, tool)
-    add_string_property_to_description(tool_instance, "vendor", tool.vendor)
-    add_string_property_to_description(tool_instance, "service_pack", tool.service_pack)
+    handle_missing_string_property(tool_instance, "vendor", tool.vendor)
+    handle_missing_string_property(tool_instance, "service_pack", tool.service_pack)
     # TODO: add tool_specific_data to descriptor <-- Not Implemented!
 
     if tool.tool_hashes is not None:
@@ -1638,7 +1598,7 @@ def convert_tool(tool, ttp, env, first_one):
     # TODO: add execution_environment to descriptor <-- Not Implemented!
     # TODO: add errors to descriptor <-- Not Implemented!
     # TODO: add compensation_model to descriptor <-- Not Implemented!
-    add_string_property_to_description(tool_instance, "title", tool.title)
+    handle_missing_string_property(tool_instance, "title", tool.title)
     convert_controlled_vocabs_to_open_vocabs(tool_instance,
                                              "labels" if get_option_value("spec_version") == "2.0" else "tool_types",
                                              tool.type_,
@@ -1686,7 +1646,10 @@ def convert_resources(resources, ttp, env, generated_ttps):
 
 
 def convert_identity_for_victim_target(identity, ttp, env, ttp_generated):
-    identity_instance = convert_identity(identity, env, parent_id=ttp.id_ if not ttp_generated else None)
+    if identity:
+        identity_instance = convert_identity(identity, env, parent_id=ttp.id_ if not ttp_generated else None)
+    else:
+        identity_instance = create_basic_object("identity", None, env, ttp.id_)
     env.bundle_instance["objects"].append(identity_instance)
     process_ttp_properties(identity_instance, ttp, env, False, True)
     finish_basic_object(ttp.id_, identity_instance, identity, env, identity_instance["id"])
@@ -1703,18 +1666,22 @@ def convert_victim_targeting(victim_targeting, ttp, env, ttps_generated):
     if hasattr(victim_targeting, "technical_details") and victim_targeting.targeted_technical_details is not None:
         for v in victim_targeting.targeted_technical_details:
             warn("Targeted technical details on %s are not a victim target in STIX 2.x", 412, ttp.id_)
-    if victim_targeting.identity:
-        identity_instance = convert_identity_for_victim_target(victim_targeting.identity, ttp, env, ttps_generated)
-        if identity_instance:
-            warn("%s generated an identity associated with a victim", 713, ttp.id_)
-            if ttps_generated:
-                for generated_ttp in ttps_generated:
-                    env.bundle_instance["relationships"].append(
-                        create_relationship(generated_ttp["id"], identity_instance["id"], env, "targets"))
-                # the relationships has been created, so its not necessary to propagate it up
-            return identity_instance
+    identity_instance = convert_identity_for_victim_target(victim_targeting.identity, ttp, env, ttps_generated)
+    info("%s generated an identity associated with a victim", 713, ttp.id_)
+    if victim_targeting.targeted_systems:
+        handle_missing_string_property(identity_instance, "targeted_systems", victim_targeting.targeted_systems,
+                                       True)
+    if victim_targeting.targeted_information:
+        handle_missing_string_property(identity_instance, "targeted_information",
+                                       victim_targeting.targeted_information, True)
+    if ttps_generated:
+        for generated_ttp in ttps_generated:
+            env.bundle_instance["relationships"].append(
+                create_relationship(generated_ttp["id"], identity_instance["id"], env, "targets"))
+        # the relationships has been created, so its not necessary to propagate it up
+    return identity_instance
     # nothing generated
-    return None
+    # return None
 
 
 def convert_ttp(ttp, env):
@@ -1738,7 +1705,7 @@ def convert_ttp(ttp, env):
             generated_objs.append(victim_target)
     # victims weren't involved, check existing list
     if not generated_objs and ttp.id_ is not None:
-        warn("TTP %s did not generate any STIX 2.x object", 415, ttp.id_)
+        error("TTP %s did not generate any STIX 2.x object", 415, ttp.id_)
     return generated_objs
 
 
@@ -1837,10 +1804,11 @@ def finalize_bundle(env):
     if stix.__version__ >= "1.2.0.0":
         add_relationships_to_reports(bundle_instance)
 
-    # source and target_ref are taken care in fix_relationships(...)
+    # source and target_ref are taken care of in fix_relationships(...)
     _TO_MAP = ("id", "idref", "created_by_ref", "external_references",
                "marking_ref", "object_marking_refs", "object_refs",
-               "sighting_of_ref", "observed_data_refs", "where_sighted_refs")
+               "sighting_of_ref", "observed_data_refs", "where_sighted_refs",
+               convert_to_custom_property_name("link_refs"))
 
     _LOOK_UP = ("", u"", [], None, dict())
 
@@ -1856,9 +1824,9 @@ def finalize_bundle(env):
                 final_pattern = fix_pattern(pattern)
                 if final_pattern:
                     if final_pattern.contains_placeholder():
-                        warn("At least one PLACEHOLDER idref was not resolved in %s", 205, ind["id"])
+                        error("At least one PLACEHOLDER idref was not resolved in %s", 205, ind["id"])
                     if final_pattern.contains_unconverted_term():
-                        warn("At least one observable could not be converted in %s", 206, ind["id"])
+                        error("At least one observable could not be converted in %s", 206, ind["id"])
                     if (isinstance(final_pattern, ComparisonExpressionForElevator) or
                             isinstance(final_pattern, UnconvertedTerm)):
                         ind["pattern"] = "[%s]" % final_pattern
@@ -1899,7 +1867,7 @@ def finalize_bundle(env):
                 stix20_id = get_id_value(value)
 
                 if stix20_id[0] is None:
-                    warn("1.X ID: %s was not mapped to STIX 2.x ID", 603, value)
+                    warn("STIX 1.X ID: %s was not mapped to STIX 2.x ID", 603, value)
                     continue
 
                 operation_on_path(bundle_instance, path, stix20_id[0])

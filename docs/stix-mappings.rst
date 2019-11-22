@@ -169,7 +169,7 @@ In STIX 1.x, an ``id`` contained a "namespace".  This was deemed unnecessary in 
 
 *none*
 
-**STIX 1.x Properties Recorded in the STIX 2.x Description Property**
+**STIX 1.x Properties Handled Based on the "missing policy"**
 
 -  ``Short_Description``
 
@@ -298,7 +298,7 @@ Attack Pattern
 | ``ttp:Related_TTPs``      | ``uses`` (malware, tool), ``related-to`` (when not used for versioning)|
 +---------------------------+------------------------------------------------------------------------+
 
-**STIX 1.x Properties Recorded in the STIX 2.x Description Property**
+**STIX 1.x Properties Handled Based on the "missing policy"**
 
 - ``ttp:Intended_Effect``
 
@@ -379,7 +379,7 @@ Campaigns
 | ``Associated_Campaigns``| ``related-to`` (when not used for versioning)|
 +-------------------------+----------------------------------------------+
 
-**STIX 1.x Properties Recorded in the STIX 2.x Description Property**
+**STIX 1.x Properties Handled Based on the "missing policy"**
 
 -  ``Status``
 
@@ -492,7 +492,7 @@ reserved, but not defined in STIX 2.x.
 |     ``Related_COAs``         | ``related-to`` (when not used for versioning)|
 +------------------------------+----------------------------------------------+
 
-**STIX 1.x Properties Recorded in the STIX 2.x Description Property**
+**STIX 1.x Properties Handled Based on the "missing policy"**
 
  - ``Stage``
  - ``Objective``
@@ -618,7 +618,7 @@ to ensure the STIX 2.x Indicator has the intended meaning.
 | ``Related_Campaigns``   | ``indicates``                                |
 +-------------------------+----------------------------------------------+
 
-**STIX 1.x Properties Recorded in the STIX 2.x Description Property**
+**STIX 1.x Properties Handled Based on the "missing policy"**
 
 *none*
 
@@ -722,7 +722,7 @@ create a new STIX 2.1 ``location`` object, transfering the STIX 1.x address info
 
 *none*
 
-**STIX 1.x Properties Recorded in the STIX 2.x Description Property**
+**STIX 1.x Properties Handled Based on the "missing policy"**
 
 *none*
 
@@ -761,7 +761,44 @@ STIX 1.x in XML
     </ta:Identity>
 
 
-STIX 2.x in JSON
+STIX 2.0 in JSON
+
+.. code-block:: json
+
+    {
+        "id": "bundle--ccd00c4a-1bdb-46ae-9898-ecaca13f1f12",
+        "objects": [
+            {
+              "administrative_area": "California",
+              "country": "US",
+              "created": "2014-11-19T23:39:03.893Z",
+              "id": "location--c1445467-fd92-4532-9161-1c3024ab6467",
+              "modified": "2014-11-19T23:39:03.893Z",
+              "type": "location"
+            },
+            {
+              "created": "2014-11-19T23:39:03.893Z",
+              "id": "relationship--b1d9c097-a0ac-46e8-997b-291ea3b976f5",
+              "modified": "2014-11-19T23:39:03.893Z",
+              "relationship_type": "located-at",
+              "source_ref": "identity--733c5838-34d9-4fbf-949c-62aba761184c",
+              "target_ref": "location--c1445467-fd92-4532-9161-1c3024ab6467",
+              "type": "relationship"
+            },
+            {
+              "created": "2014-11-19T23:39:03.893Z",
+              "id": "identity--733c5838-34d9-4fbf-949c-62aba761184c",
+              "identity_class": "organization",
+              "modified": "2014-11-19T23:39:03.893Z",
+              "name": "Disco Tean",
+              "type": "identity"
+            }
+        ],
+        "spec_version": "2.0",
+        "type": "bundle"
+    }
+
+STIX 2.1 in JSON
 
 .. code-block:: json
 
@@ -797,10 +834,12 @@ STIX 2.x in JSON
               "type": "identity"
             }
         ],
-        "spec_version": "2.x",
         "type": "bundle"
     }
 
+Notice that the spec_version property only appears on the bundle in STIX 2.0, but in STIX 2.1, is _not_ a property of the
+bundle. It may (optionally) appear on each object.  The elevator will always provides the spec_version property for
+all 2.1 SDOs and SROs, but not on SCOs.
 
 Malware
 -------------
@@ -840,7 +879,7 @@ missing, the ``title`` property can be used.
 | ``ttp:Victim_Targeting``  | ``targets``                                                                         |
 +---------------------------+-------------------------------------------------------------------------------------+
 
-**STIX 1.x Properties Recorded in the STIX 2.x Description Property**
+**STIX 1.x Properties Handled Based on the "missing policy"**
 
  - ``ttp:Intended_Effect``
 
@@ -926,7 +965,7 @@ The sightings count is captured on the Sighting SRO.
 
 *none*
 
-**STIX 1.x Properties Recorded in the STIX 2.x Description Property**
+**STIX 1.x Properties Handled Based on the "missing policy"**
 
 *none*
 
@@ -1115,7 +1154,7 @@ Threat Actor
 | ``Associated_Actors``   | ``related-to`` (when not used for versioning)|
 +-------------------------+----------------------------------------------+
 
-**STIX 1.x Properties Recorded in the STIX 2.x Description Property**
+**STIX 1.x Properties Handled Based on the "missing policy"**
 
 - ``Intended_Effect``
 
@@ -1235,7 +1274,7 @@ Tool
 | ``ttp:Related_TTPs``      | ``uses`` (attack-pattern) (reverse), ``related-to`` (when not used for versioning), ``targets`` (identity)   |
 +---------------------------------------+--------------------------------------------------------------------------------------------------+
 
-**STIX 1.x Properties Recorded in the STIX 2.x Description Property**
+**STIX 1.x Properties Handled Based on the "missing policy"**
 
 - ``ttp:Intended_Effect``
 
@@ -1322,7 +1361,7 @@ Vulnerability
 +-------------------------------+-----------------------------------------------+
 
 
-**STIX 1.x Properties Recorded in the STIX 2.x Description Property**
+**STIX 1.x Properties Handled Based on the "missing policy"**
 
 
 *none*

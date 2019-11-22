@@ -152,7 +152,11 @@ def step_observable_data(object):
     object["object_refs"] = []
     for obj in objs:
         object["object_refs"].append(obj["id"])
+        for prop in ["description", "external_references"]:
+            if prop in obj and obj[prop] in ("", u"", [], None, dict()):
+                obj.pop(prop)
     objs.append(object)
+
     return objs
 
 

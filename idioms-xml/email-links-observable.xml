@@ -1,0 +1,48 @@
+<stix:STIX_Package
+        xmlns:URIObj="http://cybox.mitre.org/objects#URIObject-2"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        xmlns:NetworkConnectionObj="http://cybox.mitre.org/objects#NetworkConnectionObject-2"
+        xmlns:example="http://example.com"
+        xmlns:AddressObj="http://cybox.mitre.org/objects#AddressObject-2"
+        xmlns:stix="http://stix.mitre.org/stix-1"
+        xmlns:cyboxCommon="http://cybox.mitre.org/common-2"
+        xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
+        xmlns:HTTPSessionObj="http://cybox.mitre.org/objects#HTTPSessionObject-2"
+        xmlns:EmailMessageObj="http://cybox.mitre.org/objects#EmailMessageObject-2"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:cybox="http://cybox.mitre.org/cybox-2"
+        xmlns:HostnameObj="http://cybox.mitre.org/objects#HostnameObject-1"
+        xmlns:stixCommon="http://stix.mitre.org/common-1"
+        xmlns:stixVocabs="http://stix.mitre.org/default_vocabularies-1"
+        xmlns:SocketAddressObj="http://cybox.mitre.org/objects#SocketAddressObject-1"
+        xmlns:indicator="http://stix.mitre.org/Indicator-2"
+        id="example:STIXPackage-7d188f68-9b6d-40d8-96a6-667ce3677874" version="1.1.1">
+    <stix:Observables>
+        <stix:Observable id="NCCIC:Observable-6355649f-ad9a-4cc1-8edc-28effcf451c5">
+            <cybox:Object id="NCCIC:Object-9fa06372-e150-11e5-8ccf-180373b1ea03">
+                <cybox:Properties type="URL" xsi:type="URIObj:URIObjectType">
+                    <URIObj:Value>http://thereelin.com/mac/htm</URIObj:Value>
+                </cybox:Properties>
+            </cybox:Object>
+        </stix:Observable>
+        <stix:Observable id="NCCIC:Observable-5e1bff77-0150-4deb-8e17-1ae29588b501">
+            <cybox:Object id="NCCIC:Object-e61ece42-e150-11e5-8f8a-180373b1ea03">
+                <cybox:Properties xsi:type="EmailMessageObj:EmailMessageObjectType">
+                    <EmailMessageObj:Header>
+                        <EmailMessageObj:From category="e-mail" xsi:type="AddressObj:AddressObjectType">
+                            <AddressObj:Address_Value>chase@ee.duke.edu</AddressObj:Address_Value>
+                        </EmailMessageObj:From>
+                        <EmailMessageObj:Subject>Fix The Error On Your Account.</EmailMessageObj:Subject>
+                        <EmailMessageObj:Message_ID>201602112058.u1BKfrXh004925@mail-gw-01.oit.duke.edu</EmailMessageObj:Message_ID>
+                        <EmailMessageObj:X_Mailer>Microsoft Outlook Express 6.00.2800.1437</EmailMessageObj:X_Mailer>
+                    </EmailMessageObj:Header>
+                    <EmailMessageObj:Links>
+                        <!-- <EmailMessageObj:Link object_reference="NCCIC:Object-8ba6199f-e150-11e5-95b9-180373b1ea03"/> -->
+                        <EmailMessageObj:Link object_reference="NCCIC:Object-9fa06372-e150-11e5-8ccf-180373b1ea03"/>
+                        <!-- <EmailMessageObj:Link object_reference="NCCIC:Object-a85cde82-e150-11e5-9d35-180373b1ea03"/> -->
+                    </EmailMessageObj:Links>
+                </cybox:Properties>
+            </cybox:Object>
+        </stix:Observable>
+    </stix:Observables>
+</stix:STIX_Package>

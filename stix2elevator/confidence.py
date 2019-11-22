@@ -75,7 +75,7 @@ def convert_confidence_value(value, id):
         # look for percentage?
         if value < 0 or value > 100:
             warn(
-                "The confidence value %s is not between 0 and 100, which is required for STIX 2.0. No confidence can be inferred",
+                "The confidence value %s is not between 0 and 100, which is required for STIX 2.1. No confidence can be inferred",
                 431, value)
             return None
         else:
@@ -84,11 +84,11 @@ def convert_confidence_value(value, id):
     elif isinstance(value, float):
         if value < 0 or value > 100:
             warn(
-                "The confidence value %s is not between 0 and 100, which is required for STIX 2.0. No confidence can be inferred",
+                "The confidence value %s is not between 0 and 100, which is required for STIX 2.1. No confidence can be inferred",
                 431, value)
             return None
         else:
-            warn("The confidence value %s in %s has been converted to an integer so it is valid in STIX 2.0", 724,
+            warn("The confidence value %s in %s has been converted to an integer so it is valid in STIX 2.1", 724,
                  value, id)
             confidentiality2_1_value = ceil(value)
     elif isinstance(value, str):
@@ -107,6 +107,6 @@ def convert_confidence_value(value, id):
     return confidentiality2_1_value
 
 
-def convert_confidence(confidence2_0, id):
+def convert_confidence(confidence1x, id):
     # should confidence description be included in a note or opinion?
-    return convert_confidence_value(confidence2_0.value, id)
+    return convert_confidence_value(confidence1x.value, id)

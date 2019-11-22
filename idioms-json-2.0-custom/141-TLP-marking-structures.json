@@ -1,0 +1,67 @@
+{
+    "id": "bundle--88139233-3c7d-4913-bb5e-d2aeb079d029",
+    "objects": [
+        {
+            "created": "2014-05-08T09:00:00.000Z",
+            "id": "indicator--8a822399-5d8a-44e4-abeb-15d480ea93c5",
+            "labels": [
+                "url-watchlist"
+            ],
+            "modified": "2014-05-08T09:00:00.000Z",
+            "name": "Malicious site hosting downloader",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
+            ],
+            "pattern": "[url:value = 'http://x4z9arb.cn/4712']",
+            "type": "indicator",
+            "valid_from": "2014-05-08T09:00:00.000000Z"
+        },
+        {
+            "created": "2014-05-08T09:00:00.000Z",
+            "id": "indicator--53fe3b22-0201-47cf-85d0-97c02164528d",
+            "labels": [
+                "ip-watchlist"
+            ],
+            "modified": "2014-05-08T09:00:00.000Z",
+            "name": "IP Address for known C2 channel",
+            "object_marking_refs": [
+                "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
+            ],
+            "pattern": "[ipv4-addr:value = '10.0.0.0']",
+            "type": "indicator",
+            "valid_from": "2014-05-08T09:00:00.000000Z"
+        },
+        {
+            "created": "2015-07-20T19:52:13.853Z",
+            "id": "indicator--14975dea-86cd-4211-a5f8-9c2e4daab69a",
+            "labels": [
+                "file-hash-watchlist"
+            ],
+            "modified": "2015-07-20T19:52:13.853Z",
+            "name": "File Reputation for SHA256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "object_marking_refs": [
+                "marking-definition--f88d31f6-486f-44da-b317-01333bde0b82"
+            ],
+            "pattern": "[file:hashes.'SHA-256' = 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855']",
+            "type": "indicator",
+            "valid_from": "2015-07-20T19:52:13.853585Z"
+        },
+        {
+            "created": "2014-10-31T15:52:13.127Z",
+            "id": "indicator--8cf9236f-1b96-493d-98be-0c1c1e8b62d7",
+            "labels": [
+                "malicious-email"
+            ],
+            "modified": "2014-10-31T15:52:13.127Z",
+            "name": "Malicious E-mail",
+            "object_marking_refs": [
+                "marking-definition--5e57c739-391a-4eb3-b6be-7d15ca92d5ed"
+            ],
+            "pattern": "[email-message:subject MATCHES '^[IMPORTANT] Please Review Before']",
+            "type": "indicator",
+            "valid_from": "2014-10-31T15:52:13.127931Z"
+        }
+    ],
+    "spec_version": "2.0",
+    "type": "bundle"
+}

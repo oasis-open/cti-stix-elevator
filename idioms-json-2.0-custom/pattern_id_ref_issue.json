@@ -1,0 +1,55 @@
+{
+    "id": "bundle--43fe3b22-0201-47cf-85d0-97c02164528d",
+    "objects": [
+        {
+            "created": "2014-05-08T09:00:00.000Z",
+            "id": "indicator--865d068f-45db-4671-a23a-4bfbe92b31e9",
+            "labels": [
+                "ip-watchlist"
+            ],
+            "modified": "2014-05-08T09:00:00.000Z",
+            "name": "indicator 3",
+            "pattern": "[(ipv4-addr:value = '10.0.0.0' OR ipv4-addr:value = '20.0.0.0')] AND [file:hashes.MD5 = '3340a281074fcb539967438e3fac326f']",
+            "type": "indicator",
+            "valid_from": "2014-05-08T09:00:00.000000Z"
+        },
+        {
+            "created": "2014-05-08T09:00:00.000Z",
+            "id": "indicator--44fe3b22-0201-47cf-85d0-97c0216452ab",
+            "labels": [
+                "ip-watchlist"
+            ],
+            "modified": "2014-05-08T09:00:00.000Z",
+            "name": "indicator 2",
+            "pattern": "[(ipv4-addr:value = '10.0.0.0' OR ipv4-addr:value = '20.0.0.0')]",
+            "type": "indicator",
+            "valid_from": "2014-05-08T09:00:00.000000Z"
+        },
+        {
+            "created": "2014-05-08T09:00:00.000Z",
+            "id": "indicator--33fe3b22-0201-47cf-85d0-97c02164528d",
+            "labels": [
+                "ip-watchlist"
+            ],
+            "modified": "2014-05-08T09:00:00.000Z",
+            "name": "IP Address for known C2 channel",
+            "pattern": "[ipv4-addr:value = '10.0.0.0']",
+            "type": "indicator",
+            "valid_from": "2014-05-08T09:00:00.000000Z"
+        },
+        {
+            "created": "2014-05-08T09:00:00.000Z",
+            "id": "indicator--b312970e-b34b-4323-9aee-d953d003bc19",
+            "labels": [
+                "ip-watchlist"
+            ],
+            "modified": "2014-05-08T09:00:00.000Z",
+            "name": "indicator 4",
+            "pattern": "[(ipv4-addr:value = '10.0.0.0' OR ipv4-addr:value = '20.0.0.0')] AND [file:hashes.MD5 = '3340a281074fcb539967438e3fac326f']",
+            "type": "indicator",
+            "valid_from": "2014-05-08T09:00:00.000000Z"
+        }
+    ],
+    "spec_version": "2.0",
+    "type": "bundle"
+}

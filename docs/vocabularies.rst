@@ -47,7 +47,8 @@ be used directly.
 +------------------------------------------+-----------------------------------+
 | ``IncidentStatusVocab``                  | *not available in STIX 2.x*       |
 +------------------------------------------+-----------------------------------+
-| ``IndicatorTypeVocab``                   | ``indicator-label-ov``            |
+| ``IndicatorTypeVocab``                   | ``indicator-label-ov`` (2.0)      |
+|                                          | ``indicator-type-ov`` (2.1)       |
 +------------------------------------------+-----------------------------------+
 | ``InformationSourceRoleVocab``           | *not available in STIX 2.x*       |
 +------------------------------------------+-----------------------------------+

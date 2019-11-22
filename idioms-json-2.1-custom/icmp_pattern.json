@@ -1,0 +1,19 @@
+{
+    "id": "bundle--89762d92-e00e-471b-a3b5-c4bdc38bdde8",
+    "objects": [
+        {
+            "created": "2014-05-08T09:00:00.000Z",
+            "id": "indicator--53fe3b22-0201-47cf-85d0-97c02164528d",
+            "indicator_types": [
+                "ip-watchlist"
+            ],
+            "modified": "2014-05-08T09:00:00.000Z",
+            "pattern": "[(network-traffic:extensions.'icmp-ext'.icmp_type_hex = h'08' AND network-traffic:extensions.'icmp-ext'.icmp_type_code = h'00' AND network-traffic:extensions.'icmp-ext'.x_elevator_icmp_checksum = h'97c02164528d')]",
+            "pattern_type": "stix",
+            "spec_version": "2.1",
+            "type": "indicator",
+            "valid_from": "2014-05-08T09:00:00.000000Z"
+        }
+    ],
+    "type": "bundle"
+}

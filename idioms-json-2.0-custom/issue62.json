@@ -1,0 +1,101 @@
+{
+    "id": "bundle--6116aed6-a7e9-11e3-a82f-000c29b241af",
+    "objects": [
+        {
+            "created": "2019-10-04T13:10:53.696Z",
+            "id": "indicator--6116b44e-a7e9-11e3-a82f-000c29b241af",
+            "labels": [
+                "unknown"
+            ],
+            "modified": "2019-10-04T13:10:53.696Z",
+            "pattern": "[((file:hashes.MD5 = '5d8129be965fab8115eca34fc84bd7f0' OR file:hashes.'SHA-1' = '2b999e7db890cc77f0098a091de756a1803a3c2b' OR file:hashes.'SHA-256' = '2c5dd8a64437cb2dd4b6747139c61d2d7f53ab3ddedbf22df3cb01bae170715b' OR file:hashes.ssdeep = '768:mvAFYk0IOqi7RKW1RD1ZCrm82+AnbaAOdoOKL70ehP:cDIOqctz2rBmbZoa71hP') AND file:name = 'VirusShare_5d8129be965fab8115eca34fc84bd7f0' AND file:size = 40654 AND (((file:extensions.'windows-pebinary-ext'.section[*].name = '.rdata' AND file:extensions.'windows-pebinary-ext'.section[*].x_elevator_entropy_min < 10.0 AND file:extensions.'windows-pebinary-ext'.section[*].entropy = 7.74202363178) AND (file:extensions.'windows-pebinary-ext'.section[*].name = '.data' AND file:extensions.'windows-pebinary-ext'.section[*].entropy = 7.89204688601) AND (file:extensions.'windows-pebinary-ext'.section[*].name = '.upx' AND file:extensions.'windows-pebinary-ext'.section[*].entropy = 7.31815613066)) AND file:extensions.'windows-pebinary-ext'.x_elevator_imports[*] = 'GetProcAddress'))]",
+            "type": "indicator",
+            "valid_from": "2019-10-04T13:10:53.696Z"
+        },
+        {
+            "created": "2019-10-04T13:10:53.696Z",
+            "id": "indicator--6116cf88-a7e9-11e3-a82f-000c29b241af",
+            "labels": [
+                "unknown"
+            ],
+            "modified": "2019-10-04T13:10:53.696Z",
+            "pattern": "[((file:hashes.MD5 = 'd41d8cd98f00b204e9800998ecf8427e' OR file:hashes.'SHA-1' = 'da39a3ee5e6b4b0d3255bfef95601890afd80709' OR file:hashes.'SHA-256' = 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855') AND file:name = 'autoexec.bat' AND file:size = 0)]",
+            "type": "indicator",
+            "valid_from": "2019-10-04T13:10:53.696Z"
+        },
+        {
+            "created": "2019-10-04T13:10:53.696Z",
+            "id": "indicator--6116d730-a7e9-11e3-a82f-000c29b241af",
+            "labels": [
+                "unknown"
+            ],
+            "modified": "2019-10-04T13:10:53.696Z",
+            "pattern": "[(process:pid = 1700 AND process:name = 'VirusShare_5d8129be965fab8115eca34fc84bd7f0' AND process:parent_ref.pid = 1616 AND process:creator_user_ref.user_id = 'admin' AND process:created = t'2010-12-09T20:17:34.934295Z' AND process:command_line = 'bash some.sh' AND (process:arguments[*] = '--p' AND process:arguments[*] = 'some_file.txt') AND process:environment_variables[*].PROXY = '123.456.0.1' AND process:child_refs[*].pid = 4567 AND process:opened_connection_refs[*].dst_ref.value = '198.49.123.10' AND process:extensions.'windows-process-ext'.window_title = 'Some Title')]",
+            "type": "indicator",
+            "valid_from": "2019-10-04T13:10:53.696Z"
+        },
+        {
+            "created": "2019-10-04T13:10:53.696Z",
+            "id": "indicator--6116dcbc-a7e9-11e3-a82f-000c29b241af",
+            "labels": [
+                "unknown"
+            ],
+            "modified": "2019-10-04T13:10:53.696Z",
+            "pattern": "[(windows-registry-key:key = 'HKEY_CURRENT_USER\\\\Software\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Explorer\\\\User Shell Folders' AND windows-registry-key:key = 'HKEY_CURRENT_USER\\\\Software\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Explorer\\\\Shell Folders' AND windows-registry-key:key = 'HKEY_LOCAL_MACHINE\\\\Software\\\\Microsoft\\\\Tracing' AND windows-registry-key:key = 'HKEY_LOCAL_MACHINE\\\\Software\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Explorer\\\\User Shell Folders' AND windows-registry-key:key = 'Software\\\\Microsoft\\\\Windows NT\\\\CurrentVersion\\\\Winlogon' AND windows-registry-key:key = 'HKEY_LOCAL_MACHINE\\\\Software\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Explorer\\\\Shell Folders' AND windows-registry-key:key = 'Software\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Explorer\\\\User Shell Folders' AND windows-registry-key:key = 'Software\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Explorer\\\\Shell Folders' AND windows-registry-key:key = 'Software\\\\Microsoft\\\\windows\\\\CurrentVersion\\\\Internet Settings' AND windows-registry-key:key = 'Software\\\\Microsoft\\\\windows\\\\CurrentVersion\\\\Internet Settings\\\\Connections' AND windows-registry-key:key = 'HKEY_CURRENT_CONFIG\\\\Software\\\\Microsoft\\\\windows\\\\CurrentVersion\\\\Internet Settings' AND windows-registry-key:key = 'Software\\\\Microsoft\\\\SystemCertificates\\\\MY' AND windows-registry-key:key = 'HKEY_LOCAL_MACHINE\\\\System\\\\CurrentControlSet\\\\Services\\\\Tcpip\\\\Parameters')]",
+            "type": "indicator",
+            "valid_from": "2019-10-04T13:10:53.696Z"
+        },
+        {
+            "created": "2019-10-04T13:10:53.696Z",
+            "first_observed": "2019-10-04T13:10:53.696Z",
+            "id": "observed-data--65492fbc-5d48-49bf-83b8-33c965e36066",
+            "last_observed": "2019-10-04T13:10:53.696Z",
+            "modified": "2019-10-04T13:10:53.696Z",
+            "number_observed": 1,
+            "objects": {
+                "0": {
+                    "arguments": [
+                        "--p",
+                        "some_file.txt"
+                    ],
+                    "child_refs": [
+                        "3"
+                    ],
+                    "created": "2010-12-09T20:17:34.934295Z",
+                    "extensions": {
+                        "windows-process-ext": {
+                            "window_title": "Some Title"
+                        }
+                    },
+                    "name": "VirusShare_5d8129be965fab8115eca34fc84bd7f0",
+                    "opened_connection_refs": [
+                        "2"
+                    ],
+                    "parent_ref": "4",
+                    "pid": 1700,
+                    "type": "process"
+                },
+                "1": {
+                    "type": "ipv4-addr",
+                    "value": "198.49.123.10"
+                },
+                "2": {
+                    "dst_port": 80,
+                    "dst_ref": "1",
+                    "type": "network-traffic"
+                },
+                "3": {
+                    "pid": 4567,
+                    "type": "process"
+                },
+                "4": {
+                    "pid": 1616,
+                    "type": "process"
+                }
+            },
+            "type": "observed-data"
+        }
+    ],
+    "spec_version": "2.0",
+    "type": "bundle"
+}

@@ -853,10 +853,12 @@
 		<!-- Killchain phase - Privilege Escalation -->
 		<stix:TTP timestamp="2015-05-15T09:00:00.000000Z" id="mandiant:ttp-e13f3e6d-4f9c-4265-b1cf-f997a1bf7827" xsi:type="ttp:TTPType">
 			<ttp:Title>Privilege Escalation</ttp:Title>
-			<ttp:Intended_Effect><stixCommon:Description>Escalating privileges involves acquiring items (most
+			<ttp:Intended_Effect>
+				<stixCommon:Description>Escalating privileges involves acquiring items (most
 				often usernames and passwords) that will allow access to more resources within
-				the network. </stixCommon:Description></ttp:Intended_Effect>
-			<ttp:Intended_Effect><stixCommon:Value xsi:type="stixVocabs:IntendedEffectVocab-1.0">Unauthorized Access</stixCommon:Value></ttp:Intended_Effect>
+				the network. </stixCommon:Description>
+				<stixCommon:Value xsi:type="stixVocabs:IntendedEffectVocab-1.0">Unauthorized Access</stixCommon:Value>
+			</ttp:Intended_Effect>
 			<ttp:Behavior><ttp:Attack_Patterns>
 				<ttp:Attack_Pattern>
 					<ttp:Description structuring_format="HTML5"><![CDATA[<!DOCTYPE html>

@@ -10,11 +10,19 @@
         },
         {
             "created": "2014-05-08T09:00:00.000Z",
-            "description": "Targets",
-            "id": "relationship--88d1b107-8a5e-4329-ba81-937fecfaa637",
+            "description": "\n\nTITLE:\n\tVictim Targeting: Customer PII and Financial Data\n\nTARGETED_INFORMATION:\nInformation Assets - Customer PII,\nInformation Assets - Financial Data",
+            "id": "identity--4fde045a-b25f-f035-e8d0-29c9d5130cd9",
             "modified": "2014-05-08T09:00:00.000Z",
-            "relationship_type": "uses",
+            "type": "identity"
+        },
+        {
+            "created": "2014-05-08T09:00:00.000Z",
+            "description": "Targets",
+            "id": "relationship--93211624-3c4f-4060-b525-ea3394a48bf4",
+            "modified": "2014-05-08T09:00:00.000Z",
+            "relationship_type": "targets",
             "source_ref": "campaign--c831ab93-ff84-9cda-2bd8-b094004da969",
+            "target_ref": "identity--4fde045a-b25f-f035-e8d0-29c9d5130cd9",
             "type": "relationship"
         }
     ],

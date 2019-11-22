@@ -1,0 +1,56 @@
+{
+    "id": "bundle--50578bc7-bb17-4f31-abf2-d5827d131368",
+    "objects": [
+        {
+            "created": "2015-05-07T14:22:14.761Z",
+            "id": "identity--ecb961e9-98cb-412e-9e38-3a0d9457506a",
+            "identity_class": "unknown",
+            "modified": "2015-05-07T14:22:14.761Z",
+            "name": "Government Sharing Program - GSP",
+            "type": "identity"
+        },
+        {
+            "created": "2015-05-07T14:22:14.760Z",
+            "created_by_ref": "identity--ecb961e9-98cb-412e-9e38-3a0d9457506a",
+            "id": "campaign--1855cb8a-d96c-4859-a450-abb1e7c061f2",
+            "modified": "2015-05-07T14:22:14.760Z",
+            "name": "Campaign against ICS",
+            "type": "campaign"
+        },
+        {
+            "created": "2015-05-07T14:22:14.760Z",
+            "created_by_ref": "identity--ecb961e9-98cb-412e-9e38-3a0d9457506a",
+            "description": "Adversary Alpha has a campaign against the ICS sector!",
+            "id": "report--ab11f431-4b3b-457c-835f-59920625fe65",
+            "labels": [
+                "campaign-characterization"
+            ],
+            "modified": "2015-05-07T14:22:14.760Z",
+            "name": "Report on Adversary Alpha's Campaign against the Industrial Control Sector",
+            "object_refs": [
+                "campaign--1855cb8a-d96c-4859-a450-abb1e7c061f2"
+            ],
+            "published": "2015-05-07T14:22:14.760Z",
+            "type": "report",
+            "x_elevator_intent": "Campaign Characterization"
+        },
+        {
+            "created": "2015-05-07T14:22:14.760Z",
+            "created_by_ref": "identity--ecb961e9-98cb-412e-9e38-3a0d9457506a",
+            "id": "report--f14804d5-3ee1-4a0e-b0f3-f9a643855ba5",
+            "labels": [
+                "indicator-malware-artifacts"
+            ],
+            "modified": "2015-05-07T14:22:14.760Z",
+            "name": "Indicators for Malware DrownedRat",
+            "object_refs": [
+                "example:ttp-66647c79-5766-4ca7-ab8a-a579056e3c83"
+            ],
+            "published": "2015-05-07T14:22:14.760Z",
+            "type": "report",
+            "x_elevator_intent": "Indicators - Malware Artifacts"
+        }
+    ],
+    "spec_version": "2.0",
+    "type": "bundle"
+}

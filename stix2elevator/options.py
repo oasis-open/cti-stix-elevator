@@ -117,8 +117,8 @@ class ElevatorOptions(object):
         All messages are turned on by default.
     """
     def __init__(self, cmd_args=None, file_=None, incidents=False,
-                 no_squirrel_gaps=False, infrastructure=False,
-                 package_created_by_id=None, default_timestamp=None,
+                 missing_policy="add-to-description", custom_property_prefix="elevator",
+                 infrastructure=False, package_created_by_id=None, default_timestamp=None,
                  validator_args="--strict-types", enable="", disable="",
                  silent=False, message_log_directory=None,
                  policy="no_policy", output_directory=None, log_level="INFO",
@@ -128,7 +128,8 @@ class ElevatorOptions(object):
             if hasattr(cmd_args, "file_"):
                 self.file_ = cmd_args.file_
             self.incidents = cmd_args.incidents
-            self.no_squirrel_gaps = cmd_args.no_squirrel_gaps
+            self.missing_policy = cmd_args.missing_policy
+            self.custom_property_prefix = cmd_args.custom_property_prefix
             self.infrastructure = cmd_args.infrastructure
             self.package_created_by_id = cmd_args.package_created_by_id
             self.default_timestamp = cmd_args.default_timestamp
@@ -151,7 +152,8 @@ class ElevatorOptions(object):
         else:
             self.file_ = file_
             self.incidents = incidents
-            self.no_squirrel_gaps = no_squirrel_gaps
+            self.missing_policy = missing_policy
+            self.custom_property_prefix = custom_property_prefix
             self.infrastructure = infrastructure
             self.package_created_by_id = package_created_by_id
             self.default_timestamp = default_timestamp
@@ -204,6 +206,9 @@ def initialize_options(elevator_args=None):
         if ALL_OPTIONS.silent and ALL_OPTIONS.policy != "no_policy":
             warn("silent option is not compatible with a policy", 211)
 
+        if ALL_OPTIONS.custom_property_prefix and not ALL_OPTIONS.missing_policy == "use-custom-properties":
+            warn("custom_property_prefix option is provided, but the mssing policy option is not 'use-custom-properies'.  It will be ignored.", 213)
+
 
 def get_validator_options():
     if ALL_OPTIONS:
@@ -238,19 +243,19 @@ def msg_id_enabled(msg_id):
 
 
 # These codes are aligned with elevator_log_messages spreadsheet.
-CHECK_CODES = [201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212,
+CHECK_CODES = [201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213,
 
-               301, 302, 303, 304, 305, 306,
+               301, 302, 303, 304, 305, 306, 307, 308,
 
                401, 402, 403, 404, 405, 406, 407, 408, 409, 410, 411, 412, 413,
                414, 415, 416, 417, 418, 419, 420, 421, 422, 423, 424, 425, 426,
-               427, 428, 429, 430, 431, 432, 433,
+               427, 428, 429, 430, 431, 432, 433, 434,
 
                501, 502, 503, 504, 505, 506, 507, 508, 509, 510, 511, 512,
 
                601, 602, 603, 604, 605, 606, 607, 608, 609, 610, 611, 612, 613,
                614, 615, 616, 617, 618, 619, 620, 621, 622, 623, 624, 625, 626,
-               627, 628, 629, 630, 631, 632,
+               627, 628, 629, 630, 631, 632, 633,
 
                701, 702, 703, 704, 705, 706, 707, 708, 709, 710, 711, 712, 713,
                714, 715, 716, 717, 718, 719, 720, 721, 722, 723, 724, 725, 726,

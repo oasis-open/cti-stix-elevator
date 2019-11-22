@@ -1,0 +1,35 @@
+{
+    "id": "bundle--c9567f73-3803-415c-b06e-2b0622830e5d",
+    "objects": [
+        {
+            "created": "2017-01-27T13:49:53.888Z",
+            "id": "identity--733c5838-34d9-4fbf-949c-62aba761184c",
+            "identity_class": "organization",
+            "modified": "2017-01-27T13:49:53.888Z",
+            "name": "Disco Tean",
+            "type": "identity"
+        },
+        {
+            "created": "2014-11-19T23:39:03.893Z",
+            "id": "threat-actor--dfaa8d77-07e2-4e28-b2c8-92e9f7b04428",
+            "labels": [
+                "unknown"
+            ],
+            "modified": "2014-11-19T23:39:03.893Z",
+            "name": "Disco Team Threat Actor Group",
+            "sophistication": "unknown",
+            "type": "threat-actor"
+        },
+        {
+            "created": "2014-11-19T23:39:03.893Z",
+            "id": "relationship--733c5838-34d9-4fbf-949c-62aba761184c",
+            "modified": "2014-11-19T23:39:03.893Z",
+            "relationship_type": "attributed-to",
+            "source_ref": "threat-actor--dfaa8d77-07e2-4e28-b2c8-92e9f7b04428",
+            "target_ref": "identity--733c5838-34d9-4fbf-949c-62aba761184c",
+            "type": "relationship"
+        }
+    ],
+    "spec_version": "2.0",
+    "type": "bundle"
+}

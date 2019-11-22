@@ -1,0 +1,103 @@
+{
+    "id": "bundle--195373a4-d596-41f4-8192-f3e5530c4a57",
+    "objects": [
+        {
+            "created": "2019-08-23T13:10:55.465Z",
+            "external_references": [
+                {
+                    "external_id": "CVE-2015-2808",
+                    "source_name": "cve"
+                }
+            ],
+            "id": "vulnerability--0d9a952d-aca5-4134-b399-5760a3ab2392",
+            "modified": "2019-08-23T13:10:55.465Z",
+            "spec_version": "2.1",
+            "type": "vulnerability"
+        },
+        {
+            "created": "2019-09-06T11:22:37.151Z",
+            "external_references": [
+                {
+                    "external_id": "T1068",
+                    "source_name": "capec"
+                }
+            ],
+            "id": "attack-pattern--1a9c3244-cc05-4d6c-8355-5fd9c681ffa9",
+            "modified": "2019-09-06T11:22:37.151Z",
+            "name": "Exploitaiton of Vulnerability",
+            "spec_version": "2.1",
+            "type": "attack-pattern"
+        },
+        {
+            "created": "2019-09-06T13:59:25.084Z",
+            "id": "identity--299616bc-9129-490e-be10-0d0669e2ef37",
+            "identity_class": "organization",
+            "modified": "2019-09-06T13:59:25.084Z",
+            "name": "Finance",
+            "sectors": [
+                "finance"
+            ],
+            "spec_version": "2.1",
+            "type": "identity"
+        },
+        {
+            "created": "2019-09-06T11:22:37.151Z",
+            "id": "indicator--dea1bdab-bff8-4b5e-9160-94b06732b7b5",
+            "indicator_types": [
+                "ip-watchlist"
+            ],
+            "kill_chain_phases": [
+                "stix:TTP-f706e4e7-53d8-44ef-967f-81535c9db7d0"
+            ],
+            "modified": "2019-09-06T11:22:37.151Z",
+            "pattern": "[ipv4-addr:value = '199.81.216.51']",
+            "pattern_type": "stix",
+            "spec_version": "2.1",
+            "type": "indicator",
+            "valid_from": "2019-09-06T11:22:37.151866Z"
+        },
+        {
+            "created": "2019-09-06T11:22:37.151Z",
+            "id": "relationship--eb8b6156-b1b3-4961-8877-462667d84bb5",
+            "modified": "2019-09-06T11:22:37.151Z",
+            "relationship_type": "targets",
+            "source_ref": "attack-pattern--1a9c3244-cc05-4d6c-8355-5fd9c681ffa9",
+            "spec_version": "2.1",
+            "target_ref": "vulnerability--0d9a952d-aca5-4134-b399-5760a3ab2392",
+            "type": "relationship"
+        },
+        {
+            "created": "2019-09-06T11:22:37.151Z",
+            "id": "relationship--47af3d49-010b-430b-ab28-83e0c0538652",
+            "modified": "2019-09-06T11:22:37.151Z",
+            "relationship_type": "targets",
+            "source_ref": "attack-pattern--1a9c3244-cc05-4d6c-8355-5fd9c681ffa9",
+            "spec_version": "2.1",
+            "target_ref": "identity--9c31e007-47fa-41ac-be8c-f8fb653e133e",
+            "type": "relationship"
+        },
+        {
+            "created": "2019-09-06T11:22:37.151Z",
+            "description": "Related_To",
+            "id": "relationship--fd5cd563-fc7d-4824-b973-613e2102d522",
+            "modified": "2019-09-06T11:22:37.151Z",
+            "relationship_type": "indicates",
+            "source_ref": "indicator--dea1bdab-bff8-4b5e-9160-94b06732b7b5",
+            "spec_version": "2.1",
+            "target_ref": "attack-pattern--1a9c3244-cc05-4d6c-8355-5fd9c681ffa9",
+            "type": "relationship"
+        },
+        {
+            "created": "2019-09-06T11:22:37.151Z",
+            "description": "Related_To",
+            "id": "relationship--97063145-18de-4a87-8ada-c1a7142f45cd",
+            "modified": "2019-09-06T11:22:37.151Z",
+            "relationship_type": "indicates",
+            "source_ref": "indicator--dea1bdab-bff8-4b5e-9160-94b06732b7b5",
+            "spec_version": "2.1",
+            "target_ref": "identity--9c31e007-47fa-41ac-be8c-f8fb653e133e",
+            "type": "relationship"
+        }
+    ],
+    "type": "bundle"
+}

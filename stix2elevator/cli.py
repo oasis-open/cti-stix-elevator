@@ -59,12 +59,21 @@ def _get_arg_parser(is_script=True):
     )
 
     parser.add_argument(
-        "--no-squirrel-gaps",
-        help="Do not include STIX 1.x content that cannot be represented "
-             "directly in STIX 2.0 using the description property.",
-        dest="no_squirrel_gaps",
-        action="store_true",
-        default=False
+        "--missing-policy",
+        help="Policy for including STIX 1.x content that cannot be represented "
+             "directly in STIX 2.x.",
+        choices=["use-custom-properties", "add-to-description", "ignore"],
+        dest="missing_policy",
+        action="store",
+        default="add-to-description"
+    )
+
+    parser.add_argument(
+        "--custom-property-prefix",
+        help="Prefix to use for custom property names when missing policy is 'use-custom-properties'.",
+        dest="custom_property_prefix",
+        action="store",
+        default="elevator"
     )
 
     parser.add_argument(
@@ -99,7 +108,7 @@ def _get_arg_parser(is_script=True):
              "Example: stix2_elevator.py <file> --validator-args=\"-v --strict-types -d 212\"",
         dest="validator_args",
         action="store",
-        default="--strict-types"
+        default=""
     )
 
     parser.add_argument(
@@ -163,7 +172,8 @@ def _get_arg_parser(is_script=True):
 
     parser.add_argument(
         "-p",
-        "--policy",
+        "--error-policy"
+        "--policy",     # deprecated
         help="The policy to deal with errors",
         dest="policy",
         choices=["no_policy", "strict_policy"],
@@ -178,7 +188,7 @@ def _get_arg_parser(is_script=True):
         dest="spec_version",
         choices=["2.0", "2.1"],
         action="store",
-        default="2.0"
+        default="2.1"
     )
     return parser
 
