@@ -39,7 +39,11 @@ import stixmarx
 
 from stix2elevator.common import ADDRESS_FAMILY_ENUMERATION, SOCKET_OPTIONS
 from stix2elevator.convert_cybox import split_into_requests_and_responses
-from stix2elevator.ids import add_id_value, exists_object_id_key, get_id_value
+from stix2elevator.ids import (add_id_value,
+                               exists_id_of_obs_in_characterizations,
+                               exists_object_id_key,
+                               fix_ids_in_characterizations,
+                               get_id_value)
 from stix2elevator.missing_policy import convert_to_custom_property_name
 from stix2elevator.options import error, get_option_value, info, warn
 from stix2elevator.utils import identifying_info, map_vocabs_to_label
@@ -2106,6 +2110,7 @@ def convert_indicator_composition_to_pattern(ind_comp):
 
 def remove_pattern_objects(bundle_instance):
     if not KEEP_OBSERVABLE_DATA_USED_IN_PATTERNS:
+        # fix any ids
         sco_ids_to_delete = []
         all_new_ids_with_patterns = []
         for old_id in get_ids_from_pattern_cache():
@@ -2130,6 +2135,7 @@ def remove_pattern_objects(bundle_instance):
             else:
                 if obj["id"] not in sco_ids_to_delete:
                     new_remaining_objects.append(obj)
+
         bundle_instance["objects"] = new_remaining_objects
 
         for obj in bundle_instance["objects"]:
@@ -2137,7 +2143,8 @@ def remove_pattern_objects(bundle_instance):
                 remaining_object_refs = []
                 if "object_refs" in obj:
                     for ident in obj["object_refs"]:
-                        if not ident.startswith("observed-data") or ident not in all_new_ids_with_patterns and ident not in sco_ids_to_delete:
+                        if (not ident.startswith("observed-data") or
+                                    (ident not in all_new_ids_with_patterns and ident not in sco_ids_to_delete)):
                             remaining_object_refs.append(ident)
                     obj["object_refs"] = remaining_object_refs
 

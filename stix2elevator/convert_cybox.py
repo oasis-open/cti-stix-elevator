@@ -258,6 +258,8 @@ def convert_file_properties(f, obj1x_id):
         file_dict["hashes"] = hashes
     if f.file_name:
         file_dict["name"] = text_type(f.file_name)
+        if f.file_extension:
+            file_dict["name"] += "." + text_type(f.file_extension)
     elif f.file_path and f.file_path.value:
         # this index is an array index, not for the objects dict
         index = f.file_path.value.rfind("/")

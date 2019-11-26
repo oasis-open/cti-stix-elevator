@@ -47,6 +47,7 @@ from stix2elevator.convert_pattern import (ComparisonExpressionForElevator,
                                            interatively_resolve_placeholder_refs,
                                            remove_pattern_objects)
 from stix2elevator.ids import (add_id_value,
+                               add_id_of_obs_in_characterizations,
                                exists_id_key,
                                exists_ids_with_no_1x_object,
                                generate_stix2x_id,
@@ -500,6 +501,8 @@ def handle_observable_characterization_list(obs_list, source_id, env):
         if o.idref is None and o.object_ and not o.object_.idref:
             # embedded
             new_od = convert_observed_data(o, env)
+            if new_od:
+                add_id_of_obs_in_characterizations(new_od["id"])
             env.bundle_instance["objects"].append(new_od)
             env.bundle_instance["relationships"].append(create_relationship(source_id,
                                                                             new_od["id"] if new_od else None,
@@ -509,15 +512,17 @@ def handle_observable_characterization_list(obs_list, source_id, env):
             if o.idref:
                 idref = o.idref
             elif o.idref is None and o.object_ and o.object_.idref:
-                idref = generate_stix2x_id("observable", o.object_.idref)
+                idref = generate_stix2x_id("observed-data", o.object_.idref)
             if exists_id_key(idref):
                 for to_ref in get_id_value(o.idref):
+                    add_id_of_obs_in_characterizations(to_ref)
                     env.bundle_instance["relationships"].append(create_relationship(source_id,
                                                                                     to_ref,
                                                                                     env,
                                                                                     verb))
             else:
                 # a forward reference, fix later
+                add_id_of_obs_in_characterizations(idref)
                 env.bundle_instance["relationships"].append(create_relationship(source_id,
                                                                                 idref,
                                                                                 env,
@@ -1235,7 +1240,10 @@ def create_scos(obs, observed_data_instance, env):
                 scos.extend(related)
                 # related[0]["id"] = get_id_value(o.id_)[0]
                 env.bundle_instance["objects"].append(
-                    create_relationship(scos[0]["id"], related[0]["id"], env, "resolves_to"))
+                    create_relationship(scos[0]["id"],
+                                        related[0]["id"],
+                                        env,
+                                        o.relationship.value.lower() if o.relationship and o.relationship.value else "resolves_to"))
     if scos:
         for obj in scos:
             observed_data_instance["object_refs"].append(obj["id"])

@@ -78,7 +78,7 @@ def _get_arg_parser(is_script=True):
 
     parser.add_argument(
         "--infrastructure",
-        help="Infrastructure will be included in the conversion.",
+        help="Infrastructure will be included in the conversion. Default for version 2.1 is true.",
         dest="infrastructure",
         action="store_true",
         default=False
