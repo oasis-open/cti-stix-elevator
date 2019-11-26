@@ -2,13 +2,13 @@
     "id": "bundle--cc0ca596-70e6-4dac-9bef-603166d17db8",
     "objects": [
         {
-            "created": "2019-08-21T10:53:07.214Z",
-            "first_seen": "2019-08-21T10:53:07.214Z",
-            "id": "infrastructure--dd955e08-16d0-6f08-5064-50d9e7a3104d",
+            "created": "2014-05-08T09:00:00.000Z",
+            "first_seen": "2014-05-08T09:00:00.000Z",
+            "id": "infrastructure--dd955e08-16d0-4f08-5064-50d9e7a3104d",
             "labels": [
                 "malware-c2"
             ],
-            "modified": "2019-08-21T10:53:07.214Z",
+            "modified": "2014-05-08T09:00:00.000Z",
             "name": "Malware C2 Channel",
             "spec_version": "2.1",
             "type": "infrastructure"
@@ -28,20 +28,19 @@
         },
         {
             "created": "2014-05-08T09:00:00.000Z",
-            "id": "relationship--224cd50f-8bf2-49ba-bd35-79c8edb51267",
+            "id": "relationship--84d4b3e4-3ce0-4795-8638-21c83cffc2a7",
             "modified": "2014-05-08T09:00:00.000Z",
             "relationship_type": "indicates",
             "source_ref": "indicator--53fe3b22-0201-47cf-85d0-97c02164528d",
             "spec_version": "2.1",
-            "target_ref": "infrastructure--dd955e08-16d0-6f08-5064-50d9e7a3104d",
             "type": "relationship"
         },
         {
             "created": "2014-05-08T09:00:00.000Z",
-            "id": "relationship--63264a17-da63-44cf-ad91-042dd157762f",
+            "id": "relationship--efb65c42-a4e4-4050-9c50-757cee2e37e6",
             "modified": "2014-05-08T09:00:00.000Z",
             "relationship_type": "consists-of",
-            "source_ref": "infrastructure--dd955e08-16d0-6f08-5064-50d9e7a3104d",
+            "source_ref": "infrastructure--dd955e08-16d0-4f08-5064-50d9e7a3104d",
             "spec_version": "2.1",
             "target_ref": "observed-data--c8c32b6e-2ea8-51c4-6446-7f5218072f27",
             "type": "relationship"

@@ -24,14 +24,14 @@
                 </ttp:Attack_Patterns>
             </ttp:Behavior>
             <ttp:Information_Source>
-                <stixCommon:Identity idref="example:identity-4ec4d0a2-80e3-11e6-ae22-56b6b6499611"/>
+                <stixCommon:Identity idref="example:identity-4ec4d0a2-80e3-41e6-ae22-56b6b6499611"/>
             </ttp:Information_Source>
         </stix:TTP>
         <stix:TTP id="example:ttp-d1c612bc-146f-4b65-b7b0-9a54a14150a4" xsi:type='ttp:TTPType'>
             <ttp:Title>Poison Ivy Variant d1c6</ttp:Title>
             <ttp:Behavior>
                 <ttp:Malware>
-                    <ttp:Malware_Instance id="example:malware-1621d4d2-b67d-11e3-ba9e-f01faf20d111">
+                    <ttp:Malware_Instance id="example:malware-1621d4d2-b67d-41e3-ba9e-f01faf20d111">
                         <ttp:Type xsi:type="stixVocabs:MalwareTypeVocab-1.0">Remote Access Trojan</ttp:Type>
                         <ttp:Name>Poison Ivy Variant d1c6</ttp:Name>
                     </ttp:Malware_Instance>
@@ -42,7 +42,7 @@
     <stix:Threat_Actors>
         <stix:Threat_Actor id="example:threatactor-9a8a0d25-7636-429b-a99e-b2a73cd0f11f" xsi:type='ta:ThreatActorType'>
             <ta:Title>Adversary Bravo</ta:Title>
-            <ta:Identity id="example:Identity-1621d4d4-b67d-11e3-9670-f01faf20d111">
+            <ta:Identity id="example:Identity-1621d4d4-b67d-41e3-9670-f01faf20d111">
                 <stixCommon:Name>Adversary Bravo</stixCommon:Name>
             </ta:Identity>
             <ta:Observed_TTPs>
@@ -56,7 +56,7 @@
                 </ta:Observed_TTP>
             </ta:Observed_TTPs>
             <ta:Information_Source>
-                <stixCommon:Identity id="example:identity-4ec4d0a2-80e3-11e6-ae22-56b6b6499611">
+                <stixCommon:Identity id="example:identity-4ec4d0a2-80e3-41e6-ae22-56b6b6499611">
 				    <stixCommon:Name>Emmanuelle</stixCommon:Name>
 			    </stixCommon:Identity>
             </ta:Information_Source>

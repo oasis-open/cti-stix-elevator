@@ -18,10 +18,10 @@
 	http://stix.mitre.org/common-1 http://stix.mitre.org/XMLSchema/common/1.2/stix_common.xsd
 	http://stix.mitre.org/default_vocabularies-1 http://stix.mitre.org/XMLSchema/default_vocabularies/1.2.0/stix_default_vocabularies.xsd
 	http://stix.mitre.org/stix-1 http://stix.mitre.org/XMLSchema/core/1.2/stix_core.xsd" 
-	id="example:Package-495c4c04-b5d8-11e3-b7bb-000c29789db9" 
+	id="example:Package-495c4c04-b5d8-41e3-b7bb-000c29789db9"
 	version="1.2">
     <stix:Courses_Of_Action>
-        <stix:Course_Of_Action id="example:coa-495c9b28-b5d8-11e3-b7bb-000c29789db9" xsi:type='coa:CourseOfActionType' version="1.2">
+        <stix:Course_Of_Action id="example:coa-495c9b28-b5d8-41e3-b7bb-000c29789db9" xsi:type='coa:CourseOfActionType' version="1.2">
             <coa:Title>Block traffic to PIVY C2 Server (10.10.10.10)</coa:Title>
             <coa:Stage xsi:type="stixVocabs:COAStageVocab-1.0">Response</coa:Stage>
             <coa:Type xsi:type="stixVocabs:CourseOfActionTypeVocab-1.0">Perimeter Blocking</coa:Type>

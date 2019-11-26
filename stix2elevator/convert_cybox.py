@@ -1,6 +1,7 @@
 from cybox.objects.account_object import Account
 from cybox.objects.address_object import Address
 from cybox.objects.archive_file_object import ArchiveFile
+from cybox.objects.artifact_object import Artifact
 from cybox.objects.domain_name_object import DomainName
 from cybox.objects.email_message_object import EmailMessage
 from cybox.objects.file_object import File
@@ -112,6 +113,21 @@ def convert_address(add, obj1x_id):
     if instance:
         finish_sco(instance, obj1x_id)
         return instance
+
+
+def convert_artifact(art, obj1x_id):
+    instance = create_base_sco(art, "artifact")
+    if art.content_type:
+        instance["mime_type"] = art.content_type
+    if art.raw_artifact:
+        instance["payload_bin"] = art.raw_artifact.value
+    if art.raw_artifact_reference:
+        instance["url"] = art.raw_artifact_reference
+    if art.hashes:
+        instance["hashes"] = convert_hashes(art.hashes)
+    warn("Any artifact packaging data on %s is not recoverable", 634, obj1x_id)
+    finish_sco(instance, obj1x_id)
+    return instance
 
 
 def convert_uri(uri, obj1x_id):
@@ -965,6 +981,8 @@ def convert_cybox_object20(obj1x):
         return None
     elif isinstance(prop, Address):
         objs["0"] = convert_address(prop, obj1x.id_)
+    elif isinstance(prop, Artifact):
+        objs["0"] = convert_artifact(prop, obj1x.id_)
     elif isinstance(prop, URI):
         objs["0"] = convert_uri(prop, obj1x.id_)
     elif isinstance(prop, EmailMessage):
@@ -1017,6 +1035,8 @@ def convert_cybox_object21(obj1x):
         return None
     elif isinstance(prop, Address):
         objs = [convert_address(prop, obj1x.id_)]
+    elif isinstance(prop, Artifact):
+        objs = [convert_artifact(prop, obj1x.id_)]
     elif isinstance(prop, URI):
         objs = [convert_uri(prop, obj1x.id_)]
     elif isinstance(prop, EmailMessage):

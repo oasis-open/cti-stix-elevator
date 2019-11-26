@@ -21,21 +21,21 @@
 
     >
     <stix:Observables cybox_major_version="1" cybox_minor_version="1">
-        <cybox:Observable id="example:observable-c8c32b6e-2ea8-51c4-6446-7f5218072f27">
+        <cybox:Observable id="example:observable-c8c32b6e-4ea8-51c4-6446-7f5218072f27">
             <cybox:Object id="example:object-d7fcce87-0e98-4537-81bf-1e7ca9ad3734">
                 <cybox:Properties xsi:type="AddressObject:AddressObjectType" category="ipv4-addr">
                     <AddressObject:Address_Value>198.51.100.2</AddressObject:Address_Value>
                 </cybox:Properties>
             </cybox:Object>
         </cybox:Observable>
-        <cybox:Observable id="example:observable-b57aa65f-9598-04fb-a9d1-5094c36d5dc4">
+        <cybox:Observable id="example:observable-b57aa65f-4598-04fb-a9d1-5094c36d5dc4">
             <cybox:Object id="example:object-f4fac80a-1239-47cc-b0e6-771b1a73f817">
                 <cybox:Properties xsi:type="AddressObject:AddressObjectType" category="ipv4-addr">
                     <AddressObject:Address_Value>198.51.100.17</AddressObject:Address_Value>
                 </cybox:Properties>
             </cybox:Object>
         </cybox:Observable>
-        <cybox:Observable id="example:observable-19c16346-0eb4-99e2-00bb-4ec3ed174cac">
+        <cybox:Observable id="example:observable-19c16346-4eb4-99e2-00bb-4ec3ed174cac">
             <cybox:Object id="example:object-174bf9a3-f163-4919-9119-b52598f97ce3">
                 <cybox:Properties xsi:type="AddressObject:AddressObjectType" category="ipv4-addr">
                     <AddressObject:Address_Value>203.0.113.19</AddressObject:Address_Value>
@@ -44,15 +44,15 @@
         </cybox:Observable>
     </stix:Observables>
     <stix:TTPs>
-        <stix:TTP xsi:type="ttp:TTPType" id="example:ttp-dd955e08-16d0-6f08-5064-50d9e7a3104d" timestamp="2014-05-08T09:00:00.000000Z">
+        <stix:TTP xsi:type="ttp:TTPType" id="example:ttp-dd955e08-16d0-4f08-5064-50d9e7a3104d" timestamp="2014-05-08T09:00:00.000000Z">
             <ttp:Title>Malware C2 Channel</ttp:Title>
             <ttp:Resources>
                 <ttp:Infrastructure>
                     <ttp:Type>Malware C2</ttp:Type>
                     <ttp:Observable_Characterization cybox_major_version="2" cybox_minor_version="1">
-                        <cybox:Observable idref="example:observable-c8c32b6e-2ea8-51c4-6446-7f5218072f27"/>
-                        <cybox:Observable idref="example:observable-b57aa65f-9598-04fb-a9d1-5094c36d5dc4"/>
-                        <cybox:Observable idref="example:observable-19c16346-0eb4-99e2-00bb-4ec3ed174cac"/>
+                        <cybox:Observable idref="example:observable-c8c32b6e-4ea8-51c4-6446-7f5218072f27"/>
+                        <cybox:Observable idref="example:observable-b57aa65f-4598-04fb-a9d1-5094c36d5dc4"/>
+                        <cybox:Observable idref="example:observable-19c16346-4eb4-99e2-00bb-4ec3ed174cac"/>
                     </ttp:Observable_Characterization>
                 </ttp:Infrastructure>
             </ttp:Resources>

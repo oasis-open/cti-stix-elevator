@@ -5,6 +5,7 @@ import sys
 from cybox.objects.account_object import Account
 from cybox.objects.address_object import Address
 from cybox.objects.archive_file_object import ArchiveFile
+from cybox.objects.artifact_object import Artifact
 from cybox.objects.domain_name_object import DomainName
 from cybox.objects.email_message_object import EmailMessage
 from cybox.objects.file_object import File
@@ -876,6 +877,27 @@ def convert_account_to_pattern(account):
         expressions.append(create_term("user-account:account_type",
                                        "Equals",
                                        stix2.StringConstant("windows-domain" if account.domain else "windows-local")))
+    if expressions:
+        return create_boolean_expression("AND", expressions)
+
+
+def convert_artifact_to_pattern(art):
+    expressions = []
+    if art.content_type:
+        expressions.append(create_term("artifact:mime_type",
+                                        art.content_type.condition,
+                                        art.content_type))
+    if art.raw_artifact:
+        expressions.append(create_term("artifact:payload_bin",
+                                       art.raw_artifact.condition,
+                                       art.raw_artifact.value))
+    if art.raw_artifact_reference:
+        expressions.append(create_term("artifact:url",
+                                       art.raw_artifact_reference.condition,
+                                       art.raw_artifact_reference.value))
+    if art.hashes:
+        expressions.append(convert_hashes_to_pattern(art.hashes))
+    # TODO: Packaging
     if expressions:
         return create_boolean_expression("AND", expressions)
 
@@ -1909,6 +1931,8 @@ def convert_object_to_pattern(obj, obs_id):
     if prop:
         if isinstance(prop, Address):
             expression = convert_address_to_pattern(prop)
+        elif isinstance(prop, Artifact):
+            convert_artifact_to_pattern(prop)
         elif isinstance(prop, URI):
             expression = convert_uri_to_pattern(prop)
         elif isinstance(prop, EmailMessage):
@@ -1988,6 +2012,16 @@ def convert_observable_to_pattern(obs):
         pop_dynamic_variable("current_observable")
 
 
+def handle_pattern_idref(obj):
+    if id_in_pattern_cache(obj.idref):
+        return get_pattern_from_cache(obj.idref)
+    else:
+        # resolve now if possible
+        if id_in_observable_mappings(obj.idref):
+            referenced_obs = get_obs_from_mapping(obj.idref)
+            return convert_observable_to_pattern(referenced_obs)
+        return IdrefPlaceHolder(obj.idref)
+
 def convert_observable_to_pattern_without_negate(obs):
     if obs.observable_composition is not None:
         pattern = convert_observable_composition_to_pattern(obs.observable_composition)
@@ -1995,32 +2029,29 @@ def convert_observable_to_pattern_without_negate(obs):
             add_to_pattern_cache(obs.id_, pattern)
         return pattern
     elif obs.object_ is not None:
-        pattern = convert_object_to_pattern(obs.object_, obs.id_)
-        if pattern:
-            add_to_pattern_cache(obs.id_, pattern)
-        if obs.object_.related_objects:
-            related_patterns = []
-            for o in obs.object_.related_objects:
-                # save pattern for later use
-                if o.id_ and not id_in_pattern_cache(o.id_):
-                    new_pattern = convert_object_to_pattern(o, o.id_)
-                    if new_pattern:
-                        related_patterns.append(new_pattern)
-                        add_to_pattern_cache(o.id_, new_pattern)
+        if obs.object_.idref is not None:
+            return handle_pattern_idref(obs.object_)
+        else:
+            pattern = convert_object_to_pattern(obs.object_, obs.id_)
+            # TODO: seems redundant
             if pattern:
-                related_patterns.append(pattern)
-            return create_boolean_expression("AND", related_patterns)
-        else:
-            return pattern
+               add_to_pattern_cache(obs.id_, pattern)
+            if obs.object_.related_objects:
+                related_patterns = []
+                for o in obs.object_.related_objects:
+                    # save pattern for later use
+                    if o.id_ and not id_in_pattern_cache(o.id_):
+                        new_pattern = convert_object_to_pattern(o, o.id_)
+                        if new_pattern:
+                            related_patterns.append(new_pattern)
+                            add_to_pattern_cache(o.id_, new_pattern)
+                if pattern:
+                    related_patterns.append(pattern)
+                return create_boolean_expression("AND", related_patterns)
+            else:
+                return pattern
     elif obs.idref is not None:
-        if id_in_pattern_cache(obs.idref):
-            return get_pattern_from_cache(obs.idref)
-        else:
-            # resolve now if possible
-            if id_in_observable_mappings(obs.idref):
-                referenced_obs = get_obs_from_mapping(obs.idref)
-                return convert_observable_to_pattern(referenced_obs)
-            return IdrefPlaceHolder(obs.idref)
+        return handle_pattern_idref(obs)
 
 
 # patterns can contain idrefs which might need to be resolved because the order in which the ids and idrefs appear

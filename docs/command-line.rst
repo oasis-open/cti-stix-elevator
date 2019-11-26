@@ -48,6 +48,10 @@ optional arguments:
                 Prefix to use for custom property names when missing
                 policy is 'use-custom-properties'.
 
+  --infrastructure
+                Infrastructure will be included in the conversion.
+                Default for version 2.1 is true.
+
   --package-created-by-id PACKAGE_CREATED_BY_ID
                 Use provided identifier for "created_by_ref"
                 properties.

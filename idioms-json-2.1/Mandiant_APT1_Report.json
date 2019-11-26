@@ -2059,7 +2059,7 @@
             "relationship_type": "consists-of",
             "source_ref": "infrastructure--8da886c4-2bff-4b0c-8474-5fd4d216fe7f",
             "spec_version": "2.1",
-            "target_ref": "observable--232deffc-063f-4e83-9027-1b930af4a09f",
+            "target_ref": "observed-data--232deffc-063f-4e83-9027-1b930af4a09f",
             "type": "relationship"
         },
         {
@@ -2070,7 +2070,7 @@
             "relationship_type": "consists-of",
             "source_ref": "infrastructure--8da886c4-2bff-4b0c-8474-5fd4d216fe7f",
             "spec_version": "2.1",
-            "target_ref": "observable--da1d061b-2bc9-467a-b16f-8d14f468e1f0",
+            "target_ref": "observed-data--da1d061b-2bc9-467a-b16f-8d14f468e1f0",
             "type": "relationship"
         },
         {
@@ -2081,7 +2081,7 @@
             "relationship_type": "consists-of",
             "source_ref": "infrastructure--8da886c4-2bff-4b0c-8474-5fd4d216fe7f",
             "spec_version": "2.1",
-            "target_ref": "observable--2173d108-5714-42fd-8213-4f3790259fda",
+            "target_ref": "observed-data--2173d108-5714-42fd-8213-4f3790259fda",
             "type": "relationship"
         },
         {
@@ -2092,7 +2092,7 @@
             "relationship_type": "consists-of",
             "source_ref": "infrastructure--8da886c4-2bff-4b0c-8474-5fd4d216fe7f",
             "spec_version": "2.1",
-            "target_ref": "observable--8ce03314-dfea-4498-ac9b-136e41ab00e4",
+            "target_ref": "observed-data--8ce03314-dfea-4498-ac9b-136e41ab00e4",
             "type": "relationship"
         },
         {

@@ -146,6 +146,7 @@ Unable to determine the STIX 2.x type for *[id]*, which is malformed            
 Multiple administrative areas with multiple countries in *[id]* is not handled"                                                             631     warn
 Unknown phase_id *[phase_id]* in *[id]*                                                                                                     632     warn
 File path directory is empty *[file_path]*                                                                                                  633     warn
+Any artifact packaging data on *[id]* is not recoverable                                                                                    634     warn
 =========================================================================================================================================== ====    =====
 
 STIX Elevator conversion based on assumptions

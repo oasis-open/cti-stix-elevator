@@ -1252,14 +1252,17 @@ def create_scos(obs, observed_data_instance, env):
 
 def create_cyber_observables(obs, observed_data_instance):
     observed_data_instance["objects"] = convert_cybox_object(obs.object_)
-    if obs.object_.related_objects:
-        for o in obs.object_.related_objects:
-            # create index for stix 2.0 cyber observable
-            current_largest_id = max(observed_data_instance["objects"].keys())
-            related = convert_cybox_object(o)
-            if related:
-                for index, obj in related.items():
-                    observed_data_instance["objects"][text_type(int(index) + int(current_largest_id) + 1)] = obj
+    if not observed_data_instance["objects"]:
+        warn("%s did not yield any STIX 2.x object", 417, obs.object_.id_ if obs.object_.id_ else obs.id_)
+    else:
+        if obs.object_.related_objects:
+            for o in obs.object_.related_objects:
+                # create index for stix 2.0 cyber observable
+                current_largest_id = max(observed_data_instance["objects"].keys())
+                related = convert_cybox_object(o)
+                if related:
+                    for index, obj in related.items():
+                        observed_data_instance["objects"][text_type(int(index) + int(current_largest_id) + 1)] = obj
 
 
 def convert_observed_data(obs, env):
