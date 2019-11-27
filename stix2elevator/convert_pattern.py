@@ -836,8 +836,9 @@ def convert_custom_properties(cps, object_type_name):
             warn("The custom property name %s does not adhere to the specification rules", 617, cp.name)
             if " " in cp.name:
                 warn("The custom property name %s contains whitespace, replacing it with underscores", 624, cp.name)
+        custom_name = convert_to_custom_property_name(cp.name.replace(" ", "_"))
         expressions.append(
-            create_term(object_type_name + ":x_" + cp.name.replace(" ", "_"), cp.condition, make_constant(cp.value)))
+            create_term(object_type_name + ":" + custom_name, cp.condition, make_constant(cp.value)))
     return create_boolean_expression("AND", expressions)
 
 

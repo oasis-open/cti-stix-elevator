@@ -439,7 +439,7 @@ def handle_relationship_to_objs(items, source_id, env, verb):
                                                                             item))
 
 
-def handle_embedded_ref(ref, id, env, verb, to_direction):
+def handle_embedded_ref(ref, id, env, default_verb, to_direction):
     new20s = handle_embedded_object(ref.item, env)
     for new20 in new20s:
         if to_direction:
@@ -451,17 +451,17 @@ def handle_embedded_ref(ref, id, env, verb, to_direction):
         env.bundle_instance["relationships"].append(create_relationship(source_id,
                                                                         target_id,
                                                                         env,
-                                                                        verb,
+                                                                        determine_appropriate_verb(default_verb, target_id),
                                                                         ref))
 
 
-def handle_existing_ref(ref, ref_id, id, env, verb, to_direction):
+def handle_existing_ref(ref, ref_id, id, env, default_verb, to_direction):
     source_id = id if to_direction else ref_id
     target_id = ref_id if to_direction else id
     env.bundle_instance["relationships"].append(create_relationship(source_id,
                                                                     target_id,
                                                                     env,
-                                                                    verb,
+                                                                    default_verb,
                                                                     ref))
 
 
@@ -470,29 +470,29 @@ def handle_existing_refs(ref, id, env, verb, to_direction):
         handle_existing_ref(ref, ref_id, id, env, verb, to_direction)
 
 
-def handle_relationship_ref(ref, id, env, verb, to_direction=True):
+def handle_relationship_ref(ref, id, env, default_verb, to_direction=True):
     if ref.item.idref is None:
-        handle_embedded_ref(ref, id, env, verb, to_direction)
+        handle_embedded_ref(ref, id, env, default_verb, to_direction)
     elif exists_id_key(ref.item.idref):
-        handle_existing_refs(ref, id, env, verb, to_direction)
+        handle_existing_refs(ref, id, env, default_verb, to_direction)
     else:
         # a forward reference, fix later
         source_id = id if to_direction else ref.item.idref
         target_id = str(ref.item.idref) if to_direction else id
-        rel_obj = create_relationship(source_id, target_id, env, verb, ref.item)
+        rel_obj = create_relationship(source_id, target_id, env, default_verb, ref.item)
         if hasattr(ref, "relationship") and ref.relationship is not None:
             rel_obj["description"] = ref.relationship.value
         env.bundle_instance["relationships"].append(rel_obj)
 
 
-def handle_relationship_to_refs(refs, source_id, env, verb):
+def handle_relationship_to_refs(refs, source_id, env, default_verb):
     for ref in refs:
-        handle_relationship_ref(ref, source_id, env, verb, to_direction=True)
+        handle_relationship_ref(ref, source_id, env, default_verb, to_direction=True)
 
 
-def handle_relationship_from_refs(refs, target_id, env, verb):
+def handle_relationship_from_refs(refs, target_id, env, default_verb):
     for ref in refs:
-        handle_relationship_ref(ref, target_id, env, verb, to_direction=False)
+        handle_relationship_ref(ref, target_id, env, default_verb, to_direction=False)
 
 
 def handle_observable_characterization_list(obs_list, source_id, env):
@@ -565,6 +565,7 @@ def fix_relationships(env):
                     extra_relationships.append(create_relationship(m_id, ref["target_ref"], env, ref["verb"]))
         if reference_needs_fixing(ref["target_ref"]):
             if not exists_id_key(ref["target_ref"]):
+                # create one, and add it
                 new_id = generate_stix2x_id(None, str.lower(ref["target_ref"]))
                 if new_id is None:
                     error("Dangling target reference %s in %s", 602, ref["target_ref"], ref["id"])
@@ -1668,15 +1669,6 @@ def convert_identity_for_victim_target(identity, ttp, env, ttp_generated):
 
 
 def convert_victim_targeting(victim_targeting, ttp, env, ttps_generated):
-    if victim_targeting.targeted_systems:
-        for v in victim_targeting.targeted_systems:
-            warn("Targeted systems on %s are not a victim target in STIX 2.", 410, ttp.id_)
-    if victim_targeting.targeted_information:
-        for v in victim_targeting.targeted_information:
-            warn("Targeted information on %s is not a victim target in STIX 2.x", 411, ttp.id_)
-    if hasattr(victim_targeting, "technical_details") and victim_targeting.targeted_technical_details is not None:
-        for v in victim_targeting.targeted_technical_details:
-            warn("Targeted technical details on %s are not a victim target in STIX 2.x", 412, ttp.id_)
     identity_instance = convert_identity_for_victim_target(victim_targeting.identity, ttp, env, ttps_generated)
     info("%s generated an identity associated with a victim", 713, ttp.id_)
     if victim_targeting.targeted_systems:
@@ -1685,6 +1677,9 @@ def convert_victim_targeting(victim_targeting, ttp, env, ttps_generated):
     if victim_targeting.targeted_information:
         handle_missing_string_property(identity_instance, "targeted_information",
                                        victim_targeting.targeted_information, True)
+    if hasattr(victim_targeting, "technical_details") and victim_targeting.targeted_technical_details is not None:
+        handle_missing_string_property(identity_instance, "technical_details",
+                                       victim_targeting.targeted_technical_details, True)
     if ttps_generated:
         for generated_ttp in ttps_generated:
             env.bundle_instance["relationships"].append(

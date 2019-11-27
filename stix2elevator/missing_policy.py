@@ -1,10 +1,13 @@
+import re
 from six import text_type
 
 from stix2elevator.options import get_option_value, info, warn
 
 
 def convert_to_custom_property_name(prop_name):
-    return "x_" + get_option_value("custom_property_prefix") + "_" + prop_name
+    if re.search('[A-F]', prop_name):
+        warn("Custom property name %s has been converted to all lower case", 727, prop_name)
+    return "x_" + get_option_value("custom_property_prefix") + "_" + prop_name.lower()
 
 
 def add_string_property_to_description(sdo_instance, property_name, property_value, is_list=False):

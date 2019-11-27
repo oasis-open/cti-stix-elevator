@@ -486,7 +486,7 @@ def convert_port(prop, obj1x_id):
         warn("port number is assumed to be a destination port", 725)
         traffic_2x["dst_port"] = prop.port_value.value
     if prop.layer4_protocol:
-        traffic_2x["protocols"] = [prop.layer4_protocol.value]
+        traffic_2x["protocols"] = [prop.layer4_protocol.value.lower()]
     finish_sco(traffic_2x, obj1x_id)
     return traffic_2x
 
@@ -967,7 +967,7 @@ def convert_network_socket(socket, obj1x_id):
     if socket.remote_address:
         handle_missing_string_property(socket_extension, "remote_address", socket.remote_address.ip_address)
     if socket.protocol:
-        cybox_traffic["protocols"] = [socket.protocol.value]
+        cybox_traffic["protocols"] = [socket.protocol.value.lower()]
     cybox_traffic["extensions"] = {"socket-ext": socket_extension}
     finish_sco(cybox_traffic, obj1x_id)
     return cybox_traffic
@@ -1076,7 +1076,7 @@ def convert_cybox_object21(obj1x):
         primary_obj = objs[0]
         if prop.custom_properties:
             for cp in prop.custom_properties.property_:
-                primary_obj["x_" + cp.name] = cp.value
+                primary_obj[convert_to_custom_property_name(cp.name)] = cp.value
         if obj1x.id_:
             add_object_id_value(obj1x.id_, objs)
         return objs

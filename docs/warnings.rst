@@ -60,9 +60,9 @@ Structured COAs type in *[id]* are not supported in STIX 2.x                    
 Indicator *[id]* has an observable or indicator composite expression which may not supported correctly in STIX 2.x - please check this pattern 407     warn
 ``TTP/Behavior/Exploits/Exploit`` in *[id]* not supported in STIX 2.x                                                                          408     warn
 ``Infrastructure`` in *[id]* not part of STIX 2.0                                                                                              409     warn
-Targeted systems on *[id]* are not a victim target in STIX 2.x                                                                                 410     warn
-Targeted information on *[id]* is not a victim target in STIX 2.x                                                                              411     warn
-Targeted technical details on *[id]* are not a victim target in STIX 2.x                                                                       412     warn
+``NO MESSAGE ASSIGNED``                                                                                                                        410     warn
+``NO MESSAGE ASSIGNED``                                                                                                                        411     warn
+``NO MESSAGE ASSIGNED``                                                                                                                        412     warn
 Kill Chains type in *[id]* not supported in STIX 2.x                                                                                           413     warn
 Victim Target in *[id]* did not yield any STIX 2.x object                                                                                      414     warn
 TTP *[id]* did not generate any STIX 2.x object                                                                                                415     error
@@ -181,6 +181,7 @@ The confidence value in *[value]* assumed to be a value on a scale between 0 and
 The confidence value in *[value]* has been converted to an integer so it is valid in STIX 2.1                                               724     warn
 port number is assumed to be a destination port                                                                                             725     warn
 Report *[id]* contains only the objects explicitly specified in the STIX 1.x report                                                         726     warn
+Custom property name *[property]* has been converted to all lower case                                                                      727     warn
 =========================================================================================================================================== ====    =====
 
 STIX elevator currently doesn't process this content

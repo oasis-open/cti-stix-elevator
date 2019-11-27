@@ -14,8 +14,8 @@ converted by the elevator.
 ``Address``                     ``ipv4-addr``                                 yes
 ``Address``                     ``ipv6-addr``                                 yes
 ``Address``                     ``mac-addr``                                  yes
-``ArchiveFile``                 ``file:archive-ext``                          patterns only
-``Artifact``                    ``artifact``                                  no
+``ArchiveFile``                 ``file:archive-ext``                          yes
+``Artifact``                    ``artifact``                                  yes
 ``AutonomusSystem``             ``autonomous-system``                         no
 ``File``                        ``directory``                                 yes
 ``DomainName``                  ``domain-name``                               yes
@@ -38,12 +38,12 @@ converted by the elevator.
 ``Port``                        ``integer``                                   yes
 ``TCP``                         ``network-traffic:tcp-ext``                   no
 ``URI``                         ``url``                                       yes
-``UnixUserAccount``             ``user-account:unix-account-ext``             no
-``UserAccount/WinUserAccount``  ``user-account``                              no
+``UnixUserAccount``             ``user-account:unix-account-ext``             yes
+``UserAccount/WinUserAccount``  ``user-account``                              yes
 ``WindowsRegistryKey``          ``window-registry-key``                       yes
-``WinExecutableFile``           ``file:window-pebinary-ext``                  patterns only
+``WinExecutableFile``           ``file:window-pebinary-ext``                  yes
 ``WinFile``                     ``file:ntfs-ext``                             no
-``WinProcess``                  ``process:windows-process-ext``               observables only
+``WinProcess``                  ``process:windows-process-ext``               yes
 ``WinService``                  ``process:windows-service-ext``               yes
 ``X509Certificate``             ``x509-certificate``                          no
 ``X509V3Extensions``            ``x509-certificate:x509-v3-extensions-type``  no
