@@ -1,4 +1,5 @@
 import re
+
 from six import text_type
 
 from stix2elevator.options import get_option_value, info, warn

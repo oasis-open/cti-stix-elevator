@@ -13,7 +13,9 @@ from stix2elevator.convert_pattern import (clear_observable_mappings,
                                            clear_pattern_cache)
 from stix2elevator.convert_stix import (clear_kill_chains_phases_mapping,
                                         convert_package)
-from stix2elevator.ids import clear_id_mapping, clear_object_id_mapping, clear_id_of_obs_in_characterizations
+from stix2elevator.ids import (clear_id_mapping,
+                               clear_id_of_obs_in_characterizations,
+                               clear_object_id_mapping)
 from stix2elevator.options import (get_option_value,
                                    get_validator_options,
                                    set_option_value,
@@ -100,8 +102,6 @@ def elevate_file(fn):
                      codes.EXIT_VALIDATION_ERROR)
     except OSError as ex:
         log.error(ex)
-
-
 
 
 def elevate_string(string):

@@ -40,11 +40,7 @@ import stixmarx
 
 from stix2elevator.common import ADDRESS_FAMILY_ENUMERATION, SOCKET_OPTIONS
 from stix2elevator.convert_cybox import split_into_requests_and_responses
-from stix2elevator.ids import (add_id_value,
-                               exists_id_of_obs_in_characterizations,
-                               exists_object_id_key,
-                               fix_ids_in_characterizations,
-                               get_id_value)
+from stix2elevator.ids import add_id_value, exists_object_id_key, get_id_value
 from stix2elevator.missing_policy import convert_to_custom_property_name
 from stix2elevator.options import error, get_option_value, info, warn
 from stix2elevator.utils import identifying_info, map_vocabs_to_label
@@ -885,17 +881,11 @@ def convert_account_to_pattern(account):
 def convert_artifact_to_pattern(art):
     expressions = []
     if art.content_type:
-        expressions.append(create_term("artifact:mime_type",
-                                        art.content_type.condition,
-                                        art.content_type))
+        expressions.append(create_term("artifact:mime_type", art.content_type.condition, art.content_type))
     if art.raw_artifact:
-        expressions.append(create_term("artifact:payload_bin",
-                                       art.raw_artifact.condition,
-                                       art.raw_artifact.value))
+        expressions.append(create_term("artifact:payload_bin", art.raw_artifact.condition, art.raw_artifact.value))
     if art.raw_artifact_reference:
-        expressions.append(create_term("artifact:url",
-                                       art.raw_artifact_reference.condition,
-                                       art.raw_artifact_reference.value))
+        expressions.append(create_term("artifact:url", art.raw_artifact_reference.condition, art.raw_artifact_reference.value))
     if art.hashes:
         expressions.append(convert_hashes_to_pattern(art.hashes))
     # TODO: Packaging
@@ -2023,6 +2013,7 @@ def handle_pattern_idref(obj):
             return convert_observable_to_pattern(referenced_obs)
         return IdrefPlaceHolder(obj.idref)
 
+
 def convert_observable_to_pattern_without_negate(obs):
     if obs.observable_composition is not None:
         pattern = convert_observable_composition_to_pattern(obs.observable_composition)
@@ -2036,7 +2027,7 @@ def convert_observable_to_pattern_without_negate(obs):
             pattern = convert_object_to_pattern(obs.object_, obs.id_)
             # TODO: seems redundant
             if pattern:
-               add_to_pattern_cache(obs.id_, pattern)
+                add_to_pattern_cache(obs.id_, pattern)
             if obs.object_.related_objects:
                 related_patterns = []
                 for o in obs.object_.related_objects:
@@ -2176,7 +2167,7 @@ def remove_pattern_objects(bundle_instance):
                 if "object_refs" in obj:
                     for ident in obj["object_refs"]:
                         if (not ident.startswith("observed-data") or
-                                    (ident not in all_new_ids_with_patterns and ident not in sco_ids_to_delete)):
+                                (ident not in all_new_ids_with_patterns and ident not in sco_ids_to_delete)):
                             remaining_object_refs.append(ident)
                     obj["object_refs"] = remaining_object_refs
 
