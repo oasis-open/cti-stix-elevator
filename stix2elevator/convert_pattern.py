@@ -40,7 +40,10 @@ import stixmarx
 
 from stix2elevator.common import ADDRESS_FAMILY_ENUMERATION, SOCKET_OPTIONS
 from stix2elevator.convert_cybox import split_into_requests_and_responses
-from stix2elevator.ids import add_id_value, exists_object_id_key, get_id_value
+from stix2elevator.ids import (add_id_value,
+                               exists_id_of_obs_in_characterizations,
+                               exists_object_id_key,
+                               get_id_value)
 from stix2elevator.missing_policy import convert_to_custom_property_name
 from stix2elevator.options import error, get_option_value, info, warn
 from stix2elevator.utils import identifying_info, map_vocabs_to_label
@@ -575,8 +578,10 @@ _OBSERVABLE_MAPPINGS = {}
 def add_to_observable_mappings(obs):
     global _OBSERVABLE_MAPPINGS
     if obs:
-        _OBSERVABLE_MAPPINGS[obs.id_] = obs
-        _OBSERVABLE_MAPPINGS[obs.object_.id_] = obs
+        if obs.id_:
+            _OBSERVABLE_MAPPINGS[obs.id_] = obs
+        if hasattr(obs.object_, "id_") and obs.object_.id_:
+            _OBSERVABLE_MAPPINGS[obs.object_.id_] = obs
 
 
 def id_in_observable_mappings(id_):
@@ -2143,7 +2148,7 @@ def remove_pattern_objects(bundle_instance):
 
         remaining_objects = []
         for obj in bundle_instance["objects"]:
-            if obj["type"] != "observed-data" or obj["id"] not in all_new_ids_with_patterns:
+            if obj["type"] != "observed-data" or obj["id"] not in all_new_ids_with_patterns or exists_id_of_obs_in_characterizations(obj["id"]):
                 remaining_objects.append(obj)
             else:
                 warn("%s is used as a pattern, therefore it is not included as an observed_data instance", 423,

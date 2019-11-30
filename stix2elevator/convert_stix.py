@@ -44,6 +44,8 @@ from stix2elevator.convert_pattern import (ComparisonExpressionForElevator,
                                            convert_observable_to_pattern,
                                            create_boolean_expression,
                                            fix_pattern,
+                                           get_obs_from_mapping,
+                                           id_in_observable_mappings,
                                            interatively_resolve_placeholder_refs,
                                            remove_pattern_objects)
 from stix2elevator.ids import (add_id_of_obs_in_characterizations,
@@ -501,9 +503,8 @@ def handle_observable_characterization_list(obs_list, source_id, env):
         if o.idref is None and o.object_ and not o.object_.idref:
             # embedded
             new_od = convert_observed_data(o, env)
-            if new_od:
-                add_id_of_obs_in_characterizations(new_od["id"])
             env.bundle_instance["objects"].append(new_od)
+            add_id_of_obs_in_characterizations(new_od["id"])
             env.bundle_instance["relationships"].append(create_relationship(source_id,
                                                                             new_od["id"] if new_od else None,
                                                                             env,
@@ -513,6 +514,7 @@ def handle_observable_characterization_list(obs_list, source_id, env):
                 idref = o.idref
             elif o.idref is None and o.object_ and o.object_.idref:
                 idref = generate_stix2x_id("observed-data", o.object_.idref)
+            add_id_of_obs_in_characterizations(idref)
             if exists_id_key(idref):
                 for to_ref in get_id_value(o.idref):
                     add_id_of_obs_in_characterizations(to_ref)
@@ -521,8 +523,11 @@ def handle_observable_characterization_list(obs_list, source_id, env):
                                                                                     env,
                                                                                     verb))
             else:
+                if id_in_observable_mappings(idref):
+                    new_od = convert_observed_data(get_obs_from_mapping(idref), env)
+                    add_id_of_obs_in_characterizations(new_od["id"])
+                    env.bundle_instance["objects"].append(new_od)
                 # a forward reference, fix later
-                add_id_of_obs_in_characterizations(idref)
                 env.bundle_instance["relationships"].append(create_relationship(source_id,
                                                                                 idref,
                                                                                 env,
@@ -1169,6 +1174,8 @@ def convert_indicator(indicator, env):
     else:  # 2.1
         add_confidence_to_object(indicator_instance, indicator.confidence)
     if indicator.observable is not None:
+        # remember observable in case it is used outside of the indicator
+        add_to_observable_mappings(indicator.observable)
         indicator_instance["pattern"] = convert_observable_to_pattern(indicator.observable)
         if get_option_value("spec_version") == "2.1":
             indicator_instance["pattern_type"] = "stix"
