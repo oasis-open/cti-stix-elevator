@@ -169,7 +169,7 @@ def convert_artifact_packaging(packaging, instance, obj1x_id):
                         property_name = "encryption_algorithm"
                     instance[property_name] = e.encryption_mechanism
                 if e.encryption_key_ref:
-                        handle_missing_string_property(instance, "encryption_key_ref", e.encryption_key_ref, is_sco=True)
+                    handle_missing_string_property(instance, "encryption_key_ref", e.encryption_key_ref, is_sco=True)
                 if e.encryption_mechanism_ref:
                     if get_option_value("missing_policy") == "use-custom-properties":
                         handle_missing_string_property(instance, "encryption_mechanism_ref", e.encryption_mechanism_ref, is_sco=True)
