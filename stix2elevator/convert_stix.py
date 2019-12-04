@@ -1409,7 +1409,7 @@ def convert_report(report, env):
                                                  REPORT_LABELS_MAP,
                                                  False)
     else:
-        report_instance["labels" if get_option_value("spec_version") == "2.0" else "report_types"] = [ "unknown"]
+        report_instance["labels" if get_option_value("spec_version") == "2.0" else "report_types"] = ["unknown"]
     process_report_contents(report, new_env, report_instance)
     report_instance["published"] = report_instance["created"]
     info("The published property is required for STIX 2.x Report %s, using the created property", 720, report_instance["id"])
