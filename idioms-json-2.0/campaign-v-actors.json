@@ -3,9 +3,11 @@
     "objects": [
         {
             "created": "2014-08-08T15:50:10.983Z",
-            "description": "\n\nTITLE:\n\tVictim Targeting: Customer PII and Financial Data\n\nTARGETED_INFORMATION:\nInformation Assets - Financial Data",
+            "description": "\n\nTARGETED_INFORMATION:\nInformation Assets - Financial Data",
             "id": "identity--2d1c6ab3-5e4e-48ac-a32b-f0c01c2836a8",
+            "identity_class": "unknown",
             "modified": "2014-08-08T15:50:10.983Z",
+            "name": "Victim Targeting: Customer PII and Financial Data",
             "type": "identity"
         },
         {

@@ -408,6 +408,7 @@
             "id": "identity--c63f31ac-871b-4846-aa25-de1926f4f3c8",
             "identity_class": "unknown",
             "modified": "2015-05-15T09:00:00.000Z",
+            "name": "APT1 Tactics, Techniques and Procedures",
             "object_marking_refs": [
                 "marking-definition--a1146e01-1b34-4d19-9ec6-bd553b55367e"
             ],
@@ -432,8 +433,7 @@
                 {
                     "value": "Unauthorized Access"
                 }
-            ],
-            "x_elevator_title": "APT1 Tactics, Techniques and Procedures"
+            ]
         },
         {
             "created": "2015-05-15T09:00:00.000Z",

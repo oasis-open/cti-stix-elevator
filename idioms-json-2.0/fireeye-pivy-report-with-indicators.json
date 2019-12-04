@@ -342,10 +342,10 @@
         {
             "created": "2015-05-15T09:00:00.000Z",
             "created_by_ref": "identity--35e017fe-672a-4707-b0cf-ce20f7a796d0",
-            "description": "\n\nTITLE:\n\tVictim Targeting: admin338",
             "id": "identity--f8cd0af8-6534-496e-bf53-f6a9aa11e5ce",
             "identity_class": "organization",
             "modified": "2015-05-15T09:00:00.000Z",
+            "name": "Victim Targeting: admin338",
             "object_marking_refs": [
                 "marking-definition--d0f790cd-ff4d-4117-89df-bcf2c1bf693e"
             ],
@@ -815,10 +815,10 @@
         {
             "created": "2015-05-15T09:00:00.000Z",
             "created_by_ref": "identity--35e017fe-672a-4707-b0cf-ce20f7a796d0",
-            "description": "\n\nTITLE:\n\tVictim Targeting: th3bug",
             "id": "identity--917ed96c-05c2-4754-aed9-9123341f7cb8",
             "identity_class": "organization",
             "modified": "2015-05-15T09:00:00.000Z",
+            "name": "Victim Targeting: th3bug",
             "object_marking_refs": [
                 "marking-definition--d0f790cd-ff4d-4117-89df-bcf2c1bf693e"
             ],
@@ -1173,10 +1173,10 @@
         {
             "created": "2015-05-15T09:00:00.000Z",
             "created_by_ref": "identity--35e017fe-672a-4707-b0cf-ce20f7a796d0",
-            "description": "\n\nTITLE:\n\tVictim Targeting: menupass",
             "id": "identity--b4b9537f-66ec-4595-87bf-7c9595f9babe",
             "identity_class": "organization",
             "modified": "2015-05-15T09:00:00.000Z",
+            "name": "Victim Targeting: menupass",
             "object_marking_refs": [
                 "marking-definition--d0f790cd-ff4d-4117-89df-bcf2c1bf693e"
             ],

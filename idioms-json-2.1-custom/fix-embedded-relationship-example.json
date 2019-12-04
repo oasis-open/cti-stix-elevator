@@ -51,6 +51,7 @@
         {
             "created": "2019-11-25T13:54:37.797Z",
             "id": "malware--1621d4d2-b67d-41e3-ba9e-f01faf20d111",
+            "is_family": false,
             "malware_types": [
                 "remote-access-trojan"
             ],

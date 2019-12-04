@@ -346,6 +346,7 @@
             "id": "identity--f8cd0af8-6534-496e-bf53-f6a9aa11e5ce",
             "identity_class": "organization",
             "modified": "2015-05-15T09:00:00.000Z",
+            "name": "Victim Targeting: admin338",
             "object_marking_refs": [
                 "marking-definition--d703b4a8-e6a8-47a7-9985-8d715e827acf"
             ],
@@ -357,8 +358,7 @@
                 "government-sector",
                 "defense-contractor-sector"
             ],
-            "type": "identity",
-            "x_elevator_title": "Victim Targeting: admin338"
+            "type": "identity"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
@@ -819,6 +819,7 @@
             "id": "identity--917ed96c-05c2-4754-aed9-9123341f7cb8",
             "identity_class": "organization",
             "modified": "2015-05-15T09:00:00.000Z",
+            "name": "Victim Targeting: th3bug",
             "object_marking_refs": [
                 "marking-definition--d703b4a8-e6a8-47a7-9985-8d715e827acf"
             ],
@@ -826,8 +827,7 @@
                 "healthcare-sector",
                 "higher-education-sector"
             ],
-            "type": "identity",
-            "x_elevator_title": "Victim Targeting: th3bug"
+            "type": "identity"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
@@ -1177,14 +1177,14 @@
             "id": "identity--b4b9537f-66ec-4595-87bf-7c9595f9babe",
             "identity_class": "organization",
             "modified": "2015-05-15T09:00:00.000Z",
+            "name": "Victim Targeting: menupass",
             "object_marking_refs": [
                 "marking-definition--d703b4a8-e6a8-47a7-9985-8d715e827acf"
             ],
             "sectors": [
                 "defense-contractor-sector"
             ],
-            "type": "identity",
-            "x_elevator_title": "Victim Targeting: menupass"
+            "type": "identity"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",

@@ -79,6 +79,7 @@ from stix2elevator.vocab_mappings import (ATTACK_MOTIVATION_MAP,
                                           COA_LABEL_MAP,
                                           INCIDENT_LABEL_MAP,
                                           INDICATOR_LABEL_MAP,
+                                          INFRASTRUCTURE_LABELS_MAP,
                                           MALWARE_LABELS_MAP,
                                           REPORT_LABELS_MAP,
                                           SECTORS_MAP,
@@ -1139,8 +1140,7 @@ def convert_indicator(indicator, env):
 
     process_description_and_short_description(indicator_instance, indicator)
     convert_controlled_vocabs_to_open_vocabs(indicator_instance,
-                                             "labels" if get_option_value(
-                                                 "spec_version") == "2.0" else "indicator_types",
+                                             "labels" if get_option_value("spec_version") == "2.0" else "indicator_types",
                                              indicator.indicator_types,
                                              INDICATOR_LABEL_MAP, False)
     if indicator.title is not None:
@@ -1404,9 +1404,10 @@ def convert_report(report, env):
         if report.header.title is not None:
             report_instance["name"] = report.header.title
         convert_controlled_vocabs_to_open_vocabs(report_instance,
-                                                 "labels" if get_option_value(
-                                                     "spec_version") == "2.0" else "report_types",
-                                                 report.header.intents, REPORT_LABELS_MAP, False)
+                                                 "labels" if get_option_value("spec_version") == "2.0" else "report_types",
+                                                 report.header.intents,
+                                                 REPORT_LABELS_MAP,
+                                                 False)
     process_report_contents(report, new_env, report_instance)
     report_instance["published"] = report_instance["created"]
     info("The published property is required for STIX 2.x Report %s, using the created property", 720, report_instance["id"])
@@ -1454,10 +1455,10 @@ def convert_threat_actor(threat_actor, env):
     elif isinstance(threat_actor.identity, CIQIdentity3_0Instance):
         convert_party_name(threat_actor.identity._specification.party_name, threat_actor_instance, False)
     convert_controlled_vocabs_to_open_vocabs(threat_actor_instance,
-                                             "labels" if get_option_value(
-                                                 "spec_version") == "2.0" else "threat_actor_types",
+                                             "labels" if get_option_value("spec_version") == "2.0" else "threat_actor_types",
                                              threat_actor.types,
-                                             THREAT_ACTOR_LABEL_MAP, False)
+                                             THREAT_ACTOR_LABEL_MAP,
+                                             False)
     handle_multiple_missing_statement_properties(threat_actor_instance, threat_actor.intended_effects, "intended_effect")
     handle_multiple_missing_statement_properties(threat_actor_instance, threat_actor.planning_and_operational_supports,
                                                  "planning_and_operational_support")
@@ -1500,11 +1501,11 @@ def determine_ttp_relationship_type_and_direction(source_type, target_type, rela
         return "related-to", True
 
 
-def process_ttp_properties(sdo_instance, ttp, env, kill_chains_in_sdo=True, victim_target=False):
+def process_ttp_properties(sdo_instance, ttp, env, kill_chains_in_sdo=True):
     process_description_and_short_description(sdo_instance, ttp, True)
     handle_multiple_missing_statement_properties(sdo_instance, ttp.intended_effects, "intended_effect")
     if hasattr(ttp, "title"):
-        if ("name" not in sdo_instance or sdo_instance["name"] is None) and not victim_target:
+        if ("name" not in sdo_instance or sdo_instance["name"] is None):
             sdo_instance["name"] = ttp.title
         else:
             handle_missing_string_property(sdo_instance, "title", ttp.title, False)
@@ -1556,6 +1557,9 @@ def convert_attack_pattern(ap, ttp, env, ttp_id_used):
 
 def convert_malware_instance(mal, ttp, env, ttp_id_used):
     malware_instance_instance = create_basic_object("malware", mal, env, ttp.id_, not ttp_id_used)
+    if get_option_value("spec_version") == "2.1":
+        malware_instance_instance["is_family"] = False
+        info("The is_family property of malware instance %s is assumed to be false", 728, malware_instance_instance["id"])
     # TODO: names?
     if mal.title is not None:
         malware_instance_instance["name"] = mal.title
@@ -1634,7 +1638,12 @@ def convert_infrastructure(infra, ttp, env, first_one):
     if infra.title is not None:
         infrastructure_instance["name"] = infra.title
     process_description_and_short_description(infrastructure_instance, infra)
-    convert_controlled_vocabs_to_open_vocabs(infrastructure_instance, "labels", infra.types, {}, False)
+    convert_controlled_vocabs_to_open_vocabs(infrastructure_instance,
+                                             "labels" if get_option_value("spec_version") == "2.0" else "infrastructure_types",
+                                             infra.types,
+                                             INFRASTRUCTURE_LABELS_MAP,
+                                             False,
+                                             get_option_value("spec_version") == "2.1")
     info("No 'first_seen' data on %s - using timestamp", 904, infra.id_ if infra.id_ else ttp.id_)
     infrastructure_instance["first_seen"] = convert_timestamp_of_stix_object(infra, infrastructure_instance["created"])
     if infra.observable_characterization is not None:
@@ -1669,8 +1678,9 @@ def convert_identity_for_victim_target(identity, ttp, env, ttp_generated):
         identity_instance = convert_identity(identity, env, parent_id=ttp.id_ if not ttp_generated else None)
     else:
         identity_instance = create_basic_object("identity", None, env, ttp.id_)
+        identity_instance["identity_class"] = "unknown"
     env.bundle_instance["objects"].append(identity_instance)
-    process_ttp_properties(identity_instance, ttp, env, False, True)
+    process_ttp_properties(identity_instance, ttp, env, False)
     finish_basic_object(ttp.id_, identity_instance, identity, env, identity_instance["id"])
     return identity_instance
 

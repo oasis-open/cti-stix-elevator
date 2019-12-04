@@ -4,10 +4,11 @@
         {
             "created": "2014-08-08T15:50:10.983Z",
             "id": "identity--2d1c6ab3-5e4e-48ac-a32b-f0c01c2836a8",
+            "identity_class": "unknown",
             "modified": "2014-08-08T15:50:10.983Z",
+            "name": "Victim Targeting: Customer PII and Financial Data",
             "type": "identity",
-            "x_elevator_targeted_information": "Information Assets - Financial Data",
-            "x_elevator_title": "Victim Targeting: Customer PII and Financial Data"
+            "x_elevator_targeted_information": "Information Assets - Financial Data"
         },
         {
             "created": "2014-08-08T15:50:10.983Z",

@@ -20,7 +20,7 @@
             "created": "2014-05-08T09:00:00.000Z",
             "first_seen": "2014-05-08T09:00:00.000Z",
             "id": "infrastructure--dd955e08-16d0-4f08-5064-50d9e7a3104d",
-            "labels": [
+            "infrastructure_types": [
                 "malware-c2"
             ],
             "modified": "2014-05-08T09:00:00.000Z",

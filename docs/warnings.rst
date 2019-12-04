@@ -182,6 +182,7 @@ The confidence value in *[value]* has been converted to an integer so it is vali
 port number is assumed to be a destination port                                                                                             725     warn
 Report *[id]* contains only the objects explicitly specified in the STIX 1.x report                                                         726     warn
 Custom property name *[property]* has been converted to all lower case                                                                      727     warn
+The is_family property of malware instance *[id]* is assumed to be true                                                                     728     info
 =========================================================================================================================================== ====    =====
 
 STIX elevator currently doesn't process this content
