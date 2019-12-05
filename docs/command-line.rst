@@ -6,9 +6,11 @@ STIX 1.x content to STIX 2.x content:
 
 .. code-block:: text
 
-    usage: stix2_elevator [-h] [--incidents]
+    usage: stix2_elevator [-h]
               [--missing-policy {use-custom-properties, add-to-description, ignore}]
+              [--custom-property-prefix CUSTOM_PROPERTY_PREFIX]
               [--infrastructure]
+              [--incidents]
               [--package-created-by-id PACKAGE_CREATED_BY_ID]
               [--default-timestamp DEFAULT_TIMESTAMP]
               [--validator-args VALIDATOR_ARGS]
@@ -21,11 +23,6 @@ STIX 1.x content to STIX 2.x content:
 
 
 stix2-elevator v2.1
-
-The stix2-elevator is a work-in-progress. It should be used to explore how
-existing STIX 1.x would potentially be represented in STIX 2.x. Using the
-current version of the stix2-elevator will provide insight to issues that might need
-to be mitigated to convert your STIX 1.x content.
 
 positional arguments:
 
@@ -41,16 +38,20 @@ optional arguments:
                 Show this help message and exit
 
   --missing-policy {use-custom-properties,add-to-description,ignore}
-                Policy for including STIX 1.x content that cannot be
-                represented directly in STIX 2.x.
+                        Policy for including STIX 1.x content that cannot be
+                        represented directly in STIX 2.x. The default is 'add-
+                        to-description'.
 
   --custom-property-prefix CUSTOM_PROPERTY_PREFIX
-                Prefix to use for custom property names when missing
-                policy is 'use-custom-properties'.
+                        Prefix to use for custom property names when missing
+                        policy is 'use-custom-properties'. The default is
+                        'elevator'.
 
   --infrastructure
                 Infrastructure will be included in the conversion.
                 Default for version 2.1 is true.
+
+  --incidents           Incidents will be included in the conversion.
 
   --package-created-by-id PACKAGE_CREATED_BY_ID
                 Use provided identifier for "created_by_ref"
@@ -109,13 +110,13 @@ optional arguments:
 
                 Example: --markings-allowed "ISAMarkingsAssertion,ISAMarkings"
 
-  -p {no_policy,strict_policy}, --policy {no_policy,strict_policy}
-                The policy to deal with errors
+  -p {no_policy,strict_policy}, --error-policy--policy {no_policy,strict_policy}
+                        The policy to deal with errors. The default is
+                        'no_policy'.
 
-  -v, --version VERSION
-                The version of stix 2 to be produced
-
-                Default: 2.0
+  -v {2.0,2.1}, --version {2.0,2.1}
+                        The version of stix 2 to be produced. The default is
+                        2.1
 
 
 Refer to the :ref:`warning_messages` section for all stix2-elevator messages. Use the
