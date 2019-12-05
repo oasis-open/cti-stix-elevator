@@ -116,10 +116,7 @@ STIX 1.1.1 - 1.2.1 content to STIX 2.0 or 2.1 content:
 
 stix2-elevator v2.1
 
-The stix2-elevator is a work-in-progress. It should be used to explore how
-existing STIX 1.x would potentially be represented in STIX 2.0. Using the
-current version of the stix2-elevator will provide insight to issues that might
-need to be mitigated to convert your STIX 1.x content.
+
 
 positional arguments:
 
