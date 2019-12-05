@@ -142,9 +142,9 @@ optional arguments:
 
   --infrastructure      Infrastructure will be included in the conversion.
                         Default for version 2.1 is true.
-                        
+
   --incidents           Incidents will be included in the conversion.
-  
+
 
   --package-created-by-id PACKAGE_CREATED_BY_ID
                         Use provided identifier for "created_by_ref"
@@ -193,8 +193,8 @@ optional arguments:
                         file > --markings-allowed
                         "ISAMarkingsAssertion,ISAMarkings"
 
-  -p {no_policy,strict_policy}, 
-  --error-policy {no_policy,strict_policy}, 
+  -p {no_policy,strict_policy},
+  --error-policy {no_policy,strict_policy},
   --policy {no_policy,strict_policy}   #deprecated
                The policy to deal with errors. The default is 'no_policy'.
 
