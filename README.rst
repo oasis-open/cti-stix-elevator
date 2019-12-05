@@ -193,9 +193,10 @@ optional arguments:
                         file > --markings-allowed
                         "ISAMarkingsAssertion,ISAMarkings"
 
-  -p {no_policy,strict_policy}, --error-policy--policy {no_policy,strict_policy}
-                        The policy to deal with errors. The default is
-                        'no_policy'.
+  -p {no_policy,strict_policy}, 
+  --error-policy {no_policy,strict_policy}, 
+  --policy {no_policy,strict_policy}   #deprecated
+               The policy to deal with errors. The default is 'no_policy'.
 
   -v {2.0,2.1}, --version {2.0,2.1}
                         The version of stix 2 to be produced. The default is
