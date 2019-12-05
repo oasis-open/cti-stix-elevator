@@ -172,7 +172,7 @@ def _get_arg_parser(is_script=True):
 
     parser.add_argument(
         "-p",
-        "--error-policy"
+        "--error-policy",
         "--policy",     # deprecated
         help="The policy to deal with errors.  The default is 'no_policy'.",
         dest="policy",
