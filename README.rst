@@ -55,11 +55,11 @@ Requirements
       Make sure to use either the latest version of python-stix 1.1.1.x or
       1.2.0.x, depending on whether you want to support STIX 1.1.1 or STIX 1.2.
 
--  `python-stix2 <https://pypi.org/project/stix2/>`_ >= 0.5.1
--  `stix2-validator <https://pypi.org/project/stix2-validator/>`_ >= 2.0.0.dev1
+-  `python-stix2 <https://pypi.org/project/stix2/>`_ >= 1.2.1
+-  `stix2-validator <https://pypi.org/project/stix2-validator/>`_ >= 2.0.0.dev2
    and its dependencies
--  `pycountry <https://pypi.org/project/pycountry/>`_ >= 1.20
--  `stixmarx <https://pypi.org/project/stixmarx/>`_ >= 1.0.3
+-  `pycountry <https://pypi.org/project/pycountry/>`_ >= 19.8.18
+-  `stixmarx <https://pypi.org/project/stixmarx/>`_ >= 1.0.6
 
 Installation
 ------------
@@ -97,38 +97,53 @@ As A Script
 
 The elevator comes with a bundled script which you can use to elevate
 STIX 1.1.1 - 1.2.1 content to STIX 2.0 or 2.1 content::
-
-    $ stix2_elevator
-    usage: stix2_elevator [-h] [--incidents] [--no-squirrel-gaps]
+/Users/rpiazza/py-envs/python3.7/bin/python /Users/rpiazza/git/stix/cti-stix-elevator/stix2elevator/cli.py -h
+usage: cli.py [-h] [--incidents]
+              [--missing-policy {use-custom-properties,add-to-description,ignore}]
+              [--custom-property-prefix CUSTOM_PROPERTY_PREFIX]
+              [--infrastructure]
               [--package-created-by-id PACKAGE_CREATED_BY_ID]
               [--default-timestamp DEFAULT_TIMESTAMP]
               [--validator-args VALIDATOR_ARGS] [-e ENABLE] [-d DISABLE] [-s]
               [--message-log-directory MESSAGE_LOG_DIRECTORY]
               [--log-level {DEBUG,INFO,WARN,ERROR,CRITICAL}]
               [-m MARKINGS_ALLOWED] [-p {no_policy,strict_policy}]
-              [-v VERSION]
+              [-v {2.0,2.1}]
               file
 
-stix2-elevator v2.0.1
+stix2-elevator v2.1
 
 The stix2-elevator is a work-in-progress. It should be used to explore how
-existing STIX 1.x would potentially be represented in STIX 2.x. Using the
-current version of the stix2-elevator will provide insight to issues that might need
-to be mitigated to convert your STIX 1.x content.
+existing STIX 1.x would potentially be represented in STIX 2.0. Using the
+current version of the stix2-elevator will provide insight to issues that might
+need to be mitigated to convert your STIX 1.x content.
 
 positional arguments:
+
+.. code-block:: text
+
   file                  The input STIX 1.x document to be elevated.
 
 optional arguments:
+
+.. code-block:: text
+
   -h, --help            show this help message and exit
 
   --incidents           Incidents will be included in the conversion.
 
-  --no-squirrel-gaps    Do not include STIX 1.x content that cannot be
-                        represented directly in STIX 2.x using the description
-                        property.
+  --missing-policy {use-custom-properties,add-to-description,ignore}
+                        Policy for including STIX 1.x content that cannot be
+                        represented directly in STIX 2.x. The default is 'add-
+                        to-description'.
+
+  --custom-property-prefix CUSTOM_PROPERTY_PREFIX
+                        Prefix to use for custom property names when missing
+                        policy is 'use-custom-properties'. The default is
+                        'elevator'.
 
   --infrastructure      Infrastructure will be included in the conversion.
+                        Default for version 2.1 is true.
 
   --package-created-by-id PACKAGE_CREATED_BY_ID
                         Use provided identifier for "created_by_ref"
@@ -165,24 +180,25 @@ optional arguments:
                         input file with extension .log in the specified
                         directory. Note, make sure the directory already
                         exists. Example: stix2_elevator.py <file> --message-
-                        log-directory "..\logs"
+                        log-directory "../logs"
 
-  --log-level  {DEBUG, INFO, WARN, ERROR, CRITICAL}
+  --log-level {DEBUG,INFO,WARN,ERROR,CRITICAL}
                         The logging output level.
 
   -m MARKINGS_ALLOWED, --markings-allowed MARKINGS_ALLOWED
-                        Avoid error exit, if these markings are in the
+                        Avoid an error exit, if these markings are in the
                         content, but not supported by the elevator. Specify as
                         a comma-separated listExample: stix2_elevator.py <
                         file > --markings-allowed
                         "ISAMarkingsAssertion,ISAMarkings"
 
-  -p, --policy  {no_policy,strict_policy}  The policy to deal with errors
+  -p {no_policy,strict_policy}, --error-policy--policy {no_policy,strict_policy}
+                        The policy to deal with errors. The default is
+                        'no_policy'.
 
-  -v, --version VERSION
-                The version of stix 2 to be produced
-
-                Default: 2.0
+  -v {2.0,2.1}, --version {2.0,2.1}
+                        The version of stix 2 to be produced. The default is
+                        2.1
 
 Refer to elevator_log_messages.rst for all stix2-elevator messages. Use the
 associated code number to --enable or --disable a message. By default, the
@@ -358,4 +374,10 @@ to repository-cla@oasis-open.org.
    :target: https://codecov.io/gh/oasis-open/cti-stix-elevator
 .. |Version| image:: https://img.shields.io/pypi/v/stix2-elevator.svg?maxAge=3600
    :target: https://pypi.org/project/stix2-elevator/
+
+
+
+
+
+
 
