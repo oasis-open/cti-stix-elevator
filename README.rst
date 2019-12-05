@@ -97,11 +97,14 @@ As A Script
 
 The elevator comes with a bundled script which you can use to elevate
 STIX 1.1.1 - 1.2.1 content to STIX 2.0 or 2.1 content::
-/Users/rpiazza/py-envs/python3.7/bin/python /Users/rpiazza/git/stix/cti-stix-elevator/stix2elevator/cli.py -h
-usage: cli.py [-h] [--incidents]
+
+.. code-block:: text
+
+  usage: stix2_elevator [-h]
               [--missing-policy {use-custom-properties,add-to-description,ignore}]
               [--custom-property-prefix CUSTOM_PROPERTY_PREFIX]
               [--infrastructure]
+              [--incidents]
               [--package-created-by-id PACKAGE_CREATED_BY_ID]
               [--default-timestamp DEFAULT_TIMESTAMP]
               [--validator-args VALIDATOR_ARGS] [-e ENABLE] [-d DISABLE] [-s]
@@ -130,8 +133,6 @@ optional arguments:
 
   -h, --help            show this help message and exit
 
-  --incidents           Incidents will be included in the conversion.
-
   --missing-policy {use-custom-properties,add-to-description,ignore}
                         Policy for including STIX 1.x content that cannot be
                         represented directly in STIX 2.x. The default is 'add-
@@ -144,6 +145,9 @@ optional arguments:
 
   --infrastructure      Infrastructure will be included in the conversion.
                         Default for version 2.1 is true.
+                        
+  --incidents           Incidents will be included in the conversion.
+  
 
   --package-created-by-id PACKAGE_CREATED_BY_ID
                         Use provided identifier for "created_by_ref"
