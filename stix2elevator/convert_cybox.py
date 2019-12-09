@@ -1026,7 +1026,7 @@ def convert_network_socket(socket, obj1x_id):
         if get_option_value("spec_version") == "2.0":
             socket_extension["protocol_family"] = socket.domain
         else:
-            handle_missing_string_property(socket_extension, "protocol_family", socket.domain, s_sco=True)
+            handle_missing_string_property(socket_extension, "protocol_family", socket.domain, is_sco=True)
     if socket.options:
         socket_extension["options"] = convert_socket_options(socket.options)
     if socket.socket_descriptor:
