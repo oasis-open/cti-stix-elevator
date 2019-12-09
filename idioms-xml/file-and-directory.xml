@@ -22,7 +22,7 @@
 
     >
     <stix:Observables cybox_major_version="1" cybox_minor_version="1">
-        <cybox:Observable id="example:observable-c8c32b6e-2ea8-51c4-6446-7f5218072f27">
+        <cybox:Observable id="example:observable-c8c32b6e-2ea8-41c4-6446-7f5218072f27">
             <cybox:Object id="example:object-d7fcce87-0e98-4537-81bf-1e7ca9ad3734">
                  <cybox:Properties xsi:type="FileObj:FileObjectType">
                      <FileObj:File_Path>/usr/local/iprip32.dll</FileObj:File_Path>
@@ -37,7 +37,7 @@
         </cybox:Observable>
     </stix:Observables>
     <stix:TTPs>
-        <stix:TTP xsi:type="ttp:TTPType" id="example:ttp-dd955e08-16d0-6f08-5064-50d9e7a3104d" timestamp="2014-05-08T09:00:00.000000Z">
+        <stix:TTP xsi:type="ttp:TTPType" id="example:ttp-dd955e08-16d0-4f08-5064-50d9e7a3104d" timestamp="2014-05-08T09:00:00.000000Z">
             <ttp:Title>Malware C2 Channel</ttp:Title>
             <ttp:Resources>
                 <ttp:Infrastructure>

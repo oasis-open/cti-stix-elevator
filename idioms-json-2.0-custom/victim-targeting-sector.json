@@ -6,12 +6,12 @@
             "id": "identity--dfd23353-167f-411c-a258-e08ec9d284af",
             "identity_class": "organization",
             "modified": "2014-09-09T14:38:08.678Z",
+            "name": "Victim Targeting: Electricity Sector and Industrial Control System Sector",
             "sectors": [
                 "electricity",
                 "industrial-control-systems"
             ],
-            "type": "identity",
-            "x_elevator_title": "Victim Targeting: Electricity Sector and Industrial Control System Sector"
+            "type": "identity"
         }
     ],
     "spec_version": "2.0",

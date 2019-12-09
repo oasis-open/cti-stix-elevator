@@ -158,6 +158,32 @@ TOOL_LABELS_MAP = \
         "Password Cracking": "password-cracking",
     }
 
+INFRASTRUCTURE_LABELS_MAP = {
+    "Anonymization": "anonymization",
+    "Anonymization - Proxy": "anonymization-proxy",
+    "Anonymization - TOR Network": "anonymization-tor-network",
+    "Anonymization - VPN": "anonymization-vpn",
+    "Communications": 'communications',
+    "Communications - Blogs": 'communications-blogs',
+    "Communications - Forums": 'communications-forums',
+    "Communications - Internet Relay Chat": 'communications-internet-relay-chat',
+    "Communications - Micro-Blogs": 'communications-micro-blogs',
+    "Communications - Mobile Communications": 'communications-mobile',
+    "Communications - Social Networks": 'communications-social-networks',
+    "Communications - User-Generated Content Websites": 'communications-user-generated-content-websites',
+    "Domain Registration": "domain-registration",
+    "Domain Registration - Dynamic DNS Services": "domain-registration-dynamic-dns-services",
+    "Domain Registration - Legitimate Domain Registration Services": "domain-registration-legitimate",
+    "Domain Registration - Malicious Domain Registrars": "domain-registration-malicious",
+    "Domain Registration - Top-Level Domain Registrars": "domain-registration-top-level",
+    "Hosting": "hosting",
+    "Hosting - Bulletproof / Rogue Hosting": "hosting-bulletproof-rogue",
+    "Hosting - Cloud Hosting": "hosting",
+    "Hosting - Compromised Server": "command-and-control",
+    "Hosting - Fast Flux Botnet Hosting": "botnet",
+    "Hosting - Legitimate Hosting": "hosting-legitmate",
+    "Electronic Payment Methods": "electronic-payment-methods"
+}
 
 REPORT_LABELS_MAP = \
     {

@@ -157,7 +157,7 @@ def find_index_of_difference(str1, str2):
     i = j = 0
 
     while True:
-        if i < str1_len and j < str1_len:
+        if i < str1_len and j < str2_len:
             if str1[1][i] != str2[1][j]:
                 print("difference at " + str(i))
                 break

@@ -5,6 +5,7 @@ import sys
 from cybox.objects.account_object import Account
 from cybox.objects.address_object import Address
 from cybox.objects.archive_file_object import ArchiveFile
+from cybox.objects.artifact_object import Artifact
 from cybox.objects.domain_name_object import DomainName
 from cybox.objects.email_message_object import EmailMessage
 from cybox.objects.file_object import File
@@ -39,7 +40,10 @@ import stixmarx
 
 from stix2elevator.common import ADDRESS_FAMILY_ENUMERATION, SOCKET_OPTIONS
 from stix2elevator.convert_cybox import split_into_requests_and_responses
-from stix2elevator.ids import add_id_value, exists_object_id_key, get_id_value
+from stix2elevator.ids import (add_id_value,
+                               exists_id_of_obs_in_characterizations,
+                               exists_object_id_key,
+                               get_id_value)
 from stix2elevator.missing_policy import convert_to_custom_property_name
 from stix2elevator.options import error, get_option_value, info, warn
 from stix2elevator.utils import identifying_info, map_vocabs_to_label
@@ -574,8 +578,10 @@ _OBSERVABLE_MAPPINGS = {}
 def add_to_observable_mappings(obs):
     global _OBSERVABLE_MAPPINGS
     if obs:
-        _OBSERVABLE_MAPPINGS[obs.id_] = obs
-        _OBSERVABLE_MAPPINGS[obs.object_.id_] = obs
+        if obs.id_:
+            _OBSERVABLE_MAPPINGS[obs.id_] = obs
+        if hasattr(obs.object_, "id_") and obs.object_.id_:
+            _OBSERVABLE_MAPPINGS[obs.object_.id_] = obs
 
 
 def id_in_observable_mappings(id_):
@@ -831,8 +837,9 @@ def convert_custom_properties(cps, object_type_name):
             warn("The custom property name %s does not adhere to the specification rules", 617, cp.name)
             if " " in cp.name:
                 warn("The custom property name %s contains whitespace, replacing it with underscores", 624, cp.name)
+        custom_name = convert_to_custom_property_name(cp.name.replace(" ", "_"))
         expressions.append(
-            create_term(object_type_name + ":x_" + cp.name.replace(" ", "_"), cp.condition, make_constant(cp.value)))
+            create_term(object_type_name + ":" + custom_name, cp.condition, make_constant(cp.value)))
     return create_boolean_expression("AND", expressions)
 
 
@@ -872,6 +879,21 @@ def convert_account_to_pattern(account):
         expressions.append(create_term("user-account:account_type",
                                        "Equals",
                                        stix2.StringConstant("windows-domain" if account.domain else "windows-local")))
+    if expressions:
+        return create_boolean_expression("AND", expressions)
+
+
+def convert_artifact_to_pattern(art):
+    expressions = []
+    if art.content_type:
+        expressions.append(create_term("artifact:mime_type", art.content_type.condition, art.content_type))
+    if art.raw_artifact:
+        expressions.append(create_term("artifact:payload_bin", art.raw_artifact.condition, art.raw_artifact.value))
+    if art.raw_artifact_reference:
+        expressions.append(create_term("artifact:url", art.raw_artifact_reference.condition, art.raw_artifact_reference.value))
+    if art.hashes:
+        expressions.append(convert_hashes_to_pattern(art.hashes))
+    # TODO: Packaging
     if expressions:
         return create_boolean_expression("AND", expressions)
 
@@ -1905,6 +1927,8 @@ def convert_object_to_pattern(obj, obs_id):
     if prop:
         if isinstance(prop, Address):
             expression = convert_address_to_pattern(prop)
+        elif isinstance(prop, Artifact):
+            convert_artifact_to_pattern(prop)
         elif isinstance(prop, URI):
             expression = convert_uri_to_pattern(prop)
         elif isinstance(prop, EmailMessage):
@@ -1984,6 +2008,17 @@ def convert_observable_to_pattern(obs):
         pop_dynamic_variable("current_observable")
 
 
+def handle_pattern_idref(obj):
+    if id_in_pattern_cache(obj.idref):
+        return get_pattern_from_cache(obj.idref)
+    else:
+        # resolve now if possible
+        if id_in_observable_mappings(obj.idref):
+            referenced_obs = get_obs_from_mapping(obj.idref)
+            return convert_observable_to_pattern(referenced_obs)
+        return IdrefPlaceHolder(obj.idref)
+
+
 def convert_observable_to_pattern_without_negate(obs):
     if obs.observable_composition is not None:
         pattern = convert_observable_composition_to_pattern(obs.observable_composition)
@@ -1991,32 +2026,29 @@ def convert_observable_to_pattern_without_negate(obs):
             add_to_pattern_cache(obs.id_, pattern)
         return pattern
     elif obs.object_ is not None:
-        pattern = convert_object_to_pattern(obs.object_, obs.id_)
-        if pattern:
-            add_to_pattern_cache(obs.id_, pattern)
-        if obs.object_.related_objects:
-            related_patterns = []
-            for o in obs.object_.related_objects:
-                # save pattern for later use
-                if o.id_ and not id_in_pattern_cache(o.id_):
-                    new_pattern = convert_object_to_pattern(o, o.id_)
-                    if new_pattern:
-                        related_patterns.append(new_pattern)
-                        add_to_pattern_cache(o.id_, new_pattern)
+        if obs.object_.idref is not None:
+            return handle_pattern_idref(obs.object_)
+        else:
+            pattern = convert_object_to_pattern(obs.object_, obs.id_)
+            # TODO: seems redundant
             if pattern:
-                related_patterns.append(pattern)
-            return create_boolean_expression("AND", related_patterns)
-        else:
-            return pattern
+                add_to_pattern_cache(obs.id_, pattern)
+            if obs.object_.related_objects:
+                related_patterns = []
+                for o in obs.object_.related_objects:
+                    # save pattern for later use
+                    if o.id_ and not id_in_pattern_cache(o.id_):
+                        new_pattern = convert_object_to_pattern(o, o.id_)
+                        if new_pattern:
+                            related_patterns.append(new_pattern)
+                            add_to_pattern_cache(o.id_, new_pattern)
+                if pattern:
+                    related_patterns.append(pattern)
+                return create_boolean_expression("AND", related_patterns)
+            else:
+                return pattern
     elif obs.idref is not None:
-        if id_in_pattern_cache(obs.idref):
-            return get_pattern_from_cache(obs.idref)
-        else:
-            # resolve now if possible
-            if id_in_observable_mappings(obs.idref):
-                referenced_obs = get_obs_from_mapping(obs.idref)
-                return convert_observable_to_pattern(referenced_obs)
-            return IdrefPlaceHolder(obs.idref)
+        return handle_pattern_idref(obs)
 
 
 # patterns can contain idrefs which might need to be resolved because the order in which the ids and idrefs appear
@@ -2106,6 +2138,7 @@ def convert_indicator_composition_to_pattern(ind_comp):
 
 def remove_pattern_objects(bundle_instance):
     if not KEEP_OBSERVABLE_DATA_USED_IN_PATTERNS:
+        # fix any ids
         sco_ids_to_delete = []
         all_new_ids_with_patterns = []
         for old_id in get_ids_from_pattern_cache():
@@ -2115,7 +2148,7 @@ def remove_pattern_objects(bundle_instance):
 
         remaining_objects = []
         for obj in bundle_instance["objects"]:
-            if obj["type"] != "observed-data" or obj["id"] not in all_new_ids_with_patterns:
+            if obj["type"] != "observed-data" or obj["id"] not in all_new_ids_with_patterns or exists_id_of_obs_in_characterizations(obj["id"]):
                 remaining_objects.append(obj)
             else:
                 warn("%s is used as a pattern, therefore it is not included as an observed_data instance", 423,
@@ -2130,6 +2163,7 @@ def remove_pattern_objects(bundle_instance):
             else:
                 if obj["id"] not in sco_ids_to_delete:
                     new_remaining_objects.append(obj)
+
         bundle_instance["objects"] = new_remaining_objects
 
         for obj in bundle_instance["objects"]:
@@ -2137,7 +2171,8 @@ def remove_pattern_objects(bundle_instance):
                 remaining_object_refs = []
                 if "object_refs" in obj:
                     for ident in obj["object_refs"]:
-                        if not ident.startswith("observed-data") or ident not in all_new_ids_with_patterns and ident not in sco_ids_to_delete:
+                        if (not ident.startswith("observed-data") or
+                                (ident not in all_new_ids_with_patterns and ident not in sco_ids_to_delete)):
                             remaining_object_refs.append(ident)
                     obj["object_refs"] = remaining_object_refs
 

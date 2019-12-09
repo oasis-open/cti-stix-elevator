@@ -211,6 +211,35 @@ def add_object_id_value(key, value):
         warn("Trying to associate %s with None", 610, key)
 
 
+_ID_OF_OBSERVABLES_IN_CHARACTERIZATIONS = []
+
+
+def clear_id_of_obs_in_characterizations():
+    global _ID_OF_OBSERVABLES_IN_CHARACTERIZATIONS
+    _ID_OF_OBSERVABLES_IN_CHARACTERIZATIONS = []
+
+
+def exists_id_of_obs_in_characterizations(id):
+    return id in _ID_OF_OBSERVABLES_IN_CHARACTERIZATIONS
+
+
+def add_id_of_obs_in_characterizations(id):
+    global _ID_OF_OBSERVABLES_IN_CHARACTERIZATIONS
+    if not exists_id_of_obs_in_characterizations(id):
+        _ID_OF_OBSERVABLES_IN_CHARACTERIZATIONS.append(id)
+
+
+def fix_ids_in_characterizations():
+    global _ID_OF_OBSERVABLES_IN_CHARACTERIZATIONS
+    remaining_ids = []
+    for id in _ID_OF_OBSERVABLES_IN_CHARACTERIZATIONS:
+        if exists_id_key(id):
+            remaining_ids.extend(get_id_value(id))
+        else:
+            remaining_ids.append(id)
+    _ID_OF_OBSERVABLES_IN_CHARACTERIZATIONS = remaining_ids
+
+
 def get_uuid_from_id(id, separator="--"):
     type_and_uuid = id.split(separator)
     return type_and_uuid[1]

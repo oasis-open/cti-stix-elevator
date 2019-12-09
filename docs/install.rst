@@ -12,8 +12,8 @@ Requirements
       Make sure to use either the latest version of python-stix 1.1.1.x or
       1.2.0.x, depending on whether you want to support STIX 1.1.1 or STIX 1.2.
 
--  `python-stix2 <https://pypi.python.org/pypi/python-stix2>`_ >= 1.1.3
--  `stix2-validator <https://pypi.python.org/pypi/stix2-validator>`_ >= 0.4.0
+-  `python-stix2 <https://pypi.python.org/pypi/python-stix2>`_ >= 1.2.1
+-  `stix2-validator <https://pypi.python.org/pypi/stix2-validator>`_ >= 2.0.0.dev2
    and its dependencies
 -  `pycountry <https://pypi.python.org/pypi/pycountry/>`_ >= 19.8.18
 -  `stixmarx <https://pypi.python.org/pypi/stixmarx>`_ >= 1.0.6

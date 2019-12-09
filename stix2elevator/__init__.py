@@ -13,7 +13,9 @@ from stix2elevator.convert_pattern import (clear_observable_mappings,
                                            clear_pattern_cache)
 from stix2elevator.convert_stix import (clear_kill_chains_phases_mapping,
                                         convert_package)
-from stix2elevator.ids import clear_id_mapping, clear_object_id_mapping
+from stix2elevator.ids import (clear_id_mapping,
+                               clear_id_of_obs_in_characterizations,
+                               clear_object_id_mapping)
 from stix2elevator.options import (get_option_value,
                                    get_validator_options,
                                    set_option_value,
@@ -38,18 +40,23 @@ def validate_stix2_string(json_string, validator_options, file_path=None):
     return fvr
 
 
-def elevate_file(fn):
-    # TODO:  combine elevate_file, elevate_string and elevate_package
-    global MESSAGES_GENERATED
-    print("Results produced by the stix2-elevator are not for production purposes.")
+def clear_globals():
     clear_id_mapping()
     clear_1x_markings_map()
     clear_pattern_cache()
     clear_object_id_mapping()
     clear_observable_mappings()
     clear_kill_chains_phases_mapping()
+    clear_id_of_obs_in_characterizations()
     cybox.utils.caches.cache_clear()
+
+
+def elevate_file(fn):
+    # TODO:  combine elevate_file, elevate_string and elevate_package
+    global MESSAGES_GENERATED
     MESSAGES_GENERATED = False
+    print("Results produced by the stix2-elevator are not for production purposes.")
+    clear_globals()
 
     validator_options = get_validator_options()
 
@@ -99,13 +106,8 @@ def elevate_file(fn):
 
 def elevate_string(string):
     global MESSAGES_GENERATED
-    clear_id_mapping()
-    clear_1x_markings_map()
-    clear_pattern_cache()
-    clear_object_id_mapping()
-    clear_observable_mappings()
-    cybox.utils.caches.cache_clear()
     MESSAGES_GENERATED = False
+    clear_globals()
 
     validator_options = get_validator_options()
 
@@ -156,13 +158,8 @@ def elevate_string(string):
 
 def elevate_package(package):
     global MESSAGES_GENERATED
-    clear_id_mapping()
-    clear_1x_markings_map()
-    clear_pattern_cache()
-    clear_object_id_mapping()
-    clear_observable_mappings()
-    cybox.utils.caches.cache_clear()
     MESSAGES_GENERATED = False
+    clear_globals()
 
     validator_options = get_validator_options()
 

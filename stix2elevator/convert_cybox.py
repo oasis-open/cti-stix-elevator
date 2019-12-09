@@ -1,6 +1,7 @@
 from cybox.objects.account_object import Account
 from cybox.objects.address_object import Address
 from cybox.objects.archive_file_object import ArchiveFile
+from cybox.objects.artifact_object import Artifact
 from cybox.objects.domain_name_object import DomainName
 from cybox.objects.email_message_object import EmailMessage
 from cybox.objects.file_object import File
@@ -114,6 +115,86 @@ def convert_address(add, obj1x_id):
         return instance
 
 
+def convert_artifact_compression(c):
+    compression_dict = dict()
+    if c.compression_mechanism:
+        compression_dict[convert_to_custom_property_name("compression_mechanism")] = c.compression_mechanism
+    if c.compression_mechanism_ref:
+        compression_dict[convert_to_custom_property_name("compression_mechanism_ref")] = c.compression_mechanism_ref
+    return compression_dict
+
+
+def convert_artifact_encoding(e):
+    encoding_dict = dict()
+    if e.algorithm:
+        encoding_dict[convert_to_custom_property_name("algorithmm")] = e.algorithm
+    if e.character_set:
+        encoding_dict[convert_to_custom_property_name("character_set")] = e.character_set
+    if e.custom_character_set_ref:
+        encoding_dict[convert_to_custom_property_name("custom_character_set_ref")] = e.custom_character_set_ref
+    return encoding_dict
+
+
+def convert_artifact_packaging(packaging, instance, obj1x_id):
+    if packaging.compression:
+        if get_option_value("missing_policy") == "use-custom-properties":
+            result = []
+            for c in packaging.compression:
+                result.append(convert_artifact_compression(c))
+            instance[convert_to_custom_property_name("compression")] = result
+        else:
+            warn("Any artifact compression info on %s is not recoverable", 634, obj1x_id)
+    if packaging.encoding:
+        if get_option_value("missing_policy") == "use-custom-properties":
+            result = []
+            for e in packaging.encoding:
+                result.append(convert_artifact_encoding(e))
+            instance[convert_to_custom_property_name("encoding")] = result
+        else:
+            warn("Any artifact encoding info on %s is not recoverable", 634, obj1x_id)
+    if packaging.encryption:
+        first = True
+        for e in packaging.encryption:
+            if first:
+                if e.encryption_key:
+                    if get_option_value("spec_version") == "2.0":
+                        property_name = convert_to_custom_property_name("encryption_key")
+                    else:
+                        property_name = "decryption_key"
+                    instance[property_name] = e.encryption_key
+                if e.encryption_mechanism:
+                    if get_option_value("spec_version") == "2.0":
+                        property_name = convert_to_custom_property_name("encryption_mechanism")
+                    else:
+                        property_name = "encryption_algorithm"
+                    instance[property_name] = e.encryption_mechanism
+                if e.encryption_key_ref:
+                    handle_missing_string_property(instance, "encryption_key_ref", e.encryption_key_ref, is_sco=True)
+                if e.encryption_mechanism_ref:
+                    if get_option_value("missing_policy") == "use-custom-properties":
+                        handle_missing_string_property(instance, "encryption_mechanism_ref", e.encryption_mechanism_ref, is_sco=True)
+                first = False
+            else:
+                warn("Only one encryption algorithm or key allowed in STIX 2.1 - used first one in %s", 510, obj1x_id)
+
+
+def convert_artifact(art, obj1x_id):
+    instance = create_base_sco(art, "artifact")
+    if art.content_type:
+        instance["mime_type"] = art.content_type
+    if art.raw_artifact:
+        instance["payload_bin"] = art.raw_artifact.value
+    if art.raw_artifact_reference:
+        instance["url"] = art.raw_artifact_reference
+    if art.hashes:
+        instance["hashes"] = convert_hashes(art.hashes)
+    if art.packaging:
+        convert_artifact_packaging(art.packaging, instance, obj1x_id)
+
+    finish_sco(instance, obj1x_id)
+    return instance
+
+
 def convert_uri(uri, obj1x_id):
     instance = create_base_sco(uri, "url", {"value": uri.value.value})
     finish_sco(instance, obj1x_id)
@@ -180,9 +261,9 @@ def convert_windows_executable_file(f):
                     section_dict[prop_name2x] = getattr(s.section_header, prop_name1x)
             if s.entropy:
                 if s.entropy.min:
-                    handle_missing_string_property(section_dict, "entropy_min", s.entropy.min)
+                    handle_missing_string_property(section_dict, "entropy_min", s.entropy.min, is_sco=True)
                 if s.entropy.max:
-                    handle_missing_string_property(section_dict, "entropy_max", s.entropy.max)
+                    handle_missing_string_property(section_dict, "entropy_max", s.entropy.max, is_sco=True)
                 if s.entropy.value:
                     section_dict["entropy"] = s.entropy.value.value
             # need to merge hash lists - worry about duplicate keys
@@ -206,12 +287,13 @@ def convert_archive_file(f, obj1x_id):
     file_objs = []
     if f.comment:
         dict["comment"] = f.comment
-    if f.version and get_option_value("spec_version") == "2.0":
-        dict["version"] = f.version
-    else:
-        if get_option_value("missing_policy") == "use-custom-properties":
-            property_name = convert_to_custom_property_name("version")
-            dict[property_name] = f.version
+    if f.version:
+        if get_option_value("spec_version") == "2.0":
+            dict["version"] = f.version
+        else:
+            if get_option_value("missing_policy") == "use-custom-properties":
+                property_name = convert_to_custom_property_name("version")
+                dict[property_name] = f.version
     if f.archived_file:
         for ar_file in f.archived_file:
             ar_file2x = convert_file(ar_file, obj1x_id)
@@ -258,6 +340,8 @@ def convert_file_properties(f, obj1x_id):
         file_dict["hashes"] = hashes
     if f.file_name:
         file_dict["name"] = text_type(f.file_name)
+        if f.file_extension:
+            file_dict["name"] += "." + text_type(f.file_extension)
     elif f.file_path and f.file_path.value:
         # this index is an array index, not for the objects dict
         index = f.file_path.value.rfind("/")
@@ -468,7 +552,7 @@ def convert_port(prop, obj1x_id):
         warn("port number is assumed to be a destination port", 725)
         traffic_2x["dst_port"] = prop.port_value.value
     if prop.layer4_protocol:
-        traffic_2x["protocols"] = [prop.layer4_protocol.value]
+        traffic_2x["protocols"] = [prop.layer4_protocol.value.lower()]
     finish_sco(traffic_2x, obj1x_id)
     return traffic_2x
 
@@ -894,7 +978,7 @@ def create_icmp_extension(icmp_header):
     if icmp_header.code:
         imcp_extension["icmp_code_hex"] = icmp_header.code.value
     if icmp_header.checksum:
-        handle_missing_string_property(imcp_extension, "checksum", icmp_header.checksum)
+        handle_missing_string_property(imcp_extension, "checksum", icmp_header.checksum, is_sco=True)
     return imcp_extension
 
 
@@ -938,18 +1022,21 @@ def convert_network_socket(socket, obj1x_id):
             warn("%s is not a member of the %s enumeration", 627, socket.address_family, "address family")
     if socket.type_:
         socket_extension["socket_type"] = socket.type_
-    if socket.domain and get_option_value("spec_version") == "2.0":
-        socket_extension["protocol_family"] = socket.domain
+    if socket.domain:
+        if get_option_value("spec_version") == "2.0":
+            socket_extension["protocol_family"] = socket.domain
+        else:
+            handle_missing_string_property(socket_extension, "protocol_family", socket.domain, is_sco=True)
     if socket.options:
         socket_extension["options"] = convert_socket_options(socket.options)
     if socket.socket_descriptor:
         socket_extension["socket_descriptor"] = socket.socket_descriptor
     if socket.local_address:
-        handle_missing_string_property(socket_extension, "local_address", socket.local_address.ip_address)
+        handle_missing_string_property(socket_extension, "local_address", socket.local_address.ip_address, is_sco=True)
     if socket.remote_address:
-        handle_missing_string_property(socket_extension, "remote_address", socket.remote_address.ip_address)
+        handle_missing_string_property(socket_extension, "remote_address", socket.remote_address.ip_address, is_sco=True)
     if socket.protocol:
-        cybox_traffic["protocols"] = [socket.protocol.value]
+        cybox_traffic["protocols"] = [socket.protocol.value.lower()]
     cybox_traffic["extensions"] = {"socket-ext": socket_extension}
     finish_sco(cybox_traffic, obj1x_id)
     return cybox_traffic
@@ -963,6 +1050,8 @@ def convert_cybox_object20(obj1x):
         return None
     elif isinstance(prop, Address):
         objs["0"] = convert_address(prop, obj1x.id_)
+    elif isinstance(prop, Artifact):
+        objs["0"] = convert_artifact(prop, obj1x.id_)
     elif isinstance(prop, URI):
         objs["0"] = convert_uri(prop, obj1x.id_)
     elif isinstance(prop, EmailMessage):
@@ -1015,6 +1104,8 @@ def convert_cybox_object21(obj1x):
         return None
     elif isinstance(prop, Address):
         objs = [convert_address(prop, obj1x.id_)]
+    elif isinstance(prop, Artifact):
+        objs = [convert_artifact(prop, obj1x.id_)]
     elif isinstance(prop, URI):
         objs = [convert_uri(prop, obj1x.id_)]
     elif isinstance(prop, EmailMessage):
@@ -1054,7 +1145,7 @@ def convert_cybox_object21(obj1x):
         primary_obj = objs[0]
         if prop.custom_properties:
             for cp in prop.custom_properties.property_:
-                primary_obj["x_" + cp.name] = cp.value
+                primary_obj[convert_to_custom_property_name(cp.name)] = cp.value
         if obj1x.id_:
             add_object_id_value(obj1x.id_, objs)
         return objs

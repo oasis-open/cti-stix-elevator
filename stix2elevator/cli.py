@@ -61,7 +61,7 @@ def _get_arg_parser(is_script=True):
     parser.add_argument(
         "--missing-policy",
         help="Policy for including STIX 1.x content that cannot be represented "
-             "directly in STIX 2.x.",
+             "directly in STIX 2.x.  The default is 'add-to-description'.",
         choices=["use-custom-properties", "add-to-description", "ignore"],
         dest="missing_policy",
         action="store",
@@ -70,7 +70,7 @@ def _get_arg_parser(is_script=True):
 
     parser.add_argument(
         "--custom-property-prefix",
-        help="Prefix to use for custom property names when missing policy is 'use-custom-properties'.",
+        help="Prefix to use for custom property names when missing policy is 'use-custom-properties'. The default is 'elevator'.",
         dest="custom_property_prefix",
         action="store",
         default="elevator"
@@ -78,7 +78,7 @@ def _get_arg_parser(is_script=True):
 
     parser.add_argument(
         "--infrastructure",
-        help="Infrastructure will be included in the conversion.",
+        help="Infrastructure will be included in the conversion. Default for version 2.1 is true.",
         dest="infrastructure",
         action="store_true",
         default=False
@@ -172,9 +172,9 @@ def _get_arg_parser(is_script=True):
 
     parser.add_argument(
         "-p",
-        "--error-policy"
+        "--error-policy",
         "--policy",     # deprecated
-        help="The policy to deal with errors",
+        help="The policy to deal with errors.  The default is 'no_policy'.",
         dest="policy",
         choices=["no_policy", "strict_policy"],
         action="store",
@@ -184,7 +184,7 @@ def _get_arg_parser(is_script=True):
     parser.add_argument(
         "-v",
         "--version",
-        help="The version of stix 2 to be produced",
+        help="The version of stix 2 to be produced.  The default is 2.1",
         dest="spec_version",
         choices=["2.0", "2.1"],
         action="store",

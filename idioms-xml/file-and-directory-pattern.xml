@@ -46,7 +46,7 @@
         </stix:Indicator>
     </stix:Indicators>
     <stix:TTPs>
-        <stix:TTP xsi:type="ttp:TTPType" id="example:ttp-dd955e08-16d0-6f08-5064-50d9e7a3104d" timestamp="2014-05-08T09:00:00.000000Z">
+        <stix:TTP xsi:type="ttp:TTPType" id="example:ttp-dd955e08-16d0-4f08-5064-50d9e7a3104d" timestamp="2014-05-08T09:00:00.000000Z">
             <ttp:Title>Malware C2 Channel</ttp:Title>
             <ttp:Resources>
                 <ttp:Infrastructure>

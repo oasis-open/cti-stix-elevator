@@ -44,9 +44,12 @@ from stix2elevator.convert_pattern import (ComparisonExpressionForElevator,
                                            convert_observable_to_pattern,
                                            create_boolean_expression,
                                            fix_pattern,
+                                           get_obs_from_mapping,
+                                           id_in_observable_mappings,
                                            interatively_resolve_placeholder_refs,
                                            remove_pattern_objects)
-from stix2elevator.ids import (add_id_value,
+from stix2elevator.ids import (add_id_of_obs_in_characterizations,
+                               add_id_value,
                                exists_id_key,
                                exists_ids_with_no_1x_object,
                                generate_stix2x_id,
@@ -76,6 +79,7 @@ from stix2elevator.vocab_mappings import (ATTACK_MOTIVATION_MAP,
                                           COA_LABEL_MAP,
                                           INCIDENT_LABEL_MAP,
                                           INDICATOR_LABEL_MAP,
+                                          INFRASTRUCTURE_LABELS_MAP,
                                           MALWARE_LABELS_MAP,
                                           REPORT_LABELS_MAP,
                                           SECTORS_MAP,
@@ -438,7 +442,7 @@ def handle_relationship_to_objs(items, source_id, env, verb):
                                                                             item))
 
 
-def handle_embedded_ref(ref, id, env, verb, to_direction):
+def handle_embedded_ref(ref, id, env, default_verb, to_direction):
     new20s = handle_embedded_object(ref.item, env)
     for new20 in new20s:
         if to_direction:
@@ -450,17 +454,17 @@ def handle_embedded_ref(ref, id, env, verb, to_direction):
         env.bundle_instance["relationships"].append(create_relationship(source_id,
                                                                         target_id,
                                                                         env,
-                                                                        verb,
+                                                                        determine_appropriate_verb(default_verb, target_id),
                                                                         ref))
 
 
-def handle_existing_ref(ref, ref_id, id, env, verb, to_direction):
+def handle_existing_ref(ref, ref_id, id, env, default_verb, to_direction):
     source_id = id if to_direction else ref_id
     target_id = ref_id if to_direction else id
     env.bundle_instance["relationships"].append(create_relationship(source_id,
                                                                     target_id,
                                                                     env,
-                                                                    verb,
+                                                                    default_verb,
                                                                     ref))
 
 
@@ -469,29 +473,29 @@ def handle_existing_refs(ref, id, env, verb, to_direction):
         handle_existing_ref(ref, ref_id, id, env, verb, to_direction)
 
 
-def handle_relationship_ref(ref, id, env, verb, to_direction=True):
+def handle_relationship_ref(ref, id, env, default_verb, to_direction=True):
     if ref.item.idref is None:
-        handle_embedded_ref(ref, id, env, verb, to_direction)
+        handle_embedded_ref(ref, id, env, default_verb, to_direction)
     elif exists_id_key(ref.item.idref):
-        handle_existing_refs(ref, id, env, verb, to_direction)
+        handle_existing_refs(ref, id, env, default_verb, to_direction)
     else:
         # a forward reference, fix later
         source_id = id if to_direction else ref.item.idref
         target_id = str(ref.item.idref) if to_direction else id
-        rel_obj = create_relationship(source_id, target_id, env, verb, ref.item)
+        rel_obj = create_relationship(source_id, target_id, env, default_verb, ref.item)
         if hasattr(ref, "relationship") and ref.relationship is not None:
             rel_obj["description"] = ref.relationship.value
         env.bundle_instance["relationships"].append(rel_obj)
 
 
-def handle_relationship_to_refs(refs, source_id, env, verb):
+def handle_relationship_to_refs(refs, source_id, env, default_verb):
     for ref in refs:
-        handle_relationship_ref(ref, source_id, env, verb, to_direction=True)
+        handle_relationship_ref(ref, source_id, env, default_verb, to_direction=True)
 
 
-def handle_relationship_from_refs(refs, target_id, env, verb):
+def handle_relationship_from_refs(refs, target_id, env, default_verb):
     for ref in refs:
-        handle_relationship_ref(ref, target_id, env, verb, to_direction=False)
+        handle_relationship_ref(ref, target_id, env, default_verb, to_direction=False)
 
 
 def handle_observable_characterization_list(obs_list, source_id, env):
@@ -501,6 +505,7 @@ def handle_observable_characterization_list(obs_list, source_id, env):
             # embedded
             new_od = convert_observed_data(o, env)
             env.bundle_instance["objects"].append(new_od)
+            add_id_of_obs_in_characterizations(new_od["id"])
             env.bundle_instance["relationships"].append(create_relationship(source_id,
                                                                             new_od["id"] if new_od else None,
                                                                             env,
@@ -509,14 +514,20 @@ def handle_observable_characterization_list(obs_list, source_id, env):
             if o.idref:
                 idref = o.idref
             elif o.idref is None and o.object_ and o.object_.idref:
-                idref = generate_stix2x_id("observable", o.object_.idref)
+                idref = generate_stix2x_id("observed-data", o.object_.idref)
+            add_id_of_obs_in_characterizations(idref)
             if exists_id_key(idref):
                 for to_ref in get_id_value(o.idref):
+                    add_id_of_obs_in_characterizations(to_ref)
                     env.bundle_instance["relationships"].append(create_relationship(source_id,
                                                                                     to_ref,
                                                                                     env,
                                                                                     verb))
             else:
+                if id_in_observable_mappings(idref):
+                    new_od = convert_observed_data(get_obs_from_mapping(idref), env)
+                    add_id_of_obs_in_characterizations(new_od["id"])
+                    env.bundle_instance["objects"].append(new_od)
                 # a forward reference, fix later
                 env.bundle_instance["relationships"].append(create_relationship(source_id,
                                                                                 idref,
@@ -560,6 +571,7 @@ def fix_relationships(env):
                     extra_relationships.append(create_relationship(m_id, ref["target_ref"], env, ref["verb"]))
         if reference_needs_fixing(ref["target_ref"]):
             if not exists_id_key(ref["target_ref"]):
+                # create one, and add it
                 new_id = generate_stix2x_id(None, str.lower(ref["target_ref"]))
                 if new_id is None:
                     error("Dangling target reference %s in %s", 602, ref["target_ref"], ref["id"])
@@ -1128,8 +1140,7 @@ def convert_indicator(indicator, env):
 
     process_description_and_short_description(indicator_instance, indicator)
     convert_controlled_vocabs_to_open_vocabs(indicator_instance,
-                                             "labels" if get_option_value(
-                                                 "spec_version") == "2.0" else "indicator_types",
+                                             "labels" if get_option_value("spec_version") == "2.0" else "indicator_types",
                                              indicator.indicator_types,
                                              INDICATOR_LABEL_MAP, False)
     if indicator.title is not None:
@@ -1163,6 +1174,8 @@ def convert_indicator(indicator, env):
     else:  # 2.1
         add_confidence_to_object(indicator_instance, indicator.confidence)
     if indicator.observable is not None:
+        # remember observable in case it is used outside of the indicator
+        add_to_observable_mappings(indicator.observable)
         indicator_instance["pattern"] = convert_observable_to_pattern(indicator.observable)
         if get_option_value("spec_version") == "2.1":
             indicator_instance["pattern_type"] = "stix"
@@ -1235,7 +1248,10 @@ def create_scos(obs, observed_data_instance, env):
                 scos.extend(related)
                 # related[0]["id"] = get_id_value(o.id_)[0]
                 env.bundle_instance["objects"].append(
-                    create_relationship(scos[0]["id"], related[0]["id"], env, "resolves_to"))
+                    create_relationship(scos[0]["id"],
+                                        related[0]["id"],
+                                        env,
+                                        o.relationship.value.lower() if o.relationship and o.relationship.value else "resolves_to"))
     if scos:
         for obj in scos:
             observed_data_instance["object_refs"].append(obj["id"])
@@ -1244,14 +1260,17 @@ def create_scos(obs, observed_data_instance, env):
 
 def create_cyber_observables(obs, observed_data_instance):
     observed_data_instance["objects"] = convert_cybox_object(obs.object_)
-    if obs.object_.related_objects:
-        for o in obs.object_.related_objects:
-            # create index for stix 2.0 cyber observable
-            current_largest_id = max(observed_data_instance["objects"].keys())
-            related = convert_cybox_object(o)
-            if related:
-                for index, obj in related.items():
-                    observed_data_instance["objects"][text_type(int(index) + int(current_largest_id) + 1)] = obj
+    if not observed_data_instance["objects"]:
+        warn("%s did not yield any STIX 2.x object", 417, obs.object_.id_ if obs.object_.id_ else obs.id_)
+    else:
+        if obs.object_.related_objects:
+            for o in obs.object_.related_objects:
+                # create index for stix 2.0 cyber observable
+                current_largest_id = max(observed_data_instance["objects"].keys())
+                related = convert_cybox_object(o)
+                if related:
+                    for index, obj in related.items():
+                        observed_data_instance["objects"][text_type(int(index) + int(current_largest_id) + 1)] = obj
 
 
 def convert_observed_data(obs, env):
@@ -1385,9 +1404,12 @@ def convert_report(report, env):
         if report.header.title is not None:
             report_instance["name"] = report.header.title
         convert_controlled_vocabs_to_open_vocabs(report_instance,
-                                                 "labels" if get_option_value(
-                                                     "spec_version") == "2.0" else "report_types",
-                                                 report.header.intents, REPORT_LABELS_MAP, False)
+                                                 "labels" if get_option_value("spec_version") == "2.0" else "report_types",
+                                                 report.header.intents,
+                                                 REPORT_LABELS_MAP,
+                                                 False)
+    else:
+        report_instance["labels" if get_option_value("spec_version") == "2.0" else "report_types"] = ["unknown"]
     process_report_contents(report, new_env, report_instance)
     report_instance["published"] = report_instance["created"]
     info("The published property is required for STIX 2.x Report %s, using the created property", 720, report_instance["id"])
@@ -1435,10 +1457,10 @@ def convert_threat_actor(threat_actor, env):
     elif isinstance(threat_actor.identity, CIQIdentity3_0Instance):
         convert_party_name(threat_actor.identity._specification.party_name, threat_actor_instance, False)
     convert_controlled_vocabs_to_open_vocabs(threat_actor_instance,
-                                             "labels" if get_option_value(
-                                                 "spec_version") == "2.0" else "threat_actor_types",
+                                             "labels" if get_option_value("spec_version") == "2.0" else "threat_actor_types",
                                              threat_actor.types,
-                                             THREAT_ACTOR_LABEL_MAP, False)
+                                             THREAT_ACTOR_LABEL_MAP,
+                                             False)
     handle_multiple_missing_statement_properties(threat_actor_instance, threat_actor.intended_effects, "intended_effect")
     handle_multiple_missing_statement_properties(threat_actor_instance, threat_actor.planning_and_operational_supports,
                                                  "planning_and_operational_support")
@@ -1481,11 +1503,11 @@ def determine_ttp_relationship_type_and_direction(source_type, target_type, rela
         return "related-to", True
 
 
-def process_ttp_properties(sdo_instance, ttp, env, kill_chains_in_sdo=True, victim_target=False):
+def process_ttp_properties(sdo_instance, ttp, env, kill_chains_in_sdo=True):
     process_description_and_short_description(sdo_instance, ttp, True)
     handle_multiple_missing_statement_properties(sdo_instance, ttp.intended_effects, "intended_effect")
     if hasattr(ttp, "title"):
-        if ("name" not in sdo_instance or sdo_instance["name"] is None) and not victim_target:
+        if ("name" not in sdo_instance or sdo_instance["name"] is None):
             sdo_instance["name"] = ttp.title
         else:
             handle_missing_string_property(sdo_instance, "title", ttp.title, False)
@@ -1537,6 +1559,9 @@ def convert_attack_pattern(ap, ttp, env, ttp_id_used):
 
 def convert_malware_instance(mal, ttp, env, ttp_id_used):
     malware_instance_instance = create_basic_object("malware", mal, env, ttp.id_, not ttp_id_used)
+    if get_option_value("spec_version") == "2.1":
+        malware_instance_instance["is_family"] = False
+        info("The is_family property of malware instance %s is assumed to be false", 728, malware_instance_instance["id"])
     # TODO: names?
     if mal.title is not None:
         malware_instance_instance["name"] = mal.title
@@ -1615,7 +1640,12 @@ def convert_infrastructure(infra, ttp, env, first_one):
     if infra.title is not None:
         infrastructure_instance["name"] = infra.title
     process_description_and_short_description(infrastructure_instance, infra)
-    convert_controlled_vocabs_to_open_vocabs(infrastructure_instance, "labels", infra.types, {}, False)
+    convert_controlled_vocabs_to_open_vocabs(infrastructure_instance,
+                                             "labels" if get_option_value("spec_version") == "2.0" else "infrastructure_types",
+                                             infra.types,
+                                             INFRASTRUCTURE_LABELS_MAP,
+                                             False,
+                                             get_option_value("spec_version") == "2.1")
     info("No 'first_seen' data on %s - using timestamp", 904, infra.id_ if infra.id_ else ttp.id_)
     infrastructure_instance["first_seen"] = convert_timestamp_of_stix_object(infra, infrastructure_instance["created"])
     if infra.observable_characterization is not None:
@@ -1650,22 +1680,14 @@ def convert_identity_for_victim_target(identity, ttp, env, ttp_generated):
         identity_instance = convert_identity(identity, env, parent_id=ttp.id_ if not ttp_generated else None)
     else:
         identity_instance = create_basic_object("identity", None, env, ttp.id_)
+        identity_instance["identity_class"] = "unknown"
     env.bundle_instance["objects"].append(identity_instance)
-    process_ttp_properties(identity_instance, ttp, env, False, True)
+    process_ttp_properties(identity_instance, ttp, env, False)
     finish_basic_object(ttp.id_, identity_instance, identity, env, identity_instance["id"])
     return identity_instance
 
 
 def convert_victim_targeting(victim_targeting, ttp, env, ttps_generated):
-    if victim_targeting.targeted_systems:
-        for v in victim_targeting.targeted_systems:
-            warn("Targeted systems on %s are not a victim target in STIX 2.", 410, ttp.id_)
-    if victim_targeting.targeted_information:
-        for v in victim_targeting.targeted_information:
-            warn("Targeted information on %s is not a victim target in STIX 2.x", 411, ttp.id_)
-    if hasattr(victim_targeting, "technical_details") and victim_targeting.targeted_technical_details is not None:
-        for v in victim_targeting.targeted_technical_details:
-            warn("Targeted technical details on %s are not a victim target in STIX 2.x", 412, ttp.id_)
     identity_instance = convert_identity_for_victim_target(victim_targeting.identity, ttp, env, ttps_generated)
     info("%s generated an identity associated with a victim", 713, ttp.id_)
     if victim_targeting.targeted_systems:
@@ -1674,6 +1696,9 @@ def convert_victim_targeting(victim_targeting, ttp, env, ttps_generated):
     if victim_targeting.targeted_information:
         handle_missing_string_property(identity_instance, "targeted_information",
                                        victim_targeting.targeted_information, True)
+    if hasattr(victim_targeting, "technical_details") and victim_targeting.targeted_technical_details is not None:
+        handle_missing_string_property(identity_instance, "technical_details",
+                                       victim_targeting.targeted_technical_details, True)
     if ttps_generated:
         for generated_ttp in ttps_generated:
             env.bundle_instance["relationships"].append(

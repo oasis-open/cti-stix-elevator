@@ -1,10 +1,14 @@
+import re
+
 from six import text_type
 
 from stix2elevator.options import get_option_value, info, warn
 
 
 def convert_to_custom_property_name(prop_name):
-    return "x_" + get_option_value("custom_property_prefix") + "_" + prop_name
+    if re.search('[A-Z]', prop_name):
+        warn("Custom property name %s has been converted to all lower case", 727, prop_name)
+    return "x_" + get_option_value("custom_property_prefix") + "_" + prop_name.lower()
 
 
 def add_string_property_to_description(sdo_instance, property_name, property_value, is_list=False):
@@ -30,9 +34,9 @@ def add_string_property_as_custom_property(sdo_instance, property_name, property
     warn("Used custom property for %s", 308, property_name + (" of " + sdo_instance["id"] if "id" in sdo_instance else ""))
 
 
-def handle_missing_string_property(sdo_instance, property_name, property_value, is_list=False):
+def handle_missing_string_property(sdo_instance, property_name, property_value, is_list=False, is_sco=False):
     if property_value:
-        if get_option_value("missing_policy") == "add-to-description" and "description" in sdo_instance:
+        if get_option_value("missing_policy") == "add-to-description" and not is_sco and "description" in sdo_instance:
             add_string_property_to_description(sdo_instance, property_name, property_value, is_list)
         elif get_option_value("missing_policy") == "use-custom-properties":
             add_string_property_as_custom_property(sdo_instance, property_name, property_value, is_list)

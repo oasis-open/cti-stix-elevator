@@ -42,6 +42,9 @@
             "id": "report--c243ad2c-1326-4e6c-9ee7-2b13dd41299c",
             "modified": "2018-09-12T00:00:16.906Z",
             "published": "2018-09-12T00:00:16.906Z",
+            "report_types": [
+               "unknown"
+            ],
             "spec_version": "2.1",
             "type": "report"
         }

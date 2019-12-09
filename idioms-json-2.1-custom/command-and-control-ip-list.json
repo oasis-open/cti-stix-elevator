@@ -17,53 +17,53 @@
             "value": "203.0.113.19"
         },
         {
-            "created": "2019-08-21T10:53:07.182Z",
-            "first_seen": "2019-08-21T10:53:07.182Z",
-            "id": "infrastructure--dd955e08-16d0-6f08-5064-50d9e7a3104d",
-            "labels": [
+            "created": "2014-05-08T09:00:00.000Z",
+            "first_seen": "2014-05-08T09:00:00.000Z",
+            "id": "infrastructure--dd955e08-16d0-4f08-5064-50d9e7a3104d",
+            "infrastructure_types": [
                 "malware-c2"
             ],
-            "modified": "2019-08-21T10:53:07.182Z",
+            "modified": "2014-05-08T09:00:00.000Z",
             "name": "Malware C2 Channel",
             "spec_version": "2.1",
             "type": "infrastructure"
         },
         {
             "created": "2014-05-08T09:00:00.000Z",
-            "id": "relationship--47e1177f-5b5d-44ba-b95f-d47e68b61cc7",
+            "id": "relationship--25e80de8-81d2-4a3c-bb47-df3ff3b33c1c",
             "modified": "2014-05-08T09:00:00.000Z",
             "relationship_type": "consists-of",
-            "source_ref": "infrastructure--dd955e08-16d0-6f08-5064-50d9e7a3104d",
+            "source_ref": "infrastructure--dd955e08-16d0-4f08-5064-50d9e7a3104d",
             "spec_version": "2.1",
-            "target_ref": "observed-data--c8c32b6e-2ea8-51c4-6446-7f5218072f27",
+            "target_ref": "observed-data--c8c32b6e-4ea8-51c4-6446-7f5218072f27",
             "type": "relationship"
         },
         {
             "created": "2014-05-08T09:00:00.000Z",
-            "id": "relationship--0ebe087d-2f78-4894-af34-c1ab543af710",
+            "id": "relationship--9d943e4b-08ef-40e7-b02c-73bf75a13531",
             "modified": "2014-05-08T09:00:00.000Z",
             "relationship_type": "consists-of",
-            "source_ref": "infrastructure--dd955e08-16d0-6f08-5064-50d9e7a3104d",
+            "source_ref": "infrastructure--dd955e08-16d0-4f08-5064-50d9e7a3104d",
             "spec_version": "2.1",
-            "target_ref": "observed-data--b57aa65f-9598-04fb-a9d1-5094c36d5dc4",
+            "target_ref": "observed-data--b57aa65f-4598-04fb-a9d1-5094c36d5dc4",
             "type": "relationship"
         },
         {
             "created": "2014-05-08T09:00:00.000Z",
-            "id": "relationship--1b78bf3a-8b33-4b36-a469-81d4afc5e284",
+            "id": "relationship--408ee0f8-cebe-4f2a-aa55-cad9ef20a500",
             "modified": "2014-05-08T09:00:00.000Z",
             "relationship_type": "consists-of",
-            "source_ref": "infrastructure--dd955e08-16d0-6f08-5064-50d9e7a3104d",
+            "source_ref": "infrastructure--dd955e08-16d0-4f08-5064-50d9e7a3104d",
             "spec_version": "2.1",
-            "target_ref": "observed-data--19c16346-0eb4-99e2-00bb-4ec3ed174cac",
+            "target_ref": "observed-data--19c16346-4eb4-99e2-00bb-4ec3ed174cac",
             "type": "relationship"
         },
         {
-            "created": "2019-08-21T10:53:07.181Z",
-            "first_observed": "2019-08-21T10:53:07.181Z",
-            "id": "observed-data--c8c32b6e-2ea8-51c4-6446-7f5218072f27",
-            "last_observed": "2019-08-21T10:53:07.181Z",
-            "modified": "2019-08-21T10:53:07.181Z",
+            "created": "2019-11-25T13:54:06.620Z",
+            "first_observed": "2019-11-25T13:54:06.620Z",
+            "id": "observed-data--c8c32b6e-4ea8-51c4-6446-7f5218072f27",
+            "last_observed": "2019-11-25T13:54:06.620Z",
+            "modified": "2019-11-25T13:54:06.620Z",
             "number_observed": 1,
             "object_refs": [
                 "ipv4-addr--7e4a9c21-50df-5298-97ce-42044f79472e"
@@ -72,11 +72,11 @@
             "type": "observed-data"
         },
         {
-            "created": "2019-08-21T10:53:07.181Z",
-            "first_observed": "2019-08-21T10:53:07.181Z",
-            "id": "observed-data--b57aa65f-9598-04fb-a9d1-5094c36d5dc4",
-            "last_observed": "2019-08-21T10:53:07.181Z",
-            "modified": "2019-08-21T10:53:07.181Z",
+            "created": "2019-11-25T13:54:06.620Z",
+            "first_observed": "2019-11-25T13:54:06.620Z",
+            "id": "observed-data--b57aa65f-4598-04fb-a9d1-5094c36d5dc4",
+            "last_observed": "2019-11-25T13:54:06.620Z",
+            "modified": "2019-11-25T13:54:06.620Z",
             "number_observed": 1,
             "object_refs": [
                 "ipv4-addr--aa3e1cc2-0c65-5358-82ae-9a7e508e939f"
@@ -85,11 +85,11 @@
             "type": "observed-data"
         },
         {
-            "created": "2019-08-21T10:53:07.181Z",
-            "first_observed": "2019-08-21T10:53:07.181Z",
-            "id": "observed-data--19c16346-0eb4-99e2-00bb-4ec3ed174cac",
-            "last_observed": "2019-08-21T10:53:07.181Z",
-            "modified": "2019-08-21T10:53:07.181Z",
+            "created": "2019-11-25T13:54:06.620Z",
+            "first_observed": "2019-11-25T13:54:06.620Z",
+            "id": "observed-data--19c16346-4eb4-99e2-00bb-4ec3ed174cac",
+            "last_observed": "2019-11-25T13:54:06.620Z",
+            "modified": "2019-11-25T13:54:06.620Z",
             "number_observed": 1,
             "object_refs": [
                 "ipv4-addr--179b9f2b-745f-5421-a6d1-701872c15d4c"

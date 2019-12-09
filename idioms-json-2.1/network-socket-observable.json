@@ -11,9 +11,9 @@
                     }
                 }
             },
-            "id": "network-traffic--eedcb05c-d030-5b59-9657-9fe758867611",
+            "id": "network-traffic--fb055025-dd4f-5fd0-bf8a-c81de67d1eb9",
             "protocols": [
-                "TCP"
+                "tcp"
             ],
             "type": "network-traffic"
         },
@@ -25,7 +25,7 @@
             "modified": "2019-08-21T11:45:07.854Z",
             "number_observed": 1,
             "object_refs": [
-                "network-traffic--eedcb05c-d030-5b59-9657-9fe758867611"
+                "network-traffic--fb055025-dd4f-5fd0-bf8a-c81de67d1eb9"
             ],
             "spec_version": "2.1",
             "type": "observed-data"

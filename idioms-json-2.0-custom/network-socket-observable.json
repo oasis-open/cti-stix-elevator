@@ -21,7 +21,7 @@
             }
           },
           "protocols": [
-            "TCP"
+            "tcp"
           ],
           "type": "network-traffic"
         }
