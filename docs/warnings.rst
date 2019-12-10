@@ -12,7 +12,7 @@ General
 =============================================================================================================== ====    =====
 Message                                                                                                         Code    Level
 =============================================================================================================== ====    =====
-Results produced by the stix2-elevator are not for production purposes.                                         201     warn
+Results produced by the stix2-elevator may generate warning messages which should be investigated               201     warn
 Observable Expressions should not contain placeholders                                                          202     error
 Placeholder *[id]* should be resolved                                                                           203     error
 Found definition for *[id]*                                                                                     204     info

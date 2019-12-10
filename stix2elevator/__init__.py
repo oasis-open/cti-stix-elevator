@@ -72,7 +72,7 @@ def elevate_file(fn):
             raise TypeError("Must be an instance of stix.core.STIXPackage")
 
         setup_logger(stix_package.id_)
-        warn("Results produced by the stix2-elevator are not for production purposes.", 201)
+        warn("Results produced by the stix2-elevator may generate warning messages which should be investigated.", 201)
         if get_option_value("default_timestamp"):
             timestamp = datetime.strptime(get_option_value("default_timestamp"), "%Y-%m-%dT%H:%M:%S.%fZ"),
         else:

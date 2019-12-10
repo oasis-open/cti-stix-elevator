@@ -51,14 +51,6 @@ def _get_arg_parser(is_script=True):
         )
 
     parser.add_argument(
-        "--incidents",
-        help="Incidents will be included in the conversion.",
-        dest="incidents",
-        action="store_true",
-        default=False
-    )
-
-    parser.add_argument(
         "--missing-policy",
         help="Policy for including STIX 1.x content that cannot be represented "
              "directly in STIX 2.x.  The default is 'add-to-description'.",
@@ -85,9 +77,17 @@ def _get_arg_parser(is_script=True):
     )
 
     parser.add_argument(
+        "--incidents",
+        help="Incidents will be included in the conversion.  This argument is deprecated.",
+        dest="incidents",
+        action="store_true",
+        default=False
+    )
+
+    parser.add_argument(
         "--package-created-by-id",
         help="Use provided identifier for \"created_by_ref\" properties. "
-             "Example: --package-created-by-id \"identity--1234abcd-1a12-12a3-0ab4-1234abcd5678\"",
+             "Example: --package-created-by-id \"identity--1234abcd-1a12-42a3-0ab4-1234abcd5678\"",
         dest="package_created_by_id",
         action="store",
         default=None
@@ -104,7 +104,7 @@ def _get_arg_parser(is_script=True):
 
     parser.add_argument(
         "--validator-args",
-        help="Arguments to pass to stix-validator. Default: --strict-types\n\n"
+        help="Arguments to pass to stix2-validator. Default: --strict-types\n\n"
              "Example: stix2_elevator.py <file> --validator-args=\"-v --strict-types -d 212\"",
         dest="validator_args",
         action="store",
