@@ -22,7 +22,7 @@ To convert STIX 2.x JSON back to STIX 1.x XML use the `stix2-slider`
 The stix2-elevator is a “best-effort” attempt to convert STIX 1.x content to STIX 2.x content. 
 **Caution should be taken if the elevator is to be used in a production environment as warnings 
 concerning the conversion are often generated.**  Users should determine which warnings are 
-acceptable and use the --disable option in conjunction with the –error-policy only to produce 
+acceptable and use the --disable option in conjunction with the –error-policy option only to produce 
 results when no other warnings are emitted.
 
 **STIX 1.x Composite Indicator Expressions and CybOX 2.x Composite
