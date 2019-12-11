@@ -1389,7 +1389,7 @@
         {
             "created": "2015-05-15T09:00:00.000Z",
             "created_by_ref": "identity--a1ee09fe-d0b1-4cc9-98fb-cf8debf08989",
-            "description": "This report contains the IOCs referenced in Appendix G of the APT1 report.\n\nINTENT:\nIndicators",
+            "description": "This report contains the IOCs referenced in Appendix G of the APT1 report.",
             "id": "report--190593d6-1861-4cfe-b212-c016fce1e248",
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "APT1 Report - Appendix G (IOCs) - Observables and OpenIOC",
