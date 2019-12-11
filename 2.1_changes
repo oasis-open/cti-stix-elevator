@@ -1,0 +1,737 @@
+commit a038401f4e7c838fbe2505ee52a56246b307a3ab
+Merge: 28360c2 bad6bf1
+Author: Emmanuelle Vargas-Gonzalez <emmanvg@users.noreply.github.com>
+Date:   Wed Dec 11 14:19:54 2019 -0500
+
+    Merge pull request #170 from oasis-open/after-validator
+    
+    Update documentation, minor code changes, and dependency
+
+commit bad6bf14ba7b43ab91c20d083c73a74242a0ec90
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Wed Dec 11 14:12:25 2019 -0500
+
+    Update docs/stix-mappings.rst
+    
+    Co-Authored-By: Emmanuelle Vargas-Gonzalez <emmanvg@users.noreply.github.com>
+
+commit f99f22133ad50033b0c3e7e7c09ae5b74e12ee64
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Wed Dec 11 14:12:01 2019 -0500
+
+    Update docs/stix-mappings.rst
+    
+    Co-Authored-By: Emmanuelle Vargas-Gonzalez <emmanvg@users.noreply.github.com>
+
+commit 508147cab55bb33dff99b5084304a56a34d4a7c8
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Wed Dec 11 14:11:54 2019 -0500
+
+    Update docs/stix-mappings.rst
+    
+    Co-Authored-By: Emmanuelle Vargas-Gonzalez <emmanvg@users.noreply.github.com>
+
+commit 0986dd8985d4ddc8bc90e75dbc804ff54f539aa0
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Wed Dec 11 13:30:35 2019 -0500
+
+    minor correction to golden files
+
+commit e0fda37c406fbcdf38cd72dd7cb810df7f2aad41
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Wed Dec 11 13:17:00 2019 -0500
+
+    doc fixes, intent is convertable in report
+
+commit 6f2824b6bb197c3808eb88c5e3dc151c303db485
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Wed Dec 11 09:49:01 2019 -0500
+
+    flaky
+
+commit 3d59f33074ebf6bdd415c467611efd2cf40a948f
+Merge: 12591d3 26b45fa
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Tue Dec 10 16:32:15 2019 -0500
+
+    Merge branch 'after-validator' of https://github.com/oasis-open/cti-stix-elevator into after-validator
+
+commit 26b45fa3e556bfdfdc444ec64e68743f63ce18fd
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Tue Dec 10 16:32:03 2019 -0500
+
+    Update README.rst
+    
+    [skip ci]
+
+commit 12591d3831ad288af8f0b50aa9cdf17efd4b1722
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Tue Dec 10 16:30:48 2019 -0500
+
+    more documentation changes
+
+commit 07619b89d2317913b6248fa16bcc3893a53babe0
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Tue Dec 10 10:30:47 2019 -0500
+
+    Update README.rst
+    
+    [skip ci]
+
+commit 5b3a806c9f2a86aa84af02a2c825cd90ad752b9d
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Tue Dec 10 10:20:57 2019 -0500
+
+    Update README.rst
+
+commit 3c5d0353a05f968d9ff2a6ab54bd3514d313d3db
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Mon Dec 9 16:28:13 2019 -0500
+
+    validator version dependency
+
+commit 28360c2747bb70711aad33807fa7c13f05f2f834
+Merge: 86091ac 3916270
+Author: Emmanuelle Vargas-Gonzalez <emmanvg@users.noreply.github.com>
+Date:   Mon Dec 9 14:37:11 2019 -0500
+
+    Merge pull request #169 from oasis-open/after-validator
+    
+    After validator changes
+
+commit 3916270478ef6fc24cd2f57e5a986d9356e06758
+Merge: 7ad711c 9095cf8
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Mon Dec 9 12:55:19 2019 -0500
+
+    Merge branch 'after-validator' of https://github.com/oasis-open/cti-stix-elevator into after-validator
+
+commit 7ad711c8ccbcf389d0890a842d798c7970465e57
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Mon Dec 9 12:55:12 2019 -0500
+
+    typo in method invocation
+
+commit 9095cf83a2df8903796f3d37dc31b5e70fe2effa
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Mon Dec 9 12:47:53 2019 -0500
+
+    Update stix2elevator/missing_policy.py
+    
+    Co-Authored-By: Emmanuelle Vargas-Gonzalez <emmanvg@users.noreply.github.com>
+
+commit 162b6b564d70eda5750162c26be3290a37a2135f
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Mon Dec 9 12:42:26 2019 -0500
+
+    Update idioms-json-2.1-custom/account_indicator.json
+    
+    Co-Authored-By: Emmanuelle Vargas-Gonzalez <emmanvg@users.noreply.github.com>
+
+commit 994d4383687eb7badc6d32406d1a794993594295
+Merge: 4ddcca9 86091ac
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Thu Dec 5 13:50:08 2019 -0500
+
+    Merge branch 'master' into after-validator
+
+commit 86091ac5184b5dcfddb37bc9313b85116b2510d9
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Thu Dec 5 13:49:46 2019 -0500
+
+    flaky
+
+commit 4ddcca9b3f8b6c613becbf5e83573b1c23ac9fa9
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Thu Dec 5 13:41:14 2019 -0500
+
+    fixed some command line doc
+
+commit 31b9a8f06e9d80582387ae540bdd06a70c254644
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Thu Dec 5 13:40:07 2019 -0500
+
+    Update README.rst
+
+commit 8fd4bcf46c5ab962e5d2689d50d913ade4b8c8dc
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Thu Dec 5 11:46:46 2019 -0500
+
+    doc updates
+
+commit 6f24958188fef77a61c2bcd6354b31de843e15df
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Thu Dec 5 11:41:19 2019 -0500
+
+    Update README.rst
+
+commit 1a40a1f4d60627f20063ee6f7b44a815167d4c98
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Thu Dec 5 11:36:37 2019 -0500
+
+    Update README.rst
+
+commit 1fdb9338e5d2a612afc1f85b19f46a7e70cc14af
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Thu Dec 5 11:35:24 2019 -0500
+
+    Update README.rst
+
+commit c7b6582d0b9e3a5ee7c530a8ba0778e838bcad7c
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Thu Dec 5 11:07:02 2019 -0500
+
+    Update README.rst
+
+commit 00076ad9eef6c34a8931d9b278796ef28de9e881
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Wed Dec 4 13:36:36 2019 -0500
+
+    flaky
+
+commit 0d40069f4c26f457d651257a7e8cdc570560971b
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Wed Dec 4 13:33:37 2019 -0500
+
+    generate labels/report_types even if no report_header is available
+
+commit 95069bd0074fd8aa26189d0948cc0dd9ef50e92d
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Wed Dec 4 11:45:17 2019 -0500
+
+    handle required properties, added infrastructure_type vocab
+
+commit 04efb51c4a7f46e5ca63cf6562874f5835ca5048
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Mon Dec 2 14:16:34 2019 -0500
+
+    flaky
+
+commit fa203f53733efc62cba9e9822a659d7f483708d2
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Mon Dec 2 14:15:17 2019 -0500
+
+    more support for artifact - fix some calls to custom properties methods
+
+commit c82d9c80f22c49afae3a603537a2eca5e7f84bca
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Sat Nov 30 17:18:59 2019 -0500
+
+    handle observable characterizations
+
+commit 4a0032da5eeacd4e6ceabdedb7e78861d3338769
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Wed Nov 27 18:06:59 2019 -0500
+
+    flaky
+
+commit 6818c4a12bcb081a681e3846ce43f24f2b0a3e7e
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Wed Nov 27 15:20:37 2019 -0500
+
+    lower_case and prefix for custom properties
+
+commit ae277761d7221602fab44c44b98c456e28d7ceba
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Tue Nov 26 18:29:16 2019 -0500
+
+    added coverage for artifact - avoid crash if no co created
+
+commit 6d39f4df7fc3cd11bd6faeec0e0fc7c63b058ad7
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Tue Nov 26 09:45:08 2019 -0500
+
+    golden file fixes, go all global resets using clear_globals
+
+commit 91a63aeb35932faaddf763b82cbc4e9496227d20
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Tue Nov 26 09:41:20 2019 -0500
+
+    add code for characterizations, use stix1.x relationship name, fixed some golden files
+
+commit a4289ec137b1798589feb01d2c90318986490b93
+Merge: 870cf44 f72bf69
+Author: Emmanuelle Vargas-Gonzalez <emmanvg@users.noreply.github.com>
+Date:   Fri Nov 22 12:58:43 2019 -0500
+
+    Merge pull request #168 from oasis-open/custom-properties
+    
+    Custom properties
+
+commit f72bf698fe39d5aa814310bae9199c8aadf9e3e7
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Fri Nov 22 11:52:46 2019 -0500
+
+    fixed entropy typo, fixed some 2.1/custom golden files
+
+commit c608d156ab16a642ba28ae9f21e25dcc92b1e3dc
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Fri Nov 15 11:39:01 2019 -0500
+
+    flaky
+
+commit 5ecbb382c37e6861c1a0f192574d8a401b0693fd
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Fri Nov 15 10:35:49 2019 -0500
+
+    test deterministic ids correctly
+
+commit b628f5e46ae946bf746696647e04ad93ba9bf5f5
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Fri Nov 8 10:53:10 2019 -0500
+
+    handle Contains op better, correctly handle service_dlls, other minor improvements
+
+commit f3fb58bbff428bf55f239695407d6448e7f55dca
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Mon Nov 4 14:11:58 2019 -0500
+
+    doc fixes
+
+commit 5f0c328a0e4b52cd022fe86f5ed4380d8e4130c7
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Mon Nov 4 10:56:20 2019 -0500
+
+    fix stepper tests
+
+commit be2909e95c0caab831078c5f29b4e6f356baf272
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Fri Nov 1 14:33:18 2019 -0400
+
+    same case for 2.0
+
+commit 2c91bef94ac792c30c29c54761b12d58860e282e
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Fri Nov 1 14:30:41 2019 -0400
+
+    flaky
+
+commit 5e2b9a2157d53c48502b21ab6de21311fccfcdb5
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Fri Nov 1 14:12:34 2019 -0400
+
+    checked on 1.1.1, added 2 new tests
+
+commit 870cf442a994fe3b1a5cef94e5bc38876ccefdcb
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Tue Oct 22 09:21:47 2019 -0400
+
+    Update README.rst
+    
+    fix some typos
+
+commit b6942eee234f6742544dc6f82473df79fd102a47
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Mon Oct 14 09:38:10 2019 -0400
+
+    remove tox-run
+
+commit c9fa3e728ff2e01c6cd79e6a15aa63a5acc057e3
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Mon Oct 14 08:53:01 2019 -0400
+
+    flaky
+
+commit 2cab522798144f78a7fa84adc2d95d99ece3e226
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Sun Oct 13 09:00:51 2019 -0400
+
+    test for more custom propertties
+
+commit bc2df4670d52368b9ac97623f000bbf6025ca55e
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Fri Oct 11 09:30:34 2019 -0400
+
+    flaky
+
+commit b48dfdb24ec90fa2005692678a5d95625d5b103c
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Fri Oct 11 09:06:16 2019 -0400
+
+    doc changes and tox changes
+
+commit a398e9cd3eaf677b818f80c41adc9f89b21bea1b
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Fri Oct 11 09:05:30 2019 -0400
+
+    add missing_policy.py
+
+commit 8ec4e77b16e926d3ff2ec61fc5f08731b0d46594
+Merge: 398a265 980bc75
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Thu Oct 10 11:04:29 2019 -0400
+
+    Merge branch 'master' into custom-properties
+
+commit 398a2652f6044660960d7fdf98360618c9b7d258
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Thu Oct 10 10:58:30 2019 -0400
+
+    custom 2.0 testing
+
+commit 980bc75692c29565f7d132f7aa71b7534578c3ce
+Merge: 91ee72b 08b98f2
+Author: Chris Lenk <clenk@users.noreply.github.com>
+Date:   Wed Oct 9 16:16:04 2019 -0400
+
+    Merge pull request #166 from oasis-open/2.1-wd05
+    
+    2.1 wd05
+
+commit 8c47d5c9a914a555deade42c2b8761209b0e5b26
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Wed Oct 9 15:35:07 2019 -0400
+
+    make appendixG work for custom properties
+
+commit 08b98f2356009f43bd34b7043662eafa0d5f2b81
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Wed Oct 9 14:26:20 2019 -0400
+
+    remove indicator-and-observable.xml:
+
+commit 23c6163f113f5436229b3ee11fae02b8ec0b1cbe
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Wed Oct 9 14:23:56 2019 -0400
+
+    testing for custom properties
+
+commit f8bc0487409a3716812388100d809d43f3398168
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Tue Oct 1 13:46:48 2019 -0400
+
+    flaky and better confidence
+
+commit 6d665634fc2b9f7711f55602525b69557799bfc7
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Mon Sep 30 12:33:10 2019 -0400
+
+    changed options
+
+commit 607a5295756ec7335931650d603a1c4c7f14f5f6
+Merge: aca0f30 d586f7c
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Sun Sep 29 08:51:30 2019 -0400
+
+    Merge branch '2.1-wd05' into custom-properties
+
+commit d586f7ca7e22b3770cbb53431d3a4e8350982233
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Thu Sep 26 15:00:54 2019 -0400
+
+    more non-ascii 3
+
+commit 9b9bdbf3987e29be45dc101858fb31bb0cd791eb
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Thu Sep 26 14:50:12 2019 -0400
+
+    more non-ascii 2
+
+commit 66964766226d4937014e5cf6097fdf20a0fc780f
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Thu Sep 26 14:30:34 2019 -0400
+
+    more non-ascii
+
+commit 7d00c429edc591993794dec2f7ce61c27038a87e
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Thu Sep 26 14:13:43 2019 -0400
+
+    remove none ascii character
+
+commit 8f9c83bc74e2184d2bd242acd575e1be172b201d
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Thu Sep 26 10:09:26 2019 -0400
+
+    fix indexing on observed-data
+
+commit aca0f30b44907a7c37699dd993e2cf7342f3210d
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Thu Sep 26 08:47:43 2019 -0400
+
+    custom properties in patterns
+
+commit 8bd717c48b4573cfac2bf27d6e80d6a0852cb8dc
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Wed Sep 25 14:27:26 2019 -0400
+
+    added option and handle statements better
+
+commit eaa3fbffed13c1221808904e0a5935bf2d6112a0
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Wed Sep 25 10:47:26 2019 -0400
+
+    custom properties
+
+commit e4896f1268a6072a7fed9d834f764f9e4f6ae644
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Mon Sep 23 12:22:34 2019 -0400
+
+    flaky again
+
+commit 5c19ef55cc999c70c554aef81a290f8e712e8848
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Fri Sep 20 11:13:10 2019 -0400
+
+    added deterministic ids, test the stepper for them
+
+commit 70736313ba343a55d536742c906182cf1d26ac62
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Wed Sep 18 12:53:05 2019 -0400
+
+    sort 'em
+
+commit cd4618374ff8c128bbeca0e08128d9888ae1816b
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Wed Sep 18 12:27:52 2019 -0400
+
+    use OrderedDict in json.loads
+
+commit dc079a1c3ce959732044f741dd566e629b970e35
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Mon Sep 16 13:59:05 2019 -0400
+
+    handle unicode 2.7 issue
+
+commit 4759795fe1e096ca392b1b73f7f7a61f5b220196
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Mon Sep 16 13:31:43 2019 -0400
+
+    check for pattern-type
+
+commit aa91cc709aa0c7e7384ddd757913b749c056d9c2
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Mon Sep 16 13:23:07 2019 -0400
+
+    flaky, snort/yara
+
+commit ca835faf6125b28076ee4a1fb658ef783675b310
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Mon Sep 16 11:38:13 2019 -0400
+
+    fix 2.0 and stepper tests
+
+commit 2c550b1032c0a369c43c123e5f8e39f254a1b9ce
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Sat Sep 14 16:25:54 2019 -0400
+
+    removed extra scos, make last 3 test cases work
+
+commit 0a0d6ec6ebf59fb8c0a65c9ed87262bfeb7d6017
+Merge: 8816f0c 91ee72b
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Fri Sep 6 13:58:03 2019 -0400
+
+    merged in issue-162
+
+commit 91ee72b520a62c05ad0a1230cabb83707ba81ee3
+Merge: c9e1f8e e465eed
+Author: Emmanuelle Vargas-Gonzalez <emmanvg@users.noreply.github.com>
+Date:   Fri Sep 6 13:34:17 2019 -0400
+
+    Merge pull request #164 from oasis-open/issue-162
+    
+    Issue 162
+
+commit e465eed897b64c58378a222a77e585abfbc5606d
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Fri Sep 6 12:15:05 2019 -0400
+
+    flaky
+
+commit 092410edaa3c7ae78426a9deba1bfb948641947a
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Fri Sep 6 11:28:04 2019 -0400
+
+    testing issue-162
+
+commit 439377bfdc114dd5076c67d80950ead48256dccc
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Thu Sep 5 16:56:06 2019 -0400
+
+    issue-162
+
+commit c9e1f8ee89a67e14a2e80318bd74b7e5179a178e
+Merge: 9bc023f 2167f4f
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Wed Sep 4 16:01:36 2019 -0400
+
+    Merge pull request #163 from emmanvg/162-issue-key-error
+    
+    change `iterpath()` method to enumerate values in list
+
+commit 2167f4fe8d4145cddcf60c9de11652c2f5c03a84
+Author: Emmanuelle Vargas-Gonzalez <emmanuelle@mitre.org>
+Date:   Wed Sep 4 14:56:16 2019 -0400
+
+    lower the pre-commit version
+
+commit a90ccef07d0c289547cc2eb1fe3359c9bd76b8b1
+Author: Emmanuelle Vargas-Gonzalez <emmanuelle@mitre.org>
+Date:   Wed Sep 4 14:51:02 2019 -0400
+
+    remove style from py34
+
+commit 9ac394dd29cf4ac7dc2dd0a56d95ea94969115a3
+Author: Emmanuelle Vargas-Gonzalez <emmanuelle@mitre.org>
+Date:   Wed Sep 4 14:31:02 2019 -0400
+
+    bring back isort-check and apply changes
+
+commit 86a50f408e14667d614a685915b36ffd91e05c3e
+Author: Emmanuelle Vargas-Gonzalez <emmanuelle@mitre.org>
+Date:   Wed Sep 4 14:09:44 2019 -0400
+
+    indent file
+
+commit 133ebc20a82b762ce60aa22241cc65f4a5bfd014
+Author: Emmanuelle Vargas-Gonzalez <emmanuelle@mitre.org>
+Date:   Wed Sep 4 13:53:57 2019 -0400
+
+    update pre-commit, tox, and travis ci configuration
+    
+    re-indent file
+
+commit df7a4b758c9d0dc60e1e3b713af881fd66a5b5cc
+Author: Emmanuelle Vargas-Gonzalez <emmanuelle@mitre.org>
+Date:   Wed Sep 4 11:25:36 2019 -0400
+
+    update pre-commit configuration
+
+commit b214de64fc00bfcbf297cf289f33c1c96cf4f7ff
+Author: Emmanuelle Vargas-Gonzalez <emmanuelle@mitre.org>
+Date:   Wed Sep 4 09:58:47 2019 -0400
+
+    sort imports, and update pre-commit
+
+commit 9bc023f7d762909a02fb547695e34e735d8a15f9
+Author: Chris Lenk <clenk@mitre.org>
+Date:   Fri Aug 30 09:35:59 2019 -0400
+
+    Add contributing guide, update docs settings
+
+commit 8816f0cf8336ac44d59c492278a4be11c008daa2
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Mon Sep 2 13:58:47 2019 -0400
+
+    handle related ttps
+
+commit 3c8079b92630d6612bd8a75935d39d8e604b2be7
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Sat Aug 31 16:06:44 2019 -0400
+
+    stepper done, elevator almost
+
+commit af70cd2d170b5233675b1aecb8b49585d7f676f7
+Author: Emmanuelle Vargas-Gonzalez <emmanuelle@mitre.org>
+Date:   Fri Aug 30 10:28:57 2019 -0400
+
+    change `iterpath()` method to enumerate values in list
+
+commit b01f1cb054df4931bd7c276dbe077bcb4a58383c
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Sat Aug 17 16:00:53 2019 -0400
+
+    handle ref and refs
+
+commit ccca1fae9be57d1b0611272891ec9e6d134d366b
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Thu Aug 15 12:44:37 2019 -0400
+
+    sco changes
+
+commit 88eb7342505d552d39cac595539c23f8b2ec0653
+Author: Chris Lenk <clenk@mitre.org>
+Date:   Thu Aug 15 12:09:08 2019 -0400
+
+    Travis py3.7 workaround no longer needed
+
+commit acfa967356fdfd694c01c271635fa2811cba530f
+Author: Rich Piazza <rpiazza@mitre.org>
+Date:   Tue Aug 13 09:44:27 2019 -0400
+
+    initial changes for wd05
+
+commit fc3d16fdb2498043f72da996277937f805a811ee
+Author: Chris Lenk <clenk@users.noreply.github.com>
+Date:   Thu Jul 25 08:43:50 2019 -0400
+
+    Update Maintainers List
+    
+    Added Jason Keirstead
+
+commit 35d75fa4543b71e7cb8f571fdc966c3ac6d8f2b2
+Merge: 8e0b688 b10c10a
+Author: Chris Lenk <clenk@users.noreply.github.com>
+Date:   Fri Feb 1 11:20:56 2019 -0500
+
+    Merge pull request #150 from oasis-open/issue148
+    
+    fix issue #148 - adding ports
+
+commit b10c10aa1aebf9b5b8b278bd80ac635fd8c3066f
+Author: Richard Piazza <rpiazza@mitre.org>
+Date:   Wed Jan 30 17:32:06 2019 -0500
+
+    fix issue #148 - adding ports
+
+commit 8e0b6886633a82ff371d2737027c96ff2225cb1c
+Merge: 85c49fd e6734f1
+Author: Chris Lenk <clenk@users.noreply.github.com>
+Date:   Wed Jan 30 14:49:45 2019 -0500
+
+    Merge pull request #149 from emmanvg/tlp-markings-changes
+    
+    TLP markings changes
+
+commit e6734f1265816c3d45640a9b6a5d746024d3e548
+Author: Emmanuelle Vargas-Gonzalez <emmanuelle@mitre.org>
+Date:   Tue Jan 29 17:48:34 2019 -0500
+
+    update idioms to reflect changes
+
+commit e03e88b67dc48ccd80fe93b7ead4cdc702f1ed20
+Author: Emmanuelle Vargas-Gonzalez <emmanuelle@mitre.org>
+Date:   Tue Jan 29 17:44:52 2019 -0500
+
+    generate good uuidv4 for sample
+
+commit ee1d909822e7f64ecc5b20ca01329095620e4265
+Author: Emmanuelle Vargas-Gonzalez <emmanuelle@mitre.org>
+Date:   Tue Jan 29 17:39:06 2019 -0500
+
+    Make changes to remove TLP marking from final bundle
+
+commit 85c49fdbd92651a5bd8aa527247cbcb9bdbc29d0
+Merge: 91a847c 3aa19fb
+Author: Chris Lenk <clenk@users.noreply.github.com>
+Date:   Tue Jan 29 09:42:51 2019 -0500
+
+    Merge pull request #146 from emmanvg/141-tlp-marking-ids
+    
+    Generate TLP marking-definition objects according to the specification
+
+commit 3aa19fb3ddcd768c40497c30c0f1b8d9c59a92cf
+Author: Emmanuelle Vargas-Gonzalez <emmanuelle@mitre.org>
+Date:   Fri Jan 18 13:47:19 2019 -0500
+
+    pre-commit style changes
+
+commit c4cfc0876fd055bfc7aa3e30b86f25757ff436b9
+Author: Emmanuelle Vargas-Gonzalez <emmanuelle@mitre.org>
+Date:   Fri Jan 18 13:24:58 2019 -0500
+
+    Add new files for testing
+
+commit 34944b1ed0add3b290e3df8125ff10a7cb83ea70
+Merge: 14bffae 91a847c
+Author: Emmanuelle Vargas-Gonzalez <emmanuelle@mitre.org>
+Date:   Fri Jan 18 13:24:16 2019 -0500
+
+    Merge branch 'master' of github.com:oasis-open/cti-stix-elevator into 141-tlp-marking-ids
+
+commit 14bffae3a0de1a85eefbc15e510c1341357bc118
+Author: Emmanuelle Vargas-Gonzalez <emmanuelle@mitre.org>
+Date:   Fri Jan 18 13:22:14 2019 -0500
+
+    Update logic to create TLP markings as stated in the specification. closes #141

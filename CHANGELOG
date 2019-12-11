@@ -1,6 +1,22 @@
 CHANGELOG
 =========
 
+2.1.0 - 2019-12-11
+
+    *	Handle SCOs
+    *	More complete support of CybOX objects
+    *	Enable use of custom properties for properties missing from STIX 2.x
+    *	Support all additional properties and property name changes for STIX 2.1 WD06
+    *	Handle UUIDv5 for SCOs in STIX 2.1
+
+    *	Fix patterns involving PE binary file header
+    *	Handle characteristic observables in infrastructure
+    *	Better mapping of STIX 1.x relationship types to STIX 2.x ones
+    *	Update logic to create TLP markings as stated in the specification
+    *	issue #148 - support ports CybOX object
+    *	Handle “Contains” operator more correctly
+    *   Allow SNORT/YARA patterns
+
 2.0.1 - 2019-01-16
 
     * #145 - Pass version option given in the command line to the stix-validator
