@@ -1134,7 +1134,7 @@ STIX 2.1 in JSON
            "object_refs": [
                 "directory--4aa982e3-4aac-5d5b-a699-d08c8c11f5f3",
                 "file--49959589-27c4-5873-8e23-82f6c909d4ca"
-           },
+           ],
            "type": "observed-data"
     }
 
