@@ -1307,8 +1307,7 @@
                 "indicator--0302df0c-a056-48e2-99d2-7bfd23931cb6"
             ],
             "published": "2015-05-15T09:00:00.000Z",
-            "type": "report",
-            "x_elevator_intent": "Indicators"
+            "type": "report"
         }
     ],
     "spec_version": "2.0",

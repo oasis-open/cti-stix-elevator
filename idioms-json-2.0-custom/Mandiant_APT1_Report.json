@@ -1539,8 +1539,7 @@
                 "attack-pattern--0781fe70-4c94-4300-8865-4b08b98611b4"
             ],
             "published": "2015-05-15T09:00:00.000Z",
-            "type": "report",
-            "x_elevator_intent": "Threat Actor Report"
+            "type": "report"
         }
     ],
     "spec_version": "2.0",

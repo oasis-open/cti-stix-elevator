@@ -1,3 +1,5 @@
+.. _cyber_observables:
+
 Mappings from CybOX 2.x to STIX 2.x
 ========================================
 
@@ -16,7 +18,7 @@ converted by the elevator.
 ``Address``                     ``mac-addr``                                  yes
 ``ArchiveFile``                 ``file:archive-ext``                          yes
 ``Artifact``                    ``artifact``                                  yes
-``AutonomusSystem``             ``autonomous-system``                         no
+``AutonomousSystem``            ``autonomous-system``                         no
 ``File``                        ``directory``                                 yes
 ``DomainName``                  ``domain-name``                               yes
 ``DNSQuery``                    *none*                                        no
@@ -24,7 +26,7 @@ converted by the elevator.
 ``File``                        ``file``                                      yes
 ``HTTPClientRequest``           ``network-traffic:http-request-ext``          yes
 ``HTTPSession``                 ``network-traffic``                           yes
-``ICMP``(``v4``/``v6``)         ``network-traffic:icmp-ext``                  yes
+``ICMP`` (``v4``/``v6``)        ``network-traffic:icmp-ext``                  yes
 ``ImageFile``                   ``file:raster-image-ext``                     no
 ``Link``                        *none*                                        no
 ``Mutex``                       ``mutex``                                     yes

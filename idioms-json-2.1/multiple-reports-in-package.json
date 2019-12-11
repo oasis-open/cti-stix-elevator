@@ -22,7 +22,7 @@
     {
       "created": "2015-05-07T14:22:14.760Z",
       "created_by_ref": "identity--cac8fc0e-3ecb-4e4f-aac5-5bbdf2ff49a5",
-      "description": "Adversary Alpha has a campaign against the ICS sector!\n\nINTENT:\nCampaign Characterization",
+      "description": "Adversary Alpha has a campaign against the ICS sector!",
       "id": "report--ab11f431-4b3b-457c-835f-59920625fe65",
       "report_types": [
         "campaign-characterization"
@@ -39,7 +39,6 @@
     {
       "created": "2015-05-07T14:22:14.760Z",
       "created_by_ref": "identity--cac8fc0e-3ecb-4e4f-aac5-5bbdf2ff49a5",
-      "description": "\n\nINTENT:\nIndicators - Malware Artifacts",
       "id": "report--f14804d5-3ee1-4a0e-b0f3-f9a643855ba5",
       "report_types": [
         "indicator-malware-artifacts"

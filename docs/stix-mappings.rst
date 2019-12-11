@@ -10,92 +10,99 @@ For each STIX 1.x object that was converted the following options are possible:
    corresponding content for 2.x.
  - **STIX 1.x property mapped using STIX 2.x relationships.** This property is used to construct a 2.x relationship object.  The "reverse"
    notation indicates the the STIX 1.x property is found on target object.
- - **STIX 1.x property recorded in the STIX 2.x description property.**  This property has no corresponding property in STIX 2.x, but its value
-   can be (optionally) included in the description property of the 2.x object as text.
+ - **STIX 1.x property handled based on the "missing policy" option.**  This property has no corresponding property in STIX 2.x, but its value
+   can be (optionally) included using custom properties or in the description property of the 2.x object as text,
+   depending upon the **--missing-property** option.
  - **STIX 1.x property not mapped.**  This property will not be included in the converted 2.x object.
+
+All examples were generated using the missing policy of **add-to-description**.
 
 Top Level Object Mappings
 -------------------------------
 
-This table describes the mapping between STIX 1.0 and STIX 2.x top-level objects.  Notice that certain object types in STIX 1.x
-that were not top-level objects are in STIX 2.x (e.g., Malware).
+This table describes the mapping between STIX 1.x and STIX 2.x top-level objects.  Notice that certain object types in STIX 1.x
+that were not top-level objects are in STIX 2.x (e.g., Malware).  In STIX 2.1, cyber observable objects are also top-level
+objects - but their mapping can be foiund in the :ref:`cyber_observables` section
 
-+-----------------------------+-------------------------+
-| **STIX 1.x object**         | **STIX 2.x object**     |
-+=============================+=========================+
-| ``Campaign``                | ``campaign``            |
-+-----------------------------+-------------------------+
-| ``Course_Of_Action``        | ``course-of-action``    |
-+-----------------------------+-------------------------+
-| ``et:Vulnerability``        | ``vulnerability``       |
-+-----------------------------+-------------------------+
-| ``et:Weakness``             | *not converted*         |
-+-----------------------------+-------------------------+
-| ``et:Configuration``        | *not converted*         |
-+-----------------------------+-------------------------+
-| ``Incident``                | *not converted*         |
-+-----------------------------+-------------------------+
-| ``Indicator``               | ``indicator``           |
-+-----------------------------+-------------------------+
-| ``Information_Source/``     | ``location``            |
-| ``CIQIdentity3_0Instance/`` |                         |
-| ``Address``                 |                         |
-+-----------------------------+-------------------------+
-| ``Report``                  | ``report``              |
-+-----------------------------+-------------------------+
-| ``Observable``              | ``observed-data``       |
-+-----------------------------+-------------------------+
-| ``Package``                 | ``bundle``              |
-+-----------------------------+-------------------------+
-| ``Threat Actor``            | ``threat-actor``        |
-+-----------------------------+-------------------------+
-| ``ttp:Attack_Pattern``      | ``attack-pattern``      |
-+-----------------------------+-------------------------+
-| ``ttp:Infrastructure``      | *not converted*         |
-+-----------------------------+-------------------------+
-| ``ttp:Malware``             | ``malware``             |
-+-----------------------------+-------------------------+
-| ``ttp:Persona``             | *not converted*         |
-+-----------------------------+-------------------------+
-| ``ttp:Tool``                | ``tool``                |
-+-----------------------------+-------------------------+
-| ``ttp:Victim_Targeting``    | ``identity``            |
-+-----------------------------+-------------------------+
-
++-----------------------------+----------------------------+
+| **STIX 1.x object**         | **STIX 2.x object**        |
++=============================+============================+
+| ``Campaign``                | ``campaign``               |
++-----------------------------+----------------------------+
+| ``Course_Of_Action``        | ``course-of-action``       |
++-----------------------------+----------------------------+
+| ``et:Vulnerability``        | ``vulnerability``          |
++-----------------------------+----------------------------+
+| ``et:Weakness``             | *not converted*            |
++-----------------------------+----------------------------+
+| ``et:Configuration``        | *not converted*            |
++-----------------------------+----------------------------+
+| ``Incident``                | *not converted by default* |
++-----------------------------+----------------------------+
+| ``Indicator``               | ``indicator``              |
++-----------------------------+----------------------------+
+| ``Information_Source/``     | ``location``               |
+| ``CIQIdentity3_0Instance/`` |                            |
+| ``Address``                 |                            |
++-----------------------------+----------------------------+
+| ``Report``                  | ``report``                 |
++-----------------------------+----------------------------+
+| ``Observable``              | ``observed-data``          |
++-----------------------------+----------------------------+
+| ``Package``                 | ``bundle``                 |
++-----------------------------+----------------------------+
+| ``Threat Actor``            | ``threat-actor``           |
++-----------------------------+----------------------------+
+| ``ttp:Attack_Pattern``      | ``attack-pattern``         |
++-----------------------------+----------------------------+
+| ``ttp:Infrastructure``      | ``infrastructure``         |
++-----------------------------+----------------------------+
+| ``ttp:Malware``             | ``malware``                |
++-----------------------------+----------------------------+
+| ``ttp:Persona``             | *not converted*            |
++-----------------------------+----------------------------+
+| ``ttp:Tool``                | ``tool``                   |
++-----------------------------+----------------------------+
+| ``ttp:Victim_Targeting``    | ``identity``               |
++-----------------------------+----------------------------+
 
 Common Properties
 ------------------------
 
 **STIX 1.x Properties Mapped Directly to STIX 2.x Properties**
 
-+-------------------------+-------------------------+
-| **STIX 1.x property**   | **STIX 2.x property**   |
-+=========================+=========================+
-| ``Description``         | ``description``         |
-+-------------------------+-------------------------+
-| ``timestamp``           |   ``modified``          |
-+-------------------------+-------------------------+
-| ``Title``               |   ``name``              |
-+-------------------------+-------------------------+
+..  table::
+    :align: left
+
+    +-------------------------+-------------------------+
+    | **STIX 1.x property**   | **STIX 2.x property**   |
+    +=========================+=========================+
+    | ``Description``         | ``description``         |
+    +-------------------------+-------------------------+
+    | ``timestamp``           |   ``modified``          |
+    +-------------------------+-------------------------+
+    | ``Title``               |   ``name``              |
+    +-------------------------+-------------------------+
 
 In STIX 1.x only one timestamp is recorded, whereas in STIX 2.x, there are two properties:  ``created`` and ``modified``.  The ``created`` timestamp
 is not stored in objects in STIX 1.x.  The ``timestamp`` property in STIX 1.x holds the ``modified`` timestamp.
 
 **STIX 1.x Properties Translated to STIX 2.x Properties**
 
-+-------------------------+--------------------------------------------------+
-| **STIX 1.x property**   | **STIX 2.x property**                            |
-+=========================+==================================================+
-| ``id``                  | ``id``                                           |
-+-------------------------+--------------------------------------------------+
-| ``Handling``            |   ``object_markings_refs, granular_markings``    |
-+-------------------------+--------------------------------------------------+
-| ``Information_Source``  |   ``created_by_ref``, ``external_references``    |
-+-------------------------+--------------------------------------------------+
-| ``Type``                |   ``labels``                                     |
-+-------------------------+--------------------------------------------------+
-| ``Confidence``          |   ``confidence``                                 |
-+-------------------------+--------------------------------------------------+
+..  table::
+    :align: left
+
+    +-------------------------+--------------------------------------------------+
+    | **STIX 1.x property**   | **STIX 2.x property**                            |
+    +=========================+==================================================+
+    | ``id``                  | ``id``                                           |
+    +-------------------------+--------------------------------------------------+
+    | ``Handling``            |   ``object_markings_refs, granular_markings``    |
+    +-------------------------+--------------------------------------------------+
+    | ``Information_Source``  |   ``created_by_ref``, ``external_references``    |
+    +-------------------------+--------------------------------------------------+
+    | ``Confidence``          |   ``confidence``                                 |
+    +-------------------------+--------------------------------------------------+
 
 In STIX 1.x, an ``id`` contained a "namespace".  This was deemed unnecessary in STIX 2.x, therefore they contain no origin information.
 
@@ -132,7 +139,7 @@ In STIX 1.x, an ``id`` contained a "namespace".  This was deemed unnecessary in 
     very streamlined set of properties: ``identity_class`` to specify
     if it is an individual or organization, ``sectors`` to indicate the
     industry sector that the identity belongs to, and a free text
-    property, ``contact_information`` to specify such information. All other STIX 1.x
+    property, ``contact_information`` to specify such information. Other OASIS CIQ standard model
     propeties are not mapped in the conversion.
 
     The ``InformationSourceType`` object was used in STIX 1.x to associate
@@ -142,13 +149,14 @@ In STIX 1.x, an ``id`` contained a "namespace".  This was deemed unnecessary in 
 
     The ``InformationSourceType`` object was also used in STIX 1.x to
     specify external information. Other properties like ``capec_id`` of
-    ``AttackPatternType``, or ``cwe_id`` of ``VulnerabilityType`` were also used
+    ``AttackPatternType``, or ``cve_id`` of ``VulnerabilityType`` were also used
     for external information, holding the ids of items in repositories
     or systems external to STIX. In STIX 2.x, the data type
     ``external-reference`` is used for all external information.
 
     The ``InformationSourceType`` object was also used in STIX 1.x to
-    specify location information.
+    specify location information.  The ``location`` object will be used when converting to
+    STIX 2.1.
 
 
 -  Type
@@ -169,11 +177,11 @@ In STIX 1.x, an ``id`` contained a "namespace".  This was deemed unnecessary in 
 
 *none*
 
-**STIX 1.x Properties Handled Based on the "missing policy"**
+**STIX 1.x Properties Handled Based by the "missing policy"**
 
 -  ``Short_Description``
 
--  ``Confidence``
+-  ``Confidence`` *in STIX 2.0*
 
     The confidence concept is available only STIX 2.1.
 
@@ -183,9 +191,9 @@ In STIX 1.x, an ``id`` contained a "namespace".  This was deemed unnecessary in 
 
     Relationships in STIX 2.x make use of id references to indicate the
     source and target of the relationship. STIX 2.x objects additionally
-    use ``id`` references for any property whose suffix is ``ref`` or``refs``.
-    The decision available in STIX 1.x to specify related objects by
-    embedding them is not available in STIX 2.x.
+    use ``id`` references for any property whose suffix is ``ref`` or ``refs``.
+    The facility available in STIX 1.x to specify related objects by
+    embedding them in other objects is not available in STIX 2.x.
 
 -  ``Related_Packages``
 
@@ -196,8 +204,11 @@ In STIX 1.x, an ``id`` contained a "namespace".  This was deemed unnecessary in 
 -  ``Version``
 
     Individual STIX objects do not have their own STIX version in STIX
-    2.x. A bundle has the property ``spec_version``, which applies to all
-    objects that are contained in the bundle.
+    2.0. A bundle has the property ``spec_version``, which applies to all
+    objects that are contained in the bundle.  In STIX 2.1, objects do have
+    the property ``spec_version``.  In all cases, the version information
+    is not transfered from the STIX 1.x object, but depends upon the --version
+    option when invoking the elevator.
 
 Versioning
 ~~~~~~~~~~~~~~~~~~~
@@ -277,26 +288,32 @@ Attack Pattern
 
 **STIX 1.x Properties Translated to STIX 2.x Properties**
 
-+---------------------------+-------------------------------------------------------------------+
-| **STIX 1.x property**     | **STIX 2.x property**                                             |
-+===========================+===================================================================+
-| ``capec_id``              |   ``external_references``                                         |
-+---------------------------+-------------------------------------------------------------------+
-| ``ttp:Kill_Chain_Phases`` | ``kill_chain_phases``                                             |
-+---------------------------+-------------------------------------------------------------------+
+..  table::
+    :align: left
+
+    ============================  ==============================
+    **STIX 1.x property**         **STIX 2.x property**
+    ============================  ==============================
+    ``capec_id``                  ``external_references``
+    ``ttp:Kill_Chain_Phases``     ``kill_chain_phases``
+    ============================  ==============================
 
 
 **STIX 1.x Properties Mapped Using STIX 2.x Relationships**
 
-+---------------------------+------------------------------------------------------------------------+
-| **STIX 1.x property**     | **STIX 2.x relationship type**                                         |
-+===========================+========================================================================+
-| ``ttp:Victim_Targeting``  | ``targets``                                                            |
-+---------------------------+------------------------------------------------------------------------+
-| ``ttp:Exploit_Targets``   | ``targets`` (vulnerability, only)                                      |
-+---------------------------+------------------------------------------------------------------------+
-| ``ttp:Related_TTPs``      | ``uses`` (malware, tool), ``related-to`` (when not used for versioning)|
-+---------------------------+------------------------------------------------------------------------+
+
+..  table::
+    :align: left
+
+    +---------------------------+------------------------------------------------------------------------+
+    | **STIX 1.x property**     | **STIX 2.x relationship type**                                         |
+    +===========================+========================================================================+
+    | ``ttp:Victim_Targeting``  | ``targets``                                                            |
+    +---------------------------+------------------------------------------------------------------------+
+    | ``ttp:Exploit_Targets``   | ``targets`` (vulnerability, only)                                      |
+    +---------------------------+------------------------------------------------------------------------+
+    | ``ttp:Related_TTPs``      | ``uses`` (malware, tool), ``related-to`` (when not used for versioning)|
+    +---------------------------+------------------------------------------------------------------------+
 
 **STIX 1.x Properties Handled Based on the "missing policy"**
 
@@ -351,33 +368,42 @@ Campaigns
 
 **STIX 1.x Properties Mapped Directly to STIX 2.x Properties**
 
-+-------------------------+------------------------+
-| **STIX 1.x property**   | **STIX 2.x property**  |
-+=========================+========================+
-| ``Names``               |   ``aliases``          |
-+-------------------------+------------------------+
+..  table::
+    :align: left
+
+    +-------------------------+------------------------+
+    | **STIX 1.x property**   | **STIX 2.x property**  |
+    +=========================+========================+
+    | ``Names``               |   ``aliases``          |
+    +-------------------------+------------------------+
 
 **STIX 1.x Properties Translated to STIX 2.x Properties**
 
-+-------------------------+------------------------+
-| **STIX 1.x property**   | **STIX 2.x property**  |
-+=========================+========================+
-| ``Intended_Effect``     |   ``objective``        |
-+-------------------------+------------------------+
+..  table::
+    :align: left
+
+    +-------------------------+------------------------+
+    | **STIX 1.x property**   | **STIX 2.x property**  |
+    +=========================+========================+
+    | ``Intended_Effect``     |   ``objective``        |
+    +-------------------------+------------------------+
 
 **​STIX 1.x Properties Mapped Using STIX 2.x Relationships**
 
-+-------------------------+----------------------------------------------+
-| **STIX 1.x property**   | **STIX 2.x relationship type**               |
-+=========================+==============================================+
-| ``Related_TTPs``        | ``uses``                                     |
-+-------------------------+----------------------------------------------+
-| ``Related_Campaign``    | ``indicates`` (reverse)                      |
-+-------------------------+----------------------------------------------+
-| ``Attribution``         | ``attributed-to``                            |
-+-------------------------+----------------------------------------------+
-| ``Associated_Campaigns``| ``related-to`` (when not used for versioning)|
-+-------------------------+----------------------------------------------+
+..  table::
+    :align: left
+
+    +-------------------------+----------------------------------------------+
+    | **STIX 1.x property**   | **STIX 2.x relationship type**               |
+    +=========================+==============================================+
+    | ``Related_TTPs``        | ``uses``                                     |
+    +-------------------------+----------------------------------------------+
+    | ``Related_Campaign``    | ``indicates`` (reverse)                      |
+    +-------------------------+----------------------------------------------+
+    | ``Attribution``         | ``attributed-to``                            |
+    +-------------------------+----------------------------------------------+
+    | ``Associated_Campaigns``| ``related-to`` (when not used for versioning)|
+    +-------------------------+----------------------------------------------+
 
 **STIX 1.x Properties Handled Based on the "missing policy"**
 
@@ -478,7 +504,14 @@ reserved, but not defined in STIX 2.x.
 
 **STIX 1.x Properties Mapped Directly to STIX 2.x Properties**
 
-*none*
+..  table::
+    :align: left
+
+    +-------------------------+-----------------------+
+    | **STIX 1.x property**   | **STIX 2.x property** |
+    +=========================+=======================+
+    | ``Type``                |   ``labels``          |
+    +-------------------------+-----------------------+
 
 **STIX 1.x Properties Translated to STIX 2.x Properties**
 
@@ -486,11 +519,14 @@ reserved, but not defined in STIX 2.x.
 
 **STIX 1.x Properties Mapped Using STIX 2.x Relationships**
 
-+------------------------------+----------------------------------------------+
-| **STIX 1.x property**        | **STIX 2.x relationship type**               |
-+==============================+==============================================+
-|     ``Related_COAs``         | ``related-to`` (when not used for versioning)|
-+------------------------------+----------------------------------------------+
+..  table::
+    :align: left
+
+    +------------------------------+----------------------------------------------+
+    | **STIX 1.x property**        | **STIX 2.x relationship type**               |
+    +==============================+==============================================+
+    |     ``Related_COAs``         | ``related-to`` (when not used for versioning)|
+    +------------------------------+----------------------------------------------+
 
 **STIX 1.x Properties Handled Based on the "missing policy"**
 
@@ -504,7 +540,6 @@ reserved, but not defined in STIX 2.x.
 
  - ``Parameter_Observables``
  - ``Structured_COA``
- - ``Action``
 
 **An Example**
 
@@ -583,50 +618,62 @@ to ensure the STIX 2.x Indicator has the intended meaning.
 
 **STIX 1.x Properties Mapped Directly to STIX 2.x Properties**
 
-+-------------------------+---------------------------------------------+
-| **STIX 1.x property**   | **STIX 2.x property**                       |
-+=========================+=============================================+
-| ``Valid_Time_Position`` |   ``valid_from``, ``valid_until``           |
-+-------------------------+---------------------------------------------+
+..  table::
+    :align: left
+
+    +-------------------------+------------------------------------------------+
+    | **STIX 1.x property**   | **STIX 2.x property**                          |
+    +=========================+================================================+
+    | ``Valid_Time_Position`` |   ``valid_from``, ``valid_until``              |
+    +-------------------------+------------------------------------------------+
+    | ``Type``                |   ``labels`` in 2.0, ``indicator_type`` in 2.1 |
+    +-------------------------+------------------------------------------------+
 
 
 **STIX 1.x Properties Translated to STIX 2.x Properties**
 
-+-------------------------+---------------------------------------------+
-| **STIX 1.x property**   | **STIX 2.x property**                       |
-+=========================+=============================================+
-| ``Alternative_ID``      |   ``external_references``                   |
-+-------------------------+---------------------------------------------+
-| ``Kill_Chain_Phases``   |   ``kill_chain_phases``                     |
-+-------------------------+---------------------------------------------+
-| ``IndicatorExpression`` |   ``pattern``                               |
-+-------------------------+---------------------------------------------+
-| ``Producer``            |   ``created_by_ref``                        |
-+-------------------------+---------------------------------------------+
+..  table::
+    :align: left
+
+    +-------------------------+---------------------------------------------+
+    | **STIX 1.x property**   | **STIX 2.x property**                       |
+    +=========================+=============================================+
+    | ``Alternative_ID``      |   ``external_references``                   |
+    +-------------------------+---------------------------------------------+
+    | ``Kill_Chain_Phases``   |   ``kill_chain_phases``                     |
+    +-------------------------+---------------------------------------------+
+    | ``Indicator_Expression``|   ``pattern``                               |
+    +-------------------------+---------------------------------------------+
+    | ``Test_Mechanisms``     |   ``pattern``                               |
+    +-------------------------+---------------------------------------------+
+    | ``Producer``            |   ``created_by_ref``                        |
+    +-------------------------+---------------------------------------------+
 
 **STIX 1.x Properties Mapped Using STIX 2.x Relationships**
 
-+-------------------------+----------------------------------------------+
-| **STIX 1.x property**   | **STIX 2.x relationship type**               |
-+=========================+==============================================+
-| ``Indicated_TTP``       | ``detects``                                  |
-+-------------------------+----------------------------------------------+
-| ``Suggested_COAs``      | ``related-to``                               |
-+-------------------------+----------------------------------------------+
-| ``Related_Indicators``  | ``related-to`` (when not used for versioning)|
-+-------------------------+----------------------------------------------+
-| ``Related_Campaigns``   | ``indicates``                                |
-+-------------------------+----------------------------------------------+
+..  table::
+    :align: left
+
+    +-------------------------+----------------------------------------------+
+    | **STIX 1.x property**   | **STIX 2.x relationship type**               |
+    +=========================+==============================================+
+    | ``Indicated_TTP``       | ``detects``                                  |
+    +-------------------------+----------------------------------------------+
+    | ``Suggested_COAs``      | ``related-to``                               |
+    +-------------------------+----------------------------------------------+
+    | ``Related_Indicators``  | ``related-to`` (when not used for versioning)|
+    +-------------------------+----------------------------------------------+
+    | ``Related_Campaigns``   | ``indicates``                                |
+    +-------------------------+----------------------------------------------+
 
 **STIX 1.x Properties Handled Based on the "missing policy"**
 
-*none*
+- ``Likely_Impact``
 
 **STIX 1.x Properties Not Mapped**
 
 - ``negate``
-- ``Test_Mechanisms``
-- ``Likely_Impact``
+
 
 **An Example**
 
@@ -654,20 +701,23 @@ STIX 2.x in JSON
     {
        "created": "2017-01-27T13:49:53.935Z",
        "id": "indicator--d81f86b9-975b-bc0b-775e-810c5ad45a4f",
-       "labels": [
+       "indicator_types": [
            "url-watchlist"
        ],
        "modified": "2017-01-27T13:49:53.935Z",
        "name": "Malicious site hosting downloader",
        "pattern": "[url:value = 'http://x4z9arb.cn/4712']",
+       "pattern_type": "stix",
        "type": "indicator",
        "valid_from": "2017-01-27T13:49:53.935382Z"
     }
 
+``indicator_types`` would be ``labels`` in 2.0
+
 **Sightings**
 
 In STIX 1.x sightings were a property of
-IndicatorType. In STIX 2.x, sightings are a top-level STIX *relationship*
+``IndicatorType``. In STIX 2.x, sightings are a top-level STIX *relationship*
 object. Because they represent the relationship (match) of an indicator
 pattern to observed data (or other object), they are more naturally
 represented as a STIX 2.x relationship.
@@ -698,21 +748,24 @@ The STIX 2.x sighting would be:
 Location
 ----------------------
 
-In STIX 2.1 the ``location`` object corresponds to any Information_Source Address objects in STIX 1.x.
-Information_Source objects with Address information can appear in most top-level STIX 1.x objects. However, you cannot
+In STIX 2.1 the ``location`` object corresponds to any ``Information_Source`` Address objects in STIX 1.x.
+``Information_Source`` objects with ``Address`` information can appear in most top-level STIX 1.x objects. However, you cannot
 store location information as a property in STIX 2.1, because ``location`` is a top-level object.  To do the conversion, it is necessary to
 create a new STIX 2.1 ``location`` object, transfering the STIX 1.x address information into it, and introducing a STIX 2.x
 ``relationship`` object between that original object and the new ``location`` object.
 
 **STIX 1.x Properties Mapped Directly to STIX 2.x Properties**
 
-+------------------------------+----------------------------------------------+
-| **STIX 1.x property**        | **STIX 2.x relationship type**               |
-+==============================+==============================================+
-|     ``Administrative_Area``   | ``administrative_area``                     |
-+------------------------------+----------------------------------------------+
-|     ``Country``              | ``country``                                  |
-+------------------------------+----------------------------------------------+
+..  table::
+    :align: left
+
+    +------------------------------+----------------------------------------------+
+    | **STIX 1.x property**        | **STIX 2.x relationship type**               |
+    +==============================+==============================================+
+    |     ``Administrative_Area``  | ``administrative_area``                      |
+    +------------------------------+----------------------------------------------+
+    |     ``Country``              | ``country``                                  |
+    +------------------------------+----------------------------------------------+
 
 **STIX 1.x Properties Translated to STIX 2.x Properties**
 
@@ -724,11 +777,11 @@ create a new STIX 2.1 ``location`` object, transfering the STIX 1.x address info
 
 **STIX 1.x Properties Handled Based on the "missing policy"**
 
-*none*
+- ``free_text_address``
 
 **STIX 1.x Properties Not Mapped**
 
-- ``free_text_address``
+*none*
 
 
 **An Example**
@@ -837,17 +890,18 @@ STIX 2.1 in JSON
         "type": "bundle"
     }
 
-Notice that the spec_version property only appears on the bundle in STIX 2.0, but in STIX 2.1, is _not_ a property of the
-bundle. It may (optionally) appear on each object.  The elevator will always provides the spec_version property for
+Notice that the ``spec_version`` property only appears on the bundle in STIX 2.0, but in STIX 2.1, it is *not* a property of the
+bundle. It may (optionally) appear on each object.  The elevator will always provides the ``spec_version`` property for
 all 2.1 SDOs and SROs, but not on SCOs.
 
 Malware
 -------------
 
-The Malware object in STIX 2.x is a stub.  STIX 2.x does not support the inclusion of MAEC content.
-The main properties of malware in STIX 2.x are not much different than the defined ones in 1.x,
-however, because of the lack of the ability to include the MAEC content fewer details of
-malware are representable in STIX 2.x.
+The Malware object in STIX 1.x is a stub, which depends up MAEC content for further properties.
+The elevator does not support the conversion of MAEC content.
+The main properties of malware in STIX 2.0 are not much different than the defined ones in 1.x.
+STIX 2.1 included more properties, and additionally the object type ``malware-analysis``, therefore
+conversion of MAEC content could be supported in a future release of the elevator.
 
 Malware is not a top-level object in STIX 1.x, but a property of a ``TTP``.
 
@@ -857,27 +911,40 @@ missing, the ``title`` property can be used.
 
 **STIX 1.x Properties Mapped Directly to STIX 2.x Properties**
 
-*none*
+..  table::
+    :align: left
+
+    +---------------------------+----------------------------------------------+
+    | **STIX 1.x property**     | **STIX 2.x property**                        |
+    +===========================+==============================================+
+    | ``Type``                  | ``labels`` in 2.0, ``malware_types`` in 2.1  |
+    +---------------------------+----------------------------------------------+
 
 **STIX 1.x Properties Translated to STIX 2.x Properties**
 
-+---------------------------+--------------------------------------------------------------------------------+
-| **STIX 1.x property**     | **STIX 2.x property**                                                          |
-+===========================+================================================================================+
-| ``ttp:Kill_Chain_Phases`` |   ``kill_chain_phases``                                                        |
-+---------------------------+--------------------------------------------------------------------------------+
+..  table::
+    :align: left
+
+    +---------------------------+--------------------------------------------------------------------------------+
+    | **STIX 1.x property**     | **STIX 2.x property**                                                          |
+    +===========================+================================================================================+
+    | ``ttp:Kill_Chain_Phases`` |   ``kill_chain_phases``                                                        |
+    +---------------------------+--------------------------------------------------------------------------------+
 
 **STIX 1.x Properties Mapped Using STIX 2.x Relationships**
 
-+---------------------------+-------------------------------------------------------------------------------------+
-| **STIX 1.x property**     | **STIX 2.x relationship type**                                                      |
-+===========================+=====================================================================================+
-| ``ttp:Related_TTPs``      | ``variant-of`` (malware), ``related-to`` (when not used for versioning), uses (tool)|
-+---------------------------+-------------------------------------------------------------------------------------+
-| ``ttp:Exploit_Targets``   | ``targets`` (vulnerability, only)                                                   |
-+---------------------------+-------------------------------------------------------------------------------------+
-| ``ttp:Victim_Targeting``  | ``targets``                                                                         |
-+---------------------------+-------------------------------------------------------------------------------------+
+..  table::
+    :align: left
+
+    +---------------------------+-------------------------------------------------------------------------------------+
+    | **STIX 1.x property**     | **STIX 2.x relationship type**                                                      |
+    +===========================+=====================================================================================+
+    | ``ttp:Related_TTPs``      | ``variant-of`` (malware), ``related-to`` (when not used for versioning), uses (tool)|
+    +---------------------------+-------------------------------------------------------------------------------------+
+    | ``ttp:Exploit_Targets``   | ``targets`` (vulnerability, only)                                                   |
+    +---------------------------+-------------------------------------------------------------------------------------+
+    | ``ttp:Victim_Targeting``  | ``targets``                                                                         |
+    +---------------------------+-------------------------------------------------------------------------------------+
 
 **STIX 1.x Properties Handled Based on the "missing policy"**
 
@@ -917,7 +984,7 @@ STIX 2.x in JSON
        "created": "2017-01-27T13:49:53.997Z",
        "description": "\n\nTITLE:\n\tPoison Ivy",
        "id": "malware--fdd60b30-b67c-11e3-b0b9-f01faf20d111",
-       "labels": [
+       "malware_types": [
            "remote-access-trojan"
        ],
        "modified": "2017-01-27T13:49:53.997Z",
@@ -925,11 +992,14 @@ STIX 2.x in JSON
        "type": "malware"
     }
 
+``malware_types`` would be ``labels`` in 2.0
+
+
 Observed Data
 --------------
 
 The Observed Data object in STIX 2.x corresponds to the ``Observable``
-object in CybOX 2.x. Each Observed Data objects contain one or more
+object in CybOX 2.x. Each Observed Data objects contain or references one or more
 *related* cyber observable objects.
 
 STIX 2.x adds two properties: ``first_observed`` and ``last_observed``.
@@ -941,25 +1011,31 @@ contain the same timestamp, otherwise they are the timestamp of the first and la
 The ``sighting_count`` property of STIX 1.x may seem to be the same concept as ``number_observed`` property,
 but because STIX 2.x has made explicit the difference between sightings and observed data,
 this is not the case.  See the STIX 2.x specification for more details.
-The sightings count is captured on the Sighting SRO.
+The sightings count is captured on the ``sighting`` SRO.
 
 **STIX 1.x Properties Mapped Directly to STIX 2.x Properties**
 
-+--------------------------+------------------------------------------------+
-| **STIX 1.x property**    | **STIX 2.x property**                          |
-+==========================+================================================+
-| ``sighting_count``       | not to be confused with **number_observed**    |
-+--------------------------+------------------------------------------------+
-| ``Keywords``             | ``labels``                                     |
-+--------------------------+------------------------------------------------+
+..  table::
+    :align: left
+
+    +--------------------------+------------------------------------------------+
+    | **STIX 1.x property**    | **STIX 2.x property**                          |
+    +==========================+================================================+
+    | ``sighting_count``       | not to be confused with **number_observed**    |
+    +--------------------------+------------------------------------------------+
+    |``Keywords``              | ``labels``                                     |
+    +--------------------------+------------------------------------------------+
 
 ​**STIX 1.x Properties Translated to STIX 2.x Properties**
 
-+--------------------------+------------------------------------------------+
-| **STIX 1.x property**    | **STIX 2.x property**                          |
-+==========================+================================================+
-| ``Object``               | ``objects``                                    |
-+--------------------------+------------------------------------------------+
+..  table::
+    :align: left
+
+    +--------------------------+------------------------------------------------+
+    | **STIX 1.x property**    | **STIX 2.x property**                          |
+    +==========================+================================================+
+    | ``Object``               | ``objects`` in 2.0, ``object_refs`` in 2.1     |
+    +--------------------------+------------------------------------------------+
 
 **STIX 1.x Properties Mapped Using STIX 2.x Relationships**
 
@@ -989,12 +1065,18 @@ STIX 1.x in XML
             <cybox:Properties xsi:type="FileObj:FileObjectType">
                 <FileObj:File_Name>iprip32.dll</FileObj:File_Name>
                 <FileObj:File_Path>/usr/local</FileObj:File_Path>
+                <FileObj:Hashes>
+                    <cyboxCommon:Hash>
+                        <cyboxCommon:Type condition="Equals" xsi:type="cyboxVocabs:HashNameVocab-1.0">SHA256</cyboxCommon:Type>
+                        <cyboxCommon:Simple_Hash_Value condition="Equals">e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855</cyboxCommon:Simple_Hash_Value>
+                    </cyboxCommon:Hash>
+                </FileObj:Hashes>
             </cybox:Properties>
        </cybox:Object>
     </cybox:Observable>
 
 
-STIX 2.x in JSON
+STIX 2.0 in JSON
 
 .. code-block:: json
 
@@ -1007,7 +1089,10 @@ STIX 2.x in JSON
        "number_observed": 1,
        "objects": {
            "0": {
-               "file_name": "iprip32.dll",
+                "hashes": {
+                    "SHA-256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                },
+               "name": "iprip32.dll",
                "parent_directory_ref": "1",
                "type": "file"
            },
@@ -1019,6 +1104,40 @@ STIX 2.x in JSON
        "type": "observed-data"
     }
 
+STIX 2.1 in JSON
+
+.. code-block:: json
+
+    {
+        "hashes": {
+            "SHA-256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "id": "file--49959589-27c4-5873-8e23-82f6c909d4ca",
+        "name": "iprip32.dll",
+        "parent_directory_ref": "directory--4aa982e3-4aac-5d5b-a699-d08c8c11f5f3",
+        "type": "file"
+    }
+
+    {
+        "id": "directory--4aa982e3-4aac-5d5b-a699-d08c8c11f5f3",
+        "path": "/usr/local",
+        "type": "directory"
+    }
+
+    {
+           "created": "2017-01-27T13:49:41.345Z",
+           "first_observed": "2017-01-27T13:49:41.345Z",
+           "id": "observed-data--c8c32b6e-2ea8-51c4-6446-7f5218072f27",
+           "last_observed": "2017-01-27T13:49:41.345Z",
+           "modified": "2017-01-27T13:49:41.345Z",
+           "number_observed": 1,
+           "object_refs": [
+                "directory--4aa982e3-4aac-5d5b-a699-d08c8c11f5f3",
+                "file--49959589-27c4-5873-8e23-82f6c909d4ca"
+           ],
+           "type": "observed-data"
+    }
+
 In STIX 2.x cyber observables are only used within ``observed-data`` objects to
 represent something that has actually been seen.  In STIX 1.x if an ``Observable`` is contained in an ``Indicator``, it is instead
 expressing a pattern to match against observed data.
@@ -1027,7 +1146,8 @@ The pattern expression to match the example cyber observable, when it is located
 
 .. code::
 
-    [(file:file_name = 'iprip32.dll' AND file:parent_directory_ref.path = '/usr/local')]
+    [(file:hashes.'SHA-256' = 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855' AND (file:name = 'iprip32.dll' AND file:parent_directory_ref.path = '/usr/local'))]",
+
 
 
 Report
@@ -1040,10 +1160,10 @@ object).
 
 In STIX 2.x, properties that were associated with the report
 header in STIX 1.x are located in the ``report`` object itself. The
-``labels`` property contains vocabulary literals similar to the ones
+``labels`` property (``report_type`` in 2.1) contains vocabulary literals similar to the ones
 contain in the ``Intent`` property in STIX 1.x.
 
-The ``published`` property is required in STIX 2.x, so the timestamp of the STIX 1.0 Report is used.
+The ``published`` property is required in STIX 2.x, so the timestamp of the STIX 1.2 Report is used.
 
 **STIX 1.x Properties Mapped Directly to STIX 2.x Properties**
 
@@ -1051,33 +1171,44 @@ The ``published`` property is required in STIX 2.x, so the timestamp of the STIX
 
 **STIX 1.x Properties Translated to STIX 2.x Properties**
 
-+-------------------------+--------------------------------------------------+
-| **STIX 1.x property**   | **STIX 2.x property**                            |
-+=========================+==================================================+
-| ``Observables``         | ``object_refs``                                  |
-+-------------------------+--------------------------------------------------+
-| ``Indicators``          | ``object_refs``                                  |
-+-------------------------+--------------------------------------------------+
-| ``TTPs``                | ``object_refs``                                  |
-+-------------------------+--------------------------------------------------+
-| ``Exploit_Targets``     | ``object_refs``                                  |
-+-------------------------+--------------------------------------------------+
-| ``Courses_Of_Action``   | ``object_refs``                                  |
-+-------------------------+--------------------------------------------------+
-| ``Campaigns``           | ``object_refs``                                  |
-+-------------------------+--------------------------------------------------+
-| ``Threat_Actors``       | ``object_refs``                                  |
-+-------------------------+--------------------------------------------------+
-| ``Report:Header.Intent``| ``labels``                                       |
-+-------------------------+--------------------------------------------------+
+..  table::
+    :align: left
+
+    +------------------------------+--------------------------------------------+
+    | **STIX 1.x property**        | **STIX 2.x property**                      |
+    +==============================+============================================+
+    | ``Observables``              | ``object_refs``                            |
+    +------------------------------+--------------------------------------------+
+    | ``Indicators``               | ``object_refs``                            |
+    +------------------------------+--------------------------------------------+
+    | ``TTPs``                     | ``object_refs``                            |
+    +------------------------------+--------------------------------------------+
+    | ``Exploit_Targets``          | ``object_refs``                            |
+    +------------------------------+--------------------------------------------+
+    | ``Courses_Of_Action``        | ``object_refs``                            |
+    +------------------------------+--------------------------------------------+
+    | ``Campaigns``                | ``object_refs``                            |
+    +------------------------------+--------------------------------------------+
+    | ``Threat_Actors``            | ``object_refs``                            |
+    +------------------------------+--------------------------------------------+
+    | ``Report:Header.Intent``     | ``labels`` in 2.0, ``report_types`` in 2.1 |
+    +------------------------------+--------------------------------------------+
+    | ``Report:Header.Description``| ``description``                            |
+    +------------------------------+--------------------------------------------+
+    | ``Report:Header.Title``      | ``name``                                   |
+    +------------------------------+--------------------------------------------+
+
 
 ​**STIX 1.x Properties Mapped Using STIX 2.x Relationships**
 
-+-------------------------+--------------------------------------------------+
-| **STIX 1.x property**   | **STIX 2.x relationship type**                   |
-+=========================+==================================================+
-| ``Related_Reports``     | ``related-to`` (when not used for versioning)    |
-+-------------------------+--------------------------------------------------+
+..  table::
+    :align: left
+
+    +-------------------------+--------------------------------------------------+
+    | **STIX 1.x property**   | **STIX 2.x relationship type**                   |
+    +=========================+==================================================+
+    | ``Related_Reports``     | ``related-to`` (when not used for versioning)    |
+    +-------------------------+--------------------------------------------------+
 
 **An Example**
 
@@ -1108,7 +1239,7 @@ STIX 2.x in JSON
             "created_by_ref": "identity--c1b58a86-e037-4069-814d-dd0bc75539e3",
             "description": "Adversary Alpha has a campaign against the ICS sector!\n\nINTENT:\nCampaign Characterization",
             "id": "report--ab11f431-4b3b-457c-835f-59920625fe65",
-            "labels": [
+            "report_types": [
                 "campaign-characterization"
             ],
             "modified": "2015-05-07T14:22:14.760Z",
@@ -1119,44 +1250,55 @@ STIX 2.x in JSON
             "type": "report"
         }
 
+``report_types`` would be ``labels`` in 2.0
+
 Threat Actor
 ------------------
 
 **STIX 1.x Properties Mapped Directly to STIX 2.x Properties**
 
-+-------------------------+----------------------------------------------+
-| **STIX 1.x property**   | **STIX 2.x property**                        |
-+=========================+==============================================+
-| ``Intended_Effects``    | ``goals``                                    |
-+-------------------------+----------------------------------------------+
+..  table::
+    :align: left
+
+    +-------------------------+--------------------------------------------------+
+    | **STIX 1.x property**   | **STIX 2.x property**                            |
+    +=========================+==================================================+
+    | ``Intended_Effects``    | ``goals``                                        |
+    +-------------------------+--------------------------------------------------+
+    | ``Type``                | ``labels`` in 2.0, ``threat_actor_types`` in 2.1 |
+    +-------------------------+--------------------------------------------------+
 
 **STIX 1.x Properties Translated to STIX 2.x Properties**
 
-+-------------------------------------+--------------------------------------------------------------------------------+
-| **STIX 1.x property**               | **STIX 2.x property**                                                          |
-+=====================================+================================================================================+
-| ``Motivation``                      |   ``primary_motivation``, ``secondary_motivations``, ``personal_motivations``  |
-+-------------------------------------+--------------------------------------------------------------------------------+
-| ``Sophistication``                  |   ``sophistication``                                                           |
-+-------------------------------------+--------------------------------------------------------------------------------+
+..  table::
+    :align: left
+
+    +-------------------------------------+--------------------------------------------------------------------------------+
+    | **STIX 1.x property**               | **STIX 2.x property**                                                          |
+    +=====================================+================================================================================+
+    | ``Motivation``                      |   ``primary_motivation``, ``secondary_motivations``, ``personal_motivations``  |
+    +-------------------------------------+--------------------------------------------------------------------------------+
+    | ``Sophistication``                  |   ``sophistication``                                                           |
+    +-------------------------------------+--------------------------------------------------------------------------------+
 
 ​**STIX 1.x Properties Mapped Using STIX 2.x Relationships**
 
-+-------------------------+----------------------------------------------+
-| **STIX 1.x property**   | **STIX 2.x relationship type**               |
-+=========================+==============================================+
-| ``Identity``            | ``attributed-to``                            |
-+-------------------------+----------------------------------------------+
-| ``Observed_TTPs``       | ``uses``                                     |
-+-------------------------+----------------------------------------------+
-| ``Associated_Campaigns``| ``attributed-to`` (reverse)                  |
-+-------------------------+----------------------------------------------+
-| ``Associated_Actors``   | ``related-to`` (when not used for versioning)|
-+-------------------------+----------------------------------------------+
+..  table::
+    :align: left
+
+    +-------------------------+----------------------------------------------+
+    | **STIX 1.x property**   | **STIX 2.x relationship type**               |
+    +=========================+==============================================+
+    | ``Identity``            | ``attributed-to``                            |
+    +-------------------------+----------------------------------------------+
+    | ``Observed_TTPs``       | ``uses``                                     |
+    +-------------------------+----------------------------------------------+
+    | ``Associated_Campaigns``| ``attributed-to`` (reverse)                  |
+    +-------------------------+----------------------------------------------+
+    | ``Associated_Actors``   | ``related-to`` (when not used for versioning)|
+    +-------------------------+----------------------------------------------+
 
 **STIX 1.x Properties Handled Based on the "missing policy"**
-
-- ``Intended_Effect``
 
 - ``Planning_And_Operational_Support``
 
@@ -1208,7 +1350,7 @@ STIX 2.x in JSON
           "created_by_ref": "identity--f690c992-8e7d-4b9a-9303-3312616c0220",
           "created": "2016-08-08T15:50:10.983Z",
           "modified": "2016-08-08T15:50:10.983Z",
-          "labels": ["nation-state"],
+          "threat_actor_types": ["nation-state"],
           "goals": ["Influence the election in Branistan"],
           "primary_motivation": "political",
           "secondary_motivations": ["ideology", "organizational-gain"],
@@ -1227,56 +1369,67 @@ STIX 2.x in JSON
     }
 
     {
-      "type": "relationship",
-      "id": "relationship--5b271699-d2ad-468c-903d-304ad7a17d71",
-      "created": "2016-08-08T15:50:10.983Z",
-      "modified": "2016-08-08T15:50:10.983Z",
-      "relationship_type": "attributed-to",
-      "source_ref": "threat-actor--56f3f0db-b5d5-431c-ae56-c18f02caf500",
-      "target_ref": "identity--8c6af861-7b20-41ef-9b59-6344fd872a8f"
+          "type": "relationship",
+          "id": "relationship--5b271699-d2ad-468c-903d-304ad7a17d71",
+          "created": "2016-08-08T15:50:10.983Z",
+          "modified": "2016-08-08T15:50:10.983Z",
+          "relationship_type": "attributed-to",
+          "source_ref": "threat-actor--56f3f0db-b5d5-431c-ae56-c18f02caf500",
+          "target_ref": "identity--8c6af861-7b20-41ef-9b59-6344fd872a8f"
     }
+
+``threat_actor_types`` would be ``labels`` in 2.0
 
 Tool
 -------
 
 **STIX 1.x Properties Mapped Directly to STIX 2.x Properties**
 
-+---------------------------------------+--------------------------------------------------------------------------------------------------+
-| **STIX 1.x property**                 | **STIX 2.x property**                                                                            |
-+=======================================+==================================================================================================+
-| ``Name`` (from CybOX)                 |   ``name``                                                                                       |
-+---------------------------------------+--------------------------------------------------------------------------------------------------+
-| ``Type`` (from CybOX)                 |   ``labels``                                                                                     |
-+---------------------------------------+--------------------------------------------------------------------------------------------------+
-| ``Description`` (from CybOX)          |   ``description``                                                                                |
-+---------------------------------------+--------------------------------------------------------------------------------------------------+
-| ``Version`` (from CybOX)              |   ``tool_version``                                                                               |
-+---------------------------------------+--------------------------------------------------------------------------------------------------+
+..  table::
+    :align: left
 
-
+    +---------------------------------------+-----------------------------------------------+
+    | **STIX 1.x property**                 | **STIX 2.x property**                         |
+    +=======================================+===============================================+
+    | ``Name`` (from CybOX)                 |   ``name``                                    |
+    +---------------------------------------+-----------------------------------------------+
+    | ``Type`` (from CybOX)                 |   ``labels`` in 2.0, ``tool_types`` in 2.1    |
+    +---------------------------------------+-----------------------------------------------+
+    | ``Description`` (from CybOX)          |   ``description``                             |
+    +---------------------------------------+-----------------------------------------------+
+    | ``Version`` (from CybOX)              |   ``tool_version``                            |
+    +---------------------------------------+-----------------------------------------------+
 
 ​**STIX 1.x Properties Translated to STIX 2.x Properties**
 
-+---------------------------------------+--------------------------------------------------------------------------------------------------+
-| **STIX 1.x property**                 | **STIX 2.x property**                                                                            |
-+=======================================+==================================================================================================+
-| ``ttp:Kill_Chain_Phases``             |   ``kill_chain_phases``                                                                          |
-+---------------------------------------+--------------------------------------------------------------------------------------------------+
-| ``References`` (from CybOX)           |   ``external_references``                                                                        |
-+---------------------------------------+--------------------------------------------------------------------------------------------------+
+..  table::
+    :align: left
 
+    +---------------------------------------+---------------------------------+
+    | **STIX 1.x property**                 | **STIX 2.x property**           |
+    +=======================================+=================================+
+    | ``ttp:Kill_Chain_Phases``             |   ``kill_chain_phases``         |
+    +---------------------------------------+---------------------------------+
+    | ``References`` (from CybOX)           |   ``external_references``       |
+    +---------------------------------------+---------------------------------+
 
 ​**STIX 1.x Properties Mapped Using STIX 2.x Relationships**
 
-+---------------------------+--------------------------------------------------------------------------------------------------------------+
-| **STIX 1.x property**     | **STIX 2.x relationship type**                                                                               |
-+=======================================+==================================================================================================+
-| ``ttp:Related_TTPs``      | ``uses`` (attack-pattern) (reverse), ``related-to`` (when not used for versioning), ``targets`` (identity)   |
-+---------------------------------------+--------------------------------------------------------------------------------------------------+
+..  table::
+    :align: left
+
+    +---------------------------+------------------------------------------------------------------------------------+
+    | **STIX 1.x property**     | **STIX 2.x relationship type**                                                     |
+    +===========================+====================================================================================+
+    | ``ttp:Related_TTPs``      | ``uses`` (attack-pattern) (reverse), ``related-to`` (when not used for versioning),|
+    |                           | ``targets`` (identity)                                                             |
+    +---------------------------+------------------------------------------------------------------------------------+
 
 **STIX 1.x Properties Handled Based on the "missing policy"**
 
-- ``ttp:Intended_Effect``
+- ``Vendor``
+
+- ``Service_Pack``
 
 **STIX 1.x Properties Not Mapped**
 
@@ -1286,11 +1439,9 @@ Tool
 - ``ttp:Exploit_Targets``
 - ``ttp:Kill_Chains``
 - ``Metadata`` (from CybOX)
-- ``Service_Pack`` (from CybOX)
 - ``Tool_Configuration`` (from CybOX)
 - ``Tool_Hashes`` (from CybOX)
 - ``Tool_Specific_Data`` (from CybOX)
-- ``Vendor`` (from CybOX)
 - ``ttp:Victim_Targeting``
 
 **An Example**
@@ -1323,10 +1474,12 @@ STIX 2.x in JSON
       "id": "tool--8e2e2d2b-17d4-4cbf-938f-98ee46b3cd3f",
       "created": "2016-04-06T20:03:48.000Z",
       "modified": "2016-04-06T20:03:48.000Z",
-      "labels": [ "remote-access"],
+      "tool_types": [ "remote-access"],
       "version": "6.03",
       "name": "VNCConnect"
     }
+
+``tool_types`` would be ``labels`` in 2.0
 
 Vulnerability
 ------------------
@@ -1337,45 +1490,46 @@ Vulnerability
 
 **STIX 1.x Properties Translated to STIX 2.x Properties**
 
+..  table::
+    :align: left
 
-+--------------------------+------------------------------------+
-| **STIX 1.x property**    | **STIX 2.x mapping**               |
-+==========================+====================================+
-| ``CVE_ID``               |   ``external_references``          |
-+--------------------------+------------------------------------+
-| ``OSVDB_ID``             |   ``external_references``          |
-+--------------------------+------------------------------------+
-| ``References``           |   ``external_references``          |
-+--------------------------+------------------------------------+
-
+    +--------------------------+------------------------------------+
+    | **STIX 1.x property**    | **STIX 2.x mapping**               |
+    +==========================+====================================+
+    | ``CVE_ID``               |   ``external_references``          |
+    +--------------------------+------------------------------------+
+    | ``OSVDB_ID``             |   ``external_references``          |
+    +--------------------------+------------------------------------+
+    | ``References``           |   ``external_references``          |
+    +--------------------------+------------------------------------+
 
 **​STIX 1.x Properties Mapped Using STIX 2.x Relationships**
 
+..  table::
+    :align: left
 
-+-------------------------------+-----------------------------------------------+
-| **STIX 1.x property**         | **STIX 2.x relationship type**                |
-+===============================+===============================================+
-| ``et:Potential_COAs``         | ``mitigates``                                 |
-+-------------------------------+-----------------------------------------------+
-| ``et:Related_Exploit_Targets``| ``related-to`` (when not used for versioning) |
-+-------------------------------+-----------------------------------------------+
+    +-------------------------------+-----------------------------------------------+
+    | **STIX 1.x property**         | **STIX 2.x relationship type**                |
+    +===============================+===============================================+
+    | ``et:Potential_COAs``         | ``mitigates``                                 |
+    +-------------------------------+-----------------------------------------------+
+    | ``et:Related_Exploit_Targets``| ``related-to`` (when not used for versioning) |
+    +-------------------------------+-----------------------------------------------+
 
 
 **STIX 1.x Properties Handled Based on the "missing policy"**
 
-
-*none*
+- ``Discovered_DateTime``
+- ``Published_DateTime``
+- ``Source``
 
 **STIX 1.x Properties Not Mapped**
-
 
 - ``is_known``
 - ``is_publicly_acknowledged``
 - ``CVSS_Score``
-- ``Discovered_DateTime``
-- ``Published_DateTime``
 - ``Affected_Software``
-- ``Source``
+
 
 **An Example**
 

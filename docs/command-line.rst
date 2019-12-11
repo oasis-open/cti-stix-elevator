@@ -38,26 +38,28 @@ optional arguments:
                 Show this help message and exit
 
   --missing-policy {use-custom-properties,add-to-description,ignore}
-                        Policy for including STIX 1.x content that cannot be
-                        represented directly in STIX 2.x. The default is 'add-
-                        to-description'.
+                Policy for including STIX 1.x content that cannot be
+                represented directly in STIX 2.x. The default is 'add-
+                to-description'.
 
   --custom-property-prefix CUSTOM_PROPERTY_PREFIX
-                        Prefix to use for custom property names when missing
-                        policy is 'use-custom-properties'. The default is
-                        'elevator'.
+                Prefix to use for custom property names when missing
+                policy is 'use-custom-properties'. The default is
+                'elevator'.
 
   --infrastructure
                 Infrastructure will be included in the conversion.
                 Default for version 2.1 is true.
 
-  --incidents           Incidents will be included in the conversion.
+  --incidents
+                Incidents will be included in the conversion.
+                This argument is deprecated.
 
   --package-created-by-id PACKAGE_CREATED_BY_ID
                 Use provided identifier for "created_by_ref"
                 properties.
 
-                Example: --package-created-by-id "identity--1234abcd-1a12-12a3-0ab4-1234abcd5678"
+                Example: --package-created-by-id "identity--1234abcd-1a12-42a3-0ab4-1234abcd5678"
 
   --default-timestamp DEFAULT_TIMESTAMP
                 Use provided timestamp for properties that require a
@@ -66,9 +68,8 @@ optional arguments:
                 Example: --default-timestamp "2016-11-15T13:10:35.053000Z"
 
   --validator-args VALIDATOR_ARGS
-                Arguments to pass to stix-validator.
-
-                Default: --strict-types
+                Arguments to pass to stix2-validator.
+                See https://stix2-validator.readthedocs.io/en/latest/options.html.
 
                 Example: --validator-args="-v --strict-types -d 212"
 
@@ -116,8 +117,7 @@ optional arguments:
                The policy to deal with errors. The default is 'no_policy'.
 
   -v {2.0,2.1}, --version {2.0,2.1}
-                        The version of stix 2 to be produced. The default is
-                        2.1
+               The version of stix 2 to be produced. The default is 2.1
 
 
 Refer to the :ref:`warning_messages` section for all stix2-elevator messages. Use the

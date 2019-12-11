@@ -1247,7 +1247,7 @@
         {
             "created": "2015-05-15T09:00:00.000Z",
             "created_by_ref": "identity--25b4ac53-b009-44a7-adac-6377624c6a31",
-            "description": "This report contains the IOCs referenced in Appendix G of the APT1 report.\n\nINTENT:\nIndicators",
+            "description": "This report contains the IOCs referenced in Appendix G of the APT1 report.",
             "id": "report--190593d6-1861-4cfe-b212-c016fce1e248",
             "labels": [
                 "indicator"

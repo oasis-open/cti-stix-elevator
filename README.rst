@@ -19,14 +19,11 @@ valid STIX
 
 To convert STIX 2.x JSON back to STIX 1.x XML use the `stix2-slider`
 
-The stix2-elevator is a work-in-progress. It should be used to explore
-how existing STIX 1.x would potentially be represented in STIX 2.x.
-Using the current version of the elevator will provide insight to
-issues
-that might need to be mitigated to convert your STIX 1.x content.
-
-**It should not be used in a production environment, and should not be
-considered final.**
+The stix2-elevator is a “best-effort” attempt to convert STIX 1.x content to STIX 2.x content.
+**Caution should be taken if the elevator is to be used in a production environment as warnings
+concerning the conversion are often generated.**  Users should determine which warnings are
+acceptable and use the --disable option in conjunction with the –error-policy option only to produce
+results when no other warnings are emitted.
 
 **STIX 1.x Composite Indicator Expressions and CybOX 2.x Composite
 Observable Expressions allow a level of flexibility not present in
@@ -56,7 +53,7 @@ Requirements
       1.2.0.x, depending on whether you want to support STIX 1.1.1 or STIX 1.2.
 
 -  `python-stix2 <https://pypi.org/project/stix2/>`_ >= 1.2.1
--  `stix2-validator <https://pypi.org/project/stix2-validator/>`_ >= 2.0.0.dev2
+-  `stix2-validator <https://pypi.org/project/stix2-validator/>`_ >= 2.0.0.dev3
    and its dependencies
 -  `pycountry <https://pypi.org/project/pycountry/>`_ >= 19.8.18
 -  `stixmarx <https://pypi.org/project/stixmarx/>`_ >= 1.0.6
@@ -88,7 +85,7 @@ version::
 Usage
 -----
 
-It is recommended that you insure that the input STIX 1.x file is
+It is recommended that you ensure that the input STIX 1.x file is
 valid before submitting it to the elevator.
 Use the `stix-validator <https://pypi.org/project/stix-validator/>`_.
 
@@ -143,13 +140,12 @@ optional arguments:
   --infrastructure      Infrastructure will be included in the conversion.
                         Default for version 2.1 is true.
 
-  --incidents           Incidents will be included in the conversion.
-
+  --incidents           Incidents will be included in the conversion. **This argument is deprecated.**
 
   --package-created-by-id PACKAGE_CREATED_BY_ID
                         Use provided identifier for "created_by_ref"
                         properties. Example: --package-created-by-id "identity
-                        --1234abcd-1a12-12a3-0ab4-1234abcd5678"
+                        --1234abcd-1a12-42a3-0ab4-1234abcd5678"
 
   --default-timestamp DEFAULT_TIMESTAMP
                         Use provided timestamp for properties that require a
@@ -157,7 +153,7 @@ optional arguments:
                         "2016-11-15T13:10:35.053000Z"
 
   --validator-args VALIDATOR_ARGS
-                        Arguments to pass to stix-validator. Default:
+                        Arguments to pass to stix2-validator. Default:
                         --strict-types Example: stix2_elevator.py <file>
                         --validator-args="-v --strict-types -d 212"
 
@@ -196,7 +192,7 @@ optional arguments:
   -p {no_policy,strict_policy},
   --error-policy {no_policy,strict_policy},
   --policy {no_policy,strict_policy}   #deprecated
-               The policy to deal with errors. The default is 'no_policy'.
+                        The policy to deal with errors. The default is 'no_policy'.
 
   -v {2.0,2.1}, --version {2.0,2.1}
                         The version of stix 2 to be produced. The default is

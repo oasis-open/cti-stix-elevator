@@ -16,76 +16,81 @@ difficult to find a corresponding literal to one from STIX 1.x. However,
 because all of these vocabularies are open in STIX 2.x, those values can
 be used directly.
 
-+------------------------------------------+-----------------------------------+
-| **STIX 1.x Vocabulary**                  | **STIX 2.x Vocabulary**           |
-+==========================================+===================================+
-| ``AssetTypeVocab``                       | *not available in STIX 2.x*       |
-+------------------------------------------+-----------------------------------+
-| ``AttackerInfrastructureTypeVocab``      | *not available in STIX 2.x*       |
-+------------------------------------------+-----------------------------------+
-| ``AttackerToolTypeVocab``                | ``tool-label-ov``                 |
-+------------------------------------------+-----------------------------------+
-| ``AvailabilityLossTypeVocab``            | *not available in STIX 2.x*       |
-+------------------------------------------+-----------------------------------+
-| ``COAStageVocab``                        | *not available in STIX 2.x*       |
-+------------------------------------------+-----------------------------------+
-| ``CampaignStatusVocab``                  | *not available in STIX 2.x*       |
-+------------------------------------------+-----------------------------------+
-| ``CourseOfActionTypeVocab``              | ``course-of-action-label-ov``     |
-+------------------------------------------+-----------------------------------+
-| ``DiscoveryMethodVocab``                 | *not available in STIX 2.x*       |
-+------------------------------------------+-----------------------------------+
-| ``HighMediumLowVocab``                   | *not used*                        |
-+------------------------------------------+-----------------------------------+
-| ``ImpactQualificationVocab``             | *not available in STIX 2.x*       |
-+------------------------------------------+-----------------------------------+
-| ``ImpactRatingVocab``                    | *not available in STIX 2.x*       |
-+------------------------------------------+-----------------------------------+
-| ``IncidentCategoryVocab``                | *not available in STIX 2.x*       |
-+------------------------------------------+-----------------------------------+
-| ``IncidentEffectVocab``                  | *not available in STIX 2.x*       |
-+------------------------------------------+-----------------------------------+
-| ``IncidentStatusVocab``                  | *not available in STIX 2.x*       |
-+------------------------------------------+-----------------------------------+
-| ``IndicatorTypeVocab``                   | ``indicator-label-ov`` (2.0)      |
-|                                          | ``indicator-type-ov`` (2.1)       |
-+------------------------------------------+-----------------------------------+
-| ``InformationSourceRoleVocab``           | *not available in STIX 2.x*       |
-+------------------------------------------+-----------------------------------+
-| ``InformationTypeVocab``                 | *not available in STIX 2.x*       |
-+------------------------------------------+-----------------------------------+
-| ``IntendedEffectVocab``                  | ``attack-objective-ov``           |
-+------------------------------------------+-----------------------------------+
-| ``LocationClassVocab``                   | *not available in STIX 2.x*       |
-+------------------------------------------+-----------------------------------+
-| ``LossDurationVocab``                    | *not available in STIX 2.x*       |
-+------------------------------------------+-----------------------------------+
-| ``LossPropertyVocab``                    | *not available in STIX 2.x*       |
-+------------------------------------------+-----------------------------------+
-| ``MalwareTypeVocab``                     | ``malware-label-ov``              |
-+------------------------------------------+-----------------------------------+
-| ``ManagementClassVocab``                 | *not available in STIX 2.x*       |
-+------------------------------------------+-----------------------------------+
-| ``MotivationVocab``                      | ``attack-motivation-ov``          |
-+------------------------------------------+-----------------------------------+
-| ``OwnershipClassVocab``                  | *not available in STIX 2.x*       |
-+------------------------------------------+-----------------------------------+
-| ``PackageIntentVocab``                   | *not used*                        |
-+------------------------------------------+-----------------------------------+
-| ``PlanningAndOperationalSupportVocab``   | ``resource-level-ov``             |
-+------------------------------------------+-----------------------------------+
-| ``ReportIntentVocab``                    | ``report-label-ov``               |
-+------------------------------------------+-----------------------------------+
-| ``SecurityCompromiseVocab``              | *not used*                        |
-+------------------------------------------+-----------------------------------+
-| ``SystemTypeVocab``                      | *not available in STIX 2.x*       |
-+------------------------------------------+-----------------------------------+
-| ``ThreatActorSophisticationVocab``       | ``attack-sophistication-level-ov``|
-+------------------------------------------+-----------------------------------+
-| ``ThreatActorTypeVocab``                 | ``threat-actor-label-ov``         |
-+------------------------------------------+-----------------------------------+
-| ``VersioningVocab``                      | *not used*                        |
-+------------------------------------------+-----------------------------------+
++------------------------------------------+-----------------------------------------+
+| **STIX 1.x Vocabulary**                  | **STIX 2.x Vocabulary**                 |
++==========================================+=========================================+
+| ``AssetTypeVocab``                       | *not available in STIX 2.x*             |
++------------------------------------------+-----------------------------------------+
+| ``AttackerInfrastructureTypeVocab``      | *not available in STIX 2.x*             |
++------------------------------------------+-----------------------------------------+
+| ``AttackerToolTypeVocab``                | ``tool-label-ov`` (2.0)                 |
+|                                          | ``tool-type-ov`` (2.1)                  |
++------------------------------------------+-----------------------------------------+
+| ``AvailabilityLossTypeVocab``            | *not available in STIX 2.x*             |
++------------------------------------------+-----------------------------------------+
+| ``COAStageVocab``                        | *not available in STIX 2.x*             |
++------------------------------------------+-----------------------------------------+
+| ``CampaignStatusVocab``                  | *not available in STIX 2.x*             |
++------------------------------------------+-----------------------------------------+
+| ``CourseOfActionTypeVocab``              | ``course-of-action-label-ov`` (2.0)     |
+|                                          | ``course-of-action-label-ov`` (2.1)     |
++------------------------------------------+-----------------------------------------+
+| ``DiscoveryMethodVocab``                 | *not available in STIX 2.x*             |
++------------------------------------------+-----------------------------------------+
+| ``HighMediumLowVocab``                   | *not used*                              |
++------------------------------------------+-----------------------------------------+
+| ``ImpactQualificationVocab``             | *not available in STIX 2.x*             |
++------------------------------------------+-----------------------------------------+
+| ``ImpactRatingVocab``                    | *not available in STIX 2.x*             |
++------------------------------------------+-----------------------------------------+
+| ``IncidentCategoryVocab``                | *not available in STIX 2.x*             |
++------------------------------------------+-----------------------------------------+
+| ``IncidentEffectVocab``                  | *not available in STIX 2.x*             |
++------------------------------------------+-----------------------------------------+
+| ``IncidentStatusVocab``                  | *not available in STIX 2.x*             |
++------------------------------------------+-----------------------------------------+
+| ``IndicatorTypeVocab``                   | ``indicator-label-ov`` (2.0)            |
+|                                          | ``indicator-type-ov`` (2.1)             |
++------------------------------------------+-----------------------------------------+
+| ``InformationSourceRoleVocab``           | *not available in STIX 2.x*             |
++------------------------------------------+-----------------------------------------+
+| ``InformationTypeVocab``                 | *not available in STIX 2.x*             |
++------------------------------------------+-----------------------------------------+
+| ``IntendedEffectVocab``                  | *not available in STIX 2.x*             |
++------------------------------------------+-----------------------------------------+
+| ``LocationClassVocab``                   | *not available in STIX 2.x*             |
++------------------------------------------+-----------------------------------------+
+| ``LossDurationVocab``                    | *not available in STIX 2.x*             |
++------------------------------------------+-----------------------------------------+
+| ``LossPropertyVocab``                    | *not available in STIX 2.x*             |
++------------------------------------------+-----------------------------------------+
+| ``MalwareTypeVocab``                     | ``malware-label-ov`` (2.0)              |
+|                                          | ``malware-type-ov`` (2.1)               |
++------------------------------------------+-----------------------------------------+
+| ``ManagementClassVocab``                 | *not available in STIX 2.x*             |
++------------------------------------------+-----------------------------------------+
+| ``MotivationVocab``                      | ``attack-motivation-ov``                |
++------------------------------------------+-----------------------------------------+
+| ``OwnershipClassVocab``                  | *not available in STIX 2.x*             |
++------------------------------------------+-----------------------------------------+
+| ``PackageIntentVocab``                   | *not used*                              |
++------------------------------------------+-----------------------------------------+
+| ``PlanningAndOperationalSupportVocab``   | ``attack-resource-level-ov``            |
++------------------------------------------+-----------------------------------------+
+| ``ReportIntentVocab``                    | ``report-label-ov`` (2.0)               |
+|                                          | ``report-type-ov`` (2.1)                |
++------------------------------------------+-----------------------------------------+
+| ``SecurityCompromiseVocab``              | *not used*                              |
++------------------------------------------+-----------------------------------------+
+| ``SystemTypeVocab``                      | *not available in STIX 2.x*             |
++------------------------------------------+-----------------------------------------+
+| ``ThreatActorSophisticationVocab``       | ``threat-actor-sophistication-level-ov``|
++------------------------------------------+-----------------------------------------+
+| ``ThreatActorTypeVocab``                 | ``threat-actor-label-ov`` (2.0)         |
+|                                          | ``threat-actor-type-ov`` (2.1)          |
++------------------------------------------+-----------------------------------------+
+| ``VersioningVocab``                      | *not used*                              |
++------------------------------------------+-----------------------------------------+
 
 New vocabularies added in STIX 2.x are:
 
@@ -93,13 +98,31 @@ New vocabularies added in STIX 2.x are:
 
 -  ``encryption-algo-ov``
 
+-  ``grouping-context-ov``
+
 -  ``hash-algorithm-ov``
 
 -  ``identity-class-ov``
 
+-  ``implementation-language-ov``
+
+-  ``infrastructure-type-ov``
+
+-  ``malware-av-result-ov``
+
+-  ``mailware-capabilities-ov``
+
 -  ``industry-sector-ov``
 
 -  ``marking-definition-ov``
+
+-  ``pattern-type-ov``
+
+-  ``threat-actor-role-ov``
+
+-  ``processor-architecture-ov``
+
+-  ``region-ov``
 
 -  ``threat-actor-role-ov``
 
@@ -111,6 +134,14 @@ because only values explicitly defined in the enumeration can be used.
 The enumerations defined in STIX 2.x are:
 
 -  ``network-socket-type-enum``
+
+-  ``network-socket-address-family-enum``
+
+-  ``opinion-enum``
+
+-  ``windows-integrity-level-enum``
+
+-  ``windows-registry-datatype-enum``
 
 -  ``windows-service-start-type-enum``
 

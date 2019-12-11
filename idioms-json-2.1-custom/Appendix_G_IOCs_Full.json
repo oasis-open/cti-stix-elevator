@@ -1450,8 +1450,7 @@
                 "indicator"
             ],
             "spec_version": "2.1",
-            "type": "report",
-            "x_elevator_intent": "Indicators"
+            "type": "report"
         }
     ],
     "type": "bundle"
