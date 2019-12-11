@@ -69,8 +69,7 @@ optional arguments:
 
   --validator-args VALIDATOR_ARGS
                 Arguments to pass to stix2-validator.
-
-                Default: --strict-types
+                See https://stix2-validator.readthedocs.io/en/latest/options.html.
 
                 Example: --validator-args="-v --strict-types -d 212"
 
@@ -118,8 +117,7 @@ optional arguments:
                The policy to deal with errors. The default is 'no_policy'.
 
   -v {2.0,2.1}, --version {2.0,2.1}
-                        The version of stix 2 to be produced. The default is
-                        2.1
+               The version of stix 2 to be produced. The default is 2.1
 
 
 Refer to the :ref:`warning_messages` section for all stix2-elevator messages. Use the

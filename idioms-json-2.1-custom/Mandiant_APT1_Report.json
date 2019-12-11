@@ -2522,8 +2522,7 @@
                 "threat-actor-report"
             ],
             "spec_version": "2.1",
-            "type": "report",
-            "x_elevator_intent": "Threat Actor Report"
+            "type": "report"
         }
     ],
     "type": "bundle"

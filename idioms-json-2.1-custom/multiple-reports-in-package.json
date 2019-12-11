@@ -34,8 +34,7 @@
                 "campaign-characterization"
             ],
             "spec_version": "2.1",
-            "type": "report",
-            "x_elevator_intent": "Campaign Characterization"
+            "type": "report"
         },
         {
             "created": "2015-05-07T14:22:14.760Z",
@@ -51,8 +50,7 @@
                 "indicator-malware-artifacts"
             ],
             "spec_version": "2.1",
-            "type": "report",
-            "x_elevator_intent": "Indicators - Malware Artifacts"
+            "type": "report"
         }
     ],
     "type": "bundle"

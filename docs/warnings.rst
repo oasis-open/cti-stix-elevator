@@ -60,9 +60,9 @@ Structured COAs type in *[id]* are not supported in STIX 2.x                    
 Indicator *[id]* has an observable or indicator composite expression which may not supported correctly in STIX 2.x - please check this pattern 407     warn
 ``TTP/Behavior/Exploits/Exploit`` in *[id]* not supported in STIX 2.x                                                                          408     warn
 ``Infrastructure`` in *[id]* not part of STIX 2.0                                                                                              409     warn
-``NO MESSAGE ASSIGNED``                                                                                                                        410     warn
-``NO MESSAGE ASSIGNED``                                                                                                                        411     warn
-``NO MESSAGE ASSIGNED``                                                                                                                        412     warn
+``NO MESSAGE ASSIGNED``                                                                                                                        410
+``NO MESSAGE ASSIGNED``                                                                                                                        411
+``NO MESSAGE ASSIGNED``                                                                                                                        412
 Kill Chains type in *[id]* not supported in STIX 2.x                                                                                           413     warn
 Victim Target in *[id]* did not yield any STIX 2.x object                                                                                      414     warn
 TTP *[id]* did not generate any STIX 2.x object                                                                                                415     error
@@ -83,7 +83,7 @@ The *[relationship name]* relationship involving *[id]* is not supported in STIX
 The confidence value *[value]* is not found on one of the confidence scales from the specification. No confidence can be inferred              430     warn
 The confidence value *[value]* is not between 0 and 100, which is required for STIX 2.1. No confidence can be inferred                         431     warn
 The confidence value *[value]* cannot be converted                                                                                             432     warn
-Location with free text address in *[id]* not handled yet"                                                                                     433     warn
+Location with free text address in *[id]* not handled yet                                                                                      433     warn
 Observed Data objects cannot refer to other external objects: *[property name]* in *[type]*"                                                   434     warn
 ============================================================================================================================================== ====    =====
 

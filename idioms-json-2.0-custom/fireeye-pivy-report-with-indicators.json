@@ -57160,8 +57160,7 @@
                 "malware--59fae6a2-4a3b-418e-8ca7-06a845820666"
             ],
             "published": "2015-05-15T09:00:00.000Z",
-            "type": "report",
-            "x_elevator_intent": "Threat Report"
+            "type": "report"
         }
     ],
     "spec_version": "2.0",

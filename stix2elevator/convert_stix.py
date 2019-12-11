@@ -1400,7 +1400,6 @@ def convert_report(report, env):
         header_created_by_ref = process_information_source(report.header.information_source, report_instance, new_env)
         new_env.add_to_env(created_by_ref=header_created_by_ref)
         # process information source before any relationships
-        handle_missing_string_property(report_instance, "intent", report.header.intents, True)
         if report.header.title is not None:
             report_instance["name"] = report.header.title
         convert_controlled_vocabs_to_open_vocabs(report_instance,
@@ -1456,12 +1455,15 @@ def convert_threat_actor(threat_actor, env):
         threat_actor_instance["name"] = threat_actor.identity.name
     elif isinstance(threat_actor.identity, CIQIdentity3_0Instance):
         convert_party_name(threat_actor.identity._specification.party_name, threat_actor_instance, False)
+    if threat_actor.intended_effects is not None:
+        threat_actor_instance["goals"] = list()
+        for g in threat_actor.intended_effects:
+            threat_actor_instance["goals"] = text_type(g)
     convert_controlled_vocabs_to_open_vocabs(threat_actor_instance,
                                              "labels" if get_option_value("spec_version") == "2.0" else "threat_actor_types",
                                              threat_actor.types,
                                              THREAT_ACTOR_LABEL_MAP,
                                              False)
-    handle_multiple_missing_statement_properties(threat_actor_instance, threat_actor.intended_effects, "intended_effect")
     handle_multiple_missing_statement_properties(threat_actor_instance, threat_actor.planning_and_operational_supports,
                                                  "planning_and_operational_support")
     if get_option_value("spec_version") == "2.0":
@@ -1610,6 +1612,10 @@ def convert_tool(tool, ttp, env, first_one):
     tool_instance = create_basic_object("tool", tool, env, ttp.id_, not first_one)
     if tool.name is not None:
         tool_instance["name"] = tool.name
+        if tool.title is not None:
+            handle_missing_string_property(tool_instance, "title", tool.title)
+    elif tool.title is not None:
+        tool_instance["name"] = tool.title
     process_description_and_short_description(tool_instance, tool)
     handle_missing_string_property(tool_instance, "vendor", tool.vendor)
     handle_missing_string_property(tool_instance, "service_pack", tool.service_pack)
@@ -1623,7 +1629,7 @@ def convert_tool(tool, ttp, env, first_one):
     # TODO: add execution_environment to descriptor <-- Not Implemented!
     # TODO: add errors to descriptor <-- Not Implemented!
     # TODO: add compensation_model to descriptor <-- Not Implemented!
-    handle_missing_string_property(tool_instance, "title", tool.title)
+
     convert_controlled_vocabs_to_open_vocabs(tool_instance,
                                              "labels" if get_option_value("spec_version") == "2.0" else "tool_types",
                                              tool.type_,

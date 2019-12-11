@@ -31,8 +31,7 @@
                 "campaign--1855cb8a-d96c-4859-a450-abb1e7c061f2"
             ],
             "published": "2015-05-07T14:22:14.760Z",
-            "type": "report",
-            "x_elevator_intent": "Campaign Characterization"
+            "type": "report"
         },
         {
             "created": "2015-05-07T14:22:14.760Z",
@@ -47,8 +46,7 @@
                 "example:ttp-66647c79-5766-4ca7-ab8a-a579056e3c83"
             ],
             "published": "2015-05-07T14:22:14.760Z",
-            "type": "report",
-            "x_elevator_intent": "Indicators - Malware Artifacts"
+            "type": "report"
         }
     ],
     "spec_version": "2.0",
