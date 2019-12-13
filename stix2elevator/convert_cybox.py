@@ -1,3 +1,5 @@
+import netaddr
+
 from cybox.objects.account_object import Account
 from cybox.objects.address_object import Address
 from cybox.objects.archive_file_object import ArchiveFile
@@ -98,10 +100,16 @@ def convert_account(acc, obj1x_id):
     finish_sco(account_dict, obj1x_id)
     return account_dict
 
+def handle_inclusive_ip_addresses(add_value):
+    if add_value.condition == 'InclusiveBetween' and isinstance(add_value.value, list):
+        x = str(netaddr.iprange_to_cidrs(add_value.value[0], add_value.value[1]))
+        return x[12:-3]
+    else:
+        return add_value
 
 def convert_address(add, obj1x_id):
     if add.category == add.CAT_IPV4:
-        instance = create_base_sco(add, "ipv4-addr", {"value": add.address_value.value})
+        instance = create_base_sco(add, "ipv4-addr", {"value": handle_inclusive_ip_addresses(add.address_value)})
     elif add.category == add.CAT_IPV6:
         instance = create_base_sco(add, "ipv6-addr", {"value": add.address_value.value})
     elif add.category == add.CAT_MAC:
