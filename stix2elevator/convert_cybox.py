@@ -1,4 +1,5 @@
 import netaddr
+import re
 
 from cybox.objects.account_object import Account
 from cybox.objects.address_object import Address
@@ -100,16 +101,21 @@ def convert_account(acc, obj1x_id):
     finish_sco(account_dict, obj1x_id)
     return account_dict
 
-def handle_inclusive_ip_addresses(add_value):
+def handle_inclusive_ip_addresses(add_value, obj1x_id):
     if add_value.condition == 'InclusiveBetween' and isinstance(add_value.value, list):
         x = str(netaddr.iprange_to_cidrs(add_value.value[0], add_value.value[1]))
-        return x[12:-3]
+        m = re.match(".*\'(\d+\.\d+\.\d+\.\d+/\d+).*", x)
+        if m:
+            return m.group(1)
+        else:
+            warn("Cannot only convert range of %s to %s in %s to a cidr", add_value.value[0], add_value.value[1], obj1x_id)
     else:
-        return add_value
+        return add_value.value
+
 
 def convert_address(add, obj1x_id):
     if add.category == add.CAT_IPV4:
-        instance = create_base_sco(add, "ipv4-addr", {"value": handle_inclusive_ip_addresses(add.address_value)})
+        instance = create_base_sco(add, "ipv4-addr", {"value": handle_inclusive_ip_addresses(add.address_value, obj1x_id)})
     elif add.category == add.CAT_IPV6:
         instance = create_base_sco(add, "ipv6-addr", {"value": add.address_value.value})
     elif add.category == add.CAT_MAC:
@@ -605,8 +611,8 @@ def convert_process(process, obj1x_id):
     if process.pid:
         process_dict["pid"] = process.pid.value
     if process.creation_time:
-        process_dict["created"] = convert_timestamp_to_string(process.creation_time.value)
-
+        process_dict["created" if get_option_value("spec_version") == "2.0" else "created_time"] = \
+            convert_timestamp_to_string(process.creation_time.value)
     if process.argument_list and get_option_value("spec_version") == "2.0":
         process_dict["arguments"] = []
         for a in process.argument_list:

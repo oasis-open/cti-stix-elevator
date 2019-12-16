@@ -51,7 +51,9 @@ def idiom_elevator_mappings(before_file_path, stored_json, version, missing_poli
 def idiom_mappings(converted_json, stored_json, ignored_properties):
 
     for good, to_check in zip(iterpath(stored_json), iterpath(converted_json)):
+
         good_path, good_value = good
+        check_path, check_value = to_check
         # last_good_field = good_path[-1]
 
         if isinstance(good_value, (dict, list)):
@@ -65,7 +67,8 @@ def idiom_mappings(converted_json, stored_json, ignored_properties):
             # are not verifiable because they contain identifiers per rule #2.
             continue
 
-        if any(x in ignored_properties for x in good_path):
+        print(["1", good, to_check])
+        if any(x in ignored_properties for x in good_path) and good_path[-1] == check_path[-1]:
             # Rule #2: Since fresh conversion may create dynamic values.
             # Some fields are omitted for verification. Currently
             # fields with: identifier and timestamp values.
@@ -132,6 +135,7 @@ def test_elevator_idiom_mapping(test_file, stored_master, version, missing_polic
                 uuid_of_check_id = check_path[1].split("--")[1]
                 if ignore_this_id(uuid_of_good_id, uuid_of_check_id):
                     continue
+        print([ good_path, check_path] )
         if good_path != check_path:
             find_index_of_difference(good_path, check_path)
             assert good_path == check_path
