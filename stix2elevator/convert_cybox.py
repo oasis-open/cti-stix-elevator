@@ -722,6 +722,8 @@ def convert_http_client_request(request):
     if request.http_request_line is not None:
         if request.http_request_line.http_method is not None:
             http_extension["request_method"] = text_type(request.http_request_line.http_method.value.lower())
+        if request.http_request_line.value is not None:
+            http_extension["request_value"] = text_type(request.http_request_line.value.value.lower())
         if request.http_request_line.version is not None:
             http_extension["request_version"] = text_type(request.http_request_line.version.value.lower())
 

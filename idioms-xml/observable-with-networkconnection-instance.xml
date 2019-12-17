@@ -49,6 +49,7 @@
                                 <HTTPSessionObj:HTTP_Client_Request>
                                     <HTTPSessionObj:HTTP_Request_Line>
                                         <HTTPSessionObj:HTTP_Method datatype="string">GET</HTTPSessionObj:HTTP_Method>
+                                        <HTTPSessionObj:Value>/download.html</HTTPSessionObj:Value>
                                         <HTTPSessionObj:Version>HTTP/1.1</HTTPSessionObj:Version>
                                     </HTTPSessionObj:HTTP_Request_Line>
                                     <HTTPSessionObj:HTTP_Request_Header>

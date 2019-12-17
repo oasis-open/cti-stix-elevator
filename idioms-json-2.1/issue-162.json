@@ -47,7 +47,10 @@
                 "ip-watchlist"
             ],
             "kill_chain_phases": [
-                "stix:TTP-f706e4e7-53d8-44ef-967f-81535c9db7d0"
+                {
+                    "kill_chain_name": "stix:TTP-af3e707f-2fb9-49e5-8c37-14026ca0a5ff",
+                    "phase_name": "stix:TTP-f706e4e7-53d8-44ef-967f-81535c9db7d0"
+                }
             ],
             "modified": "2019-09-06T11:22:37.151Z",
             "pattern": "[ipv4-addr:value = '199.81.216.51']",

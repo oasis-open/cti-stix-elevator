@@ -1724,6 +1724,11 @@ def convert_http_client_request_to_pattern(http_request):
                                              "network-traffic:extensions.'http-request-ext'.request_method")
             if term:
                 expressions.append(term)
+        if http_request.http_request_line.value is not None:
+            term = add_comparison_expression(http_request.http_request_line.value,
+                                             "network-traffic:extensions.'http-request-ext'.request_value")
+            if term:
+                expressions.append(term)
         if http_request.http_request_line.version is not None:
             term = add_comparison_expression(http_request.http_request_line.version,
                                              "network-traffic:extensions.'http-request-ext'.request_version")
