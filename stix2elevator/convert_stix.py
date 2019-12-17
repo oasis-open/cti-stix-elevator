@@ -1085,6 +1085,7 @@ def convert_kill_chain_missing_names(phase, kill_chain_phases_20):
         phase_name = phase.phase_id
     kill_chain_phases_20.append({"kill_chain_name": kill_chain_name, "phase_name": phase_name})
 
+
 def convert_kill_chains(kill_chain_phases, sdo_instance):
     if kill_chain_phases is not None:
         kill_chain_phases_20 = []

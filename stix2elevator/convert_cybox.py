@@ -1,4 +1,3 @@
-import netaddr
 import re
 
 from cybox.objects.account_object import Account
@@ -25,6 +24,7 @@ from cybox.objects.win_registry_key_object import WinRegistryKey
 from cybox.objects.win_service_object import WinService
 from six import text_type
 
+import netaddr
 from stix2elevator.common import ADDRESS_FAMILY_ENUMERATION, SOCKET_OPTIONS
 from stix2elevator.ids import (add_id_value,
                                add_object_id_value,
@@ -101,10 +101,11 @@ def convert_account(acc, obj1x_id):
     finish_sco(account_dict, obj1x_id)
     return account_dict
 
+
 def handle_inclusive_ip_addresses(add_value, obj1x_id):
     if add_value.condition == 'InclusiveBetween' and isinstance(add_value.value, list):
         x = str(netaddr.iprange_to_cidrs(add_value.value[0], add_value.value[1]))
-        m = re.match(".*\'(\d+\.\d+\.\d+\.\d+/\d+).*", x)
+        m = re.match(".*\\'(\\d+\\.\\d+\\.\\d+\\.\\d+/\\d+).*", x)
         if m:
             return m.group(1)
         else:
