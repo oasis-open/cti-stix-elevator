@@ -35,6 +35,7 @@ setup(
     packages=find_packages(),
     install_requires=[
         'pycountry>=19.8.18',
+        'netaddr',
         'stix>=1.1.1.9,<1.2.1.0',
         'stix2-validator>=2.0.0.dev3',
         'stixmarx>=1.0.6',
