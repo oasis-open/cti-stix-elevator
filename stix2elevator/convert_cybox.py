@@ -22,9 +22,9 @@ from cybox.objects.win_executable_file_object import WinExecutableFile
 from cybox.objects.win_process_object import WinProcess
 from cybox.objects.win_registry_key_object import WinRegistryKey
 from cybox.objects.win_service_object import WinService
+import netaddr
 from six import text_type
 
-import netaddr
 from stix2elevator.common import ADDRESS_FAMILY_ENUMERATION, SOCKET_OPTIONS
 from stix2elevator.ids import (add_id_value,
                                add_object_id_value,
