@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+2.1.1 - 2019-12-20
+
+    * Handle archive files correctly
+    * Handle CIDRs
+    * Handle missing kill-chain definition
+
 2.1.0 - 2019-12-11
 
     *	Handle SCOs
