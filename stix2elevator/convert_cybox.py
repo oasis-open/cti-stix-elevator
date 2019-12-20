@@ -277,7 +277,7 @@ def convert_windows_executable_file(f):
                 for prop_tuple in _PE_SECTION_HEADER_PROPERTY_MAP:
                     prop_name1x = prop_tuple[0]
                     prop_name2x = prop_tuple[1]
-                    if hasattr(s.section_header, prop_name1x) and getattr(s.section_header, prop_name1x):
+                    if hasattr(s.section_header, prop_name1x):
                         section_dict[prop_name2x] = getattr(s.section_header, prop_name1x).value
             if s.entropy:
                 if s.entropy.min:
