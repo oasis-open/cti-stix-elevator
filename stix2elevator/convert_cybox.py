@@ -258,7 +258,7 @@ def convert_windows_executable_file(f):
             for prop_tuple in _PE_FILE_HEADER_PROPERTY_MAP:
                 prop_name1x = prop_tuple[0]
                 prop_name2x = prop_tuple[1]
-                if hasattr(file_header, prop_name1x) and getattr(file_header, prop_name1x):
+                if getattr(file_header, prop_name1x, None):
                     w_ex_dict[prop_name2x] = getattr(file_header, prop_name1x).value
             if file_header.hashes is not None:
                 w_ex_dict["file_header_hashes"] = convert_hashes(file_header.hashes)
