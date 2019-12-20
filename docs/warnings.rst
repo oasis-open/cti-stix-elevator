@@ -93,7 +93,7 @@ Multiple values are not supported in STIX 2.x
 =========================================================================================================================================== ====    =====
 Message                                                                                                                                     Code    Level
 =========================================================================================================================================== ====    =====
-``NO MESSAGE ASSIGNED``                                                                                                                     501
+Cannot convert range of *[ip addr 1]* to *[ip addr 1]* in *[id]* to a CIDR                                                                  501     warn                                                                                                      501
 Only one person name allowed for *[id]* in STIX 2.x, used first one                                                                         502     warn
 Only one organization name allowed for *[id]* in STIX 2.x, used first one                                                                   503     warn
 YARA/SNORT patterns on *[id]* not supported in STIX 2.x                                                                                     504     warn

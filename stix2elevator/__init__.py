@@ -9,6 +9,7 @@ from stix2validator.validator import FileValidationResults
 from stix.core import STIXPackage
 import stixmarx
 
+from stix2elevator.convert_cybox import clear_directory_mappings
 from stix2elevator.convert_pattern import (clear_observable_mappings,
                                            clear_pattern_cache)
 from stix2elevator.convert_stix import (clear_kill_chains_phases_mapping,
@@ -48,6 +49,7 @@ def clear_globals():
     clear_observable_mappings()
     clear_kill_chains_phases_mapping()
     clear_id_of_obs_in_characterizations()
+    clear_directory_mappings()
     cybox.utils.caches.cache_clear()
 
 

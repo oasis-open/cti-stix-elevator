@@ -67,6 +67,7 @@ def idiom_mappings(converted_json, stored_json, ignored_properties):
             # are not verifiable because they contain identifiers per rule #2.
             continue
 
+        # make sure that the property names match
         if any(x in ignored_properties for x in good_path) and good_path[-1] == check_path[-1]:
             # Rule #2: Since fresh conversion may create dynamic values.
             # Some fields are omitted for verification. Currently

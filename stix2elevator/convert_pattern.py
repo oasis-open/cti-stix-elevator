@@ -1,3 +1,4 @@
+import copy
 import datetime
 import re
 import sys
@@ -191,7 +192,7 @@ class ComparisonExpressionForElevator(_ComparisonExpression):
         return isinstance(self.rhs, IdrefPlaceHolder)
 
     def collapse_reference(self, prefix):
-        new_lhs = prefix.merge(self.lhs)
+        new_lhs = copy.deepcopy(prefix).merge(self.lhs)
         new_lhs.collapsed = True
         return ComparisonExpressionForElevator(self.operator, new_lhs, self.rhs)
 
@@ -1208,6 +1209,13 @@ def convert_archive_file_to_pattern(f):
             term = add_comparison_expression(getattr(f, prop_1x), object_path)
             if term:
                 and_expressions.append(term)
+    if f.archived_file:
+        archived_file_expressions = []
+        for a_f in f.archived_file:
+            terms = convert_file_to_pattern(a_f)
+            archived_file_expressions.append(terms.collapse_reference(stix2.ObjectPath.make_object_path("file:extensions.archive-ext.contains_refs[*]")))
+        if archived_file_expressions:
+            and_expressions.append(create_boolean_expression("AND", archived_file_expressions))
     if and_expressions:
         return create_boolean_expression("AND", and_expressions)
 
@@ -1540,7 +1548,7 @@ _WINDOWS_SERVICE_PROPERTIES = \
     [["service_name", "process:extensions.'windows-service-ext'.service_name"],
      ["display_name", "process:extensions.'windows-service-ext'.display_name"],
      ["startup_command_line", "process:extensions.'windows-service-ext'.startup_command_line"],
-     ["start_type", "process:extensions.'windows-service-ext'.start_type"],
+     ["startup_type", "process:extensions.'windows-service-ext'.start_type"],
      ["service_type", "process:extensions.'windows-service-ext'.service_type"],
      ["service_status", "process:extensions.'windows-service-ext'.service_status"]]
 
