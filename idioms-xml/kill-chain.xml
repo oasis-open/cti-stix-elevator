@@ -20,7 +20,6 @@
     <stix:Indicators>
         <stix:Indicator id="example:indicator-f33c2b75-aa60-4ffb-9829-3746ef233311" timestamp="2014-10-21T21:10:09.423000+00:00" xsi:type='indicator:IndicatorType'>
             <indicator:Kill_Chain_Phases>
-                <stixCommon:Kill_Chain_Phase/>
                 <stixCommon:Kill_Chain_Phase phase_id="stix:TTP-786ca8f9-2d9a-4213-b38e-399af4a2e5d6" kill_chain_id="stix:TTP-af3e707f-2fb9-49e5-8c37-14026ca0a5ff"/>
             </indicator:Kill_Chain_Phases>
         </stix:Indicator>

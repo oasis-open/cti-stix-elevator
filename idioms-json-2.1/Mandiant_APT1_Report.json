@@ -868,12 +868,9 @@
             "type": "malware"
         },
         {
-            "id": "ipv4-addr--65bdb3e0-95f1-5fca-a137-3e1e04e5a5f7",
+            "id": "ipv4-addr--90e8b6b8-54fe-5fbc-830e-2cffb0b7487a",
             "type": "ipv4-addr",
-            "value": [
-                "143.89.0.0",
-                "143.89.255.255"
-            ]
+            "value": "143.89.0.0/16"
         },
         {
             "created": "2019-09-10T10:04:23.112Z",
@@ -886,7 +883,7 @@
                 "marking-definition--9ae67e9d-8241-4d62-af37-a54dbfa76ce3"
             ],
             "object_refs": [
-                "ipv4-addr--65bdb3e0-95f1-5fca-a137-3e1e04e5a5f7"
+                "ipv4-addr--90e8b6b8-54fe-5fbc-830e-2cffb0b7487a"
             ],
             "spec_version": "2.1",
             "type": "observed-data"
@@ -914,12 +911,9 @@
             "type": "infrastructure"
         },
         {
-            "id": "ipv4-addr--d0cbda3e-955b-5c3c-afc2-547759c67867",
+            "id": "ipv4-addr--c015256f-82b1-5161-bf41-0fc65f4eaa47",
             "type": "ipv4-addr",
-            "value": [
-                "223.166.0.0",
-                "23.167.255.255"
-            ]
+            "value": "223.166.0.0/15"
         },
         {
             "created": "2019-09-10T10:04:23.113Z",
@@ -932,18 +926,15 @@
                 "marking-definition--9ae67e9d-8241-4d62-af37-a54dbfa76ce3"
             ],
             "object_refs": [
-                "ipv4-addr--d0cbda3e-955b-5c3c-afc2-547759c67867"
+                "ipv4-addr--c015256f-82b1-5161-bf41-0fc65f4eaa47"
             ],
             "spec_version": "2.1",
             "type": "observed-data"
         },
         {
-            "id": "ipv4-addr--c0612854-2522-56a4-aa6f-bb8dbc59b510",
+            "id": "ipv4-addr--a228d39a-df8c-52b9-9942-7bb34bab4d45",
             "type": "ipv4-addr",
-            "value": [
-                "58.246.0.0",
-                "58.247.255.255"
-            ]
+            "value": "58.246.0.0/15"
         },
         {
             "created": "2019-09-10T10:04:23.113Z",
@@ -956,18 +947,15 @@
                 "marking-definition--9ae67e9d-8241-4d62-af37-a54dbfa76ce3"
             ],
             "object_refs": [
-                "ipv4-addr--c0612854-2522-56a4-aa6f-bb8dbc59b510"
+                "ipv4-addr--a228d39a-df8c-52b9-9942-7bb34bab4d45"
             ],
             "spec_version": "2.1",
             "type": "observed-data"
         },
         {
-            "id": "ipv4-addr--6ec00480-6fd2-52fa-8144-baf188ad4625",
+            "id": "ipv4-addr--46c77b1b-4dfa-5911-aa9f-8d71660a44eb",
             "type": "ipv4-addr",
-            "value": [
-                "112.64.0.0",
-                "112.65.255.255"
-            ]
+            "value": "112.64.0.0/15"
         },
         {
             "created": "2019-09-10T10:04:23.113Z",
@@ -980,18 +968,15 @@
                 "marking-definition--9ae67e9d-8241-4d62-af37-a54dbfa76ce3"
             ],
             "object_refs": [
-                "ipv4-addr--6ec00480-6fd2-52fa-8144-baf188ad4625"
+                "ipv4-addr--46c77b1b-4dfa-5911-aa9f-8d71660a44eb"
             ],
             "spec_version": "2.1",
             "type": "observed-data"
         },
         {
-            "id": "ipv4-addr--648c2501-21c6-52eb-a359-4f0a3f0bcb3f",
+            "id": "ipv4-addr--418bacc0-f953-55f6-9c70-a80c9c1901cb",
             "type": "ipv4-addr",
-            "value": [
-                "139.226.0.0",
-                "139.227.255.255"
-            ]
+            "value": "139.226.0.0/15"
         },
         {
             "created": "2019-09-10T10:04:23.113Z",
@@ -1004,18 +989,15 @@
                 "marking-definition--9ae67e9d-8241-4d62-af37-a54dbfa76ce3"
             ],
             "object_refs": [
-                "ipv4-addr--648c2501-21c6-52eb-a359-4f0a3f0bcb3f"
+                "ipv4-addr--418bacc0-f953-55f6-9c70-a80c9c1901cb"
             ],
             "spec_version": "2.1",
             "type": "observed-data"
         },
         {
-            "id": "ipv4-addr--8b1a1c09-b82d-5236-b4c1-eac4cb0112aa",
+            "id": "ipv4-addr--6733a117-63f1-54eb-ab13-d7db628e6f1c",
             "type": "ipv4-addr",
-            "value": [
-                "114.80.0.0",
-                "114.95.255.255"
-            ]
+            "value": "114.80.0.0/12"
         },
         {
             "created": "2019-09-10T10:04:23.114Z",
@@ -1028,18 +1010,15 @@
                 "marking-definition--9ae67e9d-8241-4d62-af37-a54dbfa76ce3"
             ],
             "object_refs": [
-                "ipv4-addr--8b1a1c09-b82d-5236-b4c1-eac4cb0112aa"
+                "ipv4-addr--6733a117-63f1-54eb-ab13-d7db628e6f1c"
             ],
             "spec_version": "2.1",
             "type": "observed-data"
         },
         {
-            "id": "ipv4-addr--c45344af-f3ae-5299-a128-78ed1fd18af2",
+            "id": "ipv4-addr--9fcf5bb4-c975-559c-a010-671976b3f2e1",
             "type": "ipv4-addr",
-            "value": [
-                "101.80.0.0",
-                "101.95.255.255"
-            ]
+            "value": "101.80.0.0/12"
         },
         {
             "created": "2019-09-10T10:04:23.114Z",
@@ -1052,7 +1031,7 @@
                 "marking-definition--9ae67e9d-8241-4d62-af37-a54dbfa76ce3"
             ],
             "object_refs": [
-                "ipv4-addr--c45344af-f3ae-5299-a128-78ed1fd18af2"
+                "ipv4-addr--9fcf5bb4-c975-559c-a010-671976b3f2e1"
             ],
             "spec_version": "2.1",
             "type": "observed-data"

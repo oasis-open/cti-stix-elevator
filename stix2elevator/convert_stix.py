@@ -1076,6 +1076,15 @@ def convert_incident(incident, env):
 
 # indicator
 
+def convert_kill_chain_missing_names(phase, kill_chain_phases_20):
+    kill_chain_name = phase.kill_chain_name
+    phase_name = phase.name
+    if not phase.kill_chain_name and phase.kill_chain_id:
+        kill_chain_name = phase.kill_chain_id
+    if not phase.name and phase.phase_id:
+        phase_name = phase.phase_id
+    kill_chain_phases_20.append({"kill_chain_name": kill_chain_name, "phase_name": phase_name})
+
 
 def convert_kill_chains(kill_chain_phases, sdo_instance):
     if kill_chain_phases is not None:
@@ -1091,9 +1100,9 @@ def convert_kill_chains(kill_chain_phases, sdo_instance):
                                                  "phase_name": kill_chain_info["phase_name"]})
                 except KeyError:
                     warn("Unknown phase_id %s in %s", 632, phase.phase_id, sdo_instance["id"])
-                    kill_chain_phases_20.append(phase.phase_id)
+                    convert_kill_chain_missing_names(phase, kill_chain_phases_20)
             elif isinstance(phase, KillChainPhase):
-                kill_chain_phases_20.append({"kill_chain_name": phase.kill_chain_name, "phase_name": phase.name})
+                convert_kill_chain_missing_names(phase, kill_chain_phases_20)
         if kill_chain_phases_20:
             sdo_instance["kill_chain_phases"] = kill_chain_phases_20
 

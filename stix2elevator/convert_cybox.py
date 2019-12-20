@@ -1,3 +1,5 @@
+import re
+
 from cybox.objects.account_object import Account
 from cybox.objects.address_object import Address
 from cybox.objects.archive_file_object import ArchiveFile
@@ -20,6 +22,7 @@ from cybox.objects.win_executable_file_object import WinExecutableFile
 from cybox.objects.win_process_object import WinProcess
 from cybox.objects.win_registry_key_object import WinRegistryKey
 from cybox.objects.win_service_object import WinService
+import netaddr
 from six import text_type
 
 from stix2elevator.common import ADDRESS_FAMILY_ENUMERATION, SOCKET_OPTIONS
@@ -99,10 +102,24 @@ def convert_account(acc, obj1x_id):
     return account_dict
 
 
-def convert_address(add, obj1x_id):
+def handle_inclusive_ip_addresses(add_value, obj1x_id):
+    if add_value.condition == 'InclusiveBetween' and isinstance(add_value.value, list):
+        x = str(netaddr.iprange_to_cidrs(add_value.value[0], add_value.value[1]))
+        m = re.match(r".*'(\d+.\d+.\d+.\d+/\d+).*", x)
+        if m:
+            return m.group(1)
+        else:
+            warn("Cannot convert range of %s to %s in %s to a CIDR", 501, add_value.value[0], add_value.value[1], obj1x_id)
+            return None
+    else:
+        return add_value.value
+
+
+def convert_address(add, obj1x_id=None):
     if add.category == add.CAT_IPV4:
-        instance = create_base_sco(add, "ipv4-addr", {"value": add.address_value.value})
+        instance = create_base_sco(add, "ipv4-addr", {"value": handle_inclusive_ip_addresses(add.address_value, obj1x_id)})
     elif add.category == add.CAT_IPV6:
+        # TODO: handle ipv6 CIDRs
         instance = create_base_sco(add, "ipv6-addr", {"value": add.address_value.value})
     elif add.category == add.CAT_MAC:
         instance = create_base_sco(add, "mac-addr", {"value": add.address_value.value})
@@ -110,6 +127,7 @@ def convert_address(add, obj1x_id):
         instance = create_base_sco(add, "email-addr", {"value": add.address_value.value})
     else:
         warn("The address type %s is not part of STIX 2.x", 421, add.category)
+        return None
     if instance:
         finish_sco(instance, obj1x_id)
         return instance
@@ -233,21 +251,22 @@ _PE_SECTION_HEADER_PROPERTY_MAP = \
 
 
 def convert_windows_executable_file(f):
-    dict = {}
+    w_ex_dict = {}
     if f.headers:
         file_header = f.headers.file_header
         if file_header:
             for prop_tuple in _PE_FILE_HEADER_PROPERTY_MAP:
                 prop_name1x = prop_tuple[0]
                 prop_name2x = prop_tuple[1]
-                dict[prop_name2x] = getattr(file_header, prop_name1x)
+                if getattr(file_header, prop_name1x, None):
+                    w_ex_dict[prop_name2x] = getattr(file_header, prop_name1x).value
             if file_header.hashes is not None:
-                dict["file_header_hashes"] = convert_hashes(file_header.hashes)
+                w_ex_dict["file_header_hashes"] = convert_hashes(file_header.hashes)
         if f.headers.optional_header:
             warn("file:extensions:'windows-pebinary-ext':optional_header is not implemented yet", 807)
 
     if f.type_:
-        dict["pe_type"] = map_vocabs_to_label(f.type_.value, WINDOWS_PEBINARY)
+        w_ex_dict["pe_type"] = map_vocabs_to_label(f.type_.value, WINDOWS_PEBINARY)
     sections = f.sections
     if sections:
         section_objs = []
@@ -258,7 +277,8 @@ def convert_windows_executable_file(f):
                 for prop_tuple in _PE_SECTION_HEADER_PROPERTY_MAP:
                     prop_name1x = prop_tuple[0]
                     prop_name2x = prop_tuple[1]
-                    section_dict[prop_name2x] = getattr(s.section_header, prop_name1x)
+                    if getattr(s.section_header, prop_name1x, None):
+                        section_dict[prop_name2x] = getattr(s.section_header, prop_name1x).value
             if s.entropy:
                 if s.entropy.min:
                     handle_missing_string_property(section_dict, "entropy_min", s.entropy.min, is_sco=True)
@@ -274,32 +294,88 @@ def convert_windows_executable_file(f):
             if section_dict:
                 section_objs.append(section_dict)
         if section_objs:
-            dict["sections"] = section_objs
+            w_ex_dict["sections"] = section_objs
     if f.exports:
         warn("The exports property of WinExecutableFileObj is not part of STIX 2.x", 418)
     if f.imports:
         warn("The imports property of WinExecutableFileObj is not part of STIX 2.x", 418)
-    return dict
+    return w_ex_dict
 
 
-def convert_archive_file(f, obj1x_id):
-    dict = {}
+def convert_archive_file20(f, obj1x_id):
+    index = 0
+    archive_dict = dict()
+    file_objs = dict()
+    if f.comment:
+        archive_dict["comment"] = f.comment
+    if f.version:
+        archive_dict["version"] = f.version
+    if f.archived_file:
+        archive_dict["contains_refs"] = list()
+        for ar_file in f.archived_file:
+            archive_dict["contains_refs"].append(text_type(index))
+            ar_file2x, index = convert_file(ar_file, obj1x_id, index)
+            file_objs.update(ar_file2x)
+    return archive_dict, file_objs
+
+
+def convert_archive_file21(f, obj1x_id):
+    archive_dict = {}
     file_objs = []
     if f.comment:
-        dict["comment"] = f.comment
+        archive_dict["comment"] = f.comment
     if f.version:
-        if get_option_value("spec_version") == "2.0":
-            dict["version"] = f.version
-        else:
-            if get_option_value("missing_policy") == "use-custom-properties":
-                property_name = convert_to_custom_property_name("version")
-                dict[property_name] = f.version
+        if get_option_value("missing_policy") == "use-custom-properties":
+            property_name = convert_to_custom_property_name("version")
+            archive_dict[property_name] = f.version
     if f.archived_file:
         for ar_file in f.archived_file:
-            ar_file2x = convert_file(ar_file, obj1x_id)
-            file_objs.append(ar_file2x)
-        dict["contains_refs"] = [x["id"] for x in file_objs]
-    return dict, file_objs
+            ar_file2x, ignore = convert_file(ar_file, obj1x_id)
+            file_objs.extend(ar_file2x)
+        archive_dict["contains_refs"] = [x["id"] for x in file_objs]
+    return archive_dict, file_objs
+
+
+_DIRECTORY_SCOS = {}
+
+
+def add_to_directory_mapping(id, sco):
+    global _DIRECTORY_SCOS
+    _DIRECTORY_SCOS[id] = sco
+
+
+def id_in_directory_mapping(id):
+    return id in _DIRECTORY_SCOS
+
+
+def get_sco_from_directory_mapping(id):
+    return _DIRECTORY_SCOS[id]
+
+
+def clear_directory_mappings():
+    global _DIRECTORY_SCOS
+    _DIRECTORY_SCOS = {}
+
+
+_DIRECTORY_PATHS = {}
+
+
+def add_to_directory_path_mapping(path, index):
+    global _DIRECTORY_PATHS
+    _DIRECTORY_PATHS[path] = index
+
+
+def index_in_directory_path_mapping(path):
+    return path in _DIRECTORY_PATHS
+
+
+def get_index_from_directory_path_mapping(path):
+    return _DIRECTORY_PATHS[path]
+
+
+def clear_directory_path_mappings():
+    global _DIRECTORY_PATHS
+    _DIRECTORY_PATHS = {}
 
 
 def convert_file_properties(f, obj1x_id):
@@ -351,37 +427,56 @@ def convert_file_properties(f, obj1x_id):
             file_dict["name"] = f.file_path.value[index + 1:]
         dir_path = f.file_path.value[0: index]
         if dir_path:
-            dir_dict = create_base_sco(None, "directory", {"path": (f.device_path.value if f.device_path else "") + dir_path})
+            full_path = f.device_path.value if f.device_path else ""
+            dir_dict = create_base_sco(None, "directory", {"path": full_path + dir_path})
             finish_sco(dir_dict, None)
     if f.full_path:
         warn("1.x full file paths are not processed, yet", 802)
     if isinstance(f, WinExecutableFile):
         windows_executable_file_dict = convert_windows_executable_file(f)
         if windows_executable_file_dict:
-            extended_properties["windows=pebinary-ext"] = windows_executable_file_dict
+            extended_properties["windows-pebinary-ext"] = windows_executable_file_dict
         else:
             warn("No WinExecutableFile properties found in %s", 613, text_type(f))
     if isinstance(f, ArchiveFile):
-        archive_file_dict, file_objs = convert_archive_file(f, obj1x_id)
+        if get_option_value("spec_version") == "2.0":
+            archive_file_dict, file_objs = convert_archive_file20(f, obj1x_id)
+        else:
+            archive_file_dict, file_objs = convert_archive_file21(f, obj1x_id)
         if archive_file_dict:
             extended_properties["archive-ext"] = archive_file_dict
         else:
             warn("No ArchiveFile properties found in %s", 614, text_type(f))
     else:
         file_objs = None
+    if extended_properties:
+        file_dict["extensions"] = extended_properties
     finish_sco(file_dict, obj1x_id)
     return file_dict, dir_dict, file_objs
 
 
-def convert_file20(f, obj1x_id):
+def convert_file20(f, obj1x_id, index=0):
     objs = {}
-    objs["0"], dir_dict, file_objs = convert_file_properties(f, obj1x_id)
+    file_obj_index = index
+    objs[text_type(index)], dir_dict, file_objs = convert_file_properties(f, obj1x_id)
     if dir_dict:
-        objs["1"] = dir_dict
-        objs["0"]["parent_directory_ref"] = "1"
+        if index_in_directory_path_mapping(dir_dict["path"]):
+            objs[text_type(index)]["parent_directory_ref"] = text_type(get_index_from_directory_path_mapping(dir_dict["path"]))
+            index += 1
+        else:
+            objs[text_type(index + 1)] = dir_dict
+            add_to_directory_path_mapping(dir_dict["path"], index + 1)
+            objs[text_type(index)]["parent_directory_ref"] = text_type(index + 1)
+            index += 2
     if file_objs:
-        objs.extend(file_objs)
-    return objs
+        number_mapping = {}
+        for k in sorted(file_objs.keys()):
+            number_mapping[text_type(k)] = text_type(index)
+            index += 1
+        new_objs = renumber_objs(file_objs, number_mapping)
+        objs.update(new_objs)
+        renumber_co(objs[text_type(file_obj_index)], number_mapping)
+    return objs, index
 
 
 def convert_file21(f, obj1x_id):
@@ -391,15 +486,18 @@ def convert_file21(f, obj1x_id):
         objs.append(dir_dict)
         file_dict["parent_directory_ref"] = dir_dict["id"]
     if file_objs:
-        objs.extend(file_objs)
+        for obj in file_objs:
+            if not id_in_directory_mapping(obj["id"]):
+                objs.append(obj)
+                add_to_directory_mapping(dir_dict["id"], dir_dict)
     return objs
 
 
-def convert_file(f, obj1x_id):
+def convert_file(f, obj1x_id, index=0):
     if get_option_value("spec_version") == "2.0":
-        return convert_file20(f, obj1x_id)
+        return convert_file20(f, obj1x_id, index)
     else:
-        return convert_file21(f, obj1x_id)
+        return convert_file21(f, obj1x_id), None
 
 
 def convert_attachment(attachment):
@@ -427,7 +525,7 @@ def convert_email_message(email_message, obj1x_id):
             email_dict["subject"] = text_type(header.subject)
         if header.from_:
             # should there ever be more than one?
-            from_ref = convert_address(header.from_, None)
+            from_ref = convert_address(header.from_)
             if spec_version == "2.0":
                 objs[text_type(index)] = from_ref
             else:
@@ -436,7 +534,7 @@ def convert_email_message(email_message, obj1x_id):
             index += 1
         if header.to:
             for t in header.to:
-                to_ref = convert_address(t, None)
+                to_ref = convert_address(t)
                 if spec_version == "2.0":
                     objs[text_type(index)] = to_ref
                 else:
@@ -447,7 +545,7 @@ def convert_email_message(email_message, obj1x_id):
                 index += 1
         if header.cc:
             for t in header.cc:
-                cc_ref = convert_address(t, None)
+                cc_ref = convert_address(t)
                 if spec_version == "2.0":
                     objs[text_type(index)] = cc_ref
                 else:
@@ -458,7 +556,7 @@ def convert_email_message(email_message, obj1x_id):
                 index += 1
         if header.bcc:
             for t in header.bcc:
-                bcc_ref = convert_address(t, None)
+                bcc_ref = convert_address(t)
                 if spec_version == "2.0":
                     objs[text_type(index)] = bcc_ref
                 else:
@@ -567,7 +665,7 @@ def convert_opened_connection_refs20(process, process_dict, objs, index):
                                                             index,
                                                             root_obj_index,
                                                             renumbered_nc_dicts)
-        add_objects(objs, renumbered_nc_dicts)
+        objs.update(renumbered_nc_dicts)
         process_dict["opened_connection_refs"].append(text_type(number_mapping[root_obj_index]))
         index = current_largest_id
     return index
@@ -597,8 +695,8 @@ def convert_process(process, obj1x_id):
     if process.pid:
         process_dict["pid"] = process.pid.value
     if process.creation_time:
-        process_dict["created"] = convert_timestamp_to_string(process.creation_time.value)
-
+        process_dict["created" if get_option_value("spec_version") == "2.0" else "created_time"] = \
+            convert_timestamp_to_string(process.creation_time.value)
     if process.argument_list and get_option_value("spec_version") == "2.0":
         process_dict["arguments"] = []
         for a in process.argument_list:
@@ -669,8 +767,8 @@ def convert_windows_service(service):
         cybox_ws["display_name"] = service.display_name.value
     if hasattr(service, "startup_command_line") and service.startup_command_line:
         cybox_ws["startup_command_line"] = service.startup_command_line.value
-    if hasattr(service, "start_type") and service.start_type:
-        cybox_ws["start_type"] = map_vocabs_to_label(service.start_type, SERVICE_START_TYPE)
+    if hasattr(service, "startup_type") and service.startup_type:
+        cybox_ws["start_type"] = map_vocabs_to_label(service.startup_type, SERVICE_START_TYPE)
     if hasattr(service, "service_type") and service.service_type:
         cybox_ws["service_type"] = map_vocabs_to_label(service.service_type, SERVICE_TYPE)
     if hasattr(service, "service_status") and service.service_status:
@@ -708,6 +806,8 @@ def convert_http_client_request(request):
     if request.http_request_line is not None:
         if request.http_request_line.http_method is not None:
             http_extension["request_method"] = text_type(request.http_request_line.http_method.value.lower())
+        if request.http_request_line.value is not None:
+            http_extension["request_value"] = text_type(request.http_request_line.value.value.lower())
         if request.http_request_line.version is not None:
             http_extension["request_version"] = text_type(request.http_request_line.version.value.lower())
 
@@ -878,7 +978,7 @@ def convert_network_connection(conn, obj1x_id):
             if conn.destination_socket_address.port.layer4_protocol is not None:
                 cybox_traffic["protocols"].append(text_type(conn.destination_socket_address.port.layer4_protocol.value.lower()))
         if conn.destination_socket_address.ip_address is not None:
-            destination = convert_address(conn.destination_socket_address.ip_address, None)
+            destination = convert_address(conn.destination_socket_address.ip_address)
             cybox_traffic["dst_ref"] = str(index) if spec_version == "2.0" else destination["id"]
             if spec_version == "2.0":
                 objs[text_type(index)] = destination
@@ -1043,6 +1143,8 @@ def convert_network_socket(socket, obj1x_id):
 
 
 def convert_cybox_object20(obj1x):
+    # in 2.0 indices are local
+    clear_directory_path_mappings()
     # TODO:  should related objects be handled on a case-by-case basis or just ignored
     prop = obj1x.properties
     objs = {}
@@ -1059,7 +1161,7 @@ def convert_cybox_object20(obj1x):
         objs = convert_email_message(prop, obj1x.id_)
     elif isinstance(prop, File):
         # potentially returns multiple objects
-        objs = convert_file20(prop, obj1x.id_)
+        objs, ignore = convert_file20(prop, obj1x.id_)
     elif isinstance(prop, WinRegistryKey):
         objs["0"] = convert_registry_key(prop, obj1x.id_)
     elif isinstance(prop, Process):
@@ -1158,10 +1260,6 @@ def find_index_of_type(objs, type):
     return None
 
 
-def add_objects(objects, objs_to_add):
-    objects.update(objs_to_add)
-
-
 def renumber_co(co, number_mapping):
     for k, v in co.items():
         if k.endswith("ref"):
@@ -1173,6 +1271,9 @@ def renumber_co(co, number_mapping):
                 if ref in number_mapping:
                     new_refs.append(number_mapping[ref])
             co[k] = new_refs
+        elif k == "extensions":
+            for ex_k, ex_v in v.items():
+                renumber_co(ex_v, number_mapping)
     return co
 
 
@@ -1231,7 +1332,7 @@ def fix_cybox_relationships(observed_data):
                                         mp["body_raw_ref"] = text_type(present_obj_index)
                     # TODO: warnings
         if objs_to_add:
-            add_objects(o["objects"], objs_to_add)
+            o["objects"].update(objs_to_add)
 
 
 def fix_attachments_refs(objects):

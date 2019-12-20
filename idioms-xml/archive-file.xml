@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<stix:STIX_Package
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:stix="http://stix.mitre.org/stix-1"
+    xmlns:stixCommon="http://stix.mitre.org/common-1"
+    xmlns:cybox="http://cybox.mitre.org/cybox-2"
+    xmlns:FileObj="http://cybox.mitre.org/objects#FileObject-2"
+    xmlns:ArchiveFileObj="http://cybox.mitre.org/objects#ArchiveFileObject-2"
+    xmlns:cyboxVocabs="http://cybox.mitre.org/default_vocabularies-2"
+    xmlns:cyboxCommon="http://cybox.mitre.org/common-2"
+    xmlns:stixVocabs="http://stix.mitre.org/default_vocabularies-1"
+    xmlns:example="http://example.com/"
+    xsi:schemaLocation="
+    http://stix.mitre.org/stix-1 http://stix.mitre.org/XMLSchema/core/1.2/stix_core.xsd
+    http://stix.mitre.org/Campaign-1 http://stix.mitre.org/XMLSchema/campaign/1.2/campaign.xsd
+    http://stix.mitre.org/Indicator-2 http://stix.mitre.org/XMLSchema/indicator/2.2/indicator.xsd
+    http://stix.mitre.org/TTP-2 http://stix.mitre.org/XMLSchema/ttp/1.2/ttp.xsd
+    http://stix.mitre.org/default_vocabularies-1 http://stix.mitre.org/XMLSchema/default_vocabularies/1.2.0/stix_default_vocabularies.xsd
+    http://cybox.mitre.org/objects#FileObject-2 http://cybox.mitre.org/XMLSchema/objects/File/2.1/File_Object.xsd"
+    id="example:STIXPackage-cc0ca596-70e6-4dac-9bef-603166d17db8"
+    version="1.2"
+    >
+    <stix:Observables cybox_major_version="1" cybox_minor_version="1">
+        <cybox:Observable id="example:observable-c8c32b6e-2ea8-4678-8446-7f5218072f27">
+            <cybox:Object id="example:object-d7fcce87-0e98-4537-81bf-1e7ca9ad3734">
+                 <cybox:Properties xsi:type="ArchiveFileObj:ArchiveFileObjectType">
+                     <FileObj:File_Path>/usr/local/iprip32.zip</FileObj:File_Path>
+                     <ArchiveFileObj:Archived_File>
+                         <FileObj:File_Path>/usr/local/fred.doc</FileObj:File_Path>
+                        <FileObj:Hashes>
+                            <cyboxCommon:Hash>
+                                <cyboxCommon:Type condition="Equals" xsi:type="cyboxVocabs:HashNameVocab-1.0">SHA256</cyboxCommon:Type>
+                                <cyboxCommon:Simple_Hash_Value condition="Equals">e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855</cyboxCommon:Simple_Hash_Value>
+                            </cyboxCommon:Hash>
+                        </FileObj:Hashes>
+                     </ArchiveFileObj:Archived_File>
+                      <ArchiveFileObj:Archived_File>
+                          <FileObj:Hashes>
+                            <cyboxCommon:Hash>
+                                <cyboxCommon:Type condition="Equals" xsi:type="cyboxVocabs:HashNameVocab-1.0">MD5</cyboxCommon:Type>
+                                <cyboxCommon:Simple_Hash_Value condition="Equals">5d8129be965fab8115eca34fc84bd7f0</cyboxCommon:Simple_Hash_Value>
+                            </cyboxCommon:Hash>
+                        </FileObj:Hashes>
+                      </ArchiveFileObj:Archived_File>
+                 </cybox:Properties>
+            </cybox:Object>
+        </cybox:Observable>
+    </stix:Observables>
+</stix:STIX_Package>
