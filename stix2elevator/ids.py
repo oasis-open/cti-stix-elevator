@@ -111,38 +111,38 @@ def generate_sco_id(type, instance):
         for k, c in inspect.getmembers(module, inspect.isclass):
             if "type" in c._properties:
                 _SCO_CLASSES[c._properties["type"]._fixed_value] = c
-    # TODO:  need uuid5
-    klass = _SCO_CLASSES[type]
-    if klass and hasattr(klass, "_id_contributing_properties") and klass._id_contributing_properties:
-        contributing_properties = klass._id_contributing_properties
-        streamlined_obj_vals = []
-        possible_hash = None
-        if "hashes" in instance and "hashes" in contributing_properties:
-            possible_hash = _choose_one_hash(instance["hashes"])
-        if possible_hash:
-            streamlined_obj_vals.append(possible_hash)
-        for key in contributing_properties:
-            if key != "hashes" and key in instance:
-                # if isinstance(kwargs[key], dict) or isinstance(kwargs[key], _STIXBase):
-                #     temp_deep_copy = copy.deepcopy(dict(kwargs[key]))
-                #     _recursive_stix_to_dict(temp_deep_copy)
-                #     streamlined_obj_vals.append(temp_deep_copy)
-                # elif isinstance(kwargs[key], list) and isinstance(kwargs[key][0], _STIXBase):
-                #     for obj in kwargs[key]:
-                #         temp_deep_copy = copy.deepcopy(dict(obj))
-                #         _recursive_stix_to_dict(temp_deep_copy)
-                #         streamlined_obj_vals.append(temp_deep_copy)
-                # else:
-                streamlined_obj_vals.append(instance[key])
+    if type in _SCO_CLASSES:
+        klass = _SCO_CLASSES[type]
+        if klass and hasattr(klass, "_id_contributing_properties") and klass._id_contributing_properties:
+            contributing_properties = klass._id_contributing_properties
+            streamlined_obj_vals = []
+            possible_hash = None
+            if "hashes" in instance and "hashes" in contributing_properties:
+                possible_hash = _choose_one_hash(instance["hashes"])
+            if possible_hash:
+                streamlined_obj_vals.append(possible_hash)
+            for key in contributing_properties:
+                if key != "hashes" and key in instance:
+                    # if isinstance(kwargs[key], dict) or isinstance(kwargs[key], _STIXBase):
+                    #     temp_deep_copy = copy.deepcopy(dict(kwargs[key]))
+                    #     _recursive_stix_to_dict(temp_deep_copy)
+                    #     streamlined_obj_vals.append(temp_deep_copy)
+                    # elif isinstance(kwargs[key], list) and isinstance(kwargs[key][0], _STIXBase):
+                    #     for obj in kwargs[key]:
+                    #         temp_deep_copy = copy.deepcopy(dict(obj))
+                    #         _recursive_stix_to_dict(temp_deep_copy)
+                    #         streamlined_obj_vals.append(temp_deep_copy)
+                    # else:
+                    streamlined_obj_vals.append(instance[key])
 
-        if streamlined_obj_vals:
-            data = canonicalize(streamlined_obj_vals, utf8=False)
+            if streamlined_obj_vals:
+                data = canonicalize(streamlined_obj_vals, utf8=False)
 
-            # try/except here to enable python 2 compatibility
-            try:
-                return required_prefix + text_type(uuid.uuid5(SCO_DET_ID_NAMESPACE, data))
-            except UnicodeDecodeError:
-                return required_prefix + text_type(uuid.uuid5(SCO_DET_ID_NAMESPACE, binary_type(data)))
+                # try/except here to enable python 2 compatibility
+                try:
+                    return required_prefix + text_type(uuid.uuid5(SCO_DET_ID_NAMESPACE, data))
+                except UnicodeDecodeError:
+                    return required_prefix + text_type(uuid.uuid5(SCO_DET_ID_NAMESPACE, binary_type(data)))
 
     return required_prefix + text_type(uuid.uuid4())
 

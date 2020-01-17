@@ -20,6 +20,10 @@
         "1": {
           "path": "/usr/local",
           "type": "directory"
+        },
+        "2": {
+            "type": "x-windows-hook",
+            "win-hook-type": "WH_KEYBOARD_LL"
         }
       },
       "type": "observed-data"

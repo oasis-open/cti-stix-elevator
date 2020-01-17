@@ -16,6 +16,11 @@
             "type": "directory"
         },
         {
+            "id": "x-windows-hook--156fa3a8-01e9-44a2-a1f3-59738767179c",
+            "type": "x-windows-hook",
+            "win-hook-type": "WH_KEYBOARD_LL"
+        },
+        {
             "created": "2017-01-27T13:49:41.345Z",
             "first_observed": "2017-01-27T13:49:41.345Z",
             "id": "observed-data--c8c32b6e-2ea8-51c4-6446-7f5218072f27",
@@ -24,7 +29,8 @@
             "number_observed": 1,
             "object_refs": [
                 "file--49959589-27c4-5873-8e23-82f6c909d4ca",
-                "directory--4aa982e3-4aac-5d5b-a699-d08c8c11f5f3"
+                "directory--4aa982e3-4aac-5d5b-a699-d08c8c11f5f3",
+                "x-windows-hook--156fa3a8-01e9-44a2-a1f3-59738767179c"
             ],
             "spec_version": "2.1",
             "type": "observed-data"
