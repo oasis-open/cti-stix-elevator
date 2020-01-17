@@ -48,7 +48,7 @@ def test_stepper_idiom_mapping(test_file, stored_master):
             type_of_check_id = check_path[1].split("--")[0]
             if (type_of_good_id == 'relationship' and type_of_check_id == 'relationship' or
                     type_of_good_id == 'process' and type_of_check_id == 'process' or
-                        type_of_good_id.startswith("x-") and type_of_check_id.startswith("x-")):
+                    type_of_good_id.startswith("x-") and type_of_check_id.startswith("x-")):
                 continue
         if good_path != check_path:
             find_index_of_difference(good_path, check_path)
