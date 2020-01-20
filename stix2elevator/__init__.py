@@ -3,7 +3,7 @@ import json
 import logging
 
 import cybox.utils.caches
-from six import StringIO, binary_type
+from six import BytesIO, StringIO, binary_type
 from stix2validator import ValidationError, codes, output, validate_string
 from stix2validator.validator import FileValidationResults
 from stix.core import STIXPackage
@@ -170,7 +170,7 @@ def elevate_package(package):
         output.set_silent(validator_options.silent)
 
         # It needs to be re-parsed.
-        container = stixmarx.parse(StringIO(package.to_xml()))
+        container = stixmarx.parse(BytesIO(package.to_xml()))
         stix_package = container.package
         set_option_value("marking_container", container)
 
