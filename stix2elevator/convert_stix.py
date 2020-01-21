@@ -1467,7 +1467,7 @@ def convert_threat_actor(threat_actor, env):
     if threat_actor.intended_effects is not None:
         threat_actor_instance["goals"] = list()
         for g in threat_actor.intended_effects:
-            threat_actor_instance["goals"] = text_type(g)
+            threat_actor_instance["goals"].append(text_type(g.value))
     convert_controlled_vocabs_to_open_vocabs(threat_actor_instance,
                                              "labels" if get_option_value("spec_version") == "2.0" else "threat_actor_types",
                                              threat_actor.types,
