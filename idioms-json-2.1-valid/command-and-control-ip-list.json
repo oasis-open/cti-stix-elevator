@@ -2,16 +2,10 @@
     "id": "bundle--cc0ca596-70e6-4dac-9bef-603166d17db8",
     "objects": [
         {
-            "created": "2017-01-27T13:49:41.329Z",
-            "id": "relationship--83c024c1-9e16-40c6-921e-9eb432d45afa",
-            "modified": "2017-01-27T13:49:41.329Z",
-            "relationship_type": "resolves_to",
-            "source_ref": "ipv4-addr--7e4a9c21-50df-5298-97ce-42044f79472e",
-            "target_ref": "domain-name--a5cb3d9e-4635-5956-8ccb-814a839a77c3",
-            "type": "relationship"
-        },
-        {
             "id": "ipv4-addr--7e4a9c21-50df-5298-97ce-42044f79472e",
+            "resolves_to_refs": [
+                "domain-name--a5cb3d9e-4635-5956-8ccb-814a839a77c3"
+            ],
             "type": "ipv4-addr",
             "value": "198.51.100.2"
         },
@@ -28,7 +22,6 @@
             "modified": "2017-01-27T13:49:41.329Z",
             "number_observed": 1,
             "object_refs": [
-                "relationship--83c024c1-9e16-40c6-921e-9eb432d45afa",
                 "ipv4-addr--7e4a9c21-50df-5298-97ce-42044f79472e",
                 "domain-name--a5cb3d9e-4635-5956-8ccb-814a839a77c3"
             ],
