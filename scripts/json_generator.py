@@ -6,7 +6,7 @@ import io
 import os
 import sys
 
-from stix2elevator import elevate_file
+from stix2elevator import elevate
 from stix2elevator.options import initialize_options
 from stix2elevator.utils import find_dir
 
@@ -45,7 +45,7 @@ def main():
 
         if file_and_ext[1] == "xml":
             sys.stdout.write(xml_path + "\n")
-            json_output = elevate_file(xml_path)
+            json_output = elevate(xml_path)
 
             with io.open(destination, "w", encoding="utf-8") as f:
                 f.write(json_output)
