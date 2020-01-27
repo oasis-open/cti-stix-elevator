@@ -83,21 +83,21 @@ def step_cyber_observable(obj, observed_data):
     return objs
 
 
-def step_observable_data(sco):
-    for key, obj in sco["objects"].items():
-        obj["id"] = generate_sco_id(obj["type"], obj)
-    objs = list()
-    for key, obj in sco["objects"].items():
-        objs.extend(step_cyber_observable(obj, sco))
-    sco.pop("objects")
-    sco["object_refs"] = []
-    for obj in objs:
-        sco["object_refs"].append(obj["id"])
+def step_observable_data(observed_data):
+    scos = list()
+    for observable in observed_data["objects"].values():
+        observable["id"] = generate_sco_id(observable["type"], observable)
+    for observable in observed_data["objects"].values():
+        scos.extend(step_cyber_observable(observable, observed_data))
+    observed_data.pop("objects")
+    observed_data["object_refs"] = []
+    for sco in scos:
+        observed_data["object_refs"].append(sco["id"])
         for prop in ["description", "external_references"]:
-            if prop in obj and obj[prop] in ("", u"", [], None, dict()):
-                obj.pop(prop)
-    objs.append(sco)
-    return objs
+            if prop in sco and sco[prop] in ("", u"", [], None, dict()):
+                sco.pop(prop)
+    scos.append(observed_data)
+    return scos
 
 
 def step_pattern(pattern):
@@ -107,8 +107,9 @@ def step_pattern(pattern):
 
 
 def step_object(stix_object):
+    type_set = set(("indicator", "malware", "report", "threat-actor", "tool"))
     stix_object["spec_version"] = "2.1"
-    if stix_object["type"] in ["indicator", "malware", "report", "threat-actor", "tool"]:
+    if stix_object["type"] in type_set:
         if "labels" in stix_object:
             types_property_name = stix_object["type"].replace("-", "_") + "_types"
             stix_object[types_property_name] = stix_object["labels"]
