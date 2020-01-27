@@ -7,7 +7,7 @@ import sys
 
 from six.moves import zip
 
-from stix2elevator import elevate_file
+from stix2elevator import elevate
 from stix2elevator.options import (get_option_value,
                                    initialize_options,
                                    set_option_value)
@@ -42,7 +42,7 @@ def idiom_elevator_mappings(before_file_path, stored_json, version, missing_poli
         print("'no_policy' is not allowed for testing")
     set_option_value("policy", "no_policy")
     sys.setrecursionlimit(3000)
-    converted_json = elevate_file(before_file_path)
+    converted_json = elevate(before_file_path)
     print(converted_json)
     converted_json = json.loads(converted_json)
     return idiom_mappings(converted_json, stored_json, ignore)
