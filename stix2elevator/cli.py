@@ -10,7 +10,7 @@ import argparse
 import sys
 import textwrap
 
-from stix2elevator import elevate_file
+from stix2elevator import elevate
 from stix2elevator.options import initialize_options
 from stix2elevator.version import __version__
 
@@ -199,7 +199,7 @@ def main():
     elevator_args = elevator_parser.parse_args()
     sys.setrecursionlimit(3000)
     initialize_options(elevator_args)
-    result = elevate_file(elevator_args.file_)
+    result = elevate(elevator_args.file_)
     if result:
         sys.stdout.write(result + "\n")
     else:

@@ -2,7 +2,7 @@ import io
 import os
 import sys
 
-from stix2elevator import elevate_file
+from stix2elevator import elevate
 from stix2elevator.cli import _get_arg_parser
 from stix2elevator.options import (get_option_value,
                                    initialize_options,
@@ -41,7 +41,7 @@ def main():
             sys.stdout.write(path + "\n")
             file_and_ext = filename.split(".")
             set_option_value("file_", file_and_ext[0])
-            result = elevate_file(path)
+            result = elevate(path)
 
             if result:
                 if elevator_args.output_directory:
