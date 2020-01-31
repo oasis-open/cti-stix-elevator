@@ -1,7 +1,10 @@
-from cybox.core import Observable
+
+from datetime import datetime
 from lxml import etree
 import pycountry
 from six import string_types, text_type
+
+from cybox.core import Observable
 import stix
 from stix.campaign import Campaign
 from stix.coa import CourseOfAction
@@ -1952,6 +1955,10 @@ def convert_package(stix_package, env):
 
     if hasattr(stix_package, "timestamp") and stix_package.timestamp:
         env.timestamp = stix_package.timestamp
+    elif not env.timestamp:
+        # timestamp not given on the command line
+        env.timestamp = strftime_with_appropriate_fractional_seconds(datetime.now(), True)
+        warn("Timestamp not available for stix 1x package, using current time", 905)
 
     # created_by_idref from the command line is used instead of the one from the package, if given
     if not env.created_by_ref and hasattr(stix_package.stix_header, "information_source"):

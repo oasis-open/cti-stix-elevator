@@ -100,12 +100,9 @@ def elevate(stix_package):
     try:
         setup_logger(container_package.id_)
         warn("Results produced by the stix2-elevator may generate warning messages which should be investigated.", 201)
+        env = Environment(get_option_value("package_created_by_id"))
         if get_option_value("default_timestamp"):
-            timestamp = datetime.strptime(get_option_value("default_timestamp"), "%Y-%m-%dT%H:%M:%S.%fZ")
-        else:
-            warn("Timestamp not available for stix 1x package, using current time", 905)
-            timestamp = strftime_with_appropriate_fractional_seconds(datetime.now(), True)
-        env = Environment(get_option_value("package_created_by_id"), timestamp)
+            env.timestamp = datetime.strptime(get_option_value("default_timestamp"), "%Y-%m-%dT%H:%M:%S.%fZ")
         json_string = json.dumps(
             convert_package(container_package, env),
             ensure_ascii=False,
