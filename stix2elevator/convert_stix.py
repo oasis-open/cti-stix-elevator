@@ -1,10 +1,10 @@
 
 from datetime import datetime
+
+from cybox.core import Observable
 from lxml import etree
 import pycountry
 from six import string_types, text_type
-
-from cybox.core import Observable
 import stix
 from stix.campaign import Campaign
 from stix.coa import CourseOfAction
