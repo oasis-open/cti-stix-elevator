@@ -1,4 +1,3 @@
-from datetime import datetime
 import json
 import logging
 import os
@@ -26,9 +25,7 @@ from stix2elevator.options import (get_option_value,
                                    set_option_value,
                                    setup_logger,
                                    warn)
-from stix2elevator.utils import (Environment,
-                                 clear_1x_markings_map,
-                                 strftime_with_appropriate_fractional_seconds)
+from stix2elevator.utils import Environment, clear_1x_markings_map
 from stix2elevator.version import __version__  # noqa
 
 # Module-level logger
@@ -101,8 +98,6 @@ def elevate(stix_package):
         setup_logger(container_package.id_)
         warn("Results produced by the stix2-elevator may generate warning messages which should be investigated.", 201)
         env = Environment(get_option_value("package_created_by_id"))
-        if get_option_value("default_timestamp"):
-            env.timestamp = datetime.strptime(get_option_value("default_timestamp"), "%Y-%m-%dT%H:%M:%S.%fZ")
         json_string = json.dumps(
             convert_package(container_package, env),
             ensure_ascii=False,
@@ -152,13 +147,7 @@ def elevate_file(fn):
 
         setup_logger(stix_package.id_)
         warn("Results produced by the stix2-elevator may generate warning messages which should be investigated.", 201)
-        if get_option_value("default_timestamp"):
-            timestamp = datetime.strptime(get_option_value("default_timestamp"), "%Y-%m-%dT%H:%M:%S.%fZ")
-        else:
-            warn("Timestamp not available for stix 1x package, using current time", 905)
-            timestamp = strftime_with_appropriate_fractional_seconds(datetime.now(), True)
-        env = Environment(get_option_value("package_created_by_id"),
-                          timestamp)
+        env = Environment(get_option_value("package_created_by_id"))
         json_string = json.dumps(convert_package(stix_package, env),
                                  ensure_ascii=False,
                                  indent=4,
@@ -205,12 +194,7 @@ def elevate_string(string):
 
         setup_logger(stix_package.id_)
         warn("Results produced by the stix2-elevator are not for production purposes.", 201)
-        if get_option_value("default_timestamp"):
-            timestamp = datetime.strptime(get_option_value("default_timestamp"), "%Y-%m-%dT%H:%M:%S.%fZ")
-        else:
-            timestamp = None
-        env = Environment(get_option_value("package_created_by_id"),
-                          timestamp)
+        env = Environment(get_option_value("package_created_by_id"))
         json_string = json.dumps(convert_package(stix_package, env),
                                  ensure_ascii=False,
                                  indent=4,
@@ -258,12 +242,7 @@ def elevate_package(package):
 
         setup_logger(stix_package.id_)
         warn("Results produced by the stix2-elevator are not for production purposes.", 201)
-        if get_option_value("default_timestamp"):
-            timestamp = datetime.strptime(get_option_value("default_timestamp"), "%Y-%m-%dT%H:%M:%S.%fZ")
-        else:
-            timestamp = None
-        env = Environment(get_option_value("package_created_by_id"),
-                          timestamp)
+        env = Environment(get_option_value("package_created_by_id"))
         json_string = json.dumps(convert_package(stix_package, env),
                                  ensure_ascii=False,
                                  indent=4,
