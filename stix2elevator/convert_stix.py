@@ -1,3 +1,6 @@
+
+from datetime import datetime
+
 from cybox.core import Observable
 from lxml import etree
 import pycountry
@@ -1952,6 +1955,12 @@ def convert_package(stix_package, env):
 
     if hasattr(stix_package, "timestamp") and stix_package.timestamp:
         env.timestamp = stix_package.timestamp
+    elif get_option_value("default_timestamp"):
+        env.timestamp = datetime.strptime(get_option_value("default_timestamp"), "%Y-%m-%dT%H:%M:%S.%fZ")
+    else:
+        # timestamp not given on the command line
+        env.timestamp = strftime_with_appropriate_fractional_seconds(datetime.now(), True)
+        warn("Timestamp not available for stix 1x package, using current time", 905)
 
     # created_by_idref from the command line is used instead of the one from the package, if given
     if not env.created_by_ref and hasattr(stix_package.stix_header, "information_source"):
