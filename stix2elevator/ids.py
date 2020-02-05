@@ -1,10 +1,11 @@
+import copy
 import importlib
 import inspect
 import re
 import uuid
 
-from six import binary_type, text_type
-from stix2.base import SCO_DET_ID_NAMESPACE
+from six import text_type
+from stix2.base import SCO_DET_ID_NAMESPACE, _recursive_stix_to_dict, _STIXBase
 from stix2.canonicalization.Canonicalize import canonicalize
 
 from stix2elevator.options import error, info, warn
@@ -122,18 +123,19 @@ def generate_sco_id(type, instance):
             if possible_hash:
                 streamlined_obj_vals.append(possible_hash)
             for key in contributing_properties:
+                key = str(key)
                 if key != "hashes" and key in instance:
-                    # if isinstance(kwargs[key], dict) or isinstance(kwargs[key], _STIXBase):
-                    #     temp_deep_copy = copy.deepcopy(dict(kwargs[key]))
-                    #     _recursive_stix_to_dict(temp_deep_copy)
-                    #     streamlined_obj_vals.append(temp_deep_copy)
-                    # elif isinstance(kwargs[key], list) and isinstance(kwargs[key][0], _STIXBase):
-                    #     for obj in kwargs[key]:
-                    #         temp_deep_copy = copy.deepcopy(dict(obj))
-                    #         _recursive_stix_to_dict(temp_deep_copy)
-                    #         streamlined_obj_vals.append(temp_deep_copy)
-                    # else:
-                    streamlined_obj_vals.append(instance[key])
+                    if isinstance(instance[key], dict) or isinstance(instance[key], _STIXBase):
+                        temp_deep_copy = copy.deepcopy(dict(instance[key]))
+                        _recursive_stix_to_dict(temp_deep_copy)
+                        streamlined_obj_vals.append(temp_deep_copy)
+                    elif isinstance(instance[key], list) and isinstance(instance[key][0], _STIXBase):
+                        for obj in instance[key]:
+                            temp_deep_copy = copy.deepcopy(dict(obj))
+                            _recursive_stix_to_dict(temp_deep_copy)
+                            streamlined_obj_vals.append(temp_deep_copy)
+                    else:
+                        streamlined_obj_vals.append(instance[key])
 
             if streamlined_obj_vals:
                 data = canonicalize(streamlined_obj_vals, utf8=False)
@@ -142,7 +144,7 @@ def generate_sco_id(type, instance):
                 try:
                     return required_prefix + text_type(uuid.uuid5(SCO_DET_ID_NAMESPACE, data))
                 except UnicodeDecodeError:
-                    return required_prefix + text_type(uuid.uuid5(SCO_DET_ID_NAMESPACE, binary_type(data)))
+                    return required_prefix + text_type(uuid.uuid5(SCO_DET_ID_NAMESPACE, data.encode("utf-8")))
 
     return required_prefix + text_type(uuid.uuid4())
 
