@@ -5,7 +5,7 @@ import re
 import uuid
 
 from six import text_type
-from stix2.base import SCO_DET_ID_NAMESPACE, _recursive_stix_to_dict, _STIXBase
+from stix2.base import SCO_DET_ID_NAMESPACE, _recursive_stix_to_dict
 from stix2.canonicalization.Canonicalize import canonicalize
 
 from stix2elevator.options import error, info, warn
@@ -125,11 +125,11 @@ def generate_sco_id(type, instance):
             for key in contributing_properties:
                 key = str(key)
                 if key != "hashes" and key in instance:
-                    if isinstance(instance[key], dict) or isinstance(instance[key], _STIXBase):
+                    if isinstance(instance[key], dict):
                         temp_deep_copy = copy.deepcopy(dict(instance[key]))
                         _recursive_stix_to_dict(temp_deep_copy)
                         streamlined_obj_vals.append(temp_deep_copy)
-                    elif isinstance(instance[key], list) and isinstance(instance[key][0], _STIXBase):
+                    elif isinstance(instance[key], list):
                         for obj in instance[key]:
                             temp_deep_copy = copy.deepcopy(dict(obj))
                             _recursive_stix_to_dict(temp_deep_copy)
