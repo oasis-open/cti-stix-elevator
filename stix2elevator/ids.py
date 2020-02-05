@@ -3,7 +3,7 @@ import inspect
 import re
 import uuid
 
-from six import binary_type, text_type
+from six import text_type
 from stix2.base import SCO_DET_ID_NAMESPACE
 from stix2.canonicalization.Canonicalize import canonicalize
 
@@ -123,16 +123,9 @@ def generate_sco_id(type, instance):
                 streamlined_obj_vals.append(possible_hash)
             for key in contributing_properties:
                 if key != "hashes" and key in instance:
-                    # if isinstance(kwargs[key], dict) or isinstance(kwargs[key], _STIXBase):
-                    #     temp_deep_copy = copy.deepcopy(dict(kwargs[key]))
-                    #     _recursive_stix_to_dict(temp_deep_copy)
-                    #     streamlined_obj_vals.append(temp_deep_copy)
-                    # elif isinstance(kwargs[key], list) and isinstance(kwargs[key][0], _STIXBase):
-                    #     for obj in kwargs[key]:
-                    #         temp_deep_copy = copy.deepcopy(dict(obj))
-                    #         _recursive_stix_to_dict(temp_deep_copy)
-                    #         streamlined_obj_vals.append(temp_deep_copy)
-                    # else:
+                    # We don't need to handle the isinstance(...) cases here
+                    # because the elevator uses Python default containers
+                    # to represent its content.
                     streamlined_obj_vals.append(instance[key])
 
             if streamlined_obj_vals:
@@ -142,7 +135,7 @@ def generate_sco_id(type, instance):
                 try:
                     return required_prefix + text_type(uuid.uuid5(SCO_DET_ID_NAMESPACE, data))
                 except UnicodeDecodeError:
-                    return required_prefix + text_type(uuid.uuid5(SCO_DET_ID_NAMESPACE, binary_type(data)))
+                    return required_prefix + text_type(uuid.uuid5(SCO_DET_ID_NAMESPACE, data.encode("utf-8")))
 
     return required_prefix + text_type(uuid.uuid4())
 
