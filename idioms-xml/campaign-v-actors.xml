@@ -41,8 +41,14 @@
             <campaign:Attribution>
                 <campaign:Attributed_Threat_Actor>
                     <stixCommon:Threat_Actor id="example:threatactor-56f3f0db-b5d5-431c-ae56-c18f02caf500" timestamp="2014-08-08T15:50:10.983629+00:00" xsi:type='ta:ThreatActorType' version="1.2">
-                    <ta:Title>People behind the intrusion</ta:Title>
-                </stixCommon:Threat_Actor>
+                        <ta:Intended_Effect>
+                            <stixCommon:Value xsi:type="stixVocabs:IntendedEffectVocab-1.0">Theft</stixCommon:Value>
+                        </ta:Intended_Effect>
+                        <ta:Intended_Effect>
+                            <stixCommon:Value xsi:type="stixVocabs:IntendedEffectVocab-1.0">Theft - Theft of Proprietary Information</stixCommon:Value>
+                        </ta:Intended_Effect>
+                        <ta:Title>People behind the intrusion</ta:Title>
+                    </stixCommon:Threat_Actor>
                 </campaign:Attributed_Threat_Actor>
             </campaign:Attribution>
             <campaign:Information_Source>
