@@ -3,6 +3,10 @@
     "objects": [
         {
             "created": "2014-08-08T15:50:10.983Z",
+            "goals": [
+                "Theft",
+                "Theft - Theft of Proprietary Information"
+            ],
             "id": "threat-actor--56f3f0db-b5d5-431c-ae56-c18f02caf500",
             "modified": "2014-08-08T15:50:10.983Z",
             "name": "People behind the intrusion",
