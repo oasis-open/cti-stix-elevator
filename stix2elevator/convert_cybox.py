@@ -115,12 +115,28 @@ def handle_inclusive_ip_addresses(add_value, obj1x_id):
         return add_value.value
 
 
-def convert_address(add, obj1x_id=None):
+def handle_related_objects(sco, related_objects, stix1x_rel_name, stix2x_rel_name, more_than_one=True):
+    if related_objects:
+        for ro in related_objects:
+            if ro.relationship == stix1x_rel_name and ro.idref:
+                if more_than_one:
+                    if stix2x_rel_name not in sco:
+                        sco[stix2x_rel_name] = list()
+                    sco[stix2x_rel_name].append(ro.idref)
+                else:
+                    sco[stix2x_rel_name] = ro.idref
+            else:
+                warn("The %s relationship involving %s is not supported in STIX 2.x", 427, ro.relationship, None)
+
+
+def convert_address(add, related_objects, obj1x_id=None):
     if add.category == add.CAT_IPV4:
         instance = create_base_sco(add, "ipv4-addr", {"value": handle_inclusive_ip_addresses(add.address_value, obj1x_id)})
+        handle_related_objects(instance, related_objects, "Resolved_To", "resolves_to_refs")
     elif add.category == add.CAT_IPV6:
         # TODO: handle ipv6 CIDRs
         instance = create_base_sco(add, "ipv6-addr", {"value": add.address_value.value})
+        handle_related_objects(instance, related_objects, "Resolved_To", "resolves_to_refs")
     elif add.category == add.CAT_MAC:
         instance = create_base_sco(add, "mac-addr", {"value": add.address_value.value})
     elif add.category == add.CAT_EMAIL:
@@ -782,12 +798,11 @@ def convert_windows_service(service):
     return cybox_ws, None
 
 
-def convert_domain_name(domain_name, obj1x_id):
+def convert_domain_name(domain_name, obj1x_id, related_objects):
     cybox_dm = create_base_sco(domain_name, "domain-name")
     if domain_name.value:
         cybox_dm["value"] = text_type(domain_name.value.value)
-
-    # TODO: resolves_to_refs
+    handle_related_objects(cybox_dm, related_objects, "Resolved_To", "resolves_to_refs")
     finish_sco(cybox_dm, obj1x_id)
     return cybox_dm
 
@@ -1151,7 +1166,7 @@ def convert_cybox_object20(obj1x):
     if prop is None:
         return None
     elif isinstance(prop, Address):
-        objs["0"] = convert_address(prop, obj1x.id_)
+        objs["0"] = convert_address(prop, obj1x_id=obj1x.id_)
     elif isinstance(prop, Artifact):
         objs["0"] = convert_artifact(prop, obj1x.id_)
     elif isinstance(prop, URI):
@@ -1201,11 +1216,12 @@ def convert_cybox_object20(obj1x):
 
 def convert_cybox_object21(obj1x):
     # TODO:  should related objects be handled on a case-by-case basis or just ignored
+    related_objects = obj1x.related_objects
     prop = obj1x.properties
     if prop is None:
         return None
     elif isinstance(prop, Address):
-        objs = [convert_address(prop, obj1x.id_)]
+        objs = [convert_address(prop, related_objects, obj1x_id=obj1x.id_ )]
     elif isinstance(prop, Artifact):
         objs = [convert_artifact(prop, obj1x.id_)]
     elif isinstance(prop, URI):
@@ -1221,7 +1237,7 @@ def convert_cybox_object21(obj1x):
     elif isinstance(prop, Process):
         objs = convert_process(prop, obj1x.id_)
     elif isinstance(prop, DomainName):
-        objs = [convert_domain_name(prop, obj1x.id_)]
+        objs = [convert_domain_name(prop, obj1x.id_, related_objects)]
     elif isinstance(prop, Mutex):
         objs = [convert_mutex(prop, obj1x.id_)]
     elif isinstance(prop, NetworkConnection):
@@ -1335,7 +1351,7 @@ def fix_cybox_relationships(observed_data):
             o["objects"].update(objs_to_add)
 
 
-def fix_attachments_refs(objects):
+def fix_sco_embedded_refs(objects):
     for obj in objects:
         if obj["type"] == "email-message":
             if obj["is_multipart"]:
@@ -1343,3 +1359,14 @@ def fix_attachments_refs(objects):
                     mp["body_raw_ref"] = get_id_value(mp["body_raw_ref"])[0]
                     mp["content_type"] = "text/plain"
                     info("content_type for body_multipart of %s is assumed to be 'text/plain'", 722, obj["id"])
+        elif obj["type"] in ["domain-name", "ipv4-addr", "ipv6-addr"]:
+            if "resolves_to_refs" in obj:
+                result = list()
+                for ref in obj["resolves_to_refs"]:
+                    new_id = get_id_value(ref)
+                    if new_id:
+                        result.append(new_id[0])
+                    else:
+
+                        pass
+                obj["resolves_to_refs"] = result
