@@ -35,6 +35,7 @@ from stixmarx import navigator
 from stix2elevator.confidence import convert_confidence
 from stix2elevator.convert_cybox import (convert_cybox_object20,
                                          convert_cybox_object21,
+                                         embedded_property_ref_name,
                                          fix_cybox_relationships,
                                          fix_sco_embedded_refs)
 from stix2elevator.convert_pattern import (ComparisonExpressionForElevator,
@@ -59,7 +60,8 @@ from stix2elevator.ids import (add_id_of_obs_in_characterizations,
                                get_id_value,
                                get_id_values,
                                get_type_from_id,
-                               record_ids)
+                               record_ids,
+                               is_stix1x_id)
 from stix2elevator.missing_policy import (convert_to_custom_property_name,
                                           handle_missing_confidence_property,
                                           handle_missing_statement_properties,
@@ -556,7 +558,7 @@ def fix_relationships(env):
     extra_relationships = []
     bundle_instance = env.bundle_instance
     for ref in bundle_instance["relationships"]:
-        if reference_needs_fixing(ref["source_ref"]):
+        if is_stix1x_id(ref["source_ref"]):
             if not exists_id_key(ref["source_ref"]):
                 new_id = generate_stix2x_id(None, str.lower(ref["source_ref"]))
                 if new_id is None:
@@ -572,7 +574,7 @@ def fix_relationships(env):
                     first_one = False
                 else:
                     extra_relationships.append(create_relationship(m_id, ref["target_ref"], env, ref["verb"]))
-        if reference_needs_fixing(ref["target_ref"]):
+        if is_stix1x_id(ref["target_ref"]):
             if not exists_id_key(ref["target_ref"]):
                 # create one, and add it
                 new_id = generate_stix2x_id(None, str.lower(ref["target_ref"]))
@@ -1250,21 +1252,44 @@ def convert_cybox_object(o):
         return convert_cybox_object21(o)
 
 
+def set_embedded_ref_property_2_1(sco, ro, stix2x_rel_name):
+    if stix2x_rel_name.endswith("refs"):
+        if stix2x_rel_name not in sco:
+            sco[stix2x_rel_name] = list()
+        sco[stix2x_rel_name].append(ro["id"])
+    else:
+        sco[stix2x_rel_name] = ro.id
+
+
+def set_embedded_ref_property_2_0(sco, co_id, stix2x_rel_name):
+    if stix2x_rel_name.endswith("refs"):
+        if stix2x_rel_name not in sco:
+            sco[stix2x_rel_name] = list()
+        sco[stix2x_rel_name].append(co_id)
+    else:
+        sco[stix2x_rel_name] = co_id
+
+
 def create_scos(obs, observed_data_instance, env):
     observed_data_instance["object_refs"] = []
     scos = convert_cybox_object(obs.object_)
     if obs.object_.related_objects:
         for o in obs.object_.related_objects:
-            # TODO: what if an idref??
-            related = convert_cybox_object(o)
-            if related:
-                scos.extend(related)
-                # related[0]["id"] = get_id_value(o.id_)[0]
-                env.bundle_instance["objects"].append(
-                    create_relationship(scos[0]["id"],
-                                        related[0]["id"],
-                                        env,
-                                        o.relationship.value.lower() if o.relationship and o.relationship.value else "resolves_to"))
+            if not o.idref:
+                # it is embedded - for idrefs see convert_cybox.py
+                related = convert_cybox_object(o)
+                if related:
+                    scos.extend(related)
+                    property_name = embedded_property_ref_name(obs.object_.properties, o.relationship)
+                    if not property_name:
+                        env.bundle_instance["objects"].append(
+                            create_relationship(scos[0]["id"],
+                                                related[0]["id"],
+                                                env,
+                                                o.relationship.value.lower() if o.relationship and o.relationship.value else "resolves_to"))
+                    else:
+                        if o.relationship and o.relationship.value:
+                            set_embedded_ref_property_2_1(scos[0], related[0], property_name)
     if scos:
         for obj in scos:
             observed_data_instance["object_refs"].append(obj["id"])
@@ -1284,6 +1309,12 @@ def create_cyber_observables(obs, observed_data_instance):
                 if related:
                     for index, obj in related.items():
                         observed_data_instance["objects"][text_type(int(index) + int(current_largest_id) + 1)] = obj
+                    property_name = embedded_property_ref_name(obs.object_.properties, o.relationship)
+                    if property_name and o.relationship and o.relationship.value:
+                        set_embedded_ref_property_2_0(observed_data_instance["objects"]['0'],
+                                                      text_type(int(current_largest_id) + 1),
+                                                      property_name)
+
 
 
 def convert_observed_data(obs, env):
@@ -1907,7 +1938,7 @@ def finalize_bundle(env):
             continue
 
         if last_field in _TO_MAP or iter_field in _TO_MAP:
-            if reference_needs_fixing(value) and exists_id_key(value):
+            if is_stix1x_id(value) and exists_id_key(value):
                 stix20_id = get_id_value(value)
 
                 if stix20_id[0] is None:
@@ -1916,7 +1947,7 @@ def finalize_bundle(env):
 
                 operation_on_path(bundle_instance, path, stix20_id[0])
                 info("Found STIX 1.X ID: %s replaced by %s", 702, value, stix20_id[0])
-            elif reference_needs_fixing(value) and not exists_id_key(value):
+            elif is_stix1x_id(value) and not exists_id_key(value):
                 warn("1.X ID: %s was not mapped to STIX 2.x ID", 603, value)
 
     for item in reversed(to_remove):

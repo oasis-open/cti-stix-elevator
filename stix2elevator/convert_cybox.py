@@ -1,3 +1,4 @@
+import copy
 import re
 
 from cybox.objects.account_object import Account
@@ -30,7 +31,8 @@ from stix2elevator.ids import (add_id_value,
                                add_object_id_value,
                                generate_sco_id,
                                get_id_value,
-                               get_object_id_value)
+                               get_object_id_value,
+                               is_stix1x_id)
 from stix2elevator.missing_policy import (convert_to_custom_property_name,
                                           handle_missing_string_property)
 from stix2elevator.options import error, get_option_value, info, warn
@@ -115,32 +117,32 @@ def handle_inclusive_ip_addresses(add_value, obj1x_id):
         return add_value.value
 
 
-def handle_related_objects(sco, related_objects, stix1x_rel_name, stix2x_rel_name, more_than_one=True):
+def handle_related_objects_as_embedded_relationships(sco, related_objects, stix1x_rel_name, stix2x_rel_name, more_than_one=True):
     if related_objects:
         for ro in related_objects:
             if ro.relationship == stix1x_rel_name and ro.idref:
+                # embedded objects handled in convert_stix.py
                 if more_than_one:
                     if stix2x_rel_name not in sco:
                         sco[stix2x_rel_name] = list()
                     sco[stix2x_rel_name].append(ro.idref)
                 else:
                     sco[stix2x_rel_name] = ro.idref
-            else:
-                warn("The %s relationship involving %s is not supported in STIX 2.x", 427, ro.relationship, None)
 
 
-def convert_address(add, related_objects, obj1x_id=None):
+def convert_address(add, related_objects=None, obj1x_id=None):
     if add.category == add.CAT_IPV4:
         instance = create_base_sco(add, "ipv4-addr", {"value": handle_inclusive_ip_addresses(add.address_value, obj1x_id)})
-        handle_related_objects(instance, related_objects, "Resolved_To", "resolves_to_refs")
+        handle_related_objects_as_embedded_relationships(instance, related_objects, "Resolved_To", "resolves_to_refs")
     elif add.category == add.CAT_IPV6:
         # TODO: handle ipv6 CIDRs
         instance = create_base_sco(add, "ipv6-addr", {"value": add.address_value.value})
-        handle_related_objects(instance, related_objects, "Resolved_To", "resolves_to_refs")
+        handle_related_objects_as_embedded_relationships(instance, related_objects, "Resolved_To", "resolves_to_refs")
     elif add.category == add.CAT_MAC:
         instance = create_base_sco(add, "mac-addr", {"value": add.address_value.value})
     elif add.category == add.CAT_EMAIL:
         instance = create_base_sco(add, "email-addr", {"value": add.address_value.value})
+        handle_related_objects_as_embedded_relationships(instance, related_objects, "Related_To", "belongs_to_ref", more_than_one=False)
     else:
         warn("The address type %s is not part of STIX 2.x", 421, add.category)
         return None
@@ -330,7 +332,7 @@ def convert_archive_file20(f, obj1x_id):
         archive_dict["contains_refs"] = list()
         for ar_file in f.archived_file:
             archive_dict["contains_refs"].append(text_type(index))
-            ar_file2x, index = convert_file(ar_file, obj1x_id, index)
+            ar_file2x, index = convert_file(ar_file, None, obj1x_id, index)
             file_objs.update(ar_file2x)
     return archive_dict, file_objs
 
@@ -346,7 +348,7 @@ def convert_archive_file21(f, obj1x_id):
             archive_dict[property_name] = f.version
     if f.archived_file:
         for ar_file in f.archived_file:
-            ar_file2x, ignore = convert_file(ar_file, obj1x_id)
+            ar_file2x, ignore = convert_file(ar_file, None, obj1x_id)
             file_objs.extend(ar_file2x)
         archive_dict["contains_refs"] = [x["id"] for x in file_objs]
     return archive_dict, file_objs
@@ -471,7 +473,7 @@ def convert_file_properties(f, obj1x_id):
     return file_dict, dir_dict, file_objs
 
 
-def convert_file20(f, obj1x_id, index=0):
+def convert_file20(f, related_objects, obj1x_id, index=0):
     objs = {}
     file_obj_index = index
     objs[text_type(index)], dir_dict, file_objs = convert_file_properties(f, obj1x_id)
@@ -495,7 +497,7 @@ def convert_file20(f, obj1x_id, index=0):
     return objs, index
 
 
-def convert_file21(f, obj1x_id):
+def convert_file21(f, related_objects, obj1x_id):
     file_dict, dir_dict, file_objs = convert_file_properties(f, obj1x_id)
     objs = [file_dict]
     if dir_dict:
@@ -506,14 +508,16 @@ def convert_file21(f, obj1x_id):
             if not id_in_directory_mapping(obj["id"]):
                 objs.append(obj)
                 add_to_directory_mapping(dir_dict["id"], dir_dict)
+    handle_related_objects_as_embedded_relationships(file_dict, related_objects, "Contains", "contains_refs")
+    handle_related_objects_as_embedded_relationships(file_dict, related_objects, "Contains", "content_ref")
     return objs
 
 
-def convert_file(f, obj1x_id, index=0):
+def convert_file(f, related_objects, obj1x_id, index=0):
     if get_option_value("spec_version") == "2.0":
         return convert_file20(f, obj1x_id, index)
     else:
-        return convert_file21(f, obj1x_id), None
+        return convert_file21(f, related_objects, obj1x_id), None
 
 
 def convert_attachment(attachment):
@@ -798,11 +802,11 @@ def convert_windows_service(service):
     return cybox_ws, None
 
 
-def convert_domain_name(domain_name, obj1x_id, related_objects):
+def convert_domain_name(domain_name, related_objects, obj1x_id):
     cybox_dm = create_base_sco(domain_name, "domain-name")
     if domain_name.value:
         cybox_dm["value"] = text_type(domain_name.value.value)
-    handle_related_objects(cybox_dm, related_objects, "Resolved_To", "resolves_to_refs")
+    handle_related_objects_as_embedded_relationships(cybox_dm, related_objects, "Resolved_To", "resolves_to_refs")
     finish_sco(cybox_dm, obj1x_id)
     return cybox_dm
 
@@ -1160,13 +1164,14 @@ def convert_network_socket(socket, obj1x_id):
 def convert_cybox_object20(obj1x):
     # in 2.0 indices are local
     clear_directory_path_mappings()
+    related_objects = obj1x.related_objects
     # TODO:  should related objects be handled on a case-by-case basis or just ignored
     prop = obj1x.properties
     objs = {}
     if prop is None:
         return None
     elif isinstance(prop, Address):
-        objs["0"] = convert_address(prop, obj1x_id=obj1x.id_)
+        objs["0"] = convert_address(prop, related_objects, obj1x_id=obj1x.id_)
     elif isinstance(prop, Artifact):
         objs["0"] = convert_artifact(prop, obj1x.id_)
     elif isinstance(prop, URI):
@@ -1176,13 +1181,13 @@ def convert_cybox_object20(obj1x):
         objs = convert_email_message(prop, obj1x.id_)
     elif isinstance(prop, File):
         # potentially returns multiple objects
-        objs, ignore = convert_file20(prop, obj1x.id_)
+        objs, ignore = convert_file20(prop, related_objects, obj1x.id_)
     elif isinstance(prop, WinRegistryKey):
         objs["0"] = convert_registry_key(prop, obj1x.id_)
     elif isinstance(prop, Process):
         objs = convert_process(prop, obj1x.id_)
     elif isinstance(prop, DomainName):
-        objs["0"] = convert_domain_name(prop, obj1x.id_)
+        objs["0"] = convert_domain_name(prop, related_objects, obj1x.id_)
     elif isinstance(prop, Mutex):
         objs["0"] = convert_mutex(prop, obj1x.id_)
     elif isinstance(prop, NetworkConnection):
@@ -1221,7 +1226,7 @@ def convert_cybox_object21(obj1x):
     if prop is None:
         return None
     elif isinstance(prop, Address):
-        objs = [convert_address(prop, related_objects, obj1x_id=obj1x.id_ )]
+        objs = [convert_address(prop, related_objects, obj1x.id_ )]
     elif isinstance(prop, Artifact):
         objs = [convert_artifact(prop, obj1x.id_)]
     elif isinstance(prop, URI):
@@ -1231,13 +1236,13 @@ def convert_cybox_object21(obj1x):
         objs = convert_email_message(prop, obj1x.id_)
     elif isinstance(prop, File):
         # potentially returns multiple objects
-        objs = convert_file21(prop, obj1x.id_)
+        objs = convert_file21(prop, related_objects, obj1x.id_)
     elif isinstance(prop, WinRegistryKey):
         objs = [convert_registry_key(prop, obj1x.id_)]
     elif isinstance(prop, Process):
         objs = convert_process(prop, obj1x.id_)
     elif isinstance(prop, DomainName):
-        objs = [convert_domain_name(prop, obj1x.id_, related_objects)]
+        objs = [convert_domain_name(prop, related_objects, obj1x.id_)]
     elif isinstance(prop, Mutex):
         objs = [convert_mutex(prop, obj1x.id_)]
     elif isinstance(prop, NetworkConnection):
@@ -1318,6 +1323,34 @@ def find_index_of_contents(root_data, objects):
     return None
 
 
+def change_1x_ids_to_2x_objs(co, stix2x_property_name, next_id, all_objs, objs_to_add, more_than_one=True):
+    result = list()
+    for id in co[stix2x_property_name]:
+        if is_stix1x_id(id):
+            objs = copy.deepcopy(get_object_id_value(id))
+            if objs:
+                root_obj_index = find_index_of_type(objs, "ipv4-addr")
+                if root_obj_index is not None:  # 0 is a good value
+                    root_data = objs[root_obj_index]
+                    if root_data:
+                        present_obj_index = find_index_of_contents(root_data, all_objs["objects"])
+                        if present_obj_index is None:  # 0 is a good value
+                            next_id, number_mapping = do_renumbering(objs,
+                                                                     next_id,
+                                                                     root_obj_index,
+                                                                     objs_to_add)
+                            index_to_use = number_mapping[root_obj_index]
+                        else:
+                            index_to_use = present_obj_index
+                    result.append(text_type(index_to_use))
+    # no result means they were already local indicies
+    if result:
+        if more_than_one:
+            co[stix2x_property_name] = result
+        else:
+            co[stix2x_property_name] = text_type(1)
+
+
 def fix_cybox_relationships(observed_data):
     for o in observed_data:
         if not o["objects"]:
@@ -1327,28 +1360,50 @@ def fix_cybox_relationships(observed_data):
         for co in o["objects"].values():
             if co["type"] == "email-message":
                 if co["is_multipart"]:
-                    for mp in co["body_multipart"]:
-                        objs = get_object_id_value(mp["body_raw_ref"])
-                        if objs:
-                            root_obj_index = find_index_of_type(objs, "file")
-                            if root_obj_index is not None:  # 0 is a good value
-                                mp["content_type"] = "text/plain"
-                                info("content_type for body_multipart of %s is assumed to be 'text/plain'", 722,
-                                     o["id"])
-                                root_data = objs[root_obj_index]
-                                if root_data:
-                                    present_obj_index = find_index_of_contents(root_data, o["objects"])
-                                    if present_obj_index is None:  # 0 is a good value
-                                        next_id, number_mapping = do_renumbering(objs,
-                                                                                 next_id,
-                                                                                 root_obj_index,
-                                                                                 objs_to_add)
-                                        mp["body_raw_ref"] = text_type(number_mapping[root_obj_index])
-                                    else:
-                                        mp["body_raw_ref"] = text_type(present_obj_index)
-                    # TODO: warnings
+                    change_1x_ids_to_2x_objs(co, "body_multipart", next_id, o, objs_to_add)
+            elif co["type"] in ["domain-name", "ipv4-addr", "ipv6-addr"]:
+                 if "resolves_to_refs" in co and co["resolves_to_refs"]:
+                     change_1x_ids_to_2x_objs(co, "resolves_to_refs", next_id, o, objs_to_add)
         if objs_to_add:
             o["objects"].update(objs_to_add)
+
+
+def embedded_property_ref_name(prop, relationship):
+    if relationship and relationship.value:
+        if isinstance(prop, Address) or isinstance(prop, DomainName):
+            if relationship.value == "Resolved_To":
+                return "resolves_to_refs"
+        elif isinstance(prop, File):
+            if relationship.value == "Contains":
+                return "contains_refs"
+    return None
+
+
+def change_ids_from_1x_to_2x(obj, property_name):
+    if property_name in obj:
+        result = list()
+        for ref in obj[property_name]:
+            if is_stix1x_id(ref):
+                new_ids = get_id_value(ref)
+                if new_ids:
+                    result.append(new_ids[0])
+                else:
+                    # TODO: warn
+                    pass
+            else:
+                result.append(ref)
+        obj[property_name] = result
+
+
+def change_id_from_1x_to_2x(obj, property_name):
+    if property_name in obj:
+        if is_stix1x_id(obj[property_name]):
+            new_ids = get_id_value(obj[property_name])
+            if new_ids:
+                obj[property_name] = new_ids[0]
+            else:
+                # TODO: warn
+                pass
 
 
 def fix_sco_embedded_refs(objects):
@@ -1356,17 +1411,11 @@ def fix_sco_embedded_refs(objects):
         if obj["type"] == "email-message":
             if obj["is_multipart"]:
                 for mp in obj["body_multipart"]:
-                    mp["body_raw_ref"] = get_id_value(mp["body_raw_ref"])[0]
+                    change_id_from_1x_to_2x(mp, "body_raw_ref")
                     mp["content_type"] = "text/plain"
                     info("content_type for body_multipart of %s is assumed to be 'text/plain'", 722, obj["id"])
         elif obj["type"] in ["domain-name", "ipv4-addr", "ipv6-addr"]:
-            if "resolves_to_refs" in obj:
-                result = list()
-                for ref in obj["resolves_to_refs"]:
-                    new_id = get_id_value(ref)
-                    if new_id:
-                        result.append(new_id[0])
-                    else:
-
-                        pass
-                obj["resolves_to_refs"] = result
+            change_ids_from_1x_to_2x(obj, "resolves_to_refs")
+        elif obj["type"] == "file":
+            change_ids_from_1x_to_2x(obj, "contains_refs")
+            change_id_from_1x_to_2x(obj, "content_ref")
