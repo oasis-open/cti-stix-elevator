@@ -1,0 +1,21 @@
+<stix:STIX_Package
+	xmlns:cybox="http://cybox.mitre.org/cybox-2"
+	xmlns:WinRegistryKeyObj="http://cybox.mitre.org/objects#WinRegistryKeyObject-2"
+    	xmlns:stix="http://stix.mitre.org/stix-1"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:example="http://example.com"
+    xsi:schemaLocation="
+	    http://cybox.mitre.org/objects#WinRegistryKeyObject-2 http://cybox.mitre.org/XMLSchema/objects/Win_Registry_Key/2.0.1/Win_Registry_Key_Object.xsd
+        http://stix.mitre.org/stix-1 http://stix.mitre.org/XMLSchema/core/1.2/stix_core.xsd"
+	id="example:STIXPackage-2bf5c12d-11cf-4248-87be-cf4aed89a7e0" version="1.2">
+    <stix:Observables cybox_major_version="2" cybox_minor_version="1">
+        <cybox:Observable id="example:Observable-8f4bc37b-1b96-43a2-b99c-b8a31cf00fa8">
+            <cybox:Object id="example:WinRegistryKey-f065aa04-b8e8-4333-9790-19d676468e5e">
+                <cybox:Properties xsi:type="WinRegistryKeyObj:WindowsRegistryKeyObjectType">
+                    <WinRegistryKeyObj:Key>HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders</WinRegistryKeyObj:Key>
+                    <WinRegistryKeyObj:Creator_Username>Fred</WinRegistryKeyObj:Creator_Username>
+                </cybox:Properties>
+            </cybox:Object>
+        </cybox:Observable>
+    </stix:Observables>
+</stix:STIX_Package>

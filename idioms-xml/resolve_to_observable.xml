@@ -58,13 +58,6 @@
         </stix:Information_Source>
     </stix:STIX_Header>
 	<stix:Observables cybox_major_version="2" cybox_minor_version="1">
-        <cybox:Observable id="fireeye:observable-c3594ad7-16ec-407a-9705-2faad2e63b53">
-            <cybox:Object id="fireeye:object-562f9306-5251-4b41-9130-53b37d905d85">
-                <cybox:Properties category="mac" xsi:type="AddressObj:AddressObjectType">
-                    <AddressObj:Address_Value condition="Equals">d4:be:d9:17:d8:59</AddressObj:Address_Value>
-                </cybox:Properties>
-            </cybox:Object>
-        </cybox:Observable>
 		<cybox:Observable id="fireeye:observable-42f1ec7e-2a32-4ff7-84a7-fbcb6288c8c9">
             <cybox:Title>Domain: www.dhcpserver.ns01.us</cybox:Title>
             <cybox:Object id="fireeye:object-07e2d2f3-092d-436d-bbd6-60d2bdc36d43">
@@ -88,8 +81,11 @@
                     <AddressObj:Address_Value condition="Equals">219.90.112.203</AddressObj:Address_Value>
                 </cybox:Properties>
                 <cybox:Related_Objects>
-                    <cybox:Related_Object idref="fireeye:object-562f9306-5251-4b41-9130-53b37d905d85">
+                    <cybox:Related_Object>
                         <cybox:Relationship xsi:type="cyboxVocabs:ObjectRelationshipVocab-1.0">Resolved_To</cybox:Relationship>
+                        <cybox:Properties category="mac" xsi:type="AddressObj:AddressObjectType">
+                            <AddressObj:Address_Value condition="Equals">d4:be:d9:17:d8:59</AddressObj:Address_Value>
+                        </cybox:Properties>
                     </cybox:Related_Object>
                 </cybox:Related_Objects>
             </cybox:Object>

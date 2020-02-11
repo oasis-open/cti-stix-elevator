@@ -182,6 +182,7 @@
                         <ProcessObj:Username>admin</ProcessObj:Username>
                         <ProcessObj:Creation_Time>2010-12-09T20:17:34.934295</ProcessObj:Creation_Time>
                         <ProcessObj:Image_Info>
+                            <ProcessObj:File_Name>some.sh</ProcessObj:File_Name>
                             <ProcessObj:Command_Line>bash some.sh</ProcessObj:Command_Line>
                         </ProcessObj:Image_Info>
                         <ProcessObj:Argument_List>
@@ -215,6 +216,7 @@
                         <cybox:Object id="example:WinRegistryKey-f065aa04-b8e8-4333-9790-19d676468e5e">
                             <cybox:Properties xsi:type="WinRegistryKeyObj:WindowsRegistryKeyObjectType">
                                 <WinRegistryKeyObj:Key>HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders</WinRegistryKeyObj:Key>
+                                <WinRegistryKeyObj:Creator_Username>Fred</WinRegistryKeyObj:Creator_Username>
                             </cybox:Properties>
                         </cybox:Object>
                     </cybox:Observable>

@@ -1,4 +1,3 @@
-
 from datetime import datetime
 
 from cybox.core import Observable

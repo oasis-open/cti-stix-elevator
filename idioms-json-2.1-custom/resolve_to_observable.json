@@ -2,11 +2,6 @@
     "id": "bundle--6116aed6-a7e9-11e3-a82f-000c29b241af",
     "objects": [
         {
-            "id": "mac-addr--f631863e-ba0a-59c1-98b8-4511cc383dfa",
-            "type": "mac-addr",
-            "value": "d4:be:d9:17:d8:59"
-        },
-        {
             "id": "domain-name--fbf2f00f-3906-51fe-99b1-00623576a34a",
             "resolves_to_refs": [
                 "ipv4-addr--d9076a7c-dc16-56f6-8e50-15430bfd3be9",
@@ -24,29 +19,21 @@
             "value": "219.90.112.203"
         },
         {
+            "id": "mac-addr--f631863e-ba0a-59c1-98b8-4511cc383dfa",
+            "type": "mac-addr",
+            "value": "d4:be:d9:17:d8:59"
+        },
+        {
             "id": "ipv4-addr--61ef0108-6383-55b0-b9d5-b6c399816481",
             "type": "ipv4-addr",
             "value": "202.65.220.64"
         },
         {
-            "created": "2020-02-07T12:07:53.441Z",
-            "first_observed": "2020-02-07T12:07:53.441Z",
-            "id": "observed-data--c3594ad7-16ec-407a-9705-2faad2e63b53",
-            "last_observed": "2020-02-07T12:07:53.441Z",
-            "modified": "2020-02-07T12:07:53.441Z",
-            "number_observed": 1,
-            "object_refs": [
-                "mac-addr--f631863e-ba0a-59c1-98b8-4511cc383dfa"
-            ],
-            "spec_version": "2.1",
-            "type": "observed-data"
-        },
-        {
-            "created": "2020-02-07T12:07:53.441Z",
-            "first_observed": "2020-02-07T12:07:53.441Z",
+            "created": "2020-02-07T16:58:05.185Z",
+            "first_observed": "2020-02-07T16:58:05.185Z",
             "id": "observed-data--42f1ec7e-2a32-4ff7-84a7-fbcb6288c8c9",
-            "last_observed": "2020-02-07T12:07:53.441Z",
-            "modified": "2020-02-07T12:07:53.441Z",
+            "last_observed": "2020-02-07T16:58:05.185Z",
+            "modified": "2020-02-07T16:58:05.185Z",
             "number_observed": 1,
             "object_refs": [
                 "domain-name--fbf2f00f-3906-51fe-99b1-00623576a34a"
@@ -55,24 +42,25 @@
             "type": "observed-data"
         },
         {
-            "created": "2020-02-07T12:07:53.441Z",
-            "first_observed": "2020-02-07T12:07:53.441Z",
+            "created": "2020-02-07T16:58:05.185Z",
+            "first_observed": "2020-02-07T16:58:05.185Z",
             "id": "observed-data--a9579acb-62fb-4c4f-9af3-5571c0600edc",
-            "last_observed": "2020-02-07T12:07:53.441Z",
-            "modified": "2020-02-07T12:07:53.441Z",
+            "last_observed": "2020-02-07T16:58:05.185Z",
+            "modified": "2020-02-07T16:58:05.185Z",
             "number_observed": 1,
             "object_refs": [
-                "ipv4-addr--d9076a7c-dc16-56f6-8e50-15430bfd3be9"
+                "ipv4-addr--d9076a7c-dc16-56f6-8e50-15430bfd3be9",
+                "mac-addr--f631863e-ba0a-59c1-98b8-4511cc383dfa"
             ],
             "spec_version": "2.1",
             "type": "observed-data"
         },
         {
-            "created": "2020-02-07T12:07:53.441Z",
-            "first_observed": "2020-02-07T12:07:53.441Z",
+            "created": "2020-02-07T16:58:05.185Z",
+            "first_observed": "2020-02-07T16:58:05.185Z",
             "id": "observed-data--4b3b859b-d682-47e7-8e27-fbadca8e3b72",
-            "last_observed": "2020-02-07T12:07:53.441Z",
-            "modified": "2020-02-07T12:07:53.441Z",
+            "last_observed": "2020-02-07T16:58:05.185Z",
+            "modified": "2020-02-07T16:58:05.185Z",
             "number_observed": 1,
             "object_refs": [
                 "ipv4-addr--61ef0108-6383-55b0-b9d5-b6c399816481"

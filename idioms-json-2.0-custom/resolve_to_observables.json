@@ -1,0 +1,78 @@
+{
+    "id": "bundle--6116aed6-a7e9-11e3-a82f-000c29b241af",
+    "objects": [
+        {
+            "created": "2020-02-09T16:56:22.095Z",
+            "first_observed": "2020-02-09T16:56:22.095Z",
+            "id": "observed-data--42f1ec7e-2a32-4ff7-84a7-fbcb6288c8c9",
+            "last_observed": "2020-02-09T16:56:22.095Z",
+            "modified": "2020-02-09T16:56:22.095Z",
+            "number_observed": 1,
+            "objects": {
+                "0": {
+                    "resolves_to_refs": [
+                        "1",
+                        "3"
+                    ],
+                    "type": "domain-name",
+                    "value": "www.dhcpserver.ns01.us"
+                },
+                "1": {
+                    "resolves_to_refs": [
+                        "2"
+                    ],
+                    "type": "ipv4-addr",
+                    "value": "219.90.112.203"
+                },
+                "2": {
+                    "type": "mac-addr",
+                    "value": "d4:be:d9:17:d8:59"
+                },
+                "3": {
+                    "type": "ipv4-addr",
+                    "value": "202.65.220.64"
+                }
+            },
+            "type": "observed-data"
+        },
+        {
+            "created": "2020-02-09T16:56:22.095Z",
+            "first_observed": "2020-02-09T16:56:22.095Z",
+            "id": "observed-data--a9579acb-62fb-4c4f-9af3-5571c0600edc",
+            "last_observed": "2020-02-09T16:56:22.095Z",
+            "modified": "2020-02-09T16:56:22.095Z",
+            "number_observed": 1,
+            "objects": {
+                "0": {
+                    "resolves_to_refs": [
+                        "1"
+                    ],
+                    "type": "ipv4-addr",
+                    "value": "219.90.112.203"
+                },
+                "1": {
+                    "type": "mac-addr",
+                    "value": "d4:be:d9:17:d8:59"
+                }
+            },
+            "type": "observed-data"
+        },
+        {
+            "created": "2020-02-09T16:56:22.095Z",
+            "first_observed": "2020-02-09T16:56:22.095Z",
+            "id": "observed-data--4b3b859b-d682-47e7-8e27-fbadca8e3b72",
+            "last_observed": "2020-02-09T16:56:22.095Z",
+            "modified": "2020-02-09T16:56:22.095Z",
+            "number_observed": 1,
+            "objects": {
+                "0": {
+                    "type": "ipv4-addr",
+                    "value": "202.65.220.64"
+                }
+            },
+            "type": "observed-data"
+        }
+    ],
+    "spec_version": "2.0",
+    "type": "bundle"
+}
