@@ -65,6 +65,10 @@
                                             <HTTPSessionObj:Cookie>PHPSESSID=r2t5uvjq435r4q7ib3vtdjq120</HTTPSessionObj:Cookie>
                                         </HTTPSessionObj:Parsed_Header>
                                     </HTTPSessionObj:HTTP_Request_Header>
+                                    <HTTPSessionObj:HTTP_Message_Body>
+                                        <HTTPSessionObj:Length>200</HTTPSessionObj:Length>
+                                        <HTTPSessionObj:Message_Body>aaaaaaaaaaaaaaaaaaaaaaaa</HTTPSessionObj:Message_Body>
+                                    </HTTPSessionObj:HTTP_Message_Body>
                                 </HTTPSessionObj:HTTP_Client_Request>
                                 <HTTPSessionObj:HTTP_Server_Response>
                                     <HTTPSessionObj:HTTP_Status_Line>

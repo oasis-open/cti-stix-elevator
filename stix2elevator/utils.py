@@ -1,3 +1,4 @@
+import base64
 from datetime import datetime
 import os
 
@@ -247,6 +248,10 @@ def find_dir(path, directory):
         if directory in dirs:
             found_dir = os.path.join(root, directory)
             return os.path.abspath(found_dir)
+
+
+def encode_in_base64(s):
+    return base64.b64encode(text_type(s).encode('utf-8')).decode('utf-8')
 
 
 class Environment():

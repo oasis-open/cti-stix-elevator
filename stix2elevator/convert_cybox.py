@@ -1,4 +1,3 @@
-import base64
 import copy
 import re
 
@@ -38,6 +37,7 @@ from stix2elevator.missing_policy import (convert_to_custom_property_name,
                                           handle_missing_string_property)
 from stix2elevator.options import error, get_option_value, info, warn
 from stix2elevator.utils import (convert_timestamp_to_string,
+                                 encode_in_base64,
                                  map_vocabs_to_label)
 from stix2elevator.vocab_mappings import (SERVICE_START_TYPE,
                                           SERVICE_STATUS,
@@ -549,6 +549,7 @@ def convert_email_message(email_message, obj1x_id):
             from_ref = convert_address(header.from_)
             if spec_version == "2.0":
                 objs[text_type(index)] = from_ref
+
             else:
                 objs.append(from_ref)
             email_dict["from_ref"] = text_type(index) if spec_version == "2.0" else from_ref["id"]
@@ -558,6 +559,7 @@ def convert_email_message(email_message, obj1x_id):
                 to_ref = convert_address(t)
                 if spec_version == "2.0":
                     objs[text_type(index)] = to_ref
+
                 else:
                     objs.append(to_ref)
                 if "to_refs" not in email_dict:
@@ -569,6 +571,7 @@ def convert_email_message(email_message, obj1x_id):
                 cc_ref = convert_address(t)
                 if spec_version == "2.0":
                     objs[text_type(index)] = cc_ref
+
                 else:
                     objs.append(cc_ref)
                 if "cc_refs" not in email_dict:
@@ -580,12 +583,12 @@ def convert_email_message(email_message, obj1x_id):
                 bcc_ref = convert_address(t)
                 if spec_version == "2.0":
                     objs[text_type(index)] = bcc_ref
+                    index += 1
                 else:
                     objs.append(bcc_ref)
                 if "bcc_refs" not in email_dict:
                     email_dict["bcc_refs"] = []
                 email_dict["bcc_refs"].append(text_type(index) if spec_version == "2.0" else bcc_ref["id"])
-                index += 1
         # TODO: handle additional headers
     if email_message.attachments:
         email_dict["is_multipart"] = True
@@ -608,6 +611,18 @@ def convert_email_message(email_message, obj1x_id):
                      434, "links", "email-message")
         else:
             warn("Missing property %s is ignored", 307, "links")
+    if email_message.raw_body:
+        raw_body_obj = create_base_sco("artifact", {"payload_bin": encode_in_base64(text_type(email_message.raw_body))})
+        finish_sco(raw_body_obj, None)
+        if get_option_value("spec_version") == "2.0":
+            if raw_body_obj:
+                email_dict["raw_email_ref"] = text_type(index)
+                objs[text_type(index)] = raw_body_obj
+                index += 1
+        else:
+            if raw_body_obj:
+                email_dict["raw_email_ref"] = raw_body_obj["id"]
+                objs.append(raw_body_obj)
     finish_sco(email_dict, obj1x_id)
     return objs
 
@@ -843,8 +858,8 @@ def convert_windows_service(service):
         # There is only one in STIX 1.x
         ddl_file2x = create_base_sco("file", {"name": text_type(service.service_dll)})
         finish_sco(ddl_file2x, None)
-    if get_option_value("spec_version") == "2.1":
-        cybox_ws["service_dll_refs"] = [ddl_file2x["id"]]
+        if get_option_value("spec_version") == "2.1":
+            cybox_ws["service_dll_refs"] = [ddl_file2x["id"]]
         return cybox_ws, ddl_file2x
     return cybox_ws, None
 
@@ -972,9 +987,9 @@ def convert_http_client_request(request):
     if request.http_message_body is not None:
         mb = request.http_message_body
         if mb.length:
-            http_extension["message_body_length"] = mb.length
+            http_extension["message_body_length"] = mb.length.value
         if mb.message_body:
-            body_obj = create_base_sco("artifact", {"payload_bin", base64.b64encode(text_type(mb.message_body))})
+            body_obj = create_base_sco("artifact", {"payload_bin": encode_in_base64(text_type(mb.message_body))})
             finish_sco(body_obj, None)
             if get_option_value("spec_version") == "2.1":
                 http_extension["message_body_data_ref"] = body_obj["id"]
@@ -1096,6 +1111,7 @@ def convert_network_connection(conn, obj1x_id):
                 if body_obj:
                     if get_option_value("spec_version") == "2.0":
                         objs[text_type(index)] = body_obj
+                        request_ext["message_body_data_ref"] = text_type(index)
                         index += 1
                     else:
                         objs.append(body_obj)
@@ -1113,17 +1129,15 @@ def convert_network_connection(conn, obj1x_id):
             finish_sco(cybox_traffic, obj1x_id)
             objs.append(cybox_traffic)
 
-    # cybox_traffic["end"]
-    # cybox_traffic["is_active"]
-    # cybox_traffic["src_byte_count"]
-    # cybox_traffic["dst_byte_count"]
-    # cybox_traffic["src_packets"]
-    # cybox_traffic["dst_packets"]
-    # cybox_traffic["ipfix"]
-    # cybox_traffic["src_payload_ref"]
-    # cybox_traffic["dst_payload_ref"]
+    # no STIX 1.x date for the following STIX 2.x properties:
+    #   end, is_active,
     # cybox_traffic["encapsulates_refs"]
     # cybox_traffic["encapsulated_by_ref"]
+
+    # STIX 1.x network_flow might work for: ipfix, src_byte_count, dst_byte_count, src_packets, dst_packets, start?, end?
+
+    # cybox_traffic["src_payload_ref"]?
+    # cybox_traffic["dst_payload_ref"]?
 
     return objs
 
@@ -1224,6 +1238,10 @@ def convert_network_socket(socket, obj1x_id):
     return cybox_traffic
 
 
+# def convert_netflow_object(obj1x):
+#     cybox_traffic = create_base_sco("network-traffic")
+#     if obj1x.unidirectional_flow_record
+
 def convert_cybox_object20(obj1x):
     # in 2.0 indices are local
     clear_directory_path_mappings()
@@ -1321,6 +1339,7 @@ def convert_cybox_object21(obj1x):
         objs = [convert_network_packet(prop, obj1x.id_)]
     elif isinstance(prop, NetworkSocket):
         objs = [convert_network_socket(prop, obj1x.id_)]
+
     else:
         warn("CybOX object %s not handled yet", 805, text_type(type(prop)))
         return None
