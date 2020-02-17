@@ -242,5 +242,6 @@ def get_type_from_id(id, separator="--"):
     type_and_uuid = id.split(separator)
     return type_and_uuid[0]
 
+
 def is_stix1x_id(id):
     return id and id.find("--") == -1 and id.find("-") != -1

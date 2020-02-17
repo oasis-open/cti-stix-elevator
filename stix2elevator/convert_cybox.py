@@ -666,7 +666,7 @@ def convert_registry_key(reg_key, obj1x_id):
             cybox_reg["creator_user_ref"] = "1"
             result["1"] = user_obj
     else:
-        result = [ cybox_reg ]
+        result = [cybox_reg]
         if user_obj:
             cybox_reg["creator_user_ref"] = user_obj["id"]
             result.append(user_obj)
@@ -688,7 +688,7 @@ def create_process_ref(cp, process_dict, objs, index, prop):
             process_dict[prop].append(text_type(index))
         else:
             process_dict[prop].append(cp_ref["id"])
-    else: # parent_ref
+    else:  # parent_ref
         if spec_version == "2.0":
             process_dict[prop] = text_type(index)
         else:
@@ -1307,7 +1307,7 @@ def convert_cybox_object21(obj1x):
     if prop is None:
         return None
     elif isinstance(prop, Address):
-        objs = [convert_address(prop, related_objects, obj1x.id_ )]
+        objs = [convert_address(prop, related_objects, obj1x.id_)]
     elif isinstance(prop, Artifact):
         objs = [convert_artifact(prop, obj1x.id_)]
     elif isinstance(prop, URI):
@@ -1465,8 +1465,8 @@ def fix_cybox_relationships(observed_data):
                     for mp in co["body_multipart"]:
                         change_1x_ids_to_2x_objs(mp, "body_raw_ref", next_id, o, objs_to_add, ["artifact", "file"])
             elif co["type"] in ["domain-name", "ipv4-addr", "ipv6-addr"]:
-                 if "resolves_to_refs" in co and co["resolves_to_refs"]:
-                     change_1x_ids_to_2x_objs(co, "resolves_to_refs", next_id, o, objs_to_add, ["domain-name", "ipv4-addr", "ipv6-addr"])
+                if "resolves_to_refs" in co and co["resolves_to_refs"]:
+                    change_1x_ids_to_2x_objs(co, "resolves_to_refs", next_id, o, objs_to_add, ["domain-name", "ipv4-addr", "ipv6-addr"])
         if objs_to_add:
             o["objects"].update(objs_to_add)
 

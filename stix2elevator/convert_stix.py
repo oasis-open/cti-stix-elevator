@@ -59,8 +59,8 @@ from stix2elevator.ids import (add_id_of_obs_in_characterizations,
                                get_id_value,
                                get_id_values,
                                get_type_from_id,
-                               record_ids,
-                               is_stix1x_id)
+                               is_stix1x_id,
+                               record_ids)
 from stix2elevator.missing_policy import (convert_to_custom_property_name,
                                           handle_missing_confidence_property,
                                           handle_missing_statement_properties,
@@ -1313,7 +1313,6 @@ def create_cyber_observables(obs, observed_data_instance):
                         set_embedded_ref_property_2_0(observed_data_instance["objects"]['0'],
                                                       text_type(int(current_largest_id) + 1),
                                                       property_name)
-
 
 
 def convert_observed_data(obs, env):
