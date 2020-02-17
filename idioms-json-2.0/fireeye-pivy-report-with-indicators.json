@@ -11237,7 +11237,7 @@
             "object_marking_refs": [
                 "marking-definition--d0f790cd-ff4d-4117-89df-bcf2c1bf693e"
             ],
-            "pattern": "[(domain-name:value = 'e.ct.toh.info' OR (domain-name:value = 'thief.epac.to' AND domain-name:resolves_to_refs[*].value = '101.78.151.179' AND domain-name:resolves_to_refs[*].value = '180.210.204.105') OR (domain-name:value = 'poc.hidnew.com' AND domain-name:resolves_to_refs[*].value = '123.108.108.120'))] OR [(ipv4-addr:value = '101.78.151.179' OR ipv4-addr:value = '180.210.204.105' OR ipv4-addr:value = '123.108.108.120')] OR [(file:x_elevator_pivy_password = 'th3bug' OR file:x_elevator_id = 'kr~0312' OR file:hashes.MD5 = '70d227a8c4bf293ab85b79d15b9139ce')] OR [mutex:name = 'SP0cezdd$']",
+            "pattern": "[((domain-name:value = 'e.ct.toh.info' AND domain-name:resolves_to_refs[*].value = '101.78.151.179') OR (domain-name:value = 'thief.epac.to' AND domain-name:resolves_to_refs[*].value = '101.78.151.179' AND domain-name:resolves_to_refs[*].value = '180.210.204.105' AND domain-name:resolves_to_refs[*].value = '123.108.108.120') OR (domain-name:value = 'poc.hidnew.com' AND domain-name:resolves_to_refs[*].value = '123.108.108.120'))] OR [(ipv4-addr:value = '101.78.151.179' OR ipv4-addr:value = '180.210.204.105' OR ipv4-addr:value = '123.108.108.120')] OR [(file:x_elevator_pivy_password = 'th3bug' OR file:x_elevator_id = 'kr~0312' OR file:hashes.MD5 = '70d227a8c4bf293ab85b79d15b9139ce')] OR [mutex:name = 'SP0cezdd$']",
             "type": "indicator",
             "valid_from": "2015-05-15T09:00:00.000000Z"
         },
@@ -11365,7 +11365,7 @@
             "object_marking_refs": [
                 "marking-definition--d0f790cd-ff4d-4117-89df-bcf2c1bf693e"
             ],
-            "pattern": "[(domain-name:value = 'e.ct.toh.info' OR domain-name:value = 'ct.toh.info')] OR [(file:x_elevator_id = 'bt7' OR file:x_elevator_pivy_password = 'th3bug' OR file:hashes.MD5 = '55a3b2656ceac2ba6257b6e39f4a5b5a')] OR [mutex:name = '3%*3b23@2']",
+            "pattern": "[((domain-name:value = 'e.ct.toh.info' AND domain-name:resolves_to_refs[*].value = '101.78.151.179') OR domain-name:value = 'ct.toh.info')] OR [(file:x_elevator_id = 'bt7' OR file:x_elevator_pivy_password = 'th3bug' OR file:hashes.MD5 = '55a3b2656ceac2ba6257b6e39f4a5b5a')] OR [mutex:name = '3%*3b23@2']",
             "type": "indicator",
             "valid_from": "2015-05-15T09:00:00.000000Z"
         },
@@ -11461,7 +11461,7 @@
             "object_marking_refs": [
                 "marking-definition--d0f790cd-ff4d-4117-89df-bcf2c1bf693e"
             ],
-            "pattern": "[(domain-name:value = 'thief.epac.to' AND domain-name:resolves_to_refs[*].value = '101.78.151.179' AND domain-name:resolves_to_refs[*].value = '180.210.204.105')]",
+            "pattern": "[(domain-name:value = 'thief.epac.to' AND domain-name:resolves_to_refs[*].value = '101.78.151.179' AND domain-name:resolves_to_refs[*].value = '180.210.204.105' AND domain-name:resolves_to_refs[*].value = '123.108.108.120')]",
             "type": "indicator",
             "valid_from": "2015-05-15T09:00:00.000000Z"
         },
@@ -11797,7 +11797,7 @@
             "object_marking_refs": [
                 "marking-definition--d0f790cd-ff4d-4117-89df-bcf2c1bf693e"
             ],
-            "pattern": "[domain-name:value = 'e.ct.toh.info']",
+            "pattern": "[(domain-name:value = 'e.ct.toh.info' AND domain-name:resolves_to_refs[*].value = '101.78.151.179')]",
             "type": "indicator",
             "valid_from": "2015-05-15T09:00:00.000000Z"
         },

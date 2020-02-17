@@ -107,7 +107,7 @@ def convert_account(acc, obj1x_id):
 
 def handle_inclusive_ip_addresses(add_value, obj1x_id):
     if add_value.condition == 'InclusiveBetween' and isinstance(add_value.value, list):
-        x = str(netaddr.iprange_to_cidrs(add_value.value[0], add_value.value[1]))
+        x = str(netaddr.iprange_to_cidrs(text_type(add_value.value[0]), text_type(add_value.value[1])))
         m = re.match(r".*'(\d+.\d+.\d+.\d+/\d+).*", x)
         if m:
             return m.group(1)
@@ -115,7 +115,7 @@ def handle_inclusive_ip_addresses(add_value, obj1x_id):
             warn("Cannot convert range of %s to %s in %s to a CIDR", 501, add_value.value[0], add_value.value[1], obj1x_id)
             return None
     else:
-        return add_value.value
+        return text_type(add_value.value)
 
 
 def handle_related_objects_as_embedded_relationships(sco, related_objects, stix1x_rel_name, stix2x_rel_name, more_than_one=True):
@@ -126,9 +126,9 @@ def handle_related_objects_as_embedded_relationships(sco, related_objects, stix1
                 if more_than_one:
                     if stix2x_rel_name not in sco:
                         sco[stix2x_rel_name] = list()
-                    sco[stix2x_rel_name].append(ro.idref)
+                    sco[stix2x_rel_name].append(text_type(ro.idref))
                 else:
-                    sco[stix2x_rel_name] = ro.idref
+                    sco[stix2x_rel_name] = text_type(ro.idref)
 
 
 def convert_address(add, related_objects=None, obj1x_id=None):
@@ -137,12 +137,12 @@ def convert_address(add, related_objects=None, obj1x_id=None):
         handle_related_objects_as_embedded_relationships(instance, related_objects, "Resolved_To", "resolves_to_refs")
     elif add.category == add.CAT_IPV6:
         # TODO: handle ipv6 CIDRs
-        instance = create_base_sco("ipv6-addr", {"value": add.address_value.value})
+        instance = create_base_sco("ipv6-addr", {"value": text_type(add.address_value)})
         handle_related_objects_as_embedded_relationships(instance, related_objects, "Resolved_To", "resolves_to_refs")
     elif add.category == add.CAT_MAC:
-        instance = create_base_sco("mac-addr", {"value": add.address_value.value})
+        instance = create_base_sco("mac-addr", {"value": text_type(add.address_value)})
     elif add.category == add.CAT_EMAIL:
-        instance = create_base_sco("email-addr", {"value": add.address_value.value})
+        instance = create_base_sco("email-addr", {"value": text_type(add.address_value)})
         handle_related_objects_as_embedded_relationships(instance, related_objects, "Related_To", "belongs_to_ref", more_than_one=False)
     else:
         warn("The address type %s is not part of STIX 2.x", 421, add.category)
