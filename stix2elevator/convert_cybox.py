@@ -107,7 +107,7 @@ def convert_account(acc, obj1x_id):
 
 def handle_inclusive_ip_addresses(add_value, obj1x_id):
     if add_value.condition == 'InclusiveBetween' and isinstance(add_value.value, list):
-        x = str(netaddr.iprange_to_cidrs(text_type(add_value.value[0]), text_type(add_value.value[1])))
+        x = text_type(netaddr.iprange_to_cidrs(text_type(add_value.value[0]), text_type(add_value.value[1])))
         m = re.match(r".*'(\d+.\d+.\d+.\d+/\d+).*", x)
         if m:
             return m.group(1)
@@ -1032,7 +1032,7 @@ def convert_network_connection(conn, obj1x_id):
                 cybox_traffic["protocols"].append(text_type(conn.source_socket_address.port.layer4_protocol.value.lower()))
         if conn.source_socket_address.ip_address is not None:
             source = convert_address(conn.source_socket_address.ip_address)
-            cybox_traffic["src_ref"] = str(index) if spec_version == "2.0" else source["id"]
+            cybox_traffic["src_ref"] = text_type(index) if spec_version == "2.0" else source["id"]
             if spec_version == "2.0":
                 objs[text_type(index)] = source
                 index += 1
@@ -1042,7 +1042,7 @@ def convert_network_connection(conn, obj1x_id):
         elif conn.source_socket_address.hostname is not None:
             if conn.source_socket_address.hostname.is_domain_name and conn.source_socket_address.hostname.hostname_value is not None:
                 source_domain = create_domain_name_object(conn.source_socket_address.hostname.hostname_value, None)
-                cybox_traffic["src_ref"] = str(index) if spec_version == "2.0" else source_domain["id"]
+                cybox_traffic["src_ref"] = text_type(index) if spec_version == "2.0" else source_domain["id"]
                 if spec_version == "2.0":
                     objs[text_type(index)] = source_domain
                     index += 1
@@ -1052,7 +1052,7 @@ def convert_network_connection(conn, obj1x_id):
             elif (conn.source_socket_address.hostname.naming_system is not None and
                     any(x.value == "DNS" for x in conn.source_socket_address.hostname.naming_system)):
                 source_domain = create_domain_name_object(conn.source_socket_address.hostname.hostname_value, None)
-                cybox_traffic["src_ref"] = str(index) if spec_version == "2.0" else source_domain["id"]
+                cybox_traffic["src_ref"] = text_type(index) if spec_version == "2.0" else source_domain["id"]
                 if spec_version == "2.0":
                     objs[text_type(index)] = source_domain
                     index += 1
@@ -1068,7 +1068,7 @@ def convert_network_connection(conn, obj1x_id):
                 cybox_traffic["protocols"].append(text_type(conn.destination_socket_address.port.layer4_protocol.value.lower()))
         if conn.destination_socket_address.ip_address is not None:
             destination = convert_address(conn.destination_socket_address.ip_address)
-            cybox_traffic["dst_ref"] = str(index) if spec_version == "2.0" else destination["id"]
+            cybox_traffic["dst_ref"] = text_type(index) if spec_version == "2.0" else destination["id"]
             if spec_version == "2.0":
                 objs[text_type(index)] = destination
                 index += 1
@@ -1077,7 +1077,7 @@ def convert_network_connection(conn, obj1x_id):
         elif conn.destination_socket_address.hostname is not None:
             if conn.destination_socket_address.hostname.is_domain_name and conn.destination_socket_address.hostname.hostname_value is not None:
                 destination_domain = create_domain_name_object(conn.destination_socket_address.hostname.hostname_value, None)
-                cybox_traffic["dst_ref"] = str(index) if spec_version == "2.0" else destination_domain["id"]
+                cybox_traffic["dst_ref"] = text_type(index) if spec_version == "2.0" else destination_domain["id"]
                 if spec_version == "2.0":
                     objs[text_type(index)] = destination_domain
                     index += 1
@@ -1086,7 +1086,7 @@ def convert_network_connection(conn, obj1x_id):
             elif (conn.destination_socket_address.hostname.naming_system is not None and
                     any(x.value == "DNS" for x in conn.destination_socket_address.hostname.naming_system)):
                 destination_domain = create_domain_name_object(conn.destination_socket_address.hostname.hostname_value, None)
-                cybox_traffic["dst_ref"] = str(index) if spec_version == "2.0" else destination_domain["id"]
+                cybox_traffic["dst_ref"] = text_type(index) if spec_version == "2.0" else destination_domain["id"]
                 if spec_version == "2.0":
                     objs[text_type(index)] = destination_domain
                     index += 1

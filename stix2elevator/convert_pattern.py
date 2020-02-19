@@ -1478,9 +1478,9 @@ def convert_process_to_pattern(process):
         ev_expressions = []
         for ev in process.environment_variable_list:
             # TODO: handle variable names with '-'
-            ev_expressions.append(create_term("process:environment_variables[*]." + str(ev.name),
+            ev_expressions.append(create_term("process:environment_variables[*]." + text_type(ev.name),
                                               ev.value.condition,
-                                              stix2.StringConstant(str(ev.value))))
+                                              stix2.StringConstant(text_type(ev.value))))
         if ev_expressions:
             expressions.append(create_boolean_expression("AND", ev_expressions))
     if hasattr(process, "child_pid_list") and process.child_pid_list:
@@ -1824,11 +1824,11 @@ def convert_network_packet_to_pattern(packet):
             if icmp_header.type_:
                 expressions.append(create_term("network-traffic:extensions.'icmp-ext'.icmp_type_hex",
                                                icmp_header.type_.condition,
-                                               stix2.HexConstant(str(icmp_header.type_))))
+                                               stix2.HexConstant(text_type(icmp_header.type_))))
             if icmp_header.code:
                 expressions.append(create_term("network-traffic:extensions.'icmp-ext'.icmp_type_code",
                                                icmp_header.code.condition,
-                                               stix2.HexConstant(str(icmp_header.code))))
+                                               stix2.HexConstant(text_type(icmp_header.code))))
             if icmp_header.checksum:
                 if get_option_value("missing_policy") == "use-custom-properties":
                     expressions.append(

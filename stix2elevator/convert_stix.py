@@ -485,7 +485,7 @@ def handle_relationship_ref(ref, id, env, default_verb, to_direction=True):
     else:
         # a forward reference, fix later
         source_id = id if to_direction else ref.item.idref
-        target_id = str(ref.item.idref) if to_direction else id
+        target_id = text_type(ref.item.idref) if to_direction else id
         rel_obj = create_relationship(source_id, target_id, env, default_verb, ref.item)
         if hasattr(ref, "relationship") and ref.relationship is not None:
             rel_obj["description"] = ref.relationship.value
@@ -1572,7 +1572,7 @@ def process_ttp_properties(sdo_instance, ttp, env, kill_chains_in_sdo=True):
             if rel.item.idref is None:
                 target_type = get_type_from_id(rel.item.id_)
                 verb, to_direction = determine_ttp_relationship_type_and_direction(source_type, target_type,
-                                                                                   str(rel.relationship))
+                                                                                   text_type(rel.relationship))
                 handle_embedded_ref(rel, rel.item.id_, env, verb, to_direction)
             else:
                 target_id = rel.item.idref
@@ -1580,7 +1580,7 @@ def process_ttp_properties(sdo_instance, ttp, env, kill_chains_in_sdo=True):
                 if stix20_target_ids != []:
                     for id20 in stix20_target_ids:
                         target_type = get_type_from_id(id20)
-                        verb, to_direction = determine_ttp_relationship_type_and_direction(source_type, target_type, str(rel.relationship))
+                        verb, to_direction = determine_ttp_relationship_type_and_direction(source_type, target_type, text_type(rel.relationship))
                         handle_existing_ref(rel, id20, sdo_instance["id"], env, verb, to_direction)
                 else:
                     handle_relationship_ref(rel, sdo_instance["id"], env, "related-to", to_direction=True)
