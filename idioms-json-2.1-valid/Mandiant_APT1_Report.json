@@ -92,6 +92,7 @@
             "created": "2015-05-15T09:00:00.000Z",
             "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
             "id": "malware--33c62563-1ada-4eb7-88e5-5b30664d7232",
+            "is_family": false,
             "malware_types": [
                 "unknown"
             ],
@@ -163,6 +164,7 @@
             "created": "2015-05-15T09:00:00.000Z",
             "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
             "id": "malware--9b8a4e12-e0a1-4cc8-a4af-91d7c579046d",
+            "is_family": false,
             "malware_types": [
                 "unknown"
             ],
@@ -178,6 +180,7 @@
             "created": "2015-05-15T09:00:00.000Z",
             "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
             "id": "malware--b733ebd4-15df-49a6-9d43-974e6dec1fa1",
+            "is_family": false,
             "malware_types": [
                 "unknown"
             ],
@@ -448,6 +451,7 @@
             "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
             "description": "<!DOCTYPE html>\n\t\t\t\t\t\t\t<html><body>\n\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\tWEBC2 backdoor variants download and interpret data stored\n                            \tbetween tags in HTML pages as commands. They usually download HTML pages from a system within APT1’s hop\n                            \tinfrastructure. We have observed APT1 intruders logging in to WEBC2 servers and manually editing the HTML pages\n                            \tthat backdoors will download. Because the commands are usually encoded and difficult to spell from memory, APT1\n                            \tintruders typically do not type these strings, but instead copy and paste them into the HTML files. They likely generate\n                            \tthe encoded commands on their own systems before pasting them in to an HTML file hosted by the hop point. For\n                            \texample, we observed an APT attacker pasting the string \"czo1NA==\" into an HTML page. That string is the base64-\n                            \tencoded version of \"s:54\", meaning \"sleep for 54 minutes\" (or hours, depending on the particular backdoor). In lieu\n                            \tof manually editing an HTML file on a hop point, we have also observed APT1 intruders uploading new (already-edited)\n                            \tHTML files.\n\t\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t\t</body></html>\n\nTITLE:\n\tWEBC2 Backdoor",
             "id": "malware--0f01c5a3-f516-4450-9381-4dd9f2279411",
+            "is_family": false,
             "kill_chain_phases": [
                 {
                     "kill_chain_name": "APT1 Attack Lifecycle Model",
@@ -470,6 +474,7 @@
             "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
             "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html>\n\t\t\t\t\t\t\t<body>\n\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\tWhen APT1 attackers are not using WEBC2, they require a \"command and control\" (C2) user interface so they can\n                    \t\t\tissue commands to the backdoor. This interface sometimes runs on their personal attack system, which is typically\n                    \t\t\tin Shanghai. In these instances, when a victim backdoor makes contact with a hop, the communications need to be\n                    \t\t\tforwarded from the hop to the intruder’s Shanghai system so the backdoor can talk to the C2 server software. We have\n                    \t\t\tobserved 767 separate instances in which APT1 intruders used the publicly available \"HUC Packet Transmit Tool\"\n                    \t\t\tor HTRAN on a hop. As always, keep in mind that these uses are confirmed uses, and likely represent only a small\n                    \t\t\tfraction of APT1’s total activity.\n\t\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\tThe HTRAN utility is merely a middle-man, facilitating connections between the victim and the attacker who is using\n                    \t\t\tthe hop point.\n\t\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\tTypical use of HTRAN is fairly simple: the attacker must specify the originating IP address (of his or her workstation in\n                    \t\t\tShanghai), and a port on which to accept connections.\n\t\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\tIn the 767 observed uses of HTRAN, APT1 intruders supplied 614 distinct routable IP addresses. In other words, they\n                    \t\t\tused their hops to function as middlemen between victim systems and 614 different addresses. Of these addresses,\n                    \t\t\t613 of 614 are part of APT1’s home networks.\n\t\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t\t</body>\n\t\t\t\t\t\t</html>\n\nTITLE:\n\tHTRAN Malware C2",
             "id": "malware--33159b98-3264-4e10-a968-d67975b6272f",
+            "is_family": false,
             "kill_chain_phases": [
                 {
                     "kill_chain_name": "APT1 Attack Lifecycle Model",
