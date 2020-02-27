@@ -14735,7 +14735,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(ipv4-addr:value = '60.10.1.114' OR ipv4-addr:value = '60.10.1.115' OR ipv4-addr:value = '124.237.77.11')] OR [(file:x_elevator_id = 'japan' OR file:x_elevator_pivy_password = 'keaidestone' OR file:hashes.MD5 = '65887898252f7e192709a33be268ea41')] OR [mutex:name = '%1Sjfhtd8'] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [(domain-name:value = 'tw.2012yearleft.com' AND domain-name:resolves_to_refs[*].value = '60.10.1.114' AND domain-name:resolves_to_refs[*].value = '60.10.1.115' AND domain-name:resolves_to_refs[*].value = '124.237.77.11')]",
+            "pattern": "[ipv4-addr:value = '60.10.1.114' OR ipv4-addr:value = '60.10.1.115' OR ipv4-addr:value = '124.237.77.11'] OR [file:x_elevator_id = 'japan' OR file:x_elevator_pivy_password = 'keaidestone' OR file:hashes.MD5 = '65887898252f7e192709a33be268ea41'] OR [mutex:name = '%1Sjfhtd8'] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [(domain-name:value = 'tw.2012yearleft.com' AND domain-name:resolves_to_refs[*].value = '60.10.1.114' AND domain-name:resolves_to_refs[*].value = '60.10.1.115' AND domain-name:resolves_to_refs[*].value = '124.237.77.11')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -14771,7 +14771,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(ipv4-addr:value = '122.112.2.14' OR ipv4-addr:value = '122.193.64.59' OR ipv4-addr:value = '60.2.92.68' OR ipv4-addr:value = '60.2.148.167' OR ipv4-addr:value = '69.2.92.68' OR ipv4-addr:value = '54.254.124.68' OR ipv4-addr:value = '114.80.96.8')] OR [(file:x_elevator_id = 'xc.chromeenter.com' OR file:x_elevator_pivy_password = 'menuPass' OR file:hashes.MD5 = '625a4f618d14991cd9bd595bdd590570')] OR [mutex:name = 'DHT$#&*TG'] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [(domain-name:value = 'xc.chromeenter.com' AND domain-name:resolves_to_refs[*].value = '122.112.2.14' AND domain-name:resolves_to_refs[*].value = '122.193.64.59' AND domain-name:resolves_to_refs[*].value = '60.2.92.68' AND domain-name:resolves_to_refs[*].value = '60.2.148.167' AND domain-name:resolves_to_refs[*].value = '69.2.92.68' AND domain-name:resolves_to_refs[*].value = '54.254.124.68' AND domain-name:resolves_to_refs[*].value = '114.80.96.8')]",
+            "pattern": "[ipv4-addr:value = '122.112.2.14' OR ipv4-addr:value = '122.193.64.59' OR ipv4-addr:value = '60.2.92.68' OR ipv4-addr:value = '60.2.148.167' OR ipv4-addr:value = '69.2.92.68' OR ipv4-addr:value = '54.254.124.68' OR ipv4-addr:value = '114.80.96.8'] OR [file:x_elevator_id = 'xc.chromeenter.com' OR file:x_elevator_pivy_password = 'menuPass' OR file:hashes.MD5 = '625a4f618d14991cd9bd595bdd590570'] OR [mutex:name = 'DHT$#&*TG'] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [(domain-name:value = 'xc.chromeenter.com' AND domain-name:resolves_to_refs[*].value = '122.112.2.14' AND domain-name:resolves_to_refs[*].value = '122.193.64.59' AND domain-name:resolves_to_refs[*].value = '60.2.92.68' AND domain-name:resolves_to_refs[*].value = '60.2.148.167' AND domain-name:resolves_to_refs[*].value = '69.2.92.68' AND domain-name:resolves_to_refs[*].value = '54.254.124.68' AND domain-name:resolves_to_refs[*].value = '114.80.96.8')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -14807,7 +14807,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(ipv4-addr:value = '60.2.92.68' OR ipv4-addr:value = '122.112.2.14' OR ipv4-addr:value = '60.2.148.167' OR ipv4-addr:value = '218.11.132.168' OR ipv4-addr:value = '222.73.205.105' OR ipv4-addr:value = '122.193.64.56')] OR [(file:x_elevator_id = 'sh.chromeenter.com' OR file:x_elevator_pivy_password = 'happyyongzi' OR file:hashes.MD5 = 'e6ca06e9b000933567a8604300094a85')] OR [mutex:name = 'D#WK^EKD'] OR [unconverted_term:fireeye:observable-6e55ddf1-77f7-4f96-a462-ec9a77cbea3c] OR [(domain-name:value = 'sh.chromeenter.com' AND domain-name:resolves_to_refs[*].value = '60.2.92.68' AND domain-name:resolves_to_refs[*].value = '122.112.2.14' AND domain-name:resolves_to_refs[*].value = '60.2.148.167' AND domain-name:resolves_to_refs[*].value = '218.11.132.168' AND domain-name:resolves_to_refs[*].value = '222.73.205.105' AND domain-name:resolves_to_refs[*].value = '122.193.64.56')]",
+            "pattern": "[ipv4-addr:value = '60.2.92.68' OR ipv4-addr:value = '122.112.2.14' OR ipv4-addr:value = '60.2.148.167' OR ipv4-addr:value = '218.11.132.168' OR ipv4-addr:value = '222.73.205.105' OR ipv4-addr:value = '122.193.64.56'] OR [file:x_elevator_id = 'sh.chromeenter.com' OR file:x_elevator_pivy_password = 'happyyongzi' OR file:hashes.MD5 = 'e6ca06e9b000933567a8604300094a85'] OR [mutex:name = 'D#WK^EKD'] OR [unconverted_term:fireeye:observable-6e55ddf1-77f7-4f96-a462-ec9a77cbea3c] OR [(domain-name:value = 'sh.chromeenter.com' AND domain-name:resolves_to_refs[*].value = '60.2.92.68' AND domain-name:resolves_to_refs[*].value = '122.112.2.14' AND domain-name:resolves_to_refs[*].value = '60.2.148.167' AND domain-name:resolves_to_refs[*].value = '218.11.132.168' AND domain-name:resolves_to_refs[*].value = '222.73.205.105' AND domain-name:resolves_to_refs[*].value = '122.193.64.56')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -14843,7 +14843,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[ipv4-addr:value = '60.10.1.121'] OR [mutex:name = 'DLKWI&#JH'] OR [(file:x_elevator_id = 'Fchdel-04-22' OR file:x_elevator_pivy_password = 'smallfish' OR file:hashes.MD5 = '18ccf0e2709406c4a0b3635064ca32dc')] OR [(domain-name:value = 'dedydns.ns01.us' AND domain-name:resolves_to_refs[*].value = '60.10.1.121')]",
+            "pattern": "[ipv4-addr:value = '60.10.1.121'] OR [mutex:name = 'DLKWI&#JH'] OR [file:x_elevator_id = 'Fchdel-04-22' OR file:x_elevator_pivy_password = 'smallfish' OR file:hashes.MD5 = '18ccf0e2709406c4a0b3635064ca32dc'] OR [(domain-name:value = 'dedydns.ns01.us' AND domain-name:resolves_to_refs[*].value = '60.10.1.121')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -14879,7 +14879,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(ipv4-addr:value = '221.207.59.118' OR ipv4-addr:value = '121.41.129.12' OR ipv4-addr:value = '121.41.129.143' OR ipv4-addr:value = '121.41.129.179' OR ipv4-addr:value = '121.41.129.140' OR ipv4-addr:value = '121.41.129.214' OR ipv4-addr:value = '121.41.129.75' OR ipv4-addr:value = '121.41.129.100' OR ipv4-addr:value = '221.130.179.36' OR ipv4-addr:value = '121.41.129.213' OR ipv4-addr:value = '121.41.129.59' OR ipv4-addr:value = '121.41.129.250' OR ipv4-addr:value = '121.41.129.193' OR ipv4-addr:value = '60.163.225.156' OR ipv4-addr:value = '121.41.129.223')] OR [unconverted_term:fireeye:observable-6e55ddf1-77f7-4f96-a462-ec9a77cbea3c] OR [(file:x_elevator_pivy_password = 'xiaoxiaohuli' OR file:x_elevator_id = 'js001' OR file:hashes.MD5 = 'e62584c9cd15c3fa2b6ed0f3a34688ab')] OR [mutex:name = '&@%$?2341'] OR [(domain-name:value = 'js001.3322.org' AND domain-name:resolves_to_refs[*].value = '221.207.59.118' AND domain-name:resolves_to_refs[*].value = '121.41.129.12' AND domain-name:resolves_to_refs[*].value = '121.41.129.143' AND domain-name:resolves_to_refs[*].value = '121.41.129.179' AND domain-name:resolves_to_refs[*].value = '121.41.129.140' AND domain-name:resolves_to_refs[*].value = '121.41.129.214' AND domain-name:resolves_to_refs[*].value = '121.41.129.75' AND domain-name:resolves_to_refs[*].value = '121.41.129.100' AND domain-name:resolves_to_refs[*].value = '221.130.179.36' AND domain-name:resolves_to_refs[*].value = '121.41.129.213' AND domain-name:resolves_to_refs[*].value = '121.41.129.59' AND domain-name:resolves_to_refs[*].value = '121.41.129.250' AND domain-name:resolves_to_refs[*].value = '121.41.129.193' AND domain-name:resolves_to_refs[*].value = '60.163.225.156' AND domain-name:resolves_to_refs[*].value = '121.41.129.223')]",
+            "pattern": "[ipv4-addr:value = '221.207.59.118' OR ipv4-addr:value = '121.41.129.12' OR ipv4-addr:value = '121.41.129.143' OR ipv4-addr:value = '121.41.129.179' OR ipv4-addr:value = '121.41.129.140' OR ipv4-addr:value = '121.41.129.214' OR ipv4-addr:value = '121.41.129.75' OR ipv4-addr:value = '121.41.129.100' OR ipv4-addr:value = '221.130.179.36' OR ipv4-addr:value = '121.41.129.213' OR ipv4-addr:value = '121.41.129.59' OR ipv4-addr:value = '121.41.129.250' OR ipv4-addr:value = '121.41.129.193' OR ipv4-addr:value = '60.163.225.156' OR ipv4-addr:value = '121.41.129.223'] OR [unconverted_term:fireeye:observable-6e55ddf1-77f7-4f96-a462-ec9a77cbea3c] OR [file:x_elevator_pivy_password = 'xiaoxiaohuli' OR file:x_elevator_id = 'js001' OR file:hashes.MD5 = 'e62584c9cd15c3fa2b6ed0f3a34688ab'] OR [mutex:name = '&@%$?2341'] OR [(domain-name:value = 'js001.3322.org' AND domain-name:resolves_to_refs[*].value = '221.207.59.118' AND domain-name:resolves_to_refs[*].value = '121.41.129.12' AND domain-name:resolves_to_refs[*].value = '121.41.129.143' AND domain-name:resolves_to_refs[*].value = '121.41.129.179' AND domain-name:resolves_to_refs[*].value = '121.41.129.140' AND domain-name:resolves_to_refs[*].value = '121.41.129.214' AND domain-name:resolves_to_refs[*].value = '121.41.129.75' AND domain-name:resolves_to_refs[*].value = '121.41.129.100' AND domain-name:resolves_to_refs[*].value = '221.130.179.36' AND domain-name:resolves_to_refs[*].value = '121.41.129.213' AND domain-name:resolves_to_refs[*].value = '121.41.129.59' AND domain-name:resolves_to_refs[*].value = '121.41.129.250' AND domain-name:resolves_to_refs[*].value = '121.41.129.193' AND domain-name:resolves_to_refs[*].value = '60.163.225.156' AND domain-name:resolves_to_refs[*].value = '121.41.129.223')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -14915,7 +14915,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(ipv4-addr:value = '60.10.1.120' OR ipv4-addr:value = '221.130.179.36' OR ipv4-addr:value = '199.2.137.238' OR ipv4-addr:value = '117.11.157.171' OR ipv4-addr:value = '60.10.1.119')] OR [(file:x_elevator_id = 'bak' OR file:x_elevator_pivy_password = 'keaidestone' OR file:hashes.MD5 = 'd6dba8166b7b1da0173a0165d3a3e0bf')] OR [mutex:name = '_ldkjfl!*'] OR [unconverted_term:fireeye:observable-c5d4e32b-5240-4172-b3f7-8ea4906b88e2] OR [(domain-name:value = 'weile3322a.3322.org' AND domain-name:resolves_to_refs[*].value = '60.10.1.120' AND domain-name:resolves_to_refs[*].value = '221.130.179.36' AND domain-name:resolves_to_refs[*].value = '199.2.137.238' AND domain-name:resolves_to_refs[*].value = '117.11.157.171' AND domain-name:resolves_to_refs[*].value = '60.10.1.119')]",
+            "pattern": "[ipv4-addr:value = '60.10.1.120' OR ipv4-addr:value = '221.130.179.36' OR ipv4-addr:value = '199.2.137.238' OR ipv4-addr:value = '117.11.157.171' OR ipv4-addr:value = '60.10.1.119'] OR [file:x_elevator_id = 'bak' OR file:x_elevator_pivy_password = 'keaidestone' OR file:hashes.MD5 = 'd6dba8166b7b1da0173a0165d3a3e0bf'] OR [mutex:name = '_ldkjfl!*'] OR [unconverted_term:fireeye:observable-c5d4e32b-5240-4172-b3f7-8ea4906b88e2] OR [(domain-name:value = 'weile3322a.3322.org' AND domain-name:resolves_to_refs[*].value = '60.10.1.120' AND domain-name:resolves_to_refs[*].value = '221.130.179.36' AND domain-name:resolves_to_refs[*].value = '199.2.137.238' AND domain-name:resolves_to_refs[*].value = '117.11.157.171' AND domain-name:resolves_to_refs[*].value = '60.10.1.119')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -14951,7 +14951,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(ipv4-addr:value = '60.10.1.114' OR ipv4-addr:value = '60.10.1.115' OR ipv4-addr:value = '124.237.77.11')] OR [mutex:name = '$c5$#F1i2'] OR [(file:x_elevator_id = 'killer' OR file:x_elevator_pivy_password = 'keaidestone' OR file:hashes.MD5 = '6bead751a0f6056008d5d200dea0d88b')] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [(domain-name:value = 'tw.2012yearleft.com' AND domain-name:resolves_to_refs[*].value = '60.10.1.114' AND domain-name:resolves_to_refs[*].value = '60.10.1.115' AND domain-name:resolves_to_refs[*].value = '124.237.77.11')]",
+            "pattern": "[ipv4-addr:value = '60.10.1.114' OR ipv4-addr:value = '60.10.1.115' OR ipv4-addr:value = '124.237.77.11'] OR [mutex:name = '$c5$#F1i2'] OR [file:x_elevator_id = 'killer' OR file:x_elevator_pivy_password = 'keaidestone' OR file:hashes.MD5 = '6bead751a0f6056008d5d200dea0d88b'] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [(domain-name:value = 'tw.2012yearleft.com' AND domain-name:resolves_to_refs[*].value = '60.10.1.114' AND domain-name:resolves_to_refs[*].value = '60.10.1.115' AND domain-name:resolves_to_refs[*].value = '124.237.77.11')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -14987,7 +14987,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(ipv4-addr:value = '112.213.118.33' OR ipv4-addr:value = '60.10.1.114' OR ipv4-addr:value = '60.10.1.115' OR ipv4-addr:value = '124.237.77.11')] OR [mutex:name = 'df555tkjy'] OR [(file:x_elevator_id = '7.2' OR file:x_elevator_pivy_password = 'keaidestone' OR file:hashes.MD5 = '08709f35581e0958d1ca4e50b7d86dba')] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [((domain-name:value = 'hk.2012yearleft.com' AND domain-name:resolves_to_refs[*].value = '112.213.118.33') OR (domain-name:value = 'tw.2012yearleft.com' AND domain-name:resolves_to_refs[*].value = '60.10.1.114' AND domain-name:resolves_to_refs[*].value = '60.10.1.115' AND domain-name:resolves_to_refs[*].value = '124.237.77.11'))]",
+            "pattern": "[ipv4-addr:value = '112.213.118.33' OR ipv4-addr:value = '60.10.1.114' OR ipv4-addr:value = '60.10.1.115' OR ipv4-addr:value = '124.237.77.11'] OR [mutex:name = 'df555tkjy'] OR [file:x_elevator_id = '7.2' OR file:x_elevator_pivy_password = 'keaidestone' OR file:hashes.MD5 = '08709f35581e0958d1ca4e50b7d86dba'] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [(domain-name:value = 'hk.2012yearleft.com' AND domain-name:resolves_to_refs[*].value = '112.213.118.33') OR (domain-name:value = 'tw.2012yearleft.com' AND domain-name:resolves_to_refs[*].value = '60.10.1.114' AND domain-name:resolves_to_refs[*].value = '60.10.1.115' AND domain-name:resolves_to_refs[*].value = '124.237.77.11')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -15023,7 +15023,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(ipv4-addr:value = '60.2.92.69' OR ipv4-addr:value = '112.84.190.115' OR ipv4-addr:value = '122.193.64.58')] OR [mutex:name = '*#&@dd#@!'] OR [(file:x_elevator_id = 'ngcc.8800.org' OR file:x_elevator_pivy_password = 'menuPass' OR file:hashes.MD5 = 'f5315fb4a654087d30c69c768d80f826')] OR [unconverted_term:fireeye:observable-6e55ddf1-77f7-4f96-a462-ec9a77cbea3c] OR [(domain-name:value = 'ngcc.8800.org' AND domain-name:resolves_to_refs[*].value = '60.2.92.69' AND domain-name:resolves_to_refs[*].value = '112.84.190.115' AND domain-name:resolves_to_refs[*].value = '122.193.64.58')]",
+            "pattern": "[ipv4-addr:value = '60.2.92.69' OR ipv4-addr:value = '112.84.190.115' OR ipv4-addr:value = '122.193.64.58'] OR [mutex:name = '*#&@dd#@!'] OR [file:x_elevator_id = 'ngcc.8800.org' OR file:x_elevator_pivy_password = 'menuPass' OR file:hashes.MD5 = 'f5315fb4a654087d30c69c768d80f826'] OR [unconverted_term:fireeye:observable-6e55ddf1-77f7-4f96-a462-ec9a77cbea3c] OR [(domain-name:value = 'ngcc.8800.org' AND domain-name:resolves_to_refs[*].value = '60.2.92.69' AND domain-name:resolves_to_refs[*].value = '112.84.190.115' AND domain-name:resolves_to_refs[*].value = '122.193.64.58')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -15059,7 +15059,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(ipv4-addr:value = '54.241.2.3' OR ipv4-addr:value = '54.241.13.219' OR ipv4-addr:value = '54.241.8.84' OR ipv4-addr:value = '54.241.17.1' OR ipv4-addr:value = '122.193.64.58' OR ipv4-addr:value = '60.2.92.67' OR ipv4-addr:value = '54.245.89.19' OR ipv4-addr:value = '184.169.176.71' OR ipv4-addr:value = '184.169.134.80' OR ipv4-addr:value = '60.2.148.166')] OR [mutex:name = '&J#JF&EWF'] OR [(file:x_elevator_id = 'av.ddns.us' OR file:x_elevator_pivy_password = 'admin' OR file:hashes.MD5 = '60963553335fa5877bd5f9be9d8b23a6')] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [(domain-name:value = 'av.ddns.us' AND domain-name:resolves_to_refs[*].value = '54.241.2.3' AND domain-name:resolves_to_refs[*].value = '54.241.13.219' AND domain-name:resolves_to_refs[*].value = '54.241.8.84' AND domain-name:resolves_to_refs[*].value = '54.241.17.1' AND domain-name:resolves_to_refs[*].value = '122.193.64.58' AND domain-name:resolves_to_refs[*].value = '60.2.92.67' AND domain-name:resolves_to_refs[*].value = '54.245.89.19' AND domain-name:resolves_to_refs[*].value = '184.169.176.71' AND domain-name:resolves_to_refs[*].value = '184.169.134.80' AND domain-name:resolves_to_refs[*].value = '60.2.148.166')]",
+            "pattern": "[ipv4-addr:value = '54.241.2.3' OR ipv4-addr:value = '54.241.13.219' OR ipv4-addr:value = '54.241.8.84' OR ipv4-addr:value = '54.241.17.1' OR ipv4-addr:value = '122.193.64.58' OR ipv4-addr:value = '60.2.92.67' OR ipv4-addr:value = '54.245.89.19' OR ipv4-addr:value = '184.169.176.71' OR ipv4-addr:value = '184.169.134.80' OR ipv4-addr:value = '60.2.148.166'] OR [mutex:name = '&J#JF&EWF'] OR [file:x_elevator_id = 'av.ddns.us' OR file:x_elevator_pivy_password = 'admin' OR file:hashes.MD5 = '60963553335fa5877bd5f9be9d8b23a6'] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [(domain-name:value = 'av.ddns.us' AND domain-name:resolves_to_refs[*].value = '54.241.2.3' AND domain-name:resolves_to_refs[*].value = '54.241.13.219' AND domain-name:resolves_to_refs[*].value = '54.241.8.84' AND domain-name:resolves_to_refs[*].value = '54.241.17.1' AND domain-name:resolves_to_refs[*].value = '122.193.64.58' AND domain-name:resolves_to_refs[*].value = '60.2.92.67' AND domain-name:resolves_to_refs[*].value = '54.245.89.19' AND domain-name:resolves_to_refs[*].value = '184.169.176.71' AND domain-name:resolves_to_refs[*].value = '184.169.134.80' AND domain-name:resolves_to_refs[*].value = '60.2.148.166')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -15095,7 +15095,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[ipv4-addr:value = '60.10.1.115'] OR [mutex:name = 'KEIVH^#$S'] OR [(file:x_elevator_id = 'autuo.xicp.net' OR file:x_elevator_pivy_password = 'keaidestone' OR file:hashes.MD5 = 'b1deff736b6d12b8d98b485e20d318ea')] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [(domain-name:value = 'autuo.xicp.net' AND domain-name:resolves_to_refs[*].value = '60.10.1.115')]",
+            "pattern": "[ipv4-addr:value = '60.10.1.115'] OR [mutex:name = 'KEIVH^#$S'] OR [file:x_elevator_id = 'autuo.xicp.net' OR file:x_elevator_pivy_password = 'keaidestone' OR file:hashes.MD5 = 'b1deff736b6d12b8d98b485e20d318ea'] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [(domain-name:value = 'autuo.xicp.net' AND domain-name:resolves_to_refs[*].value = '60.10.1.115')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -15131,7 +15131,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(ipv4-addr:value = '60.10.1.114' OR ipv4-addr:value = '60.10.1.115' OR ipv4-addr:value = '124.237.77.11')] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [(file:x_elevator_pivy_password = 'keaidestone' OR file:x_elevator_id = 'tw2012' OR file:hashes.MD5 = '4ac3e877e1f30d2a1aa9639ac0707307')] OR [mutex:name = 'K^DJA^#FE'] OR [(domain-name:value = 'tw.2012yearleft.com' AND domain-name:resolves_to_refs[*].value = '60.10.1.114' AND domain-name:resolves_to_refs[*].value = '60.10.1.115' AND domain-name:resolves_to_refs[*].value = '124.237.77.11')]",
+            "pattern": "[ipv4-addr:value = '60.10.1.114' OR ipv4-addr:value = '60.10.1.115' OR ipv4-addr:value = '124.237.77.11'] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [file:x_elevator_pivy_password = 'keaidestone' OR file:x_elevator_id = 'tw2012' OR file:hashes.MD5 = '4ac3e877e1f30d2a1aa9639ac0707307'] OR [mutex:name = 'K^DJA^#FE'] OR [(domain-name:value = 'tw.2012yearleft.com' AND domain-name:resolves_to_refs[*].value = '60.10.1.114' AND domain-name:resolves_to_refs[*].value = '60.10.1.115' AND domain-name:resolves_to_refs[*].value = '124.237.77.11')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -15167,7 +15167,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[mutex:name = '5c325aaac'] OR [(file:x_elevator_id = '9.10.foolish.chicken' OR file:x_elevator_pivy_password = 'happyyongzi' OR file:hashes.MD5 = 'b5695df9da14b8c9db7e607942d01fac')] OR [domain-name:value = 'wefhijapad.9966.org']",
+            "pattern": "[mutex:name = '5c325aaac'] OR [file:x_elevator_id = '9.10.foolish.chicken' OR file:x_elevator_pivy_password = 'happyyongzi' OR file:hashes.MD5 = 'b5695df9da14b8c9db7e607942d01fac'] OR [domain-name:value = 'wefhijapad.9966.org']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -15203,7 +15203,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[ipv4-addr:value = '60.10.1.120'] OR [(file:x_elevator_id = 'G0508' OR file:x_elevator_pivy_password = 'XGstone' OR file:hashes.MD5 = 'b2dc98caa647e64a2a8105c298218462')] OR [mutex:name = 'a888v888b'] OR [(domain-name:value = 'apple.cmdnetview.com' AND domain-name:resolves_to_refs[*].value = '60.10.1.120')]",
+            "pattern": "[ipv4-addr:value = '60.10.1.120'] OR [file:x_elevator_id = 'G0508' OR file:x_elevator_pivy_password = 'XGstone' OR file:hashes.MD5 = 'b2dc98caa647e64a2a8105c298218462'] OR [mutex:name = 'a888v888b'] OR [(domain-name:value = 'apple.cmdnetview.com' AND domain-name:resolves_to_refs[*].value = '60.10.1.120')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -15239,7 +15239,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(ipv4-addr:value = '125.77.199.30' OR ipv4-addr:value = '199.2.137.238' OR ipv4-addr:value = '60.10.1.115' OR ipv4-addr:value = '124.237.77.11' OR ipv4-addr:value = '60.10.1.114')] OR [mutex:name = '#567999wk'] OR [(file:x_elevator_id = 'pansenes.go.jp' OR file:x_elevator_pivy_password = 'keaidestone' OR file:hashes.MD5 = 'c1bcc9513f27c33d24f7ed0fc5700b47')] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [(domain-name:value = 'pansenes.3322.org' AND domain-name:resolves_to_refs[*].value = '125.77.199.30' AND domain-name:resolves_to_refs[*].value = '199.2.137.238' AND domain-name:resolves_to_refs[*].value = '60.10.1.115' AND domain-name:resolves_to_refs[*].value = '124.237.77.11' AND domain-name:resolves_to_refs[*].value = '60.10.1.114')]",
+            "pattern": "[ipv4-addr:value = '125.77.199.30' OR ipv4-addr:value = '199.2.137.238' OR ipv4-addr:value = '60.10.1.115' OR ipv4-addr:value = '124.237.77.11' OR ipv4-addr:value = '60.10.1.114'] OR [mutex:name = '#567999wk'] OR [file:x_elevator_id = 'pansenes.go.jp' OR file:x_elevator_pivy_password = 'keaidestone' OR file:hashes.MD5 = 'c1bcc9513f27c33d24f7ed0fc5700b47'] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [(domain-name:value = 'pansenes.3322.org' AND domain-name:resolves_to_refs[*].value = '125.77.199.30' AND domain-name:resolves_to_refs[*].value = '199.2.137.238' AND domain-name:resolves_to_refs[*].value = '60.10.1.115' AND domain-name:resolves_to_refs[*].value = '124.237.77.11' AND domain-name:resolves_to_refs[*].value = '60.10.1.114')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -15275,7 +15275,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[ipv4-addr:value = '123.183.210.28'] OR [(file:x_elevator_id = 'mongoles' OR file:x_elevator_pivy_password = 'fishplay' OR file:hashes.MD5 = '494e65cf21ad559fccf3dacdd69acc94')] OR [mutex:name = 'KFEIIF^#$'] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [(domain-name:value = 'mongoles.3322.org' AND domain-name:resolves_to_refs[*].value = '123.183.210.28')]",
+            "pattern": "[ipv4-addr:value = '123.183.210.28'] OR [file:x_elevator_id = 'mongoles' OR file:x_elevator_pivy_password = 'fishplay' OR file:hashes.MD5 = '494e65cf21ad559fccf3dacdd69acc94'] OR [mutex:name = 'KFEIIF^#$'] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [(domain-name:value = 'mongoles.3322.org' AND domain-name:resolves_to_refs[*].value = '123.183.210.28')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -15311,7 +15311,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(ipv4-addr:value = '54.241.6.130' OR ipv4-addr:value = '122.193.64.56')] OR [mutex:name = 'KD*#KLSDK'] OR [(file:x_elevator_id = 'do.ddns.ms' OR file:x_elevator_pivy_password = 'menuPass' OR file:hashes.MD5 = 'bf553932f6f418250a4dd81c63b3ccee')] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [(domain-name:value = 'do.ddns.ms' AND domain-name:resolves_to_refs[*].value = '54.241.6.130' AND domain-name:resolves_to_refs[*].value = '122.193.64.56')]",
+            "pattern": "[ipv4-addr:value = '54.241.6.130' OR ipv4-addr:value = '122.193.64.56'] OR [mutex:name = 'KD*#KLSDK'] OR [file:x_elevator_id = 'do.ddns.ms' OR file:x_elevator_pivy_password = 'menuPass' OR file:hashes.MD5 = 'bf553932f6f418250a4dd81c63b3ccee'] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [(domain-name:value = 'do.ddns.ms' AND domain-name:resolves_to_refs[*].value = '54.241.6.130' AND domain-name:resolves_to_refs[*].value = '122.193.64.56')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -15347,7 +15347,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[ipv4-addr:value = '124.237.77.25'] OR [(file:x_elevator_id = '6r.suibian2010.info' OR file:x_elevator_pivy_password = 'admin' OR file:hashes.MD5 = '4ad286a97c82f91df3e07b101a224f56')] OR [mutex:name = '&#JKJD&#A'] OR [(domain-name:value = '6r.suibian2010.info' AND domain-name:resolves_to_refs[*].value = '124.237.77.25')]",
+            "pattern": "[ipv4-addr:value = '124.237.77.25'] OR [file:x_elevator_id = '6r.suibian2010.info' OR file:x_elevator_pivy_password = 'admin' OR file:hashes.MD5 = '4ad286a97c82f91df3e07b101a224f56'] OR [mutex:name = '&#JKJD&#A'] OR [(domain-name:value = '6r.suibian2010.info' AND domain-name:resolves_to_refs[*].value = '124.237.77.25')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -15383,7 +15383,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(ipv4-addr:value = '184.169.134.80' OR ipv4-addr:value = '54.241.6.130')] OR [mutex:name = '$#^@G#%^S'] OR [(file:x_elevator_id = 'Cs.lflink.com' OR file:x_elevator_pivy_password = 'menuPass' OR file:hashes.MD5 = 'aa7368b928eaaff80e42c0d0637c4a61')] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [(domain-name:value = 'cs.lflink.com' AND domain-name:resolves_to_refs[*].value = '184.169.134.80' AND domain-name:resolves_to_refs[*].value = '54.241.6.130')]",
+            "pattern": "[ipv4-addr:value = '184.169.134.80' OR ipv4-addr:value = '54.241.6.130'] OR [mutex:name = '$#^@G#%^S'] OR [file:x_elevator_id = 'Cs.lflink.com' OR file:x_elevator_pivy_password = 'menuPass' OR file:hashes.MD5 = 'aa7368b928eaaff80e42c0d0637c4a61'] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [(domain-name:value = 'cs.lflink.com' AND domain-name:resolves_to_refs[*].value = '184.169.134.80' AND domain-name:resolves_to_refs[*].value = '54.241.6.130')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -15419,7 +15419,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(ipv4-addr:value = '60.10.1.120' OR ipv4-addr:value = '218.57.11.26' OR ipv4-addr:value = '221.130.179.36' OR ipv4-addr:value = '221.207.59.118' OR ipv4-addr:value = '118.192.11.19' OR ipv4-addr:value = '199.2.137.238' OR ipv4-addr:value = '60.10.1.119')] OR [(file:x_elevator_id = 'weile3322b.3322.org' OR file:x_elevator_pivy_password = 'keaidestone' OR file:hashes.MD5 = '39a59411e7b12236c0b4351168fb47ce')] OR [mutex:name = '#&@dke#@*'] OR [unconverted_term:fireeye:observable-6e55ddf1-77f7-4f96-a462-ec9a77cbea3c] OR [(domain-name:value = 'weile3322b.3322.org' AND domain-name:resolves_to_refs[*].value = '60.10.1.120' AND domain-name:resolves_to_refs[*].value = '218.57.11.26' AND domain-name:resolves_to_refs[*].value = '221.130.179.36' AND domain-name:resolves_to_refs[*].value = '221.207.59.118' AND domain-name:resolves_to_refs[*].value = '118.192.11.19' AND domain-name:resolves_to_refs[*].value = '199.2.137.238' AND domain-name:resolves_to_refs[*].value = '60.10.1.119')]",
+            "pattern": "[ipv4-addr:value = '60.10.1.120' OR ipv4-addr:value = '218.57.11.26' OR ipv4-addr:value = '221.130.179.36' OR ipv4-addr:value = '221.207.59.118' OR ipv4-addr:value = '118.192.11.19' OR ipv4-addr:value = '199.2.137.238' OR ipv4-addr:value = '60.10.1.119'] OR [file:x_elevator_id = 'weile3322b.3322.org' OR file:x_elevator_pivy_password = 'keaidestone' OR file:hashes.MD5 = '39a59411e7b12236c0b4351168fb47ce'] OR [mutex:name = '#&@dke#@*'] OR [unconverted_term:fireeye:observable-6e55ddf1-77f7-4f96-a462-ec9a77cbea3c] OR [(domain-name:value = 'weile3322b.3322.org' AND domain-name:resolves_to_refs[*].value = '60.10.1.120' AND domain-name:resolves_to_refs[*].value = '218.57.11.26' AND domain-name:resolves_to_refs[*].value = '221.130.179.36' AND domain-name:resolves_to_refs[*].value = '221.207.59.118' AND domain-name:resolves_to_refs[*].value = '118.192.11.19' AND domain-name:resolves_to_refs[*].value = '199.2.137.238' AND domain-name:resolves_to_refs[*].value = '60.10.1.119')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -15455,7 +15455,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(ipv4-addr:value = '114.80.96.8' OR ipv4-addr:value = '122.193.64.59' OR ipv4-addr:value = '125.39.80.205' OR ipv4-addr:value = '54.241.6.130')] OR [(file:x_elevator_id = 'ma.VizVaz.com' OR file:x_elevator_pivy_password = 'aDmin' OR file:hashes.MD5 = 'bb7ae118a83f3bed742dbbc50136dc50')] OR [mutex:name = 'J(&#F@hd$'] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [(domain-name:value = 'ma.vizvaz.com' AND domain-name:resolves_to_refs[*].value = '114.80.96.8' AND domain-name:resolves_to_refs[*].value = '122.193.64.59' AND domain-name:resolves_to_refs[*].value = '125.39.80.205' AND domain-name:resolves_to_refs[*].value = '54.241.6.130')]",
+            "pattern": "[ipv4-addr:value = '114.80.96.8' OR ipv4-addr:value = '122.193.64.59' OR ipv4-addr:value = '125.39.80.205' OR ipv4-addr:value = '54.241.6.130'] OR [file:x_elevator_id = 'ma.VizVaz.com' OR file:x_elevator_pivy_password = 'aDmin' OR file:hashes.MD5 = 'bb7ae118a83f3bed742dbbc50136dc50'] OR [mutex:name = 'J(&#F@hd$'] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [(domain-name:value = 'ma.vizvaz.com' AND domain-name:resolves_to_refs[*].value = '114.80.96.8' AND domain-name:resolves_to_refs[*].value = '122.193.64.59' AND domain-name:resolves_to_refs[*].value = '125.39.80.205' AND domain-name:resolves_to_refs[*].value = '54.241.6.130')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -15491,7 +15491,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[ipv4-addr:value = '60.10.1.119'] OR [mutex:name = 'fd5gh55a5'] OR [(domain-name:value = 'abcd120719.6600.org' OR (domain-name:value = 'abcd120719.6600.org' AND domain-name:resolves_to_refs[*].value = '60.10.1.119'))] OR [(file:x_elevator_id = 'abcd120719.6600.org' OR file:x_elevator_pivy_password = 'happyyongzi' OR file:hashes.MD5 = '459ee0adaad4d493830e655eb4d686f7')] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8]",
+            "pattern": "[ipv4-addr:value = '60.10.1.119'] OR [mutex:name = 'fd5gh55a5'] OR [domain-name:value = 'abcd120719.6600.org' OR (domain-name:value = 'abcd120719.6600.org' AND domain-name:resolves_to_refs[*].value = '60.10.1.119')] OR [file:x_elevator_id = 'abcd120719.6600.org' OR file:x_elevator_pivy_password = 'happyyongzi' OR file:hashes.MD5 = '459ee0adaad4d493830e655eb4d686f7'] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -15527,7 +15527,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[ipv4-addr:value = '123.183.210.26'] OR [(file:x_elevator_id = 'cloudns.8800.org' OR file:x_elevator_pivy_password = 'smallfish' OR file:hashes.MD5 = '46f5de8e9e165d34e622bbf2cf61942b')] OR [mutex:name = 'kdkeiks33'] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [(domain-name:value = 'cloudns.8800.org' AND domain-name:resolves_to_refs[*].value = '123.183.210.26')]",
+            "pattern": "[ipv4-addr:value = '123.183.210.26'] OR [file:x_elevator_id = 'cloudns.8800.org' OR file:x_elevator_pivy_password = 'smallfish' OR file:hashes.MD5 = '46f5de8e9e165d34e622bbf2cf61942b'] OR [mutex:name = 'kdkeiks33'] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [(domain-name:value = 'cloudns.8800.org' AND domain-name:resolves_to_refs[*].value = '123.183.210.26')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -15563,7 +15563,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(ipv4-addr:value = '60.10.1.120' OR ipv4-addr:value = '221.130.179.36' OR ipv4-addr:value = '199.2.137.238' OR ipv4-addr:value = '117.11.157.171' OR ipv4-addr:value = '60.10.1.119')] OR [(file:x_elevator_id = '0927Def' OR file:x_elevator_pivy_password = 'keaidestone' OR file:hashes.MD5 = '421b1220970488738b5f578999ecac0e')] OR [mutex:name = '#_!._B.I8'] OR [(domain-name:value = 'weile3322a.3322.org' AND domain-name:resolves_to_refs[*].value = '60.10.1.120' AND domain-name:resolves_to_refs[*].value = '221.130.179.36' AND domain-name:resolves_to_refs[*].value = '199.2.137.238' AND domain-name:resolves_to_refs[*].value = '117.11.157.171' AND domain-name:resolves_to_refs[*].value = '60.10.1.119')]",
+            "pattern": "[ipv4-addr:value = '60.10.1.120' OR ipv4-addr:value = '221.130.179.36' OR ipv4-addr:value = '199.2.137.238' OR ipv4-addr:value = '117.11.157.171' OR ipv4-addr:value = '60.10.1.119'] OR [file:x_elevator_id = '0927Def' OR file:x_elevator_pivy_password = 'keaidestone' OR file:hashes.MD5 = '421b1220970488738b5f578999ecac0e'] OR [mutex:name = '#_!._B.I8'] OR [(domain-name:value = 'weile3322a.3322.org' AND domain-name:resolves_to_refs[*].value = '60.10.1.120' AND domain-name:resolves_to_refs[*].value = '221.130.179.36' AND domain-name:resolves_to_refs[*].value = '199.2.137.238' AND domain-name:resolves_to_refs[*].value = '117.11.157.171' AND domain-name:resolves_to_refs[*].value = '60.10.1.119')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -15599,7 +15599,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(ipv4-addr:value = '27.98.200.47' OR ipv4-addr:value = '14.102.252.142' OR ipv4-addr:value = '122.112.2.14' OR ipv4-addr:value = '202.150.213.12' OR ipv4-addr:value = '216.83.43.205' OR ipv4-addr:value = '180.210.204.230' OR ipv4-addr:value = '111.92.231.6' OR ipv4-addr:value = '202.150.208.60' OR ipv4-addr:value = '27.98.200.50')] OR [(file:x_elevator_id = 'baby' OR file:hashes.MD5 = '88fd19e48625e623a4d6abb5d5b78445')] OR [mutex:name = 'rdgSxQc12'] OR [(domain-name:value = 'cecon.flower-show.org' AND domain-name:resolves_to_refs[*].value = '27.98.200.47' AND domain-name:resolves_to_refs[*].value = '14.102.252.142' AND domain-name:resolves_to_refs[*].value = '122.112.2.14' AND domain-name:resolves_to_refs[*].value = '202.150.213.12' AND domain-name:resolves_to_refs[*].value = '216.83.43.205' AND domain-name:resolves_to_refs[*].value = '180.210.204.230' AND domain-name:resolves_to_refs[*].value = '111.92.231.6' AND domain-name:resolves_to_refs[*].value = '202.150.208.60' AND domain-name:resolves_to_refs[*].value = '27.98.200.50')]",
+            "pattern": "[ipv4-addr:value = '27.98.200.47' OR ipv4-addr:value = '14.102.252.142' OR ipv4-addr:value = '122.112.2.14' OR ipv4-addr:value = '202.150.213.12' OR ipv4-addr:value = '216.83.43.205' OR ipv4-addr:value = '180.210.204.230' OR ipv4-addr:value = '111.92.231.6' OR ipv4-addr:value = '202.150.208.60' OR ipv4-addr:value = '27.98.200.50'] OR [file:x_elevator_id = 'baby' OR file:hashes.MD5 = '88fd19e48625e623a4d6abb5d5b78445'] OR [mutex:name = 'rdgSxQc12'] OR [(domain-name:value = 'cecon.flower-show.org' AND domain-name:resolves_to_refs[*].value = '27.98.200.47' AND domain-name:resolves_to_refs[*].value = '14.102.252.142' AND domain-name:resolves_to_refs[*].value = '122.112.2.14' AND domain-name:resolves_to_refs[*].value = '202.150.213.12' AND domain-name:resolves_to_refs[*].value = '216.83.43.205' AND domain-name:resolves_to_refs[*].value = '180.210.204.230' AND domain-name:resolves_to_refs[*].value = '111.92.231.6' AND domain-name:resolves_to_refs[*].value = '202.150.208.60' AND domain-name:resolves_to_refs[*].value = '27.98.200.50')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -15635,7 +15635,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(ipv4-addr:value = '125.77.199.30' OR ipv4-addr:value = '199.2.137.238' OR ipv4-addr:value = '60.10.1.115' OR ipv4-addr:value = '124.237.77.11' OR ipv4-addr:value = '60.10.1.114')] OR [mutex:name = '#567999wk'] OR [(file:x_elevator_id = 'pansenes.go.jp' OR file:x_elevator_pivy_password = 'keaidestone' OR file:hashes.MD5 = 'a5ec5a677346634a42c9f9101ce9d861')] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [(domain-name:value = 'pansenes.3322.org' AND domain-name:resolves_to_refs[*].value = '125.77.199.30' AND domain-name:resolves_to_refs[*].value = '199.2.137.238' AND domain-name:resolves_to_refs[*].value = '60.10.1.115' AND domain-name:resolves_to_refs[*].value = '124.237.77.11' AND domain-name:resolves_to_refs[*].value = '60.10.1.114')]",
+            "pattern": "[ipv4-addr:value = '125.77.199.30' OR ipv4-addr:value = '199.2.137.238' OR ipv4-addr:value = '60.10.1.115' OR ipv4-addr:value = '124.237.77.11' OR ipv4-addr:value = '60.10.1.114'] OR [mutex:name = '#567999wk'] OR [file:x_elevator_id = 'pansenes.go.jp' OR file:x_elevator_pivy_password = 'keaidestone' OR file:hashes.MD5 = 'a5ec5a677346634a42c9f9101ce9d861'] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [(domain-name:value = 'pansenes.3322.org' AND domain-name:resolves_to_refs[*].value = '125.77.199.30' AND domain-name:resolves_to_refs[*].value = '199.2.137.238' AND domain-name:resolves_to_refs[*].value = '60.10.1.115' AND domain-name:resolves_to_refs[*].value = '124.237.77.11' AND domain-name:resolves_to_refs[*].value = '60.10.1.114')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -15671,7 +15671,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(ipv4-addr:value = '60.10.1.114' OR ipv4-addr:value = '60.10.1.115' OR ipv4-addr:value = '124.237.77.11')] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [(file:x_elevator_pivy_password = 'keaidestone' OR file:x_elevator_id = 'tw2012' OR file:hashes.MD5 = '54fcf43e6f7641eeacdf1fd12a740c7c')] OR [mutex:name = 'K^DJA^#FE'] OR [(domain-name:value = 'tw.2012yearleft.com' AND domain-name:resolves_to_refs[*].value = '60.10.1.114' AND domain-name:resolves_to_refs[*].value = '60.10.1.115' AND domain-name:resolves_to_refs[*].value = '124.237.77.11')]",
+            "pattern": "[ipv4-addr:value = '60.10.1.114' OR ipv4-addr:value = '60.10.1.115' OR ipv4-addr:value = '124.237.77.11'] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [file:x_elevator_pivy_password = 'keaidestone' OR file:x_elevator_id = 'tw2012' OR file:hashes.MD5 = '54fcf43e6f7641eeacdf1fd12a740c7c'] OR [mutex:name = 'K^DJA^#FE'] OR [(domain-name:value = 'tw.2012yearleft.com' AND domain-name:resolves_to_refs[*].value = '60.10.1.114' AND domain-name:resolves_to_refs[*].value = '60.10.1.115' AND domain-name:resolves_to_refs[*].value = '124.237.77.11')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -15707,7 +15707,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(ipv4-addr:value = '60.2.148.164' OR ipv4-addr:value = '60.2.92.69' OR ipv4-addr:value = '184.169.176.71' OR ipv4-addr:value = '184.72.33.25' OR ipv4-addr:value = '60.10.1.118' OR ipv4-addr:value = '60.2.148.165' OR ipv4-addr:value = '60.2.148.166' OR ipv4-addr:value = '54.241.8.84' OR ipv4-addr:value = '54.241.2.3' OR ipv4-addr:value = '60.2.92.67' OR ipv4-addr:value = '54.241.13.219')] OR [mutex:name = 'L&#JDFAEF'] OR [(file:x_elevator_id = 'fbi.zyns.com' OR file:x_elevator_pivy_password = 'menuPass' OR file:hashes.MD5 = 'd81dac704850c0ee051b8455510cc0a4')] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [(domain-name:value = 'fbi.zyns.com' AND domain-name:resolves_to_refs[*].value = '60.2.148.164' AND domain-name:resolves_to_refs[*].value = '60.2.92.69' AND domain-name:resolves_to_refs[*].value = '184.169.176.71' AND domain-name:resolves_to_refs[*].value = '184.72.33.25' AND domain-name:resolves_to_refs[*].value = '60.10.1.118' AND domain-name:resolves_to_refs[*].value = '60.2.148.165' AND domain-name:resolves_to_refs[*].value = '60.2.148.166' AND domain-name:resolves_to_refs[*].value = '54.241.8.84' AND domain-name:resolves_to_refs[*].value = '54.241.2.3' AND domain-name:resolves_to_refs[*].value = '60.2.92.67' AND domain-name:resolves_to_refs[*].value = '54.241.13.219')]",
+            "pattern": "[ipv4-addr:value = '60.2.148.164' OR ipv4-addr:value = '60.2.92.69' OR ipv4-addr:value = '184.169.176.71' OR ipv4-addr:value = '184.72.33.25' OR ipv4-addr:value = '60.10.1.118' OR ipv4-addr:value = '60.2.148.165' OR ipv4-addr:value = '60.2.148.166' OR ipv4-addr:value = '54.241.8.84' OR ipv4-addr:value = '54.241.2.3' OR ipv4-addr:value = '60.2.92.67' OR ipv4-addr:value = '54.241.13.219'] OR [mutex:name = 'L&#JDFAEF'] OR [file:x_elevator_id = 'fbi.zyns.com' OR file:x_elevator_pivy_password = 'menuPass' OR file:hashes.MD5 = 'd81dac704850c0ee051b8455510cc0a4'] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [(domain-name:value = 'fbi.zyns.com' AND domain-name:resolves_to_refs[*].value = '60.2.148.164' AND domain-name:resolves_to_refs[*].value = '60.2.92.69' AND domain-name:resolves_to_refs[*].value = '184.169.176.71' AND domain-name:resolves_to_refs[*].value = '184.72.33.25' AND domain-name:resolves_to_refs[*].value = '60.10.1.118' AND domain-name:resolves_to_refs[*].value = '60.2.148.165' AND domain-name:resolves_to_refs[*].value = '60.2.148.166' AND domain-name:resolves_to_refs[*].value = '54.241.8.84' AND domain-name:resolves_to_refs[*].value = '54.241.2.3' AND domain-name:resolves_to_refs[*].value = '60.2.92.67' AND domain-name:resolves_to_refs[*].value = '54.241.13.219')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -15743,7 +15743,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[ipv4-addr:value = '60.10.1.121'] OR [mutex:name = 'AK&FESA#^'] OR [(file:x_elevator_id = 'applelib120102.9966.org' OR file:x_elevator_pivy_password = 'smallfish' OR file:hashes.MD5 = 'cd6a0b076678165e04f8583d19a9a46f')] OR [(domain-name:value = 'applelib120102.9966.org' AND domain-name:resolves_to_refs[*].value = '60.10.1.121')]",
+            "pattern": "[ipv4-addr:value = '60.10.1.121'] OR [mutex:name = 'AK&FESA#^'] OR [file:x_elevator_id = 'applelib120102.9966.org' OR file:x_elevator_pivy_password = 'smallfish' OR file:hashes.MD5 = 'cd6a0b076678165e04f8583d19a9a46f'] OR [(domain-name:value = 'applelib120102.9966.org' AND domain-name:resolves_to_refs[*].value = '60.10.1.121')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -15779,7 +15779,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(ipv4-addr:value = '60.10.1.114' OR ipv4-addr:value = '60.10.1.115' OR ipv4-addr:value = '124.237.77.11')] OR [(file:x_elevator_id = 'japan' OR file:x_elevator_pivy_password = 'keaidestone' OR file:hashes.MD5 = '52a58fc5e8aeb2e87215649f66210ed8')] OR [mutex:name = '%1Sjfhtd8'] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [(domain-name:value = 'tw.2012yearleft.com' AND domain-name:resolves_to_refs[*].value = '60.10.1.114' AND domain-name:resolves_to_refs[*].value = '60.10.1.115' AND domain-name:resolves_to_refs[*].value = '124.237.77.11')]",
+            "pattern": "[ipv4-addr:value = '60.10.1.114' OR ipv4-addr:value = '60.10.1.115' OR ipv4-addr:value = '124.237.77.11'] OR [file:x_elevator_id = 'japan' OR file:x_elevator_pivy_password = 'keaidestone' OR file:hashes.MD5 = '52a58fc5e8aeb2e87215649f66210ed8'] OR [mutex:name = '%1Sjfhtd8'] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [(domain-name:value = 'tw.2012yearleft.com' AND domain-name:resolves_to_refs[*].value = '60.10.1.114' AND domain-name:resolves_to_refs[*].value = '60.10.1.115' AND domain-name:resolves_to_refs[*].value = '124.237.77.11')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -15815,7 +15815,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(ipv4-addr:value = '112.213.118.33' OR ipv4-addr:value = '60.10.1.114' OR ipv4-addr:value = '60.10.1.115' OR ipv4-addr:value = '124.237.77.11')] OR [(file:x_elevator_id = '9.6.chicken.welcome' OR file:x_elevator_pivy_password = 'keaidestone' OR file:hashes.MD5 = 'c2c7ceb8a428a36b80b9ce1037d209dd')] OR [mutex:name = 'JEETRYS66'] OR [((domain-name:value = 'hk.2012yearleft.com' AND domain-name:resolves_to_refs[*].value = '112.213.118.33') OR (domain-name:value = 'tw.2012yearleft.com' AND domain-name:resolves_to_refs[*].value = '60.10.1.114' AND domain-name:resolves_to_refs[*].value = '60.10.1.115' AND domain-name:resolves_to_refs[*].value = '124.237.77.11'))]",
+            "pattern": "[ipv4-addr:value = '112.213.118.33' OR ipv4-addr:value = '60.10.1.114' OR ipv4-addr:value = '60.10.1.115' OR ipv4-addr:value = '124.237.77.11'] OR [file:x_elevator_id = '9.6.chicken.welcome' OR file:x_elevator_pivy_password = 'keaidestone' OR file:hashes.MD5 = 'c2c7ceb8a428a36b80b9ce1037d209dd'] OR [mutex:name = 'JEETRYS66'] OR [(domain-name:value = 'hk.2012yearleft.com' AND domain-name:resolves_to_refs[*].value = '112.213.118.33') OR (domain-name:value = 'tw.2012yearleft.com' AND domain-name:resolves_to_refs[*].value = '60.10.1.114' AND domain-name:resolves_to_refs[*].value = '60.10.1.115' AND domain-name:resolves_to_refs[*].value = '124.237.77.11')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -15851,7 +15851,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(ipv4-addr:value = '184.169.134.80' OR ipv4-addr:value = '54.241.6.130')] OR [mutex:name = '$GF0*^#DE'] OR [(file:x_elevator_id = 'cs.lflink.COM' OR file:x_elevator_pivy_password = 'menuPass' OR file:hashes.MD5 = 'c2f000577585ce59661b21a500eb253e')] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [(domain-name:value = 'cs.lflink.com' AND domain-name:resolves_to_refs[*].value = '184.169.134.80' AND domain-name:resolves_to_refs[*].value = '54.241.6.130')]",
+            "pattern": "[ipv4-addr:value = '184.169.134.80' OR ipv4-addr:value = '54.241.6.130'] OR [mutex:name = '$GF0*^#DE'] OR [file:x_elevator_id = 'cs.lflink.COM' OR file:x_elevator_pivy_password = 'menuPass' OR file:hashes.MD5 = 'c2f000577585ce59661b21a500eb253e'] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [(domain-name:value = 'cs.lflink.com' AND domain-name:resolves_to_refs[*].value = '184.169.134.80' AND domain-name:resolves_to_refs[*].value = '54.241.6.130')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -15887,7 +15887,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(file:x_elevator_id = 'DNSPODDWG.authorizeddns.org' OR file:x_elevator_pivy_password = 'smallfish' OR file:hashes.MD5 = 'd9af0e6501c7a375e6276709da4572d8')] OR [mutex:name = 'D#*KDIAJE'] OR [domain-name:value = 'DNSPODDWG.authorizeddns.org']",
+            "pattern": "[file:x_elevator_id = 'DNSPODDWG.authorizeddns.org' OR file:x_elevator_pivy_password = 'smallfish' OR file:hashes.MD5 = 'd9af0e6501c7a375e6276709da4572d8'] OR [mutex:name = 'D#*KDIAJE'] OR [domain-name:value = 'DNSPODDWG.authorizeddns.org']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -15923,7 +15923,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(ipv4-addr:value = '54.241.6.130' OR ipv4-addr:value = '60.2.148.165' OR ipv4-addr:value = '184.169.176.71')] OR [mutex:name = '^#DFDyu08'] OR [(file:x_elevator_id = 'za.myftp.info' OR file:x_elevator_pivy_password = 'menuPass' OR file:hashes.MD5 = '5b668982bcf868629f1e31bdcda21b05')] OR [(domain-name:value = 'za.myftp.info' AND domain-name:resolves_to_refs[*].value = '54.241.6.130' AND domain-name:resolves_to_refs[*].value = '60.2.148.165' AND domain-name:resolves_to_refs[*].value = '184.169.176.71')]",
+            "pattern": "[ipv4-addr:value = '54.241.6.130' OR ipv4-addr:value = '60.2.148.165' OR ipv4-addr:value = '184.169.176.71'] OR [mutex:name = '^#DFDyu08'] OR [file:x_elevator_id = 'za.myftp.info' OR file:x_elevator_pivy_password = 'menuPass' OR file:hashes.MD5 = '5b668982bcf868629f1e31bdcda21b05'] OR [(domain-name:value = 'za.myftp.info' AND domain-name:resolves_to_refs[*].value = '54.241.6.130' AND domain-name:resolves_to_refs[*].value = '60.2.148.165' AND domain-name:resolves_to_refs[*].value = '184.169.176.71')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -15959,7 +15959,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[ipv4-addr:value = '115.192.191.33'] OR [mutex:name = 'D#A^KHQde'] OR [(file:x_elevator_id = 'www.yamaha10.tk' OR file:x_elevator_pivy_password = 'japanorus' OR file:hashes.MD5 = 'a5232ea8745e2d7f7740d1d222e2364f')] OR [(domain-name:value = 'www.yamaha10.tk' AND domain-name:resolves_to_refs[*].value = '115.192.191.33')]",
+            "pattern": "[ipv4-addr:value = '115.192.191.33'] OR [mutex:name = 'D#A^KHQde'] OR [file:x_elevator_id = 'www.yamaha10.tk' OR file:x_elevator_pivy_password = 'japanorus' OR file:hashes.MD5 = 'a5232ea8745e2d7f7740d1d222e2364f'] OR [(domain-name:value = 'www.yamaha10.tk' AND domain-name:resolves_to_refs[*].value = '115.192.191.33')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -15995,7 +15995,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(ipv4-addr:value = '60.2.148.167' OR ipv4-addr:value = '54.241.6.130')] OR [(file:x_elevator_id = 'jj.mysecondarydns.com' OR file:x_elevator_pivy_password = 'menuPass' OR file:hashes.MD5 = '4e84b1448cf96fabe88c623b222057c4')] OR [mutex:name = '((*HKG^%3'] OR [(domain-name:value = 'jj.mysecondarydns.com' AND domain-name:resolves_to_refs[*].value = '60.2.148.167' AND domain-name:resolves_to_refs[*].value = '54.241.6.130')]",
+            "pattern": "[ipv4-addr:value = '60.2.148.167' OR ipv4-addr:value = '54.241.6.130'] OR [file:x_elevator_id = 'jj.mysecondarydns.com' OR file:x_elevator_pivy_password = 'menuPass' OR file:hashes.MD5 = '4e84b1448cf96fabe88c623b222057c4'] OR [mutex:name = '((*HKG^%3'] OR [(domain-name:value = 'jj.mysecondarydns.com' AND domain-name:resolves_to_refs[*].value = '60.2.148.167' AND domain-name:resolves_to_refs[*].value = '54.241.6.130')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -16031,7 +16031,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(ipv4-addr:value = '60.2.92.68' OR ipv4-addr:value = '114.80.96.8' OR ipv4-addr:value = '60.2.148.165' OR ipv4-addr:value = '54.241.6.130')] OR [mutex:name = 'wZF$^#6.4'] OR [(file:x_elevator_id = 'zg.ns02.biz' OR file:x_elevator_pivy_password = 'menuPass' OR file:hashes.MD5 = '4bc6cab128f623f34bb97194da21d7b6')] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [(domain-name:value = 'zg.ns02.biz' AND domain-name:resolves_to_refs[*].value = '60.2.92.68' AND domain-name:resolves_to_refs[*].value = '114.80.96.8' AND domain-name:resolves_to_refs[*].value = '60.2.148.165' AND domain-name:resolves_to_refs[*].value = '54.241.6.130')]",
+            "pattern": "[ipv4-addr:value = '60.2.92.68' OR ipv4-addr:value = '114.80.96.8' OR ipv4-addr:value = '60.2.148.165' OR ipv4-addr:value = '54.241.6.130'] OR [mutex:name = 'wZF$^#6.4'] OR [file:x_elevator_id = 'zg.ns02.biz' OR file:x_elevator_pivy_password = 'menuPass' OR file:hashes.MD5 = '4bc6cab128f623f34bb97194da21d7b6'] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [(domain-name:value = 'zg.ns02.biz' AND domain-name:resolves_to_refs[*].value = '60.2.92.68' AND domain-name:resolves_to_refs[*].value = '114.80.96.8' AND domain-name:resolves_to_refs[*].value = '60.2.148.165' AND domain-name:resolves_to_refs[*].value = '54.241.6.130')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -16067,7 +16067,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[ipv4-addr:value = '218.240.54.126'] OR [(file:x_elevator_id = 'test.yamaha.10dig.net' OR file:x_elevator_pivy_password = 'japanorus' OR file:hashes.MD5 = '4ffcd711fcfe28d3a6dcac244c552efb')] OR [mutex:name = 'DKEKYW&^%'] OR [(domain-name:value = 'test.yamaha.10dig.net' AND domain-name:resolves_to_refs[*].value = '218.240.54.126')]",
+            "pattern": "[ipv4-addr:value = '218.240.54.126'] OR [file:x_elevator_id = 'test.yamaha.10dig.net' OR file:x_elevator_pivy_password = 'japanorus' OR file:hashes.MD5 = '4ffcd711fcfe28d3a6dcac244c552efb'] OR [mutex:name = 'DKEKYW&^%'] OR [(domain-name:value = 'test.yamaha.10dig.net' AND domain-name:resolves_to_refs[*].value = '218.240.54.126')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -16103,7 +16103,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(ipv4-addr:value = '124.237.77.11' OR ipv4-addr:value = '60.10.1.115' OR ipv4-addr:value = '60.10.1.114' OR ipv4-addr:value = '112.213.118.33')] OR [mutex:name = 'vv0ffjju0'] OR [(file:x_elevator_id = 'Bak.8.8.Fuck' OR file:x_elevator_pivy_password = 'keaidestone' OR file:hashes.MD5 = 'c84a04eabb91e3dd2388d435527b6906')] OR [((domain-name:value = 'monkey.2012yearleft.com' AND domain-name:resolves_to_refs[*].value = '124.237.77.11' AND domain-name:resolves_to_refs[*].value = '60.10.1.115' AND domain-name:resolves_to_refs[*].value = '60.10.1.114') OR (domain-name:value = 'hk.2012yearleft.com' AND domain-name:resolves_to_refs[*].value = '112.213.118.33'))]",
+            "pattern": "[ipv4-addr:value = '124.237.77.11' OR ipv4-addr:value = '60.10.1.115' OR ipv4-addr:value = '60.10.1.114' OR ipv4-addr:value = '112.213.118.33'] OR [mutex:name = 'vv0ffjju0'] OR [file:x_elevator_id = 'Bak.8.8.Fuck' OR file:x_elevator_pivy_password = 'keaidestone' OR file:hashes.MD5 = 'c84a04eabb91e3dd2388d435527b6906'] OR [(domain-name:value = 'monkey.2012yearleft.com' AND domain-name:resolves_to_refs[*].value = '124.237.77.11' AND domain-name:resolves_to_refs[*].value = '60.10.1.115' AND domain-name:resolves_to_refs[*].value = '60.10.1.114') OR (domain-name:value = 'hk.2012yearleft.com' AND domain-name:resolves_to_refs[*].value = '112.213.118.33')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -16139,7 +16139,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(ipv4-addr:value = '60.2.148.165' OR ipv4-addr:value = '184.72.33.25' OR ipv4-addr:value = '125.39.80.4' OR ipv4-addr:value = '60.10.1.118' OR ipv4-addr:value = '184.169.176.71' OR ipv4-addr:value = '184.169.160.194' OR ipv4-addr:value = '60.2.148.166')] OR [(file:x_elevator_id = 'nasa.xxuz.com' OR file:x_elevator_pivy_password = 'menuPass' OR file:hashes.MD5 = '4e78ae59302bbfe440ec25cc104a7a53')] OR [mutex:name = '1vvb8888d'] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [(domain-name:value = 'nasa.xxuz.com' AND domain-name:resolves_to_refs[*].value = '60.2.148.165' AND domain-name:resolves_to_refs[*].value = '184.72.33.25' AND domain-name:resolves_to_refs[*].value = '125.39.80.4' AND domain-name:resolves_to_refs[*].value = '60.10.1.118' AND domain-name:resolves_to_refs[*].value = '184.169.176.71' AND domain-name:resolves_to_refs[*].value = '184.169.160.194' AND domain-name:resolves_to_refs[*].value = '60.2.148.166')]",
+            "pattern": "[ipv4-addr:value = '60.2.148.165' OR ipv4-addr:value = '184.72.33.25' OR ipv4-addr:value = '125.39.80.4' OR ipv4-addr:value = '60.10.1.118' OR ipv4-addr:value = '184.169.176.71' OR ipv4-addr:value = '184.169.160.194' OR ipv4-addr:value = '60.2.148.166'] OR [file:x_elevator_id = 'nasa.xxuz.com' OR file:x_elevator_pivy_password = 'menuPass' OR file:hashes.MD5 = '4e78ae59302bbfe440ec25cc104a7a53'] OR [mutex:name = '1vvb8888d'] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [(domain-name:value = 'nasa.xxuz.com' AND domain-name:resolves_to_refs[*].value = '60.2.148.165' AND domain-name:resolves_to_refs[*].value = '184.72.33.25' AND domain-name:resolves_to_refs[*].value = '125.39.80.4' AND domain-name:resolves_to_refs[*].value = '60.10.1.118' AND domain-name:resolves_to_refs[*].value = '184.169.176.71' AND domain-name:resolves_to_refs[*].value = '184.169.160.194' AND domain-name:resolves_to_refs[*].value = '60.2.148.166')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -16175,7 +16175,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(ipv4-addr:value = '125.77.199.30' OR ipv4-addr:value = '60.10.1.120' OR ipv4-addr:value = '199.2.137.238')] OR [mutex:name = '$#$29321!'] OR [(file:x_elevator_id = 'xgstone.3322.org' OR file:x_elevator_pivy_password = 'XGstone' OR file:hashes.MD5 = '5415be1e85fd3b56fe7a6f57ec3cef43')] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [(domain-name:value = 'xgstone.3322.org' AND domain-name:resolves_to_refs[*].value = '125.77.199.30' AND domain-name:resolves_to_refs[*].value = '60.10.1.120' AND domain-name:resolves_to_refs[*].value = '199.2.137.238')]",
+            "pattern": "[ipv4-addr:value = '125.77.199.30' OR ipv4-addr:value = '60.10.1.120' OR ipv4-addr:value = '199.2.137.238'] OR [mutex:name = '$#$29321!'] OR [file:x_elevator_id = 'xgstone.3322.org' OR file:x_elevator_pivy_password = 'XGstone' OR file:hashes.MD5 = '5415be1e85fd3b56fe7a6f57ec3cef43'] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [(domain-name:value = 'xgstone.3322.org' AND domain-name:resolves_to_refs[*].value = '125.77.199.30' AND domain-name:resolves_to_refs[*].value = '60.10.1.120' AND domain-name:resolves_to_refs[*].value = '199.2.137.238')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -16211,7 +16211,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(domain-name:value = 'abcd120807.3322.org' OR domain-name:value = 'abcd120807.3322.org')] OR [mutex:name = 'dsdd88a8t'] OR [(file:x_elevator_id = '8.8.Send' OR file:x_elevator_pivy_password = 'happyyongzi' OR file:hashes.MD5 = 'cab408c59c3450fcc9ddb401eede170f')]",
+            "pattern": "[domain-name:value = 'abcd120807.3322.org' OR domain-name:value = 'abcd120807.3322.org'] OR [mutex:name = 'dsdd88a8t'] OR [file:x_elevator_id = '8.8.Send' OR file:x_elevator_pivy_password = 'happyyongzi' OR file:hashes.MD5 = 'cab408c59c3450fcc9ddb401eede170f']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -16247,7 +16247,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[ipv4-addr:value = '60.10.1.121'] OR [mutex:name = 'DKKK#&FKJ'] OR [(file:x_elevator_id = 'dedydns.ns01.us' OR file:x_elevator_pivy_password = 'smallfish' OR file:hashes.MD5 = 'ed179f1f90765963a0b363bedbe674f6')] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [(domain-name:value = 'dedydns.ns01.us' AND domain-name:resolves_to_refs[*].value = '60.10.1.121')]",
+            "pattern": "[ipv4-addr:value = '60.10.1.121'] OR [mutex:name = 'DKKK#&FKJ'] OR [file:x_elevator_id = 'dedydns.ns01.us' OR file:x_elevator_pivy_password = 'smallfish' OR file:hashes.MD5 = 'ed179f1f90765963a0b363bedbe674f6'] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [(domain-name:value = 'dedydns.ns01.us' AND domain-name:resolves_to_refs[*].value = '60.10.1.121')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -16283,7 +16283,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(ipv4-addr:value = '60.10.1.120' OR ipv4-addr:value = '221.130.179.36' OR ipv4-addr:value = '199.2.137.238' OR ipv4-addr:value = '117.11.157.171' OR ipv4-addr:value = '60.10.1.119')] OR [(file:x_elevator_id = 'bak' OR file:x_elevator_pivy_password = 'keaidestone' OR file:hashes.MD5 = 'ea5580bc00700eab50b99203e64ec0c5')] OR [mutex:name = 'JJDJYE&#$'] OR [(domain-name:value = 'weile3322a.3322.org' AND domain-name:resolves_to_refs[*].value = '60.10.1.120' AND domain-name:resolves_to_refs[*].value = '221.130.179.36' AND domain-name:resolves_to_refs[*].value = '199.2.137.238' AND domain-name:resolves_to_refs[*].value = '117.11.157.171' AND domain-name:resolves_to_refs[*].value = '60.10.1.119')]",
+            "pattern": "[ipv4-addr:value = '60.10.1.120' OR ipv4-addr:value = '221.130.179.36' OR ipv4-addr:value = '199.2.137.238' OR ipv4-addr:value = '117.11.157.171' OR ipv4-addr:value = '60.10.1.119'] OR [file:x_elevator_id = 'bak' OR file:x_elevator_pivy_password = 'keaidestone' OR file:hashes.MD5 = 'ea5580bc00700eab50b99203e64ec0c5'] OR [mutex:name = 'JJDJYE&#$'] OR [(domain-name:value = 'weile3322a.3322.org' AND domain-name:resolves_to_refs[*].value = '60.10.1.120' AND domain-name:resolves_to_refs[*].value = '221.130.179.36' AND domain-name:resolves_to_refs[*].value = '199.2.137.238' AND domain-name:resolves_to_refs[*].value = '117.11.157.171' AND domain-name:resolves_to_refs[*].value = '60.10.1.119')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -16319,7 +16319,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[ipv4-addr:value = '60.10.1.121'] OR [(file:x_elevator_id = 'dedydns.ns01.us' OR file:x_elevator_pivy_password = 'smallfish' OR file:hashes.MD5 = 'e84853c0484b02b7518dd683787d04fc')] OR [mutex:name = 'DKKK#&FKJ'] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [(domain-name:value = 'dedydns.ns01.us' AND domain-name:resolves_to_refs[*].value = '60.10.1.121')]",
+            "pattern": "[ipv4-addr:value = '60.10.1.121'] OR [file:x_elevator_id = 'dedydns.ns01.us' OR file:x_elevator_pivy_password = 'smallfish' OR file:hashes.MD5 = 'e84853c0484b02b7518dd683787d04fc'] OR [mutex:name = 'DKKK#&FKJ'] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [(domain-name:value = 'dedydns.ns01.us' AND domain-name:resolves_to_refs[*].value = '60.10.1.121')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -16355,7 +16355,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(ipv4-addr:value = '124.237.77.11' OR ipv4-addr:value = '60.10.1.115' OR ipv4-addr:value = '60.10.1.114' OR ipv4-addr:value = '112.213.118.33')] OR [mutex:name = 'vv0ffjju0'] OR [(file:x_elevator_id = 'Bak.8.8.Fuck' OR file:x_elevator_pivy_password = 'keaidestone' OR file:hashes.MD5 = 'e7a5a551f847c735487acede71f8a9d8')] OR [((domain-name:value = 'monkey.2012yearleft.com' AND domain-name:resolves_to_refs[*].value = '124.237.77.11' AND domain-name:resolves_to_refs[*].value = '60.10.1.115' AND domain-name:resolves_to_refs[*].value = '60.10.1.114') OR (domain-name:value = 'hk.2012yearleft.com' AND domain-name:resolves_to_refs[*].value = '112.213.118.33'))]",
+            "pattern": "[ipv4-addr:value = '124.237.77.11' OR ipv4-addr:value = '60.10.1.115' OR ipv4-addr:value = '60.10.1.114' OR ipv4-addr:value = '112.213.118.33'] OR [mutex:name = 'vv0ffjju0'] OR [file:x_elevator_id = 'Bak.8.8.Fuck' OR file:x_elevator_pivy_password = 'keaidestone' OR file:hashes.MD5 = 'e7a5a551f847c735487acede71f8a9d8'] OR [(domain-name:value = 'monkey.2012yearleft.com' AND domain-name:resolves_to_refs[*].value = '124.237.77.11' AND domain-name:resolves_to_refs[*].value = '60.10.1.115' AND domain-name:resolves_to_refs[*].value = '60.10.1.114') OR (domain-name:value = 'hk.2012yearleft.com' AND domain-name:resolves_to_refs[*].value = '112.213.118.33')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -16391,7 +16391,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[mutex:name = '#dsf3^&&*'] OR [(file:x_elevator_id = 'yugoogless' OR file:x_elevator_pivy_password = 'happyyongzi' OR file:hashes.MD5 = '7e3c3eec58cbb6c4bcc4d59a549f7678')] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [domain-name:value = 'yugoogless.3322.org']",
+            "pattern": "[mutex:name = '#dsf3^&&*'] OR [file:x_elevator_id = 'yugoogless' OR file:x_elevator_pivy_password = 'happyyongzi' OR file:hashes.MD5 = '7e3c3eec58cbb6c4bcc4d59a549f7678'] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [domain-name:value = 'yugoogless.3322.org']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -16427,7 +16427,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(file:x_elevator_id = '530.0' OR file:x_elevator_pivy_password = 'admin' OR file:hashes.MD5 = '86328b05ffaf47ae90de61689a3536c4')] OR [mutex:name = 'dsfew1111'] OR [ipv4-addr:value = '114.80.96.8']",
+            "pattern": "[file:x_elevator_id = '530.0' OR file:x_elevator_pivy_password = 'admin' OR file:hashes.MD5 = '86328b05ffaf47ae90de61689a3536c4'] OR [mutex:name = 'dsfew1111'] OR [ipv4-addr:value = '114.80.96.8']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -16463,7 +16463,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(file:x_elevator_id = '221fuck' OR file:x_elevator_pivy_password = 'keaidestone' OR file:hashes.MD5 = '36c6672abdfa7f8c1cf20d27277d7e1a')] OR [mutex:name = 'eeee888bf'] OR [ipv4-addr:value = '60.10.1.114']",
+            "pattern": "[file:x_elevator_id = '221fuck' OR file:x_elevator_pivy_password = 'keaidestone' OR file:hashes.MD5 = '36c6672abdfa7f8c1cf20d27277d7e1a'] OR [mutex:name = 'eeee888bf'] OR [ipv4-addr:value = '60.10.1.114']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -16499,7 +16499,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(ipv4-addr:value = '60.2.148.164' OR ipv4-addr:value = '60.2.92.69' OR ipv4-addr:value = '184.169.176.71' OR ipv4-addr:value = '184.72.33.25' OR ipv4-addr:value = '60.10.1.118' OR ipv4-addr:value = '60.2.148.165' OR ipv4-addr:value = '60.2.148.166' OR ipv4-addr:value = '54.241.8.84' OR ipv4-addr:value = '54.241.2.3' OR ipv4-addr:value = '60.2.92.67' OR ipv4-addr:value = '54.241.13.219')] OR [(file:x_elevator_id = 'fbi.zyns.com' OR file:x_elevator_pivy_password = 'menuPass' OR file:hashes.MD5 = '72f9d92c2ee99ad79d956c9d3a1a0989')] OR [mutex:name = 'KDdy&$*#F'] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [(domain-name:value = 'fbi.zyns.com' AND domain-name:resolves_to_refs[*].value = '60.2.148.164' AND domain-name:resolves_to_refs[*].value = '60.2.92.69' AND domain-name:resolves_to_refs[*].value = '184.169.176.71' AND domain-name:resolves_to_refs[*].value = '184.72.33.25' AND domain-name:resolves_to_refs[*].value = '60.10.1.118' AND domain-name:resolves_to_refs[*].value = '60.2.148.165' AND domain-name:resolves_to_refs[*].value = '60.2.148.166' AND domain-name:resolves_to_refs[*].value = '54.241.8.84' AND domain-name:resolves_to_refs[*].value = '54.241.2.3' AND domain-name:resolves_to_refs[*].value = '60.2.92.67' AND domain-name:resolves_to_refs[*].value = '54.241.13.219')]",
+            "pattern": "[ipv4-addr:value = '60.2.148.164' OR ipv4-addr:value = '60.2.92.69' OR ipv4-addr:value = '184.169.176.71' OR ipv4-addr:value = '184.72.33.25' OR ipv4-addr:value = '60.10.1.118' OR ipv4-addr:value = '60.2.148.165' OR ipv4-addr:value = '60.2.148.166' OR ipv4-addr:value = '54.241.8.84' OR ipv4-addr:value = '54.241.2.3' OR ipv4-addr:value = '60.2.92.67' OR ipv4-addr:value = '54.241.13.219'] OR [file:x_elevator_id = 'fbi.zyns.com' OR file:x_elevator_pivy_password = 'menuPass' OR file:hashes.MD5 = '72f9d92c2ee99ad79d956c9d3a1a0989'] OR [mutex:name = 'KDdy&$*#F'] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [(domain-name:value = 'fbi.zyns.com' AND domain-name:resolves_to_refs[*].value = '60.2.148.164' AND domain-name:resolves_to_refs[*].value = '60.2.92.69' AND domain-name:resolves_to_refs[*].value = '184.169.176.71' AND domain-name:resolves_to_refs[*].value = '184.72.33.25' AND domain-name:resolves_to_refs[*].value = '60.10.1.118' AND domain-name:resolves_to_refs[*].value = '60.2.148.165' AND domain-name:resolves_to_refs[*].value = '60.2.148.166' AND domain-name:resolves_to_refs[*].value = '54.241.8.84' AND domain-name:resolves_to_refs[*].value = '54.241.2.3' AND domain-name:resolves_to_refs[*].value = '60.2.92.67' AND domain-name:resolves_to_refs[*].value = '54.241.13.219')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -16535,7 +16535,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[ipv4-addr:value = '60.10.1.114'] OR [mutex:name = 'JDKLFY(*F'] OR [(file:x_elevator_id = 'D:2013/05/08' OR file:x_elevator_pivy_password = 'keaidestone' OR file:hashes.MD5 = '018509c1165817d4b0a3e728eab41ea0')] OR [unconverted_term:fireeye:observable-59127d7f-ad98-4854-ac90-f44e4ce23bd1] OR [(domain-name:value = 'scrlk.exprenum.com' AND domain-name:resolves_to_refs[*].value = '60.10.1.114')]",
+            "pattern": "[ipv4-addr:value = '60.10.1.114'] OR [mutex:name = 'JDKLFY(*F'] OR [file:x_elevator_id = 'D:2013/05/08' OR file:x_elevator_pivy_password = 'keaidestone' OR file:hashes.MD5 = '018509c1165817d4b0a3e728eab41ea0'] OR [unconverted_term:fireeye:observable-59127d7f-ad98-4854-ac90-f44e4ce23bd1] OR [(domain-name:value = 'scrlk.exprenum.com' AND domain-name:resolves_to_refs[*].value = '60.10.1.114')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -16571,7 +16571,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(ipv4-addr:value = '125.77.199.30' OR ipv4-addr:value = '199.2.137.238' OR ipv4-addr:value = '60.10.1.115' OR ipv4-addr:value = '124.237.77.11' OR ipv4-addr:value = '60.10.1.114')] OR [mutex:name = '#@$DEFew)'] OR [(file:x_elevator_id = 'pansenes.3322.org' OR file:x_elevator_pivy_password = 'keaidestone' OR file:hashes.MD5 = '36cc4c909462db0f067b11a5e719a4ee')] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [(domain-name:value = 'pansenes.3322.org' AND domain-name:resolves_to_refs[*].value = '125.77.199.30' AND domain-name:resolves_to_refs[*].value = '199.2.137.238' AND domain-name:resolves_to_refs[*].value = '60.10.1.115' AND domain-name:resolves_to_refs[*].value = '124.237.77.11' AND domain-name:resolves_to_refs[*].value = '60.10.1.114')]",
+            "pattern": "[ipv4-addr:value = '125.77.199.30' OR ipv4-addr:value = '199.2.137.238' OR ipv4-addr:value = '60.10.1.115' OR ipv4-addr:value = '124.237.77.11' OR ipv4-addr:value = '60.10.1.114'] OR [mutex:name = '#@$DEFew)'] OR [file:x_elevator_id = 'pansenes.3322.org' OR file:x_elevator_pivy_password = 'keaidestone' OR file:hashes.MD5 = '36cc4c909462db0f067b11a5e719a4ee'] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [(domain-name:value = 'pansenes.3322.org' AND domain-name:resolves_to_refs[*].value = '125.77.199.30' AND domain-name:resolves_to_refs[*].value = '199.2.137.238' AND domain-name:resolves_to_refs[*].value = '60.10.1.115' AND domain-name:resolves_to_refs[*].value = '124.237.77.11' AND domain-name:resolves_to_refs[*].value = '60.10.1.114')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -16607,7 +16607,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[ipv4-addr:value = '60.10.1.121'] OR [mutex:name = '&#JDJSUS'] OR [(file:x_elevator_id = 'Fchdel-05-21' OR file:x_elevator_pivy_password = 'smallfish' OR file:hashes.MD5 = '377d8d30172f083b7a0cdff846681f81')] OR [(domain-name:value = 'dedydns.ns01.us' AND domain-name:resolves_to_refs[*].value = '60.10.1.121')]",
+            "pattern": "[ipv4-addr:value = '60.10.1.121'] OR [mutex:name = '&#JDJSUS'] OR [file:x_elevator_id = 'Fchdel-05-21' OR file:x_elevator_pivy_password = 'smallfish' OR file:hashes.MD5 = '377d8d30172f083b7a0cdff846681f81'] OR [(domain-name:value = 'dedydns.ns01.us' AND domain-name:resolves_to_refs[*].value = '60.10.1.121')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -16643,7 +16643,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(ipv4-addr:value = '60.2.92.69' OR ipv4-addr:value = '112.84.190.115' OR ipv4-addr:value = '122.193.64.58')] OR [mutex:name = ')!VuSR.I4'] OR [(file:x_elevator_id = 'wensha' OR file:x_elevator_pivy_password = 'admin' OR file:hashes.MD5 = '7aa047cd6dac1d0a4fbc6d968c1b6407')] OR [unconverted_term:fireeye:observable-928e7d88-ce58-4ca2-a860-b3d4f0197b10] OR [(domain-name:value = 'ngcc.8800.org' AND domain-name:resolves_to_refs[*].value = '60.2.92.69' AND domain-name:resolves_to_refs[*].value = '112.84.190.115' AND domain-name:resolves_to_refs[*].value = '122.193.64.58')]",
+            "pattern": "[ipv4-addr:value = '60.2.92.69' OR ipv4-addr:value = '112.84.190.115' OR ipv4-addr:value = '122.193.64.58'] OR [mutex:name = ')!VuSR.I4'] OR [file:x_elevator_id = 'wensha' OR file:x_elevator_pivy_password = 'admin' OR file:hashes.MD5 = '7aa047cd6dac1d0a4fbc6d968c1b6407'] OR [unconverted_term:fireeye:observable-928e7d88-ce58-4ca2-a860-b3d4f0197b10] OR [(domain-name:value = 'ngcc.8800.org' AND domain-name:resolves_to_refs[*].value = '60.2.92.69' AND domain-name:resolves_to_refs[*].value = '112.84.190.115' AND domain-name:resolves_to_refs[*].value = '122.193.64.58')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -16679,7 +16679,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(ipv4-addr:value = '54.241.13.219' OR ipv4-addr:value = '54.241.2.3' OR ipv4-addr:value = '54.245.89.19' OR ipv4-addr:value = '60.2.92.67' OR ipv4-addr:value = '184.72.33.25' OR ipv4-addr:value = '184.169.163.193' OR ipv4-addr:value = '184.169.176.71')] OR [(file:x_elevator_id = 'army.xxuz.com' OR file:x_elevator_pivy_password = 'menuPass' OR file:hashes.MD5 = '090a6a5da51aa84413e42b2c00e4521f')] OR [mutex:name = 'd111111w1'] OR [(domain-name:value = 'army.xxuz.com' AND domain-name:resolves_to_refs[*].value = '54.241.13.219' AND domain-name:resolves_to_refs[*].value = '54.241.2.3' AND domain-name:resolves_to_refs[*].value = '54.245.89.19' AND domain-name:resolves_to_refs[*].value = '60.2.92.67' AND domain-name:resolves_to_refs[*].value = '184.72.33.25' AND domain-name:resolves_to_refs[*].value = '184.169.163.193' AND domain-name:resolves_to_refs[*].value = '184.169.176.71')]",
+            "pattern": "[ipv4-addr:value = '54.241.13.219' OR ipv4-addr:value = '54.241.2.3' OR ipv4-addr:value = '54.245.89.19' OR ipv4-addr:value = '60.2.92.67' OR ipv4-addr:value = '184.72.33.25' OR ipv4-addr:value = '184.169.163.193' OR ipv4-addr:value = '184.169.176.71'] OR [file:x_elevator_id = 'army.xxuz.com' OR file:x_elevator_pivy_password = 'menuPass' OR file:hashes.MD5 = '090a6a5da51aa84413e42b2c00e4521f'] OR [mutex:name = 'd111111w1'] OR [(domain-name:value = 'army.xxuz.com' AND domain-name:resolves_to_refs[*].value = '54.241.13.219' AND domain-name:resolves_to_refs[*].value = '54.241.2.3' AND domain-name:resolves_to_refs[*].value = '54.245.89.19' AND domain-name:resolves_to_refs[*].value = '60.2.92.67' AND domain-name:resolves_to_refs[*].value = '184.72.33.25' AND domain-name:resolves_to_refs[*].value = '184.169.163.193' AND domain-name:resolves_to_refs[*].value = '184.169.176.71')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -16715,7 +16715,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(ipv4-addr:value = '60.10.1.120' OR ipv4-addr:value = '221.130.179.36' OR ipv4-addr:value = '199.2.137.238' OR ipv4-addr:value = '117.11.157.171' OR ipv4-addr:value = '60.10.1.119')] OR [(file:x_elevator_id = '0927Def' OR file:x_elevator_pivy_password = 'keaidestone' OR file:hashes.MD5 = 'dad0c02b91f656ffe1d4de3dbf344624')] OR [mutex:name = '#_!._B.I8'] OR [unconverted_term:fireeye:observable-c5d4e32b-5240-4172-b3f7-8ea4906b88e2] OR [(domain-name:value = 'weile3322a.3322.org' AND domain-name:resolves_to_refs[*].value = '60.10.1.120' AND domain-name:resolves_to_refs[*].value = '221.130.179.36' AND domain-name:resolves_to_refs[*].value = '199.2.137.238' AND domain-name:resolves_to_refs[*].value = '117.11.157.171' AND domain-name:resolves_to_refs[*].value = '60.10.1.119')]",
+            "pattern": "[ipv4-addr:value = '60.10.1.120' OR ipv4-addr:value = '221.130.179.36' OR ipv4-addr:value = '199.2.137.238' OR ipv4-addr:value = '117.11.157.171' OR ipv4-addr:value = '60.10.1.119'] OR [file:x_elevator_id = '0927Def' OR file:x_elevator_pivy_password = 'keaidestone' OR file:hashes.MD5 = 'dad0c02b91f656ffe1d4de3dbf344624'] OR [mutex:name = '#_!._B.I8'] OR [unconverted_term:fireeye:observable-c5d4e32b-5240-4172-b3f7-8ea4906b88e2] OR [(domain-name:value = 'weile3322a.3322.org' AND domain-name:resolves_to_refs[*].value = '60.10.1.120' AND domain-name:resolves_to_refs[*].value = '221.130.179.36' AND domain-name:resolves_to_refs[*].value = '199.2.137.238' AND domain-name:resolves_to_refs[*].value = '117.11.157.171' AND domain-name:resolves_to_refs[*].value = '60.10.1.119')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -16751,7 +16751,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(ipv4-addr:value = '60.10.1.120' OR ipv4-addr:value = '218.57.11.26' OR ipv4-addr:value = '221.130.179.36' OR ipv4-addr:value = '221.207.59.118' OR ipv4-addr:value = '118.192.11.19' OR ipv4-addr:value = '199.2.137.238' OR ipv4-addr:value = '60.10.1.119')] OR [mutex:name = '#FIE^53@D'] OR [(file:x_elevator_id = 'weile33' OR file:x_elevator_pivy_password = 'keaidestone' OR file:hashes.MD5 = 'fc384c3d0bf74258c1b8d05c29afb927')] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [(domain-name:value = 'weile3322b.3322.org' AND domain-name:resolves_to_refs[*].value = '60.10.1.120' AND domain-name:resolves_to_refs[*].value = '218.57.11.26' AND domain-name:resolves_to_refs[*].value = '221.130.179.36' AND domain-name:resolves_to_refs[*].value = '221.207.59.118' AND domain-name:resolves_to_refs[*].value = '118.192.11.19' AND domain-name:resolves_to_refs[*].value = '199.2.137.238' AND domain-name:resolves_to_refs[*].value = '60.10.1.119')]",
+            "pattern": "[ipv4-addr:value = '60.10.1.120' OR ipv4-addr:value = '218.57.11.26' OR ipv4-addr:value = '221.130.179.36' OR ipv4-addr:value = '221.207.59.118' OR ipv4-addr:value = '118.192.11.19' OR ipv4-addr:value = '199.2.137.238' OR ipv4-addr:value = '60.10.1.119'] OR [mutex:name = '#FIE^53@D'] OR [file:x_elevator_id = 'weile33' OR file:x_elevator_pivy_password = 'keaidestone' OR file:hashes.MD5 = 'fc384c3d0bf74258c1b8d05c29afb927'] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [(domain-name:value = 'weile3322b.3322.org' AND domain-name:resolves_to_refs[*].value = '60.10.1.120' AND domain-name:resolves_to_refs[*].value = '218.57.11.26' AND domain-name:resolves_to_refs[*].value = '221.130.179.36' AND domain-name:resolves_to_refs[*].value = '221.207.59.118' AND domain-name:resolves_to_refs[*].value = '118.192.11.19' AND domain-name:resolves_to_refs[*].value = '199.2.137.238' AND domain-name:resolves_to_refs[*].value = '60.10.1.119')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -16787,7 +16787,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(ipv4-addr:value = '60.10.1.114' OR ipv4-addr:value = '60.10.1.115' OR ipv4-addr:value = '124.237.77.11')] OR [mutex:name = '%1Sjfhtd8'] OR [(file:x_elevator_id = 'japan' OR file:x_elevator_pivy_password = 'keaidestone' OR file:hashes.MD5 = '7b6b8c695270845aae457dd26cd647a0')] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [(domain-name:value = 'tw.2012yearleft.com' AND domain-name:resolves_to_refs[*].value = '60.10.1.114' AND domain-name:resolves_to_refs[*].value = '60.10.1.115' AND domain-name:resolves_to_refs[*].value = '124.237.77.11')]",
+            "pattern": "[ipv4-addr:value = '60.10.1.114' OR ipv4-addr:value = '60.10.1.115' OR ipv4-addr:value = '124.237.77.11'] OR [mutex:name = '%1Sjfhtd8'] OR [file:x_elevator_id = 'japan' OR file:x_elevator_pivy_password = 'keaidestone' OR file:hashes.MD5 = '7b6b8c695270845aae457dd26cd647a0'] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [(domain-name:value = 'tw.2012yearleft.com' AND domain-name:resolves_to_refs[*].value = '60.10.1.114' AND domain-name:resolves_to_refs[*].value = '60.10.1.115' AND domain-name:resolves_to_refs[*].value = '124.237.77.11')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -16823,7 +16823,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[ipv4-addr:value = '60.10.1.114'] OR [mutex:name = 'JDKLFY(*F'] OR [(file:x_elevator_id = 'D:2013/05/07' OR file:x_elevator_pivy_password = 'keaidestone' OR file:hashes.MD5 = '223d1396f2b5b7719702c980cbd1d6c0')] OR [unconverted_term:fireeye:observable-59127d7f-ad98-4854-ac90-f44e4ce23bd1] OR [(domain-name:value = 'scrlk.exprenum.com' AND domain-name:resolves_to_refs[*].value = '60.10.1.114')]",
+            "pattern": "[ipv4-addr:value = '60.10.1.114'] OR [mutex:name = 'JDKLFY(*F'] OR [file:x_elevator_id = 'D:2013/05/07' OR file:x_elevator_pivy_password = 'keaidestone' OR file:hashes.MD5 = '223d1396f2b5b7719702c980cbd1d6c0'] OR [unconverted_term:fireeye:observable-59127d7f-ad98-4854-ac90-f44e4ce23bd1] OR [(domain-name:value = 'scrlk.exprenum.com' AND domain-name:resolves_to_refs[*].value = '60.10.1.114')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -16859,7 +16859,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(ipv4-addr:value = '60.10.1.120' OR ipv4-addr:value = '221.130.179.36' OR ipv4-addr:value = '199.2.137.238' OR ipv4-addr:value = '117.11.157.171' OR ipv4-addr:value = '60.10.1.119')] OR [(file:x_elevator_id = '0923Def' OR file:x_elevator_pivy_password = 'keaidestone' OR file:hashes.MD5 = '2a113b26b0133f67ed900a06a330683d')] OR [mutex:name = '_ldkjls!*'] OR [(domain-name:value = 'weile3322a.3322.org' AND domain-name:resolves_to_refs[*].value = '60.10.1.120' AND domain-name:resolves_to_refs[*].value = '221.130.179.36' AND domain-name:resolves_to_refs[*].value = '199.2.137.238' AND domain-name:resolves_to_refs[*].value = '117.11.157.171' AND domain-name:resolves_to_refs[*].value = '60.10.1.119')]",
+            "pattern": "[ipv4-addr:value = '60.10.1.120' OR ipv4-addr:value = '221.130.179.36' OR ipv4-addr:value = '199.2.137.238' OR ipv4-addr:value = '117.11.157.171' OR ipv4-addr:value = '60.10.1.119'] OR [file:x_elevator_id = '0923Def' OR file:x_elevator_pivy_password = 'keaidestone' OR file:hashes.MD5 = '2a113b26b0133f67ed900a06a330683d'] OR [mutex:name = '_ldkjls!*'] OR [(domain-name:value = 'weile3322a.3322.org' AND domain-name:resolves_to_refs[*].value = '60.10.1.120' AND domain-name:resolves_to_refs[*].value = '221.130.179.36' AND domain-name:resolves_to_refs[*].value = '199.2.137.238' AND domain-name:resolves_to_refs[*].value = '117.11.157.171' AND domain-name:resolves_to_refs[*].value = '60.10.1.119')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -16895,7 +16895,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[ipv4-addr:value = '60.10.1.115'] OR [mutex:name = 'KEIVH^#$S'] OR [(file:x_elevator_id = 'autuo.xicp.net' OR file:x_elevator_pivy_password = 'keaidestone' OR file:hashes.MD5 = '8e94701b572fb446c2794cdd3c18ecd9')] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [(domain-name:value = 'autuo.xicp.net' AND domain-name:resolves_to_refs[*].value = '60.10.1.115')]",
+            "pattern": "[ipv4-addr:value = '60.10.1.115'] OR [mutex:name = 'KEIVH^#$S'] OR [file:x_elevator_id = 'autuo.xicp.net' OR file:x_elevator_pivy_password = 'keaidestone' OR file:hashes.MD5 = '8e94701b572fb446c2794cdd3c18ecd9'] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [(domain-name:value = 'autuo.xicp.net' AND domain-name:resolves_to_refs[*].value = '60.10.1.115')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -16931,7 +16931,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(ipv4-addr:value = '199.2.137.234' OR ipv4-addr:value = '119.167.225.48' OR ipv4-addr:value = '221.130.179.36')] OR [mutex:name = ')!V&#D#Ew'] OR [(file:x_elevator_id = 'abcd091202.3322.org' OR file:x_elevator_pivy_password = 'happyyongzi' OR file:hashes.MD5 = '85af7819c3cd96895d543570b75b202f')] OR [unconverted_term:fireeye:observable-6e55ddf1-77f7-4f96-a462-ec9a77cbea3c] OR [(domain-name:value = 'abcd091221.3322.org' AND domain-name:resolves_to_refs[*].value = '199.2.137.234' AND domain-name:resolves_to_refs[*].value = '119.167.225.48' AND domain-name:resolves_to_refs[*].value = '221.130.179.36')]",
+            "pattern": "[ipv4-addr:value = '199.2.137.234' OR ipv4-addr:value = '119.167.225.48' OR ipv4-addr:value = '221.130.179.36'] OR [mutex:name = ')!V&#D#Ew'] OR [file:x_elevator_id = 'abcd091202.3322.org' OR file:x_elevator_pivy_password = 'happyyongzi' OR file:hashes.MD5 = '85af7819c3cd96895d543570b75b202f'] OR [unconverted_term:fireeye:observable-6e55ddf1-77f7-4f96-a462-ec9a77cbea3c] OR [(domain-name:value = 'abcd091221.3322.org' AND domain-name:resolves_to_refs[*].value = '199.2.137.234' AND domain-name:resolves_to_refs[*].value = '119.167.225.48' AND domain-name:resolves_to_refs[*].value = '221.130.179.36')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -16967,7 +16967,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(ipv4-addr:value = '60.10.1.114' OR ipv4-addr:value = '60.10.1.115' OR ipv4-addr:value = '124.237.77.11')] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [(file:x_elevator_pivy_password = 'keaidestone' OR file:x_elevator_id = 'tw2012' OR file:hashes.MD5 = '31f7e35e7a73a1d89b6269412a935996')] OR [mutex:name = 'K^DJA^#FE'] OR [(domain-name:value = 'tw.2012yearleft.com' AND domain-name:resolves_to_refs[*].value = '60.10.1.114' AND domain-name:resolves_to_refs[*].value = '60.10.1.115' AND domain-name:resolves_to_refs[*].value = '124.237.77.11')]",
+            "pattern": "[ipv4-addr:value = '60.10.1.114' OR ipv4-addr:value = '60.10.1.115' OR ipv4-addr:value = '124.237.77.11'] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [file:x_elevator_pivy_password = 'keaidestone' OR file:x_elevator_id = 'tw2012' OR file:hashes.MD5 = '31f7e35e7a73a1d89b6269412a935996'] OR [mutex:name = 'K^DJA^#FE'] OR [(domain-name:value = 'tw.2012yearleft.com' AND domain-name:resolves_to_refs[*].value = '60.10.1.114' AND domain-name:resolves_to_refs[*].value = '60.10.1.115' AND domain-name:resolves_to_refs[*].value = '124.237.77.11')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -17003,7 +17003,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[ipv4-addr:value = '60.10.1.118'] OR [mutex:name = 'dfigjg&^*'] OR [(file:x_elevator_id = 'st.astro' OR file:x_elevator_pivy_password = 'menuPass' OR file:hashes.MD5 = '3243a6caaeb7f175330f0fc7f789aced')] OR [(domain-name:value = 'yeap1.jumpingcrab.com' AND domain-name:resolves_to_refs[*].value = '60.10.1.118')]",
+            "pattern": "[ipv4-addr:value = '60.10.1.118'] OR [mutex:name = 'dfigjg&^*'] OR [file:x_elevator_id = 'st.astro' OR file:x_elevator_pivy_password = 'menuPass' OR file:hashes.MD5 = '3243a6caaeb7f175330f0fc7f789aced'] OR [(domain-name:value = 'yeap1.jumpingcrab.com' AND domain-name:resolves_to_refs[*].value = '60.10.1.118')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -17039,7 +17039,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(file:x_elevator_id = '114.80.96.8' OR file:x_elevator_pivy_password = 'admin' OR file:hashes.MD5 = 'fde24cf3e9dc626b3a6f4481f74de699')] OR [mutex:name = '1ddddfddg'] OR [(ipv4-addr:value = '114.80.96.8' OR ipv4-addr:value = '54.251.58.234')]",
+            "pattern": "[file:x_elevator_id = '114.80.96.8' OR file:x_elevator_pivy_password = 'admin' OR file:hashes.MD5 = 'fde24cf3e9dc626b3a6f4481f74de699'] OR [mutex:name = '1ddddfddg'] OR [ipv4-addr:value = '114.80.96.8' OR ipv4-addr:value = '54.251.58.234']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -17075,7 +17075,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(ipv4-addr:value = '60.10.1.114' OR ipv4-addr:value = '60.10.1.115' OR ipv4-addr:value = '124.237.77.11')] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [(file:x_elevator_pivy_password = 'keaidestone' OR file:x_elevator_id = 'tw2012' OR file:hashes.MD5 = '82f926009c06dfa452714608da21cb77')] OR [mutex:name = 'K^DJA^#FE'] OR [(domain-name:value = 'tw.2012yearleft.com' AND domain-name:resolves_to_refs[*].value = '60.10.1.114' AND domain-name:resolves_to_refs[*].value = '60.10.1.115' AND domain-name:resolves_to_refs[*].value = '124.237.77.11')]",
+            "pattern": "[ipv4-addr:value = '60.10.1.114' OR ipv4-addr:value = '60.10.1.115' OR ipv4-addr:value = '124.237.77.11'] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [file:x_elevator_pivy_password = 'keaidestone' OR file:x_elevator_id = 'tw2012' OR file:hashes.MD5 = '82f926009c06dfa452714608da21cb77'] OR [mutex:name = 'K^DJA^#FE'] OR [(domain-name:value = 'tw.2012yearleft.com' AND domain-name:resolves_to_refs[*].value = '60.10.1.114' AND domain-name:resolves_to_refs[*].value = '60.10.1.115' AND domain-name:resolves_to_refs[*].value = '124.237.77.11')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -17111,7 +17111,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[mutex:name = 'SDK&#AD'] OR [(file:x_elevator_id = 'meibubaker.3322.org' OR file:x_elevator_pivy_password = 'happyyongzi' OR file:hashes.MD5 = '8ca16b82d57cf6898a55e9fcdb400769')] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [domain-name:value = 'meibubaker.3322.org']",
+            "pattern": "[mutex:name = 'SDK&#AD'] OR [file:x_elevator_id = 'meibubaker.3322.org' OR file:x_elevator_pivy_password = 'happyyongzi' OR file:hashes.MD5 = '8ca16b82d57cf6898a55e9fcdb400769'] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [domain-name:value = 'meibubaker.3322.org']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -17147,7 +17147,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(file:x_elevator_id = '114.80.96.8' OR file:x_elevator_pivy_password = 'admin' OR file:hashes.MD5 = '1d4e74574bd8fde793d85cbe59f8a288')] OR [mutex:name = '1ddddfddg'] OR [(ipv4-addr:value = '114.80.96.8' OR ipv4-addr:value = '54.251.58.234')]",
+            "pattern": "[file:x_elevator_id = '114.80.96.8' OR file:x_elevator_pivy_password = 'admin' OR file:hashes.MD5 = '1d4e74574bd8fde793d85cbe59f8a288'] OR [mutex:name = '1ddddfddg'] OR [ipv4-addr:value = '114.80.96.8' OR ipv4-addr:value = '54.251.58.234']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -17183,7 +17183,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(ipv4-addr:value = '125.77.199.30' OR ipv4-addr:value = '199.2.137.238' OR ipv4-addr:value = '60.10.1.115' OR ipv4-addr:value = '124.237.77.11' OR ipv4-addr:value = '60.10.1.114')] OR [(file:x_elevator_id = 'pansenes.3322.org' OR file:x_elevator_pivy_password = 'keaidestone' OR file:hashes.MD5 = 'a144440d16fb69cf4522f789aacb3ef2')] OR [mutex:name = '#@$DEFew)'] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [(domain-name:value = 'pansenes.3322.org' AND domain-name:resolves_to_refs[*].value = '125.77.199.30' AND domain-name:resolves_to_refs[*].value = '199.2.137.238' AND domain-name:resolves_to_refs[*].value = '60.10.1.115' AND domain-name:resolves_to_refs[*].value = '124.237.77.11' AND domain-name:resolves_to_refs[*].value = '60.10.1.114')]",
+            "pattern": "[ipv4-addr:value = '125.77.199.30' OR ipv4-addr:value = '199.2.137.238' OR ipv4-addr:value = '60.10.1.115' OR ipv4-addr:value = '124.237.77.11' OR ipv4-addr:value = '60.10.1.114'] OR [file:x_elevator_id = 'pansenes.3322.org' OR file:x_elevator_pivy_password = 'keaidestone' OR file:hashes.MD5 = 'a144440d16fb69cf4522f789aacb3ef2'] OR [mutex:name = '#@$DEFew)'] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [(domain-name:value = 'pansenes.3322.org' AND domain-name:resolves_to_refs[*].value = '125.77.199.30' AND domain-name:resolves_to_refs[*].value = '199.2.137.238' AND domain-name:resolves_to_refs[*].value = '60.10.1.115' AND domain-name:resolves_to_refs[*].value = '124.237.77.11' AND domain-name:resolves_to_refs[*].value = '60.10.1.114')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -17219,7 +17219,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[mutex:name = '#@$36fdsf'] OR [(file:x_elevator_id = 'xgstonebak.cas.go.jp' OR file:x_elevator_pivy_password = 'XGstone' OR file:hashes.MD5 = '1ccb5a6dfec4261b32eee8d439f821df')] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [domain-name:value = 'xgstonebak.3322.org']",
+            "pattern": "[mutex:name = '#@$36fdsf'] OR [file:x_elevator_id = 'xgstonebak.cas.go.jp' OR file:x_elevator_pivy_password = 'XGstone' OR file:hashes.MD5 = '1ccb5a6dfec4261b32eee8d439f821df'] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [domain-name:value = 'xgstonebak.3322.org']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -17255,7 +17255,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(file:x_elevator_id = 'baby D:2013/05/01' OR file:x_elevator_pivy_password = 'keaidestone' OR file:hashes.MD5 = '20098465e8fd00f8a0845fff134ed844')] OR [mutex:name = 'D(*F(*#DG'] OR [unconverted_term:fireeye:observable-59127d7f-ad98-4854-ac90-f44e4ce23bd1] OR [domain-name:value = 'baby.macforlinux.net']",
+            "pattern": "[file:x_elevator_id = 'baby D:2013/05/01' OR file:x_elevator_pivy_password = 'keaidestone' OR file:hashes.MD5 = '20098465e8fd00f8a0845fff134ed844'] OR [mutex:name = 'D(*F(*#DG'] OR [unconverted_term:fireeye:observable-59127d7f-ad98-4854-ac90-f44e4ce23bd1] OR [domain-name:value = 'baby.macforlinux.net']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -17291,7 +17291,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(ipv4-addr:value = '125.77.199.30' OR ipv4-addr:value = '199.2.137.238' OR ipv4-addr:value = '123.183.210.27' OR ipv4-addr:value = '123.183.210.26' OR ipv4-addr:value = '123.183.210.28')] OR [mutex:name = 'HHE^&^#^%'] OR [(file:x_elevator_id = 'microcnmlgb3322.org' OR file:x_elevator_pivy_password = 'happyyongzi' OR file:hashes.MD5 = '6ff16afc92ce09acd2e3890b780efd86')] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [(domain-name:value = 'microcnmlgb.3322.org' AND domain-name:resolves_to_refs[*].value = '125.77.199.30' AND domain-name:resolves_to_refs[*].value = '199.2.137.238' AND domain-name:resolves_to_refs[*].value = '123.183.210.27' AND domain-name:resolves_to_refs[*].value = '123.183.210.26' AND domain-name:resolves_to_refs[*].value = '123.183.210.28')]",
+            "pattern": "[ipv4-addr:value = '125.77.199.30' OR ipv4-addr:value = '199.2.137.238' OR ipv4-addr:value = '123.183.210.27' OR ipv4-addr:value = '123.183.210.26' OR ipv4-addr:value = '123.183.210.28'] OR [mutex:name = 'HHE^&^#^%'] OR [file:x_elevator_id = 'microcnmlgb3322.org' OR file:x_elevator_pivy_password = 'happyyongzi' OR file:hashes.MD5 = '6ff16afc92ce09acd2e3890b780efd86'] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [(domain-name:value = 'microcnmlgb.3322.org' AND domain-name:resolves_to_refs[*].value = '125.77.199.30' AND domain-name:resolves_to_refs[*].value = '199.2.137.238' AND domain-name:resolves_to_refs[*].value = '123.183.210.27' AND domain-name:resolves_to_refs[*].value = '123.183.210.26' AND domain-name:resolves_to_refs[*].value = '123.183.210.28')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -17327,7 +17327,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(file:x_elevator_id = '114.80.96.8' OR file:x_elevator_pivy_password = 'admin' OR file:hashes.MD5 = '8a2205deb22c6ad61f007d52dc220351')] OR [mutex:name = '1d2311ddg'] OR [(ipv4-addr:value = '114.80.96.8' OR ipv4-addr:value = '54.251.58.234')]",
+            "pattern": "[file:x_elevator_id = '114.80.96.8' OR file:x_elevator_pivy_password = 'admin' OR file:hashes.MD5 = '8a2205deb22c6ad61f007d52dc220351'] OR [mutex:name = '1d2311ddg'] OR [ipv4-addr:value = '114.80.96.8' OR ipv4-addr:value = '54.251.58.234']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -17363,7 +17363,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[ipv4-addr:value = '60.10.1.124'] OR [(file:x_elevator_id = 'helshellfucde.8866.org' OR file:x_elevator_pivy_password = 'happyyongzi' OR file:hashes.MD5 = '9a014c33f9a9958ffbcf99d2a71d52fe')] OR [mutex:name = 'J&^EHSAGF'] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [(domain-name:value = 'helshellfucde.8866.org' AND domain-name:resolves_to_refs[*].value = '60.10.1.124')]",
+            "pattern": "[ipv4-addr:value = '60.10.1.124'] OR [file:x_elevator_id = 'helshellfucde.8866.org' OR file:x_elevator_pivy_password = 'happyyongzi' OR file:hashes.MD5 = '9a014c33f9a9958ffbcf99d2a71d52fe'] OR [mutex:name = 'J&^EHSAGF'] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [(domain-name:value = 'helshellfucde.8866.org' AND domain-name:resolves_to_refs[*].value = '60.10.1.124')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -17399,7 +17399,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[mutex:name = ')!KEI#&^@'] OR [(file:x_elevator_id = 'abcd100621.3322.org' OR file:x_elevator_pivy_password = 'happyyongzi' OR file:hashes.MD5 = 'abf8e40d7c99e9b3f515ec0872fe099e')] OR [unconverted_term:fireeye:observable-6e55ddf1-77f7-4f96-a462-ec9a77cbea3c] OR [domain-name:value = 'abcd100621.3322.org']",
+            "pattern": "[mutex:name = ')!KEI#&^@'] OR [file:x_elevator_id = 'abcd100621.3322.org' OR file:x_elevator_pivy_password = 'happyyongzi' OR file:hashes.MD5 = 'abf8e40d7c99e9b3f515ec0872fe099e'] OR [unconverted_term:fireeye:observable-6e55ddf1-77f7-4f96-a462-ec9a77cbea3c] OR [domain-name:value = 'abcd100621.3322.org']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -17435,7 +17435,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(ipv4-addr:value = '60.10.1.120' OR ipv4-addr:value = '112.213.118.34')] OR [(file:x_elevator_id = '8.28.Good.Luck' OR file:x_elevator_pivy_password = 'XGstone' OR file:hashes.MD5 = '3c341919b04d9b57f1be69cd6f21d2d4')] OR [mutex:name = '8c867sajd'] OR [((domain-name:value = 'apple.cmdnetview.com' AND domain-name:resolves_to_refs[*].value = '60.10.1.120') OR (domain-name:value = 'hk.cmdnetview.com' AND domain-name:resolves_to_refs[*].value = '112.213.118.34'))]",
+            "pattern": "[ipv4-addr:value = '60.10.1.120' OR ipv4-addr:value = '112.213.118.34'] OR [file:x_elevator_id = '8.28.Good.Luck' OR file:x_elevator_pivy_password = 'XGstone' OR file:hashes.MD5 = '3c341919b04d9b57f1be69cd6f21d2d4'] OR [mutex:name = '8c867sajd'] OR [(domain-name:value = 'apple.cmdnetview.com' AND domain-name:resolves_to_refs[*].value = '60.10.1.120') OR (domain-name:value = 'hk.cmdnetview.com' AND domain-name:resolves_to_refs[*].value = '112.213.118.34')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -17471,7 +17471,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[ipv4-addr:value = '60.2.92.67'] OR [(file:x_elevator_id = '3q.wubangtu.info' OR file:x_elevator_pivy_password = 'menuPass' OR file:hashes.MD5 = 'a5965b750997dbecec61358d41ac93c7')] OR [mutex:name = 'DK&#FU@A'] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [(domain-name:value = '3q.wubangtu.info' AND domain-name:resolves_to_refs[*].value = '60.2.92.67')]",
+            "pattern": "[ipv4-addr:value = '60.2.92.67'] OR [file:x_elevator_id = '3q.wubangtu.info' OR file:x_elevator_pivy_password = 'menuPass' OR file:hashes.MD5 = 'a5965b750997dbecec61358d41ac93c7'] OR [mutex:name = 'DK&#FU@A'] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [(domain-name:value = '3q.wubangtu.info' AND domain-name:resolves_to_refs[*].value = '60.2.92.67')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -17507,7 +17507,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(ipv4-addr:value = '54.241.2.3' OR ipv4-addr:value = '54.241.13.219' OR ipv4-addr:value = '54.241.8.84' OR ipv4-addr:value = '54.241.17.1' OR ipv4-addr:value = '122.193.64.58' OR ipv4-addr:value = '60.2.92.67' OR ipv4-addr:value = '54.245.89.19' OR ipv4-addr:value = '184.169.176.71' OR ipv4-addr:value = '184.169.134.80' OR ipv4-addr:value = '60.2.148.166')] OR [mutex:name = 'DK#8S#*IE'] OR [(file:x_elevator_id = 'av.ddns.us' OR file:x_elevator_pivy_password = 'menuPass' OR file:hashes.MD5 = '3ae7ea7511c0df60997d2c32252758c1')] OR [(domain-name:value = 'av.ddns.us' AND domain-name:resolves_to_refs[*].value = '54.241.2.3' AND domain-name:resolves_to_refs[*].value = '54.241.13.219' AND domain-name:resolves_to_refs[*].value = '54.241.8.84' AND domain-name:resolves_to_refs[*].value = '54.241.17.1' AND domain-name:resolves_to_refs[*].value = '122.193.64.58' AND domain-name:resolves_to_refs[*].value = '60.2.92.67' AND domain-name:resolves_to_refs[*].value = '54.245.89.19' AND domain-name:resolves_to_refs[*].value = '184.169.176.71' AND domain-name:resolves_to_refs[*].value = '184.169.134.80' AND domain-name:resolves_to_refs[*].value = '60.2.148.166')]",
+            "pattern": "[ipv4-addr:value = '54.241.2.3' OR ipv4-addr:value = '54.241.13.219' OR ipv4-addr:value = '54.241.8.84' OR ipv4-addr:value = '54.241.17.1' OR ipv4-addr:value = '122.193.64.58' OR ipv4-addr:value = '60.2.92.67' OR ipv4-addr:value = '54.245.89.19' OR ipv4-addr:value = '184.169.176.71' OR ipv4-addr:value = '184.169.134.80' OR ipv4-addr:value = '60.2.148.166'] OR [mutex:name = 'DK#8S#*IE'] OR [file:x_elevator_id = 'av.ddns.us' OR file:x_elevator_pivy_password = 'menuPass' OR file:hashes.MD5 = '3ae7ea7511c0df60997d2c32252758c1'] OR [(domain-name:value = 'av.ddns.us' AND domain-name:resolves_to_refs[*].value = '54.241.2.3' AND domain-name:resolves_to_refs[*].value = '54.241.13.219' AND domain-name:resolves_to_refs[*].value = '54.241.8.84' AND domain-name:resolves_to_refs[*].value = '54.241.17.1' AND domain-name:resolves_to_refs[*].value = '122.193.64.58' AND domain-name:resolves_to_refs[*].value = '60.2.92.67' AND domain-name:resolves_to_refs[*].value = '54.245.89.19' AND domain-name:resolves_to_refs[*].value = '184.169.176.71' AND domain-name:resolves_to_refs[*].value = '184.169.134.80' AND domain-name:resolves_to_refs[*].value = '60.2.148.166')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -17543,7 +17543,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(ipv4-addr:value = '199.2.137.234' OR ipv4-addr:value = '60.10.1.115' OR ipv4-addr:value = '125.77.199.30')] OR [(file:x_elevator_id = 'pliment.3322.org' OR file:x_elevator_pivy_password = 'keaidestone' OR file:hashes.MD5 = 'aa76e01067c064a8091391759a35ef0a')] OR [mutex:name = 'K#*SJAJD^'] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [(domain-name:value = 'pliment.3322.org' AND domain-name:resolves_to_refs[*].value = '199.2.137.234' AND domain-name:resolves_to_refs[*].value = '60.10.1.115' AND domain-name:resolves_to_refs[*].value = '125.77.199.30')]",
+            "pattern": "[ipv4-addr:value = '199.2.137.234' OR ipv4-addr:value = '60.10.1.115' OR ipv4-addr:value = '125.77.199.30'] OR [file:x_elevator_id = 'pliment.3322.org' OR file:x_elevator_pivy_password = 'keaidestone' OR file:hashes.MD5 = 'aa76e01067c064a8091391759a35ef0a'] OR [mutex:name = 'K#*SJAJD^'] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [(domain-name:value = 'pliment.3322.org' AND domain-name:resolves_to_refs[*].value = '199.2.137.234' AND domain-name:resolves_to_refs[*].value = '60.10.1.115' AND domain-name:resolves_to_refs[*].value = '125.77.199.30')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -17579,7 +17579,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(ipv4-addr:value = '221.207.59.118' OR ipv4-addr:value = '121.41.129.12' OR ipv4-addr:value = '121.41.129.143' OR ipv4-addr:value = '121.41.129.179' OR ipv4-addr:value = '121.41.129.140' OR ipv4-addr:value = '121.41.129.214' OR ipv4-addr:value = '121.41.129.75' OR ipv4-addr:value = '121.41.129.100' OR ipv4-addr:value = '221.130.179.36' OR ipv4-addr:value = '121.41.129.213' OR ipv4-addr:value = '121.41.129.59' OR ipv4-addr:value = '121.41.129.250' OR ipv4-addr:value = '121.41.129.193' OR ipv4-addr:value = '60.163.225.156' OR ipv4-addr:value = '121.41.129.223')] OR [unconverted_term:fireeye:observable-6e55ddf1-77f7-4f96-a462-ec9a77cbea3c] OR [(file:x_elevator_pivy_password = 'xiaoxiaohuli' OR file:x_elevator_id = 'js001' OR file:hashes.MD5 = 'a4754be7b34ed55faff832edadac61f6')] OR [mutex:name = '&@%$?2341'] OR [(domain-name:value = 'js001.3322.org' AND domain-name:resolves_to_refs[*].value = '221.207.59.118' AND domain-name:resolves_to_refs[*].value = '121.41.129.12' AND domain-name:resolves_to_refs[*].value = '121.41.129.143' AND domain-name:resolves_to_refs[*].value = '121.41.129.179' AND domain-name:resolves_to_refs[*].value = '121.41.129.140' AND domain-name:resolves_to_refs[*].value = '121.41.129.214' AND domain-name:resolves_to_refs[*].value = '121.41.129.75' AND domain-name:resolves_to_refs[*].value = '121.41.129.100' AND domain-name:resolves_to_refs[*].value = '221.130.179.36' AND domain-name:resolves_to_refs[*].value = '121.41.129.213' AND domain-name:resolves_to_refs[*].value = '121.41.129.59' AND domain-name:resolves_to_refs[*].value = '121.41.129.250' AND domain-name:resolves_to_refs[*].value = '121.41.129.193' AND domain-name:resolves_to_refs[*].value = '60.163.225.156' AND domain-name:resolves_to_refs[*].value = '121.41.129.223')]",
+            "pattern": "[ipv4-addr:value = '221.207.59.118' OR ipv4-addr:value = '121.41.129.12' OR ipv4-addr:value = '121.41.129.143' OR ipv4-addr:value = '121.41.129.179' OR ipv4-addr:value = '121.41.129.140' OR ipv4-addr:value = '121.41.129.214' OR ipv4-addr:value = '121.41.129.75' OR ipv4-addr:value = '121.41.129.100' OR ipv4-addr:value = '221.130.179.36' OR ipv4-addr:value = '121.41.129.213' OR ipv4-addr:value = '121.41.129.59' OR ipv4-addr:value = '121.41.129.250' OR ipv4-addr:value = '121.41.129.193' OR ipv4-addr:value = '60.163.225.156' OR ipv4-addr:value = '121.41.129.223'] OR [unconverted_term:fireeye:observable-6e55ddf1-77f7-4f96-a462-ec9a77cbea3c] OR [file:x_elevator_pivy_password = 'xiaoxiaohuli' OR file:x_elevator_id = 'js001' OR file:hashes.MD5 = 'a4754be7b34ed55faff832edadac61f6'] OR [mutex:name = '&@%$?2341'] OR [(domain-name:value = 'js001.3322.org' AND domain-name:resolves_to_refs[*].value = '221.207.59.118' AND domain-name:resolves_to_refs[*].value = '121.41.129.12' AND domain-name:resolves_to_refs[*].value = '121.41.129.143' AND domain-name:resolves_to_refs[*].value = '121.41.129.179' AND domain-name:resolves_to_refs[*].value = '121.41.129.140' AND domain-name:resolves_to_refs[*].value = '121.41.129.214' AND domain-name:resolves_to_refs[*].value = '121.41.129.75' AND domain-name:resolves_to_refs[*].value = '121.41.129.100' AND domain-name:resolves_to_refs[*].value = '221.130.179.36' AND domain-name:resolves_to_refs[*].value = '121.41.129.213' AND domain-name:resolves_to_refs[*].value = '121.41.129.59' AND domain-name:resolves_to_refs[*].value = '121.41.129.250' AND domain-name:resolves_to_refs[*].value = '121.41.129.193' AND domain-name:resolves_to_refs[*].value = '60.163.225.156' AND domain-name:resolves_to_refs[*].value = '121.41.129.223')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -17903,7 +17903,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(domain-name:value = 'abcd120719.6600.org' AND domain-name:resolves_to_refs[*].value = '60.10.1.119')]",
+            "pattern": "[domain-name:value = 'abcd120719.6600.org' AND domain-name:resolves_to_refs[*].value = '60.10.1.119']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -18479,7 +18479,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(domain-name:value = 'cloudns.8800.org' AND domain-name:resolves_to_refs[*].value = '123.183.210.26')]",
+            "pattern": "[domain-name:value = 'cloudns.8800.org' AND domain-name:resolves_to_refs[*].value = '123.183.210.26']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -18497,7 +18497,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(domain-name:value = 'do.ddns.ms' AND domain-name:resolves_to_refs[*].value = '54.241.6.130' AND domain-name:resolves_to_refs[*].value = '122.193.64.56')]",
+            "pattern": "[domain-name:value = 'do.ddns.ms' AND domain-name:resolves_to_refs[*].value = '54.241.6.130' AND domain-name:resolves_to_refs[*].value = '122.193.64.56']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -18533,7 +18533,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(domain-name:value = '6r.suibian2010.info' AND domain-name:resolves_to_refs[*].value = '124.237.77.25')]",
+            "pattern": "[domain-name:value = '6r.suibian2010.info' AND domain-name:resolves_to_refs[*].value = '124.237.77.25']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -19127,7 +19127,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(domain-name:value = 'xc.chromeenter.com' AND domain-name:resolves_to_refs[*].value = '122.112.2.14' AND domain-name:resolves_to_refs[*].value = '122.193.64.59' AND domain-name:resolves_to_refs[*].value = '60.2.92.68' AND domain-name:resolves_to_refs[*].value = '60.2.148.167' AND domain-name:resolves_to_refs[*].value = '69.2.92.68' AND domain-name:resolves_to_refs[*].value = '54.254.124.68' AND domain-name:resolves_to_refs[*].value = '114.80.96.8')]",
+            "pattern": "[domain-name:value = 'xc.chromeenter.com' AND domain-name:resolves_to_refs[*].value = '122.112.2.14' AND domain-name:resolves_to_refs[*].value = '122.193.64.59' AND domain-name:resolves_to_refs[*].value = '60.2.92.68' AND domain-name:resolves_to_refs[*].value = '60.2.148.167' AND domain-name:resolves_to_refs[*].value = '69.2.92.68' AND domain-name:resolves_to_refs[*].value = '54.254.124.68' AND domain-name:resolves_to_refs[*].value = '114.80.96.8']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -19181,7 +19181,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(domain-name:value = 'sh.chromeenter.com' AND domain-name:resolves_to_refs[*].value = '60.2.92.68' AND domain-name:resolves_to_refs[*].value = '122.112.2.14' AND domain-name:resolves_to_refs[*].value = '60.2.148.167' AND domain-name:resolves_to_refs[*].value = '218.11.132.168' AND domain-name:resolves_to_refs[*].value = '222.73.205.105' AND domain-name:resolves_to_refs[*].value = '122.193.64.56')]",
+            "pattern": "[domain-name:value = 'sh.chromeenter.com' AND domain-name:resolves_to_refs[*].value = '60.2.92.68' AND domain-name:resolves_to_refs[*].value = '122.112.2.14' AND domain-name:resolves_to_refs[*].value = '60.2.148.167' AND domain-name:resolves_to_refs[*].value = '218.11.132.168' AND domain-name:resolves_to_refs[*].value = '222.73.205.105' AND domain-name:resolves_to_refs[*].value = '122.193.64.56']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -19199,7 +19199,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(domain-name:value = 'weile3322a.3322.org' AND domain-name:resolves_to_refs[*].value = '60.10.1.120' AND domain-name:resolves_to_refs[*].value = '221.130.179.36' AND domain-name:resolves_to_refs[*].value = '199.2.137.238' AND domain-name:resolves_to_refs[*].value = '117.11.157.171' AND domain-name:resolves_to_refs[*].value = '60.10.1.119')]",
+            "pattern": "[domain-name:value = 'weile3322a.3322.org' AND domain-name:resolves_to_refs[*].value = '60.10.1.120' AND domain-name:resolves_to_refs[*].value = '221.130.179.36' AND domain-name:resolves_to_refs[*].value = '199.2.137.238' AND domain-name:resolves_to_refs[*].value = '117.11.157.171' AND domain-name:resolves_to_refs[*].value = '60.10.1.119']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -19217,7 +19217,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(domain-name:value = 'fbi.zyns.com' AND domain-name:resolves_to_refs[*].value = '60.2.148.164' AND domain-name:resolves_to_refs[*].value = '60.2.92.69' AND domain-name:resolves_to_refs[*].value = '184.169.176.71' AND domain-name:resolves_to_refs[*].value = '184.72.33.25' AND domain-name:resolves_to_refs[*].value = '60.10.1.118' AND domain-name:resolves_to_refs[*].value = '60.2.148.165' AND domain-name:resolves_to_refs[*].value = '60.2.148.166' AND domain-name:resolves_to_refs[*].value = '54.241.8.84' AND domain-name:resolves_to_refs[*].value = '54.241.2.3' AND domain-name:resolves_to_refs[*].value = '60.2.92.67' AND domain-name:resolves_to_refs[*].value = '54.241.13.219')]",
+            "pattern": "[domain-name:value = 'fbi.zyns.com' AND domain-name:resolves_to_refs[*].value = '60.2.148.164' AND domain-name:resolves_to_refs[*].value = '60.2.92.69' AND domain-name:resolves_to_refs[*].value = '184.169.176.71' AND domain-name:resolves_to_refs[*].value = '184.72.33.25' AND domain-name:resolves_to_refs[*].value = '60.10.1.118' AND domain-name:resolves_to_refs[*].value = '60.2.148.165' AND domain-name:resolves_to_refs[*].value = '60.2.148.166' AND domain-name:resolves_to_refs[*].value = '54.241.8.84' AND domain-name:resolves_to_refs[*].value = '54.241.2.3' AND domain-name:resolves_to_refs[*].value = '60.2.92.67' AND domain-name:resolves_to_refs[*].value = '54.241.13.219']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -19253,7 +19253,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(domain-name:value = 'microcnmlgb.3322.org' AND domain-name:resolves_to_refs[*].value = '125.77.199.30' AND domain-name:resolves_to_refs[*].value = '199.2.137.238' AND domain-name:resolves_to_refs[*].value = '123.183.210.27' AND domain-name:resolves_to_refs[*].value = '123.183.210.26' AND domain-name:resolves_to_refs[*].value = '123.183.210.28')]",
+            "pattern": "[domain-name:value = 'microcnmlgb.3322.org' AND domain-name:resolves_to_refs[*].value = '125.77.199.30' AND domain-name:resolves_to_refs[*].value = '199.2.137.238' AND domain-name:resolves_to_refs[*].value = '123.183.210.27' AND domain-name:resolves_to_refs[*].value = '123.183.210.26' AND domain-name:resolves_to_refs[*].value = '123.183.210.28']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -19379,7 +19379,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(domain-name:value = 'cyhk2008.8800.org' AND domain-name:resolves_to_refs[*].value = '218.240.54.126' AND domain-name:resolves_to_refs[*].value = '122.200.124.57' AND domain-name:resolves_to_refs[*].value = '60.209.5.243' AND domain-name:resolves_to_refs[*].value = '114.80.96.8' AND domain-name:resolves_to_refs[*].value = '60.10.1.119')]",
+            "pattern": "[domain-name:value = 'cyhk2008.8800.org' AND domain-name:resolves_to_refs[*].value = '218.240.54.126' AND domain-name:resolves_to_refs[*].value = '122.200.124.57' AND domain-name:resolves_to_refs[*].value = '60.209.5.243' AND domain-name:resolves_to_refs[*].value = '114.80.96.8' AND domain-name:resolves_to_refs[*].value = '60.10.1.119']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -19415,7 +19415,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(domain-name:value = 'abcd091221.3322.org' AND domain-name:resolves_to_refs[*].value = '199.2.137.234' AND domain-name:resolves_to_refs[*].value = '119.167.225.48' AND domain-name:resolves_to_refs[*].value = '221.130.179.36')]",
+            "pattern": "[domain-name:value = 'abcd091221.3322.org' AND domain-name:resolves_to_refs[*].value = '199.2.137.234' AND domain-name:resolves_to_refs[*].value = '119.167.225.48' AND domain-name:resolves_to_refs[*].value = '221.130.179.36']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -19559,7 +19559,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(domain-name:value = 'helshellfucde.8866.org' AND domain-name:resolves_to_refs[*].value = '60.10.1.124')]",
+            "pattern": "[domain-name:value = 'helshellfucde.8866.org' AND domain-name:resolves_to_refs[*].value = '60.10.1.124']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -19595,7 +19595,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(domain-name:value = 'av.ddns.us' AND domain-name:resolves_to_refs[*].value = '54.241.2.3' AND domain-name:resolves_to_refs[*].value = '54.241.13.219' AND domain-name:resolves_to_refs[*].value = '54.241.8.84' AND domain-name:resolves_to_refs[*].value = '54.241.17.1' AND domain-name:resolves_to_refs[*].value = '122.193.64.58' AND domain-name:resolves_to_refs[*].value = '60.2.92.67' AND domain-name:resolves_to_refs[*].value = '54.245.89.19' AND domain-name:resolves_to_refs[*].value = '184.169.176.71' AND domain-name:resolves_to_refs[*].value = '184.169.134.80' AND domain-name:resolves_to_refs[*].value = '60.2.148.166')]",
+            "pattern": "[domain-name:value = 'av.ddns.us' AND domain-name:resolves_to_refs[*].value = '54.241.2.3' AND domain-name:resolves_to_refs[*].value = '54.241.13.219' AND domain-name:resolves_to_refs[*].value = '54.241.8.84' AND domain-name:resolves_to_refs[*].value = '54.241.17.1' AND domain-name:resolves_to_refs[*].value = '122.193.64.58' AND domain-name:resolves_to_refs[*].value = '60.2.92.67' AND domain-name:resolves_to_refs[*].value = '54.245.89.19' AND domain-name:resolves_to_refs[*].value = '184.169.176.71' AND domain-name:resolves_to_refs[*].value = '184.169.134.80' AND domain-name:resolves_to_refs[*].value = '60.2.148.166']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -19613,7 +19613,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(domain-name:value = '3q.wubangtu.info' AND domain-name:resolves_to_refs[*].value = '60.2.92.67')]",
+            "pattern": "[domain-name:value = '3q.wubangtu.info' AND domain-name:resolves_to_refs[*].value = '60.2.92.67']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -19631,7 +19631,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(domain-name:value = 'apple.cmdnetview.com' AND domain-name:resolves_to_refs[*].value = '60.10.1.120')]",
+            "pattern": "[domain-name:value = 'apple.cmdnetview.com' AND domain-name:resolves_to_refs[*].value = '60.10.1.120']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -19667,7 +19667,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(domain-name:value = 'mongoles.3322.org' AND domain-name:resolves_to_refs[*].value = '123.183.210.28')]",
+            "pattern": "[domain-name:value = 'mongoles.3322.org' AND domain-name:resolves_to_refs[*].value = '123.183.210.28']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -19757,7 +19757,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(domain-name:value = 'nodns2.qipian.org' AND domain-name:resolves_to_refs[*].value = '208.73.210.85' AND domain-name:resolves_to_refs[*].value = '74.54.152.76')]",
+            "pattern": "[domain-name:value = 'nodns2.qipian.org' AND domain-name:resolves_to_refs[*].value = '208.73.210.85' AND domain-name:resolves_to_refs[*].value = '74.54.152.76']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -19793,7 +19793,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(domain-name:value = 'pliment.3322.org' AND domain-name:resolves_to_refs[*].value = '199.2.137.234' AND domain-name:resolves_to_refs[*].value = '60.10.1.115' AND domain-name:resolves_to_refs[*].value = '125.77.199.30')]",
+            "pattern": "[domain-name:value = 'pliment.3322.org' AND domain-name:resolves_to_refs[*].value = '199.2.137.234' AND domain-name:resolves_to_refs[*].value = '60.10.1.115' AND domain-name:resolves_to_refs[*].value = '125.77.199.30']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -19811,7 +19811,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(domain-name:value = 'weile3322b.3322.org' AND domain-name:resolves_to_refs[*].value = '60.10.1.120' AND domain-name:resolves_to_refs[*].value = '218.57.11.26' AND domain-name:resolves_to_refs[*].value = '221.130.179.36' AND domain-name:resolves_to_refs[*].value = '221.207.59.118' AND domain-name:resolves_to_refs[*].value = '118.192.11.19' AND domain-name:resolves_to_refs[*].value = '199.2.137.238' AND domain-name:resolves_to_refs[*].value = '60.10.1.119')]",
+            "pattern": "[domain-name:value = 'weile3322b.3322.org' AND domain-name:resolves_to_refs[*].value = '60.10.1.120' AND domain-name:resolves_to_refs[*].value = '218.57.11.26' AND domain-name:resolves_to_refs[*].value = '221.130.179.36' AND domain-name:resolves_to_refs[*].value = '221.207.59.118' AND domain-name:resolves_to_refs[*].value = '118.192.11.19' AND domain-name:resolves_to_refs[*].value = '199.2.137.238' AND domain-name:resolves_to_refs[*].value = '60.10.1.119']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -19829,7 +19829,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(domain-name:value = 'test.yamaha.10dig.net' AND domain-name:resolves_to_refs[*].value = '218.240.54.126')]",
+            "pattern": "[domain-name:value = 'test.yamaha.10dig.net' AND domain-name:resolves_to_refs[*].value = '218.240.54.126']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -19847,7 +19847,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(domain-name:value = 'applelib120102.9966.org' AND domain-name:resolves_to_refs[*].value = '60.10.1.121')]",
+            "pattern": "[domain-name:value = 'applelib120102.9966.org' AND domain-name:resolves_to_refs[*].value = '60.10.1.121']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -19865,7 +19865,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(domain-name:value = 'www.yamaha10.tk' AND domain-name:resolves_to_refs[*].value = '115.192.191.33')]",
+            "pattern": "[domain-name:value = 'www.yamaha10.tk' AND domain-name:resolves_to_refs[*].value = '115.192.191.33']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -19937,7 +19937,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(domain-name:value = 'xgstone.3322.org' AND domain-name:resolves_to_refs[*].value = '125.77.199.30' AND domain-name:resolves_to_refs[*].value = '60.10.1.120' AND domain-name:resolves_to_refs[*].value = '199.2.137.238')]",
+            "pattern": "[domain-name:value = 'xgstone.3322.org' AND domain-name:resolves_to_refs[*].value = '125.77.199.30' AND domain-name:resolves_to_refs[*].value = '60.10.1.120' AND domain-name:resolves_to_refs[*].value = '199.2.137.238']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -19955,7 +19955,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(domain-name:value = 'mf.ddns.info' AND domain-name:resolves_to_refs[*].value = '54.245.89.19' AND domain-name:resolves_to_refs[*].value = '60.2.148.166' AND domain-name:resolves_to_refs[*].value = '60.2.92.69' AND domain-name:resolves_to_refs[*].value = '54.241.8.84' AND domain-name:resolves_to_refs[*].value = '184.169.176.71' AND domain-name:resolves_to_refs[*].value = '60.2.92.67' AND domain-name:resolves_to_refs[*].value = '54.241.2.3' AND domain-name:resolves_to_refs[*].value = '192.168.242.23')]",
+            "pattern": "[domain-name:value = 'mf.ddns.info' AND domain-name:resolves_to_refs[*].value = '54.245.89.19' AND domain-name:resolves_to_refs[*].value = '60.2.148.166' AND domain-name:resolves_to_refs[*].value = '60.2.92.69' AND domain-name:resolves_to_refs[*].value = '54.241.8.84' AND domain-name:resolves_to_refs[*].value = '184.169.176.71' AND domain-name:resolves_to_refs[*].value = '60.2.92.67' AND domain-name:resolves_to_refs[*].value = '54.241.2.3' AND domain-name:resolves_to_refs[*].value = '192.168.242.23']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -19973,7 +19973,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(domain-name:value = 'yeap1.jumpingcrab.com' AND domain-name:resolves_to_refs[*].value = '60.10.1.118')]",
+            "pattern": "[domain-name:value = 'yeap1.jumpingcrab.com' AND domain-name:resolves_to_refs[*].value = '60.10.1.118']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -19991,7 +19991,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(domain-name:value = 'ngcc.8800.org' AND domain-name:resolves_to_refs[*].value = '60.2.92.69' AND domain-name:resolves_to_refs[*].value = '112.84.190.115' AND domain-name:resolves_to_refs[*].value = '122.193.64.58')]",
+            "pattern": "[domain-name:value = 'ngcc.8800.org' AND domain-name:resolves_to_refs[*].value = '60.2.92.69' AND domain-name:resolves_to_refs[*].value = '112.84.190.115' AND domain-name:resolves_to_refs[*].value = '122.193.64.58']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -20027,7 +20027,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(domain-name:value = 'monkey.2012yearleft.com' AND domain-name:resolves_to_refs[*].value = '124.237.77.11' AND domain-name:resolves_to_refs[*].value = '60.10.1.115' AND domain-name:resolves_to_refs[*].value = '60.10.1.114')]",
+            "pattern": "[domain-name:value = 'monkey.2012yearleft.com' AND domain-name:resolves_to_refs[*].value = '124.237.77.11' AND domain-name:resolves_to_refs[*].value = '60.10.1.115' AND domain-name:resolves_to_refs[*].value = '60.10.1.114']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -20045,7 +20045,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(domain-name:value = 'jj.mysecondarydns.com' AND domain-name:resolves_to_refs[*].value = '60.2.148.167' AND domain-name:resolves_to_refs[*].value = '54.241.6.130')]",
+            "pattern": "[domain-name:value = 'jj.mysecondarydns.com' AND domain-name:resolves_to_refs[*].value = '60.2.148.167' AND domain-name:resolves_to_refs[*].value = '54.241.6.130']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -20081,7 +20081,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(domain-name:value = 'pansenes.3322.org' AND domain-name:resolves_to_refs[*].value = '125.77.199.30' AND domain-name:resolves_to_refs[*].value = '199.2.137.238' AND domain-name:resolves_to_refs[*].value = '60.10.1.115' AND domain-name:resolves_to_refs[*].value = '124.237.77.11' AND domain-name:resolves_to_refs[*].value = '60.10.1.114')]",
+            "pattern": "[domain-name:value = 'pansenes.3322.org' AND domain-name:resolves_to_refs[*].value = '125.77.199.30' AND domain-name:resolves_to_refs[*].value = '199.2.137.238' AND domain-name:resolves_to_refs[*].value = '60.10.1.115' AND domain-name:resolves_to_refs[*].value = '124.237.77.11' AND domain-name:resolves_to_refs[*].value = '60.10.1.114']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -20099,7 +20099,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(domain-name:value = 'www.microsoftupdate.dynssl.com' AND domain-name:resolves_to_refs[*].value = '202.65.220.64')]",
+            "pattern": "[domain-name:value = 'www.microsoftupdate.dynssl.com' AND domain-name:resolves_to_refs[*].value = '202.65.220.64']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -21233,7 +21233,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(domain-name:value = 'sportsnews.findhere.org' AND domain-name:resolves_to_refs[*].value = '202.66.35.163')]",
+            "pattern": "[domain-name:value = 'sportsnews.findhere.org' AND domain-name:resolves_to_refs[*].value = '202.66.35.163']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -21449,7 +21449,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(domain-name:value = 'army.xxuz.com' AND domain-name:resolves_to_refs[*].value = '54.241.13.219' AND domain-name:resolves_to_refs[*].value = '54.241.2.3' AND domain-name:resolves_to_refs[*].value = '54.245.89.19' AND domain-name:resolves_to_refs[*].value = '60.2.92.67' AND domain-name:resolves_to_refs[*].value = '184.72.33.25' AND domain-name:resolves_to_refs[*].value = '184.169.163.193' AND domain-name:resolves_to_refs[*].value = '184.169.176.71')]",
+            "pattern": "[domain-name:value = 'army.xxuz.com' AND domain-name:resolves_to_refs[*].value = '54.241.13.219' AND domain-name:resolves_to_refs[*].value = '54.241.2.3' AND domain-name:resolves_to_refs[*].value = '54.245.89.19' AND domain-name:resolves_to_refs[*].value = '60.2.92.67' AND domain-name:resolves_to_refs[*].value = '184.72.33.25' AND domain-name:resolves_to_refs[*].value = '184.169.163.193' AND domain-name:resolves_to_refs[*].value = '184.169.176.71']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -21467,7 +21467,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(domain-name:value = 'autuo.xicp.net' AND domain-name:resolves_to_refs[*].value = '60.10.1.115')]",
+            "pattern": "[domain-name:value = 'autuo.xicp.net' AND domain-name:resolves_to_refs[*].value = '60.10.1.115']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -21485,7 +21485,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(domain-name:value = 'cecon.flower-show.org' AND domain-name:resolves_to_refs[*].value = '27.98.200.47' AND domain-name:resolves_to_refs[*].value = '14.102.252.142' AND domain-name:resolves_to_refs[*].value = '122.112.2.14' AND domain-name:resolves_to_refs[*].value = '202.150.213.12' AND domain-name:resolves_to_refs[*].value = '216.83.43.205' AND domain-name:resolves_to_refs[*].value = '180.210.204.230' AND domain-name:resolves_to_refs[*].value = '111.92.231.6' AND domain-name:resolves_to_refs[*].value = '202.150.208.60' AND domain-name:resolves_to_refs[*].value = '27.98.200.50')]",
+            "pattern": "[domain-name:value = 'cecon.flower-show.org' AND domain-name:resolves_to_refs[*].value = '27.98.200.47' AND domain-name:resolves_to_refs[*].value = '14.102.252.142' AND domain-name:resolves_to_refs[*].value = '122.112.2.14' AND domain-name:resolves_to_refs[*].value = '202.150.213.12' AND domain-name:resolves_to_refs[*].value = '216.83.43.205' AND domain-name:resolves_to_refs[*].value = '180.210.204.230' AND domain-name:resolves_to_refs[*].value = '111.92.231.6' AND domain-name:resolves_to_refs[*].value = '202.150.208.60' AND domain-name:resolves_to_refs[*].value = '27.98.200.50']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -21503,7 +21503,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(domain-name:value = 'cs.lflink.com' AND domain-name:resolves_to_refs[*].value = '184.169.134.80' AND domain-name:resolves_to_refs[*].value = '54.241.6.130')]",
+            "pattern": "[domain-name:value = 'cs.lflink.com' AND domain-name:resolves_to_refs[*].value = '184.169.134.80' AND domain-name:resolves_to_refs[*].value = '54.241.6.130']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -21521,7 +21521,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(domain-name:value = 'dedydns.ns01.us' AND domain-name:resolves_to_refs[*].value = '60.10.1.121')]",
+            "pattern": "[domain-name:value = 'dedydns.ns01.us' AND domain-name:resolves_to_refs[*].value = '60.10.1.121']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -21539,7 +21539,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(domain-name:value = 'for.ddns.mobi' AND domain-name:resolves_to_refs[*].value = '184.169.134.80' AND domain-name:resolves_to_refs[*].value = '54.241.6.130' AND domain-name:resolves_to_refs[*].value = '184.72.33.25')]",
+            "pattern": "[domain-name:value = 'for.ddns.mobi' AND domain-name:resolves_to_refs[*].value = '184.169.134.80' AND domain-name:resolves_to_refs[*].value = '54.241.6.130' AND domain-name:resolves_to_refs[*].value = '184.72.33.25']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -21557,7 +21557,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(domain-name:value = 'hk.2012yearleft.com' AND domain-name:resolves_to_refs[*].value = '112.213.118.33')]",
+            "pattern": "[domain-name:value = 'hk.2012yearleft.com' AND domain-name:resolves_to_refs[*].value = '112.213.118.33']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -21575,7 +21575,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(domain-name:value = 'hk.cmdnetview.com' AND domain-name:resolves_to_refs[*].value = '112.213.118.34')]",
+            "pattern": "[domain-name:value = 'hk.cmdnetview.com' AND domain-name:resolves_to_refs[*].value = '112.213.118.34']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -21593,7 +21593,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(domain-name:value = 'kmd.crabdance.com' AND domain-name:resolves_to_refs[*].value = '54.241.7.146' AND domain-name:resolves_to_refs[*].value = '184.169.176.71' AND domain-name:resolves_to_refs[*].value = '60.10.1.118')]",
+            "pattern": "[domain-name:value = 'kmd.crabdance.com' AND domain-name:resolves_to_refs[*].value = '54.241.7.146' AND domain-name:resolves_to_refs[*].value = '184.169.176.71' AND domain-name:resolves_to_refs[*].value = '60.10.1.118']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -21611,7 +21611,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(domain-name:value = 'ma.vizvaz.com' AND domain-name:resolves_to_refs[*].value = '114.80.96.8' AND domain-name:resolves_to_refs[*].value = '122.193.64.59' AND domain-name:resolves_to_refs[*].value = '125.39.80.205' AND domain-name:resolves_to_refs[*].value = '54.241.6.130')]",
+            "pattern": "[domain-name:value = 'ma.vizvaz.com' AND domain-name:resolves_to_refs[*].value = '114.80.96.8' AND domain-name:resolves_to_refs[*].value = '122.193.64.59' AND domain-name:resolves_to_refs[*].value = '125.39.80.205' AND domain-name:resolves_to_refs[*].value = '54.241.6.130']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -21629,7 +21629,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(domain-name:value = 'maofajapa.3322.org' AND domain-name:resolves_to_refs[*].value = '60.10.1.121')]",
+            "pattern": "[domain-name:value = 'maofajapa.3322.org' AND domain-name:resolves_to_refs[*].value = '60.10.1.121']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -21665,7 +21665,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(domain-name:value = 'nasa.xxuz.com' AND domain-name:resolves_to_refs[*].value = '60.2.148.165' AND domain-name:resolves_to_refs[*].value = '184.72.33.25' AND domain-name:resolves_to_refs[*].value = '125.39.80.4' AND domain-name:resolves_to_refs[*].value = '60.10.1.118' AND domain-name:resolves_to_refs[*].value = '184.169.176.71' AND domain-name:resolves_to_refs[*].value = '184.169.160.194' AND domain-name:resolves_to_refs[*].value = '60.2.148.166')]",
+            "pattern": "[domain-name:value = 'nasa.xxuz.com' AND domain-name:resolves_to_refs[*].value = '60.2.148.165' AND domain-name:resolves_to_refs[*].value = '184.72.33.25' AND domain-name:resolves_to_refs[*].value = '125.39.80.4' AND domain-name:resolves_to_refs[*].value = '60.10.1.118' AND domain-name:resolves_to_refs[*].value = '184.169.176.71' AND domain-name:resolves_to_refs[*].value = '184.169.160.194' AND domain-name:resolves_to_refs[*].value = '60.2.148.166']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -21683,7 +21683,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(domain-name:value = 'scrlk.exprenum.com' AND domain-name:resolves_to_refs[*].value = '60.10.1.114')]",
+            "pattern": "[domain-name:value = 'scrlk.exprenum.com' AND domain-name:resolves_to_refs[*].value = '60.10.1.114']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -21701,7 +21701,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(domain-name:value = 'send.have8000.com' AND domain-name:resolves_to_refs[*].value = '124.237.77.25')]",
+            "pattern": "[domain-name:value = 'send.have8000.com' AND domain-name:resolves_to_refs[*].value = '124.237.77.25']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -21737,7 +21737,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(domain-name:value = 'xwwl8866.vicp.net' AND domain-name:resolves_to_refs[*].value = '50.117.115.89')]",
+            "pattern": "[domain-name:value = 'xwwl8866.vicp.net' AND domain-name:resolves_to_refs[*].value = '50.117.115.89']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -21755,7 +21755,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(domain-name:value = 'yo.acmetoy.com' AND domain-name:resolves_to_refs[*].value = '114.80.96.8' AND domain-name:resolves_to_refs[*].value = '60.2.92.68' AND domain-name:resolves_to_refs[*].value = '60.2.148.167')]",
+            "pattern": "[domain-name:value = 'yo.acmetoy.com' AND domain-name:resolves_to_refs[*].value = '114.80.96.8' AND domain-name:resolves_to_refs[*].value = '60.2.92.68' AND domain-name:resolves_to_refs[*].value = '60.2.148.167']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -21773,7 +21773,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(domain-name:value = 'za.myftp.info' AND domain-name:resolves_to_refs[*].value = '54.241.6.130' AND domain-name:resolves_to_refs[*].value = '60.2.148.165' AND domain-name:resolves_to_refs[*].value = '184.169.176.71')]",
+            "pattern": "[domain-name:value = 'za.myftp.info' AND domain-name:resolves_to_refs[*].value = '54.241.6.130' AND domain-name:resolves_to_refs[*].value = '60.2.148.165' AND domain-name:resolves_to_refs[*].value = '184.169.176.71']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -21791,7 +21791,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(domain-name:value = 'zg.ns02.biz' AND domain-name:resolves_to_refs[*].value = '60.2.92.68' AND domain-name:resolves_to_refs[*].value = '114.80.96.8' AND domain-name:resolves_to_refs[*].value = '60.2.148.165' AND domain-name:resolves_to_refs[*].value = '54.241.6.130')]",
+            "pattern": "[domain-name:value = 'zg.ns02.biz' AND domain-name:resolves_to_refs[*].value = '60.2.92.68' AND domain-name:resolves_to_refs[*].value = '114.80.96.8' AND domain-name:resolves_to_refs[*].value = '60.2.148.165' AND domain-name:resolves_to_refs[*].value = '54.241.6.130']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -21827,7 +21827,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(ipv4-addr:value = '180.210.206.240' OR ipv4-addr:value = '174.139.112.137')] OR [(file:x_elevator_pivy_password = 'wwwst@Admin' OR file:hashes.MD5 = 'd05f81cd8d079b862b2ce7d241ad2209')] OR [((domain-name:value = 'microsoftupdate.freeTCP.com' AND domain-name:resolves_to_refs[*].value = '180.210.206.240') OR (domain-name:value = 'microsoftupdate.eDNS.biz' AND domain-name:resolves_to_refs[*].value = '174.139.112.137') OR (domain-name:value = 'microsoftupdate.ns01.biz' AND domain-name:resolves_to_refs[*].value = '180.210.206.240'))] OR [mutex:name = '56qygfads']",
+            "pattern": "[ipv4-addr:value = '180.210.206.240' OR ipv4-addr:value = '174.139.112.137'] OR [file:x_elevator_pivy_password = 'wwwst@Admin' OR file:hashes.MD5 = 'd05f81cd8d079b862b2ce7d241ad2209'] OR [(domain-name:value = 'microsoftupdate.freeTCP.com' AND domain-name:resolves_to_refs[*].value = '180.210.206.240') OR (domain-name:value = 'microsoftupdate.eDNS.biz' AND domain-name:resolves_to_refs[*].value = '174.139.112.137') OR (domain-name:value = 'microsoftupdate.ns01.biz' AND domain-name:resolves_to_refs[*].value = '180.210.206.240')] OR [mutex:name = '56qygfads']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -21881,7 +21881,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(domain-name:value = 'microsoftupdate.freeTCP.com' AND domain-name:resolves_to_refs[*].value = '180.210.206.240')]",
+            "pattern": "[domain-name:value = 'microsoftupdate.freeTCP.com' AND domain-name:resolves_to_refs[*].value = '180.210.206.240']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -21899,7 +21899,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(domain-name:value = 'microsoftupdate.ns01.biz' AND domain-name:resolves_to_refs[*].value = '180.210.206.240')]",
+            "pattern": "[domain-name:value = 'microsoftupdate.ns01.biz' AND domain-name:resolves_to_refs[*].value = '180.210.206.240']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -21917,7 +21917,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(domain-name:value = 'microsoftupdate.eDNS.biz' AND domain-name:resolves_to_refs[*].value = '174.139.112.137')]",
+            "pattern": "[domain-name:value = 'microsoftupdate.eDNS.biz' AND domain-name:resolves_to_refs[*].value = '174.139.112.137']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -22043,7 +22043,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(ipv4-addr:value = '60.10.1.114' OR ipv4-addr:value = '60.10.1.115' OR ipv4-addr:value = '124.237.77.11')] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [(file:x_elevator_pivy_password = 'keaidestone' OR file:x_elevator_id = 'tw2012' OR file:hashes.MD5 = 'e9622f4b9d2a82c296a773a2c6e63fcb')] OR [(domain-name:value = 'tw.2012yearleft.com' AND domain-name:resolves_to_refs[*].value = '60.10.1.114' AND domain-name:resolves_to_refs[*].value = '60.10.1.115' AND domain-name:resolves_to_refs[*].value = '124.237.77.11')] OR [mutex:name = 'K^DJA^#FE']",
+            "pattern": "[ipv4-addr:value = '60.10.1.114' OR ipv4-addr:value = '60.10.1.115' OR ipv4-addr:value = '124.237.77.11'] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [file:x_elevator_pivy_password = 'keaidestone' OR file:x_elevator_id = 'tw2012' OR file:hashes.MD5 = 'e9622f4b9d2a82c296a773a2c6e63fcb'] OR [(domain-name:value = 'tw.2012yearleft.com' AND domain-name:resolves_to_refs[*].value = '60.10.1.114' AND domain-name:resolves_to_refs[*].value = '60.10.1.115' AND domain-name:resolves_to_refs[*].value = '124.237.77.11')] OR [mutex:name = 'K^DJA^#FE']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -22079,7 +22079,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(domain-name:value = 'tw.2012yearleft.com' AND domain-name:resolves_to_refs[*].value = '60.10.1.114' AND domain-name:resolves_to_refs[*].value = '60.10.1.115' AND domain-name:resolves_to_refs[*].value = '124.237.77.11')]",
+            "pattern": "[domain-name:value = 'tw.2012yearleft.com' AND domain-name:resolves_to_refs[*].value = '60.10.1.114' AND domain-name:resolves_to_refs[*].value = '60.10.1.115' AND domain-name:resolves_to_refs[*].value = '124.237.77.11']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -22133,7 +22133,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(domain-name:value = 'js001.3322.org' AND domain-name:resolves_to_refs[*].value = '221.207.59.118' AND domain-name:resolves_to_refs[*].value = '121.41.129.12' AND domain-name:resolves_to_refs[*].value = '121.41.129.143' AND domain-name:resolves_to_refs[*].value = '121.41.129.179' AND domain-name:resolves_to_refs[*].value = '121.41.129.140' AND domain-name:resolves_to_refs[*].value = '121.41.129.214' AND domain-name:resolves_to_refs[*].value = '121.41.129.75' AND domain-name:resolves_to_refs[*].value = '121.41.129.100' AND domain-name:resolves_to_refs[*].value = '221.130.179.36' AND domain-name:resolves_to_refs[*].value = '121.41.129.213' AND domain-name:resolves_to_refs[*].value = '121.41.129.59' AND domain-name:resolves_to_refs[*].value = '121.41.129.250' AND domain-name:resolves_to_refs[*].value = '121.41.129.193' AND domain-name:resolves_to_refs[*].value = '60.163.225.156' AND domain-name:resolves_to_refs[*].value = '121.41.129.223')]",
+            "pattern": "[domain-name:value = 'js001.3322.org' AND domain-name:resolves_to_refs[*].value = '221.207.59.118' AND domain-name:resolves_to_refs[*].value = '121.41.129.12' AND domain-name:resolves_to_refs[*].value = '121.41.129.143' AND domain-name:resolves_to_refs[*].value = '121.41.129.179' AND domain-name:resolves_to_refs[*].value = '121.41.129.140' AND domain-name:resolves_to_refs[*].value = '121.41.129.214' AND domain-name:resolves_to_refs[*].value = '121.41.129.75' AND domain-name:resolves_to_refs[*].value = '121.41.129.100' AND domain-name:resolves_to_refs[*].value = '221.130.179.36' AND domain-name:resolves_to_refs[*].value = '121.41.129.213' AND domain-name:resolves_to_refs[*].value = '121.41.129.59' AND domain-name:resolves_to_refs[*].value = '121.41.129.250' AND domain-name:resolves_to_refs[*].value = '121.41.129.193' AND domain-name:resolves_to_refs[*].value = '60.163.225.156' AND domain-name:resolves_to_refs[*].value = '121.41.129.223']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -22169,7 +22169,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(ipv4-addr:value = '221.207.59.118' OR ipv4-addr:value = '121.41.129.12' OR ipv4-addr:value = '121.41.129.143' OR ipv4-addr:value = '121.41.129.179' OR ipv4-addr:value = '121.41.129.140' OR ipv4-addr:value = '121.41.129.214' OR ipv4-addr:value = '121.41.129.75' OR ipv4-addr:value = '121.41.129.100' OR ipv4-addr:value = '221.130.179.36' OR ipv4-addr:value = '121.41.129.213' OR ipv4-addr:value = '121.41.129.59' OR ipv4-addr:value = '121.41.129.250' OR ipv4-addr:value = '121.41.129.193' OR ipv4-addr:value = '60.163.225.156' OR ipv4-addr:value = '121.41.129.223')] OR [(file:x_elevator_pivy_password = 'xiaoxiaohuli' OR file:x_elevator_id = 'js001' OR file:hashes.MD5 = 'b08694e14a9b966d8033b42b58ab727d')] OR [mutex:name = '&@%$?2341'] OR [(domain-name:value = 'js001.3322.org' AND domain-name:resolves_to_refs[*].value = '221.207.59.118' AND domain-name:resolves_to_refs[*].value = '121.41.129.12' AND domain-name:resolves_to_refs[*].value = '121.41.129.143' AND domain-name:resolves_to_refs[*].value = '121.41.129.179' AND domain-name:resolves_to_refs[*].value = '121.41.129.140' AND domain-name:resolves_to_refs[*].value = '121.41.129.214' AND domain-name:resolves_to_refs[*].value = '121.41.129.75' AND domain-name:resolves_to_refs[*].value = '121.41.129.100' AND domain-name:resolves_to_refs[*].value = '221.130.179.36' AND domain-name:resolves_to_refs[*].value = '121.41.129.213' AND domain-name:resolves_to_refs[*].value = '121.41.129.59' AND domain-name:resolves_to_refs[*].value = '121.41.129.250' AND domain-name:resolves_to_refs[*].value = '121.41.129.193' AND domain-name:resolves_to_refs[*].value = '60.163.225.156' AND domain-name:resolves_to_refs[*].value = '121.41.129.223')]",
+            "pattern": "[ipv4-addr:value = '221.207.59.118' OR ipv4-addr:value = '121.41.129.12' OR ipv4-addr:value = '121.41.129.143' OR ipv4-addr:value = '121.41.129.179' OR ipv4-addr:value = '121.41.129.140' OR ipv4-addr:value = '121.41.129.214' OR ipv4-addr:value = '121.41.129.75' OR ipv4-addr:value = '121.41.129.100' OR ipv4-addr:value = '221.130.179.36' OR ipv4-addr:value = '121.41.129.213' OR ipv4-addr:value = '121.41.129.59' OR ipv4-addr:value = '121.41.129.250' OR ipv4-addr:value = '121.41.129.193' OR ipv4-addr:value = '60.163.225.156' OR ipv4-addr:value = '121.41.129.223'] OR [file:x_elevator_pivy_password = 'xiaoxiaohuli' OR file:x_elevator_id = 'js001' OR file:hashes.MD5 = 'b08694e14a9b966d8033b42b58ab727d'] OR [mutex:name = '&@%$?2341'] OR [(domain-name:value = 'js001.3322.org' AND domain-name:resolves_to_refs[*].value = '221.207.59.118' AND domain-name:resolves_to_refs[*].value = '121.41.129.12' AND domain-name:resolves_to_refs[*].value = '121.41.129.143' AND domain-name:resolves_to_refs[*].value = '121.41.129.179' AND domain-name:resolves_to_refs[*].value = '121.41.129.140' AND domain-name:resolves_to_refs[*].value = '121.41.129.214' AND domain-name:resolves_to_refs[*].value = '121.41.129.75' AND domain-name:resolves_to_refs[*].value = '121.41.129.100' AND domain-name:resolves_to_refs[*].value = '221.130.179.36' AND domain-name:resolves_to_refs[*].value = '121.41.129.213' AND domain-name:resolves_to_refs[*].value = '121.41.129.59' AND domain-name:resolves_to_refs[*].value = '121.41.129.250' AND domain-name:resolves_to_refs[*].value = '121.41.129.193' AND domain-name:resolves_to_refs[*].value = '60.163.225.156' AND domain-name:resolves_to_refs[*].value = '121.41.129.223')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -22205,7 +22205,7 @@
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
-            "pattern": "[(ipv4-addr:value = '60.10.1.114' OR ipv4-addr:value = '60.10.1.115' OR ipv4-addr:value = '124.237.77.11')] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [(file:x_elevator_pivy_password = 'keaidestone' OR file:x_elevator_id = 'tw2012' OR file:hashes.MD5 = 'f815281ed4b16169e0b474dbac612bbc')] OR [mutex:name = 'K^DJA^#FE'] OR [(domain-name:value = 'tw.2012yearleft.com' AND domain-name:resolves_to_refs[*].value = '60.10.1.114' AND domain-name:resolves_to_refs[*].value = '60.10.1.115' AND domain-name:resolves_to_refs[*].value = '124.237.77.11')]",
+            "pattern": "[ipv4-addr:value = '60.10.1.114' OR ipv4-addr:value = '60.10.1.115' OR ipv4-addr:value = '124.237.77.11'] OR [unconverted_term:fireeye:observable-11061994-5eb1-4ac2-b019-b32aa3b28de8] OR [file:x_elevator_pivy_password = 'keaidestone' OR file:x_elevator_id = 'tw2012' OR file:hashes.MD5 = 'f815281ed4b16169e0b474dbac612bbc'] OR [mutex:name = 'K^DJA^#FE'] OR [(domain-name:value = 'tw.2012yearleft.com' AND domain-name:resolves_to_refs[*].value = '60.10.1.114' AND domain-name:resolves_to_refs[*].value = '60.10.1.115' AND domain-name:resolves_to_refs[*].value = '124.237.77.11')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
