@@ -24,7 +24,7 @@ from cybox.objects.win_executable_file_object import WinExecutableFile
 from cybox.objects.win_process_object import WinProcess
 from cybox.objects.win_registry_key_object import WinRegistryKey
 from cybox.objects.win_service_object import WinService
-from six import text_type
+from six import text_type, string_types
 import stix2
 from stix2.patterns import (BasicObjectPathComponent,
                             ListConstant,
@@ -58,40 +58,46 @@ KEEP_OBSERVABLE_DATA_USED_IN_PATTERNS = False
 KEEP_INDICATORS_USED_IN_COMPOSITE_INDICATOR_EXPRESSION = True
 
 
-class BasicObjectPathComponentForElevator(BasicObjectPathComponent):
-    @staticmethod
-    def create_ObjectPathComponent(component_name):
-        if component_name.endswith("_ref"):
-            return ReferenceObjectPathComponentForElevator(component_name)
-        elif component_name.find("[") != -1:
-            parse1 = component_name.split("[")
-            return ListObjectPathComponentForElevator(parse1[0], parse1[1][:-1])
-        else:
-            return BasicObjectPathComponentForElevator(component_name, False)
-
-
-class ListObjectPathComponentForElevator(ListObjectPathComponent):
-    @staticmethod
-    def create_ObjectPathComponent(component_name):
-        if component_name.endswith("_ref"):
-            return ReferenceObjectPathComponentForElevator(component_name)
-        elif component_name.find("[") != -1:
-            parse1 = component_name.split("[")
-            return ListObjectPathComponentForElevator(parse1[0], parse1[1][:-1])
-        else:
-            return BasicObjectPathComponentForElevator(component_name, False)
-
-
-class ReferenceObjectPathComponentForElevator(ReferenceObjectPathComponent):
-    @staticmethod
-    def create_ObjectPathComponent(component_name):
-        if component_name.endswith("_ref"):
-            return ReferenceObjectPathComponentForElevator(component_name)
-        elif component_name.find("[") != -1:
-            parse1 = component_name.split("[")
-            return ListObjectPathComponentForElevator(parse1[0], parse1[1][:-1])
-        else:
-            return BasicObjectPathComponentForElevator(component_name, False)
+# class BasicObjectPathComponentForElevator(BasicObjectPathComponent):
+#     @staticmethod
+#     def create_ObjectPathComponent(component_name):
+#         if component_name.endswith("_ref"):
+#             return ReferenceObjectPathComponentForElevator(component_name)
+#         elif component_name.find("[") != -1:
+#             parse1 = component_name.split("[")
+#             return ListObjectPathComponentForElevator(parse1[0], parse1[1][:-1])
+#         else:
+#             return BasicObjectPathComponentForElevator(component_name, False)
+#
+#     def get_property(self):
+#         return self.component_name
+#
+#
+# class ListObjectPathComponentForElevator(ListObjectPathComponent):
+#     @staticmethod
+#     def create_ObjectPathComponent(component_name):
+#         if component_name.endswith("_ref"):
+#             return ReferenceObjectPathComponentForElevator(component_name)
+#         elif component_name.find("[") != -1:
+#             parse1 = component_name.split("[")
+#             return ListObjectPathComponentForElevator(parse1[0], parse1[1][:-1])
+#         else:
+#             return BasicObjectPathComponentForElevator(component_name, False)
+#
+#
+# class ReferenceObjectPathComponentForElevator(ReferenceObjectPathComponent):
+#     @staticmethod
+#     def create_ObjectPathComponent(component_name):
+#         if component_name.endswith("_ref"):
+#             return ReferenceObjectPathComponentForElevator(component_name)
+#         elif component_name.find("[") != -1:
+#             parse1 = component_name.split("[")
+#             return ListObjectPathComponentForElevator(parse1[0], parse1[1][:-1])
+#         else:
+#             return BasicObjectPathComponentForElevator(component_name, False)
+#
+#     def get_property(self):
+#         return self.property_name
 
 
 class ObjectPathForElevator(ObjectPath):
@@ -167,6 +173,19 @@ class ObjectPathForElevator(ObjectPath):
                     x.property_name = "modified_time"
         return self
 
+    def get_property(self):
+        return str(self)
+
+    @staticmethod
+    def make_object_path(lhs):
+        """Create ObjectPath from string encoded object path
+
+        Args:
+            lhs (str): object path of left-hand-side component of expression
+        """
+        path_as_parts = lhs.split(":")
+        return ObjectPathForElevator(path_as_parts[0], path_as_parts[1].split("."))
+
 
 class ComparisonExpressionForElevator(_ComparisonExpression):
     # overrides, so IdrefPlaceHolder can be handled
@@ -179,7 +198,7 @@ class ComparisonExpressionForElevator(_ComparisonExpression):
         if isinstance(lhs, stix2.ObjectPath):
             self.lhs = lhs
         else:
-            self.lhs = stix2.ObjectPath.make_object_path(lhs)
+            self.lhs = ObjectPathForElevator.make_object_path(lhs)
         # rhs might be a reference to another object, which has its own observable pattern
         if isinstance(rhs, _Constant) or isinstance(rhs, IdrefPlaceHolder):
             self.rhs = rhs
@@ -209,8 +228,14 @@ class ComparisonExpressionForElevator(_ComparisonExpression):
     def partition_according_to_object_path(self):
         return self
 
+    def contains_observation_expressions(self):
+        return False
+
     def contains_unconverted_term(self):
         return False
+
+    def get_property(self):
+        return self.lhs.get_property()
 
     def toSTIX21(self):
         self.lhs = self.lhs.toSTIX21()
@@ -267,6 +292,18 @@ class IsSupersetComparisonExpressionForElevator(ComparisonExpressionForElevator)
         super(IsSupersetComparisonExpressionForElevator, self).__init__("ISSUPERSET", lhs, rhs, negated)
 
 
+def new_property(term, current_subs):
+    property_to_check = term.get_property()
+    op = None
+    if isinstance(term, ComparisonExpressionForElevator):
+        op = term.operator
+    if property_to_check and property_to_check.find("*") == -1 and op == "=":
+        for sub in current_subs:
+            if property_to_check == sub.get_property():
+                return False
+    return True
+
+
 class BooleanExpressionForElevator(_BooleanExpression):
     def add_operand(self, operand):
         self.operands.append(operand)
@@ -303,26 +340,35 @@ class BooleanExpressionForElevator(_BooleanExpression):
         results = []
         for term in self.operands:
             term_was_appended = False
+            term = term.partition_according_to_object_path()
+            # see which subexpression to add to, if any
             for sub in subexpressions:
                 if not hasattr(term, "root_type") and not hasattr(sub[0], "root_type"):
                     sub.append(term)
                     term_was_appended = True
                     break
-                elif hasattr(term, "root_type") and hasattr(sub[0], "root_type") and term.root_type == sub[0].root_type:
+                elif (hasattr(term, "root_type") and
+                      hasattr(sub[0], "root_type") and
+                      term.root_type == sub[0].root_type and
+                      (new_property(term, sub) or self.operator == "OR")):
                     sub.append(term)
                     term_was_appended = True
                     break
+            # it wasn't added to any current subexpression, add it as new subexpression
             if not term_was_appended:
                 subexpressions.append([term])
         for x in subexpressions:
             if len(x) == 1:
                 results.append(x[0])
             else:
-                results.append(create_boolean_expression(self.operator, x))
+                results.append(create_boolean_expression(self.operator, x, use_parens=False))
         if len(results) == 1:
             return results[0]
         else:
             return CompoundObservationExpressionForElevator(self.operator, results)
+
+    def contains_observation_expressions(self):
+        return False
 
     def contains_unconverted_term(self):
         for args in self.operands:
@@ -369,6 +415,9 @@ class IdrefPlaceHolder(object):
     def contains_placeholder(self):
         return True
 
+    def contains_observation_expressions(self):
+        return False
+
     def replace_placeholder_with_idref_pattern(self, idref):
         if idref == self.idref:
             return True, get_pattern_from_cache(idref)
@@ -386,8 +435,9 @@ class IdrefPlaceHolder(object):
 
 
 class UnconvertedTerm(object):
-    def __init__(self, term_info):
+    def __init__(self, term_info, root_type=None):
         self.term_info = term_info
+        self.root_type = root_type
 
     def __str__(self):
         return "unconverted_term:%s" % self.term_info
@@ -404,11 +454,20 @@ class UnconvertedTerm(object):
     def contains_unconverted_term(self):
         return True
 
+    def contains_observation_expressions(self):
+        return False
+
+    def get_property(self):
+        return None
+
 
 class ObservationExpressionForElevator(ObservationExpression):
     def toSTIX21(self):
         self.operand.toSTIX21()
         return self
+
+    def contains_observation_expressions(self):
+        return True
 
 
 class CompoundObservationExpressionForElevator(_CompoundObservationExpression):
@@ -417,12 +476,14 @@ class CompoundObservationExpressionForElevator(_CompoundObservationExpression):
         if len(self.operands) == 1:
             return "[%s]" % self.operands[0]
         for o in self.operands:
-            if isinstance(o, ObservationExpressionForElevator) or isinstance(o,
-                                                                             CompoundObservationExpressionForElevator):
+            if o.contains_observation_expressions():
                 sub_exprs.append("%s" % o)
             else:
                 sub_exprs.append("[%s]" % o)
         return (" " + self.operator + " ").join(sub_exprs)
+
+    def contains_observation_expressions(self):
+        return True
 
     def contains_placeholder(self):
         for args in self.operands:
@@ -437,6 +498,21 @@ class CompoundObservationExpressionForElevator(_CompoundObservationExpression):
 
     def partition_according_to_object_path(self):
         return self
+
+    def replace_placeholder_with_idref_pattern(self, idref):
+        new_operands = []
+        change_made = False
+        for args in self.operands:
+            change_made_this_time, new_operand = args.replace_placeholder_with_idref_pattern(idref)
+            if change_made_this_time:
+                if not hasattr(self, "root_type"):
+                    self.root_type = new_operand.root_type
+                elif self.root_type and hasattr(new_operand, "root_type") and (self.root_type != new_operand.root_type):
+                    self.root_type = None
+            change_made = change_made or change_made_this_time
+            new_operands.append(new_operand)
+        self.operands = new_operands
+        return change_made, self
 
     def toSTIX21(self):
         for arg in self.operands:
@@ -515,23 +591,35 @@ class ParentheticalExpressionForElevator(stix2.ParentheticalExpression):
         self.expression = self.expression.partition_according_to_object_path()
         return self
 
+    def contains_observation_expressions(self):
+        return self.expression.contains_observation_expressions()
+
+    def get_property(self):
+        return None
+
     def toSTIX21(self):
         self.expression.toSTIX21()
         return self
 
 
-def create_boolean_expression(operator, operands):
+def create_boolean_expression(operator, operands, use_parens=True):
     if len(operands) == 1:
         return operands[0]
     exp = BooleanExpressionForElevator(operator, [])
     for arg in operands:
-        if not isinstance(arg, IdrefPlaceHolder) and not isinstance(arg, UnconvertedTerm) and hasattr(arg, "root_type"):
+        if not isinstance(arg, IdrefPlaceHolder) and hasattr(arg, "root_type"):
             if not hasattr(exp, "root_type"):
                 exp.root_type = arg.root_type
             elif exp.root_type and (exp.root_type != arg.root_type):
                 exp.root_type = None
         exp.add_operand(arg)
-    return ParentheticalExpressionForElevator(exp)
+    if use_parens:
+        pexp = ParentheticalExpressionForElevator(exp)
+        if hasattr(exp, "root_type"):
+            pexp.root_type = exp.root_type
+        return pexp
+    else:
+        return exp
 
 
 ###################
@@ -808,7 +896,7 @@ def make_constant(obj):
         return stix2.IntegerConstant(obj)
     elif isinstance(obj, float):
         return stix2.FloatConstant(obj)
-    elif isinstance(obj, str) or isinstance(obj, stixmarx.api.types.MarkableText):
+    elif isinstance(obj, string_types) or isinstance(obj, stixmarx.api.types.MarkableText):
         return stix2.StringConstant(obj.strip())
     elif isinstance(obj, list):
         return stix2.ListConstant([make_constant(x) for x in obj])
@@ -1070,8 +1158,8 @@ _PE_FILE_HEADER_PROPERTIES = \
      ["characteristics", "file:extensions.'windows-pebinary-ext'.characteristics_hex"]]
 
 
-_PE_SECTION_HEADER_PROPERTIES = [["name", "file:extensions.'windows-pebinary-ext'.section[*].name"],
-                                 ["virtual_size", "file:extensions.'windows-pebinary-ext'.section[*].size"]]
+_PE_SECTION_HEADER_PROPERTIES = [["name", "file:extensions.'windows-pebinary-ext'.sections[*].name"],
+                                 ["virtual_size", "file:extensions.'windows-pebinary-ext'.sections[*].size"]]
 
 
 _ARCHIVE_FILE_PROPERTIES_2_0 = [["comment", "file:extensions.'archive-ext'.comment"],
@@ -1132,7 +1220,7 @@ def convert_windows_executable_file_to_pattern(f):
                 if s.entropy.min:
                     if get_option_value("missing_policy") == "use-custom-properties":
                         section_expressions.append(
-                            create_term("file:extensions.'windows-pebinary-ext'.section[*]." +
+                            create_term("file:extensions.'windows-pebinary-ext'.sections[*]." +
                                         convert_to_custom_property_name("entropy_min"),
                                         s.entropy.min.condition,
                                         stix2.FloatConstant(s.entropy.min.value)))
@@ -1142,7 +1230,7 @@ def convert_windows_executable_file_to_pattern(f):
                 if s.entropy.max:
                     if get_option_value("missing_policy") == "use-custom-properties":
                         section_expressions.append(
-                            create_term("file:extensions.'windows-pebinary-ext'.section[*]." +
+                            create_term("file:extensions.'windows-pebinary-ext'.sections[*]." +
                                         convert_to_custom_property_name("entropy_max"),
                                         s.entropy.max.condition,
                                         stix2.FloatConstant(s.entropy.max.value)))
@@ -1150,7 +1238,7 @@ def convert_windows_executable_file_to_pattern(f):
                     else:
                         warn("Entropy.max is not supported in STIX 2.x", 424)
                 if s.entropy.value:
-                    section_expressions.append(create_term("file:extensions.'windows-pebinary-ext'.section[*].entropy",
+                    section_expressions.append(create_term("file:extensions.'windows-pebinary-ext'.sections[*].entropy",
                                                            s.entropy.value.condition,
                                                            stix2.FloatConstant(s.entropy.value.value)))
             if s.data_hashes:
@@ -1213,7 +1301,7 @@ def convert_archive_file_to_pattern(f):
         archived_file_expressions = []
         for a_f in f.archived_file:
             terms = convert_file_to_pattern(a_f)
-            archived_file_expressions.append(terms.collapse_reference(stix2.ObjectPath.make_object_path("file:extensions.archive-ext.contains_refs[*]")))
+            archived_file_expressions.append(terms.collapse_reference(ObjectPathForElevator.make_object_path("file:extensions.archive-ext.contains_refs[*]")))
         if archived_file_expressions:
             and_expressions.append(create_boolean_expression("AND", archived_file_expressions))
     if and_expressions:
@@ -1496,7 +1584,7 @@ def convert_process_to_pattern(process):
         for nc in process.network_connection_list:
             new_pattern = convert_network_connection_to_pattern(nc)
             network_connection_expressions.append(
-                new_pattern.collapse_reference(stix2.ObjectPath.make_object_path("process:opened_connection_refs[*]")))
+                new_pattern.collapse_reference(ObjectPathForElevator.make_object_path("process:opened_connection_refs[*]")))
         if network_connection_expressions:
             expressions.append(create_boolean_expression("AND", network_connection_expressions))
     if isinstance(process, WinProcess):
@@ -1609,7 +1697,7 @@ def convert_domain_name_to_pattern(domain_name, related_objects):
                                                                        new_pattern))
                     else:
                         pattern.append(new_pattern.collapse_reference(
-                            stix2.ObjectPath.make_object_path("domain-name:resolves_to_refs[*]")))
+                            ObjectPathForElevator.make_object_path("domain-name:resolves_to_refs[*]")))
             else:
                 warn("The %s relationship involving %s is not supported in STIX 2.x", 427, ro.relationship,
                      identifying_info(ro))
@@ -1932,6 +2020,17 @@ def convert_observable_composition_to_pattern(obs_comp):
         return ""
 
 
+def determine_term_type(stix1_obj):
+    if isinstance(stix1_obj, (File, WinExecutableFile)):
+        return "file"
+    elif isinstance(stix1_obj, (Process, WinProcess, WinService)):
+        return "process"
+    elif isinstance(stix1_obj, WinRegistryKey):
+        return "windows-registry-key"
+    else:
+        return None
+
+
 def convert_object_to_pattern(obj, obs_id):
     related_objects = obj.related_objects
     prop = obj.properties
@@ -1985,7 +2084,7 @@ def convert_object_to_pattern(obj, obs_id):
     if not expression:
         warn("No pattern term was created from %s", 422, obs_id)
         if not get_option_value("missing_policy") == "ignore":
-            expression = UnconvertedTerm(obs_id)
+            expression = UnconvertedTerm(obs_id, determine_term_type(prop))
     elif obj.id_:
         add_id_value(obj.id_, obs_id)
         add_to_pattern_cache(obj.id_, expression)

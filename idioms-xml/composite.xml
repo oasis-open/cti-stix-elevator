@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<stix:STIX_Package
+    xmlns:stix="http://stix.mitre.org/stix-1"
+    xmlns:report="http://stix.mitre.org/Report-1"
+    xmlns:campaign="http://stix.mitre.org/Campaign-1"
+    xmlns:coa="http://stix.mitre.org/CourseOfAction-1"
+    xmlns:cyboxCommon="http://cybox.mitre.org/common-2"
+    xmlns:AddressObj="http://cybox.mitre.org/objects#AddressObject-2"
+    xmlns:CodeObj="http://cybox.mitre.org/objects#CodeObject-2"
+    xmlns:FileObj="http://cybox.mitre.org/objects#FileObject-2"
+    xmlns:MutexObj="http://cybox.mitre.org/objects#MutexObject-2"
+    xmlns:DomainNameObj="http://cybox.mitre.org/objects#DomainNameObject-1"
+    xmlns:cybox="http://cybox.mitre.org/cybox-2"
+    xmlns:cyboxVocabs="http://cybox.mitre.org/default_vocabularies-2"
+    xmlns:fireeye="http://www.fireeye.com"
+    xmlns:marking="http://data-marking.mitre.org/Marking-1"
+    xmlns:indicator="http://stix.mitre.org/Indicator-2"
+    xmlns:terms="http://data-marking.mitre.org/extensions/MarkingStructure#Terms_Of_Use-1"
+    xmlns:stixCiqIdentity="http://stix.mitre.org/extensions/Identity#CIQIdentity3.0-1"
+    xmlns:stixCommon="http://stix.mitre.org/common-1"
+    xmlns:stixVocabs="http://stix.mitre.org/default_vocabularies-1"
+    xmlns:ta="http://stix.mitre.org/ThreatActor-1"
+    xmlns:ttp="http://stix.mitre.org/TTP-1"
+    xmlns:xpil="urn:oasis:names:tc:ciq:xpil:3"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+        http://stix.mitre.org/stix-1 ../../stix_core.xsd
+        http://stix.mitre.org/Report-1 ../../report.xsd
+        http://stix.mitre.org/default_vocabularies-1 ../../stix_default_vocabularies.xsd
+        http://cybox.mitre.org/cybox-2 ../../cybox/cybox_core.xsd
+        http://cybox.mitre.org/default_vocabularies-2 ../../cybox/cybox_default_vocabularies.xsd
+        http://stix.mitre.org/Campaign-1 ../../campaign.xsd
+        http://stix.mitre.org/ThreatActor-1 ../../threat_actor.xsd
+        http://stix.mitre.org/Indicator-2 ../../indicator.xsd
+        http://stix.mitre.org/TTP-1 ../../ttp.xsd
+        http://stix.mitre.org/COA-1 ../../course_of_action.xsd
+        http://data-marking.mitre.org/Marking-1 ../../data_marking.xsd
+        http://data-marking.mitre.org/extensions/MarkingStructure#Terms_Of_Use-1 ../../extensions/marking/terms_of_use_marking.xsd
+        http://stix.mitre.org/extensions/Identity#CIQIdentity3.0-1 ../../extensions/identity/ciq_3.0_identity.xsd
+        http://cybox.mitre.org/objects#AddressObject-2 ../../cybox/objects/Address_Object.xsd
+        http://cybox.mitre.org/objects#CodeObject-2 ../../cybox/objects/Code_Object.xsd
+        http://cybox.mitre.org/objects#FileObject-2 ../../cybox/objects/File_Object.xsd
+        http://cybox.mitre.org/objects#MutexObject-2 ../../cybox/objects/Mutex_Object.xsd
+        http://cybox.mitre.org/objects#DomainNameObject-1 ../../cybox/objects/Domain_Name_Object.xsd
+    "
+    id="fireeye:stix-b7b16e67-4292-46a3-ba64-60c1a491723d" version="1.2">
+    <stix:Observables cybox_major_version="2" cybox_minor_version="2">
+        <cybox:Observable id="fireeye:observable-6e9697fa-38a2-4ba7-adda-a6eb268099fa">
+            <cybox:Title>Sample: 026871ea3d6cbbeb90fea6bf2906cc12</cybox:Title>
+            <cybox:Object id="fireeye:object-2049611d-757c-4d46-830a-bf5becd26f39">
+                <cybox:Properties xsi:type="FileObj:FileObjectType">
+                    <FileObj:Hashes>
+                        <cyboxCommon:Hash>
+                            <cyboxCommon:Type>MD5</cyboxCommon:Type>
+                            <cyboxCommon:Simple_Hash_Value condition="Equals">026871ea3d6cbbeb90fea6bf2906cc12</cyboxCommon:Simple_Hash_Value>
+                        </cyboxCommon:Hash>
+                    </FileObj:Hashes>
+                </cybox:Properties>
+            </cybox:Object>
+        </cybox:Observable>
+        <cybox:Observable id="fireeye:observable-1a4b4a68-df3c-4a0f-8c45-3b9d35497a27">
+            <cybox:Title>IP: 202.65.222.45</cybox:Title>
+            <cybox:Object id="fireeye:object-3de52bc5-c386-4fd7-9fc1-1e3266aed210">
+                <cybox:Properties category="ipv4-addr" xsi:type="AddressObj:AddressObjectType">
+                    <AddressObj:Address_Value condition="Equals">202.65.222.45</AddressObj:Address_Value>
+                </cybox:Properties>
+            </cybox:Object>
+        </cybox:Observable>
+        <cybox:Observable id="fireeye:observable-a9579acb-62fb-4c4f-9af3-5571c0600edc">
+            <cybox:Title>IP: 219.90.112.203</cybox:Title>
+            <cybox:Object id="fireeye:object-142748e8-8000-4029-8291-31cd191a48ce">
+                <cybox:Properties category="ipv4-addr" xsi:type="AddressObj:AddressObjectType">
+                    <AddressObj:Address_Value condition="Equals">219.90.112.203</AddressObj:Address_Value>
+                </cybox:Properties>
+            </cybox:Object>
+        </cybox:Observable>
+    </stix:Observables>
+    <stix:Indicators>
+        <stix:Indicator timestamp="2015-05-15T09:00:00.000000Z" id="fireeye:indicator-702f0acc-4669-43bf-9193-55cdd1d928c7" xsi:type="indicator:IndicatorType">
+            <indicator:Type xsi:type="stixVocabs:IndicatorTypeVocab-1.1">Malware Artifacts</indicator:Type>
+            <indicator:Composite_Indicator_Expression operator="AND">
+                <indicator:Indicator idref="fireeye:indicator-e462b080-43a7-4eec-9357-f3bf39771743"/>
+                <indicator:Indicator idref="fireeye:indicator-7cb99f15-4d25-40b2-91ac-1ec3355e3ef4"/>
+            </indicator:Composite_Indicator_Expression>
+        </stix:Indicator>
+        <stix:Indicator timestamp="2015-05-15T09:00:00.000000Z" id="fireeye:indicator-6478991b-3af4-45f9-b649-b2c4e7acedc7" xsi:type="indicator:IndicatorType">
+            <indicator:Title>Composite Indicator (026871ea3d6cbbeb90fea6bf2906cc12)</indicator:Title>
+            <indicator:Type xsi:type="stixVocabs:IndicatorTypeVocab-1.1">Malware Artifacts</indicator:Type>
+            <indicator:Composite_Indicator_Expression operator="OR">
+                <indicator:Indicator idref="fireeye:indicator-702f0acc-4669-43bf-9193-55cdd1d928c7"/>
+                <indicator:Indicator idref="fireeye:indicator-4272b570-476e-4e3b-9dd9-f36ebd0a6295"/>
+            </indicator:Composite_Indicator_Expression>
+        </stix:Indicator>
+        <stix:Indicator timestamp="2015-05-15T09:00:00.000000Z" id="fireeye:indicator-e462b080-43a7-4eec-9357-f3bf39771743" xsi:type="indicator:IndicatorType">
+            <indicator:Title>IP: 219.90.112.203</indicator:Title>
+            <indicator:Type xsi:type="stixVocabs:IndicatorTypeVocab-1.1">IP Watchlist</indicator:Type>
+            <indicator:Observable idref="fireeye:observable-a9579acb-62fb-4c4f-9af3-5571c0600edc"/>
+        </stix:Indicator>
+        <stix:Indicator timestamp="2015-05-15T09:00:00.000000Z" id="fireeye:indicator-7cb99f15-4d25-40b2-91ac-1ec3355e3ef4" xsi:type="indicator:IndicatorType">
+            <indicator:Title>IP: 202.65.222.45</indicator:Title>
+            <indicator:Type xsi:type="stixVocabs:IndicatorTypeVocab-1.1">IP Watchlist</indicator:Type>
+            <indicator:Observable idref="fireeye:observable-1a4b4a68-df3c-4a0f-8c45-3b9d35497a27"/>
+        </stix:Indicator>
+        <stix:Indicator timestamp="2015-05-15T09:00:00.000000Z" id="fireeye:indicator-4272b570-476e-4e3b-9dd9-f36ebd0a6295" xsi:type="indicator:IndicatorType">
+            <indicator:Title>Sample: 026871ea3d6cbbeb90fea6bf2906cc12</indicator:Title>
+            <indicator:Type xsi:type="stixVocabs:IndicatorTypeVocab-1.1">Malware Artifacts</indicator:Type>
+            <indicator:Observable idref="fireeye:observable-6e9697fa-38a2-4ba7-adda-a6eb268099fa"/>
+        </stix:Indicator>
+    </stix:Indicators>
+</stix:STIX_Package>

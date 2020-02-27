@@ -548,7 +548,7 @@ def determine_appropriate_verb(current_verb, m_id):
     if m_id is not None and current_verb == "uses":
         type_and_uuid = m_id.split("--")
         if type_and_uuid[0] == "identity":
-            return "targets"
+            return u"targets"
     return current_verb
 
 
@@ -576,7 +576,7 @@ def fix_relationships(env):
         if is_stix1x_id(ref["target_ref"]):
             if not exists_id_key(ref["target_ref"]):
                 # create one, and add it
-                new_id = generate_stix2x_id(None, str.lower(ref["target_ref"]))
+                new_id = generate_stix2x_id(None, ref["target_ref"].lower())
                 if new_id is None:
                     error("Dangling target reference %s in %s", 602, ref["target_ref"], ref["id"])
                 add_id_value(ref["target_ref"], new_id)
@@ -662,7 +662,7 @@ def convert_campaign(camp, env):
     if camp.names is not None:
         campaign_instance["aliases"] = []
         for name in camp.names:
-            if isinstance(name, text_type):
+            if isinstance(name, string_types):
                 campaign_instance["aliases"].append(name)
             else:
                 campaign_instance["aliases"].append(name.value)
@@ -1206,6 +1206,7 @@ def convert_indicator(indicator, env):
                 expressions.append(term)
         indicator_instance["pattern"] = create_boolean_expression(indicator.composite_indicator_expression.operator,
                                                                   expressions)
+        add_to_pattern_cache(indicator.id_, indicator_instance["pattern"])
         if get_option_value("spec_version") == "2.1":
             indicator_instance["pattern_type"] = "stix"
     if indicator.observable and indicator.composite_indicator_expression or indicator.composite_indicator_expression:
@@ -1853,7 +1854,7 @@ def finalize_bundle(env):
             if "kill_chain_phases" in ind20:
                 fixed_kill_chain_phases = []
                 for kcp in ind20["kill_chain_phases"]:
-                    if isinstance(kcp, str):
+                    if isinstance(kcp, string_types):
                         # noinspection PyBroadException
                         try:
                             kill_chain_phase_in_20 = _KILL_CHAINS_PHASES[kcp]
