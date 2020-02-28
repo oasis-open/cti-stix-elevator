@@ -1265,7 +1265,7 @@ def convert_windows_executable_file_to_pattern(f):
                 expressions.append(create_boolean_expression("AND", export_expressions))
         else:
             if not get_option_value("missing_policy") == "ignore":
-                expressions.append(UnconvertedTerm("WinExecutableFileObj.exports"))
+                expressions.append(UnconvertedTerm("WinExecutableFileObj.exports", "file"))
     if f.imports:
         warn("The imports property of WinExecutableFileObj is not part of STIX 2.x", 418)
         if get_option_value("missing_policy") == "use-custom-properties":
@@ -1283,7 +1283,7 @@ def convert_windows_executable_file_to_pattern(f):
                 expressions.append(create_boolean_expression("AND", import_expressions))
         else:
             if not get_option_value("missing_policy") == "ignore":
-                expressions.append(UnconvertedTerm("WinExecutableFileObj.imports"))
+                expressions.append(UnconvertedTerm("WinExecutableFileObj.imports", "file"))
     if expressions:
         return create_boolean_expression("AND", expressions)
 
@@ -1561,7 +1561,7 @@ def convert_process_to_pattern(process):
                     expressions.append(create_boolean_expression("AND", argument_expressions))
             else:
                 if not get_option_value("missing_policy") == "ignore":
-                    expressions.append(UnconvertedTerm("ProcessObj.argument_list"))
+                    expressions.append(UnconvertedTerm("ProcessObj.argument_list", "process"))
     if hasattr(process, "environment_variable_list") and process.environment_variable_list:
         ev_expressions = []
         for ev in process.environment_variable_list:
@@ -1627,7 +1627,7 @@ def convert_windows_process_to_pattern(process):
     if process.startup_info:
         warn("The startup_info property of ProcessObj is not part of STIX 2.x", 418)
         if not get_option_value("missing_policy") == "ignore":
-            expressions.append(UnconvertedTerm("ProcessObj.startup_info"))
+            expressions.append(UnconvertedTerm("ProcessObj.startup_info", "process"))
     if expressions:
         return create_boolean_expression("AND", expressions)
 

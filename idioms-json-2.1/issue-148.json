@@ -10,7 +10,7 @@
             ],
             "modified": "2014-05-08T09:00:00.000Z",
             "name": "Incident on Port",
-            "pattern": "[(network-traffic:dst_port = 337 AND network-traffic:protocols[*] = 'DCCP')]",
+            "pattern": "[network-traffic:dst_port = 337 AND network-traffic:protocols[*] = 'DCCP']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",

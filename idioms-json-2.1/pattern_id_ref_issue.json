@@ -23,7 +23,7 @@
       ],
       "modified": "2014-05-08T09:00:00.000Z",
       "name": "indicator 2",
-      "pattern": "[ipv4-addr:value = '10.0.0.0'] OR [ipv4-addr:value = '20.0.0.0']",
+      "pattern": "[ipv4-addr:value = '10.0.0.0' OR ipv4-addr:value = '20.0.0.0']",
       "pattern_type": "stix",
       "spec_version": "2.1",
       "type": "indicator",
