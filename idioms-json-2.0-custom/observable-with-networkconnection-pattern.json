@@ -9,7 +9,7 @@
             ],
             "modified": "2017-03-29T15:21:52.293Z",
             "name": "A Network Connection example",
-          "pattern": "[(network-traffic:protocols[*] = 'ipv4' AND network-traffic:protocols[*] = 'tcp' AND network-traffic:src_port = 5255 AND network-traffic:src_ref.value = '198.49.168.11' AND network-traffic:dst_port INVALID-CONDITION 80 AND network-traffic:dst_ref.value MATCHES '^198.49')]",
+          "pattern": "[network-traffic:protocols[*] = 'ipv4' AND network-traffic:protocols[*] = 'tcp' AND network-traffic:src_port = 5255 AND network-traffic:src_ref.value = '198.49.168.11' AND network-traffic:dst_port INVALID-CONDITION 80 AND network-traffic:dst_ref.value MATCHES '^198.49']",
             "type": "indicator",
             "valid_from": "2017-03-29T15:21:52.293788Z"
         }

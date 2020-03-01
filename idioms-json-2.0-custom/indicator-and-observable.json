@@ -8,7 +8,7 @@
                 "ip-watchlist"
             ],
             "modified": "2019-11-01T13:50:58.520Z",
-            "pattern": "[(domain-name:value = 'microsoftb.byinter.net' AND domain-name:resolves_to_refs[*].value = '202.65.222.45')]",
+            "pattern": "[domain-name:value = 'microsoftb.byinter.net' AND domain-name:resolves_to_refs[*].value = '202.65.222.45']",
             "type": "indicator",
             "valid_from": "2019-11-01T13:50:58.520Z"
         },

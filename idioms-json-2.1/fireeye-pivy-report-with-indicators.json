@@ -239,7 +239,7 @@
         {
             "created": "2015-05-15T09:00:00.000Z",
             "created_by_ref": "identity--7c5c1239-6c40-427f-a7ae-ef4d64ac4995",
-            "description": "Poison Ivy is a remote access tool that is freely available for download from its official web site at www.poisonivy-rat.com. First released in 2005, the tool has gone unchanged since 2008 with version 2.3.2. Poison Ivy includes features common to most Windows-based RATs, including key logging, screen capturing, video capturing, file transfers, system administration, password theft, and traffic relaying.\n\nPoison Ivy's wide availability and easy-to-use features make it a popular choice for all kinds of criminals. But it is probably most notable for its role in many high profile, targeted APT attacks.\n\nThese APTs pursue specific targets, using RATs to maintain a persistent presence within the target's network. They move laterally and escalate system privileges to extract sensitive information-whenever the attacker wants to do so.4,5 Because some RATs used in targeted attacks are widely available, determining whether an attack is part of a broader APT campaign can be difficult. Equally challenging is identifying malicious traffic to determine the attacker's post-compromise activities and assess overall damage-these RATs often encrypt their network communications after the initial exploit.\n\nIn 2011, three years after the most recent release of PIVY, attackers used the RAT to compromise security firm RSA and steal data about its SecureID authentication system. That data was subsequently used in other attacks. The RSA attack was linked to Chinese threat actors and described at the time as extremely sophisticated. Exploiting a zero-day vulnerability, the attack delivered PIVY as the payload. It was not an isolated incident. The campaign appears to have started in 2010, with many other companies compromised.\n \nPIVY also played a key role in the 2011 campaign known as Nitro that targeted chemical makers, government agencies, defense contractors, and human rights groups. Still active a year later, the Nitro attackers used a zero-day vulnerability in Java to deploy PIVY in 2012. Just recently, PIVY was the payload of a zero-day exploit in Internet Explorer used in what is known as a \"strategic web compromise\" attack against visitors to a U.S. government website and a variety of others.\n\nRATs require live, direct, real-time human interaction by the APT attacker. This characteristic is distinctly different from crimeware (malware focused on cybercrime), where the criminal can issue commands to their botnet of compromised endpoints whenever they please and set them to work on a common goal such as a spam relay. In contrast, RATs are much more personal and may indicate that you are dealing with a dedicated threat actor that is interested in your organization specifically.\n",
+            "description": "Poison Ivy is a remote access tool that is freely available for download from its official web site at www.poisonivy-rat.com. First released in 2005, the tool has gone unchanged since 2008 with version 2.3.2. Poison Ivy includes features common to most Windows-based RATs, including key logging, screen capturing, video capturing, file transfers, system administration, password theft, and traffic relaying.\n\nPoison Ivy's wide availability and easy-to-use features make it a popular choice for all kinds of criminals. But it is probably most notable for its role in many high profile, targeted APT attacks.\n\nThese APTs pursue specific targets, using RATs to maintain a persistent presence within the target's network. They move laterally and escalate system privileges to extract sensitive information-whenever the attacker wants to do so.4,5 Because some RATs used in targeted attacks are widely available, determining whether an attack is part of a broader APT campaign can be difficult. Equally challenging is identifying malicious traffic to determine the attacker's post-compromise activities and assess overall damage-these RATs often encrypt their network communications after the initial exploit.\n\nIn 2011, three years after the most recent release of PIVY, attackers used the RAT to compromise security firm RSA and steal data about its SecureID authentication system. That data was subsequently used in other attacks. The RSA attack was linked to Chinese threat actors and described at the time as extremely sophisticated. Exploiting a zero-day vulnerability, the attack delivered PIVY as the payload. It was not an isolated incident. The campaign appears to have started in 2010, with many other companies compromised.\n \nPIVY also played a key role in the 2011 campaign known as Nitro that targeted chemical makers, government agencies, defense contractors, and human rights groups. Still active a year later, the Nitro attackers used a zero-day vulnerability in Java to deploy PIVY in 2012. Just recently, PIVY was the payload of a zero-day exploit in Internet Explorer used in what is known as a \"strategic web compromise\" attack against visitors to a U.S. government website and a variety of others.\n\nRATs require live, direct, real-time human interaction by the APT attacker. This characteristic is distinctly different from crimeware (malware focused on cybercrime), where the criminal can issue commands to their botnet of compromised endpoints whenever they please and set them to work on a common goal such as a spam relay. In contrast, RATs are much more personal and may indicate that you are dealing with a dedicated threat actor that is interested in your organization specifically.\n\n\nTITLE:\n\tPoison Ivy (PIVY)",
             "id": "malware--591f0cb7-d66f-4e14-a8e6-5927b597f920",
             "is_family": false,
             "malware_types": [
@@ -850,12 +850,12 @@
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
             "spec_version": "2.1",
-            "type": "malware",
-            "x_elevator_title": "PIVY Variant (6e99585c3fbd4f3a55bd8f604cb35f38)"
+            "type": "malware"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
             "created_by_ref": "identity--7c5c1239-6c40-427f-a7ae-ef4d64ac4995",
+            "description": "\n\nTITLE:\n\tPIVY Variant (8d36fd85d9c7d1f4bb170a28cc23498a)",
             "id": "malware--cc00cffe-36b3-40ad-a69c-26427af29935",
             "is_family": false,
             "malware_types": [
@@ -867,12 +867,12 @@
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
             "spec_version": "2.1",
-            "type": "malware",
-            "x_elevator_title": "PIVY Variant (8d36fd85d9c7d1f4bb170a28cc23498a)"
+            "type": "malware"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
             "created_by_ref": "identity--7c5c1239-6c40-427f-a7ae-ef4d64ac4995",
+            "description": "\n\nTITLE:\n\tPIVY Variant (330ddac1f605ff8abf60880c584ed797)",
             "id": "malware--ca7cd0ef-48cf-4cf1-9ad8-aed3f83ffdc7",
             "is_family": false,
 			"malware_types": [
@@ -1293,6 +1293,7 @@
         {
             "created": "2015-05-15T09:00:00.000Z",
             "created_by_ref": "identity--7c5c1239-6c40-427f-a7ae-ef4d64ac4995",
+            "description": "\n\nTITLE:\n\tPIVY Variant (41af5776bb2717a452510b7f63c54a00)",
             "id": "malware--b89b39d3-5079-43ba-8984-5992a607ebde",
             "is_family": false,
 			"malware_types": [
@@ -2053,8 +2054,7 @@
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
             "spec_version": "2.1",
-            "type": "malware",
-            "x_elevator_title": "PIVY Variant (0a265f04b44c1177eaa96817b0b70c0f)"
+            "type": "malware"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
@@ -2280,6 +2280,7 @@
         {
             "created": "2015-05-15T09:00:00.000Z",
             "created_by_ref": "identity--7c5c1239-6c40-427f-a7ae-ef4d64ac4995",
+            "description": "\n\nTITLE:\n\tPIVY Variant (e06cb5f8ed24903ab9f42816cb0c2922)",
             "id": "malware--8e4f6736-10de-4a15-934e-1367072428f4",
             "is_family": false,
 			"malware_types": [
@@ -2410,8 +2411,7 @@
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
             ],
             "spec_version": "2.1",
-            "type": "malware",
-            "x_elevator_title": "PIVY Variant (9e161fad98a678fa957d8cda2a608cb0)"
+            "type": "malware"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
@@ -3181,6 +3181,7 @@
         {
             "created": "2015-05-15T09:00:00.000Z",
             "created_by_ref": "identity--7c5c1239-6c40-427f-a7ae-ef4d64ac4995",
+            "description": "\n\nTITLE:\n\tPIVY Variant (c84a04eabb91e3dd2388d435527b6906)",
             "id": "malware--70d965e8-f28f-4223-abd2-a7efb403e038",
             "is_family": false,
 			"malware_types": [
@@ -3452,6 +3453,7 @@
         {
             "created": "2015-05-15T09:00:00.000Z",
             "created_by_ref": "identity--7c5c1239-6c40-427f-a7ae-ef4d64ac4995",
+            "description": "\n\nTITLE:\n\tPIVY Variant (7d551d1cba1aa7696ab5a787e93b4c83)",
             "id": "malware--85bf512d-c12b-40f4-b0b6-793f71cb1e07",
             "is_family": false,
 			"malware_types": [
