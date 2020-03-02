@@ -33,9 +33,9 @@ def idiom_elevator_mappings(before_file_path, stored_json, version, missing_poli
     print("Checking - " + before_file_path)
     print("With Master - " + stored_json["id"])
 
-    initialize_options()
+    initialize_options(disable="206,212,308,407,409,413,415,416,417,418,420,422,423,502,503,509,511,602,603,604,608,610,613,615,617,624,625,702,710,713,714,715,716,717,718,720,721,726,727,805,808,813,816,901,902,903,905")
     set_option_value("missing_policy", missing_policy)
-    set_option_value("log_level", "CRITICAL")
+    set_option_value("log_level", "INFO")
     set_option_value("spec_version", version)
     set_option_value("validator_args", "--version " + version)
     if not get_option_value("policy") == "no_policy":

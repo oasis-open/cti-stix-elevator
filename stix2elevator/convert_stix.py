@@ -872,6 +872,7 @@ def convert_party_name(party_name, obj, is_identity_obj):
                 obj["name"] = get_name(name)
                 first_one = False
             else:
+                aliases.append(get_name(name))
                 warn("Only one person name allowed for %s in STIX 2.x, used first one", 502, obj["id"])
                 # add to description
     elif party_name.organisation_names:
@@ -883,6 +884,7 @@ def convert_party_name(party_name, obj, is_identity_obj):
                 obj["name"] = get_name(name)
                 first_one = False
             else:
+                aliases.append(get_name(name))
                 warn("Only one organization name allowed for %s in STIX 2.x, used first one", 503, obj["id"])
                 # add to description
     return aliases
@@ -1497,7 +1499,9 @@ def convert_threat_actor(threat_actor, env):
     elif threat_actor.identity.name:
         threat_actor_instance["name"] = threat_actor.identity.name
     elif isinstance(threat_actor.identity, CIQIdentity3_0Instance):
-        convert_party_name(threat_actor.identity._specification.party_name, threat_actor_instance, False)
+        aliases = convert_party_name(threat_actor.identity._specification.party_name, threat_actor_instance, False)
+        if aliases and get_option_value("spec_version") == "2.1":
+            threat_actor_instance["aliases"] = aliases
     if threat_actor.intended_effects is not None:
         threat_actor_instance["goals"] = list()
         for g in threat_actor.intended_effects:

@@ -82,6 +82,9 @@
             "type": "identity"
         },
         {
+            "aliases": [
+                "APT1"
+            ],
             "created": "2015-05-15T09:00:00.000Z",
             "created_by_ref": "identity--b86f1a53-2cc7-4ecf-8a2d-e0928bce0d02",
             "id": "threat-actor--8dff0344-0c82-4079-8d04-6f3e4d9bd1df",
@@ -162,6 +165,11 @@
             "type": "malware"
         },
         {
+            "aliases": [
+                "Wang Dong",
+                "JackWang",
+                "Greenfield” (绿野)"
+            ],
             "created": "2015-05-15T09:00:00.000Z",
             "created_by_ref": "identity--b86f1a53-2cc7-4ecf-8a2d-e0928bce0d02",
             "id": "threat-actor--6d179234-61fc-40c4-ae86-3d53308d8e65",
@@ -190,6 +198,11 @@
             "type": "identity"
         },
         {
+            "aliases": [
+                "DOTA",
+                "Rodney",
+                "Raith"
+            ],
             "created": "2015-05-15T09:00:00.000Z",
             "created_by_ref": "identity--b86f1a53-2cc7-4ecf-8a2d-e0928bce0d02",
             "id": "threat-actor--d84cf283-93be-4ca7-890d-76c63eff3636",
@@ -251,6 +264,9 @@
             "type": "malware"
         },
         {
+            "aliases": [
+                "Mei Qiang"
+            ],
             "created": "2015-05-15T09:00:00.000Z",
             "created_by_ref": "identity--b86f1a53-2cc7-4ecf-8a2d-e0928bce0d02",
             "id": "threat-actor--02e7c48f-0301-4c23-b3e4-02e5a0114c21",
