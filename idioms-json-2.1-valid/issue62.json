@@ -9,6 +9,7 @@
             ],
             "modified": "2018-07-30T13:03:43.987Z",
             "pattern": "[((file:hashes.MD5 = '5d8129be965fab8115eca34fc84bd7f0' OR file:hashes.'SHA-1' = '2b999e7db890cc77f0098a091de756a1803a3c2b' OR file:hashes.'SHA-256' = '2c5dd8a64437cb2dd4b6747139c61d2d7f53ab3ddedbf22df3cb01bae170715b' OR file:hashes.ssdeep = '768:mvAFYk0IOqi7RKW1RD1ZCrm82+AnbaAOdoOKL70ehP:cDIOqctz2rBmbZoa71hP') AND file:name = 'VirusShare_5d8129be965fab8115eca34fc84bd7f0' AND file:size = 40654 AND (((file:extensions.'windows-pebinary-ext'.section[*].name = '.rdata' AND file:extensions.'windows-pebinary-ext'.section[*].entropy = 7.74202363178) AND (file:extensions.'windows-pebinary-ext'.section[*].name = '.data' AND file:extensions.'windows-pebinary-ext'.section[*].entropy = 7.89204688601) AND (file:extensions.'windows-pebinary-ext'.section[*].name = '.upx' AND file:extensions.'windows-pebinary-ext'.section[*].entropy = 7.31815613066))))]",
+            "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
             "valid_from": "2018-07-30T13:03:43.987655Z"
@@ -21,6 +22,7 @@
             ],
             "modified": "2018-07-30T13:03:43.991Z",
             "pattern": "[((file:hashes.MD5 = 'd41d8cd98f00b204e9800998ecf8427e' OR file:hashes.'SHA-1' = 'da39a3ee5e6b4b0d3255bfef95601890afd80709' OR file:hashes.'SHA-256' = 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855') AND file:name = 'autoexec.bat' AND file:size = 0)]",
+            "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
             "valid_from": "2018-07-30T13:03:43.991158Z"
@@ -33,6 +35,7 @@
             ],
             "modified": "2018-08-21T09:30:27.969Z",
             "pattern": "[(process:pid = 1700 AND process:parent_ref.pid = 1616 AND process:creator_user_ref.user_id = 'admin' AND process:created = t'2010-12-09T20:17:34.934295Z' AND process:command_line = 'bash some.sh') AND process:environment_variables[*].PROXY = '123.456.0.1' AND process:child_refs[*].pid = 4567 AND process:opened_connection_refs[*].dst_ref.value = '198.49.123.10' AND process:extensions.'windows-process-ext'.window_title = 'Some Title']",
+            "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
             "valid_from": "2018-07-30T13:03:43.992158Z"
@@ -45,6 +48,7 @@
             ],
             "modified": "2018-07-30T13:03:43.992Z",
             "pattern": "[(windows-registry-key:key = 'HKEY_CURRENT_USER\\\\Software\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Explorer\\\\User Shell Folders' AND windows-registry-key:key = 'HKEY_CURRENT_USER\\\\Software\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Explorer\\\\Shell Folders' AND windows-registry-key:key = 'HKEY_LOCAL_MACHINE\\\\Software\\\\Microsoft\\\\Tracing' AND windows-registry-key:key = 'HKEY_LOCAL_MACHINE\\\\Software\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Explorer\\\\User Shell Folders' AND windows-registry-key:key = 'Software\\\\Microsoft\\\\Windows NT\\\\CurrentVersion\\\\Winlogon' AND windows-registry-key:key = 'HKEY_LOCAL_MACHINE\\\\Software\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Explorer\\\\Shell Folders' AND windows-registry-key:key = 'Software\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Explorer\\\\User Shell Folders' AND windows-registry-key:key = 'Software\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Explorer\\\\Shell Folders' AND windows-registry-key:key = 'Software\\\\Microsoft\\\\windows\\\\CurrentVersion\\\\Internet Settings' AND windows-registry-key:key = 'Software\\\\Microsoft\\\\windows\\\\CurrentVersion\\\\Internet Settings\\\\Connections' AND windows-registry-key:key = 'HKEY_CURRENT_CONFIG\\\\Software\\\\Microsoft\\\\windows\\\\CurrentVersion\\\\Internet Settings' AND windows-registry-key:key = 'Software\\\\Microsoft\\\\SystemCertificates\\\\MY' AND windows-registry-key:key = 'HKEY_LOCAL_MACHINE\\\\System\\\\CurrentControlSet\\\\Services\\\\Tcpip\\\\Parameters')]",
+            "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
             "valid_from": "2018-08-21T09:30:27.972376Z"
