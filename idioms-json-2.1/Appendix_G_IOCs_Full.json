@@ -15,7 +15,6 @@
         {
             "created": "2018-10-02T14:17:39.106Z",
             "id": "identity--a1ee09fe-d0b1-4cc9-98fb-cf8debf08989",
-            "identity_class": "unknown",
             "modified": "2018-10-02T14:17:39.106Z",
             "name": "MITRE",
             "object_marking_refs": [
@@ -352,9 +351,6 @@
             "created_by_ref": "identity--a1ee09fe-d0b1-4cc9-98fb-cf8debf08989",
             "description": "\n                A WEBC2 backdoor is designed to retrieve a Web page from a pre-determined C2 server. It expects the Web page to contain special HTML tags; the backdoor will attempt to interpret the data between the tags as commands. Members of this family of backdoor malware talk to specific Web-based Command & Control (C2) servers. The backdoor has a limited command set, depending on version. It is primarily a downloader, but it classified as a backdoor because it can accept a limited command set, including changing local directories, downloading and executing additional files, sleeping, and connecting to a specific IP & port not initially included in the instruction set for the malware. Each version of the malware has at least one hardcoded URL to which it connects to receive its initial commands. This family of malware installs itself as a service, with the malware either being the executable run by the service, or the service DLL loaded by a legitimate service. The same core code is seen recompiled on different dates or with different names, but the same functionality. Key signatures include a specific set of functions (some of which can be used with the OS-provided rundll32.exe tool to install the malware as a service), and hardcoded strings used in communication with C2 servers to issue commands to the implant.\n            ",
             "id": "indicator--8b34f3bd-8176-4e33-a4ca-6b9970c2be2e",
-            "indicator_types": [
-                "unknown"
-            ],
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "WEBC2-Y21K (FAMILY)",
             "object_marking_refs": [

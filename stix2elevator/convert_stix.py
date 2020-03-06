@@ -976,7 +976,6 @@ def convert_ciq_addresses2_1(ciq_info_addresses, identity_instance, env, parent_
 def convert_identity(identity, env, parent_id=None, temp_marking_id=None, from_package=False):
     identity_instance = create_basic_object("identity", identity, env, parent_id)
     identity_instance["sectors"] = []
-    identity_instance["identity_class"] = "unknown"
     if identity.name is not None:
         identity_instance["name"] = identity.name
     if isinstance(identity, CIQIdentity3_0Instance):
@@ -1152,13 +1151,14 @@ def negate_indicator(indicator):
 
 
 def convert_indicator(indicator, env):
+    spec_version = get_option_value("spec_version")
     indicator_instance = create_basic_object("indicator", indicator, env)
 
     process_description_and_short_description(indicator_instance, indicator)
     convert_controlled_vocabs_to_open_vocabs(indicator_instance,
-                                             "labels" if get_option_value("spec_version") == "2.0" else "indicator_types",
+                                             "labels" if spec_version == "2.0" else "indicator_types",
                                              indicator.indicator_types,
-                                             INDICATOR_LABEL_MAP, False)
+                                             INDICATOR_LABEL_MAP, False, required=spec_version == "2.0")
     if indicator.title is not None:
         indicator_instance["name"] = indicator.title
     if indicator.alternative_id is not None:
@@ -1447,11 +1447,13 @@ def convert_report(report, env):
         # process information source before any relationships
         if report.header.title is not None:
             report_instance["name"] = report.header.title
+        spec_version = get_option_value("spec_version")
         convert_controlled_vocabs_to_open_vocabs(report_instance,
-                                                 "labels" if get_option_value("spec_version") == "2.0" else "report_types",
+                                                 "labels" if spec_version == "2.0" else "report_types",
                                                  report.header.intents,
                                                  REPORT_LABELS_MAP,
-                                                 False)
+                                                 False,
+                                                 required=spec_version == "2.0")
     else:
         report_instance["labels" if get_option_value("spec_version") == "2.0" else "report_types"] = ["unknown"]
     process_report_contents(report, new_env, report_instance)
@@ -1506,11 +1508,13 @@ def convert_threat_actor(threat_actor, env):
         threat_actor_instance["goals"] = list()
         for g in threat_actor.intended_effects:
             threat_actor_instance["goals"].append(text_type(g.value))
+    spec_version = get_option_value("spec_version")
     convert_controlled_vocabs_to_open_vocabs(threat_actor_instance,
-                                             "labels" if get_option_value("spec_version") == "2.0" else "threat_actor_types",
+                                             "labels" if spec_version == "2.0" else "threat_actor_types",
                                              threat_actor.types,
                                              THREAT_ACTOR_LABEL_MAP,
-                                             False)
+                                             False,
+                                             required=spec_version == "2.0")
     handle_multiple_missing_statement_properties(threat_actor_instance, threat_actor.planning_and_operational_supports,
                                                  "planning_and_operational_support")
     if get_option_value("spec_version") == "2.0":
@@ -1615,11 +1619,13 @@ def convert_malware_instance(mal, ttp, env, ttp_id_used):
     if mal.title is not None:
         malware_instance_instance["name"] = mal.title
     process_description_and_short_description(malware_instance_instance, mal)
+    spec_version = get_option_value("spec_version")
     convert_controlled_vocabs_to_open_vocabs(malware_instance_instance,
-                                             "labels" if get_option_value("spec_version") == "2.0" else "malware_types",
+                                             "labels" if spec_version == "2.0" else "malware_types",
                                              mal.types,
                                              MALWARE_LABELS_MAP,
-                                             False)
+                                             False,
+                                             required=spec_version == "2.0")
     if mal.names is not None:
         for n in mal.names:
             if "name" not in malware_instance_instance:
@@ -1676,12 +1682,13 @@ def convert_tool(tool, ttp, env, first_one):
     # TODO: add execution_environment to descriptor <-- Not Implemented!
     # TODO: add errors to descriptor <-- Not Implemented!
     # TODO: add compensation_model to descriptor <-- Not Implemented!
-
+    spec_version = get_option_value("spec_version")
     convert_controlled_vocabs_to_open_vocabs(tool_instance,
-                                             "labels" if get_option_value("spec_version") == "2.0" else "tool_types",
+                                             "labels" if spec_version == "2.0" else "tool_types",
                                              tool.type_,
                                              TOOL_LABELS_MAP,
-                                             False)
+                                             False,
+                                             required=spec_version == "2.0")
     tool_instance["tool_version"] = tool.version
     process_ttp_properties(tool_instance, ttp, env)
     finish_basic_object(ttp.id_, tool_instance, env, tool)
@@ -1698,7 +1705,7 @@ def convert_infrastructure(infra, ttp, env, first_one):
                                              infra.types,
                                              INFRASTRUCTURE_LABELS_MAP,
                                              False,
-                                             get_option_value("spec_version") == "2.1")
+                                             required=False)
     info("No 'first_seen' data on %s - using timestamp", 904, infra.id_ if infra.id_ else ttp.id_)
     infrastructure_instance["first_seen"] = convert_timestamp_of_stix_object(infra, infrastructure_instance["created"])
     if infra.observable_characterization is not None:

@@ -15,7 +15,6 @@
         {
             "created": "2019-08-12T15:22:42.816Z",
             "id": "identity--b86f1a53-2cc7-4ecf-8a2d-e0928bce0d02",
-            "identity_class": "unknown",
             "modified": "2019-08-12T15:22:42.816Z",
             "name": "MITRE",
             "object_marking_refs": [
@@ -47,8 +46,7 @@
         {
             "created": "2015-05-15T09:00:00.000Z",
             "id": "identity--bd546b83-21a0-4c62-9be2-69ce40ac5e2f",
-            "identity_class": "unknown",
-            "modified": "2015-05-15T09:00:00.000Z",
+                        "modified": "2015-05-15T09:00:00.000Z",
             "name": "Harbin Institute of Technology (哈尔滨工业大学)",
             "object_marking_refs": [
                 "marking-definition--0cda5493-87c3-4247-8438-cd6ade69206a"
@@ -59,8 +57,7 @@
         {
             "created": "2015-05-15T09:00:00.000Z",
             "id": "identity--10e32d23-6a3b-4c58-93e4-7dff9ec18816",
-            "identity_class": "unknown",
-            "modified": "2015-05-15T09:00:00.000Z",
+                        "modified": "2015-05-15T09:00:00.000Z",
             "name": "Zhejiang University School of Computer Science and Technology (浙江大学计算机学院)",
             "object_marking_refs": [
                 "marking-definition--0cda5493-87c3-4247-8438-cd6ade69206a"
@@ -95,9 +92,6 @@
             ],
             "sophistication": "unknown",
             "spec_version": "2.1",
-            "threat_actor_types": [
-                "unknown"
-            ],
             "type": "threat-actor"
         },
         {
@@ -138,9 +132,6 @@
             "created_by_ref": "identity--b86f1a53-2cc7-4ecf-8a2d-e0928bce0d02",
             "first_seen": "2015-05-15T09:00:00.000Z",
             "id": "infrastructure--bc18cb09-1834-4f36-ab85-65a445d8f9a5",
-            "infrastructure_types": [
-                "unknown"
-            ],
             "modified": "2015-05-15T09:00:00.000Z",
             "object_marking_refs": [
                 "marking-definition--0cda5493-87c3-4247-8438-cd6ade69206a"
@@ -153,9 +144,6 @@
             "created_by_ref": "identity--b86f1a53-2cc7-4ecf-8a2d-e0928bce0d02",
             "id": "malware--942e3f8a-343d-405e-abbb-dca333b7bda7",
             "is_family": false,
-            "malware_types": [
-                "unknown"
-            ],
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "MANITSME",
             "object_marking_refs": [
@@ -180,9 +168,6 @@
             ],
             "sophistication": "unknown",
             "spec_version": "2.1",
-            "threat_actor_types": [
-                "unknown"
-            ],
             "type": "threat-actor"
         },
         {
@@ -213,9 +198,6 @@
             ],
             "sophistication": "unknown",
             "spec_version": "2.1",
-            "threat_actor_types": [
-                "unknown"
-            ],
             "type": "threat-actor"
         },
         {
@@ -236,9 +218,6 @@
             "created_by_ref": "identity--b86f1a53-2cc7-4ecf-8a2d-e0928bce0d02",
             "id": "malware--cd84321b-4d0f-4472-8bc4-5f0819f877c9",
             "is_family": false,
-            "malware_types": [
-                "unknown"
-            ],
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "AURIGA",
             "object_marking_refs": [
@@ -252,9 +231,6 @@
             "created_by_ref": "identity--b86f1a53-2cc7-4ecf-8a2d-e0928bce0d02",
             "id": "malware--0dd15ea1-b379-4876-99ea-564acdb6e04b",
             "is_family": false,
-            "malware_types": [
-                "unknown"
-            ],
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "BANGAT",
             "object_marking_refs": [
@@ -277,16 +253,12 @@
             ],
             "sophistication": "unknown",
             "spec_version": "2.1",
-            "threat_actor_types": [
-                "unknown"
-            ],
             "type": "threat-actor"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
             "id": "identity--17d2f0d7-2534-4db7-89fe-bcce169bd317",
-            "identity_class": "unknown",
-            "modified": "2015-05-15T09:00:00.000Z",
+                        "modified": "2015-05-15T09:00:00.000Z",
             "name": "Comment Crew",
             "object_marking_refs": [
                 "marking-definition--0cda5493-87c3-4247-8438-cd6ade69206a"
@@ -305,16 +277,12 @@
             ],
             "sophistication": "unknown",
             "spec_version": "2.1",
-            "threat_actor_types": [
-                "unknown"
-            ],
             "type": "threat-actor"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
             "id": "identity--1765f435-56cf-44b8-89bf-ec0cbee8867e",
-            "identity_class": "unknown",
-            "modified": "2015-05-15T09:00:00.000Z",
+                        "modified": "2015-05-15T09:00:00.000Z",
             "name": "Comment Group",
             "object_marking_refs": [
                 "marking-definition--0cda5493-87c3-4247-8438-cd6ade69206a"
@@ -333,16 +301,12 @@
             ],
             "sophistication": "unknown",
             "spec_version": "2.1",
-            "threat_actor_types": [
-                "unknown"
-            ],
             "type": "threat-actor"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
             "id": "identity--fb78f4ac-0ea9-4d3e-a5d2-7f123f33a1dd",
-            "identity_class": "unknown",
-            "modified": "2015-05-15T09:00:00.000Z",
+                        "modified": "2015-05-15T09:00:00.000Z",
             "name": "Shady Rat",
             "object_marking_refs": [
                 "marking-definition--0cda5493-87c3-4247-8438-cd6ade69206a"
@@ -361,16 +325,12 @@
             ],
             "sophistication": "unknown",
             "spec_version": "2.1",
-            "threat_actor_types": [
-                "unknown"
-            ],
             "type": "threat-actor"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
             "id": "identity--fa936763-9e6f-4556-a9fd-87b1fd158ff1",
-            "identity_class": "unknown",
-            "modified": "2015-05-15T09:00:00.000Z",
+                        "modified": "2015-05-15T09:00:00.000Z",
             "name": "GSD 3rd Department / 2nd Bureau",
             "object_marking_refs": [
                 "marking-definition--0cda5493-87c3-4247-8438-cd6ade69206a"
@@ -389,16 +349,12 @@
             ],
             "sophistication": "unknown",
             "spec_version": "2.1",
-            "threat_actor_types": [
-                "unknown"
-            ],
             "type": "threat-actor"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
             "id": "identity--6d7abe71-7683-461d-a8c5-6b8a2ce9545b",
-            "identity_class": "unknown",
-            "modified": "2015-05-15T09:00:00.000Z",
+                        "modified": "2015-05-15T09:00:00.000Z",
             "name": "GSD 3rd Department",
             "object_marking_refs": [
                 "marking-definition--0cda5493-87c3-4247-8438-cd6ade69206a"
@@ -417,16 +373,12 @@
             ],
             "sophistication": "unknown",
             "spec_version": "2.1",
-            "threat_actor_types": [
-                "unknown"
-            ],
             "type": "threat-actor"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
             "id": "identity--57e477b2-3b52-4e4a-b066-663d624c01db",
-            "identity_class": "unknown",
-            "modified": "2015-05-15T09:00:00.000Z",
+                        "modified": "2015-05-15T09:00:00.000Z",
             "name": "PLA General Staff",
             "object_marking_refs": [
                 "marking-definition--0cda5493-87c3-4247-8438-cd6ade69206a"
@@ -445,9 +397,6 @@
             ],
             "sophistication": "unknown",
             "spec_version": "2.1",
-            "threat_actor_types": [
-                "unknown"
-            ],
             "type": "threat-actor"
         },
         {
@@ -493,9 +442,6 @@
             ],
             "sophistication": "unknown",
             "spec_version": "2.1",
-            "threat_actor_types": [
-                "unknown"
-            ],
             "type": "threat-actor"
         },
         {
@@ -533,9 +479,6 @@
             ],
             "sophistication": "unknown",
             "spec_version": "2.1",
-            "threat_actor_types": [
-                "unknown"
-            ],
             "type": "threat-actor"
         },
         {
@@ -828,8 +771,7 @@
             "created_by_ref": "identity--0707b599-6d4c-45bb-a011-2e397665fdc7",
             "description": " The group does not target industries systematically but\n\t\t\t\t\t\t\tmore likely steals from an enormous range of industries on a continuous\n\t\t\t\t\t\t\tbasis.  Organizations in all industries related to China’s\n\t\t\t\t\t\t\tstrategic priorities are potential targets of APT1’s comprehensive cyber\n\t\t\t\t\t\t\tespionage campaign. \n\nINTENDED_EFFECT:<!DOCTYPE html>\n\t\t\t\t\t<html><body>\n\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tOur evidence indicates that APT1 has been stealing\n\t\t\t\t\t\t\thundreds of terabytes of data from at least 141 organizations across a diverse\n\t\t\t\t\t\t\tset of industries beginning as early as 2006. Remarkably, we have witnessed APT1\n\t\t\t\t\t\t\ttarget dozens of organizations simultaneously. Once the group establishes access\n\t\t\t\t\t\t\tto a victim’s network, they continue to access it periodically over several\n\t\t\t\t\t\t\tmonths or years to steal large volumes of valuable intellectual property,\n\t\t\t\t\t\t\tincluding technology blueprints, proprietary manufacturing processes, test\n\t\t\t\t\t\t\tresults, business plans, pricing documents, partnership agreements, emails and\n\t\t\t\t\t\t\tcontact lists from victim organizations’ leadership. We believe that the\n\t\t\t\t\t\t\textensive activity we have directly observed represents only a small fraction of\n\t\t\t\t\t\t\tthe cyber espionage that APT1 has committed. \n\t\t\t\t\t\t\t</P>\n\t\t\t\t\t</body></html>\n\nINTENDED_EFFECT:Advantage - Economic\n\nINTENDED_EFFECT:Theft - Intellectual Property\n\nINTENDED_EFFECT:Competitive Advantage\n\nINTENDED_EFFECT:Theft - Credential Theft\n\nINTENDED_EFFECT:Unauthorized Access",
             "id": "identity--c63f31ac-871b-4846-aa25-de1926f4f3c8",
-            "identity_class": "unknown",
-            "modified": "2015-05-15T09:00:00.000Z",
+                        "modified": "2015-05-15T09:00:00.000Z",
             "name": "APT1 Tactics, Techniques and Procedures",
             "object_marking_refs": [
                 "marking-definition--d0658277-f427-4667-ad14-be31abc414dc"
@@ -1073,9 +1015,6 @@
             "description": "<!DOCTYPE html>\n\t\t\t\t\t<html>\n\t\t\t\t\t\t<body>\n\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tIn the last two years alone, we have confirmed 937 APT1 C2 servers — that is, actively listening or communicating\n                    \t\tprograms — running on 849 distinct IP addresses. However, we have evidence to suggest that APT1 is running\n                    \t\thundreds, and likely thousands, of other servers (see the Domains section below). The programs acting as APT1\n                    \t\tservers have mainly been: (1) FTP, for transferring files; (2) web, primarily for WEBC2; (3) RDP, for remote graphical\n                    \t\tcontrol of a system; (4) HTRAN, for proxying; and (5) C2 servers associated with various backdoor families (covered in\n                    \t\t<a href=\"http://intelreport.mandiant.com\">Appendix C: The Malware Arsenal</a>).\n\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t</body>\n\t\t\t\t\t</html>",
             "first_seen": "2019-08-12T15:22:42.841Z",
             "id": "infrastructure--36fa6965-c7b9-4ca4-bc3c-6f9c40bc29c4",
-            "infrastructure_types": [
-                "unknown"
-            ],
             "modified": "2019-08-12T15:22:42.841Z",
             "name": "APT1 C2 Servers Infrstructure",
             "object_marking_refs": [
@@ -1090,9 +1029,6 @@
             "description": "<!DOCTYPE html>\n\t\t\t\t\t<html>\n\t\t\t\t\t\t<body>\n\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tAPT1’s infrastructure includes FQDNs in addition to the IP addresses discussed above. The FQDNs\n                        \tplay an important role in their intrusion campaigns because APT1 embeds FQDNs as C2 addresses\n                        \twithin their backdoors. In the last several years we have confirmed 2,551 FQDNs attributed to\n                        \tAPT1. Of these, we have redacted FQDNs that implicated victims by name and provided 2,046 in\n                        \t<a href=\"http://intelreport.mandiant.com\">Appendix D</a>. By using FQDNs rather than hardcoded\n                        \tIP addresses as C2 addresses, attackers may dynamically decide where to direct C2 connections\n                        \tfrom a given backdoor. That is, if they lose control of a specific hop point (IP address) they\n                        \tcan \"point\" the C2 FQDN address to a different IP address and resume their control over victim\n                        \tbackdoors. This flexibility allows the attacker to direct victim systems to myriad C2 servers and\n                        \tavoid being blocked.\n\t\t\t\t\t\t\t</p>\n\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tAPT1 FQDNs can be grouped into three categories: (1) registered zones, (2) third-party zones, and (3) hijacked domains.\n\t\t\t\t\t\t\t</p>\n\t\t\t\t\t\t</body>\n\t\t\t\t\t</html>",
             "first_seen": "2019-08-12T15:22:42.841Z",
             "id": "infrastructure--1d04a399-dd12-49f8-aac9-fa781eb4beef",
-            "infrastructure_types": [
-                "unknown"
-            ],
             "modified": "2019-08-12T15:22:42.841Z",
             "name": "Domain Names Infrastructure",
             "object_marking_refs": [
@@ -1107,9 +1043,6 @@
             "description": "<!DOCTYPE html>\n\t\t\t\t\t<html>\n\t\t\t\t\t\t<body>\n\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tA DNS zone represents a collection of FQDNs that end with the same name, and which are usually registered through \n\t\t\t\t\t\t\ta domain registration company and controlled by a single owner. For example, “hugesoft.org” is an FQDN but also represents\n\t\t\t\t\t\t\ta zone. The FQDNs “ug-co.hugesoft.org” and “7cback.hugesoft.org” are part of the “hugesoft. org” zone and are called \n\t\t\t\t\t\t\t“subdomains” of the zone. The person who registered “hugesoft.org” may add as many subdomains as they wish and controls \n\t\t\t\t\t\t\tthe IP resolutions of these FQDNs. APT1 has registered at least 107 zones since 2004. Within these zones, we know of \n\t\t\t\t\t\t\tthousands of FQDNs that have resolved to hundreds of IP addresses (which we suspect are hops) and in some instances to \n\t\t\t\t\t\t\tAPT1’s source IP addresses in Shanghai.\n\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tThe first zone we became aware of was “hugesoft. org”, which was registered through eNom, Inc. in October 2004. The \n\t\t\t\t\t\t\tregistrant supplied “uglygorilla@163.com” as an email address. The supplied registration information, which is still \n\t\t\t\t\t\t\tvisible in public “whois” data as of February 3, 2013, includes the following:\n\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t\t<code>\n\t\t\t\t\t\t\t\tDomain Name:HUGESOFT.ORG\n      \t\t\t\t\t\t\tCreated On:25-Oct-2004 09:46:18 UTC\n      \t\t\t\t\t\t\tRegistrant Name:huge soft\n      \t\t\t\t\t\t\tRegistrant Organization:hugesoft\n      \t\t\t\t\t\t\tRegistrant Street1:shanghai\n     \t\t\t\t\t\t\tRegistrant City:shanghai\n      \t\t\t\t\t\t\tRegistrant State/Province:S\n      \t\t\t\t\t\t\tRegistrant Postal Code:200001\n      \t\t\t\t\t\t\tRegistrant Country:CN\n      \t\t\t\t\t\t\tRegistrant Phone:+86.21000021\n      \t\t\t\t\t\t\tRegistrant Email:uglygorilla@163.com\n\t\t\t\t\t\t\t</code>\n\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tThe supplied registrant information does not need to be accurate for the zone to be registered successfully. For example, \n\t\t\t\t\t\t\t“shanghai” is not a street name. Nevertheless, it is noteworthy that Shanghai appeared in the first known APT1 domain \n\t\t\t\t\t\t\tregistration, along with a phone number that begins with China’s “+86” international code. In fact, Shanghai was listed \n\t\t\t\t\t\t\tas the registrant’s city in at least 24 of the 107 (22%) registrations. \n\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tSome of the supplied registration information is obviously false. For example, consider the registration information \n\t\t\t\t\t\t\tsupplied for the zone “uszzcs.com” in 2005:\n\t\t\t\t\t\t\t</p>\n\t\t\t\t\t\t\t<code>\n\t\t\t\t\t\t\t\tVictor etejedaa@yahoo.com +86.8005439436\n       \t\t\t\t\t\t\tMichael Murphy\n       \t\t\t\t\t\t\t795 Livermore St.\n       \t\t\t\t\t\t\tYellow Spring,Ohio,UNITED STATES 45387\n\t\t\t\t\t\t\t</code>\n\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tHere, a phone number with a Chinese prefix (“+86”) accompanied an address in the United States. Since the United States \n\t\t\t\t\t\t\tuses the prefix “+1”, it is highly unlikely that a person living in Ohio would provide a phone number beginning with “+86”. \n\t\t\t\t\t\t\tAdditionally, the city name is spelled incorrectly, as it should be “Yellow Springs” instead of “Yellow Spring”. This could \n\t\t\t\t\t\t\thave been attributed to a one-time spelling mistake, except the registrant spelled the city name incorrectly multiple times, \n\t\t\t\t\t\t\tboth for the zones “uszzcs.com” and “attnpower.com”. This suggests that the registrant really thought “Yellow Spring” was the \n\t\t\t\t\t\t\tcorrect spelling and that he or she did not, in fact, live or work in Yellow Springs, Ohio.\n\t\t\t\t\t\t\t</p>\n\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tOverall, the combination of a relatively high number of “Shanghai” registrations with obviously false registration examples \n\t\t\t\t\t\t\tin other registrations suggests a partially uncoordinated domain registration campaign from 2004 until present, in which some \n\t\t\t\t\t\t\tregistrants tried to fabricate non-Shanghai locations but others did not. This is supported by contextual information on the \n\t\t\t\t\t\t\tInternet for the email address “lfengg@163.com,” which was supplied in the registration information for seven of the 107 zones. \n\t\t\t\t\t\t\tOn the site “www.china-one.org,” the email address “lfengg@163.com” appears as the contact for the Shanghai Kai Optical \n\t\t\t\t\t\t\tInformation Technology Co., Ltd., a website production company located in a part of Shanghai that is across the river from \n\t\t\t\t\t\t\tPLA Unit 61398.\n\t\t\t\t\t\t\t</p>\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t<h1>naming themes</h1>\n\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tAbout half of APT1’s known zones were named according to three themes: news, technology and business. These themes cause \n\t\t\t\t\t\t\tAPT1 command and control addresses to appear benign at first glance. However, we believe that the hundreds of FQDNs within \n\t\t\t\t\t\t\tthese zones were created for the purpose of APT1 intrusions. (Note: these themes are not unique to APT1 or even APT in general.)\n\t\t\t\t\t\t\t</p>\n\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tThe news-themed zones include the names of well-known news media outlets such as CNN, Yahoo and Reuters. However, they also \n\t\t\t\t\t\t\tinclude names referencing English-speaking countries, such as “aunewsonline.com” (Australia), “canadatvsite.com” (Canada), \n\t\t\t\t\t\t\tand “todayusa.org” (U.S.). Below is a list of zones registered by APT1 that are news- themed:\n\t\t\t\t\t\t\t</p>\n\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\t<div\n\t\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t\taoldaily.com<br>\n\t\t\t\t\t\t\t\t\taunewsonline.com<br>\n\t\t\t\t\t\t\t\t\tcanadatvsite.com<br>\n\t\t\t\t\t\t\t\t\tcanoedaily.com<br>\n\t\t\t\t\t\t\t\t\tcnndaily.com<br>\n\t\t\t\t\t\t\t\t\tcnndaily.net<br>\n\t\t\t\t\t\t\t\t\tcnnnewsdaily.com<br>\n\t\t\t\t\t\t\t\t\tdefenceonline.net<br>\n\t\t\t\t\t\t\t\t\tfreshreaders.net<br>\n\t\t\t\t\t\t\t\t\tgiftnews.org<br>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t\tissnbgkit.net<br>\n\t\t\t\t\t\t\t\t\tmediaxsds.net<br>\n\t\t\t\t\t\t\t\t\tmyyahoonews.com<br>\n\t\t\t\t\t\t\t\t\tnewsesport.com<br>\n\t\t\t\t\t\t\t\t\tnewsonet.net<br>\n\t\t\t\t\t\t\t\t\tnewsonlinesite.com<br>\n\t\t\t\t\t\t\t\t\tnewspappers.org<br>\n\t\t\t\t\t\t\t\t\tnytimesnews.net<br>\n\t\t\t\t\t\t\t\t\toplaymagzine.comv\n\t\t\t\t\t\t\t\t\tphoenixtvus.com<br>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t\tpurpledaily.com<br>\n\t\t\t\t\t\t\t\t\treutersnewsonline.com<br>\n\t\t\t\t\t\t\t\t\trssadvanced.org<br>\n\t\t\t\t\t\t\t\t\tsaltlakenews.org<br>\n\t\t\t\t\t\t\t\t\tsportreadok.net<br>\n\t\t\t\t\t\t\t\t\ttodayusa.org<br>\n\t\t\t\t\t\t\t\t\tusapappers.com<br>\n\t\t\t\t\t\t\t\t\tusnewssite.com<br>\n\t\t\t\t\t\t\t\t\tyahoodaily.com<br>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</p>\n\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tThe technology-themed zones reference well-known technology companies (AOL, Apple, Google, Microsoft), antivirus vendors \n\t\t\t\t\t\t\t(McAfee, Symantec), and products (Blackberry, Bluecoat). APT1 also used more generic names referencing topics like software:\n\t\t\t\t\t\t\t</p>\n\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\t<div\n\t\t\t\t\t\t\t\taolon1ine.com<br>\n\t\t\t\t\t\t\t\tapplesoftupdate.com<br>\n\t\t\t\t\t\t\t\tblackberrycluter.com<br>\n\t\t\t\t\t\t\t\tbluecoate.com<br>\n\t\t\t\t\t\t\t\tcomrepair.net<br>\n\t\t\t\t\t\t\t\tdnsweb.org<br>\n\t\t\t\t\t\t\t\tdownloadsite.me<br>\n\t\t\t\t\t\t\t\tfirefoxupdata.com<br>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\tglobalowa.com<br>\n\t\t\t\t\t\t\t\tgmailboxes.com<br>\n\t\t\t\t\t\t\t\thugesoft.org<br>\n\t\t\t\t\t\t\t\tidirectech.com<br>\n\t\t\t\t\t\t\t\tifexcel.com<br>\n\t\t\t\t\t\t\t\tinfosupports.com<br>\n\t\t\t\t\t\t\t\tlivemymsn.com<br>\n\t\t\t\t\t\t\t\tmcafeepaying.com<br>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div\n\t\t\t\t\t\t\t\tmicrosoft-update-info.com<br>\n\t\t\t\t\t\t\t\tmicyuisyahooapis.com<br>\n\t\t\t\t\t\t\t\tmsnhome.org<br>\n\t\t\t\t\t\t\t\tpcclubddk.net<br>\n\t\t\t\t\t\t\t\tprogammerli.com<br>\n\t\t\t\t\t\t\t\tsoftsolutionbox.net<br>\n\t\t\t\t\t\t\t\tsymanteconline.net<br>\n\t\t\t\t\t\t\t\twebservicesupdate.com<br>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</p>\n\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tFinally, some zones used by APT1 reflect a business theme. The names suggest websites that professionals might visit:\n\t\t\t\t\t\t\t</p>\n\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\t<div\n\t\t\t\t\t\t\t\tadvanbusiness.com<br>\n\t\t\t\t\t\t\t\tbusinessconsults.net<br>\n\t\t\t\t\t\t\t\tbusinessformars.com<br>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div\n\t\t\t\t\t\t\t\tcompanyinfosite.com<br>\n\t\t\t\t\t\t\t\tconferencesinfo.com<br>\n\t\t\t\t\t\t\t\tcopporationnews.com<br>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div\n\t\t\t\t\t\t\t\tinfobusinessus.org<br>\n\t\t\t\t\t\t\t\tjobsadvanced.com<br>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</p>\n\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tNot every zone stays within APT1’s control forever. Over a campaign lasting for so many years, APT1 has not always \n\t\t\t\t\t\t\trenewed every zone in their attack infrastructure. Additionally, while some have simply been allowed to expire, \n\t\t\t\t\t\t\tothers have been transferred to the organizations that the domain names attempted to imitate. For example, in September 2011, \n\t\t\t\t\t\t\tYahoo filed a complaint against “zheng youjun” of “Arizona, USA”, who registered the APT1\n\t\t\t\t\t\t\tzone “myyahoonews.com”. Yahoo alleged the “<myyahoonews.com> domain name was confusingly similar to Complainant’s YAHOO! \n\t\t\t\t\t\t\tmark” and that “[zheng youjun] registered and used the <myyahoonews.com> domain name in bad faith.” In response, the National \n\t\t\t\t\t\t\tArbitration Forum found that the site “myyahoonews.com” at the time resolved to “a phishing web page, substantially similar to \n\t\t\t\t\t\t\tthe actual WorldSID website...in an effort to collect login credentials under false pretenses.” Not surprisingly, “zheng youjun” \n\t\t\t\t\t\t\tdid not respond. Subsequently, control of “myyahoonews.com” was transferred from APT1 to Yahoo.\n\t\t\t\t\t\t\t</p>\n\t\t\t\t\t\t</body>\n\t\t\t\t\t</html>",
             "first_seen": "2019-08-12T15:22:42.841Z",
             "id": "infrastructure--a6fa7315-04ff-4234-ad22-6c210ffe0f2b",
-            "infrastructure_types": [
-                "unknown"
-            ],
             "modified": "2019-08-12T15:22:42.841Z",
             "name": "Registered DNS Zones infrastructure",
             "object_marking_refs": [
@@ -1124,9 +1057,6 @@
             "description": "<!DOCTYPE html>\n\t\t\t\t\t<html>\n\t\t\t\t\t\t<body>\n\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tThe third-party service that APT1 has used the most is known as \"dynamic DNS.\" This is a service that allows people\n                        \tto register subdomains under zones that other people have registered and provided to the service. Over the years,\n                        \tAPT1 has registered hundreds of FQDNs in this manner. When they need to change the IP resolution of an FQDN, they\n                        \tsimply log in to these services and update the IP resolution of their FQDN via a web-based interface.\n\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tIn addition to dynamic DNS, recently we have observed that APT1 has been creating FQDNs that end with\n                        \t\"appspot.com\", suggesting that they are using Google’s App Engine service.\n\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t</body>\n\t\t\t\t\t</html>",
             "first_seen": "2019-08-12T15:22:42.842Z",
             "id": "infrastructure--5c446bed-3bf6-4344-a4d2-5560d550fc82",
-            "infrastructure_types": [
-                "unknown"
-            ],
             "modified": "2019-08-12T15:22:42.842Z",
             "name": "Third-party Services Infrastructure",
             "object_marking_refs": [
@@ -1141,9 +1071,6 @@
             "description": "<!DOCTYPE html>\n\t\t\t\t\t<html>\n\t\t\t\t\t\t<body>\n\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tAPT1 intruders often use the FQDNs that are associated with legitimate websites hosted by their hop points. We\n                        \tconsider these domains to be \"hijacked\" because they were registered by someone for a legitimate reason, but have\n                        \tbeen leveraged by APT1 for malicious purposes. APT1 uses hijacked FQDNs for two main purposes. First, they\n                        \tplace malware (usually in ZIP files) on the legitimate websites hosted on the hop point and then send spear phishing\n                        \temails with a link that includes the legitimate FQDN. Second, they embed hijacked FQDNs as C2 addresses in their\n                        \tbackdoors.\n\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t</body>\n\t\t\t\t\t</html>",
             "first_seen": "2019-08-12T15:22:42.842Z",
             "id": "infrastructure--3756130b-9a5f-47d4-8ed4-4350c9921696",
-            "infrastructure_types": [
-                "unknown"
-            ],
             "modified": "2019-08-12T15:22:42.842Z",
             "name": "Hijacked FQDN Infrastructure",
             "object_marking_refs": [
@@ -1251,9 +1178,6 @@
                 "marking-definition--0cda5493-87c3-4247-8438-cd6ade69206a"
             ],
             "spec_version": "2.1",
-            "tool_types": [
-                "unknown"
-            ],
             "type": "tool"
         },
         {
@@ -1273,9 +1197,7 @@
                 "marking-definition--0cda5493-87c3-4247-8438-cd6ade69206a"
             ],
             "spec_version": "2.1",
-            "tool_types": [
-                "unknown"
-            ],
+            
             "type": "tool"
         },
         {
@@ -1295,9 +1217,7 @@
                 "marking-definition--0cda5493-87c3-4247-8438-cd6ade69206a"
             ],
             "spec_version": "2.1",
-            "tool_types": [
-                "unknown"
-            ],
+            
             "type": "tool"
         },
         {
@@ -1317,9 +1237,7 @@
                 "marking-definition--0cda5493-87c3-4247-8438-cd6ade69206a"
             ],
             "spec_version": "2.1",
-            "tool_types": [
-                "unknown"
-            ],
+            
             "type": "tool"
         },
         {
@@ -1339,9 +1257,7 @@
                 "marking-definition--0cda5493-87c3-4247-8438-cd6ade69206a"
             ],
             "spec_version": "2.1",
-            "tool_types": [
-                "unknown"
-            ],
+            
             "type": "tool"
         },
         {
@@ -1361,9 +1277,7 @@
                 "marking-definition--0cda5493-87c3-4247-8438-cd6ade69206a"
             ],
             "spec_version": "2.1",
-            "tool_types": [
-                "unknown"
-            ],
+            
             "type": "tool"
         },
         {
@@ -1383,9 +1297,7 @@
                 "marking-definition--0cda5493-87c3-4247-8438-cd6ade69206a"
             ],
             "spec_version": "2.1",
-            "tool_types": [
-                "unknown"
-            ],
+            
             "type": "tool"
         },
         {
@@ -1405,9 +1317,7 @@
                 "marking-definition--0cda5493-87c3-4247-8438-cd6ade69206a"
             ],
             "spec_version": "2.1",
-            "tool_types": [
-                "unknown"
-            ],
+            
             "type": "tool"
         },
         {
@@ -1503,9 +1413,7 @@
                 "marking-definition--0cda5493-87c3-4247-8438-cd6ade69206a"
             ],
             "spec_version": "2.1",
-            "tool_types": [
-                "unknown"
-            ],
+            
             "type": "tool"
         },
         {
@@ -1525,9 +1433,7 @@
                 "marking-definition--0cda5493-87c3-4247-8438-cd6ade69206a"
             ],
             "spec_version": "2.1",
-            "tool_types": [
-                "unknown"
-            ],
+            
             "type": "tool"
         },
         {

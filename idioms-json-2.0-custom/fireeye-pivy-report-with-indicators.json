@@ -14,7 +14,6 @@
         {
             "created": "2019-11-27T11:59:45.319Z",
             "id": "identity--7c5c1239-6c40-427f-a7ae-ef4d64ac4995",
-            "identity_class": "unknown",
             "modified": "2019-11-27T11:59:45.319Z",
             "name": "MITRE",
             "object_marking_refs": [

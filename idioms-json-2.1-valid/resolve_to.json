@@ -4,9 +4,6 @@
     {
       "created": "2018-07-30T13:03:44.858Z",
       "id": "indicator--6116b44e-a7e9-11e3-a82f-000c29b241af",
-      "indicator_types": [
-        "unknown"
-      ],
       "modified": "2018-07-30T13:03:44.858Z",
       "pattern": "[(domain-name:value = 'microsoftb.byinter.net' AND domain-name:resolves_to_refs[*].value = '202.65.222.45')]",
       "spec_version": "2.1",

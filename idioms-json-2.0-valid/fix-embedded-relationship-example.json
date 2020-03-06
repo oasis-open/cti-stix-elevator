@@ -4,7 +4,6 @@
     {
       "created": "2017-01-27T13:49:53.872Z",
       "id": "identity--4ec4d0a2-80e3-11e6-ae22-56b6b6499611",
-      "identity_class": "unknown",
       "modified": "2017-01-27T13:49:53.872Z",
       "name": "Emmanuelle",
       "type": "identity"
@@ -12,7 +11,6 @@
     {
       "created": "2017-01-27T13:49:53.872Z",
       "id": "identity--1621d4d4-b67d-11e3-9670-f01faf20d111",
-      "identity_class": "unknown",
       "modified": "2017-01-27T13:49:53.872Z",
       "name": "Adversary Bravo",
       "type": "identity"

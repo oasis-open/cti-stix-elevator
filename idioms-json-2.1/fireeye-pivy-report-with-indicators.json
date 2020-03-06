@@ -15,7 +15,6 @@
         {
             "created": "2019-11-27T11:59:45.319Z",
             "id": "identity--7c5c1239-6c40-427f-a7ae-ef4d64ac4995",
-            "identity_class": "unknown",
             "modified": "2019-11-27T11:59:45.319Z",
             "name": "MITRE",
             "object_marking_refs": [
@@ -135,9 +134,6 @@
             ],
             "sophistication": "unknown",
             "spec_version": "2.1",
-            "threat_actor_types": [
-                "unknown"
-            ],
             "type": "threat-actor"
         },
         {
@@ -167,9 +163,6 @@
             ],
             "sophistication": "unknown",
             "spec_version": "2.1",
-            "threat_actor_types": [
-                "unknown"
-            ],
             "type": "threat-actor"
         },
         {
@@ -183,9 +176,6 @@
             ],
             "sophistication": "unknown",
             "spec_version": "2.1",
-            "threat_actor_types": [
-                "unknown"
-            ],
             "type": "threat-actor"
         },
         {
@@ -215,9 +205,6 @@
             ],
             "sophistication": "unknown",
             "spec_version": "2.1",
-            "threat_actor_types": [
-                "unknown"
-            ],
             "type": "threat-actor"
         },
         {
@@ -242,9 +229,6 @@
             "description": "Poison Ivy is a remote access tool that is freely available for download from its official web site at www.poisonivy-rat.com. First released in 2005, the tool has gone unchanged since 2008 with version 2.3.2. Poison Ivy includes features common to most Windows-based RATs, including key logging, screen capturing, video capturing, file transfers, system administration, password theft, and traffic relaying.\n\nPoison Ivy's wide availability and easy-to-use features make it a popular choice for all kinds of criminals. But it is probably most notable for its role in many high profile, targeted APT attacks.\n\nThese APTs pursue specific targets, using RATs to maintain a persistent presence within the target's network. They move laterally and escalate system privileges to extract sensitive information-whenever the attacker wants to do so.4,5 Because some RATs used in targeted attacks are widely available, determining whether an attack is part of a broader APT campaign can be difficult. Equally challenging is identifying malicious traffic to determine the attacker's post-compromise activities and assess overall damage-these RATs often encrypt their network communications after the initial exploit.\n\nIn 2011, three years after the most recent release of PIVY, attackers used the RAT to compromise security firm RSA and steal data about its SecureID authentication system. That data was subsequently used in other attacks. The RSA attack was linked to Chinese threat actors and described at the time as extremely sophisticated. Exploiting a zero-day vulnerability, the attack delivered PIVY as the payload. It was not an isolated incident. The campaign appears to have started in 2010, with many other companies compromised.\n \nPIVY also played a key role in the 2011 campaign known as Nitro that targeted chemical makers, government agencies, defense contractors, and human rights groups. Still active a year later, the Nitro attackers used a zero-day vulnerability in Java to deploy PIVY in 2012. Just recently, PIVY was the payload of a zero-day exploit in Internet Explorer used in what is known as a \"strategic web compromise\" attack against visitors to a U.S. government website and a variety of others.\n\nRATs require live, direct, real-time human interaction by the APT attacker. This characteristic is distinctly different from crimeware (malware focused on cybercrime), where the criminal can issue commands to their botnet of compromised endpoints whenever they please and set them to work on a common goal such as a spam relay. In contrast, RATs are much more personal and may indicate that you are dealing with a dedicated threat actor that is interested in your organization specifically.\n\n\nTITLE:\n\tPoison Ivy (PIVY)",
             "id": "malware--591f0cb7-d66f-4e14-a8e6-5927b597f920",
             "is_family": false,
-            "malware_types": [
-                "unknown"
-            ],
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "Poison Ivy (PIVY)",
             "object_marking_refs": [
@@ -291,9 +275,6 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (140e728871eff241e0148363b2931b1d)",
             "id": "malware--2ee01cb3-e9fa-46f9-8ec5-ffc9cb0b59f1",
             "is_family": false,
-            "malware_types": [
-                "unknown"
-            ],
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "140e728871eff241e0148363b2931b1d",
             "object_marking_refs": [
@@ -308,9 +289,6 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (767d04f72f5941326f11f8927cf3697b)",
             "id": "malware--33cc429f-7974-49a9-ab2e-6ebc3c37d62b",
             "is_family": false,
-            "malware_types": [
-                "unknown"
-            ],
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "767d04f72f5941326f11f8927cf3697b",
             "object_marking_refs": [
@@ -325,9 +303,6 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (03e0271d12a24050da632675b14091c1)",
             "id": "malware--fa0ffc72-0f73-4b08-84a5-6ea62b46828b",
             "is_family": false,
-            "malware_types": [
-                "unknown"
-            ],
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "03e0271d12a24050da632675b14091c1",
             "object_marking_refs": [
@@ -342,9 +317,6 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (87133a339492ecb5142a93c7bbfd3805)",
             "id": "malware--f0bfc691-7945-47d9-95c7-a0219b8a5c67",
             "is_family": false,
-            "malware_types": [
-                "unknown"
-            ],
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "87133a339492ecb5142a93c7bbfd3805",
             "object_marking_refs": [
@@ -359,9 +331,6 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (707a4493775fd9c959861dcf04f18283)",
             "id": "malware--dfb4e482-2b04-4365-973e-1feb5a567263",
             "is_family": false,
-            "malware_types": [
-                "unknown"
-            ],
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "707a4493775fd9c959861dcf04f18283",
             "object_marking_refs": [
@@ -416,9 +385,6 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (e765c69b11860c4f1b84276278991253)",
             "id": "malware--dff22c1b-26f9-4fbd-8b42-8b8507c684fd",
             "is_family": false,
-            "malware_types": [
-                "unknown"
-            ],
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "e765c69b11860c4f1b84276278991253",
             "object_marking_refs": [
@@ -433,9 +399,6 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (e74d62dfdc308df3038e61dfc4e4256a)",
             "id": "malware--e55c6eaa-bf0f-4b6b-9572-5cd0d3f62134",
             "is_family": false,
-            "malware_types": [
-                "unknown"
-            ],
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "e74d62dfdc308df3038e61dfc4e4256a",
             "object_marking_refs": [
@@ -450,9 +413,6 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (8087d49e7bb391e0ba6e482f931b0ad5)",
             "id": "malware--23a87226-706a-430e-96cd-d7f2c99b7b29",
             "is_family": false,
-            "malware_types": [
-                "unknown"
-            ],
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "8087d49e7bb391e0ba6e482f931b0ad5",
             "object_marking_refs": [
@@ -467,9 +427,6 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (0a43013eef1c2ffba36e3c29512c89a2)",
             "id": "malware--aaba08c5-e50d-49a1-a54a-cfdf1a68ff51",
             "is_family": false,
-            "malware_types": [
-                "unknown"
-            ],
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "0a43013eef1c2ffba36e3c29512c89a2",
             "object_marking_refs": [
@@ -484,9 +441,6 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (808e21d6efa2884811fbd0adf67fda78)",
             "id": "malware--61a62a6a-9a18-4758-8e52-622431c4b8ae",
             "is_family": false,
-            "malware_types": [
-                "unknown"
-            ],
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "808e21d6efa2884811fbd0adf67fda78",
             "object_marking_refs": [
@@ -501,9 +455,6 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (bc90b4593b7b631a78a8305a873d6d5c)",
             "id": "malware--5b2a2542-47fe-40f9-8915-4bf7c7397810",
             "is_family": false,
-            "malware_types": [
-                "unknown"
-            ],
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "bc90b4593b7b631a78a8305a873d6d5c",
             "object_marking_refs": [
@@ -518,9 +469,6 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (be6e72ad1b1ed2685a23dfe1b36f03cc)",
             "id": "malware--35322f13-94bd-4b97-abb6-2a9adc24b8d8",
             "is_family": false,
-            "malware_types": [
-                "unknown"
-            ],
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "be6e72ad1b1ed2685a23dfe1b36f03cc",
             "object_marking_refs": [
@@ -535,9 +483,6 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (5032ff32a41748bdb40df0fd581cd669)",
             "id": "malware--80cd5722-40ff-4938-aba5-991bd8da2b39",
             "is_family": false,
-            "malware_types": [
-                "unknown"
-            ],
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "5032ff32a41748bdb40df0fd581cd669",
             "object_marking_refs": [
@@ -552,9 +497,6 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (0323de551aa10ca6221368c4a73732e6)",
             "id": "malware--c221ae40-f998-4fa9-ba46-9be04e163371",
             "is_family": false,
-            "malware_types": [
-                "unknown"
-            ],
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "0323de551aa10ca6221368c4a73732e6",
             "object_marking_refs": [
@@ -569,9 +511,6 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (4713557e3ed2ced62ceccbe4d07314b4)",
             "id": "malware--9717d5a3-773c-490d-b90f-718602fb3c43",
             "is_family": false,
-            "malware_types": [
-                "unknown"
-            ],
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "4713557e3ed2ced62ceccbe4d07314b4",
             "object_marking_refs": [
@@ -586,9 +525,6 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (0678645e45fcd3da84ab27122d6775a9)",
             "id": "malware--2c346548-2150-47f1-91c4-a78fa404be12",
             "is_family": false,
-            "malware_types": [
-                "unknown"
-            ],
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "0678645e45fcd3da84ab27122d6775a9",
             "object_marking_refs": [
@@ -603,9 +539,6 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (3c9a177a39e09e9a4ec4f09c029f5cb2)",
             "id": "malware--8c1057bd-4a8a-4632-b0d4-b72ebd7936d3",
             "is_family": false,
-            "malware_types": [
-                "unknown"
-            ],
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "3c9a177a39e09e9a4ec4f09c029f5cb2",
             "object_marking_refs": [
@@ -620,9 +553,6 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (51d9e2993d203bd43a502a2b1e1193da)",
             "id": "malware--2e160c21-83d0-4d09-a833-c85327e49b46",
             "is_family": false,
-            "malware_types": [
-                "unknown"
-            ],
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "51d9e2993d203bd43a502a2b1e1193da",
             "object_marking_refs": [
@@ -637,9 +567,6 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (c977d6e9c7844a1c8d6db1b6a9aba497)",
             "id": "malware--7bac9c8b-c19a-4ce6-9337-4750d68f05cc",
             "is_family": false,
-            "malware_types": [
-                "unknown"
-            ],
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "c977d6e9c7844a1c8d6db1b6a9aba497",
             "object_marking_refs": [
@@ -654,9 +581,6 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (02ac495eb31a2405fce287565b590a1f)",
             "id": "malware--30fb07e5-fe94-480e-9c15-8d494500cf17",
             "is_family": false,
-            "malware_types": [
-                "unknown"
-            ],
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "02ac495eb31a2405fce287565b590a1f",
             "object_marking_refs": [
@@ -671,9 +595,6 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (1f43738b1f67266fdafd73235acbf338)",
             "id": "malware--b8d4945a-5fc1-4ceb-a2c4-af17def8b396",
             "is_family": false,
-            "malware_types": [
-                "unknown"
-            ],
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "1f43738b1f67266fdafd73235acbf338",
             "object_marking_refs": [
@@ -688,9 +609,6 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (8010cae3e8431bb11ed6dc9acabb93b7)",
             "id": "malware--30ea087f-7d2b-496b-9ed1-5f000c8b7695",
             "is_family": false,
-            "malware_types": [
-                "unknown"
-            ],
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "8010cae3e8431bb11ed6dc9acabb93b7",
             "object_marking_refs": [
@@ -705,9 +623,6 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (ce8112de474c22c1407ce94245c2d1de)",
             "id": "malware--7b284c94-9598-4e6f-944e-188bbb36716d",
             "is_family": false,
-            "malware_types": [
-                "unknown"
-            ],
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "ce8112de474c22c1407ce94245c2d1de",
             "object_marking_refs": [
@@ -722,9 +637,6 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (026871ea3d6cbbeb90fea6bf2906cc12)",
             "id": "malware--f1a0e293-d490-4e89-9fbb-384188076f60",
             "is_family": false,
-            "malware_types": [
-                "unknown"
-            ],
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "026871ea3d6cbbeb90fea6bf2906cc12",
             "object_marking_refs": [
@@ -739,9 +651,6 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (db815161022fcecf282b40745f72d9fc)",
             "id": "malware--707ad4a8-e037-466c-9f59-ac935f53e606",
             "is_family": false,
-            "malware_types": [
-                "unknown"
-            ],
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "db815161022fcecf282b40745f72d9fc",
             "object_marking_refs": [
@@ -756,9 +665,6 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (6cf2f645395fbb64bbc14fb8993e2eea)",
             "id": "malware--b1da97a0-e8e7-44d7-8faf-8907589d8465",
             "is_family": false,
-            "malware_types": [
-                "unknown"
-            ],
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "6cf2f645395fbb64bbc14fb8993e2eea",
             "object_marking_refs": [
@@ -773,9 +679,6 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (4ffcd711fcfe28d3a6dcac244c552efb)",
             "id": "malware--a3f90728-8a0c-453b-9101-27515bd01d51",
             "is_family": false,
-            "malware_types": [
-                "unknown"
-            ],
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "4ffcd711fcfe28d3a6dcac244c552efb",
             "object_marking_refs": [
@@ -790,9 +693,6 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (a5232ea8745e2d7f7740d1d222e2364f)",
             "id": "malware--f4478b80-3dd3-473d-878a-80a6a82a00a9",
             "is_family": false,
-            "malware_types": [
-                "unknown"
-            ],
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "a5232ea8745e2d7f7740d1d222e2364f",
             "object_marking_refs": [
@@ -807,9 +707,6 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (ef90df225101836952ad7e91b55b30cd)",
             "id": "malware--cc3533bd-a1e5-411c-9cfe-3660dd07e8e3",
             "is_family": false,
-            "malware_types": [
-                "unknown"
-            ],
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "ef90df225101836952ad7e91b55b30cd",
             "object_marking_refs": [
@@ -824,9 +721,6 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (070d1e5c9299afa47df25e63572a3ae8)",
             "id": "malware--c31b9c7e-3eda-4a93-aabc-e5a01d1e8577",
             "is_family": false,
-            "malware_types": [
-                "unknown"
-            ],
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "070d1e5c9299afa47df25e63572a3ae8",
             "object_marking_refs": [
@@ -841,9 +735,6 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (6e99585c3fbd4f3a55bd8f604cb35f38)",
             "id": "malware--e5b7be4b-c7ca-40b8-b9f3-e686bb9c3c0d",
             "is_family": false,
-            "malware_types": [
-                "unknown"
-            ],
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "6e99585c3fbd4f3a55bd8f604cb35f38",
             "object_marking_refs": [
@@ -858,9 +749,6 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (8d36fd85d9c7d1f4bb170a28cc23498a)",
             "id": "malware--cc00cffe-36b3-40ad-a69c-26427af29935",
             "is_family": false,
-            "malware_types": [
-                "unknown"
-            ],
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "8d36fd85d9c7d1f4bb170a28cc23498a",
             "object_marking_refs": [
@@ -875,10 +763,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (330ddac1f605ff8abf60880c584ed797)",
             "id": "malware--ca7cd0ef-48cf-4cf1-9ad8-aed3f83ffdc7",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "330ddac1f605ff8abf60880c584ed797",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -892,10 +777,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (37f70717f549f1938e5785527e56978d)",
             "id": "malware--4703ede5-2184-4f06-a6d0-0144faca4662",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "37f70717f549f1938e5785527e56978d",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -939,10 +821,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (da931466e4ef41fe7855e33ae4d79daf)",
             "id": "malware--34a3d511-e213-40d5-a932-fc4d836d455e",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "da931466e4ef41fe7855e33ae4d79daf",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -956,10 +835,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (70d227a8c4bf293ab85b79d15b9139ce)",
             "id": "malware--dcce72e4-fdb6-43af-8eb6-bd474a11ad4c",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "70d227a8c4bf293ab85b79d15b9139ce",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -973,10 +849,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (418747bc75e1b4db9fbe13981b38db63)",
             "id": "malware--2821af3c-0f2b-45b4-92f5-465ca7a51920",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "418747bc75e1b4db9fbe13981b38db63",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -990,10 +863,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (98256615dada111549761a4c00e9fbd4)",
             "id": "malware--862fd6e1-1711-4b70-8bec-1591f4baabc1",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "98256615dada111549761a4c00e9fbd4",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -1007,10 +877,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (766837eae6eaaf24b965634256ca8f72)",
             "id": "malware--2e20839b-3ced-4bd7-868d-9cfae43eb84f",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "766837eae6eaaf24b965634256ca8f72",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -1024,10 +891,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (b174490ddedb3e21e5c1d6fc2e00d2b4)",
             "id": "malware--15f9dece-0c7c-4579-a1f9-61dca12b2e34",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "b174490ddedb3e21e5c1d6fc2e00d2b4",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -1041,10 +905,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (a3d593e958c1f3ec1adb027168a83ae2)",
             "id": "malware--dc5135f2-8d89-4993-a083-4fee4debdfb6",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "a3d593e958c1f3ec1adb027168a83ae2",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -1058,10 +919,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (0e86c994f2af7e6689a2964f493c6752)",
             "id": "malware--7b8662e4-286e-4862-8b00-79bd3750e3a5",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "0e86c994f2af7e6689a2964f493c6752",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -1075,10 +933,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (55a3b2656ceac2ba6257b6e39f4a5b5a)",
             "id": "malware--f86febd3-609b-4d2e-9fec-aa805cb498bf",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "55a3b2656ceac2ba6257b6e39f4a5b5a",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -1092,10 +947,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (8002debc47e04d534b45f7bb7dfcab4d)",
             "id": "malware--ddc66992-4a1a-470d-bfae-694e740ce181",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "8002debc47e04d534b45f7bb7dfcab4d",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -1109,10 +961,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (5ba90fa19a14981f9c13a0046807e757)",
             "id": "malware--2787ecb2-9abe-4141-a61a-e4a04c02126f",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "5ba90fa19a14981f9c13a0046807e757",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -1126,10 +975,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (0eeaf7bf1d3663cc43b5a545f8863a7a)",
             "id": "malware--ea91fe28-a94a-4511-a31e-a78eb7fcf9bd",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "0eeaf7bf1d3663cc43b5a545f8863a7a",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -1143,10 +989,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (f6ae04677428c54c80caf84f25488403)",
             "id": "malware--027acc14-5136-478c-a9ff-24d7a8288014",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "f6ae04677428c54c80caf84f25488403",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -1160,10 +1003,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (9535f777553b8f20db9b99f90bdf5a9a)",
             "id": "malware--08596787-5427-4220-8971-f56ca5aabf2b",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "9535f777553b8f20db9b99f90bdf5a9a",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -1177,10 +1017,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (a5a672d5573f01ae3457bb22107be93f)",
             "id": "malware--ceb035a7-096c-4d8a-bb4c-8fdf2fb93cad",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "a5a672d5573f01ae3457bb22107be93f",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -1194,10 +1031,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (27cd0af60f08b0270e1ec1a50a7ba90a)",
             "id": "malware--03fcd8c2-a5ee-46f3-b32e-0f0d655f1d92",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "27cd0af60f08b0270e1ec1a50a7ba90a",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -1211,10 +1045,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (5d7060f4d72b52f73d49a554a59df27a)",
             "id": "malware--b30eab7f-e848-4170-acce-a21b7ae45902",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "5d7060f4d72b52f73d49a554a59df27a",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -1228,10 +1059,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (0526c1bcdbedf7c354b059ff33f8c9ca)",
             "id": "malware--f34df5fa-b871-4102-9f33-431f7863d1c8",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "0526c1bcdbedf7c354b059ff33f8c9ca",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -1245,10 +1073,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (95bcaebe0fb21cfc3b4218e1e1c4033e)",
             "id": "malware--c91715d4-e81f-4621-8d09-fec8c15d596f",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "95bcaebe0fb21cfc3b4218e1e1c4033e",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -1262,10 +1087,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (f7bb9fe955bf88e02992b86b7ee898e7)",
             "id": "malware--3db69389-6359-4b1d-9f36-956a4e4e65e3",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "f7bb9fe955bf88e02992b86b7ee898e7",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -1279,10 +1101,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (0eb56631aca651cf163b8c02d5d791de)",
             "id": "malware--767d4bfe-da1d-4567-a9e5-982c69d6be45",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "0eb56631aca651cf163b8c02d5d791de",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -1296,10 +1115,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (41af5776bb2717a452510b7f63c54a00)",
             "id": "malware--b89b39d3-5079-43ba-8984-5992a607ebde",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "41af5776bb2717a452510b7f63c54a00",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -1348,10 +1164,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (421b1220970488738b5f578999ecac0e)",
             "id": "malware--0fd8d950-207a-42cd-b153-041be31e48d5",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "421b1220970488738b5f578999ecac0e",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -1365,10 +1178,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (410eeaa18dbec01a27c5b41753b3c7ed)",
             "id": "malware--a19437ea-b8e3-4598-8423-5a73d88f17de",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "410eeaa18dbec01a27c5b41753b3c7ed",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -1382,10 +1192,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (3c341919b04d9b57f1be69cd6f21d2d4)",
             "id": "malware--2f5b0d2f-3a05-4b11-8d60-2244db7ba7d6",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "3c341919b04d9b57f1be69cd6f21d2d4",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -1399,10 +1206,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (45894da9ebcfd132c29acb6411af8af6)",
             "id": "malware--78837766-44ae-4dc7-9fc1-a897d29f0d88",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "45894da9ebcfd132c29acb6411af8af6",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -1416,10 +1220,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (d5889a7223b9d13b60ab08aafe3344ad)",
             "id": "malware--2fd26025-1453-4df7-a594-4ba6f7cf54d9",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "d5889a7223b9d13b60ab08aafe3344ad",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -1433,10 +1234,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (c1bcc9513f27c33d24f7ed0fc5700b47)",
             "id": "malware--5a74a069-0759-4c93-8ea3-70c53a223230",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "c1bcc9513f27c33d24f7ed0fc5700b47",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -1450,10 +1248,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (1d4e74574bd8fde793d85cbe59f8a288)",
             "id": "malware--d9bd9ffd-3e6f-453d-80f1-c2205c46dc78",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "1d4e74574bd8fde793d85cbe59f8a288",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -1467,10 +1262,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (3ae7ea7511c0df60997d2c32252758c1)",
             "id": "malware--54b02531-48bb-4ff5-ba37-f511908aa858",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "3ae7ea7511c0df60997d2c32252758c1",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -1484,10 +1276,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (72f9d92c2ee99ad79d956c9d3a1a0989)",
             "id": "malware--c6bc27e1-5ea8-4047-9a56-4be846f4b97d",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "72f9d92c2ee99ad79d956c9d3a1a0989",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -1501,10 +1290,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (4e78ae59302bbfe440ec25cc104a7a53)",
             "id": "malware--0be8fa38-6ca3-4f87-bf47-44e5bbf6550b",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "4e78ae59302bbfe440ec25cc104a7a53",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -1518,10 +1304,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (6bead751a0f6056008d5d200dea0d88b)",
             "id": "malware--ec1d7f53-2b04-4371-a04d-65f866f39244",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "6bead751a0f6056008d5d200dea0d88b",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -1535,10 +1318,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (494e65cf21ad559fccf3dacdd69acc94)",
             "id": "malware--cf1d3250-57c1-4f91-90d6-b08b9073ca5f",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "494e65cf21ad559fccf3dacdd69acc94",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -1552,10 +1332,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (459ee0adaad4d493830e655eb4d686f7)",
             "id": "malware--9c892e1c-77e4-4ed2-a71b-9e6116a44435",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "459ee0adaad4d493830e655eb4d686f7",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -1569,10 +1346,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (46f5de8e9e165d34e622bbf2cf61942b)",
             "id": "malware--63c1deff-2e5f-4493-86e9-a4bdcca01878",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "46f5de8e9e165d34e622bbf2cf61942b",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -1586,10 +1360,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (6d989302166ba1709d66f90066c2fd59)",
             "id": "malware--773eea2a-193c-4c85-9521-65f8f9042140",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "6d989302166ba1709d66f90066c2fd59",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -1603,10 +1374,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (4ac3e877e1f30d2a1aa9639ac0707307)",
             "id": "malware--903a54fe-e116-4d73-9320-23609d13d8b0",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "4ac3e877e1f30d2a1aa9639ac0707307",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -1620,10 +1388,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (6ff16afc92ce09acd2e3890b780efd86)",
             "id": "malware--4d95e1e8-bdf5-4c10-81dd-9b86ab7da45d",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "6ff16afc92ce09acd2e3890b780efd86",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -1637,10 +1402,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (4ad286a97c82f91df3e07b101a224f56)",
             "id": "malware--cb1f97b1-2919-4535-bfae-ceb396c52f44",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "4ad286a97c82f91df3e07b101a224f56",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -1654,10 +1416,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (4bc6cab128f623f34bb97194da21d7b6)",
             "id": "malware--4ffee86a-b160-4a21-8b73-39c27fe6bf28",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "4bc6cab128f623f34bb97194da21d7b6",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -1671,10 +1430,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (54dcae2d9d420d6d21d4d605ed798332)",
             "id": "malware--46a77043-53d1-4259-8121-9dbad4a8828f",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "54dcae2d9d420d6d21d4d605ed798332",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -1688,10 +1444,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (19361c808d262d89437bd56072c9a297)",
             "id": "malware--d129c652-a93c-4f2c-9d7a-feb621c0f499",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "19361c808d262d89437bd56072c9a297",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -1705,10 +1458,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (52a58fc5e8aeb2e87215649f66210ed8)",
             "id": "malware--07fed79f-6a17-4bf9-a2ed-e6f9877d646a",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "52a58fc5e8aeb2e87215649f66210ed8",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -1722,10 +1472,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (7aa047cd6dac1d0a4fbc6d968c1b6407)",
             "id": "malware--5b971b83-f177-46d4-98ff-d2ffaac3f29e",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "7aa047cd6dac1d0a4fbc6d968c1b6407",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -1739,10 +1486,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (d9af0e6501c7a375e6276709da4572d8)",
             "id": "malware--895af3d5-5700-475e-bb0b-54d29ec2be8e",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "d9af0e6501c7a375e6276709da4572d8",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -1756,10 +1500,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (a5965b750997dbecec61358d41ac93c7)",
             "id": "malware--e3cec144-e901-4acf-9f10-1008a51b1cb9",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "a5965b750997dbecec61358d41ac93c7",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -1773,10 +1514,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (a4754be7b34ed55faff832edadac61f6)",
             "id": "malware--25f6285e-0bd7-404b-8dd4-2b903369d38c",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "a4754be7b34ed55faff832edadac61f6",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -1790,10 +1528,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (65887898252f7e192709a33be268ea41)",
             "id": "malware--0ac3576b-6347-483d-a04b-2c4fc2c9084d",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "65887898252f7e192709a33be268ea41",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -1807,10 +1542,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (7b6b8c695270845aae457dd26cd647a0)",
             "id": "malware--1bbfa9a4-3be6-4597-83cb-1d70b26cd020",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "7b6b8c695270845aae457dd26cd647a0",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -1824,10 +1556,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (7e3c3eec58cbb6c4bcc4d59a549f7678)",
             "id": "malware--b7ad5451-75ab-4e97-b92c-f72192b9cc87",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "7e3c3eec58cbb6c4bcc4d59a549f7678",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -1841,10 +1570,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (85af7819c3cd96895d543570b75b202f)",
             "id": "malware--641e9792-74f7-4b5a-823e-0b85e48d0f3b",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "85af7819c3cd96895d543570b75b202f",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -1858,10 +1584,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (54fcf43e6f7641eeacdf1fd12a740c7c)",
             "id": "malware--b8ad4295-4554-42ad-a3f9-09d06856c666",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "54fcf43e6f7641eeacdf1fd12a740c7c",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -1875,10 +1598,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (4e84b1448cf96fabe88c623b222057c4)",
             "id": "malware--4406c7c7-6c58-478d-aacc-0334929ebdde",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "4e84b1448cf96fabe88c623b222057c4",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -1892,10 +1612,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (76b744382cdc455f8b20542de34493d2)",
             "id": "malware--4ea4a3cb-7e52-496c-935a-a57e41e0674e",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "76b744382cdc455f8b20542de34493d2",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -1909,10 +1626,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (5415be1e85fd3b56fe7a6f57ec3cef43)",
             "id": "malware--a5ae084e-1ea1-4be3-9ffe-dee4f0993dcf",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "5415be1e85fd3b56fe7a6f57ec3cef43",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -1926,10 +1640,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (5281dcb76c34b8ae45c3f03f883a08db)",
             "id": "malware--7b12666f-f332-438d-acff-73493ba82399",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "5281dcb76c34b8ae45c3f03f883a08db",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -1943,10 +1654,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (82f926009c06dfa452714608da21cb77)",
             "id": "malware--3ae1dd84-5bd4-44c4-9200-7aab41d9973f",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "82f926009c06dfa452714608da21cb77",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -1960,10 +1668,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (090a6a5da51aa84413e42b2c00e4521f)",
             "id": "malware--48311f55-2f8d-4d00-87f9-b39cb338f72f",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "090a6a5da51aa84413e42b2c00e4521f",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -1977,10 +1682,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (f39c796e229a65a3ef23c3885471d1df)",
             "id": "malware--05f3d767-ff79-41aa-a591-e88d0cb65f66",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "f39c796e229a65a3ef23c3885471d1df",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -1994,10 +1696,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (e84853c0484b02b7518dd683787d04fc)",
             "id": "malware--de8f548e-d2cf-4442-886a-814ef174e56b",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "e84853c0484b02b7518dd683787d04fc",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -2011,10 +1710,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (9aab46ed60be9f0356f4b6e39191ae5d)",
             "id": "malware--6bb608dc-9a2e-4e19-9975-01734a625b12",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "9aab46ed60be9f0356f4b6e39191ae5d",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -2028,10 +1724,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (ea5580bc00700eab50b99203e64ec0c5)",
             "id": "malware--8baac074-74b8-4a03-ac83-90618f338ce8",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "ea5580bc00700eab50b99203e64ec0c5",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -2045,10 +1738,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (0a265f04b44c1177eaa96817b0b70c0f)",
             "id": "malware--0eb3ffa1-654d-414d-ada0-ef210cc55d90",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "0a265f04b44c1177eaa96817b0b70c0f",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -2062,10 +1752,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (55c0b07de69a0cee01101d0d6f66ca3e)",
             "id": "malware--ed7733f2-eaf6-4880-b6b8-b96061717d5a",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "55c0b07de69a0cee01101d0d6f66ca3e",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -2079,10 +1766,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (5ac4f52d56009c18e9156ae5ea0d2016)",
             "id": "malware--14fba9df-d3c2-4c80-a391-99d87a0707da",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "5ac4f52d56009c18e9156ae5ea0d2016",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -2096,10 +1780,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (0fe91d41d2b361f6a88b51a6ed880d23)",
             "id": "malware--4a38cbbf-51f7-42a0-98f5-a9bbc597dad0",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "0fe91d41d2b361f6a88b51a6ed880d23",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -2113,10 +1794,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (86328b05ffaf47ae90de61689a3536c4)",
             "id": "malware--7ace7258-bfff-4c5b-bae4-6583a164abf4",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "86328b05ffaf47ae90de61689a3536c4",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -2130,10 +1808,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (39a59411e7b12236c0b4351168fb47ce)",
             "id": "malware--3f1515b4-a171-48b2-8074-6599c784ed85",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "39a59411e7b12236c0b4351168fb47ce",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -2147,10 +1822,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (56cff0d0e0ce486aa0b9e4bc0bf2a141)",
             "id": "malware--91b36537-bd12-457c-9a12-bd94956e0dec",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "56cff0d0e0ce486aa0b9e4bc0bf2a141",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -2164,10 +1836,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (105c80e404324938eae633934ee44ed1)",
             "id": "malware--e3058c9e-4adb-41ae-8352-5317c1be98ee",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "105c80e404324938eae633934ee44ed1",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -2181,10 +1850,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (8a2205deb22c6ad61f007d52dc220351)",
             "id": "malware--7e310f39-a851-4fcd-b687-d3565ffe6a57",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "8a2205deb22c6ad61f007d52dc220351",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -2198,10 +1864,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (ed179f1f90765963a0b363bedbe674f6)",
             "id": "malware--4aa71750-c8f3-4998-b4ed-f67d903dcff9",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "ed179f1f90765963a0b363bedbe674f6",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -2215,10 +1878,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (018509c1165817d4b0a3e728eab41ea0)",
             "id": "malware--5e8dfa9c-8940-46d5-90d9-d2f50bbf9902",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "018509c1165817d4b0a3e728eab41ea0",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -2232,10 +1892,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (fc384c3d0bf74258c1b8d05c29afb927)",
             "id": "malware--8214e79e-891a-4d4a-b6d7-26cbd145f63c",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "fc384c3d0bf74258c1b8d05c29afb927",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -2249,10 +1906,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (5c00b5d04c31b1b85382ff1eecff6084)",
             "id": "malware--daeb0891-b153-41d4-b18b-367a5492133a",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "5c00b5d04c31b1b85382ff1eecff6084",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -2266,10 +1920,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (9a014c33f9a9958ffbcf99d2a71d52fe)",
             "id": "malware--260d101a-dddc-4a84-9379-4b48418a3365",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "9a014c33f9a9958ffbcf99d2a71d52fe",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -2283,10 +1934,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (e06cb5f8ed24903ab9f42816cb0c2922)",
             "id": "malware--8e4f6736-10de-4a15-934e-1367072428f4",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "e06cb5f8ed24903ab9f42816cb0c2922",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -2300,10 +1948,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (e3ff26beb4334899014cd941816c3180)",
             "id": "malware--2e6b7c86-9afd-4412-ac24-e43f08ec7d2e",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "e3ff26beb4334899014cd941816c3180",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -2317,10 +1962,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (a5ec5a677346634a42c9f9101ce9d861)",
             "id": "malware--3f39dad8-de02-468d-bd4b-de7ad4a4e357",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "a5ec5a677346634a42c9f9101ce9d861",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -2334,10 +1976,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (5b668982bcf868629f1e31bdcda21b05)",
             "id": "malware--27a595d0-b2b4-414a-899d-9e87893ac858",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "5b668982bcf868629f1e31bdcda21b05",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -2351,10 +1990,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (f5315fb4a654087d30c69c768d80f826)",
             "id": "malware--8c857eb3-0576-494d-844f-7d911e50d49a",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "f5315fb4a654087d30c69c768d80f826",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -2368,10 +2004,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (fde24cf3e9dc626b3a6f4481f74de699)",
             "id": "malware--5032acb9-c978-476a-953a-5d8ebd034d10",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "fde24cf3e9dc626b3a6f4481f74de699",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -2385,10 +2018,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (046f51fb62d01957497a349be2bb555f)",
             "id": "malware--1f02f735-3aa2-41aa-a2f1-c82f4cfe1f58",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "046f51fb62d01957497a349be2bb555f",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -2402,10 +2032,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (9e161fad98a678fa957d8cda2a608cb0)",
             "id": "malware--e49c5caa-16d1-473b-9e47-c43537c90ced",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "9e161fad98a678fa957d8cda2a608cb0",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -2419,10 +2046,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (8ca16b82d57cf6898a55e9fcdb400769)",
             "id": "malware--fa89f3e2-7988-43d6-974a-ca8ff1084358",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "8ca16b82d57cf6898a55e9fcdb400769",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -2436,10 +2060,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (5f0bb4d702ed341cf4c3185d4c141110)",
             "id": "malware--16db0c0e-8af6-4a5a-98c4-ae022d88295b",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "5f0bb4d702ed341cf4c3185d4c141110",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -2453,10 +2074,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (08709f35581e0958d1ca4e50b7d86dba)",
             "id": "malware--a0f63787-a087-4261-a795-61fb2dae58da",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "08709f35581e0958d1ca4e50b7d86dba",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -2470,10 +2088,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (8e94701b572fb446c2794cdd3c18ecd9)",
             "id": "malware--fb17d950-6fb0-4483-adc8-fe084cbc9586",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "8e94701b572fb446c2794cdd3c18ecd9",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -2487,10 +2102,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (5c5401fd7d32f481570511c73083e9a1)",
             "id": "malware--e2830a97-b3ef-4c07-8088-75fc624e296d",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "5c5401fd7d32f481570511c73083e9a1",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -2504,10 +2116,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (a144440d16fb69cf4522f789aacb3ef2)",
             "id": "malware--534b451e-a5ee-4264-89a0-b57cd2d9a21d",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "a144440d16fb69cf4522f789aacb3ef2",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -2521,10 +2130,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (00beeeef9dfe8ddf5f8d539504777e7e)",
             "id": "malware--a14c6a5e-9fc0-455a-b4bb-f5e9c4fe4ff6",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "00beeeef9dfe8ddf5f8d539504777e7e",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -2538,10 +2144,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (d8c00fed6625e5f8d0b8188a5caac115)",
             "id": "malware--3ed0364f-62c8-4ebc-b136-deaf6966880b",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "d8c00fed6625e5f8d0b8188a5caac115",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -2555,10 +2158,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (60963553335fa5877bd5f9be9d8b23a6)",
             "id": "malware--8e939441-036c-4a34-a80d-751a0395ae8e",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "60963553335fa5877bd5f9be9d8b23a6",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -2572,10 +2172,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (b18505ee9e2cecc69035acc912114768)",
             "id": "malware--6e229c21-7b2f-405c-9cf0-1a9aa218ddaf",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "b18505ee9e2cecc69035acc912114768",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -2589,10 +2186,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (625a4f618d14991cd9bd595bdd590570)",
             "id": "malware--27cf110c-281e-4f93-94aa-cbd34c7efae4",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "625a4f618d14991cd9bd595bdd590570",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -2606,10 +2200,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (18ccf0e2709406c4a0b3635064ca32dc)",
             "id": "malware--f8a934bd-1570-4b45-927f-1e3af4cc8f45",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "18ccf0e2709406c4a0b3635064ca32dc",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -2623,10 +2214,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (abf8e40d7c99e9b3f515ec0872fe099e)",
             "id": "malware--4d47bd96-8726-492b-ac8e-50cd4b50c8e8",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "abf8e40d7c99e9b3f515ec0872fe099e",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -2640,10 +2228,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (15d42116acb393ac4d323fb7606c8108)",
             "id": "malware--56736642-633e-4e2e-a823-484e4c037788",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "15d42116acb393ac4d323fb7606c8108",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -2657,10 +2242,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (b1deff736b6d12b8d98b485e20d318ea)",
             "id": "malware--17099f03-5ec8-456d-a2de-968aebaafc78",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "b1deff736b6d12b8d98b485e20d318ea",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -2674,10 +2256,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (e7a5a551f847c735487acede71f8a9d8)",
             "id": "malware--74efd1f5-2718-41e7-981d-7e3b9cb50d71",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "e7a5a551f847c735487acede71f8a9d8",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -2691,10 +2270,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (dad0c02b91f656ffe1d4de3dbf344624)",
             "id": "malware--3321d61c-6bb1-426a-b853-52d8c3466532",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "dad0c02b91f656ffe1d4de3dbf344624",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -2708,10 +2284,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (1b851bb23578033c79b8b15313b9c382)",
             "id": "malware--f2984dfd-131a-471a-a41f-cdd0fb432b92",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "1b851bb23578033c79b8b15313b9c382",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -2725,10 +2298,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (1ccb5a6dfec4261b32eee8d439f821df)",
             "id": "malware--2c4ea690-56bb-41f5-bd79-b6ea19aad2e4",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "1ccb5a6dfec4261b32eee8d439f821df",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -2742,10 +2312,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (6005cbea84d281e03b53be49d1378885)",
             "id": "malware--ab8a2af8-9411-4415-8c16-4a19e5dfea7e",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "6005cbea84d281e03b53be49d1378885",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -2759,10 +2326,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (377d8d30172f083b7a0cdff846681f81)",
             "id": "malware--2be46f2d-4e92-4201-ad83-85c47a69b98a",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "377d8d30172f083b7a0cdff846681f81",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -2776,10 +2340,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (36cc4c909462db0f067b11a5e719a4ee)",
             "id": "malware--7781ffbf-2a5c-4a54-a489-2fddd85b7363",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "36cc4c909462db0f067b11a5e719a4ee",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -2793,10 +2354,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (bf553932f6f418250a4dd81c63b3ccee)",
             "id": "malware--29acc82d-630c-461b-bb4e-ec99ab06b809",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "bf553932f6f418250a4dd81c63b3ccee",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -2810,10 +2368,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (cf8094c07c15aa394dddd4eca4aa8c8b)",
             "id": "malware--2b6638b2-9cc6-41bc-b883-aaf45f7a2947",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "cf8094c07c15aa394dddd4eca4aa8c8b",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -2827,10 +2382,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (629049d376058a1f31ab2a36f3c0f234)",
             "id": "malware--c67fe311-d813-4bda-9b32-e19fbb0d1b0e",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "629049d376058a1f31ab2a36f3c0f234",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -2844,10 +2396,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (e4242bbcc0aa91c40a50a8305d7a3433)",
             "id": "malware--fe844499-4819-463c-84dc-362638ea727e",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "e4242bbcc0aa91c40a50a8305d7a3433",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -2861,10 +2410,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (68fec995a13762184a2616bda86757f8)",
             "id": "malware--b0804b4d-4b1f-4e4a-a871-b1473e73a7c1",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "68fec995a13762184a2616bda86757f8",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -2878,10 +2424,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (3243a6caaeb7f175330f0fc7f789aced)",
             "id": "malware--33125ae7-0d34-4e97-ab8b-04c42ab60c3d",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "3243a6caaeb7f175330f0fc7f789aced",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -2895,10 +2438,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (36c6672abdfa7f8c1cf20d27277d7e1a)",
             "id": "malware--d1d15120-ea83-4634-9ed2-cd1f34d711f1",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "36c6672abdfa7f8c1cf20d27277d7e1a",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -2912,10 +2452,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (cd6a0b076678165e04f8583d19a9a46f)",
             "id": "malware--65ab529f-7c86-423c-9d32-25e8152c0964",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "cd6a0b076678165e04f8583d19a9a46f",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -2929,10 +2466,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (1372fae7e279b29eb648d158ae022172)",
             "id": "malware--0db3ebb2-b880-4961-a4e5-98f8f4c60e57",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "1372fae7e279b29eb648d158ae022172",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -2946,10 +2480,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (bb7ae118a83f3bed742dbbc50136dc50)",
             "id": "malware--74e0b32c-7f4b-4fa9-a82d-46ecfb1a059a",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "bb7ae118a83f3bed742dbbc50136dc50",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -2963,10 +2494,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (6848da04f6c10d2cceae4831351cb291)",
             "id": "malware--cd721637-f104-4a6d-a79e-f74530287be0",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "6848da04f6c10d2cceae4831351cb291",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -2980,10 +2508,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (aa76e01067c064a8091391759a35ef0a)",
             "id": "malware--58404eca-36d7-4239-a890-630ba1d158f0",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "aa76e01067c064a8091391759a35ef0a",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -2997,10 +2522,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (11ea8d8dd0ffde8285f3c0049861a442)",
             "id": "malware--bb93ada5-b5f3-4174-bead-0faecdbe28ce",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "11ea8d8dd0ffde8285f3c0049861a442",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -3014,10 +2536,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (e6ca06e9b000933567a8604300094a85)",
             "id": "malware--3d7d1585-9cf4-401b-b480-2aae6131d15f",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "e6ca06e9b000933567a8604300094a85",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -3031,10 +2550,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (aa7368b928eaaff80e42c0d0637c4a61)",
             "id": "malware--1e89baef-ead0-47d0-8a71-52fbc46bc8db",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "aa7368b928eaaff80e42c0d0637c4a61",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -3048,10 +2564,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (e62584c9cd15c3fa2b6ed0f3a34688ab)",
             "id": "malware--9849ea2a-fc17-4068-9c01-dab903ada13c",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "e62584c9cd15c3fa2b6ed0f3a34688ab",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -3065,10 +2578,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (c2f000577585ce59661b21a500eb253e)",
             "id": "malware--0d5fe336-cb01-47df-93a6-7c5de9b01a5a",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "c2f000577585ce59661b21a500eb253e",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -3082,10 +2592,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (d84851ad131424f04fbffc3bbac03bff)",
             "id": "malware--d8e98488-2c1f-41a9-86c9-602d5a96cac1",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "d84851ad131424f04fbffc3bbac03bff",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -3099,10 +2606,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (223d1396f2b5b7719702c980cbd1d6c0)",
             "id": "malware--0b2e2718-a421-4f9a-ad54-2ab2136698fe",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "223d1396f2b5b7719702c980cbd1d6c0",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -3116,10 +2620,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (c2c7ceb8a428a36b80b9ce1037d209dd)",
             "id": "malware--420ef2ec-4603-4107-a9a4-5b14fb27ec95",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "c2c7ceb8a428a36b80b9ce1037d209dd",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -3133,10 +2634,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (d6dba8166b7b1da0173a0165d3a3e0bf)",
             "id": "malware--621f3091-a6b6-410b-b715-fb61d91d1511",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "d6dba8166b7b1da0173a0165d3a3e0bf",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -3150,10 +2648,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (20098465e8fd00f8a0845fff134ed844)",
             "id": "malware--387526e2-fa1a-4d12-aa15-535ed244cdc5",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "20098465e8fd00f8a0845fff134ed844",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -3167,10 +2662,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (d81dac704850c0ee051b8455510cc0a4)",
             "id": "malware--0768d1fb-70e6-4e31-a083-8a1abdf1d8ff",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "d81dac704850c0ee051b8455510cc0a4",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -3184,10 +2676,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (c84a04eabb91e3dd2388d435527b6906)",
             "id": "malware--70d965e8-f28f-4223-abd2-a7efb403e038",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "c84a04eabb91e3dd2388d435527b6906",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -3201,10 +2690,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (31f7e35e7a73a1d89b6269412a935996)",
             "id": "malware--4d6850f0-483b-4f5f-b1da-f87a8510e9a6",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "31f7e35e7a73a1d89b6269412a935996",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -3218,10 +2704,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (cab408c59c3450fcc9ddb401eede170f)",
             "id": "malware--defb1821-8428-4ead-8c08-da365d237ab2",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "cab408c59c3450fcc9ddb401eede170f",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -3235,10 +2718,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (b5695df9da14b8c9db7e607942d01fac)",
             "id": "malware--39c32255-bb13-468e-9cda-c5644b931cb4",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "b5695df9da14b8c9db7e607942d01fac",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -3252,10 +2732,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (c3171961e78d3acdb4cd299c643ba482)",
             "id": "malware--dcc8004b-ab26-4582-b7dc-568acbb48a57",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "c3171961e78d3acdb4cd299c643ba482",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -3269,10 +2746,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (2a113b26b0133f67ed900a06a330683d)",
             "id": "malware--fa468c98-b8b9-4145-8308-4b91a2c34c72",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "2a113b26b0133f67ed900a06a330683d",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -3286,10 +2760,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (b2dc98caa647e64a2a8105c298218462)",
             "id": "malware--e61000b5-a2df-466d-9525-974b427fb7e9",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "b2dc98caa647e64a2a8105c298218462",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -3303,10 +2774,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (f815281ed4b16169e0b474dbac612bbc)",
             "id": "malware--ae0ee06f-a939-422e-bf3c-718872457362",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "f815281ed4b16169e0b474dbac612bbc",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -3320,10 +2788,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (e9622f4b9d2a82c296a773a2c6e63fcb)",
             "id": "malware--6379656a-19e5-483b-ae0d-747726690807",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "e9622f4b9d2a82c296a773a2c6e63fcb",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -3337,10 +2802,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (b08694e14a9b966d8033b42b58ab727d)",
             "id": "malware--3cb94b8d-da73-4624-ba1d-a2a9769cebd6",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "b08694e14a9b966d8033b42b58ab727d",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -3354,10 +2816,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (1000371d10154fcfd94028ad66285519)",
             "id": "malware--7e39361b-cd37-450a-ab88-f934a103ff72",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "1000371d10154fcfd94028ad66285519",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -3371,10 +2830,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (2173b43a66070aadf052ab66dd6933ce)",
             "id": "malware--585b2299-7a01-48ee-89f9-7f966b2f641c",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "2173b43a66070aadf052ab66dd6933ce",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -3388,10 +2844,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (2ffe59a6a047b2333a1f3eb58753f3bc)",
             "id": "malware--fb6cb6fa-d4c4-4f4a-87e3-c3b7ae4d4a3c",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "2ffe59a6a047b2333a1f3eb58753f3bc",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -3405,10 +2858,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (441d239744d05b861202e3e25a2af0cd)",
             "id": "malware--76b27221-959b-4471-8c9a-2af95655816c",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "441d239744d05b861202e3e25a2af0cd",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -3422,10 +2872,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (4ab9bcbec67cafda3a1e4bf6d2d60de9)",
             "id": "malware--b7610226-c87a-465e-bff9-c3656f423416",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "4ab9bcbec67cafda3a1e4bf6d2d60de9",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -3439,10 +2886,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (6fbd221f328ced713025ffcf589dba9a)",
             "id": "malware--1ca1bdde-4f34-4a35-a215-71007c060ba4",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "6fbd221f328ced713025ffcf589dba9a",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -3456,10 +2900,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (7d551d1cba1aa7696ab5a787e93b4c83)",
             "id": "malware--85bf512d-c12b-40f4-b0b6-793f71cb1e07",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "7d551d1cba1aa7696ab5a787e93b4c83",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -3473,10 +2914,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (841ec2dec944964fc54786a1167713ff)",
             "id": "malware--7e16ec98-a87f-403d-a546-a0deb9fa4b81",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "841ec2dec944964fc54786a1167713ff",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -3490,10 +2928,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (85321dee31100bd3ece5b586ac3e6557)",
             "id": "malware--45c33198-370c-4cf6-99e0-9cea66f237fa",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "85321dee31100bd3ece5b586ac3e6557",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -3507,10 +2942,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (9de349e581b66bd410cf7a737d0db1e1)",
             "id": "malware--3b83b772-fcba-46e4-9a52-cd4678c68b83",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "9de349e581b66bd410cf7a737d0db1e1",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -3524,10 +2956,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (9e2af3377f508c22a3e96e1110ad5f12)",
             "id": "malware--632ea185-c226-44e7-858a-05aac2d0c3bf",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "9e2af3377f508c22a3e96e1110ad5f12",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -3541,10 +2970,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (a4d13be7f6b8f66c80731b75d7d5aff8)",
             "id": "malware--70d7f498-93a8-4a33-b6a0-028f5ef6ab36",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "a4d13be7f6b8f66c80731b75d7d5aff8",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -3558,10 +2984,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (b9ddbb07c4bde0d4f8e6b2065a7d8848)",
             "id": "malware--4d0aeaec-d073-4615-90b3-a9e717025db9",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "b9ddbb07c4bde0d4f8e6b2065a7d8848",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -3575,10 +2998,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (cab66da82594ff5266ac8dd89e3d1539)",
             "id": "malware--435adcbb-7a46-4255-a581-f9f8cf39644b",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "cab66da82594ff5266ac8dd89e3d1539",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -3592,10 +3012,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (e5e3fd8a9ee0a5b8e66c11ce1e081067)",
             "id": "malware--4fe1269e-7360-471e-9788-d13af3dc77ef",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "e5e3fd8a9ee0a5b8e66c11ce1e081067",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -3609,10 +3026,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (f0ee1f777d1c6a009c37cbcbf81f3a5a)",
             "id": "malware--7323cc18-c4b2-4e25-8a5e-3caa4afa3081",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "f0ee1f777d1c6a009c37cbcbf81f3a5a",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -3626,10 +3040,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (f18c7639dbb8644c4bca179243ee2a99)",
             "id": "malware--bf2bdcaf-61a0-4e90-bcce-ad0b0551a02e",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "f18c7639dbb8644c4bca179243ee2a99",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -3643,10 +3054,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (4ad286a97c82f91df3e07b101a224f56)",
             "id": "malware--e51f43fe-37eb-4469-a666-a4c74708c9ed",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "4ad286a97c82f91df3e07b101a224f56",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -3660,10 +3068,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (88fd19e48625e623a4d6abb5d5b78445)",
             "id": "malware--f9e0c47b-a923-4ea6-805e-bd7dcdefeb26",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "88fd19e48625e623a4d6abb5d5b78445",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
@@ -3677,10 +3082,7 @@
             "description": "\n\nTITLE:\n\tPIVY Variant (d05f81cd8d079b862b2ce7d241ad2209)",
             "id": "malware--59fae6a2-4a3b-418e-8ca7-06a845820666",
             "is_family": false,
-			"malware_types": [
-                "unknown"
-            ],
-            "modified": "2015-05-15T09:00:00.000Z",
+			"modified": "2015-05-15T09:00:00.000Z",
             "name": "d05f81cd8d079b862b2ce7d241ad2209",
             "object_marking_refs": [
                 "marking-definition--e64e0b3c-b3f5-41ed-acdd-158b7c84da85"
