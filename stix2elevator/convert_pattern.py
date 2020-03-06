@@ -24,15 +24,12 @@ from cybox.objects.win_executable_file_object import WinExecutableFile
 from cybox.objects.win_process_object import WinProcess
 from cybox.objects.win_registry_key_object import WinRegistryKey
 from cybox.objects.win_service_object import WinService
-from six import text_type, string_types
+from six import string_types, text_type
 import stix2
-from stix2.patterns import (BasicObjectPathComponent,
-                            ListConstant,
-                            ListObjectPathComponent,
+from stix2.patterns import (ListConstant,
                             ObjectPath,
                             ObservationExpression,
                             QualifiedObservationExpression,
-                            ReferenceObjectPathComponent,
                             _BooleanExpression,
                             _ComparisonExpression,
                             _CompoundObservationExpression,

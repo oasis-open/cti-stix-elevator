@@ -828,7 +828,7 @@ def convert_vulnerability(v, et, env):
 
     if v.references is not None:
         for ref in v.references:
-            vulnerability_instance["external_references"].append({"source_name": "internet_resource", "url": ref.reference})
+            vulnerability_instance["external_references"].append({"source_name": "internet_resource", "url": ref})
     process_et_properties(vulnerability_instance, et, env)
     finish_basic_object(et.id_, vulnerability_instance, env, v)
     return vulnerability_instance
