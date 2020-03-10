@@ -144,9 +144,6 @@
             "created_by_ref": "identity--1c2dcc0d-412f-4586-88cb-f695ec7a7a1f",
             "id": "malware--57f6f9c8-38a1-4add-a3aa-1329d23f5f1c",
             "is_family": false,
-            "malware_types": [
-                "unknown"
-            ],
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "MANITSME",
             "object_marking_refs": [
@@ -221,9 +218,6 @@
             "created_by_ref": "identity--1c2dcc0d-412f-4586-88cb-f695ec7a7a1f",
             "id": "malware--9868fa33-bfbd-491f-a583-4e5ba8da760e",
             "is_family": false,
-            "malware_types": [
-                "unknown"
-            ],
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "AURIGA",
             "object_marking_refs": [
@@ -237,9 +231,6 @@
             "created_by_ref": "identity--1c2dcc0d-412f-4586-88cb-f695ec7a7a1f",
             "id": "malware--0eee0bd3-4f8a-4ebe-8610-208441f4671b",
             "is_family": false,
-            "malware_types": [
-                "unknown"
-            ],
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "BANGAT",
             "object_marking_refs": [
