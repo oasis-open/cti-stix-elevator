@@ -10,7 +10,8 @@ import pytest
 from stix2elevator import (elevate,
                            elevate_file,
                            elevate_package,
-                           elevate_string)
+                           elevate_string,
+                           options)
 from stix2elevator.options import (ElevatorOptions,
                                    get_option_value,
                                    initialize_options,
@@ -36,9 +37,14 @@ def setup_options():
 @pytest.mark.parametrize("opts", [
     ElevatorOptions(policy="no_policy", spec_version="2.1", log_level="DEBUG", disable=[212, 901]),
     {"policy": "no_policy", "spec_version": "2.1", "log_level": "DEBUG", "disable": [212, 901]},
-    Namespace(policy="no_policy", spec_version="2.1", log_level="DEBUG", disable="212,901"),
+    Namespace(policy="no_policy", spec_version="2.1", log_level="DEBUG", disable="212,901",
+              file_=None, incidents=False, missing_policy="add-to-description",
+              custom_property_prefix="elevator", infrastructure=False, package_created_by_id=None,
+              default_timestamp=None, validator_args="--strict-types", enable=None, silent=False,
+              message_log_directory=None, output_directory=None, markings_allowed=""),
 ])
 def test_setup_options(opts):
+    options.ALL_OPTIONS = None  # To make sure we can set it again
     initialize_options(opts)
     assert get_option_value("policy") == "no_policy"
     assert get_option_value("spec_version") == "2.1"
