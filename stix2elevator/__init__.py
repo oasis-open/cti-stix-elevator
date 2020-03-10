@@ -6,8 +6,7 @@ import warnings
 
 import cybox.utils.caches
 from six import BytesIO, StringIO, binary_type, text_type
-from stix2validator import ValidationError, codes, output, validate_string
-from stix2validator.validator import FileValidationResults
+from stix2validator import ValidationError, codes, output
 from stix.core import STIXPackage
 import stixmarx
 from stixmarx.container import MarkingContainer
@@ -25,21 +24,13 @@ from stix2elevator.options import (get_option_value,
                                    set_option_value,
                                    setup_logger,
                                    warn)
-from stix2elevator.utils import Environment, clear_1x_markings_map
+from stix2elevator.utils import (Environment,
+                                 clear_1x_markings_map,
+                                 validate_stix2_string)
 from stix2elevator.version import __version__  # noqa
 
 # Module-level logger
 log = logging.getLogger(__name__)
-
-
-def validate_stix2_string(json_string, validator_options, file_path=None):
-    # Ensure the json_string is a Unicode text string. json.dumps() sometimes
-    # returns a byte-"str" on Python 2.
-    if isinstance(json_string, binary_type):
-        json_string = json_string.decode("utf-8")
-    results = validate_string(json_string, validator_options)
-    fvr = FileValidationResults(results.is_valid, file_path, results)
-    return fvr
 
 
 def clear_globals():

@@ -8,10 +8,10 @@ need to be mitigated to convert your STIX 1.x content.
 
 import argparse
 import sys
-import textwrap
 
 from stix2elevator import elevate
 from stix2elevator.options import initialize_options
+from stix2elevator.utils import NewlinesHelpFormatter
 from stix2elevator.version import __version__
 
 CODE_TABLE = """
@@ -20,16 +20,6 @@ associated code number to --enable or --disable a message. By default, the
 stix2-elevator displays all messages. Note: disabling the message does not
 disable the functionality.
 """
-
-
-class NewlinesHelpFormatter(argparse.RawDescriptionHelpFormatter):
-    """Custom help formatter to insert newlines between argument help texts.
-    """
-    def _split_lines(self, text, width):
-        text = self._whitespace_matcher.sub(' ', text).strip()
-        txt = textwrap.wrap(text, width)
-        txt[-1] += '\n'
-        return txt
 
 
 def _get_arg_parser(is_script=True):
