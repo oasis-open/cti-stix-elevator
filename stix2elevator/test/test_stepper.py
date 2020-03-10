@@ -3,6 +3,7 @@ import os
 
 from stix2elevator.stix_stepper import step_file
 from stix2elevator.utils import find_dir, id_property
+import stix2validator
 
 from .test_idioms import (BEFORE_FILENAMES,
                           BEFORE_FILES,
@@ -21,10 +22,15 @@ _IGNORE = ()
 
 def idiom_stepper_mappings(before_file_path, stored_json):
     """Test fresh conversion from XML to JSON matches stored JSON samples."""
+    validator_options = stix2validator.parse_args("")
+
+    stix2validator.output.set_level(validator_options.verbose)
+    stix2validator.output.set_silent(validator_options.silent)
+
     print("Checking - " + before_file_path)
     print("With Master - " + stored_json["id"])
 
-    converted_json = step_file(before_file_path)
+    converted_json = step_file(before_file_path, validator_options)
     converted_json = json.loads(converted_json)
     return idiom_mappings(converted_json, stored_json, _IGNORE)
 

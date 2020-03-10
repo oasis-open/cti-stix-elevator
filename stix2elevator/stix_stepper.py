@@ -175,14 +175,8 @@ def _get_arg_parser(is_script=True):
     return parser
 
 
-def step_file(fn, encoding="utf-8"):
+def step_file(fn, validator_options, encoding="utf-8"):
     sys.setrecursionlimit(5000)
-    stepper_arg_parser = _get_arg_parser()
-    stepper_args = stepper_arg_parser.parse_args()
-    validator_options = stix2validator.parse_args(shlex.split(stepper_args.validator_args))
-
-    stix2validator.output.set_level(validator_options.verbose)
-    stix2validator.output.set_silent(validator_options.silent)
 
     with io.open(fn, "r", encoding=encoding) as json_data:
         json_content = json.load(json_data, object_pairs_hook=OrderedDict)
@@ -207,5 +201,13 @@ def step_file(fn, encoding="utf-8"):
         return
 
 
+def main():
+    stepper_arg_parser = _get_arg_parser()
+    stepper_args = stepper_arg_parser.parse_args()
+    validator_options = stix2validator.parse_args(shlex.split(stepper_args.validator_args))
+
+    stix2validator.output.set_level(validator_options.verbose)
+    stix2validator.output.set_silent(validator_options.silent)
+
 if __name__ == '__main__':
-    step_file(sys.argv[1])
+    main()
