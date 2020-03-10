@@ -2,7 +2,7 @@ import logging
 import os
 import shlex
 
-from six import text_type
+from six import string_types
 from stix2validator.scripts import stix2_validator
 
 ALL_OPTIONS = None
@@ -86,6 +86,29 @@ def setup_logger(package_id):
         log.addHandler(fh)
 
 
+def _convert_to_int_list(check_codes):
+    """Takes a comma-separated string or list of strings and converts to list of ints.
+
+    Args:
+        check_codes: comma-separated string or list of strings
+
+    Returns:
+        list: the check codes as a list of integers
+
+    Raises:
+        ValueError: if conversion fails
+        RuntimeError: if cannot determine how to convert input
+    """
+    if isinstance(check_codes, list):
+        if all(isinstance(x, int) for x in check_codes):
+            return check_codes  # good input
+        else:
+            return [int(x) for x in check_codes]  # list of str
+    elif isinstance(check_codes, string_types):
+        return [int(x) for x in check_codes.split(",")]  # str, comma-separated expected
+    raise RuntimeError("Could not convert values: {} of type {}".format(check_codes, type(check_codes)))
+
+
 class ElevatorOptions(object):
     """Collection of stix2-elevator options which can be set via command line or
     programmatically in a script.
@@ -107,8 +130,8 @@ class ElevatorOptions(object):
             When this value is not set, current time will be used instead.
         validator_args: If set, these values will be used to create a
             ValidationOptions instance if requested.  The elevator should not produce any custom objects.
-        enable: Messages to enable.
-        disable: Messages to disable.
+        enable: Messages to enable. Expects a list of ints.
+        disable: Messages to disable. Expects a list of ints.
         silent: If set, no stix2-elevator log messages will be emitted.
         message_log_directory: If set, it will write all emitted messages to
             file. It will use the filename or package id to name the log file.
@@ -119,7 +142,7 @@ class ElevatorOptions(object):
     def __init__(self, cmd_args=None, file_=None, incidents=False,
                  missing_policy="add-to-description", custom_property_prefix="elevator",
                  infrastructure=False, package_created_by_id=None, default_timestamp=None,
-                 validator_args="--strict-types", enable="", disable="",
+                 validator_args="--strict-types", enable=None, disable=None,
                  silent=False, message_log_directory=None,
                  policy="no_policy", output_directory=None, log_level="INFO",
                  markings_allowed="", spec_version="2.0"):
@@ -176,18 +199,16 @@ class ElevatorOptions(object):
         # and convert check code numbers to names. By default all messages are
         # enabled.
         if self.disable:
-            self.disabled = self.disable.split(",")
-            self.disabled = [CHECK_CODES[x] if x in CHECK_CODES else x
-                             for x in self.disabled]
+            self.disabled = _convert_to_int_list(self.disable)
+            self.disabled = [x for x in self.disabled if x in CHECK_CODES]
         else:
             self.disabled = []
 
         if self.enable:
-            self.enabled = self.enable.split(",")
-            self.enabled = [CHECK_CODES[x] if x in CHECK_CODES else x
-                            for x in self.enabled]
+            self.enabled = _convert_to_int_list(self.enable)
+            self.enabled = [x for x in self.enabled if x in CHECK_CODES]
         else:
-            self.enabled = [text_type(x) for x in CHECK_CODES]
+            self.enabled = CHECK_CODES
 
         if self.markings_allowed:
             self.markings_allowed = self.markings_allowed.split(",")
@@ -195,10 +216,15 @@ class ElevatorOptions(object):
         self.marking_container = None
 
 
-def initialize_options(elevator_args=None):
+def initialize_options(options=None):
     global ALL_OPTIONS
     if not ALL_OPTIONS:
-        ALL_OPTIONS = ElevatorOptions(elevator_args)
+        if isinstance(options, ElevatorOptions):
+            ALL_OPTIONS = options
+        elif isinstance(options, dict):
+            ALL_OPTIONS = ElevatorOptions(**options)
+        else:
+            ALL_OPTIONS = ElevatorOptions(options)
 
         if ALL_OPTIONS.silent and ALL_OPTIONS.message_log_directory:
             warn("Both console and output log have disabled messages.", 209)
@@ -231,8 +257,6 @@ def set_option_value(option_name, option_value):
 
 
 def msg_id_enabled(msg_id):
-    msg_id = text_type(msg_id)
-
     if get_option_value("silent"):
         return False
 
