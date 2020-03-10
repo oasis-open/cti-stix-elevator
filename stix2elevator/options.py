@@ -1,3 +1,4 @@
+import copy
 import logging
 import os
 import shlex
@@ -130,8 +131,8 @@ class ElevatorOptions(object):
             When this value is not set, current time will be used instead.
         validator_args: If set, these values will be used to create a
             ValidationOptions instance if requested.  The elevator should not produce any custom objects.
-        enable: Messages to enable. Expects a list of ints.
-        disable: Messages to disable. Expects a list of ints.
+        enabled: Messages to enable. Expects a list of ints.
+        disabled: Messages to disable. Expects a list of ints.
         silent: If set, no stix2-elevator log messages will be emitted.
         message_log_directory: If set, it will write all emitted messages to
             file. It will use the filename or package id to name the log file.
@@ -142,7 +143,7 @@ class ElevatorOptions(object):
     def __init__(self, cmd_args=None, file_=None, incidents=False,
                  missing_policy="add-to-description", custom_property_prefix="elevator",
                  infrastructure=False, package_created_by_id=None, default_timestamp=None,
-                 validator_args="--strict-types", enable=None, disable=None,
+                 validator_args="--strict-types", enabled=None, disabled=None,
                  silent=False, message_log_directory=None,
                  policy="no_policy", output_directory=None, log_level="INFO",
                  markings_allowed="", spec_version="2.0"):
@@ -158,8 +159,8 @@ class ElevatorOptions(object):
             self.default_timestamp = cmd_args.default_timestamp
             self.validator_args = cmd_args.validator_args
 
-            self.enable = cmd_args.enable
-            self.disable = cmd_args.disable
+            self.enabled = cmd_args.enabled
+            self.disabled = cmd_args.disabled
             self.silent = cmd_args.silent
             self.policy = cmd_args.policy
             self.message_log_directory = cmd_args.message_log_directory
@@ -167,9 +168,6 @@ class ElevatorOptions(object):
             self.markings_allowed = cmd_args.markings_allowed
             if hasattr(cmd_args, "output_directory"):
                 self.output_directory = cmd_args.output_directory
-            # validator arg --silent is currently broken
-            # if self.silent:
-            #    self.validator_args += " --silent"
             self.spec_version = cmd_args.spec_version
 
         else:
@@ -182,8 +180,8 @@ class ElevatorOptions(object):
             self.default_timestamp = default_timestamp
             self.validator_args = validator_args
 
-            self.enable = enable
-            self.disable = disable
+            self.enabled = enabled
+            self.disabled = disabled
             self.silent = silent
             self.policy = policy
             self.message_log_directory = message_log_directory
@@ -195,25 +193,54 @@ class ElevatorOptions(object):
         if self.validator_args.find("--version") == -1:
             self.validator_args = self.validator_args + " --version " + self.spec_version
 
-        # Convert string of comma-separated checks to a list,
-        # and convert check code numbers to names. By default all messages are
-        # enabled.
-        if self.disable:
-            self.disabled = _convert_to_int_list(self.disable)
-            self.disabled = [x for x in self.disabled if x in CHECK_CODES]
-        else:
-            self.disabled = []
-
-        if self.enable:
-            self.enabled = _convert_to_int_list(self.enable)
-            self.enabled = [x for x in self.enabled if x in CHECK_CODES]
-        else:
-            self.enabled = CHECK_CODES
-
         if self.markings_allowed:
             self.markings_allowed = self.markings_allowed.split(",")
 
         self.marking_container = None
+
+    @property
+    def disabled(self):
+        return self._disabled
+
+    @disabled.setter
+    def disabled(self, disabled):
+        def remove_silent(item, elements):
+            try:
+                elements.remove(item)
+            except ValueError:
+                pass  # suppress exception if value is not present
+        # Convert string of comma-separated checks to a list,
+        # and convert check code numbers to names. By default no messages are
+        # disabled.
+        if disabled:
+            self._disabled = _convert_to_int_list(disabled)
+            self._disabled = [x for x in self._disabled if x in CHECK_CODES]
+            for x in self._disabled:
+                remove_silent(x, self._enabled)
+        else:
+            self._disabled = []
+
+    @property
+    def enabled(self):
+        return self._enabled
+
+    @enabled.setter
+    def enabled(self, enabled):
+        def remove_silent(item, elements):
+            try:
+                elements.remove(item)
+            except ValueError:
+                pass  # suppress exception if value is not present
+        # Convert string of comma-separated checks to a list,
+        # and convert check code numbers to names. By default all messages are
+        # enabled.
+        if enabled:
+            self._enabled = _convert_to_int_list(enabled)
+            self._enabled = [x for x in self._enabled if x in CHECK_CODES]
+            for x in self._enabled:
+                remove_silent(x, self._disabled)
+        else:
+            self._enabled = copy.deepcopy(CHECK_CODES)
 
 
 def initialize_options(options=None):
