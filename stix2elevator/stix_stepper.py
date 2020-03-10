@@ -11,6 +11,7 @@ import stix2validator
 
 from stix2elevator.ids import generate_sco_id
 from stix2elevator.utils import NewlinesHelpFormatter, validate_stix2_string
+from stix2elevator.version import __version__
 
 
 def lookup_stix_id(obs_id, all_objects):
@@ -148,7 +149,7 @@ def step_bundle(bundle):
 def _get_arg_parser(is_script=True):
     """Create and return an ArgumentParser for this application."""
 
-    desc = "stix_stepper v{0}\n\n".format("__version__")
+    desc = "stix_stepper v{0}\n\n".format(__version__)
 
     parser = argparse.ArgumentParser(
         description=desc,
