@@ -1,3 +1,4 @@
+from argparse import Namespace
 import io
 import os
 
@@ -9,8 +10,12 @@ import pytest
 from stix2elevator import (elevate,
                            elevate_file,
                            elevate_package,
-                           elevate_string)
-from stix2elevator.options import initialize_options, set_option_value
+                           elevate_string,
+                           options)
+from stix2elevator.options import (ElevatorOptions,
+                                   get_option_value,
+                                   initialize_options,
+                                   set_option_value)
 from stix2elevator.utils import find_dir
 
 # This module only tests for the main functions used to interact with the elevator from a programmatic or
@@ -27,6 +32,24 @@ def setup_options():
     set_option_value("spec_version", version)
     set_option_value("validator_args", "--version " + version)
     set_option_value("policy", "no_policy")
+
+
+@pytest.mark.parametrize("opts", [
+    ElevatorOptions(policy="no_policy", spec_version="2.1", log_level="DEBUG", disabled=[212, 901]),
+    {"policy": "no_policy", "spec_version": "2.1", "log_level": "DEBUG", "disabled": [212, 901]},
+    Namespace(policy="no_policy", spec_version="2.1", log_level="DEBUG", disabled="212,901",
+              file_=None, incidents=False, missing_policy="add-to-description",
+              custom_property_prefix="elevator", infrastructure=False, package_created_by_id=None,
+              default_timestamp=None, validator_args="--strict-types", enabled=None, silent=False,
+              message_log_directory=None, output_directory=None, markings_allowed=""),
+])
+def test_setup_options(opts):
+    options.ALL_OPTIONS = None  # To make sure we can set it again
+    initialize_options(opts)
+    assert get_option_value("policy") == "no_policy"
+    assert get_option_value("spec_version") == "2.1"
+    assert get_option_value("log_level") == "DEBUG"
+    assert get_option_value("disabled") == [212, 901]
 
 
 def test_elevate_with_marking_container():

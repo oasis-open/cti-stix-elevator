@@ -107,8 +107,8 @@ def _get_arg_parser(is_script=True):
         help="A comma-separated list of the stix2-elevator messages to enable. "
              "If the --disable option is not used, no other messages will be "
              "shown. \n\nExample: stix2_elevator.py <file> --enable 250",
-        dest="enable",
-        default=""
+        dest="enabled",
+        default=None
     )
 
     parser.add_argument(
@@ -116,8 +116,8 @@ def _get_arg_parser(is_script=True):
         "--disable",
         help="A comma-separated list of the stix2-elevator messages to disable. \n\n"
              "Example: stix2_elevator.py <file> --disable 212,220",
-        dest="disable",
-        default=""
+        dest="disabled",
+        default=None
     )
 
     parser.add_argument(
