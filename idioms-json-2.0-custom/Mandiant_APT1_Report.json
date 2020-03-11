@@ -14,8 +14,7 @@
         {
             "created": "2019-09-16T11:04:59.121Z",
             "id": "identity--457f7913-c000-48ec-9394-67d777e7d586",
-            "identity_class": "unknown",
-            "modified": "2019-09-16T11:04:59.121Z",
+                        "modified": "2019-09-16T11:04:59.121Z",
             "name": "MITRE",
             "object_marking_refs": [
                 "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
@@ -25,8 +24,7 @@
         {
             "created": "2015-05-15T09:00:00.000Z",
             "id": "identity--f3bcbd2e-7ae1-4a02-9f85-8243a53b3085",
-            "identity_class": "unknown",
-            "modified": "2015-05-15T09:00:00.000Z",
+                        "modified": "2015-05-15T09:00:00.000Z",
             "name": "Harbin Institute of Technology (哈尔滨工业大学)",
             "object_marking_refs": [
                 "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
@@ -36,8 +34,7 @@
         {
             "created": "2015-05-15T09:00:00.000Z",
             "id": "identity--0652ac78-8b89-46d6-b4fe-8526baa6bb10",
-            "identity_class": "unknown",
-            "modified": "2015-05-15T09:00:00.000Z",
+                        "modified": "2015-05-15T09:00:00.000Z",
             "name": "Zhejiang University School of Computer Science and Technology (浙江大学计算机学院)",
             "object_marking_refs": [
                 "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
@@ -195,8 +192,7 @@
         {
             "created": "2015-05-15T09:00:00.000Z",
             "id": "identity--950f1c88-4641-4dfb-abd2-0bb14279b5b5",
-            "identity_class": "unknown",
-            "modified": "2015-05-15T09:00:00.000Z",
+                        "modified": "2015-05-15T09:00:00.000Z",
             "name": "Comment Crew",
             "object_marking_refs": [
                 "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
@@ -221,8 +217,7 @@
         {
             "created": "2015-05-15T09:00:00.000Z",
             "id": "identity--7c2ad953-0bd3-43bc-9b0f-631d1d77a703",
-            "identity_class": "unknown",
-            "modified": "2015-05-15T09:00:00.000Z",
+                        "modified": "2015-05-15T09:00:00.000Z",
             "name": "Comment Group",
             "object_marking_refs": [
                 "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
@@ -247,8 +242,7 @@
         {
             "created": "2015-05-15T09:00:00.000Z",
             "id": "identity--8ca3fc2d-0ccc-4db1-9a5c-3d9ed876ac5b",
-            "identity_class": "unknown",
-            "modified": "2015-05-15T09:00:00.000Z",
+                        "modified": "2015-05-15T09:00:00.000Z",
             "name": "Shady Rat",
             "object_marking_refs": [
                 "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
@@ -273,8 +267,7 @@
         {
             "created": "2015-05-15T09:00:00.000Z",
             "id": "identity--1e2841a1-4bf8-4483-bde5-10c73d0d83f8",
-            "identity_class": "unknown",
-            "modified": "2015-05-15T09:00:00.000Z",
+                        "modified": "2015-05-15T09:00:00.000Z",
             "name": "GSD 3rd Department / 2nd Bureau",
             "object_marking_refs": [
                 "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
@@ -299,8 +292,7 @@
         {
             "created": "2015-05-15T09:00:00.000Z",
             "id": "identity--a0a49a2a-866c-438a-aa03-32c9328753d1",
-            "identity_class": "unknown",
-            "modified": "2015-05-15T09:00:00.000Z",
+                        "modified": "2015-05-15T09:00:00.000Z",
             "name": "GSD 3rd Department",
             "object_marking_refs": [
                 "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
@@ -325,8 +317,7 @@
         {
             "created": "2015-05-15T09:00:00.000Z",
             "id": "identity--da92c2e4-88c9-40da-9813-b0caeacc04f2",
-            "identity_class": "unknown",
-            "modified": "2015-05-15T09:00:00.000Z",
+                        "modified": "2015-05-15T09:00:00.000Z",
             "name": "PLA General Staff",
             "object_marking_refs": [
                 "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
@@ -406,8 +397,7 @@
             "created": "2015-05-15T09:00:00.000Z",
             "created_by_ref": "identity--d90337ae-d1e0-4412-9b6c-71f0ac8ecd85",
             "id": "identity--c63f31ac-871b-4846-aa25-de1926f4f3c8",
-            "identity_class": "unknown",
-            "modified": "2015-05-15T09:00:00.000Z",
+                        "modified": "2015-05-15T09:00:00.000Z",
             "name": "APT1 Tactics, Techniques and Procedures",
             "object_marking_refs": [
                 "marking-definition--a1146e01-1b34-4d19-9ec6-bd553b55367e"

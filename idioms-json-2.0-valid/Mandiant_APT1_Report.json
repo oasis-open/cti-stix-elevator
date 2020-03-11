@@ -14,8 +14,7 @@
     {
       "created": "2018-09-26T15:49:56.019Z",
       "id": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
-      "identity_class": "unknown",
-      "modified": "2018-09-26T15:49:56.019Z",
+            "modified": "2018-09-26T15:49:56.019Z",
       "name": "MITRE",
       "object_marking_refs": [
         "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
@@ -25,8 +24,7 @@
     {
       "created": "2015-05-15T09:00:00.000Z",
       "id": "identity--1c62e9eb-bef8-4a38-ba4f-29be7ba910e6",
-      "identity_class": "unknown",
-      "modified": "2015-05-15T09:00:00.000Z",
+            "modified": "2015-05-15T09:00:00.000Z",
       "name": "Harbin Institute of Technology (哈尔滨工业大学)",
       "object_marking_refs": [
         "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
@@ -36,8 +34,7 @@
     {
       "created": "2015-05-15T09:00:00.000Z",
       "id": "identity--9a1a5860-2a36-416a-a649-b43443306c83",
-      "identity_class": "unknown",
-      "modified": "2015-05-15T09:00:00.000Z",
+            "modified": "2015-05-15T09:00:00.000Z",
       "name": "Zhejiang University School of Computer Science and Technology (浙江大学计算机学院)",
       "object_marking_refs": [
         "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
@@ -193,8 +190,7 @@
     {
       "created": "2015-05-15T09:00:00.000Z",
       "id": "identity--e8e676c6-3c16-4d26-ac3e-d5cf788179e6",
-      "identity_class": "unknown",
-      "modified": "2015-05-15T09:00:00.000Z",
+            "modified": "2015-05-15T09:00:00.000Z",
       "name": "Comment Crew",
       "object_marking_refs": [
         "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
@@ -219,8 +215,7 @@
     {
       "created": "2015-05-15T09:00:00.000Z",
       "id": "identity--7de07f79-fbe5-4d63-9343-3421258b1c1f",
-      "identity_class": "unknown",
-      "modified": "2015-05-15T09:00:00.000Z",
+            "modified": "2015-05-15T09:00:00.000Z",
       "name": "Comment Group",
       "object_marking_refs": [
         "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
@@ -245,8 +240,7 @@
     {
       "created": "2015-05-15T09:00:00.000Z",
       "id": "identity--3372fa09-3a8c-4324-8a72-f88984b27c01",
-      "identity_class": "unknown",
-      "modified": "2015-05-15T09:00:00.000Z",
+            "modified": "2015-05-15T09:00:00.000Z",
       "name": "Shady Rat",
       "object_marking_refs": [
         "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
@@ -271,8 +265,7 @@
     {
       "created": "2015-05-15T09:00:00.000Z",
       "id": "identity--78f57d59-e1b7-4a78-b145-a988e321a555",
-      "identity_class": "unknown",
-      "modified": "2015-05-15T09:00:00.000Z",
+            "modified": "2015-05-15T09:00:00.000Z",
       "name": "GSD 3rd Department / 2nd Bureau",
       "object_marking_refs": [
         "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
@@ -297,8 +290,7 @@
     {
       "created": "2015-05-15T09:00:00.000Z",
       "id": "identity--50616a25-78fb-4be0-b6f2-3a75993fcbfb",
-      "identity_class": "unknown",
-      "modified": "2015-05-15T09:00:00.000Z",
+            "modified": "2015-05-15T09:00:00.000Z",
       "name": "GSD 3rd Department",
       "object_marking_refs": [
         "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
@@ -323,8 +315,7 @@
     {
       "created": "2015-05-15T09:00:00.000Z",
       "id": "identity--490f0285-561d-4978-bd01-967e0e305051",
-      "identity_class": "unknown",
-      "modified": "2015-05-15T09:00:00.000Z",
+            "modified": "2015-05-15T09:00:00.000Z",
       "name": "PLA General Staff",
       "object_marking_refs": [
         "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
@@ -403,8 +394,7 @@
       "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
       "description": "\n\nINTENDED_EFFECT:<!DOCTYPE html>\n\t\t\t\t\t<html><body>\n\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tOur evidence indicates that APT1 has been stealing\n\t\t\t\t\t\t\thundreds of terabytes of data from at least 141 organizations across a diverse\n\t\t\t\t\t\t\tset of industries beginning as early as 2006. Remarkably, we have witnessed APT1\n\t\t\t\t\t\t\ttarget dozens of organizations simultaneously. Once the group establishes access\n\t\t\t\t\t\t\tto a victim’s network, they continue to access it periodically over several\n\t\t\t\t\t\t\tmonths or years to steal large volumes of valuable intellectual property,\n\t\t\t\t\t\t\tincluding technology blueprints, proprietary manufacturing processes, test\n\t\t\t\t\t\t\tresults, business plans, pricing documents, partnership agreements, emails and\n\t\t\t\t\t\t\tcontact lists from victim organizations’ leadership. We believe that the\n\t\t\t\t\t\t\textensive activity we have directly observed represents only a small fraction of\n\t\t\t\t\t\t\tthe cyber espionage that APT1 has committed. \n\t\t\t\t\t\t\t</P>\n\t\t\t\t\t</body></html>\n\nINTENDED_EFFECT:Advantage - Economic\n\nINTENDED_EFFECT:Theft - Intellectual Property\n\nINTENDED_EFFECT:Competitive Advantage\n\nINTENDED_EFFECT:Theft - Credential Theft\n\nINTENDED_EFFECT:Unauthorized Access",
       "id": "identity--c63f31ac-871b-4846-aa25-de1926f4f3c8",
-      "identity_class": "unknown",
-      "modified": "2018-09-26T15:49:56.060Z",
+            "modified": "2018-09-26T15:49:56.060Z",
       "name": "APT1 Tactics, Techniques and Procedures",
       "object_marking_refs": [
         "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"

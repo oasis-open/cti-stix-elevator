@@ -1,12 +1,17 @@
+import argparse
 from collections import OrderedDict
 import io
 import json
+import shlex
 import sys
 
 from six import text_type
 from stix2.pattern_visitor import create_pattern_object
+import stix2validator
 
 from stix2elevator.ids import generate_sco_id
+from stix2elevator.utils import NewlinesHelpFormatter, validate_stix2_string
+from stix2elevator.version import __version__
 
 
 def lookup_stix_id(obs_id, all_objects):
@@ -112,7 +117,8 @@ def step_object(stix_object):
     if stix_object["type"] in type_set:
         if "labels" in stix_object:
             types_property_name = stix_object["type"].replace("-", "_") + "_types"
-            stix_object[types_property_name] = stix_object["labels"]
+            if len(stix_object["labels"]) != 1 or "unknown" not in stix_object["labels"]:
+                stix_object[types_property_name] = stix_object["labels"]
             stix_object.pop("labels")
     if stix_object["type"] == "indicator":
         stix_object["pattern"] = step_pattern(stix_object["pattern"])
@@ -142,8 +148,38 @@ def step_bundle(bundle):
     return bundle
 
 
-def step_file(fn, encoding="utf-8"):
+def _get_arg_parser(is_script=True):
+    """Create and return an ArgumentParser for this application."""
+
+    desc = "stix_stepper v{0}\n\n".format(__version__)
+
+    parser = argparse.ArgumentParser(
+        description=desc,
+        formatter_class=NewlinesHelpFormatter,
+        epilog=""
+    )
+
+    if is_script:
+        parser.add_argument(
+            "file_",
+            help="The input STIX 1.x document to be stepped.",
+            metavar="file"
+        )
+
+    parser.add_argument(
+        "--validator-args",
+        help="Arguments to pass to stix2-validator. Default: --strict-types\n\n"
+             "Example: stix2_elevator.py <file> --validator-args=\"-v --strict-types -d 212\"",
+        dest="validator_args",
+        action="store",
+        default=""
+    )
+    return parser
+
+
+def step_file(fn, validator_options, encoding="utf-8"):
     sys.setrecursionlimit(5000)
+
     with io.open(fn, "r", encoding=encoding) as json_data:
         json_content = json.load(json_data, object_pairs_hook=OrderedDict)
 
@@ -155,11 +191,26 @@ def step_file(fn, encoding="utf-8"):
                                  separators=(',', ': '),
                                  sort_keys=True)
         print(json_string)
+        try:
+            validation_results = validate_stix2_string(json_string, validator_options, fn)
+            stix2validator.output.print_results([validation_results])
+        except stix2validator.ValidationError as ex:
+            stix2validator.output.error("Validation error occurred: '%s'" % ex,
+                                        stix2validator.codes.EXIT_VALIDATION_ERROR)
         return json_string
     else:
         print("stix_stepper only converts STIX 2.0 to STIX 2.1")
         return
 
 
+def main():
+    stepper_arg_parser = _get_arg_parser()
+    stepper_args = stepper_arg_parser.parse_args()
+    validator_options = stix2validator.parse_args(shlex.split(stepper_args.validator_args))
+
+    stix2validator.output.set_level(validator_options.verbose)
+    stix2validator.output.set_silent(validator_options.silent)
+
+
 if __name__ == '__main__':
-    step_file(sys.argv[1])
+    main()

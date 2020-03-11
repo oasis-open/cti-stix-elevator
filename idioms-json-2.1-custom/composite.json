@@ -1,0 +1,75 @@
+{
+    "id": "bundle--b7b16e67-4292-46a3-ba64-60c1a491723d",
+    "objects": [
+        {
+            "created": "2015-05-15T09:00:00.000Z",
+            "id": "indicator--702f0acc-4669-43bf-9193-55cdd1d928c7",
+            "indicator_types": [
+                "malware-artifacts"
+            ],
+            "modified": "2015-05-15T09:00:00.000Z",
+            "pattern": "[ipv4-addr:value = '219.90.112.203'] AND [ipv4-addr:value = '202.65.222.45']",
+            "pattern_type": "stix",
+            "spec_version": "2.1",
+            "type": "indicator",
+            "valid_from": "2015-05-15T09:00:00.000000Z"
+        },
+        {
+            "created": "2015-05-15T09:00:00.000Z",
+            "id": "indicator--6478991b-3af4-45f9-b649-b2c4e7acedc7",
+            "indicator_types": [
+                "malware-artifacts"
+            ],
+            "modified": "2015-05-15T09:00:00.000Z",
+            "name": "Composite Indicator (026871ea3d6cbbeb90fea6bf2906cc12)",
+            "pattern": "([ipv4-addr:value = '219.90.112.203'] AND [ipv4-addr:value = '202.65.222.45']) OR [file:hashes.MD5 = '026871ea3d6cbbeb90fea6bf2906cc12']",
+            "pattern_type": "stix",
+            "spec_version": "2.1",
+            "type": "indicator",
+            "valid_from": "2015-05-15T09:00:00.000000Z"
+        },
+        {
+            "created": "2015-05-15T09:00:00.000Z",
+            "id": "indicator--e462b080-43a7-4eec-9357-f3bf39771743",
+            "indicator_types": [
+                "ip-watchlist"
+            ],
+            "modified": "2015-05-15T09:00:00.000Z",
+            "name": "IP: 219.90.112.203",
+            "pattern": "[ipv4-addr:value = '219.90.112.203']",
+            "pattern_type": "stix",
+            "spec_version": "2.1",
+            "type": "indicator",
+            "valid_from": "2015-05-15T09:00:00.000000Z"
+        },
+        {
+            "created": "2015-05-15T09:00:00.000Z",
+            "id": "indicator--7cb99f15-4d25-40b2-91ac-1ec3355e3ef4",
+            "indicator_types": [
+                "ip-watchlist"
+            ],
+            "modified": "2015-05-15T09:00:00.000Z",
+            "name": "IP: 202.65.222.45",
+            "pattern": "[ipv4-addr:value = '202.65.222.45']",
+            "pattern_type": "stix",
+            "spec_version": "2.1",
+            "type": "indicator",
+            "valid_from": "2015-05-15T09:00:00.000000Z"
+        },
+        {
+            "created": "2015-05-15T09:00:00.000Z",
+            "id": "indicator--4272b570-476e-4e3b-9dd9-f36ebd0a6295",
+            "indicator_types": [
+                "malware-artifacts"
+            ],
+            "modified": "2015-05-15T09:00:00.000Z",
+            "name": "Sample: 026871ea3d6cbbeb90fea6bf2906cc12",
+            "pattern": "[file:hashes.MD5 = '026871ea3d6cbbeb90fea6bf2906cc12']",
+            "pattern_type": "stix",
+            "spec_version": "2.1",
+            "type": "indicator",
+            "valid_from": "2015-05-15T09:00:00.000000Z"
+        }
+    ],
+    "type": "bundle"
+}

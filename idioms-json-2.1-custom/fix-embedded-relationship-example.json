@@ -4,7 +4,6 @@
         {
             "created": "2019-11-25T13:54:37.797Z",
             "id": "identity--4ec4d0a2-80e3-41e6-ae22-56b6b6499611",
-            "identity_class": "unknown",
             "modified": "2019-11-25T13:54:37.797Z",
             "name": "Emmanuelle",
             "spec_version": "2.1",
@@ -13,7 +12,6 @@
         {
             "created": "2019-11-25T13:54:37.797Z",
             "id": "identity--1621d4d4-b67d-41e3-9670-f01faf20d111",
-            "identity_class": "unknown",
             "modified": "2019-11-25T13:54:37.797Z",
             "name": "Adversary Bravo",
             "spec_version": "2.1",
@@ -27,9 +25,6 @@
             "name": "Adversary Bravo",
             "sophistication": "unknown",
             "spec_version": "2.1",
-            "threat_actor_types": [
-                "unknown"
-            ],
             "type": "threat-actor"
         },
         {

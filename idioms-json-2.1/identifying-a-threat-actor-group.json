@@ -36,14 +36,11 @@
       "name": "Disco Team Threat Actor Group",
       "sophistication": "unknown",
       "spec_version": "2.1",
-      "threat_actor_types": [
-        "unknown"
-      ],
       "type": "threat-actor"
     },
     {
       "created": "2014-11-19T23:39:03.893Z",
-      "id": "relationship--733c5838-34d9-4fbf-949c-62aba761184c",
+      "id": "relationship--e5fc075f-a3c4-40e6-a529-fd4b111bda33",
       "modified": "2014-11-19T23:39:03.893Z",
       "relationship_type": "attributed-to",
       "source_ref": "threat-actor--dfaa8d77-07e2-4e28-b2c8-92e9f7b04428",

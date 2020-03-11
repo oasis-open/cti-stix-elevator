@@ -195,10 +195,10 @@ class ElevatorOptions(object):
         self.marking_container = None
 
 
-def initialize_options(elevator_args=None):
+def initialize_options(**kwargs):
     global ALL_OPTIONS
     if not ALL_OPTIONS:
-        ALL_OPTIONS = ElevatorOptions(elevator_args)
+        ALL_OPTIONS = ElevatorOptions(**kwargs)
 
         if ALL_OPTIONS.silent and ALL_OPTIONS.message_log_directory:
             warn("Both console and output log have disabled messages.", 209)
@@ -224,6 +224,7 @@ def get_option_value(option_name):
 
 
 def set_option_value(option_name, option_value):
+    global ALL_OPTIONS
     if ALL_OPTIONS:
         setattr(ALL_OPTIONS, option_name, option_value)
     else:

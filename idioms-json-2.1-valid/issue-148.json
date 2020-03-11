@@ -5,9 +5,6 @@
       "created": "2014-05-08T09:00:00.000Z",
       "description": "Port Numbers",
       "id": "indicator--b61d71d8-fe37-4bcd-a76d-d437156b8226",
-      "indicator_types": [
-        "unknown"
-      ],
       "modified": "2014-05-08T09:00:00.000Z",
       "name": "Incident on Port",
       "pattern": "[(network-traffic:dst_port = 337 AND network-traffic:protocols[*] = 'DCCP')]",

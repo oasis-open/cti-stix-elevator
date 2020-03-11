@@ -35,7 +35,7 @@ def idiom_elevator_mappings(before_file_path, stored_json, version, missing_poli
 
     initialize_options()
     set_option_value("missing_policy", missing_policy)
-    set_option_value("log_level", "CRITICAL")
+    set_option_value("log_level", "INFO")
     set_option_value("spec_version", version)
     set_option_value("validator_args", "--version " + version)
     if not get_option_value("policy") == "no_policy":

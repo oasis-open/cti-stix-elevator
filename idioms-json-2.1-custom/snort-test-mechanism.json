@@ -19,9 +19,6 @@
       "confidence": 85,
       "created": "2014-06-20T15:16:56.987Z",
       "id": "indicator--567b201c-4fd5-4bde-a5db-42abc340807b",
-      "indicator_types": [
-        "unknown"
-      ],
       "modified": "2014-06-20T15:16:56.987Z",
       "name": "Snort Signature for Heartbleed",
       "pattern": "alert tcp any any -> any any (msg:\"FOX-SRT - Flowbit - TLS-SSL Client Hello\"; flow:established; dsize:< 500; content:\"|16 03|\"; depth:2; byte_test:1, <=, 2, 3; byte_test:1, !=, 2, 1; content:\"|01|\"; offset:5; depth:1; content:\"|03|\"; offset:9; byte_test:1, <=, 3, 10; byte_test:1, !=, 2, 9; content:\"|00 0f 00|\"; flowbits:set,foxsslsession; flowbits:noalert; threshold:type limit, track by_src, count 1, seconds 60; reference:cve,2014-0160; classtype:bad-unknown; sid: 21001130; rev:9;), alert tcp any any -> any any (msg:\"FOX-SRT - Suspicious - TLS-SSL Large Heartbeat Response\"; flow:established; flowbits:isset,foxsslsession; content:\"|18 03|\"; depth: 2; byte_test:1, <=, 3, 2; byte_test:1, !=, 2, 1; byte_test:2, >, 200, 3; threshold:type limit, track by_src, count 1, seconds 600; reference:cve,2014-0160; classtype:bad-unknown; sid: 21001131; rev:5;)",

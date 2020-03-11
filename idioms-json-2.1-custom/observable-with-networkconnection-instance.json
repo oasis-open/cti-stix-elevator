@@ -12,10 +12,17 @@
             "value": "198.49.123.10"
         },
         {
+            "id": "artifact--8a7bf821-70fd-5624-88f2-e2fd2464aea0",
+            "payload_bin": "YWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFh",
+            "type": "artifact"
+        },
+        {
             "dst_port": 80,
             "dst_ref": "ipv4-addr--c5a216ae-2184-5acd-b145-2d1321457d0b",
             "extensions": {
                 "http-request-ext": {
+                    "message_body_data_ref": "artifact--8a7bf821-70fd-5624-88f2-e2fd2464aea0",
+                    "message_body_length": 200,
                     "request_header": {
                         "Accept": "text/plain",
                         "Accept-Charset": "utf-8",
@@ -55,6 +62,7 @@
             "object_refs": [
                 "domain-name--220a2699-5ebf-5b57-bf02-424964bb19c0",
                 "ipv4-addr--c5a216ae-2184-5acd-b145-2d1321457d0b",
+                "artifact--8a7bf821-70fd-5624-88f2-e2fd2464aea0",
                 "network-traffic--d6c8c747-f552-5525-b498-ac02312d556c"
             ],
             "spec_version": "2.1",

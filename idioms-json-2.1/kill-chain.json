@@ -10,9 +10,6 @@
           "phase_name": "Actions on Objectives"
         }
       ],
-      "indicator_types": [
-        "unknown"
-      ],
       "modified": "2014-10-21T21:10:09.423Z",
       "type": "indicator",
       "spec_version": "2.1",
