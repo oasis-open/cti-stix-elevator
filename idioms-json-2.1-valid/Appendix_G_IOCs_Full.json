@@ -15,7 +15,6 @@
         {
             "created": "2017-05-03T14:09:03.121Z",
             "id": "identity--25b4ac53-b009-44a7-adac-6377624c6a31",
-            "identity_class": "unknown",
             "modified": "2017-05-03T14:09:03.121Z",
             "name": "MITRE",
             "object_marking_refs": [
@@ -352,9 +351,6 @@
             "created_by_ref": "identity--25b4ac53-b009-44a7-adac-6377624c6a31",
             "description": "\n                A WEBC2 backdoor is designed to retrieve a Web page from a pre-determined C2 server. It expects the Web page to contain special HTML tags; the backdoor will attempt to interpret the data between the tags as commands. Members of this family of backdoor malware talk to specific Web-based Command & Control (C2) servers. The backdoor has a limited command set, depending on version. It is primarily a downloader, but it classified as a backdoor because it can accept a limited command set, including changing local directories, downloading and executing additional files, sleeping, and connecting to a specific IP & port not initially included in the instruction set for the malware. Each version of the malware has at least one hardcoded URL to which it connects to receive its initial commands. This family of malware installs itself as a service, with the malware either being the executable run by the service, or the service DLL loaded by a legitimate service. The same core code is seen recompiled on different dates or with different names, but the same functionality. Key signatures include a specific set of functions (some of which can be used with the OS-provided rundll32.exe tool to install the malware as a service), and hardcoded strings used in communication with C2 servers to issue commands to the implant.\n            ",
             "id": "indicator--8b34f3bd-8176-4e33-a4ca-6b9970c2be2e",
-            "indicator_types": [
-                "unknown"
-            ],
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "WEBC2-Y21K (FAMILY)",
             "object_marking_refs": [
@@ -778,7 +774,7 @@
             "object_marking_refs": [
                 "marking-definition--826e0737-7ce3-4dc2-91e6-f4fa1864f75a"
             ],
-            "pattern": "[(file:hashes.MD5 = '4788960e489197f2633f581607eb0d26' OR file:hashes.MD5 = '2ef062fa86537db34f5907a9775664a1' OR file:hashes.MD5 = '2e86a9862257a0cf723ceef3868a1a12' OR file:name = 'exploie.exe' OR ((file:name = 'r.exe' OR file:name = 'Browser.exe' OR file:name MATCHES 'bits.exe') AND (file:size = 378880 OR file:size = 40960 OR file:size = 536576) AND (file:extensions.'windows-pebinary-ext'.file_header.time_date_stamp = '2010-03-15T06:26:41Z' OR file:extensions.'windows-pebinary-ext'.file_header.time_date_stamp = '2011-03-16T01:08:00Z' OR file:extensions.'windows-pebinary-ext'.file_header.time_date_stamp = '2011-03-28T09:23:35Z')) AND file:name NOT = 'firefox.exe') AND file:name NOT = 'explorer.exe']",
+            "pattern": "[(file:hashes.MD5 = '4788960e489197f2633f581607eb0d26' OR file:hashes.MD5 = '2ef062fa86537db34f5907a9775664a1' OR file:hashes.MD5 = '2e86a9862257a0cf723ceef3868a1a12' OR file:name = 'exploie.exe' OR ((file:name = 'r.exe' OR file:name = 'Browser.exe' OR file:name MATCHES 'bits.exe') AND (file:size = 378880 OR file:size = 40960 OR file:size = 536576) AND (file:extensions.'windows-pebinary-ext'.file_header.time_date_stamp = '2010-03-15T06:26:41Z' OR file:extensions.'windows-pebinary-ext'.file_header.time_date_stamp = '2011-03-16T01:08:00Z' OR file:extensions.'windows-pebinary-ext'.file_header.time_date_stamp = '2011-03-28T09:23:35Z')) AND file:name NOT = 'firefox.exe' AND file:name NOT = 'explorer.exe')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
