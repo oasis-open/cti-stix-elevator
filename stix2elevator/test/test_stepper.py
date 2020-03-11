@@ -1,9 +1,10 @@
 import json
 import os
 
+import stix2validator
+
 from stix2elevator.stix_stepper import step_file
 from stix2elevator.utils import find_dir, id_property
-import stix2validator
 
 from .test_idioms import (BEFORE_FILENAMES,
                           BEFORE_FILES,

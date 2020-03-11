@@ -209,5 +209,6 @@ def main():
     stix2validator.output.set_level(validator_options.verbose)
     stix2validator.output.set_silent(validator_options.silent)
 
+
 if __name__ == '__main__':
     main()
