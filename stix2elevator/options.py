@@ -277,6 +277,7 @@ def get_option_value(option_name):
 
 
 def set_option_value(option_name, option_value):
+    global ALL_OPTIONS
     if ALL_OPTIONS:
         setattr(ALL_OPTIONS, option_name, option_value)
     else:

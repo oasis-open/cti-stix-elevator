@@ -12,9 +12,6 @@
             "name": "People behind the intrusion",
             "sophistication": "unknown",
             "spec_version": "2.1",
-            "threat_actor_types": [
-                "unknown"
-            ],
             "type": "threat-actor"
         },
         {

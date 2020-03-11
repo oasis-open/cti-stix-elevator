@@ -4,12 +4,9 @@
     {
       "created": "2018-08-03T10:23:55.329Z",
       "id": "indicator--ea31dfd9-9f9d-4580-ba03-e85afcc06b15",
-      "indicator_types": [
-        "unknown"
-      ],
       "modified": "2018-08-03T10:23:55.329Z",
       "name": "A Network Socket example",
-      "pattern": "[(network-traffic:extensions.'socket-ext'.address_family = 'AF_INET' AND network-traffic:extensions.'socket-ext'.options.IP_MULTICAST_LOOP = true AND network-traffic:extensions.'socket-ext'.x_elevator_local_address = '198.51.100.2' AND network-traffic:protocols[*] = 'TCP')]",
+      "pattern": "[network-traffic:extensions.'socket-ext'.address_family = 'AF_INET' AND network-traffic:extensions.'socket-ext'.options.IP_MULTICAST_LOOP = true AND network-traffic:extensions.'socket-ext'.x_elevator_local_address = '198.51.100.2' AND network-traffic:protocols[*] = 'TCP']",
       "pattern_type": "stix",
       "spec_version": "2.1",
       "type": "indicator",

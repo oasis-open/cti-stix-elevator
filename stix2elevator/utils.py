@@ -1,7 +1,12 @@
+import argparse
+import base64
 from datetime import datetime
 import os
+import textwrap
 
 from six import binary_type, iteritems, text_type
+from stix2validator import validate_string
+from stix2validator.validator import FileValidationResults
 
 from stix2elevator.options import info, warn
 
@@ -247,6 +252,30 @@ def find_dir(path, directory):
         if directory in dirs:
             found_dir = os.path.join(root, directory)
             return os.path.abspath(found_dir)
+
+
+class NewlinesHelpFormatter(argparse.RawDescriptionHelpFormatter):
+    """Custom help formatter to insert newlines between argument help texts.
+    """
+    def _split_lines(self, text, width):
+        text = self._whitespace_matcher.sub(' ', text).strip()
+        txt = textwrap.wrap(text, width)
+        txt[-1] += '\n'
+        return txt
+
+
+def validate_stix2_string(json_string, validator_options, file_path=None):
+    # Ensure the json_string is a Unicode text string. json.dumps() sometimes
+    # returns a byte-"str" on Python 2.
+    if isinstance(json_string, binary_type):
+        json_string = json_string.decode("utf-8")
+    results = validate_string(json_string, validator_options)
+    fvr = FileValidationResults(results.is_valid, file_path, results)
+    return fvr
+
+
+def encode_in_base64(s):
+    return base64.b64encode(text_type(s).encode('utf-8')).decode('utf-8')
 
 
 class Environment():

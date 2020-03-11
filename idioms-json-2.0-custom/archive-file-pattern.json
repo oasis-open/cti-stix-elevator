@@ -8,7 +8,7 @@
                 "ip-watchlist"
             ],
             "modified": "2014-05-08T09:00:00.000Z",
-            "pattern": "[((file:name = 'iprip32.dll' AND file:parent_directory_ref.path = '/usr/local') AND ((file:extensions.'archive-ext'.contains_refs[*].hashes.'SHA-256' = 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855' AND (file:extensions.'archive-ext'.contains_refs[*].name = 'fred.doc' AND file:extensions.'archive-ext'.contains_refs[*].parent_directory_ref.path = '/usr/local')) AND file:extensions.'archive-ext'.contains_refs[*].hashes.MD5 = '5d8129be965fab8115eca34fc84bd7f0'))]",
+            "pattern": "[(file:name = 'iprip32.dll' AND file:parent_directory_ref.path = '/usr/local') AND ((file:extensions.'archive-ext'.contains_refs[*].hashes.'SHA-256' = 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855' AND (file:extensions.'archive-ext'.contains_refs[*].name = 'fred.doc' AND file:extensions.'archive-ext'.contains_refs[*].parent_directory_ref.path = '/usr/local')) AND file:extensions.'archive-ext'.contains_refs[*].hashes.MD5 = '5d8129be965fab8115eca34fc84bd7f0')]",
             "type": "indicator",
             "valid_from": "2014-05-08T09:00:00.000000Z"
         }

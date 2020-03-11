@@ -15,9 +15,6 @@
         {
             "created": "2018-09-06T16:14:38.947Z",
             "id": "indicator--dfe2b6ad-545d-4144-b546-94c53b4f2002",
-            "indicator_types": [
-                "unknown"
-            ],
             "modified": "2018-09-06T16:14:38.947Z",
             "pattern": "[file:name = 'bombISIS.pdf'] AND [email-message:subject = 'Syria strategic plans leaked']",
             "pattern_type": "stix",
@@ -28,11 +25,8 @@
         {
             "created": "2018-09-06T16:14:38.950Z",
             "id": "indicator--66c7e55d-5b74-42fc-8cb2-169ec592573b",
-            "indicator_types": [
-                "unknown"
-            ],
             "modified": "2018-09-06T16:14:38.950Z",
-            "pattern": "[(mutex:name MATCHES 'foo' OR file:name = 'barfoobar')] AND [network-traffic:dst_ref.value = '46.123.99.25']",
+            "pattern": "([mutex:name MATCHES 'foo'] OR [file:name = 'barfoobar']) AND [network-traffic:dst_ref.value = '46.123.99.25']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -41,9 +35,6 @@
         {
             "created": "2018-09-06T16:14:38.950Z",
             "id": "indicator--879d387d-473c-438e-bf53-1d19aeb215d0",
-            "indicator_types": [
-                "unknown"
-            ],
             "modified": "2018-09-06T16:14:38.950Z",
             "pattern": "[network-traffic:src_ref.value IN ('10.0.0.0', '10.0.0.1', '10.0.0.2')]",
             "pattern_type": "stix",
