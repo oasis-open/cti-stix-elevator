@@ -120,11 +120,13 @@ def step_object(stix_object):
             if len(stix_object["labels"]) != 1 or "unknown" not in stix_object["labels"]:
                 stix_object[types_property_name] = stix_object["labels"]
             stix_object.pop("labels")
-        if stix_object["type"] == "indicator":
-            stix_object["pattern"] = step_pattern(stix_object["pattern"])
-            stix_object["pattern_type"] = "stix"
-        elif stix_object["type"] == "malware":
-            stix_object["is_family"] = False
+    if stix_object["type"] == "indicator":
+        stix_object["pattern"] = step_pattern(stix_object["pattern"])
+        stix_object["pattern_type"] = "stix"
+        return [stix_object]
+    elif stix_object["type"] == "malware":
+        # couldn't explicitly represent malware families in 2.0, so assume False
+        stix_object["is_family"] = False
         return [stix_object]
     elif stix_object["type"] == "observed-data":
         x = step_observable_data(stix_object)
