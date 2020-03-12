@@ -383,11 +383,11 @@ def handle_sightings_observables(related_observables, bundle_instance, parent_ti
     return refs
 
 
-def process_information_source_for_sighting(sighting, sighting_instance, bundle_instance, parent_timestamp):
+def process_information_source_for_sighting(sighting, sighting_instance, bundle_instance):
     if sighting.source:
         information_source = sighting.source
         if information_source.identity is not None:
-            sighting_instance["where_sighted_refs"] = [get_identity_ref(information_source.identity, bundle_instance, parent_timestamp)]
+            sighting_instance["where_sighted_refs"] = [get_identity_ref(information_source.identity, bundle_instance)]
             if information_source.description:
                 process_description_and_short_description(sighting_instance, sighting)
             if information_source.references:
