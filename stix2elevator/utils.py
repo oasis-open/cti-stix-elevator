@@ -4,6 +4,7 @@ from datetime import datetime
 import os
 import textwrap
 
+from cybox.common.properties import DateTime
 from six import binary_type, iteritems, text_type
 from stix2validator import validate_string
 from stix2validator.validator import FileValidationResults
@@ -74,6 +75,8 @@ def convert_controlled_vocabs_to_open_vocabs(new_obj, new_property_name, old_voc
 def strftime_with_appropriate_fractional_seconds(timestamp, milliseconds_only):
     if isinstance(timestamp, (text_type, binary_type)):
         timestamp = datetime.strptime(timestamp, "%Y-%m-%dT%H:%M:%S.%fZ")
+    elif isinstance(timestamp, DateTime):
+        timestamp = timestamp.value
     if milliseconds_only:
         return timestamp.strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3] + "Z"
     else:
