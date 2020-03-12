@@ -604,7 +604,7 @@ def convert_email_message(email_message, obj1x_id):
                 email_dict[property_name] = list()
                 for l in email_message.links:
                     sco_id = get_id_value(l.object_reference)
-                    email_dict[property_name].append(sco_id)
+                    email_dict[property_name].extend(sco_id)
                 warn("Used custom property for %s", 308, "links")
             else:
                 warn("Observed Data objects cannot refer to other external objects (in STIX 2.0): %s in %s",

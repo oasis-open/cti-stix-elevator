@@ -188,7 +188,7 @@ def main():
     elevator_parser = _get_arg_parser()
     elevator_args = elevator_parser.parse_args()
     sys.setrecursionlimit(3000)
-    initialize_options(cmd_args=elevator_args)
+    initialize_options(options=elevator_args)
     result = elevate(elevator_args.file_)
     if result:
         sys.stdout.write(result + "\n")
