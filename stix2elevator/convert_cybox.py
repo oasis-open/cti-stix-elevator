@@ -539,7 +539,7 @@ def convert_email_message(email_message, obj1x_id):
     if email_message.header:
         header = email_message.header
         if header.date:
-            email_dict["date"] = convert_timestamp_to_string(header.date)
+            email_dict["date"] = convert_timestamp_to_string(header.date.value)
         if header.content_type:
             email_dict["content_type"] = text_type(header.content_type)
         if header.subject:
