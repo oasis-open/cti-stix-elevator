@@ -649,7 +649,7 @@ def add_relationships_to_reports(bundle_instance):
 
 def add_confidence_to_object(sdo_instance, confidence):
     if confidence is not None and confidence.value is not None:
-        sdo_instance["confidence"] = convert_confidence(confidence, id)
+        sdo_instance["confidence"] = convert_confidence(confidence, sdo_instance["id"])
 
 
 # campaign

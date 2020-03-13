@@ -70,7 +70,7 @@ def convert_numeric_string(value):
         return float(value)
 
 
-def convert_confidence_value(value, id):
+def convert_confidence_value(value, id_of_sdo):
     if isinstance(value, (int, long)):
         # look for percentage?
         if value < 0 or value > 100:
@@ -89,16 +89,16 @@ def convert_confidence_value(value, id):
             return None
         else:
             warn("The confidence value %s in %s has been converted to an integer so it is valid in STIX 2.1", 724,
-                 value, id)
+                 value, id_of_sdo)
             confidentiality2_1_value = ceil(value)
     elif isinstance(value, str):
         value = text_type(value)
         if value.isnumeric():
-            confidentiality2_1_value = convert_confidence_value(convert_numeric_string(value), id)
+            confidentiality2_1_value = convert_confidence_value(convert_numeric_string(value), id_of_sdo)
         else:
             confidentiality2_1_value = convert_confidence_string(value)
     elif isinstance(value, object):
-        confidentiality2_1_value = convert_confidence_value(value.value, id)
+        confidentiality2_1_value = convert_confidence_value(value.value, id_of_sdo)
     else:
         warn(
             "The confidence value %s cannot be converted", 432, value)
@@ -107,6 +107,6 @@ def convert_confidence_value(value, id):
     return confidentiality2_1_value
 
 
-def convert_confidence(confidence1x, id):
+def convert_confidence(confidence1x, id_of_sdo):
     # should confidence description be included in a note or opinion?
-    return convert_confidence_value(confidence1x.value, id)
+    return convert_confidence_value(confidence1x.value, id_of_sdo)
