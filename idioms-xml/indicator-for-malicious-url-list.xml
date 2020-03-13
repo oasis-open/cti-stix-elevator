@@ -1,0 +1,28 @@
+<stix:STIX_Package
+	xmlns:stixVocabs="http://stix.mitre.org/default_vocabularies-1"
+	xmlns:URIObj="http://cybox.mitre.org/objects#URIObject-2"
+	xmlns:stix="http://stix.mitre.org/stix-1"
+	xmlns:stixCommon="http://stix.mitre.org/common-1"
+	xmlns:cybox="http://cybox.mitre.org/cybox-2"
+	xmlns:cyboxCommon="http://cybox.mitre.org/common-2"
+	xmlns:indicator="http://stix.mitre.org/Indicator-2"
+	xmlns:example="http://example.com"
+	xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	 id="example:Package-6dcfdedf-aa96-4c54-8b61-33d57bebc0f7" version="1.2">
+    <stix:Indicators>
+        <stix:Indicator id="example:indicator-e0321ab0-4547-4f94-83d3-3e594767dd4b" timestamp="2020-03-13T15:57:09.287696+00:00" xsi:type='indicator:IndicatorType'>
+            <indicator:Title>Indicator for URL Watchlist</indicator:Title>
+            <indicator:Type xsi:type="stixVocabs:IndicatorTypeVocab-1.1">URL Watchlist</indicator:Type>
+            <indicator:Observable id="example:Observable-141ab9cb-e50b-4e53-8432-0aa1bc16a50b">
+                <cybox:Object id="example:URI-10edcf76-1334-4942-9b8e-df47c651fe23">
+                    <cybox:Properties xsi:type="URIObj:URIObjectType">
+                        <URIObj:Value condition="Equals" apply_condition="ANY">http://example.com/foo/malicious1.html##comma##http://example.com/foo/malicious2.html##comma##http://example.com/foo/malicious3.html</URIObj:Value>
+                    </cybox:Properties>
+                </cybox:Object>
+            </indicator:Observable>
+        </stix:Indicator>
+    </stix:Indicators>
+</stix:STIX_Package>

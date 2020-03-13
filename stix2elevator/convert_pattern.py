@@ -1026,7 +1026,10 @@ def convert_address_to_pattern(add):
 
 
 def convert_uri_to_pattern(uri):
-    return create_term("url:value", uri.value.condition, make_constant(uri.value.value.strip()))
+    if isinstance(uri.value.value, list):
+        return create_term("url:value", uri.value.condition, make_constant([val.strip() for val in uri.value.value]))
+    else:
+        return create_term("url:value", uri.value.condition, make_constant(uri.value.value.strip()))
 
 
 # NOTICE:  The format of these PROPERTIES is different than the others in this file!!!!!!

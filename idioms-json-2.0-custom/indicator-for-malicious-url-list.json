@@ -1,0 +1,19 @@
+{
+    "id": "bundle--6dcfdedf-aa96-4c54-8b61-33d57bebc0f7",
+    "objects": [
+        {
+            "created": "2020-03-13T15:57:09.287Z",
+            "id": "indicator--e0321ab0-4547-4f94-83d3-3e594767dd4b",
+            "labels": [
+                "url-watchlist"
+            ],
+            "modified": "2020-03-13T15:57:09.287Z",
+            "name": "Indicator for URL Watchlist",
+            "pattern": "[url:value IN ('http://example.com/foo/malicious1.html', 'http://example.com/foo/malicious2.html', 'http://example.com/foo/malicious3.html')]",
+            "type": "indicator",
+            "valid_from": "2020-03-13T15:57:09.287696Z"
+        }
+    ],
+    "spec_version": "2.0",
+    "type": "bundle"
+}
