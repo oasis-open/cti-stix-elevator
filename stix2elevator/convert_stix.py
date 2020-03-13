@@ -370,12 +370,12 @@ def handle_free_text_lines(sdo_instance, free_text_lines):
 # Sightings
 
 
-def handle_sightings_observables(related_observables, bundle_instance, parent_timestamp, sighted_object_created_by_ref):
+def handle_sightings_observables(related_observables, env):
     refs = []
     for ref in related_observables:
         if ref.item.idref is None:
             # embedded
-            new20s = handle_embedded_object(ref.item, bundle_instance, sighted_object_created_by_ref, parent_timestamp)
+            new20s = handle_embedded_object(ref.item, env)
             for new20 in new20s:
                 refs.append(new20["id"])
         else:
@@ -383,11 +383,11 @@ def handle_sightings_observables(related_observables, bundle_instance, parent_ti
     return refs
 
 
-def process_information_source_for_sighting(sighting, sighting_instance, bundle_instance, parent_timestamp):
+def process_information_source_for_sighting(sighting, sighting_instance, env):
     if sighting.source:
         information_source = sighting.source
         if information_source.identity is not None:
-            sighting_instance["where_sighted_refs"] = [get_identity_ref(information_source.identity, bundle_instance, parent_timestamp)]
+            sighting_instance["where_sighted_refs"] = [get_identity_ref(information_source.identity, env)]
             if information_source.description:
                 process_description_and_short_description(sighting_instance, sighting)
             if information_source.references:

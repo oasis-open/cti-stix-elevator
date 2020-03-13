@@ -1,0 +1,38 @@
+{
+    "id": "bundle--99d2a5bf-7cf2-4e90-a402-ed1b08a5bcc5",
+    "objects": [
+        {
+            "created": "2020-03-12T15:49:11.512Z",
+            "id": "identity--e3e84ffb-15c9-47a6-9964-26e48adc566b",
+            "modified": "2020-03-12T15:49:11.512Z",
+            "name": "Charlie Tango",
+            "type": "identity"
+        },
+        {
+            "count": 1,
+            "created": "2020-03-12T15:49:11.516Z",
+            "id": "sighting--3e8e12a6-9c18-488c-adf0-053697c9649d",
+            "modified": "2020-03-12T15:49:11.516Z",
+            "sighting_of_ref": "indicator--6737ec19-c598-4c15-929c-3a94fc1d5951",
+            "summary": false,
+            "type": "sighting",
+            "where_sighted_refs": [
+                "identity--e3e84ffb-15c9-47a6-9964-26e48adc566b"
+            ]
+        },
+        {
+            "created": "2020-03-12T15:49:11.512Z",
+            "id": "indicator--6737ec19-c598-4c15-929c-3a94fc1d5951",
+            "labels": [
+                "unknown"
+            ],
+            "modified": "2020-03-12T15:49:11.512Z",
+            "name": "Malicious site hosting downloader",
+            "pattern": "[url:value = 'http://x4z9arb.cn/4712']",
+            "type": "indicator",
+            "valid_from": "2020-03-12T15:49:11.512807Z"
+        }
+    ],
+    "spec_version": "2.0",
+    "type": "bundle"
+}
