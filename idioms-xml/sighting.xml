@@ -1,0 +1,35 @@
+<stix:STIX_Package
+	xmlns:URIObj="http://cybox.mitre.org/objects#URIObject-2"
+	xmlns:indicator="http://stix.mitre.org/Indicator-2"
+	xmlns:cyboxCommon="http://cybox.mitre.org/common-2"
+	xmlns:stix="http://stix.mitre.org/stix-1"
+	xmlns:stixCommon="http://stix.mitre.org/common-1"
+	xmlns:cybox="http://cybox.mitre.org/cybox-2"
+	xmlns:example="http://example.com"
+	xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	 id="example:Package-99d2a5bf-7cf2-4e90-a402-ed1b08a5bcc5" version="1.2">
+    <stix:Indicators>
+        <stix:Indicator id="example:indicator-6737ec19-c598-4c15-929c-3a94fc1d5951" timestamp="2020-03-12T15:49:11.512807+00:00" xsi:type='indicator:IndicatorType'>
+            <indicator:Title>Malicious site hosting downloader</indicator:Title>
+            <indicator:Observable id="example:Observable-2a64c3d7-271a-4125-89cd-c84c6534fd85">
+                <cybox:Object id="example:URI-157e60b4-184d-4705-966e-616f3d2f6e33">
+                    <cybox:Properties xsi:type="URIObj:URIObjectType">
+                        <URIObj:Value>http://x4z9arb.cn/4712</URIObj:Value>
+                    </cybox:Properties>
+                </cybox:Object>
+            </indicator:Observable>
+            <indicator:Sightings>
+                <indicator:Sighting timestamp="2020-03-12T15:49:11.516590+00:00">
+                    <indicator:Source>
+                        <stixCommon:Identity>
+                            <stixCommon:Name>Charlie Tango</stixCommon:Name>
+                        </stixCommon:Identity>
+                    </indicator:Source>
+                </indicator:Sighting>
+            </indicator:Sightings>
+        </stix:Indicator>
+    </stix:Indicators>
+</stix:STIX_Package>
