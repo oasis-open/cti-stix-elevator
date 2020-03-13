@@ -97,7 +97,7 @@ def convert_confidence_value(value, id):
             confidentiality2_1_value = convert_confidence_value(convert_numeric_string(value), id)
         else:
             confidentiality2_1_value = convert_confidence_string(value)
-    elif isinstance(value, object) and value is not None:
+    elif isinstance(value, object):
         confidentiality2_1_value = convert_confidence_value(value.value, id)
     else:
         warn(
