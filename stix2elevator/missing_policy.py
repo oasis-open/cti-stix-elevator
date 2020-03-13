@@ -65,7 +65,7 @@ def add_confidence_property_as_custom_property(sdo_instance, confidence, parent_
 
 
 def handle_missing_confidence_property(sdo_instance, confidence, parent_property_name=None):
-    if confidence:
+    if confidence and confidence.value:
         if get_option_value("missing_policy") == "add-to-description" and confidence:
             add_confidence_property_to_description(sdo_instance, confidence, parent_property_name)
         elif get_option_value("missing_policy") == "use-custom-properties":
