@@ -197,7 +197,7 @@ def process_description_and_short_description(so, entity, parent_info=False):
                 warn("Used custom property for short_description of %s", 308, so["id"])
                 so[convert_to_custom_property_name("short_description")] = short_description_as_text
             else:
-                warn("Missing property short_description of %s is ignored", 307, so["id"])
+                warn("Missing property 'short_description' of %s is ignored", 307, so["id"])
 
 
 def create_basic_object(stix2x_type, stix1x_obj, env, parent_id=None, id_used=False):
@@ -354,7 +354,7 @@ def finish_basic_object(old_id, instance, env, stix1x_obj, temp_marking_id=None)
 
 def handle_free_text_lines(sdo_instance, free_text_lines):
     if get_option_value("missing_policy") == "ignore":
-        warn("Missing property free_text_lines of %s is ignored", 307, sdo_instance["id"])
+        warn("Missing property 'free_text_lines' of %s is ignored", 307, sdo_instance["id"])
     else:
         lines = ""
         for line in free_text_lines:
@@ -723,7 +723,7 @@ def convert_campaign(camp, env):
 def handle_missing_objective_property(sdo_instance, objective):
     if objective is not None:
         if get_option_value("missing_policy") == "ignore":
-            warn("Missing property objective of %s is ignored", 307, sdo_instance["id"])
+            warn("Missing property 'objective' of %s is ignored", 307, sdo_instance["id"])
         else:
             all_text = []
 

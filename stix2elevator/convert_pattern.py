@@ -876,10 +876,10 @@ def create_term(lhs, condition, rhs, negated=False):
         return create_term_with_range(lhs, condition, rhs, negated)
     else:
         if condition == "Contains" and not isinstance(rhs, ListConstant):
-            warn("Used MATCHES operator for %s", 715, condition)
+            info("Used MATCHES operator for %s", 715, condition)
             return create_term_with_regex(lhs, condition, rhs, negated)
         elif condition == "DoesNotContain":
-            warn("Used MATCHES operator for %s", 715, condition)
+            info("Used MATCHES operator for %s", 715, condition)
             return create_term_with_regex(lhs, condition, rhs, not negated)
         # return lhs + " " + negate_if_needed(convert_condition(condition), negated) + " '" + convert_to_text_type(rhs) + "'"
         return ComparisonExpressionForElevator(convert_condition(condition), lhs, rhs, negated)
@@ -1921,7 +1921,7 @@ def convert_network_packet_to_pattern(packet):
                                     convert_to_custom_property_name("icmp_checksum"),
                                     icmp_header.checksum.condition,
                                     stix2.HexConstant(icmp_header.checksum.value)))
-                warn("Used custom property for %s", 308, "icmp_checksum")
+                    warn("Used custom property for %s", 308, "icmp_checksum")
             else:
                 warn("_ICMPHeader.checksum content not supported in STIX 2.x", 424)
             return create_boolean_expression("AND", expressions)

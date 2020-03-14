@@ -160,7 +160,7 @@ def get_id_values():
 
 def add_id_value(key, value):
     if not value:
-        warn("Trying to associate %s with None", 610, key)
+        warn("No object mapped to %s", 610, key)
     if exists_id_key(key):
         _IDS_TO_NEW_IDS[key].append(value)
     else:

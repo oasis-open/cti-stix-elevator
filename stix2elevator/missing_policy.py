@@ -41,7 +41,7 @@ def handle_missing_string_property(sdo_instance, property_name, property_value, 
         elif get_option_value("missing_policy") == "use-custom-properties":
             add_string_property_as_custom_property(sdo_instance, property_name, property_value, is_list)
         else:
-            warn("Missing property %s is ignored", 307, property_name + (" of " + sdo_instance["id"] if "id" in sdo_instance else ""))
+            warn("Missing property %s is ignored", 307, ("'" + property_name + "'" + (" of " + sdo_instance["id"] if "id" in sdo_instance else "")))
 
 
 def add_confidence_property_to_description(sdo_instance, confidence, parent_property_name):
@@ -71,7 +71,7 @@ def handle_missing_confidence_property(sdo_instance, confidence, parent_property
         elif get_option_value("missing_policy") == "use-custom-properties":
             add_confidence_property_as_custom_property(sdo_instance, confidence, parent_property_name)
         else:
-            warn("Missing property confidence %s is ignored", 307, sdo_instance["id"])
+            warn("Missing property 'confidence' of %s is ignored", 307, sdo_instance["id"])
 
 
 def add_statement_type_to_description(sdo_instance, statement, property_name):

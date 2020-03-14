@@ -610,7 +610,7 @@ def convert_email_message(email_message, obj1x_id):
                 warn("Observed Data objects cannot refer to other external objects (in STIX 2.0): %s in %s",
                      434, "links", "email-message")
         else:
-            warn("Missing property %s is ignored", 307, "links")
+            warn("Missing property '%s' is ignored", 307, "links")
     if email_message.raw_body:
         raw_body_obj = create_base_sco("artifact", {"payload_bin": encode_in_base64(text_type(email_message.raw_body))})
         finish_sco(raw_body_obj, None)
