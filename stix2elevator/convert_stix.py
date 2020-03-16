@@ -756,7 +756,7 @@ def convert_course_of_action(coa, env):
     if coa.related_coas:
         info("All 'associated coas' relationships of %s are assumed to not represent STIX 1.2 versioning", 710, coa.id_)
         handle_relationship_to_refs(coa.related_coas, coa_instance["id"], new_env,
-                                    coa_created_by_ref, "related-to")
+                                    "related-to")
     finish_basic_object(coa.id_, coa_instance, env, coa)
     return coa_instance
 
