@@ -1273,49 +1273,59 @@ def set_embedded_ref_property_2_0(sco, co_id, stix2x_rel_name):
 
 
 def create_scos(obs, observed_data_instance, env):
-    observed_data_instance["object_refs"] = []
-    scos = convert_cybox_object(obs.object_)
-    if obs.object_.related_objects:
-        for o in obs.object_.related_objects:
-            if not o.idref:
-                # it is embedded - for idrefs see convert_cybox.py
-                related = convert_cybox_object(o)
-                if related:
-                    scos.extend(related)
-                    property_name = embedded_property_ref_name(obs.object_.properties, o.relationship)
-                    if not property_name:
-                        env.bundle_instance["objects"].append(
-                            create_relationship(scos[0]["id"],
-                                                related[0]["id"],
-                                                env,
-                                                o.relationship.value.lower() if o.relationship and o.relationship.value else "resolves_to"))
-                    else:
-                        if o.relationship and o.relationship.value:
-                            set_embedded_ref_property_2_1(scos[0], related[0], property_name)
-    if scos:
-        for obj in scos:
-            observed_data_instance["object_refs"].append(obj["id"])
-            env.bundle_instance["objects"].append(obj)
+    if not obs.object_ and obs.observable_composition:
+        warn("%s contains a observable composition, which implies it not an observation, but a pattern and needs " +
+             "to be contained within an indicator.",
+             635, obs.id_)
+    else:
+        observed_data_instance["object_refs"] = []
+        scos = convert_cybox_object(obs.object_)
+        if obs.object_.related_objects:
+            for o in obs.object_.related_objects:
+                if not o.idref:
+                    # it is embedded - for idrefs see convert_cybox.py
+                    related = convert_cybox_object(o)
+                    if related:
+                        scos.extend(related)
+                        property_name = embedded_property_ref_name(obs.object_.properties, o.relationship)
+                        if not property_name:
+                            env.bundle_instance["objects"].append(
+                                create_relationship(scos[0]["id"],
+                                                    related[0]["id"],
+                                                    env,
+                                                    o.relationship.value.lower() if o.relationship and o.relationship.value else "resolves_to"))
+                        else:
+                            if o.relationship and o.relationship.value:
+                                set_embedded_ref_property_2_1(scos[0], related[0], property_name)
+        if scos:
+            for obj in scos:
+                observed_data_instance["object_refs"].append(obj["id"])
+                env.bundle_instance["objects"].append(obj)
 
 
 def create_cyber_observables(obs, observed_data_instance):
-    observed_data_instance["objects"] = convert_cybox_object(obs.object_)
-    if not observed_data_instance["objects"]:
-        warn("%s did not yield any STIX 2.x object", 417, obs.object_.id_ if obs.object_.id_ else obs.id_)
+    if not obs.object_ and obs.observable_composition:
+        warn("%s contains a observable composition, which implies it not an observation, but a pattern and needs " +
+             "to be contained within an indicator",
+             635, obs.id_)
     else:
-        if obs.object_.related_objects:
-            for o in obs.object_.related_objects:
-                # create index for stix 2.0 cyber observable
-                current_largest_id = max(observed_data_instance["objects"].keys())
-                related = convert_cybox_object(o)
-                if related:
-                    for index, obj in related.items():
-                        observed_data_instance["objects"][text_type(int(index) + int(current_largest_id) + 1)] = obj
-                    property_name = embedded_property_ref_name(obs.object_.properties, o.relationship)
-                    if property_name and o.relationship and o.relationship.value:
-                        set_embedded_ref_property_2_0(observed_data_instance["objects"]['0'],
-                                                      text_type(int(current_largest_id) + 1),
-                                                      property_name)
+        observed_data_instance["objects"] = convert_cybox_object(obs.object_)
+        if not observed_data_instance["objects"]:
+            warn("%s did not yield any STIX 2.x object", 417, obs.object_.id_ if obs.object_.id_ else obs.id_)
+        else:
+            if obs.object_.related_objects:
+                for o in obs.object_.related_objects:
+                    # create index for stix 2.0 cyber observable
+                    current_largest_id = max(observed_data_instance["objects"].keys())
+                    related = convert_cybox_object(o)
+                    if related:
+                        for index, obj in related.items():
+                            observed_data_instance["objects"][text_type(int(index) + int(current_largest_id) + 1)] = obj
+                        property_name = embedded_property_ref_name(obs.object_.properties, o.relationship)
+                        if property_name and o.relationship and o.relationship.value:
+                            set_embedded_ref_property_2_0(observed_data_instance["objects"]['0'],
+                                                          text_type(int(current_largest_id) + 1),
+                                                          property_name)
 
 
 def convert_observed_data(obs, env):
@@ -1327,14 +1337,16 @@ def convert_observed_data(obs, env):
         create_cyber_observables(obs, observed_data_instance)
     else:
         create_scos(obs, observed_data_instance, env)
+    # remember the original 1.x observable, in case it has to be turned into a pattern later
+    add_to_observable_mappings(obs)
+    if "objects" not in observed_data_instance and "object_refs" not in observed_data_instance:
+        return None
     info("'first_observed' and 'last_observed' data not available directly on %s - using timestamp", 901, obs.id_)
     observed_data_instance["first_observed"] = observed_data_instance["created"]
     observed_data_instance["last_observed"] = observed_data_instance["created"]
     observed_data_instance["number_observed"] = 1 if obs.sighting_count is None else obs.sighting_count
     # created_by
     finish_basic_object(obs.id_, observed_data_instance, env, obs)
-    # remember the original 1.x observable, in case it has to be turned into a pattern later
-    add_to_observable_mappings(obs)
     return observed_data_instance
 
 
@@ -2023,20 +2035,21 @@ def convert_package(stix_package, env):
     # observables
     if stix_package.observables is not None:
         for o_d in stix_package.observables:
-            o_d20 = convert_observed_data(o_d, env)
-            bundle_instance["observed_data"].append(o_d20)
+            o_d2x = convert_observed_data(o_d, env)
+            if o_d2x:
+                bundle_instance["observed_data"].append(o_d2x)
 
     # campaigns
     if stix_package.campaigns:
         for camp in stix_package.campaigns:
-            camp20 = convert_campaign(camp, env)
-            bundle_instance["objects"].append(camp20)
+            camp2x = convert_campaign(camp, env)
+            bundle_instance["objects"].append(camp2x)
 
     # coas
     if stix_package.courses_of_action:
         for coa in stix_package.courses_of_action:
-            coa20 = convert_course_of_action(coa, env)
-            bundle_instance["objects"].append(coa20)
+            coa2x = convert_course_of_action(coa, env)
+            bundle_instance["objects"].append(coa2x)
 
     # exploit-targets
     if stix_package.exploit_targets:
@@ -2048,26 +2061,26 @@ def convert_package(stix_package, env):
     if get_option_value("incidents"):
         if stix_package.incidents:
             for i in stix_package.incidents:
-                i20 = convert_incident(i, env)
-                bundle_instance["objects"].append(i20)
+                i2x = convert_incident(i, env)
+                bundle_instance["objects"].append(i2x)
 
     # indicators
     if stix_package.indicators:
         for i in stix_package.indicators:
-            i20 = convert_indicator(i, env)
-            bundle_instance["indicators"].append(i20)
+            i2x = convert_indicator(i, env)
+            bundle_instance["indicators"].append(i2x)
 
     # reports
     if stix.__version__ >= "1.2.0.0" and stix_package.reports:
         for report in stix_package.reports:
-            report20 = convert_report(report, env)
-            bundle_instance["reports"].append(report20)
+            report2x = convert_report(report, env)
+            bundle_instance["reports"].append(report2x)
 
     # threat actors
     if stix_package.threat_actors:
         for ta in stix_package.threat_actors:
-            ta20 = convert_threat_actor(ta, env)
-            bundle_instance["objects"].append(ta20)
+            ta2x = convert_threat_actor(ta, env)
+            bundle_instance["objects"].append(ta2x)
 
     # ttps
     if stix_package.ttps:

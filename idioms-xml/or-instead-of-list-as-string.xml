@@ -1,0 +1,59 @@
+<stix:STIX_Package
+	xmlns:URIObj="http://cybox.mitre.org/objects#URIObject-2"
+	xmlns:stixVocabs="http://stix.mitre.org/default_vocabularies-1"
+	xmlns:marking="http://data-marking.mitre.org/Marking-1"
+	xmlns:stixCommon="http://stix.mitre.org/common-1"
+	xmlns:indicator="http://stix.mitre.org/Indicator-2"
+	xmlns:stix="http://stix.mitre.org/stix-1"
+	xmlns:cybox="http://cybox.mitre.org/cybox-2"
+	xmlns:cyboxCommon="http://cybox.mitre.org/common-2"
+	xmlns:example="http://example.com"
+	xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	 id="example:Package-99b34cd7-1894-4a9a-a105-a7c950c25411" version="1.2">
+    <stix:Observables cybox_major_version="2" cybox_minor_version="1" cybox_update_version="0">
+            <cybox:Observable id="example:observable-fc839bda-6e01-4c3d-acc8-f6ffea1a2d92">
+            <cybox:Title>Malicious URLs 1</cybox:Title>
+            <cybox:Object id="example:uri-ff6c7fe6-d6c6-46d1-a828-9af7137d81ab">
+                <cybox:Properties xsi:type="URIObj:URIObjectType" type="URL">
+                    <URIObj:Value>http://example.com/foo/malicious1.html</URIObj:Value>
+                </cybox:Properties>
+            </cybox:Object>
+        </cybox:Observable>
+        <cybox:Observable id="example:observable-6c561331-d5bc-40eb-9236-d8d90650f8c7">
+            <cybox:Title>Malicious URLs 2</cybox:Title>
+            <cybox:Object id="example:uri-75ca0ebb-9049-430b-94ae-6a40c856ac4d">
+                <cybox:Properties xsi:type="URIObj:URIObjectType" type="URL">
+                    <URIObj:Value>'http://example.com/foo/malicious2.html</URIObj:Value>
+                </cybox:Properties>
+            </cybox:Object>
+        </cybox:Observable>
+        <cybox:Observable id="example:observable-da60afb6-058d-489e-99f9-fd9e516e7f75">
+            <cybox:Title>Malicious URLs 3</cybox:Title>
+            <cybox:Object id="example:uri-edc725e6-61db-4be3-9f1b-55ac7281dfd9">
+                <cybox:Properties xsi:type="URIObj:URIObjectType" type="URL">
+                    <URIObj:Value>http://example.com/foo/malicious3.html</URIObj:Value>
+                </cybox:Properties>
+            </cybox:Object>
+        </cybox:Observable>
+        <cybox:Observable id="example:observable-c82a4b83-9ad7-462d-bdaf-0597585ea9ba">
+            <cybox:Observable_Composition operator="OR">
+                <cybox:Observable idref="example:observable-fc839bda-6e01-4c3d-acc8-f6ffea1a2d92">
+                </cybox:Observable>
+                <cybox:Observable idref="example:observable-6c561331-d5bc-40eb-9236-d8d90650f8c7">
+                </cybox:Observable>
+                <cybox:Observable idref="example:observable-da60afb6-058d-489e-99f9-fd9e516e7f75">
+                </cybox:Observable>
+            </cybox:Observable_Composition>
+        </cybox:Observable>
+    </stix:Observables>
+    <stix:Indicators>
+        <stix:Indicator id="example:indicator-087a093f-5fd4-40ff-917a-7004d711872d" timestamp="2020-03-16T12:54:57.291731+00:00" xsi:type='indicator:IndicatorType'>
+            <indicator:Title>Indicator for URL Watchlist</indicator:Title>
+            <indicator:Type xsi:type="stixVocabs:IndicatorTypeVocab-1.1">URL Watchlist</indicator:Type>
+            <cybox:Observable idref="example:observable-c82a4b83-9ad7-462d-bdaf-0597585ea9ba"/>
+        </stix:Indicator>
+    </stix:Indicators>
+</stix:STIX_Package>
