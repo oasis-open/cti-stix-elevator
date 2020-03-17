@@ -64,7 +64,7 @@
                                 </EmailMessageObj:Recipient>
                             </EmailMessageObj:To>
                             <EmailMessageObj:From category="e-mail">
-                                <AddressObj:Address_Value condition="Equals">fred@abc.com</AddressObj:Address_Value>
+                                <AddressObj:Address_Value condition="Equals">fred@abc.com##comma##betty@abc.com</AddressObj:Address_Value>
                             </EmailMessageObj:From>
                         </EmailMessageObj:Header>
                     </cybox:Properties>

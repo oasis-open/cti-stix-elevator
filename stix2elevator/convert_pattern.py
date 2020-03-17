@@ -1014,19 +1014,19 @@ def convert_unix_user_to_pattern(account):
 def convert_address_to_pattern(add):
     cond = add.address_value.condition
     if add.category == add.CAT_IPV4:
-        return create_term("ipv4-addr:value", cond, make_constant(add.address_value.value.strip()))
+        return create_term("ipv4-addr:value", cond, make_constant(add.address_value.value))
     elif add.category == add.CAT_IPV6:
-        return create_term("ipv6-addr:value", cond, make_constant(add.address_value.value.strip()))
+        return create_term("ipv6-addr:value", cond, make_constant(add.address_value.value))
     elif add.category == add.CAT_MAC:
-        return create_term("mac-addr:value", cond, make_constant(add.address_value.value.strip()))
+        return create_term("mac-addr:value", cond, make_constant(add.address_value.value))
     elif add.category == add.CAT_EMAIL:
-        return create_term("email-addr:value", cond, make_constant(add.address_value.value.strip()))
+        return create_term("email-addr:value", cond, make_constant(add.address_value.value))
     else:
         warn("The address type %s is not part of Cybox 3.0", 421, add.category)
 
 
 def convert_uri_to_pattern(uri):
-    return create_term("url:value", uri.value.condition, make_constant(uri.value.value.strip()))
+    return create_term("url:value", uri.value.condition, make_constant(uri.value.value))
 
 
 # NOTICE:  The format of these PROPERTIES is different than the others in this file!!!!!!
