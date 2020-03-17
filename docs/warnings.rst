@@ -147,6 +147,7 @@ Multiple administrative areas with multiple countries in *[id]* is not handled" 
 Unknown phase_id *[phase_id]* in *[id]*                                                                                                     632     warn
 File path directory is empty *[file_path]*                                                                                                  633     warn
 Any artifact packaging data on *[id]* is not recoverable                                                                                    634     warn
+*[id]* contains a observable composition, which implies it not an observation, but a pattern and needs to be contained within an indicator. 635     warn
 =========================================================================================================================================== ====    =====
 
 STIX Elevator conversion based on assumptions
