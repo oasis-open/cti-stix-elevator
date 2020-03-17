@@ -6,9 +6,11 @@ current version of the stix2-elevator will provide insight to issues that might
 need to be mitigated to convert your STIX 1.x content.
 """
 
+# Standard Library
 import argparse
 import sys
 
+# internal
 from stix2elevator import elevate
 from stix2elevator.options import initialize_options
 from stix2elevator.utils import NewlinesHelpFormatter

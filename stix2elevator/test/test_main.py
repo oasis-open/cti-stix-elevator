@@ -1,21 +1,21 @@
+# Standard Library
 from argparse import Namespace
 import io
 import os
 
+# external
+import pytest
 from six import StringIO
 from stix.core import STIXPackage
 import stixmarx
 
-import pytest
-from stix2elevator import (elevate,
-                           elevate_file,
-                           elevate_package,
-                           elevate_string,
-                           options)
-from stix2elevator.options import (ElevatorOptions,
-                                   get_option_value,
-                                   initialize_options,
-                                   set_option_value)
+# internal
+from stix2elevator import (
+    elevate, elevate_file, elevate_package, elevate_string, options
+)
+from stix2elevator.options import (
+    ElevatorOptions, get_option_value, initialize_options, set_option_value
+)
 from stix2elevator.utils import find_dir
 
 # This module only tests for the main functions used to interact with the elevator from a programmatic or

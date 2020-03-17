@@ -1,8 +1,10 @@
+# Standard Library
 import copy
 import logging
 import os
 import shlex
 
+# external
 from six import string_types
 from stix2validator.scripts import stix2_validator
 

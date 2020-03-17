@@ -1,6 +1,8 @@
+# Standard Library
 import copy
 import re
 
+# external
 from cybox.objects.account_object import Account
 from cybox.objects.address_object import Address
 from cybox.objects.archive_file_object import ArchiveFile
@@ -26,23 +28,22 @@ from cybox.objects.win_service_object import WinService
 import netaddr
 from six import text_type
 
+# internal
 from stix2elevator.common import ADDRESS_FAMILY_ENUMERATION, SOCKET_OPTIONS
-from stix2elevator.ids import (add_id_value,
-                               add_object_id_value,
-                               generate_sco_id,
-                               get_id_value,
-                               get_object_id_value,
-                               is_stix1x_id)
-from stix2elevator.missing_policy import (convert_to_custom_property_name,
-                                          handle_missing_string_property)
+from stix2elevator.ids import (
+    add_id_value, add_object_id_value, generate_sco_id, get_id_value,
+    get_object_id_value, is_stix1x_id
+)
+from stix2elevator.missing_policy import (
+    convert_to_custom_property_name, handle_missing_string_property
+)
 from stix2elevator.options import error, get_option_value, info, warn
-from stix2elevator.utils import (convert_timestamp_to_string,
-                                 encode_in_base64,
-                                 map_vocabs_to_label)
-from stix2elevator.vocab_mappings import (SERVICE_START_TYPE,
-                                          SERVICE_STATUS,
-                                          SERVICE_TYPE,
-                                          WINDOWS_PEBINARY)
+from stix2elevator.utils import (
+    convert_timestamp_to_string, encode_in_base64, map_vocabs_to_label
+)
+from stix2elevator.vocab_mappings import (
+    SERVICE_START_TYPE, SERVICE_STATUS, SERVICE_TYPE, WINDOWS_PEBINARY
+)
 
 
 def create_base_sco(type, other_properties=None):

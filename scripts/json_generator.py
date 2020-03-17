@@ -2,10 +2,12 @@
 # It serves as a complimentary tool to generate "idioms-json" directory for
 # testing purposes. Which helps by automating this process.
 
+# Standard Library
 import io
 import os
 import sys
 
+# internal
 from stix2elevator import elevate
 from stix2elevator.options import initialize_options
 from stix2elevator.utils import find_dir

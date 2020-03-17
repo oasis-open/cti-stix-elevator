@@ -1,13 +1,16 @@
+# Standard Library
 import argparse
 import base64
 from datetime import datetime
 import os
 import textwrap
 
+# external
 from six import binary_type, iteritems, text_type
 from stix2validator import validate_string
 from stix2validator.validator import FileValidationResults
 
+# internal
 from stix2elevator.options import info, warn
 
 
