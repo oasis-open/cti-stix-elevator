@@ -1,12 +1,14 @@
+# Standard Library
 import io
 import os
 import sys
 
+# internal
 from stix2elevator import elevate
 from stix2elevator.cli import _get_arg_parser
-from stix2elevator.options import (get_option_value,
-                                   initialize_options,
-                                   set_option_value)
+from stix2elevator.options import (
+    get_option_value, initialize_options, set_option_value
+)
 
 
 def main():

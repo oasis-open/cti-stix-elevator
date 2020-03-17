@@ -1,16 +1,19 @@
 from __future__ import print_function
 
+# Standard Library
 import io
 import json
 import os
 import sys
 
+# external
 from six.moves import zip
 
+# internal
 from stix2elevator import elevate
-from stix2elevator.options import (get_option_value,
-                                   initialize_options,
-                                   set_option_value)
+from stix2elevator.options import (
+    get_option_value, initialize_options, set_option_value
+)
 from stix2elevator.utils import find_dir, id_property, iterpath
 
 BEFORE_FILES = []

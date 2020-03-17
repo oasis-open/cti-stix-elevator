@@ -1,17 +1,18 @@
+# Standard Library
 import json
 import os
 
+# external
 import stix2validator
 
+# internal
 from stix2elevator.stix_stepper import step_file
 from stix2elevator.utils import find_dir, id_property
 
-from .test_idioms import (BEFORE_FILENAMES,
-                          BEFORE_FILES,
-                          MASTER_JSON_FILES,
-                          find_index_of_difference,
-                          idiom_mappings,
-                          setup_tests)
+from .test_idioms import (
+    BEFORE_FILENAMES, BEFORE_FILES, MASTER_JSON_FILES,
+    find_index_of_difference, idiom_mappings, setup_tests
+)
 
 # _IGNORE = (u"id",
 #            u"bcc_refs", u"cc_refs", u"child_refs", u"object_refs", u"opened_connection_refs", u"to_refs",

@@ -1,5 +1,7 @@
+# Standard Library
 from datetime import datetime
 
+# external
 from cybox.core import Observable
 from lxml import etree
 import pycountry
@@ -16,80 +18,64 @@ from stix.extensions.malware.maec_4_1_malware import MAECInstance
 import stix.extensions.marking.ais
 from stix.extensions.marking.ais import AISMarkingStructure
 from stix.extensions.marking.simple_marking import SimpleMarkingStructure
-from stix.extensions.marking.terms_of_use_marking import \
+from stix.extensions.marking.terms_of_use_marking import (
     TermsOfUseMarkingStructure
+)
 from stix.extensions.marking.tlp import TLPMarkingStructure
-from stix.extensions.test_mechanism.open_ioc_2010_test_mechanism import \
+from stix.extensions.test_mechanism.open_ioc_2010_test_mechanism import (
     OpenIOCTestMechanism
-from stix.extensions.test_mechanism.snort_test_mechanism import \
+)
+from stix.extensions.test_mechanism.snort_test_mechanism import (
     SnortTestMechanism
-from stix.extensions.test_mechanism.yara_test_mechanism import \
+)
+from stix.extensions.test_mechanism.yara_test_mechanism import (
     YaraTestMechanism
+)
 from stix.incident import Incident
 from stix.indicator import Indicator
 from stix.threat_actor import ThreatActor
 from stix.ttp import TTP
 from stixmarx import navigator
 
+# internal
 from stix2elevator.confidence import convert_confidence
-from stix2elevator.convert_cybox import (convert_cybox_object20,
-                                         convert_cybox_object21,
-                                         embedded_property_ref_name,
-                                         fix_cybox_relationships,
-                                         fix_sco_embedded_refs)
-from stix2elevator.convert_pattern import (ComparisonExpressionForElevator,
-                                           CompoundObservationExpressionForElevator,
-                                           ParentheticalExpressionForElevator,
-                                           UnconvertedTerm,
-                                           add_to_observable_mappings,
-                                           add_to_pattern_cache,
-                                           convert_indicator_to_pattern,
-                                           convert_observable_to_pattern,
-                                           create_boolean_expression,
-                                           fix_pattern,
-                                           get_obs_from_mapping,
-                                           id_in_observable_mappings,
-                                           interatively_resolve_placeholder_refs,
-                                           remove_pattern_objects)
-from stix2elevator.ids import (add_id_of_obs_in_characterizations,
-                               add_id_value,
-                               exists_id_key,
-                               exists_ids_with_no_1x_object,
-                               generate_stix2x_id,
-                               get_id_value,
-                               get_id_values,
-                               get_type_from_id,
-                               is_stix1x_id,
-                               record_ids)
-from stix2elevator.missing_policy import (convert_to_custom_property_name,
-                                          handle_missing_confidence_property,
-                                          handle_missing_statement_properties,
-                                          handle_missing_string_property,
-                                          handle_missing_tool_property,
-                                          handle_multiple_missing_statement_properties)
+from stix2elevator.convert_cybox import (
+    convert_cybox_object20, convert_cybox_object21, embedded_property_ref_name,
+    fix_cybox_relationships, fix_sco_embedded_refs
+)
+from stix2elevator.convert_pattern import (
+    ComparisonExpressionForElevator, CompoundObservationExpressionForElevator,
+    ParentheticalExpressionForElevator, UnconvertedTerm,
+    add_to_observable_mappings, add_to_pattern_cache,
+    convert_indicator_to_pattern, convert_observable_to_pattern,
+    create_boolean_expression, fix_pattern, get_obs_from_mapping,
+    id_in_observable_mappings, interatively_resolve_placeholder_refs,
+    remove_pattern_objects
+)
+from stix2elevator.ids import (
+    add_id_of_obs_in_characterizations, add_id_value, exists_id_key,
+    exists_ids_with_no_1x_object, generate_stix2x_id, get_id_value,
+    get_id_values, get_type_from_id, is_stix1x_id, record_ids
+)
+from stix2elevator.missing_policy import (
+    convert_to_custom_property_name, handle_missing_confidence_property,
+    handle_missing_statement_properties, handle_missing_string_property,
+    handle_missing_tool_property, handle_multiple_missing_statement_properties
+)
 from stix2elevator.options import error, get_option_value, info, warn
-from stix2elevator.utils import (add_marking_map_entry,
-                                 check_map_1x_markings_to_2x,
-                                 convert_controlled_vocabs_to_open_vocabs,
-                                 convert_timestamp_of_stix_object,
-                                 convert_timestamp_to_string,
-                                 identifying_info,
-                                 iterpath,
-                                 map_1x_markings_to_2x,
-                                 map_vocabs_to_label,
-                                 operation_on_path,
-                                 strftime_with_appropriate_fractional_seconds)
-from stix2elevator.vocab_mappings import (ATTACK_MOTIVATION_MAP,
-                                          COA_LABEL_MAP,
-                                          INCIDENT_LABEL_MAP,
-                                          INDICATOR_LABEL_MAP,
-                                          INFRASTRUCTURE_LABELS_MAP,
-                                          MALWARE_LABELS_MAP,
-                                          REPORT_LABELS_MAP,
-                                          SECTORS_MAP,
-                                          THREAT_ACTOR_LABEL_MAP,
-                                          THREAT_ACTOR_SOPHISTICATION_MAP,
-                                          TOOL_LABELS_MAP)
+from stix2elevator.utils import (
+    add_marking_map_entry, check_map_1x_markings_to_2x,
+    convert_controlled_vocabs_to_open_vocabs, convert_timestamp_of_stix_object,
+    convert_timestamp_to_string, identifying_info, iterpath,
+    map_1x_markings_to_2x, map_vocabs_to_label, operation_on_path,
+    strftime_with_appropriate_fractional_seconds
+)
+from stix2elevator.vocab_mappings import (
+    ATTACK_MOTIVATION_MAP, COA_LABEL_MAP, INCIDENT_LABEL_MAP,
+    INDICATOR_LABEL_MAP, INFRASTRUCTURE_LABELS_MAP, MALWARE_LABELS_MAP,
+    REPORT_LABELS_MAP, SECTORS_MAP, THREAT_ACTOR_LABEL_MAP,
+    THREAT_ACTOR_SOPHISTICATION_MAP, TOOL_LABELS_MAP
+)
 
 if stix.__version__ >= "1.2.0.0":
     from stix.report import Report

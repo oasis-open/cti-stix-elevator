@@ -1,9 +1,11 @@
+# Standard Library
 import json
 import logging
 import os
 import re
 import warnings
 
+# external
 import cybox.utils.caches
 from six import BytesIO, StringIO, binary_type, text_type
 from stix2validator import ValidationError, codes, output
@@ -11,22 +13,25 @@ from stix.core import STIXPackage
 import stixmarx
 from stixmarx.container import MarkingContainer
 
+# internal
 from stix2elevator.convert_cybox import clear_directory_mappings
-from stix2elevator.convert_pattern import (clear_observable_mappings,
-                                           clear_pattern_cache)
-from stix2elevator.convert_stix import (clear_kill_chains_phases_mapping,
-                                        convert_package)
-from stix2elevator.ids import (clear_id_mapping,
-                               clear_id_of_obs_in_characterizations,
-                               clear_object_id_mapping)
-from stix2elevator.options import (get_option_value,
-                                   get_validator_options,
-                                   set_option_value,
-                                   setup_logger,
-                                   warn)
-from stix2elevator.utils import (Environment,
-                                 clear_1x_markings_map,
-                                 validate_stix2_string)
+from stix2elevator.convert_pattern import (
+    clear_observable_mappings, clear_pattern_cache
+)
+from stix2elevator.convert_stix import (
+    clear_kill_chains_phases_mapping, convert_package
+)
+from stix2elevator.ids import (
+    clear_id_mapping, clear_id_of_obs_in_characterizations,
+    clear_object_id_mapping
+)
+from stix2elevator.options import (
+    get_option_value, get_validator_options, set_option_value, setup_logger,
+    warn
+)
+from stix2elevator.utils import (
+    Environment, clear_1x_markings_map, validate_stix2_string
+)
 from stix2elevator.version import __version__  # noqa
 
 # Module-level logger

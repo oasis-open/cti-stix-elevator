@@ -1,8 +1,10 @@
+# Standard Library
 import copy
 import datetime
 import re
 import sys
 
+# external
 from cybox.objects.account_object import Account
 from cybox.objects.address_object import Address
 from cybox.objects.archive_file_object import ArchiveFile
@@ -26,22 +28,20 @@ from cybox.objects.win_registry_key_object import WinRegistryKey
 from cybox.objects.win_service_object import WinService
 from six import string_types, text_type
 import stix2
-from stix2.patterns import (ListConstant,
-                            ObjectPath,
-                            ObservationExpression,
-                            QualifiedObservationExpression,
-                            _BooleanExpression,
-                            _ComparisonExpression,
-                            _CompoundObservationExpression,
-                            _Constant)
+from stix2.patterns import (
+    ListConstant, ObjectPath, ObservationExpression,
+    QualifiedObservationExpression, _BooleanExpression, _ComparisonExpression,
+    _CompoundObservationExpression, _Constant
+)
 import stixmarx
 
+# internal
 from stix2elevator.common import ADDRESS_FAMILY_ENUMERATION, SOCKET_OPTIONS
 from stix2elevator.convert_cybox import split_into_requests_and_responses
-from stix2elevator.ids import (add_id_value,
-                               exists_id_of_obs_in_characterizations,
-                               exists_object_id_key,
-                               get_id_value)
+from stix2elevator.ids import (
+    add_id_value, exists_id_of_obs_in_characterizations, exists_object_id_key,
+    get_id_value
+)
 from stix2elevator.missing_policy import convert_to_custom_property_name
 from stix2elevator.options import error, get_option_value, info, warn
 from stix2elevator.utils import identifying_info, map_vocabs_to_label

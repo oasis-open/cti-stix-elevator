@@ -1,12 +1,15 @@
+# Standard Library
 import importlib
 import inspect
 import re
 import uuid
 
+# external
 from six import text_type
 from stix2.base import SCO_DET_ID_NAMESPACE
 from stix2.canonicalization.Canonicalize import canonicalize
 
+# internal
 from stix2elevator.options import error, info, warn
 from stix2elevator.utils import map_1x_type_to_20
 

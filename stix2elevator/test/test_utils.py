@@ -1,6 +1,8 @@
+# external
+import pytest
 from stix.indicator import Indicator
 
-import pytest
+# internal
 from stix2elevator import convert_stix, utils
 from stix2elevator.options import _convert_to_int_list
 from stix2elevator.utils import Environment

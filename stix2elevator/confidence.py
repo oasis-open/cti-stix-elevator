@@ -1,8 +1,11 @@
+# Standard Library
 from math import ceil
 import sys
 
+# external
 from six import text_type
 
+# internal
 from stix2elevator.options import warn
 
 if sys.version_info > (3,):

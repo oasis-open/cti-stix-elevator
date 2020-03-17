@@ -1,7 +1,10 @@
+# Standard Library
 import re
 
+# external
 from six import text_type
 
+# internal
 from stix2elevator.options import get_option_value, info, warn
 
 

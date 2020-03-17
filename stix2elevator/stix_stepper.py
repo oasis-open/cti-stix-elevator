@@ -1,3 +1,4 @@
+# Standard Library
 import argparse
 from collections import OrderedDict
 import io
@@ -5,10 +6,12 @@ import json
 import shlex
 import sys
 
+# external
 from six import text_type
 from stix2.pattern_visitor import create_pattern_object
 import stix2validator
 
+# internal
 from stix2elevator.ids import generate_sco_id
 from stix2elevator.utils import NewlinesHelpFormatter, validate_stix2_string
 from stix2elevator.version import __version__
