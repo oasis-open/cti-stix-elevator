@@ -79,14 +79,14 @@ def elevate(stix_package):
             io = BytesIO(stix_package.to_xml())
             container = stixmarx.parse(io)
         elif isinstance(stix_package, text_type):
-            if stix_package.endswith(text_type(".xml")) or os.path.isfile(stix_package):
+            if stix_package.endswith(".xml") or os.path.isfile(stix_package):
                 # a path-like string was passed
                 fn = stix_package
             else:
                 stix_package = StringIO(stix_package)
             container = stixmarx.parse(stix_package)
         elif isinstance(stix_package, binary_type):
-            if stix_package.endswith(binary_type(".xml")) or os.path.isfile(stix_package):
+            if stix_package.endswith(b".xml") or os.path.isfile(stix_package):
                 # a path-like string was passed
                 fn = stix_package
             else:

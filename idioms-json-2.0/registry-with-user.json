@@ -12,6 +12,7 @@
                 "0": {
                     "creator_user_ref": "1",
                     "key": "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\User Shell Folders",
+                    "modified_time": "2013-02-19T00:00:00.000000Z",
                     "type": "windows-registry-key"
                 },
                 "1": {
