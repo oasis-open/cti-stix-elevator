@@ -5,6 +5,7 @@
             "creator_user_ref": "user-account--bde0514f-3926-5535-a23e-030fc14d15f8",
             "id": "windows-registry-key--d37b122f-81f4-5b22-b13e-f3cb62e25a30",
             "key": "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\User Shell Folders",
+            "modified_time": "2013-02-19T00:00:00.000000Z",
             "type": "windows-registry-key"
         },
         {

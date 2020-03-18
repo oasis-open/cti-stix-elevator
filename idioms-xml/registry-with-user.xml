@@ -14,6 +14,7 @@
                 <cybox:Properties xsi:type="WinRegistryKeyObj:WindowsRegistryKeyObjectType">
                     <WinRegistryKeyObj:Key>HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders</WinRegistryKeyObj:Key>
                     <WinRegistryKeyObj:Creator_Username>Fred</WinRegistryKeyObj:Creator_Username>
+                    <WinRegistryKeyObj:Modified_Time>2013-02-19T00:00:00Z</WinRegistryKeyObj:Modified_Time>
                 </cybox:Properties>
             </cybox:Object>
         </cybox:Observable>

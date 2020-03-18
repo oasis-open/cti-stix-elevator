@@ -105,8 +105,8 @@ def test_elevate_with_binary_string():
     xml_idioms_dir = find_dir(directory, "idioms-xml")
     archive_file = os.path.join(xml_idioms_dir, "141-TLP-marking-structures.xml")
 
-    with io.open(archive_file, mode="r", encoding="utf-8") as f:
-        input_stix = f.read().encode("utf-8")
+    with io.open(archive_file, mode="rb") as f:
+        input_stix = f.read()
 
     json_result = elevate(input_stix)
     assert json_result
