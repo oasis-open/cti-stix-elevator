@@ -252,7 +252,7 @@ def convert_hashes(hashes):
             hash_type = text_type(h.type_).lower()
         else:
             hash_type = text_type(h.type_)
-        hash_dict[hash_type] = hash_value
+        hash_dict[hash_type] = hash_value.value
     return hash_dict
 
 
@@ -653,9 +653,9 @@ def convert_registry_key(reg_key, obj1x_id):
             cybox_reg["values"].append(reg_value)
     if reg_key.modified_time:
         if get_option_value("spec_version") == "2.0":
-            cybox_reg["modified"] = convert_timestamp_to_string(reg_key.modified_time)
+            cybox_reg["modified"] = convert_timestamp_to_string(reg_key.modified_time.value)
         else:
-            cybox_reg["modified_time"] = convert_timestamp_to_string(reg_key.modified_time)
+            cybox_reg["modified_time"] = convert_timestamp_to_string(reg_key.modified_time.value)
     finish_sco(cybox_reg, obj1x_id)
     if reg_key.creator_username:
         user_obj = create_base_sco("user-account", {"user_id": text_type(reg_key.creator_username)})

@@ -7,6 +7,7 @@ import warnings
 
 # external
 import cybox.utils.caches
+import lxml.etree
 from six import BytesIO, StringIO, binary_type, text_type
 from stix2validator import ValidationError, codes, output
 from stix.core import STIXPackage
@@ -36,6 +37,14 @@ from stix2elevator.version import __version__  # noqa
 
 # Module-level logger
 log = logging.getLogger(__name__)
+log.propagate = False
+
+formatter = logging.Formatter("[%(name)s] [%(levelname)-7s] [%(asctime)s] [PID: %(process)d] [TID: %(thread)d]")
+
+# Console Handler for Elevator messages
+ch = logging.StreamHandler()
+ch.setFormatter(formatter)
+log.addHandler(ch)
 
 
 def clear_globals():
@@ -69,15 +78,20 @@ def elevate(stix_package):
         elif isinstance(stix_package, STIXPackage):
             io = BytesIO(stix_package.to_xml())
             container = stixmarx.parse(io)
-        elif os.path.isfile(stix_package):
-            container = stixmarx.parse(stix_package)
-            fn = stix_package
         elif isinstance(stix_package, text_type):
-            io = StringIO(stix_package)
-            container = stixmarx.parse(io)
+            if stix_package.endswith(".xml") or os.path.isfile(stix_package):
+                # a path-like string was passed
+                fn = stix_package
+            else:
+                stix_package = StringIO(stix_package)
+            container = stixmarx.parse(stix_package)
         elif isinstance(stix_package, binary_type):
-            io = BytesIO(stix_package)
-            container = stixmarx.parse(io)
+            if stix_package.endswith(".xml") or os.path.isfile(stix_package):
+                # a path-like string was passed
+                fn = stix_package
+            else:
+                stix_package = BytesIO(stix_package)
+            container = stixmarx.parse(stix_package)
         else:
             raise RuntimeError("Unable to resolve object {} of type {}".format(stix_package, type(stix_package)))
 
@@ -86,8 +100,8 @@ def elevate(stix_package):
 
         if not isinstance(container_package, STIXPackage):
             raise TypeError("Must be an instance of stix.core.STIXPackage")
-    except OSError as ex:
-        log.error(ex)
+    except (OSError, IOError, lxml.etree.XMLSyntaxError) as ex:
+        log.exception(ex)
         return None
 
     try:
@@ -116,8 +130,8 @@ def elevate(stix_package):
                 return json_string
 
     except ValidationError as ex:
-        output.error("Validation error occurred: '%s'" % ex,
-                     codes.EXIT_VALIDATION_ERROR)
+        output.error("Validation error occurred: '{}'".format(ex))
+        output.error("Error Code: {}".format(codes.EXIT_VALIDATION_ERROR))
 
 
 def elevate_file(fn):
@@ -162,10 +176,10 @@ def elevate_file(fn):
                 return None
 
     except ValidationError as ex:
-        output.error("Validation error occurred: '%s'" % ex,
-                     codes.EXIT_VALIDATION_ERROR)
-    except OSError as ex:
-        log.error(ex)
+        output.error("Validation error occurred: '{}'".format(ex))
+        output.error("Error Code: {}".format(codes.EXIT_VALIDATION_ERROR))
+    except (OSError, IOError, lxml.etree.XMLSyntaxError) as ex:
+        log.exception(ex)
 
 
 def elevate_string(string):
@@ -210,10 +224,10 @@ def elevate_string(string):
                 return None
 
     except ValidationError as ex:
-        output.error("Validation error occurred: '%s'" % ex,
-                     codes.EXIT_VALIDATION_ERROR)
-    except OSError as ex:
-        log.error(ex)
+        output.error("Validation error occurred: '{}'".format(ex))
+        output.error("Error Code: {}".format(codes.EXIT_VALIDATION_ERROR))
+    except (OSError, IOError, lxml.etree.XMLSyntaxError) as ex:
+        log.exception(ex)
 
 
 def elevate_package(package):
@@ -257,7 +271,7 @@ def elevate_package(package):
                 return None
 
     except ValidationError as ex:
-        output.error("Validation error occurred: '%s'" % ex,
-                     codes.EXIT_VALIDATION_ERROR)
-    except OSError as ex:
-        log.error(ex)
+        output.error("Validation error occurred: '{}'".format(ex))
+        output.error("Error Code: {}".format(codes.EXIT_VALIDATION_ERROR))
+    except (OSError, IOError, lxml.etree.XMLSyntaxError) as ex:
+        log.exception(ex)
