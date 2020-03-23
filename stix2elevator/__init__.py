@@ -83,7 +83,7 @@ def elevate(stix_package):
                 # a path-like string was passed
                 fn = stix_package
                 if os.path.exists(fn) is False:
-                    raise FileNotFoundError("The file '{}' was not found.".format(fn))
+                    raise IOError("The file '{}' was not found.".format(fn))
             else:
                 stix_package = StringIO(stix_package)
             container = stixmarx.parse(stix_package)
@@ -92,7 +92,7 @@ def elevate(stix_package):
                 # a path-like string was passed
                 fn = stix_package
                 if os.path.exists(fn) is False:
-                    raise FileNotFoundError("The file '{}' was not found.".format(fn))
+                    raise IOError("The file '{}' was not found.".format(fn))
             else:
                 stix_package = BytesIO(stix_package)
             container = stixmarx.parse(stix_package)
