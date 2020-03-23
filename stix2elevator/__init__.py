@@ -39,7 +39,7 @@ from stix2elevator.version import __version__  # noqa
 log = logging.getLogger(__name__)
 log.propagate = False
 
-formatter = logging.Formatter("[%(name)s] [%(levelname)-7s] [%(asctime)s] [PID: %(process)d] [TID: %(thread)d]")
+formatter = logging.Formatter("[%(name)s] [%(levelname)-7s] [%(asctime)s] %(message)s")
 
 # Console Handler for Elevator messages
 ch = logging.StreamHandler()
@@ -82,6 +82,8 @@ def elevate(stix_package):
             if stix_package.endswith(".xml") or os.path.isfile(stix_package):
                 # a path-like string was passed
                 fn = stix_package
+                if os.path.exists(fn) is False:
+                    raise FileNotFoundError("The file '{}' was not found.".format(fn))
             else:
                 stix_package = StringIO(stix_package)
             container = stixmarx.parse(stix_package)
@@ -89,6 +91,8 @@ def elevate(stix_package):
             if stix_package.endswith(b".xml") or os.path.isfile(stix_package):
                 # a path-like string was passed
                 fn = stix_package
+                if os.path.exists(fn) is False:
+                    raise FileNotFoundError("The file '{}' was not found.".format(fn))
             else:
                 stix_package = BytesIO(stix_package)
             container = stixmarx.parse(stix_package)
@@ -100,8 +104,9 @@ def elevate(stix_package):
 
         if not isinstance(container_package, STIXPackage):
             raise TypeError("Must be an instance of stix.core.STIXPackage")
-    except (OSError, IOError, lxml.etree.XMLSyntaxError) as ex:
-        log.exception(ex)
+    except (OSError, IOError, lxml.etree.Error) as ex:
+        log.error("Error occurred: %s", ex)
+        # log.exception(ex)
         return None
 
     try:
@@ -148,6 +153,9 @@ def elevate_file(fn):
         output.set_level(validator_options.verbose)
         output.set_silent(validator_options.silent)
 
+        if os.path.exists(fn) is False:
+            raise FileNotFoundError("The file '{}' was not found.".format(fn))
+
         container = stixmarx.parse(fn)
         stix_package = container.package
         set_option_value("marking_container", container)
@@ -178,8 +186,9 @@ def elevate_file(fn):
     except ValidationError as ex:
         output.error("Validation error occurred: '{}'".format(ex))
         output.error("Error Code: {}".format(codes.EXIT_VALIDATION_ERROR))
-    except (OSError, IOError, lxml.etree.XMLSyntaxError) as ex:
-        log.exception(ex)
+    except (OSError, IOError, lxml.etree.Error) as ex:
+        log.error("Error occurred: %s", ex)
+        # log.exception(ex)
 
 
 def elevate_string(string):
@@ -226,8 +235,9 @@ def elevate_string(string):
     except ValidationError as ex:
         output.error("Validation error occurred: '{}'".format(ex))
         output.error("Error Code: {}".format(codes.EXIT_VALIDATION_ERROR))
-    except (OSError, IOError, lxml.etree.XMLSyntaxError) as ex:
-        log.exception(ex)
+    except (OSError, IOError, lxml.etree.Error) as ex:
+        log.error("Error occurred: %s", ex)
+        # log.exception(ex)
 
 
 def elevate_package(package):
@@ -273,5 +283,6 @@ def elevate_package(package):
     except ValidationError as ex:
         output.error("Validation error occurred: '{}'".format(ex))
         output.error("Error Code: {}".format(codes.EXIT_VALIDATION_ERROR))
-    except (OSError, IOError, lxml.etree.XMLSyntaxError) as ex:
-        log.exception(ex)
+    except (OSError, IOError, lxml.etree.Error) as ex:
+        log.error("Error occurred: %s", ex)
+        # log.exception(ex)
