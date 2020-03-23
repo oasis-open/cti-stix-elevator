@@ -5,7 +5,7 @@ from datetime import datetime
 from cybox.core import Observable
 from lxml import etree
 import pycountry
-from six import string_types, text_type
+from six import ensure_text, string_types, text_type
 import stix
 from stix.campaign import Campaign
 from stix.coa import CourseOfAction
@@ -1128,7 +1128,7 @@ def convert_test_mechanism(indicator, indicator_instance):
                         indicator_instance["pattern"] = ", ".join(list_of_strings)
                         indicator_instance["pattern_type"] = "snort"
                     elif isinstance(tm, OpenIOCTestMechanism):
-                        indicator_instance["pattern"] = etree.tostring(tm.ioc)
+                        indicator_instance["pattern"] = ensure_text(etree.tostring(tm.ioc))
                         indicator_instance["pattern_type"] = "openioc"
 
 
