@@ -153,8 +153,8 @@ def elevate_file(fn):
         output.set_level(validator_options.verbose)
         output.set_silent(validator_options.silent)
 
-        if os.path.exists(fn) is False:
-            raise FileNotFoundError("The file '{}' was not found.".format(fn))
+        if os.path.isfile(fn) is False:
+            raise IOError("The file '{}' was not found.".format(fn))
 
         container = stixmarx.parse(fn)
         stix_package = container.package
