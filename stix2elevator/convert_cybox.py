@@ -213,7 +213,10 @@ def convert_artifact_packaging(packaging, instance, obj1x_id):
                         handle_missing_string_property(instance, "encryption_mechanism_ref", e.encryption_mechanism_ref, is_sco=True)
                 first = False
             else:
-                warn("Only one encryption algorithm or key allowed in STIX 2.1 - used first one in %s", 510, obj1x_id)
+                warn("Only one encryption algorithm or key allowed in STIX 2.1 - used %s in %s",
+                     510,
+                     instance[property_name],
+                     obj1x_id)
 
 
 def convert_artifact(art, obj1x_id):

@@ -60,7 +60,7 @@ Structured COAs type in *[id]* are not supported in STIX 2.x                    
 Indicator *[id]* has an observable or indicator composite expression which may not supported correctly in STIX 2.x - please check this pattern 407     warn
 ``TTP/Behavior/Exploits/Exploit`` in *[id]* not supported in STIX 2.x                                                                          408     warn
 ``Infrastructure`` in *[id]* not part of STIX 2.0                                                                                              409     warn
-``NO MESSAGE ASSIGNED``                                                                                                                        410
+IOC indicator in *[id]* cannot be converted to a STIX pattern                                                                                  410     warn
 ``NO MESSAGE ASSIGNED``                                                                                                                        411
 ``NO MESSAGE ASSIGNED``                                                                                                                        412
 Kill Chains type in *[id]* not supported in STIX 2.x                                                                                           413     warn
@@ -94,15 +94,15 @@ Multiple values are not supported in STIX 2.x
 Message                                                                                                                                     Code    Level
 =========================================================================================================================================== ====    =====
 Cannot convert range of *[ip addr 1]* to *[ip addr 1]* in *[id]* to a CIDR                                                                  501     warn                                                                                                      501
-Only one person name allowed for *[id]* in STIX 2.x, used first one                                                                         502     warn
-Only one organization name allowed for *[id]* in STIX 2.x, used first one                                                                   503     warn
-YARA/SNORT patterns on *[id]* not supported in STIX 2.x                                                                                     504     warn
+Only one person name allowed for *[id]* in STIX 2.x, used *[name_1]*, *[name_2]* becomes an alias                                           502     warn
+Only one organization name allowed for %s in STIX 2.x, used *[name_1]*, *[name_2]* becomes an alias                                         503     warn
+YARA/SNORT/IOC or other patterns are not supported in STIX 2.0. See *[id]*                                                                  504     warn
 ``NO MESSAGE ASSIGNED``                                                                                                                     505
-Only one alternative test mechanism allowed for *[id]* in STIX 2.x - used first one, which was *[pattern_lang]*                             506     warn
+Only one alternative test mechanism allowed for *[id]* in STIX 2.x - used *[pattern_lang_1]*, dropped *[pattern_lang_2]*                    506     warn
 Only one valid time window allowed for *[id]* in STIX 2.x - used first one                                                                  507     warn
-Only one name for malware is allowed for *[id]* in STIX 2.x - used first one                                                                508     warn
+Only one name for malware is allowed for *[id]* in STIX 2.x - used *[name_1]*, dropped *[name_2]*"                                          508     warn
 No STIX 1.x vocab value given for *[property]*, using 'unknown'                                                                             509     warn
-Only one *[property]* allowed in STIX 2.x - used first one                                                                                  510     warn
+Only one *[property]* allowed in STIX 2.x - used *[prop_value]* in *[id]*                                                                   510     warn
 File size 'window' not allowed in top level observable, using first value                                                                   511     warn
 Only one ``HTTP_Request_Response`` used for ``http-request-ext``, using first value                                                         512     warn
 =========================================================================================================================================== ====    =====
@@ -122,7 +122,7 @@ Identity *[id]* has organization and person names                               
 Dangling kill chain phase id in indicator *[id]*                                                                                            607     error
 ``windows-registry-key`` is required to have a ``key`` property                                                                             608     error
 *[condition]* was used, but two values were not provided.                                                                                   609     error
-No object mapped to *[old_id]*                                                                                                            610     warn
+No object mapped to *[old_id]*                                                                                                              610     warn
 Could not associate *[old_id]* with None                                                                                                    611     error
 Identity *[id]* must have a name, using 'None'                                                                                              612     error
 No ``WinExecutableFile`` properties found in *[WinExeFile]*                                                                                 613     warn

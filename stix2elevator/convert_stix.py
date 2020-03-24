@@ -858,9 +858,13 @@ def convert_party_name(party_name, obj, is_identity_obj):
                 obj["name"] = get_name(name)
                 first_one = False
             else:
-                aliases.append(get_name(name))
-                warn("Only one person name allowed for %s in STIX 2.x, used first one", 502, obj["id"])
-                # add to description
+                alias_name = get_name(name)
+                aliases.append(alias_name)
+                warn("Only one person name allowed for %s in STIX 2.x, used %s, %s becomes an alias",
+                     502,
+                     obj["id"],
+                     obj["name"],
+                     alias_name)
     elif party_name.organisation_names:
         if is_identity_obj:
             obj["identity_class"] = "organization"
@@ -870,9 +874,13 @@ def convert_party_name(party_name, obj, is_identity_obj):
                 obj["name"] = get_name(name)
                 first_one = False
             else:
-                aliases.append(get_name(name))
-                warn("Only one organization name allowed for %s in STIX 2.x, used first one", 503, obj["id"])
-                # add to description
+                alias_name = get_name(name)
+                aliases.append(alias_name)
+                warn("Only one organization name allowed for %s in STIX 2.x, used %s, %s becomes an alias",
+                     503,
+                     obj["id"],
+                     obj["name"],
+                     alias_name)
     return aliases
 
 
@@ -1102,10 +1110,21 @@ def convert_kill_chains(kill_chain_phases, sdo_instance):
 _ALLOW_YARA_AND_SNORT_PATTENS = False
 
 
+def determine_pattern_type(tm):
+    if isinstance(tm, YaraTestMechanism):
+        return "yara"
+    elif isinstance(tm, SnortTestMechanism):
+        return "snort"
+    elif isinstance(tm, OpenIOCTestMechanism):
+        return "openioc"
+    else:
+        return "unknown"
+
+
 def convert_test_mechanism(indicator, indicator_instance):
     if indicator.test_mechanisms is not None:
         if not _ALLOW_YARA_AND_SNORT_PATTENS and get_option_value("spec_version") == "2.0":
-            warn("YARA/SNORT patterns on %s not supported in STIX 2.0", 504, indicator_instance["id"])
+            warn("YARA/SNORT/IOC or other patterns are not supported in STIX 2.0. See %s", 504, indicator_instance["id"])
             return
         if hasattr(indicator_instance, "pattern"):
             # TODO: maybe put in description
@@ -1113,12 +1132,10 @@ def convert_test_mechanism(indicator, indicator_instance):
         else:
             for tm in indicator.test_mechanisms:
                 if hasattr(indicator_instance, "pattern"):
-                    # TODO: maybe put in description
-                    msg = "Only one alternative test mechanism allowed for %s in STIX 2.1 - used first one, which was %s"
-                    warn(msg, 506, indicator_instance["id"], indicator_instance["pattern_lang"])
+                    msg = "Only one alternative test mechanism allowed for %s in STIX 2.1 - used %s, dropped %s"
+                    warn(msg, 506, indicator_instance["id"], indicator_instance["pattern_type"], determine_pattern_type(tm))
                 else:
                     if isinstance(tm, YaraTestMechanism):
-
                         indicator_instance["pattern"] = text_type(tm.rule.value)
                         indicator_instance["pattern_type"] = "yara"
                     elif isinstance(tm, SnortTestMechanism):
@@ -1128,6 +1145,7 @@ def convert_test_mechanism(indicator, indicator_instance):
                         indicator_instance["pattern"] = ", ".join(list_of_strings)
                         indicator_instance["pattern_type"] = "snort"
                     elif isinstance(tm, OpenIOCTestMechanism):
+                        warn("IOC indicator in %s cannot be converted to a STIX pattern", 410, indicator_instance["id"])
                         indicator_instance["pattern"] = ensure_text(etree.tostring(tm.ioc))
                         indicator_instance["pattern_type"] = "openioc"
 
@@ -1630,7 +1648,11 @@ def convert_malware_instance(mal, ttp, env, ttp_id_used):
                 malware_instance_instance["name"] = text_type(n)
             else:
                 # TODO: add to description?
-                warn("Only one name for malware is allowed for %s in STIX 2.x - used first one", 508, malware_instance_instance["id"])
+                warn("Only one name for malware is allowed for %s in STIX 2.x - used %s, dropped %s",
+                     508,
+                     malware_instance_instance["id"],
+                     malware_instance_instance["name"],
+                     text_type(n))
     if isinstance(mal, MAECInstance):
         warn("MAEC content in %s cannot be represented in STIX 2.x", 426, ttp.id_)
     process_ttp_properties(malware_instance_instance, ttp, env)

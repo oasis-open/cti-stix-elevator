@@ -1,0 +1,39 @@
+{
+    "id": "bundle--34a5abf9-0483-45b9-ae88-76e90191febe",
+    "objects": [
+        {
+            "created": "2020-02-24T16:07:27.201Z",
+            "id": "malware--2479ea4e-90d9-45e2-bca6-2445cd9b25a0",
+            "labels": [
+                "unknown"
+            ],
+            "modified": "2020-02-24T16:07:27.201Z",
+            "name": "Zeus",
+            "type": "malware",
+            "x_elevator_title": "Zeus"
+        },
+        {
+            "created": "2020-02-24T16:07:27.203Z",
+            "description": "Finds Zeus variants, twexts, sdra64, ntos",
+            "id": "indicator--2088b46d-5fdc-4b93-8727-5d6e697c6fc1",
+            "labels": [
+                "unknown"
+            ],
+            "modified": "2020-02-24T16:07:27.203Z",
+            "name": "Zeus",
+            "type": "indicator",
+            "valid_from": "2020-02-24T16:07:27.203888Z"
+        },
+        {
+            "created": "2020-02-24T16:07:27.203Z",
+            "id": "relationship--ee89b339-051b-4f3f-8b08-39727acf01f5",
+            "modified": "2020-02-24T16:07:27.203Z",
+            "relationship_type": "indicates",
+            "source_ref": "indicator--2088b46d-5fdc-4b93-8727-5d6e697c6fc1",
+            "target_ref": "malware--2479ea4e-90d9-45e2-bca6-2445cd9b25a0",
+            "type": "relationship"
+        }
+    ],
+    "spec_version": "2.0",
+    "type": "bundle"
+}
