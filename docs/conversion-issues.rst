@@ -79,8 +79,8 @@ Optional vs. Required
 
 Certain fields are required in STIX 2.x object that were optional in
 STIX 1.x. This goes beyond the properties such as ids, created/modified timestamps. The most
-frequently occurring example is the ``malware_types`` property (other SDOs have similarly named properties).
-The elevator will use a default value - ``unknown``.
+frequently occurring example is the ``labels`` property in 2.0.
+The elevator will use a default value - ``unknown``. Other SDOs have similarly named properties.
 
 ​Issues with Patterns
 ------------------------

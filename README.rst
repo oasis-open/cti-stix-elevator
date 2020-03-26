@@ -39,7 +39,7 @@ For more information, see `the
 documentation <https://stix2-elevator.readthedocs.io/>`__ on
 ReadTheDocs.
 
-Please enter any comments on how to improve it into the issue tracker.
+Please enter any comments on how to improve the elevator into the issue tracker.
 
 Requirements
 ------------

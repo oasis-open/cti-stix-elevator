@@ -32,8 +32,7 @@ be used directly.
 +------------------------------------------+-----------------------------------------+
 | ``CampaignStatusVocab``                  | *not available in STIX 2.x*             |
 +------------------------------------------+-----------------------------------------+
-| ``CourseOfActionTypeVocab``              | ``course-of-action-label-ov`` (2.0)     |
-|                                          | ``course-of-action-label-ov`` (2.1)     |
+| ``CourseOfActionTypeVocab``              |  *not available in STIX 2.x*            |
 +------------------------------------------+-----------------------------------------+
 | ``DiscoveryMethodVocab``                 | *not available in STIX 2.x*             |
 +------------------------------------------+-----------------------------------------+
@@ -106,15 +105,13 @@ New vocabularies added in STIX 2.x are:
 
 -  ``implementation-language-ov``
 
--  ``infrastructure-type-ov``
-
--  ``malware-av-result-ov``
-
--  ``mailware-capabilities-ov``
-
 -  ``industry-sector-ov``
 
--  ``marking-definition-ov``
+-  ``infrastructure-type-ov``
+
+-  ``malware-result-ov``
+
+-  ``malware-capabilities-ov``
 
 -  ``pattern-type-ov``
 

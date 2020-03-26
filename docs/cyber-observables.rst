@@ -57,7 +57,7 @@ Converting Network Cyber Observables
 Most of the mappings between CybOX 2.x objects and STIX 2.x cyber
 observables are straightforward, therefore, they will not be detailed in
 this document. However, it would be advantageous to detail the mappings
-of ``network-traffic``, a "catch-all" STIX 2.0 cyber observable type for
+of ``network-traffic``, a "catch-all" STIX 2.x cyber observable type for
 information previously represented in CybOX 2.x by:
 
 - ``NetworkConnection``

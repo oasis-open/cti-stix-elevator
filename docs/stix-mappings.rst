@@ -41,7 +41,7 @@ objects - but their mapping can be foiund in the :ref:`cyber_observables` sectio
 +-----------------------------+----------------------------+
 | ``Indicator``               | ``indicator``              |
 +-----------------------------+----------------------------+
-| ``Information_Source/``     | ``location``               |
+| ``Information_Source/``     | ``location`` *in 2.1*      |
 | ``CIQIdentity3_0Instance/`` |                            |
 | ``Address``                 |                            |
 +-----------------------------+----------------------------+
@@ -602,9 +602,13 @@ STIX 2.x in JSON
                 "type": "course-of-action"
             }
         ],
-        "spec_version": "2.x",
+        "spec_version": "2.0",
         "type": "bundle"
     }
+
+Notice that the ``spec_version`` property only appears on the bundle in STIX 2.0, but in STIX 2.1, it is *not* a property of the
+bundle. It may (optionally) appear on each object.  The elevator will always provides the ``spec_version`` property for
+all 2.1 SDOs and SROs, but not on SCOs.
 
 Indicator
 ------------------
@@ -813,44 +817,6 @@ STIX 1.x in XML
         </ExtSch:Specification>
     </ta:Identity>
 
-
-STIX 2.0 in JSON
-
-.. code-block:: json
-
-    {
-        "id": "bundle--ccd00c4a-1bdb-46ae-9898-ecaca13f1f12",
-        "objects": [
-            {
-              "administrative_area": "California",
-              "country": "US",
-              "created": "2014-11-19T23:39:03.893Z",
-              "id": "location--c1445467-fd92-4532-9161-1c3024ab6467",
-              "modified": "2014-11-19T23:39:03.893Z",
-              "type": "location"
-            },
-            {
-              "created": "2014-11-19T23:39:03.893Z",
-              "id": "relationship--b1d9c097-a0ac-46e8-997b-291ea3b976f5",
-              "modified": "2014-11-19T23:39:03.893Z",
-              "relationship_type": "located-at",
-              "source_ref": "identity--733c5838-34d9-4fbf-949c-62aba761184c",
-              "target_ref": "location--c1445467-fd92-4532-9161-1c3024ab6467",
-              "type": "relationship"
-            },
-            {
-              "created": "2014-11-19T23:39:03.893Z",
-              "id": "identity--733c5838-34d9-4fbf-949c-62aba761184c",
-              "identity_class": "organization",
-              "modified": "2014-11-19T23:39:03.893Z",
-              "name": "Disco Tean",
-              "type": "identity"
-            }
-        ],
-        "spec_version": "2.0",
-        "type": "bundle"
-    }
-
 STIX 2.1 in JSON
 
 .. code-block:: json
@@ -890,9 +856,6 @@ STIX 2.1 in JSON
         "type": "bundle"
     }
 
-Notice that the ``spec_version`` property only appears on the bundle in STIX 2.0, but in STIX 2.1, it is *not* a property of the
-bundle. It may (optionally) appear on each object.  The elevator will always provides the ``spec_version`` property for
-all 2.1 SDOs and SROs, but not on SCOs.
 
 Malware
 -------------
@@ -999,7 +962,7 @@ Observed Data
 --------------
 
 The Observed Data object in STIX 2.x corresponds to the ``Observable``
-object in CybOX 2.x. Each Observed Data objects contain or references one or more
+object in CybOX 2.x. Each Observed Data object contains or references one or more
 *related* cyber observable objects.
 
 STIX 2.x adds two properties: ``first_observed`` and ``last_observed``.
