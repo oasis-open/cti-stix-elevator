@@ -1,4 +1,4 @@
-|Build_Status| |Coverage| |Version|
+|Build_Status| |Coverage| |Version| |Documentation_Status|
 
 cti-stix-elevator
 =================
@@ -61,24 +61,27 @@ Requirements
 Installation
 ------------
 
-Install with pip::
+Install with pip
+
+.. code-block:: bash
 
     $ pip install stix2-elevator
 
 This will install all necessary dependencies, including the latest
-version of
-python-stix.
+version of python-stix.
 
 If you need to support older STIX 1.1.1 content, install python-stix
-1.1.1.x
-first::
+1.1.1.x first
+
+.. code-block:: bash
 
     $ pip install 'stix<1.2'
     $ pip install stix2-elevator
 
 You can also install the stix2-elevator from GitHub to get the latest
-(unstable)
-version::
+(unstable) version
+
+.. code-block:: bash
 
     $ pip install git+https://github.com/oasis-open/cti-stix-elevator.git
 
@@ -104,14 +107,18 @@ STIX 1.1.1 - 1.2.1 content to STIX 2.0 or 2.1 content:
               [--incidents]
               [--package-created-by-id PACKAGE_CREATED_BY_ID]
               [--default-timestamp DEFAULT_TIMESTAMP]
-              [--validator-args VALIDATOR_ARGS] [-e ENABLE] [-d DISABLE] [-s]
+              [--validator-args VALIDATOR_ARGS]
+              [-e ENABLED]
+              [-d DISABLED]
+              [-s]
               [--message-log-directory MESSAGE_LOG_DIRECTORY]
               [--log-level {DEBUG,INFO,WARN,ERROR,CRITICAL}]
-              [-m MARKINGS_ALLOWED] [-p {no_policy,strict_policy}]
+              [-m MARKINGS_ALLOWED]
+              [-p {no_policy,strict_policy}]
               [-v {2.0,2.1}]
               file
 
-stix2-elevator v2.1
+stix2-elevator v2.1.1
 
 
 
@@ -157,13 +164,13 @@ optional arguments:
                         --strict-types Example: stix2_elevator.py <file>
                         --validator-args="-v --strict-types -d 212"
 
-  -e ENABLE, --enable ENABLE
+  -e ENABLED, --enable ENABLED
                         A comma-separated list of the stix2-elevator messages
                         to enable. If the --disable option is not used, no
                         other messages will be shown. Example:
                         stix2_elevator.py <file> --enable 250
 
-  -d DISABLE, --disable DISABLE
+  -d DISABLED, --disable DISABLED
                         A comma-separated list of the stix2-elevator messages
                         to disable. Example: stix2_elevator.py <file>
                         --disable 212,220
@@ -206,26 +213,28 @@ disable the functionality.
 As A Library
 ~~~~~~~~~~~~
 
-You can also use this library to integrate STIX elevation into your
-own
-tools. You can elevate a STIX 1.x file::
+You can also use this library to integrate STIX elevation into your own tools.
 
-      from stix2elevator import elevate_file
-      from stix2elevator.options import initialize_options
+.. code-block:: python
 
-      initialize_options()
-      results = elevate_file("stix_file.xml")
-      print(results)
+    # You can elevate a STIX 1.x file
+    from stix2elevator import elevate
+    from stix2elevator.options import initialize_options
 
-Additionally, a similar method exists to accept a string as an
-argument::
+    initialize_options()
+    results = elevate("stix_file.xml")
+    print(results)
 
-      from stix2elevator import elevate_string
-      from stix2elevator.options import initialize_options
+The same method accept a string as an argument.
 
-      initialize_options()
-      results = elevate_string("...")
-      print(results)
+.. code-block:: python
+
+    from stix2elevator import elevate
+    from stix2elevator.options import initialize_options
+
+    initialize_options()
+    results = elevate("<stix:Package...")
+    print(results)
 
 To set options, use set_option_value, found in options.py
 
@@ -234,7 +243,9 @@ Using the stepper
 
 The stix-stepper is a simple script that will convert STIX 2.0 content to STIX 2.1 content.
 
-You can invoke it as follows::
+You can invoke it as follows.
+
+.. code-block:: bash
 
     $ stix_stepper <2.0 file>
 
@@ -372,10 +383,6 @@ to repository-cla@oasis-open.org.
    :target: https://codecov.io/gh/oasis-open/cti-stix-elevator
 .. |Version| image:: https://img.shields.io/pypi/v/stix2-elevator.svg?maxAge=3600
    :target: https://pypi.org/project/stix2-elevator/
-
-
-
-
-
-
-
+.. |Documentation_Status| image:: https://readthedocs.org/projects/stix2-elevator/badge/?version=latest
+   :target: https://stix2-elevator.readthedocs.io/en/latest/
+   :alt: Documentation Status

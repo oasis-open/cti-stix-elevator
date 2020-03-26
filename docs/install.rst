@@ -21,22 +21,24 @@ Requirements
 Installation Steps
 ------------------
 
-Install with pip::
+Install with pip
+
+.. code-block:: bash
 
     $ pip install stix2-elevator
 
 This will install all necessary dependencies, including the latest
 version of python-stix.
 
-If you need to support older STIX 1.1.1 content, install python-stix
-1.1.1.x
-first::
+If you need to support older STIX 1.1.1 content, install python-stix 1.1.1.x first
+
+.. code-block:: bash
 
     $ pip install 'stix<1.2'
     $ pip install stix2-elevator
 
-You can also install the stix2-elevator from GitHub to get the latest
-(unstable)
-version::
+You can also install the stix2-elevator from GitHub to get the latest (unstable) version
+
+.. code-block:: bash
 
     $ pip install git+https://github.com/oasis-open/cti-stix-elevator.git

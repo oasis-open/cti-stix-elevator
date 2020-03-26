@@ -7,22 +7,25 @@ STIX 1.x content to STIX 2.x content:
 .. code-block:: text
 
     usage: stix2_elevator [-h]
-              [--missing-policy {use-custom-properties, add-to-description, ignore}]
+              [--missing-policy {use-custom-properties,add-to-description,ignore}]
               [--custom-property-prefix CUSTOM_PROPERTY_PREFIX]
               [--infrastructure]
               [--incidents]
               [--package-created-by-id PACKAGE_CREATED_BY_ID]
               [--default-timestamp DEFAULT_TIMESTAMP]
               [--validator-args VALIDATOR_ARGS]
-              [-e ENABLE] [-d DISABLE] [-s]
+              [-e ENABLED]
+              [-d DISABLED]
+              [-s]
               [--message-log-directory MESSAGE_LOG_DIRECTORY]
               [--log-level {DEBUG,INFO,WARN,ERROR,CRITICAL}]
-              [-m MARKINGS_ALLOWED] [-p {no_policy,strict_policy}]
-              [-v --version VERSION]
+              [-m MARKINGS_ALLOWED]
+              [-p {no_policy,strict_policy}]
+              [-v {2.0,2.1}]
               file
 
 
-stix2-elevator v2.1
+stix2-elevator v2.1.1
 
 positional arguments:
 
@@ -73,14 +76,14 @@ optional arguments:
 
                 Example: --validator-args="-v --strict-types -d 212"
 
-  -e ENABLE, --enable ENABLE
+  -e ENABLED, --enable ENABLED
                 A comma-separated list of the stix2-elevator messages
                 to enable. If the --disable option is not used, no
                 other messages will be shown.
 
                 Example: --enable 250
 
-  -d DISABLE, --disable DISABLE
+  -d DISABLED, --disable DISABLED
                 A comma-separated list of the stix2-elevator messages
                 to disable.
 
