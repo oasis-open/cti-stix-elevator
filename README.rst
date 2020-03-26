@@ -217,7 +217,7 @@ You can also use this library to integrate STIX elevation into your own tools.
 
 .. code-block:: python
 
-    # You can elevate a STIX 1.x file
+    # Elevate a STIX 1.x via filename
     from stix2elevator import elevate
     from stix2elevator.options import initialize_options
 
@@ -225,10 +225,11 @@ You can also use this library to integrate STIX elevation into your own tools.
     results = elevate("stix_file.xml")
     print(results)
 
-The same method accept a string as an argument.
+The same method can also accept a string as an argument.
 
 .. code-block:: python
 
+    # Elevate a STIX 1.x via string
     from stix2elevator import elevate
     from stix2elevator.options import initialize_options
 
