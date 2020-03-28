@@ -24,7 +24,7 @@ Both console and output log have disabled messages.                             
 OSError *[message]*                                                                                             210     error
 silent option is not compatible with a policy                                                                   211     warn
 Created Marking Structure for *[id]*                                                                            212     warn
-custom_property_prefix is provided, but the mssing policy is not 'use-custom-properies'.  It will be ignored.   213     warn
+custom_property_prefix is provided, but the missing policy is not 'use-custom-properies'.  It will be ignored.  213     warn
 =============================================================================================================== ====    =====
 
 
