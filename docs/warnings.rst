@@ -24,7 +24,7 @@ Both console and output log have disabled messages.                             
 OSError *[message]*                                                                                             210     error
 silent option is not compatible with a policy                                                                   211     warn
 Created Marking Structure for *[id]*                                                                            212     warn
-custom_property_prefix is provided, but the mssing policy is not 'use-custom-properies'.  It will be ignored.   213     warn
+custom_property_prefix is provided, but the missing policy is not 'use-custom-properies'.  It will be ignored.  213     warn
 =============================================================================================================== ====    =====
 
 
@@ -97,7 +97,7 @@ Cannot convert range of *[ip addr 1]* to *[ip addr 1]* in *[id]* to a CIDR      
 Only one person name allowed for *[id]* in STIX 2.x, used *[name_1]*, *[name_2]* becomes an alias                                           502     warn
 Only one organization name allowed for %s in STIX 2.x, used *[name_1]*, *[name_2]* becomes an alias                                         503     warn
 YARA/SNORT/IOC or other patterns are not supported in STIX 2.0. See *[id]*                                                                  504     warn
-``NO MESSAGE ASSIGNED``                                                                                                                     505
+Only two pdfids are allowed for *[id]*, dropping *[pidid]*                                                                                  505     warn
 Only one alternative test mechanism allowed for *[id]* in STIX 2.x - used *[pattern_lang_1]*, dropped *[pattern_lang_2]*                    506     warn
 Only one valid time window allowed for *[id]* in STIX 2.x - used first one                                                                  507     warn
 Only one name for malware is allowed for *[id]* in STIX 2.x - used *[name_1]*, dropped *[name_2]*"                                          508     warn
@@ -125,8 +125,8 @@ Dangling kill chain phase id in indicator *[id]*                                
 No object mapped to *[old_id]*                                                                                                              610     warn
 Could not associate *[old_id]* with None                                                                                                    611     error
 Identity *[id]* must have a name, using 'None'                                                                                              612     error
-No ``WinExecutableFile`` properties found in *[WinExeFile]*                                                                                 613     warn
-No ``ArchiveFile`` properties found in *[ArchiveFile]*                                                                                      614     warn
+No *[type]* properties found in *[object]*                                                                                                  613     warn
+``NO MESSAGE ASSIGNED``                                                                                                                     614
 No ``WinProcess`` properties found in *[WinProcess]*                                                                                        615     warn
 No ``WinService`` properties found in *[WinService]*                                                                                        616     warn
 The custom property name *[property name]* does not adhere to the specification rules                                                       617     warn

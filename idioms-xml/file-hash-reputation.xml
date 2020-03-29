@@ -1,5 +1,6 @@
 <stix:STIX_Package 
 	xmlns:FileObj="http://cybox.mitre.org/objects#FileObject-2"
+    xmlns:ImageFileObj="http://cybox.mitre.org/objects#ImageFileObject-1"
 	xmlns:cybox="http://cybox.mitre.org/cybox-2"
 	xmlns:cyboxCommon="http://cybox.mitre.org/common-2"
 	xmlns:cyboxVocabs="http://cybox.mitre.org/default_vocabularies-2"
@@ -27,6 +28,7 @@
                                 <cyboxCommon:Simple_Hash_Value condition="Equals">e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855</cyboxCommon:Simple_Hash_Value>
                             </cyboxCommon:Hash>
                         </FileObj:Hashes>
+                        <ImageFileObj:Image_Height>45</ImageFileObj:Image_Height>
                     </cybox:Properties>
                 </cybox:Object>
             </indicator:Observable>

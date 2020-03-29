@@ -261,8 +261,8 @@ def initialize_options(options=None):
         if ALL_OPTIONS.silent and ALL_OPTIONS.policy != "no_policy":
             warn("silent option is not compatible with a policy", 211)
 
-        if ALL_OPTIONS.custom_property_prefix and not ALL_OPTIONS.missing_policy == "use-custom-properties":
-            warn("custom_property_prefix option is provided, but the mssing policy option is not 'use-custom-properies'.  It will be ignored.", 213)
+        if not ALL_OPTIONS.custom_property_prefix == "elevator" and not ALL_OPTIONS.missing_policy == "use-custom-properties":
+            warn("custom_property_prefix option is provided, but the missing policy option is not 'use-custom-properies'.  It will be ignored.", 213)
 
 
 def get_validator_options():

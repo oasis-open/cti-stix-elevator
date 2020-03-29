@@ -1,5 +1,6 @@
 # Standard Library
 import copy
+from datetime import datetime
 import re
 
 # external
@@ -11,10 +12,12 @@ from cybox.objects.domain_name_object import DomainName
 from cybox.objects.email_message_object import EmailMessage
 from cybox.objects.file_object import File
 from cybox.objects.http_session_object import HTTPSession
+from cybox.objects.image_file_object import ImageFile
 from cybox.objects.mutex_object import Mutex
 from cybox.objects.network_connection_object import NetworkConnection
 from cybox.objects.network_packet_object import NetworkPacket
 from cybox.objects.network_socket_object import NetworkSocket
+from cybox.objects.pdf_file_object import PDFFile
 from cybox.objects.port_object import Port
 from cybox.objects.process_object import Process
 from cybox.objects.unix_user_account_object import UnixUserAccount
@@ -29,7 +32,9 @@ import netaddr
 from six import text_type
 
 # internal
-from stix2elevator.common import ADDRESS_FAMILY_ENUMERATION, SOCKET_OPTIONS
+from stix2elevator.common import (
+    ADDRESS_FAMILY_ENUMERATION, PDF_DOC_INFO_DICT_KEYS, SOCKET_OPTIONS
+)
 from stix2elevator.ids import (
     add_id_value, add_object_id_value, generate_sco_id, get_id_value,
     get_object_id_value, is_stix1x_id
@@ -259,6 +264,60 @@ def convert_hashes(hashes):
     return hash_dict
 
 
+_IMAGE_FILE_PROPERTY_MAP = \
+    [
+        ["image_height", "image_height"],
+        ["image_width", "image_width"],
+        ["bits_per_pixel", "bits_per_pixel"],
+    ]
+
+
+def convert_image_file(f):
+    image_file_dict = dict()
+    for prop_tuple in _IMAGE_FILE_PROPERTY_MAP:
+        prop_name1x = prop_tuple[0]
+        prop_name2x = prop_tuple[1]
+        if getattr(f, prop_name1x, None):
+            image_file_dict[prop_name2x] = getattr(f, prop_name1x).value
+    return image_file_dict
+
+
+def convert_pdf_file(f):
+    pdf_file_dict = dict()
+    file_ids = list()
+    if f.version:
+        pdf_file_dict["version"] = text_type(f.version)
+    if f.metadata:
+        if f.metadata.optimized:
+            pdf_file_dict["is_optimized"] = f.metadata.optimized
+        if f.metadata.document_information_dictionary:
+            dict2x = dict()
+            dict1x = f.metadata.document_information_dictionary
+            for key in PDF_DOC_INFO_DICT_KEYS:
+                value = getattr(dict1x, key, None)
+                if value:
+                    if isinstance(value.value, datetime):
+                        dict2x[key] = convert_timestamp_to_string(value.value)
+                    else:
+                        dict2x[key] = value.value
+            pdf_file_dict["document_info_dict "] = dict2x
+    if f.trailers:
+        count = 0
+        for t in f.trailers:
+            if t.id_:
+                for file_id in t.id_.id_string:
+                    if count == 2:
+                        warn("Only two pdfids are allowed for %s, dropping %s", 505, f.id_, file_id)
+                    file_ids.append(file_id.value)
+                    count += 1
+        if len(file_ids) == 2:
+            pdf_file_dict["pdfid0"] = file_ids[0]
+            pdf_file_dict["pdfid1"] = file_ids[1]
+        elif len(file_ids) == 1:
+            pdf_file_dict["pdfid0"] = file_ids[0]
+    return pdf_file_dict
+
+
 _PE_FILE_HEADER_PROPERTY_MAP = \
     [["machine", "machine_hex"],
      ["time_date_stamp", "time_date_stamp"],
@@ -469,9 +528,21 @@ def convert_file_properties(f, obj1x_id):
         if archive_file_dict:
             extended_properties["archive-ext"] = archive_file_dict
         else:
-            warn("No ArchiveFile properties found in %s", 614, text_type(f))
+            warn("No ArchiveFile properties found in %s", 613, text_type(f))
     else:
         file_objs = None
+    if isinstance(f, ImageFile):
+        image_file_dict = convert_image_file(f)
+        if image_file_dict:
+            extended_properties["raster-image-ext"] = image_file_dict
+        else:
+            warn("No ImageFile properties found in %s", 613, text_type(f))
+    if isinstance(f, PDFFile):
+        pdf_file_dict = convert_pdf_file(f)
+        if pdf_file_dict:
+            extended_properties["pdf-ext"] = pdf_file_dict
+        else:
+            warn("No ImageFile properties found in %s", 613, text_type(f))
     if extended_properties:
         file_dict["extensions"] = extended_properties
     finish_sco(file_dict, obj1x_id)

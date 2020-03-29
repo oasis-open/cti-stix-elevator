@@ -1,0 +1,58 @@
+{
+    "id": "bundle--bc2955f8-f1bb-4f02-b2ed-339d7daf6d75",
+    "objects": [
+        {
+            "extensions": {
+                "raster-image-ext": {
+                    "image_height": 45
+                }
+            },
+            "hashes": {
+                "SHA-256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "id": "file--91e9548f-ae2c-523b-8f64-dea76c1e9f2d",
+            "type": "file"
+        },
+        {
+            "extensions": {
+                "pdf-ext": {
+                    "document_info_dict ": {
+                        "creationdate": "2015-07-20T19:52:13.853585Z",
+                        "subject": "Fudge"
+                    },
+                    "pdfid0": "DFCE52BD827ECF765649852119D",
+                    "version": "4.5"
+                }
+            },
+            "id": "file--7354bcad-077b-5c5b-8287-f48fc9c0ce02",
+            "type": "file"
+        },
+        {
+            "created": "2020-03-28T13:38:15.459Z",
+            "first_observed": "2020-03-28T13:38:15.459Z",
+            "id": "observed-data--14975dea-86cd-4211-a5f8-9c2e4daab69a",
+            "last_observed": "2020-03-28T13:38:15.459Z",
+            "modified": "2020-03-28T13:38:15.459Z",
+            "number_observed": 1,
+            "object_refs": [
+                "file--91e9548f-ae2c-523b-8f64-dea76c1e9f2d"
+            ],
+            "spec_version": "2.1",
+            "type": "observed-data"
+        },
+        {
+            "created": "2020-03-29T10:43:39.850Z",
+            "first_observed": "2020-03-29T10:43:39.850Z",
+            "id": "observed-data--14975dea-86cd-4211-a5f8-9c2e4daab69a",
+            "last_observed": "2020-03-29T10:43:39.850Z",
+            "modified": "2020-03-29T10:43:39.850Z",
+            "number_observed": 1,
+            "object_refs": [
+                "file--7354bcad-077b-5c5b-8287-f48fc9c0ce02"
+            ],
+            "spec_version": "2.1",
+            "type": "observed-data"
+        }
+    ],
+    "type": "bundle"
+}

@@ -5,7 +5,7 @@
     xmlns:stixCommon="http://stix.mitre.org/common-1"
     xmlns:cybox="http://cybox.mitre.org/cybox-2"
     xmlns:FileObj="http://cybox.mitre.org/objects#FileObject-2"
-    xmlns:ArchiveFileObj="http://cybox.mitre.org/objects#ArchiveFileObject-2"
+    xmlns:ArchiveFileObj="http://cybox.mitre.org/objects#ArchiveFileObject-1"
     xmlns:cyboxVocabs="http://cybox.mitre.org/default_vocabularies-2"
     xmlns:cyboxCommon="http://cybox.mitre.org/common-2"
     xmlns:stixVocabs="http://stix.mitre.org/default_vocabularies-1"
