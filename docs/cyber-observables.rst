@@ -27,12 +27,12 @@ converted by the elevator.
 ``HTTPClientRequest``           ``network-traffic:http-request-ext``          yes
 ``HTTPSession``                 ``network-traffic``                           yes
 ``ICMP`` (``v4``/``v6``)        ``network-traffic:icmp-ext``                  yes
-``ImageFile``                   ``file:raster-image-ext``                     no
+``ImageFile``                   ``file:raster-image-ext``                     yes
 ``Link``                        *none*                                        no
 ``Mutex``                       ``mutex``                                     yes
 ``NetworkConnection``           ``network-traffic``                           yes
 ``NetworkSocket``               ``network-traffic:socket-ext``                yes
-``PDFFile``                     ``file:pdf-ext``                              no
+``PDFFile``                     ``file:pdf-ext``                              yes
 ``Process``                     ``process``                                   yes
 ``Product``                     ``software``                                  no
 ``SocketAddress``               ``network-traffic``                           yes

@@ -13,10 +13,12 @@ from cybox.objects.domain_name_object import DomainName
 from cybox.objects.email_message_object import EmailMessage
 from cybox.objects.file_object import File
 from cybox.objects.http_session_object import HostField, HTTPSession
+from cybox.objects.image_file_object import ImageFile
 from cybox.objects.mutex_object import Mutex
 from cybox.objects.network_connection_object import NetworkConnection
 from cybox.objects.network_packet_object import NetworkPacket
 from cybox.objects.network_socket_object import NetworkSocket
+from cybox.objects.pdf_file_object import PDFFile
 from cybox.objects.port_object import Port
 from cybox.objects.process_object import Process
 from cybox.objects.unix_user_account_object import UnixUserAccount
@@ -36,7 +38,9 @@ from stix2.patterns import (
 import stixmarx
 
 # internal
-from stix2elevator.common import ADDRESS_FAMILY_ENUMERATION, SOCKET_OPTIONS
+from stix2elevator.common import (
+    ADDRESS_FAMILY_ENUMERATION, PDF_DOC_INFO_DICT_KEYS, SOCKET_OPTIONS
+)
 from stix2elevator.convert_cybox import split_into_requests_and_responses
 from stix2elevator.ids import (
     add_id_value, exists_id_of_obs_in_characterizations, exists_object_id_key,
@@ -1159,20 +1163,6 @@ _PE_SECTION_HEADER_PROPERTIES = [["name", "file:extensions.'windows-pebinary-ext
                                  ["virtual_size", "file:extensions.'windows-pebinary-ext'.sections[*].size"]]
 
 
-_ARCHIVE_FILE_PROPERTIES_2_0 = [["comment", "file:extensions.'archive-ext'.comment"],
-                                ["version", "file:extensions.'archive-ext'.version"]]
-
-
-_ARCHIVE_FILE_PROPERTIES_2_1 = [["comment", "file:extensions.'archive-ext'.comment"]]
-
-
-def select_archive_file_properties():
-    if get_option_value("spec_version") == "2.1":
-        return _ARCHIVE_FILE_PROPERTIES_2_1
-    else:
-        return _ARCHIVE_FILE_PROPERTIES_2_0
-
-
 def convert_windows_executable_file_to_pattern(f):
     expressions = []
     if f.headers:
@@ -1285,6 +1275,19 @@ def convert_windows_executable_file_to_pattern(f):
         return create_boolean_expression("AND", expressions)
 
 
+_ARCHIVE_FILE_PROPERTIES_2_0 = [["comment", "file:extensions.'archive-ext'.comment"],
+                                ["version", "file:extensions.'archive-ext'.version"]]
+
+_ARCHIVE_FILE_PROPERTIES_2_1 = [["comment", "file:extensions.'archive-ext'.comment"]]
+
+
+def select_archive_file_properties():
+    if get_option_value("spec_version") == "2.1":
+        return _ARCHIVE_FILE_PROPERTIES_2_1
+    else:
+        return _ARCHIVE_FILE_PROPERTIES_2_0
+
+
 def convert_archive_file_to_pattern(f):
     and_expressions = []
     for prop_spec in select_archive_file_properties():
@@ -1301,6 +1304,71 @@ def convert_archive_file_to_pattern(f):
             archived_file_expressions.append(terms.collapse_reference(ObjectPathForElevator.make_object_path("file:extensions.archive-ext.contains_refs[*]")))
         if archived_file_expressions:
             and_expressions.append(create_boolean_expression("AND", archived_file_expressions))
+    if and_expressions:
+        return create_boolean_expression("AND", and_expressions)
+
+
+_IMAGE_FILE_PROPERTIES = \
+    [
+        ["image_height", "file:extensions.'raster-image-ext'.image_height"],
+        ["image_width", "file:extensions.'raster-image-ext'.image_width"],
+        ["bits_per_pixel", "file:extensions.'raster-image-ext'.bits_per_pixel"],
+    ]
+
+
+def convert_image_file_to_pattern(f):
+    and_expressions = []
+    for prop_spec in _IMAGE_FILE_PROPERTIES:
+        prop_1x = prop_spec[0]
+        object_path = prop_spec[1]
+        if hasattr(f, prop_1x):
+            term = add_comparison_expression(getattr(f, prop_1x), object_path)
+            if term:
+                and_expressions.append(term)
+    if and_expressions:
+        return create_boolean_expression("AND", and_expressions)
+
+
+def convert_pdf_file_to_pattern(f):
+    and_expressions = []
+    file_ids = list()
+    if f.version:
+        and_expressions.append(create_term("file:extensions.'pdf-ext'.version",
+                                           f.version.condition,
+                                           make_constant(f.version.value)))
+    if f.metadata:
+        if f.metadata.optimized:
+            and_expressions.append(create_term("file:extensions.'pdf-ext'.is_optimized",
+                                               f.metadata.optimized.condition,
+                                               make_constant(f.metadata.optimized.value)))
+        if f.metadata.document_information_dictionary:
+            dict1x = f.metadata.document_information_dictionary
+            for key in PDF_DOC_INFO_DICT_KEYS:
+                value = getattr(dict1x, key, None)
+                if value:
+                    and_expressions.append(create_term("file:extensions.'pdf-ext'." + key,
+                                                       value.condition,
+                                                       make_constant(value.value)))
+    if f.trailers:
+        count = 0
+        for t in f.trailers:
+            if t.id_:
+                for file_id in t.id_.id_string:
+                    if count == 2:
+                        warn("Only two pdfids are allowed for %s, dropping %s", 505, f.id_, file_id)
+                    file_ids.append(file_id)
+                    count += 1
+        if len(file_ids) == 2:
+            and_expressions.append(create_term("file:extensions.'pdf-ext'.pdfid0",
+                                               file_ids[0].condition,
+                                               make_constant(file_ids[0].value)))
+            and_expressions.append(create_term("file:extensions.'pdf-ext'.pdfid1",
+                                               file_ids[1].condition,
+                                               make_constant(file_ids[1].value)))
+        elif len(file_ids) == 1:
+            and_expressions.append(create_term("file:extensions.'pdf-ext'.pdfid0",
+                                               file_ids[0].condition,
+                                               make_constant(file_ids[0].value)))
     if and_expressions:
         return create_boolean_expression("AND", and_expressions)
 
@@ -1441,7 +1509,19 @@ def convert_file_to_pattern(f):
         if archive_file_expressions:
             expressions.append(archive_file_expressions)
         else:
-            warn("No ArchiveFile properties found in %s", 614, text_type(f))
+            warn("No ArchiveFile properties found in %s", 613, text_type(f))
+    if isinstance(f, ImageFile):
+        image_file_expressions = convert_image_file_to_pattern(f)
+        if image_file_expressions:
+            expressions.append(image_file_expressions)
+        else:
+            warn("No ImageFile properties found in %s", 613, text_type(f))
+    if isinstance(f, PDFFile):
+        pdf_file_expressions = convert_pdf_file_to_pattern(f)
+        if pdf_file_expressions:
+            expressions.append(pdf_file_expressions)
+        else:
+            warn("No PDFFile properties found in %s", 613, text_type(f))
     if expressions:
         return create_boolean_expression("AND", expressions)
 

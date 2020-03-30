@@ -1,0 +1,54 @@
+<stix:STIX_Package
+	xmlns:FileObj="http://cybox.mitre.org/objects#FileObject-2"
+    xmlns:ImageFileObj="http://cybox.mitre.org/objects#ImageFileObject-1"
+    xmlns:PDFFileObj="http://cybox.mitre.org/objects#PDFFileObject-1"
+	xmlns:cybox="http://cybox.mitre.org/cybox-2"
+	xmlns:cyboxCommon="http://cybox.mitre.org/common-2"
+	xmlns:cyboxVocabs="http://cybox.mitre.org/default_vocabularies-2"
+	xmlns:example="http://example.com"
+	xmlns:indicator="http://stix.mitre.org/Indicator-2"
+	xmlns:stix="http://stix.mitre.org/stix-1"
+	xmlns:stixCommon="http://stix.mitre.org/common-1"
+	xmlns:stixVocabs="http://stix.mitre.org/default_vocabularies-1"
+	xmlns:ttp="http://stix.mitre.org/TTP-1"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="example:Package-bc2955f8-f1bb-4f02-b2ed-339d7daf6d75" version="1.2">
+    <stix:STIX_Header>
+        <stix:Title>File Hash Reputation Service Results</stix:Title>
+        <stix:Package_Intent xsi:type="stixVocabs:PackageIntentVocab-1.0">Indicators - Malware Artifacts</stix:Package_Intent>
+    </stix:STIX_Header>
+    <stix:Observables>
+        <cybox:Observable id="example:observable-14975dea-86cd-4211-a5f8-9c2e4daab69a" timestamp="2015-07-20T19:52:13.853585+00:00" xsi:type='indicator:IndicatorType'>
+            <cybox:Object id="example:File-b04bfc7c-04ae-4dfe-ba8e-a297f0717552">
+                <cybox:Properties xsi:type="ImageFileObj:ImageFileObjectType">
+                    <FileObj:Hashes>
+                        <cyboxCommon:Hash>
+                            <cyboxCommon:Type condition="Equals" xsi:type="cyboxVocabs:HashNameVocab-1.0">SHA256</cyboxCommon:Type>
+                            <cyboxCommon:Simple_Hash_Value condition="Equals">e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855</cyboxCommon:Simple_Hash_Value>
+                        </cyboxCommon:Hash>
+                    </FileObj:Hashes>
+                    <ImageFileObj:Image_Height>45</ImageFileObj:Image_Height>
+                </cybox:Properties>
+            </cybox:Object>
+        </cybox:Observable>
+        <cybox:Observable id="example:observable-a8770cfa-7921-43a5-b145-cf168aa3b019" timestamp="2015-07-20T19:52:13.853585+00:00" xsi:type='indicator:IndicatorType'>
+                <cybox:Object id="example:File-ebb16ce4-51b3-44f7-9dab-a510885d85a8">
+                    <cybox:Properties xsi:type="PDFFileObj:PDFFileObjectType">
+                        <PDFFileObj:Version>4.5</PDFFileObj:Version>
+                        <PDFFileObj:Metadata optimized="false">
+                            <PDFFileObj:Document_Information_Dictionary>
+                                <PDFFileObj:CreationDate>2015-07-20T19:52:13.853585+00:00</PDFFileObj:CreationDate>
+                                <PDFFileObj:Subject>Fudge</PDFFileObj:Subject>
+                            </PDFFileObj:Document_Information_Dictionary>
+                        </PDFFileObj:Metadata>
+                        <PDFFileObj:Trailers>
+                            <PDFFileObj:Trailer>
+                                <PDFFileObj:ID>
+                                    <PDFFileObj:ID_String>DFCE52BD827ECF765649852119D</PDFFileObj:ID_String>
+                                </PDFFileObj:ID>
+                            </PDFFileObj:Trailer>
+                        </PDFFileObj:Trailers>
+                    </cybox:Properties>
+                </cybox:Object>
+            </cybox:Observable>
+    </stix:Observables>
+</stix:STIX_Package>

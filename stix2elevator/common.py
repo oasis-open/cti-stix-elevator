@@ -32,3 +32,5 @@ ADDRESS_FAMILY_ENUMERATION = [
     "AF_IRDA",
     "AF_BTH",
 ]
+
+PDF_DOC_INFO_DICT_KEYS = ["author", "subject", "keywords", "creator", "producer", "creationdate", "moddate", "trapped"]
