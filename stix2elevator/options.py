@@ -263,7 +263,7 @@ def initialize_options(options=None):
 
         if not ALL_OPTIONS.custom_property_prefix == "elevator" and not ALL_OPTIONS.missing_policy == "use-custom-properties":
             warn("custom_property_prefix option is provided, but the missing policy option is not 'use-custom-properies'.  It will be ignored.", 213)
-            
+
 
 def get_validator_options():
     if ALL_OPTIONS:
