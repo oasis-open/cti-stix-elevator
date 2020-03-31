@@ -8,7 +8,7 @@
                 "ip-watchlist"
             ],
             "modified": "2020-03-29T12:59:46.115Z",
-            "pattern": "[file:hashes.'SHA-256' = 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855' AND file:extensions.'raster-image-ext'.image_height = 45]",
+            "pattern": "[file:hashes.'SHA-256' = 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855' AND (file:extensions.'raster-image-ext'.image_height = 45 AND file:extensions.'raster-image-ext'.image_width = 45)]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",

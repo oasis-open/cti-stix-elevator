@@ -28,6 +28,8 @@ from cybox.objects.win_executable_file_object import WinExecutableFile
 from cybox.objects.win_process_object import WinProcess
 from cybox.objects.win_registry_key_object import WinRegistryKey
 from cybox.objects.win_service_object import WinService
+from cybox.objects.x509_certificate_object import X509Certificate
+
 from six import string_types, text_type
 import stix2
 from stix2.patterns import (
@@ -500,6 +502,9 @@ class CompoundObservationExpressionForElevator(_CompoundObservationExpression):
     def partition_according_to_object_path(self):
         return self
 
+    def get_property(self):
+        return None
+
     def replace_placeholder_with_idref_pattern(self, idref):
         new_operands = []
         change_made = False
@@ -596,6 +601,7 @@ class ParentheticalExpressionForElevator(stix2.ParentheticalExpression):
         return self.expression.contains_observation_expressions()
 
     def get_property(self):
+        # TODO: there could be a similar property within the parenthetical expression
         return None
 
     def toSTIX21(self):
@@ -2082,6 +2088,97 @@ def convert_network_socket_to_pattern(socket):
     return create_boolean_expression("AND", expressions)
 
 
+_X509_V3_PROPERTY_MAP = \
+    [
+        ["basic_constraints", "x509-certificate:x509_v3_extensions.basic_constraints"],
+        ["name_constraints", "x509-certificate:x509_v3_extensions.name_constraints"],
+        ["policy_constraints", "x509-certificate:x509_v3_extensions.policy_constraints"],
+        ["key_usage", "x509-certificate:x509_v3_extensions.key_usage"],
+        ["extended_key_usage", "x509-certificate:x509_v3_extensions.extended_key_usage"],
+        ["subject_key_identifier", "x509-certificate:x509_v3_extensions.subject_key_identifier"],
+        ["authority_key_identifier", "x509-certificate:x509_v3_extensions.authority_key_identifier"],
+        ["subject_alternative_name", "x509-certificate:x509_v3_extensions.subject_alternative_name"],
+        ["issuer_alternative_name", "x509-certificate:x509_v3_extensions.issuer_alternative_name"],
+        ["subject_directory_attributes", "x509-certificate:x509_v3_extensions.subject_directory_attributes"],
+        ["crl_distribution_points", "x509-certificate:x509_v3_extensions.crl_distribution_points"],
+        ["inhibit_any_policy", "x509-certificate:x509_v3_extensions.inhibit_any_policy"],
+        ["certificate_policies", "x509-certificate:x509_v3_extensions.certificate_policies"],
+        ["policy_mappings", "x509-certificate:x509_v3_extensions.policy_mappings"],
+    ]
+
+
+def convert_v3_extension_to_pattern(v3_ext):
+    expressions = []
+    for prop_spec in _X509_V3_PROPERTY_MAP:
+        prop_1x = prop_spec[0]
+        object_path = prop_spec[1]
+        if hasattr(v3_ext, prop_1x) and getattr(v3_ext, prop_1x):
+            term = add_comparison_expression(getattr(v3_ext, prop_1x), object_path)
+            if term:
+                expressions.append(term)
+    if v3_ext.private_key_usage_period:
+        if v3_ext.private_key_usage_period.not_before:
+            expressions.append(add_comparison_expression(v3_ext.private_key_usage_period.not_before,
+                                                         "x509-certificate:x509_v3_extensions.private_key_usage_period_not_before"))
+        if v3_ext.private_key_usage_period.not_after:
+            expressions.append(add_comparison_expression(v3_ext.private_key_usage_period.not_after,
+                                                            "x509-certificate:x509_v3_extensions.private_key_usage_period_not_after"))
+    if expressions:
+        return create_boolean_expression("AND", expressions)
+
+
+_X509_PROPERTY_MAP = \
+    [
+        ["serial_number", "x509-certificate:serial_number"],
+        ["signature_algorithm", "x509-certificate:signature_algorithm"],
+        ["issuer", "x509-certificate:issuer"],
+        ["subject", "x509-certificate:subject"],
+        ["version", "x509--certificate:version"]
+    ]
+
+# is_self_signed
+# hashes
+# version
+
+
+def convert_x509_certificate_to_pattern(x509):
+    expressions = []
+    if x509.certificate:
+        cert = x509.certificate
+        for prop_spec in _X509_PROPERTY_MAP:
+            prop_1x = prop_spec[0]
+            object_path = prop_spec[1]
+            if hasattr(cert, prop_1x) and getattr(cert, prop_1x):
+                term = add_comparison_expression(getattr(cert, prop_1x), object_path)
+                if term:
+                    expressions.append(term)
+        if cert.validity:
+            if cert.validity.not_before:
+                expressions.append(add_comparison_expression(cert.validity.not_before,
+                                                             "x509-certificate:validity_not_before"))
+            if cert.validity.not_after:
+                expressions.append(add_comparison_expression(cert.validity.not_after,
+                                                             "x509-certificate:validity_not_after"))
+        if cert.subject_public_key:
+            if cert.subject_public_key.public_key_algorithm:
+                add_comparison_expression(cert.subject_public_key.public_key_algorithm,
+                                          "x509-certificate:subject_public_key_algorithm")
+            if cert.subject_public_key.rsa_public_key:
+                rsa_key = cert.subject_public_key.rsa_public_key
+                if rsa_key.modulus:
+                    add_comparison_expression(rsa_key.modulus,
+                                              "x509-certificate:subject_public_key_modulus")
+                if rsa_key.exponent:
+                    add_comparison_expression(rsa_key.exponent,
+                                              "x509-certificate:subject_public_key_exponent")
+        if cert.standard_extensions:
+            v3_expressions = convert_v3_extension_to_pattern(cert.standard_extensions)
+            if v3_expressions:
+                expressions.append(v3_expressions)
+    if expressions:
+        return create_boolean_expression("AND", expressions)
+
+
 ####################################################################################################################
 
 
@@ -2144,6 +2241,8 @@ def convert_object_to_pattern(obj, obs_id):
             expression = convert_network_packet_to_pattern(prop)
         elif isinstance(prop, NetworkSocket):
             expression = convert_network_socket_to_pattern(prop)
+        elif isinstance(prop, X509Certificate):
+            expression = convert_x509_certificate_to_pattern(prop)
         else:
             warn("%s found in %s cannot be converted to a pattern, yet.", 808, text_type(obj.properties), obs_id)
             if not get_option_value("missing_policy") == "ignore":

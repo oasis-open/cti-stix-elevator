@@ -1,0 +1,51 @@
+<stix:STIX_Package
+        xmlns:example="http://example.com"
+        xmlns:stix="http://stix.mitre.org/stix-1"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:cybox="http://cybox.mitre.org/cybox-2"
+	    xmlns:indicator="http://stix.mitre.org/Indicator-2"
+        xmlns:stixVocabs="http://stix.mitre.org/default_vocabularies-1"
+        xmlns:X509CertificateObj="http://cybox.mitre.org/objects#X509CertificateObject-2"
+        id="example:STIXPackage-b1f1ce62-63c6-448c-bdc7-9ead04826ad2" version="1.2">
+    <stix:Indicators>
+            <stix:Indicator id="example:indicator-8674ed26-06c7-4259-a3ba-a024322707ea" xsi:type='indicator:IndicatorType' negate="false">
+                <indicator:Type xsi:type="stixVocabs:IndicatorTypeVocab-1.1">Malware Artifacts</indicator:Type>
+                <indicator:Observable idref="example:observable-cb67963d-f547-4198-9a7c-17f803d187f9"/>
+		    </stix:Indicator>
+    </stix:Indicators>
+    <stix:Observables cybox_major_version="2" cybox_minor_version="1" cybox_update_version="0">
+        <cybox:Observable id="example:observable-cb67963d-f547-4198-9a7c-17f803d187f9">
+            <cybox:Object id="example:X509Certificate-ed2c87bf-c0e3-4da9-873a-afa95da00459">
+                <cybox:Properties xsi:type="X509CertificateObj:X509CertificateObjectType">
+                    <X509CertificateObj:Certificate>
+                        <X509CertificateObj:Serial_Number>36:f7:d4:32:f4:ab:70:ea:d3:ce:98:6e:ea:99:93:49:32:0a:b7:06</X509CertificateObj:Serial_Number>
+                        <X509CertificateObj:Issuer>C=ZA, ST=Western Cape, L=Cape Town, O=Thawte Consulting cc, OU=Certification Services Division, CN=Thawte Server CA/emailAddress=server-certs@thawte.com</X509CertificateObj:Issuer>
+                        <X509CertificateObj:Subject>C=US, ST=Maryland, L=Pasadena, O=Brent Baccala, OU=FreeSoft, CN=www.freesoft.org/emailAddress=baccala@freesoft.org</X509CertificateObj:Subject>
+                        <X509CertificateObj:Validity>
+                            <X509CertificateObj:Not_After>2016-08-21T12:00:00Z</X509CertificateObj:Not_After>
+                            <X509CertificateObj:Not_Before>2016-03-12T12:00:00Z</X509CertificateObj:Not_Before>
+                        </X509CertificateObj:Validity>
+                        <X509CertificateObj:Standard_Extensions>
+                            <X509CertificateObj:Authority_Key_Identifier>keyid,issuer</X509CertificateObj:Authority_Key_Identifier>
+                            <X509CertificateObj:Basic_Constraints>critical,CA:TRUE, pathlen:0</X509CertificateObj:Basic_Constraints>
+                            <X509CertificateObj:CRL_Distribution_Points>URI:http://myhost.com/myca.crl</X509CertificateObj:CRL_Distribution_Points>
+                            <X509CertificateObj:Extended_Key_Usage>critical,codeSigning,1.2.3.4</X509CertificateObj:Extended_Key_Usage>
+                            <X509CertificateObj:Inhibit_Any_Policy>2</X509CertificateObj:Inhibit_Any_Policy>
+                            <X509CertificateObj:Key_Usage>critical, keyCertSign</X509CertificateObj:Key_Usage>
+                            <X509CertificateObj:Name_Constraints>permitted;IP:192.168.0.0/255.255.0.0</X509CertificateObj:Name_Constraints>
+                            <X509CertificateObj:Policy_Constraints>requireExplicitPolicy:3</X509CertificateObj:Policy_Constraints>
+                            <X509CertificateObj:Subject_Key_Identifier>HASH</X509CertificateObj:Subject_Key_Identifier>
+                            <X509CertificateObj:Private_Key_Usage_Period>
+                                <X509CertificateObj:Not_Before>2016-03-12T12:00:00Z</X509CertificateObj:Not_Before>
+                                <X509CertificateObj:Not_After>2018-03-12T12:00:00Z</X509CertificateObj:Not_After>
+                            </X509CertificateObj:Private_Key_Usage_Period>
+                            <X509CertificateObj:Certificate_Policies>1.2.4.5, 1.1.3.4</X509CertificateObj:Certificate_Policies>
+                            <X509CertificateObj:Subject_Alternative_Name>email:my@other.address,RID:1.2.3.4</X509CertificateObj:Subject_Alternative_Name>
+                            <X509CertificateObj:Issuer_Alternative_Name>issuer:copy</X509CertificateObj:Issuer_Alternative_Name>
+                        </X509CertificateObj:Standard_Extensions>
+                    </X509CertificateObj:Certificate>
+                </cybox:Properties>
+            </cybox:Object>
+        </cybox:Observable>
+    </stix:Observables>
+</stix:STIX_Package>
