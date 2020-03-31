@@ -29,7 +29,6 @@ from cybox.objects.win_process_object import WinProcess
 from cybox.objects.win_registry_key_object import WinRegistryKey
 from cybox.objects.win_service_object import WinService
 from cybox.objects.x509_certificate_object import X509Certificate
-
 from six import string_types, text_type
 import stix2
 from stix2.patterns import (
@@ -2122,7 +2121,7 @@ def convert_v3_extension_to_pattern(v3_ext):
                                                          "x509-certificate:x509_v3_extensions.private_key_usage_period_not_before"))
         if v3_ext.private_key_usage_period.not_after:
             expressions.append(add_comparison_expression(v3_ext.private_key_usage_period.not_after,
-                                                            "x509-certificate:x509_v3_extensions.private_key_usage_period_not_after"))
+                                                         "x509-certificate:x509_v3_extensions.private_key_usage_period_not_after"))
     if expressions:
         return create_boolean_expression("AND", expressions)
 

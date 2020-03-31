@@ -29,7 +29,6 @@ from cybox.objects.win_process_object import WinProcess
 from cybox.objects.win_registry_key_object import WinRegistryKey
 from cybox.objects.win_service_object import WinService
 from cybox.objects.x509_certificate_object import X509Certificate
-
 import netaddr
 from six import text_type
 
