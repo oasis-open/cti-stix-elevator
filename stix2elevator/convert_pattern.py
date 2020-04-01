@@ -22,6 +22,7 @@ from cybox.objects.network_socket_object import NetworkSocket
 from cybox.objects.pdf_file_object import PDFFile
 from cybox.objects.port_object import Port
 from cybox.objects.process_object import Process
+from cybox.objects.product_object import Product
 from cybox.objects.unix_user_account_object import UnixUserAccount
 from cybox.objects.uri_object import URI
 from cybox.objects.win_computer_account_object import WinComputerAccount
@@ -2100,6 +2101,20 @@ def convert_network_socket_to_pattern(socket):
     return create_boolean_expression("AND", expressions)
 
 
+def convert_product_to_pattern(prod):
+    expressions = []
+    if prod.product:
+        expressions.append(add_comparison_expression(prod.product, "software:name"))
+    if prod.vendor:
+        expressions.append(add_comparison_expression(prod.vendor, "software:vendor"))
+    if prod.version:
+        expressions.append(add_comparison_expression(prod.version, "software:version"))
+    if prod.language:
+        expressions.append(add_comparison_expression(prod.language, "software:languages[*]"))
+    if expressions:
+        return create_boolean_expression("AND", expressions)
+
+
 _X509_V3_PROPERTY_MAP = \
     [
         ["basic_constraints", "x509-certificate:x509_v3_extensions.basic_constraints"],
@@ -2239,6 +2254,8 @@ def convert_object_to_pattern(obj, obs_id):
             expression = convert_registry_key_to_pattern(prop)
         elif isinstance(prop, Process):
             expression = convert_process_to_pattern(prop)
+        elif isinstance(prop, Product):
+            expression = convert_product_to_pattern(prop)
         elif isinstance(prop, DomainName):
             expression = convert_domain_name_to_pattern(prop, related_objects)
         elif isinstance(prop, Mutex):

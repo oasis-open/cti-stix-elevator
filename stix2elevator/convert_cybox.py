@@ -21,6 +21,7 @@ from cybox.objects.network_socket_object import NetworkSocket
 from cybox.objects.pdf_file_object import PDFFile
 from cybox.objects.port_object import Port
 from cybox.objects.process_object import Process
+from cybox.objects.product_object import Product
 from cybox.objects.unix_user_account_object import UnixUserAccount
 from cybox.objects.uri_object import URI
 from cybox.objects.user_account_object import UserAccount
@@ -1327,6 +1328,20 @@ def convert_network_socket(socket, obj1x_id):
     return cybox_traffic
 
 
+def convert_product(prod, obj1x_id):
+    instance = create_base_sco("software")
+    if prod.product:
+        instance["name"] = prod.product.value
+    if prod.vendor:
+        instance["vendor"] = prod.vendor.value
+    if prod.version:
+        instance["version"] = prod.version.value
+    if prod.language:
+        instance["languages"] = [prod.language.value]
+    finish_sco(instance, obj1x_id)
+    return instance
+
+
 _X509_V3_PROPERTY_MAP = \
     [
         ["basic_constraints", "basic_constraints"],
@@ -1440,6 +1455,8 @@ def convert_cybox_object20(obj1x):
         objs = convert_registry_key(prop, obj1x.id_)
     elif isinstance(prop, Process):
         objs = convert_process(prop, obj1x.id_)
+    elif isinstance(prop, Product):
+        objs["0"] = convert_product(prop, obj1x.id_)
     elif isinstance(prop, DomainName):
         objs["0"] = convert_domain_name(prop, related_objects, obj1x.id_)
     elif isinstance(prop, Mutex):
@@ -1499,6 +1516,8 @@ def convert_cybox_object21(obj1x):
         objs = convert_registry_key(prop, obj1x.id_)
     elif isinstance(prop, Process):
         objs = convert_process(prop, obj1x.id_)
+    elif isinstance(prop, Product):
+        objs = [convert_product(prop, obj1x.id_)]
     elif isinstance(prop, DomainName):
         objs = [convert_domain_name(prop, related_objects, obj1x.id_)]
     elif isinstance(prop, Mutex):

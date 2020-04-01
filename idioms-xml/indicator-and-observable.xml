@@ -6,6 +6,7 @@
     xmlns:cybox="http://cybox.mitre.org/cybox-2"
     xmlns:AddressObj="http://cybox.mitre.org/objects#AddressObject-2"
     xmlns:DomainNameObj="http://cybox.mitre.org/objects#DomainNameObject-1"
+    xmlns:ProductObj="http://cybox.mitre.org/objects#ProductObject-2"
     xmlns:FileObj="http://cybox.mitre.org/objects#FileObject-2"
     xmlns:stixVocabs="http://stix.mitre.org/default_vocabularies-1"
     xmlns:example="http://example.com/"
@@ -17,13 +18,13 @@
     id="example:STIXPackage-43fe3b22-0201-47cf-85d0-97c02164528d"
     version="1.2">
     <stix:Indicators>
-        <stix:Indicator id="example:guid-6116b44e-a7e9-11e3-a82f-000c29b241af" xmlns:indicator='http://stix.mitre.org/Indicator-2' xsi:type='indicator:IndicatorType' negate="false">
+        <stix:Indicator id="example:guid-6116b44e-a7e9-41e3-a82f-000c29b241af" xmlns:indicator='http://stix.mitre.org/Indicator-2' xsi:type='indicator:IndicatorType' negate="false">
             <indicator:Type xsi:type="stixVocabs:IndicatorTypeVocab-1.1">IP Watchlist</indicator:Type>
             <indicator:Observable idref="fireeye:observable-57a43ab6-2a79-4134-8812-fef3df3616e1"/>
 		</stix:Indicator>
     </stix:Indicators>
     <stix:Observables cybox_major_version="1" cybox_minor_version="1">
-        <cybox:Observable id="example:observable-c8c32b6e-2ea8-51c4-6446-7f5218072f27">
+        <cybox:Observable id="example:observable-c8c32b6e-2ea8-41c4-9446-7f5218072f27">
             <cybox:Object id="example:object-d7fcce87-0e98-4537-81bf-1e7ca9ad3734">
                  <cybox:Properties xsi:type="FileObj:FileObjectType">
                      <FileObj:File_Path>/usr/local/iprip32.dll</FileObj:File_Path>
@@ -36,6 +37,16 @@
                  </cybox:Properties>
             </cybox:Object>
         </cybox:Observable>
+        <cybox:Observable id="example:Observable-1a9e6bc3-7665-4413-8f07-75cceef20856">
+                <cybox:Object id="example:Product-58be05e7-2e9a-451c-baf2-4baf06889337">
+                    <cybox:Properties xsi:type="ProductObj:ProductObjectType">
+                        <ProductObj:Product>Word</ProductObj:Product>
+                        <ProductObj:Vendor>Microsoft</ProductObj:Vendor>
+                        <ProductObj:Version>2002</ProductObj:Version>
+                        <ProductObj:Language>eng</ProductObj:Language>
+                    </cybox:Properties>
+                </cybox:Object>
+            </cybox:Observable>
         <cybox:Observable id="fireeye:observable-57a43ab6-2a79-4134-8812-fef3df3616e1">
             	<cybox:Title>Domain: microsoftb.byinter.net</cybox:Title>
             	<cybox:Object id="example:object-7671c9e2-3468-43ad-b15b-9266d7993ffe">

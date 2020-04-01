@@ -3,7 +3,7 @@
     "objects": [
         {
             "created": "2019-11-01T13:49:47.072Z",
-            "id": "indicator--6116b44e-a7e9-11e3-a82f-000c29b241af",
+            "id": "indicator--6116b44e-a7e9-41e3-a82f-000c29b241af",
             "labels": [
                 "ip-watchlist"
             ],
@@ -15,7 +15,7 @@
         {
             "created": "2019-11-01T13:49:47.072Z",
             "first_observed": "2019-11-01T13:49:47.072Z",
-            "id": "observed-data--c8c32b6e-2ea8-51c4-6446-7f5218072f27",
+            "id": "observed-data--c8c32b6e-2ea8-41c4-9446-7f5218072f27",
             "last_observed": "2019-11-01T13:49:47.072Z",
             "modified": "2019-11-01T13:49:47.072Z",
             "number_observed": 1,
@@ -31,6 +31,26 @@
                 "1": {
                     "path": "/usr/local",
                     "type": "directory"
+                }
+            },
+            "type": "observed-data"
+        },
+        {
+            "created": "2020-04-01T12:29:10.530Z",
+            "first_observed": "2020-04-01T12:29:10.530Z",
+            "id": "observed-data--1a9e6bc3-7665-4413-8f07-75cceef20856",
+            "last_observed": "2020-04-01T12:29:10.530Z",
+            "modified": "2020-04-01T12:29:10.530Z",
+            "number_observed": 1,
+            "objects": {
+                "0": {
+                    "languages": [
+                        "eng"
+                    ],
+                    "name": "Word",
+                    "type": "software",
+                    "vendor": "Microsoft",
+                    "version": "2002"
                 }
             },
             "type": "observed-data"
