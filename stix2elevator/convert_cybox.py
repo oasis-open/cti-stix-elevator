@@ -8,6 +8,7 @@ from cybox.objects.account_object import Account
 from cybox.objects.address_object import Address
 from cybox.objects.archive_file_object import ArchiveFile
 from cybox.objects.artifact_object import Artifact
+from cybox.objects.as_object import AutonomousSystem
 from cybox.objects.domain_name_object import DomainName
 from cybox.objects.email_message_object import EmailMessage
 from cybox.objects.file_object import File
@@ -238,6 +239,18 @@ def convert_artifact(art, obj1x_id):
     if art.packaging:
         convert_artifact_packaging(art.packaging, instance, obj1x_id)
 
+    finish_sco(instance, obj1x_id)
+    return instance
+
+
+def convert_as(a_s, obj1x_id):
+    instance = create_base_sco("autonomous-system")
+    if a_s.number:
+        instance["number"] = int(a_s.number.value)
+    if a_s.name:
+        instance["name"] = a_s.name.value
+    if a_s.regional_internet_registry:
+        instance["rir"] = a_s.regional_internet_registry.value
     finish_sco(instance, obj1x_id)
     return instance
 
@@ -1413,6 +1426,8 @@ def convert_cybox_object20(obj1x):
         objs["0"] = convert_address(prop, related_objects, obj1x_id=obj1x.id_)
     elif isinstance(prop, Artifact):
         objs["0"] = convert_artifact(prop, obj1x.id_)
+    elif isinstance(prop, AutonomousSystem):
+        objs["0"] = convert_as(prop, obj1x.id_)
     elif isinstance(prop, URI):
         objs["0"] = convert_uri(prop, obj1x.id_)
     elif isinstance(prop, EmailMessage):
@@ -1470,6 +1485,8 @@ def convert_cybox_object21(obj1x):
         objs = [convert_address(prop, related_objects, obj1x.id_)]
     elif isinstance(prop, Artifact):
         objs = [convert_artifact(prop, obj1x.id_)]
+    elif isinstance(prop, AutonomousSystem):
+        objs = [convert_as(prop, obj1x.id_)]
     elif isinstance(prop, URI):
         objs = [convert_uri(prop, obj1x.id_)]
     elif isinstance(prop, EmailMessage):

@@ -18,7 +18,7 @@ converted by the elevator.
 ``Address``                     ``mac-addr``                                  yes
 ``ArchiveFile``                 ``file:archive-ext``                          yes
 ``Artifact``                    ``artifact``                                  yes
-``AutonomousSystem``            ``autonomous-system``                         no
+``AutonomousSystem``            ``autonomous-system``                         yes
 ``File``                        ``directory``                                 yes
 ``DomainName``                  ``domain-name``                               yes
 ``DNSQuery``                    *none*                                        no
