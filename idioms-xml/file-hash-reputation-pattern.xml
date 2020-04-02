@@ -37,6 +37,7 @@
                         </cyboxCommon:Hash>
                     </FileObj:Hashes>
                     <ImageFileObj:Image_Height>45</ImageFileObj:Image_Height>
+                    <ImageFileObj:Image_Width>45</ImageFileObj:Image_Width>
                 </cybox:Properties>
             </cybox:Object>
         </cybox:Observable>

@@ -47,8 +47,8 @@ converted by the elevator.
 ``WinFile``                     ``file:ntfs-ext``                             no
 ``WinProcess``                  ``process:windows-process-ext``               yes
 ``WinService``                  ``process:windows-service-ext``               yes
-``X509Certificate``             ``x509-certificate``                          no
-``X509V3Extensions``            ``x509-certificate:x509-v3-extensions-type``  no
+``X509Certificate``             ``x509-certificate``                          yes
+``X509V3Extensions``            ``x509-certificate:x509-v3-extensions-type``  yes
 =============================== ============================================= ============================================
 
 Converting Network Cyber Observables

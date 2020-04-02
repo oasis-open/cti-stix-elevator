@@ -28,6 +28,7 @@ from cybox.objects.win_executable_file_object import WinExecutableFile
 from cybox.objects.win_process_object import WinProcess
 from cybox.objects.win_registry_key_object import WinRegistryKey
 from cybox.objects.win_service_object import WinService
+from cybox.objects.x509_certificate_object import X509Certificate
 import netaddr
 from six import text_type
 
@@ -1313,6 +1314,88 @@ def convert_network_socket(socket, obj1x_id):
     return cybox_traffic
 
 
+_X509_V3_PROPERTY_MAP = \
+    [
+        ["basic_constraints", "basic_constraints"],
+        ["name_constraints", "name_constraints"],
+        ["policy_constraints", "policy_constraints"],
+        ["key_usage", "key_usage"],
+        ["extended_key_usage", "extended_key_usage"],
+        ["subject_key_identifier", "subject_key_identifier"],
+        ["authority_key_identifier", "authority_key_identifier"],
+        ["subject_alternative_name", "subject_alternative_name"],
+        ["issuer_alternative_name", "issuer_alternative_name"],
+        ["subject_directory_attributes", "subject_directory_attributes"],
+        ["crl_distribution_points", "crl_distribution_points"],
+        # ["inhibit_any_policy", "inhibit_any_policy"],  MUST BE A STRING
+        ["certificate_policies", "certificate_policies"],
+        ["policy_mappings", "policy_mappings"],
+    ]
+
+
+def convert_v3_extension(v3_ext):
+    v3_ext_dict = dict()
+    for prop_tuple in _X509_V3_PROPERTY_MAP:
+        prop_name1x = prop_tuple[0]
+        prop_name2x = prop_tuple[1]
+        if getattr(v3_ext, prop_name1x, None):
+            v3_ext_dict[prop_name2x] = getattr(v3_ext, prop_name1x).value
+    if v3_ext.inhibit_any_policy:
+        v3_ext_dict["inhibit_any_policy"] = text_type(v3_ext.inhibit_any_policy.value)
+    if v3_ext.private_key_usage_period:
+        if v3_ext.private_key_usage_period.not_before:
+            v3_ext_dict["private_key_usage_period_not_before"] = convert_timestamp_to_string(v3_ext.private_key_usage_period.not_before.value)
+        if v3_ext.private_key_usage_period.not_after:
+            v3_ext_dict["private_key_usage_period_not_after"] = convert_timestamp_to_string(v3_ext.private_key_usage_period.not_after.value)
+    return v3_ext_dict
+
+
+_X509_PROPERTY_MAP = \
+    [
+        ["serial_number", "serial_number"],
+        ["signature_algorithm", "signature_algorithm"],
+        ["issuer", "issuer"],
+        ["subject", "subject"],
+    ]
+
+# is_self_signed
+# hashes
+# version
+
+
+def convert_x509_certificate(x509, obj1x_id):
+    x509_obj = create_base_sco("x509-certificate")
+    if x509.certificate:
+        cert = x509.certificate
+        for prop_tuple in _X509_PROPERTY_MAP:
+            prop_name1x = prop_tuple[0]
+            prop_name2x = prop_tuple[1]
+            if getattr(cert, prop_name1x, None):
+                x509_obj[prop_name2x] = getattr(cert, prop_name1x).value
+        if cert.version:
+            x509_obj["version"] = text_type(cert.version.value)
+        if cert.validity:
+            if cert.validity.not_before:
+                x509_obj["validity_not_before"] = convert_timestamp_to_string(cert.validity.not_before.value)
+            if cert.validity.not_after:
+                x509_obj["validity_not_after"] = convert_timestamp_to_string(cert.validity.not_after.value)
+        if cert.subject_public_key:
+            if cert.subject_public_key.public_key_algorithm:
+                x509_obj["subject_public_key_algorithm"] = cert.subject_public_key.public_key_algorithm.value
+            if cert.subject_public_key.rsa_public_key:
+                rsa_key = cert.subject_public_key.rsa_public_key
+                if rsa_key.modulus:
+                    x509_obj["subject_public_key_modulus"] = rsa_key.modulus.value
+                if rsa_key.exponent:
+                    x509_obj["subject_public_key_exponent"] = rsa_key.exponent.value
+        if cert.standard_extensions:
+            ext_dict = convert_v3_extension(cert.standard_extensions)
+            if ext_dict:
+                x509_obj["x509_v3_extensions"] = ext_dict
+    finish_sco(x509_obj, obj1x_id)
+    return x509_obj
+
+
 # def convert_netflow_object(obj1x):
 #     cybox_traffic = create_base_sco("network-traffic")
 #     if obj1x.unidirectional_flow_record
@@ -1359,6 +1442,8 @@ def convert_cybox_object20(obj1x):
         objs["0"] = convert_network_packet(prop, obj1x.id_)
     elif isinstance(prop, NetworkSocket):
         objs["0"] = convert_network_socket(prop, obj1x.id_)
+    elif isinstance(prop, X509Certificate):
+        objs["0"] = convert_x509_certificate(prop, obj1x.id_)
     else:
         warn("CybOX object %s not handled yet", 805, text_type(type(prop)))
         return None
@@ -1414,7 +1499,8 @@ def convert_cybox_object21(obj1x):
         objs = [convert_network_packet(prop, obj1x.id_)]
     elif isinstance(prop, NetworkSocket):
         objs = [convert_network_socket(prop, obj1x.id_)]
-
+    elif isinstance(prop, X509Certificate):
+        objs = [convert_x509_certificate(prop, obj1x.id_)]
     else:
         warn("CybOX object %s not handled yet", 805, text_type(type(prop)))
         return None

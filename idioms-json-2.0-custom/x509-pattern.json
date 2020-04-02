@@ -1,0 +1,18 @@
+{
+    "id": "bundle--b1f1ce62-63c6-448c-bdc7-9ead04826ad2",
+    "objects": [
+        {
+            "created": "2020-03-31T12:40:54.424Z",
+            "id": "indicator--8674ed26-06c7-4259-a3ba-a024322707ea",
+            "labels": [
+                "malware-artifacts"
+            ],
+            "modified": "2020-03-31T12:40:54.424Z",
+            "pattern": "[x509-certificate:serial_number = '36:f7:d4:32:f4:ab:70:ea:d3:ce:98:6e:ea:99:93:49:32:0a:b7:06' AND x509-certificate:issuer = 'C=ZA, ST=Western Cape, L=Cape Town, O=Thawte Consulting cc, OU=Certification Services Division, CN=Thawte Server CA/emailAddress=server-certs@thawte.com' AND x509-certificate:subject = 'C=US, ST=Maryland, L=Pasadena, O=Brent Baccala, OU=FreeSoft, CN=www.freesoft.org/emailAddress=baccala@freesoft.org' AND x509-certificate:validity_not_before = t'2016-03-12T12:00:00Z' AND x509-certificate:validity_not_after = t'2016-08-21T12:00:00Z' AND (x509-certificate:x509_v3_extensions.basic_constraints = 'critical,CA:TRUE, pathlen:0' AND x509-certificate:x509_v3_extensions.name_constraints = 'permitted;IP:192.168.0.0/255.255.0.0' AND x509-certificate:x509_v3_extensions.policy_constraints = 'requireExplicitPolicy:3' AND x509-certificate:x509_v3_extensions.key_usage = 'critical, keyCertSign' AND x509-certificate:x509_v3_extensions.extended_key_usage = 'critical,codeSigning,1.2.3.4' AND x509-certificate:x509_v3_extensions.subject_key_identifier = 'HASH' AND x509-certificate:x509_v3_extensions.authority_key_identifier = 'keyid,issuer' AND x509-certificate:x509_v3_extensions.subject_alternative_name = 'email:my@other.address,RID:1.2.3.4' AND x509-certificate:x509_v3_extensions.issuer_alternative_name = 'issuer:copy' AND x509-certificate:x509_v3_extensions.crl_distribution_points = 'URI:http://myhost.com/myca.crl' AND x509-certificate:x509_v3_extensions.inhibit_any_policy = 2 AND x509-certificate:x509_v3_extensions.certificate_policies = '1.2.4.5, 1.1.3.4' AND x509-certificate:x509_v3_extensions.private_key_usage_period_not_before = t'2016-03-12T12:00:00Z' AND x509-certificate:x509_v3_extensions.private_key_usage_period_not_after = t'2018-03-12T12:00:00Z')]",
+            "type": "indicator",
+            "valid_from": "2020-03-31T12:40:54.424Z"
+        }
+    ],
+    "spec_version": "2.0",
+    "type": "bundle"
+}
