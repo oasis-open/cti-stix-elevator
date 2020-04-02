@@ -9,6 +9,7 @@ from cybox.objects.account_object import Account
 from cybox.objects.address_object import Address
 from cybox.objects.archive_file_object import ArchiveFile
 from cybox.objects.artifact_object import Artifact
+from cybox.objects.as_object import AutonomousSystem
 from cybox.objects.domain_name_object import DomainName
 from cybox.objects.email_message_object import EmailMessage
 from cybox.objects.file_object import File
@@ -21,6 +22,7 @@ from cybox.objects.network_socket_object import NetworkSocket
 from cybox.objects.pdf_file_object import PDFFile
 from cybox.objects.port_object import Port
 from cybox.objects.process_object import Process
+from cybox.objects.product_object import Product
 from cybox.objects.unix_user_account_object import UnixUserAccount
 from cybox.objects.uri_object import URI
 from cybox.objects.win_computer_account_object import WinComputerAccount
@@ -1032,6 +1034,18 @@ def convert_address_to_pattern(add):
         return create_term("email-addr:value", cond, make_constant(add.address_value.value))
     else:
         warn("The address type %s is not part of Cybox 3.0", 421, add.category)
+
+
+def convert_as_to_pattern(a_s):
+    expressions = []
+    if a_s.number:
+        expressions.append(add_comparison_expression(a_s.number, "autonomous-system:number"))
+    if a_s.name:
+        expressions.append(add_comparison_expression(a_s.name, "autonomous-system:name"))
+    if a_s.regional_internet_registry:
+        expressions.append(add_comparison_expression(a_s.regional_internet_registry, "autonomous-system:rir"))
+    if expressions:
+        return create_boolean_expression("AND", expressions)
 
 
 def convert_uri_to_pattern(uri):
@@ -2087,6 +2101,20 @@ def convert_network_socket_to_pattern(socket):
     return create_boolean_expression("AND", expressions)
 
 
+def convert_product_to_pattern(prod):
+    expressions = []
+    if prod.product:
+        expressions.append(add_comparison_expression(prod.product, "software:name"))
+    if prod.vendor:
+        expressions.append(add_comparison_expression(prod.vendor, "software:vendor"))
+    if prod.version:
+        expressions.append(add_comparison_expression(prod.version, "software:version"))
+    if prod.language:
+        expressions.append(add_comparison_expression(prod.language, "software:languages[*]"))
+    if expressions:
+        return create_boolean_expression("AND", expressions)
+
+
 _X509_V3_PROPERTY_MAP = \
     [
         ["basic_constraints", "x509-certificate:x509_v3_extensions.basic_constraints"],
@@ -2213,7 +2241,9 @@ def convert_object_to_pattern(obj, obs_id):
         if isinstance(prop, Address):
             expression = convert_address_to_pattern(prop)
         elif isinstance(prop, Artifact):
-            convert_artifact_to_pattern(prop)
+            expression = convert_artifact_to_pattern(prop)
+        elif isinstance(prop, AutonomousSystem):
+            expression = convert_as_to_pattern(prop)
         elif isinstance(prop, URI):
             expression = convert_uri_to_pattern(prop)
         elif isinstance(prop, EmailMessage):
@@ -2224,6 +2254,8 @@ def convert_object_to_pattern(obj, obs_id):
             expression = convert_registry_key_to_pattern(prop)
         elif isinstance(prop, Process):
             expression = convert_process_to_pattern(prop)
+        elif isinstance(prop, Product):
+            expression = convert_product_to_pattern(prop)
         elif isinstance(prop, DomainName):
             expression = convert_domain_name_to_pattern(prop, related_objects)
         elif isinstance(prop, Mutex):

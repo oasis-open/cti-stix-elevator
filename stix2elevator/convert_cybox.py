@@ -8,6 +8,7 @@ from cybox.objects.account_object import Account
 from cybox.objects.address_object import Address
 from cybox.objects.archive_file_object import ArchiveFile
 from cybox.objects.artifact_object import Artifact
+from cybox.objects.as_object import AutonomousSystem
 from cybox.objects.domain_name_object import DomainName
 from cybox.objects.email_message_object import EmailMessage
 from cybox.objects.file_object import File
@@ -20,6 +21,7 @@ from cybox.objects.network_socket_object import NetworkSocket
 from cybox.objects.pdf_file_object import PDFFile
 from cybox.objects.port_object import Port
 from cybox.objects.process_object import Process
+from cybox.objects.product_object import Product
 from cybox.objects.unix_user_account_object import UnixUserAccount
 from cybox.objects.uri_object import URI
 from cybox.objects.user_account_object import UserAccount
@@ -238,6 +240,18 @@ def convert_artifact(art, obj1x_id):
     if art.packaging:
         convert_artifact_packaging(art.packaging, instance, obj1x_id)
 
+    finish_sco(instance, obj1x_id)
+    return instance
+
+
+def convert_as(a_s, obj1x_id):
+    instance = create_base_sco("autonomous-system")
+    if a_s.number:
+        instance["number"] = int(a_s.number.value)
+    if a_s.name:
+        instance["name"] = a_s.name.value
+    if a_s.regional_internet_registry:
+        instance["rir"] = a_s.regional_internet_registry.value
     finish_sco(instance, obj1x_id)
     return instance
 
@@ -1314,6 +1328,20 @@ def convert_network_socket(socket, obj1x_id):
     return cybox_traffic
 
 
+def convert_product(prod, obj1x_id):
+    instance = create_base_sco("software")
+    if prod.product:
+        instance["name"] = prod.product.value
+    if prod.vendor:
+        instance["vendor"] = prod.vendor.value
+    if prod.version:
+        instance["version"] = prod.version.value
+    if prod.language:
+        instance["languages"] = [prod.language.value]
+    finish_sco(instance, obj1x_id)
+    return instance
+
+
 _X509_V3_PROPERTY_MAP = \
     [
         ["basic_constraints", "basic_constraints"],
@@ -1413,6 +1441,8 @@ def convert_cybox_object20(obj1x):
         objs["0"] = convert_address(prop, related_objects, obj1x_id=obj1x.id_)
     elif isinstance(prop, Artifact):
         objs["0"] = convert_artifact(prop, obj1x.id_)
+    elif isinstance(prop, AutonomousSystem):
+        objs["0"] = convert_as(prop, obj1x.id_)
     elif isinstance(prop, URI):
         objs["0"] = convert_uri(prop, obj1x.id_)
     elif isinstance(prop, EmailMessage):
@@ -1425,6 +1455,8 @@ def convert_cybox_object20(obj1x):
         objs = convert_registry_key(prop, obj1x.id_)
     elif isinstance(prop, Process):
         objs = convert_process(prop, obj1x.id_)
+    elif isinstance(prop, Product):
+        objs["0"] = convert_product(prop, obj1x.id_)
     elif isinstance(prop, DomainName):
         objs["0"] = convert_domain_name(prop, related_objects, obj1x.id_)
     elif isinstance(prop, Mutex):
@@ -1470,6 +1502,8 @@ def convert_cybox_object21(obj1x):
         objs = [convert_address(prop, related_objects, obj1x.id_)]
     elif isinstance(prop, Artifact):
         objs = [convert_artifact(prop, obj1x.id_)]
+    elif isinstance(prop, AutonomousSystem):
+        objs = [convert_as(prop, obj1x.id_)]
     elif isinstance(prop, URI):
         objs = [convert_uri(prop, obj1x.id_)]
     elif isinstance(prop, EmailMessage):
@@ -1482,6 +1516,8 @@ def convert_cybox_object21(obj1x):
         objs = convert_registry_key(prop, obj1x.id_)
     elif isinstance(prop, Process):
         objs = convert_process(prop, obj1x.id_)
+    elif isinstance(prop, Product):
+        objs = [convert_product(prop, obj1x.id_)]
     elif isinstance(prop, DomainName):
         objs = [convert_domain_name(prop, related_objects, obj1x.id_)]
     elif isinstance(prop, Mutex):

@@ -7,6 +7,7 @@
     xmlns:ttp="http://stix.mitre.org/TTP-1"
     xmlns:cybox="http://cybox.mitre.org/cybox-2"
     xmlns:FileObj="http://cybox.mitre.org/objects#FileObject-2"
+    xmlns:ASObj="http://cybox.mitre.org/objects#ASObject-1"
     xmlns:cyboxVocabs="http://cybox.mitre.org/default_vocabularies-2"
     xmlns:cyboxCommon="http://cybox.mitre.org/common-2"
     xmlns:stixVocabs="http://stix.mitre.org/default_vocabularies-1"
@@ -19,40 +20,51 @@
     http://stix.mitre.org/default_vocabularies-1 http://stix.mitre.org/XMLSchema/default_vocabularies/1.2.0/stix_default_vocabularies.xsd
     http://cybox.mitre.org/objects#FileObject-2 http://cybox.mitre.org/XMLSchema/objects/File/2.1/File_Object.xsd"
     id="example:STIXPackage-cc0ca596-70e6-4dac-9bef-603166d17db8"
-    version="1.2"
-
-    >
+    version="1.2">
     <stix:Indicators>
         <stix:Indicator xsi:type="indicator:IndicatorType"
                         id="example:Indicator-53fe3b22-0201-47cf-85d0-97c02164528d"
                         timestamp="2014-05-08T09:00:00.000000Z">
             <indicator:Type xsi:type="stixVocabs:IndicatorTypeVocab-1.1">IP Watchlist</indicator:Type>
-            <indicator:Observable id="example:observable-c8c32b6e-2ea8-51c4-6446-7f5218072f27">
-                <cybox:Object id="example:object-d7fcce87-0e98-4537-81bf-1e7ca9ad3734">
-                     <cybox:Properties xsi:type="FileObj:FileObjectType">
-                         <FileObj:File_Path>/usr/local/iprip32.dll</FileObj:File_Path>
-                         <FileObj:Hashes>
-                                <cyboxCommon:Hash>
-                                    <cyboxCommon:Type condition="Equals" xsi:type="cyboxVocabs:HashNameVocab-1.0">SHA256</cyboxCommon:Type>
-                                    <cyboxCommon:Simple_Hash_Value condition="equals">e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855</cyboxCommon:Simple_Hash_Value>
-                                </cyboxCommon:Hash>
-                            </FileObj:Hashes>
-                     </cybox:Properties>
-                </cybox:Object>
+            <indicator:Observable id="example:Observable-b8d22c66-2168-4cb5-b091-4ba1d60f5d65">
+                <cybox:Observable_Composition operator="AND">
+                    <cybox:Observable id="example:observable-c8c32b6e-2ea8-41c4-a446-7f5218072f27">
+                        <cybox:Object id="example:object-d7fcce87-0e98-4537-81bf-1e7ca9ad3734">
+                             <cybox:Properties xsi:type="FileObj:FileObjectType">
+                                 <FileObj:File_Path>/usr/local/iprip32.dll</FileObj:File_Path>
+                                 <FileObj:Hashes>
+                                        <cyboxCommon:Hash>
+                                            <cyboxCommon:Type condition="Equals" xsi:type="cyboxVocabs:HashNameVocab-1.0">SHA256</cyboxCommon:Type>
+                                            <cyboxCommon:Simple_Hash_Value condition="equals">e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855</cyboxCommon:Simple_Hash_Value>
+                                        </cyboxCommon:Hash>
+                                    </FileObj:Hashes>
+                             </cybox:Properties>
+                        </cybox:Object>
+                    </cybox:Observable>
+                    <cybox:Observable id="example:observable-5371c060-17d5-4067-b12a-1953e0b44bc3">
+                        <cybox:Object id="example:object-3e60185b-6e84-48a7-bef0-f3cafaf79975">
+                            <cybox:Properties xsi:type="ASObj:ASObjectType">
+                                <ASObj:Name>Slime Industries</ASObj:Name>
+                                <ASObj:Number>15139</ASObj:Number>
+                                <ASObj:Regional_Internet_Registry>ARIN</ASObj:Regional_Internet_Registry>
+                            </cybox:Properties>
+                        </cybox:Object>
+                    </cybox:Observable>
+                </cybox:Observable_Composition>
             </indicator:Observable>
             <indicator:Indicated_TTP>
-                <stixCommon:TTP idref="example:ttp-dd955e08-16d0-6f08-5064-50d9e7a3104d" />
+                <stixCommon:TTP idref="example:ttp-dd955e08-16d0-4f08-b064-50d9e7a3104d" />
             </indicator:Indicated_TTP>
         </stix:Indicator>
     </stix:Indicators>
     <stix:TTPs>
-        <stix:TTP xsi:type="ttp:TTPType" id="example:ttp-dd955e08-16d0-4f08-5064-50d9e7a3104d" timestamp="2014-05-08T09:00:00.000000Z">
+        <stix:TTP xsi:type="ttp:TTPType" id="example:ttp-dd955e08-16d0-4f08-b064-50d9e7a3104d" timestamp="2014-05-08T09:00:00.000000Z">
             <ttp:Title>Malware C2 Channel</ttp:Title>
             <ttp:Resources>
                 <ttp:Infrastructure>
                     <ttp:Type>Malware C2</ttp:Type>
                     <ttp:Observable_Characterization cybox_major_version="2" cybox_minor_version="1">
-                        <cybox:Observable idref="example:observable-c8c32b6e-2ea8-51c4-6446-7f5218072f27"/>
+                        <cybox:Observable idref="example:observable-c8c32b6e-2ea8-41c4-a446-7f5218072f27"/>
                     </ttp:Observable_Characterization>
                 </ttp:Infrastructure>
             </ttp:Resources>

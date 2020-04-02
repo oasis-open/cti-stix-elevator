@@ -18,7 +18,7 @@ converted by the elevator.
 ``Address``                     ``mac-addr``                                  yes
 ``ArchiveFile``                 ``file:archive-ext``                          yes
 ``Artifact``                    ``artifact``                                  yes
-``AutonomousSystem``            ``autonomous-system``                         no
+``AutonomousSystem``            ``autonomous-system``                         yes
 ``File``                        ``directory``                                 yes
 ``DomainName``                  ``domain-name``                               yes
 ``DNSQuery``                    *none*                                        no
@@ -34,7 +34,7 @@ converted by the elevator.
 ``NetworkSocket``               ``network-traffic:socket-ext``                yes
 ``PDFFile``                     ``file:pdf-ext``                              yes
 ``Process``                     ``process``                                   yes
-``Product``                     ``software``                                  no
+``Product``                     ``software``                                  yes
 ``SocketAddress``               ``network-traffic``                           yes
 ``Hostname``                    ``domain-name``                               yes
 ``Port``                        ``integer``                                   yes

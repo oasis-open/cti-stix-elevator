@@ -16,6 +16,7 @@
             ],
             "modified": "2014-10-09T21:38:50.631Z",
             "name": "Malicious executable",
+            "pattern": "[software:name = 'Word' AND software:vendor = 'Microsoft' AND software:version = '2002' AND software:languages[*] = 'eng']",
             "type": "indicator",
             "valid_from": "2014-10-09T21:38:50.631509Z"
         }
