@@ -749,9 +749,9 @@ def convert_course_of_action(coa, env):
     handle_missing_statement_properties(coa_instance, coa.impact, "impact")
     handle_missing_statement_properties(coa_instance, coa.cost, "cost")
     handle_missing_statement_properties(coa_instance, coa.efficacy, "efficacy")
-    coa_created_by_ref = process_information_source(coa.information_source,
-                                                    coa_instance,
-                                                    new_env)
+    new_env.add_to_env(created_by_ref=process_information_source(coa.information_source,
+                                                                 coa_instance,
+                                                                 new_env))
     # process information source before any relationships
     if coa.related_coas:
         info("All 'associated coas' relationships of %s are assumed to not represent STIX 1.2 versioning", 710, coa.id_)
