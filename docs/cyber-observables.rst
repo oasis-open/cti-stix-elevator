@@ -34,7 +34,7 @@ converted by the elevator.
 ``NetworkSocket``               ``network-traffic:socket-ext``                yes
 ``PDFFile``                     ``file:pdf-ext``                              yes
 ``Process``                     ``process``                                   yes
-``Product``                     ``software``                                  no
+``Product``                     ``software``                                  yes
 ``SocketAddress``               ``network-traffic``                           yes
 ``Hostname``                    ``domain-name``                               yes
 ``Port``                        ``integer``                                   yes
