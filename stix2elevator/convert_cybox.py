@@ -1250,7 +1250,7 @@ def convert_http_session(session, obj1x_id):
             warn("HTTPServerResponse type is not supported in STIX 2.x", 429)
         if len(requests) >= 1:
             cybox_traffic = create_base_sco("network-traffic")
-            cybox_traffic["extensions"] = {"http-request-ext": convert_http_client_request(requests[0])}
+            cybox_traffic["extensions"] = {"http-request-ext": convert_http_client_request(requests[0])[0]}
             if len(requests) > 1:
                 warn("Only HTTP_Request_Response used for http-request-ext, using first value", 512)
             finish_sco(cybox_traffic, obj1x_id)
