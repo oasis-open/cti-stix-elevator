@@ -1,0 +1,35 @@
+<stix:STIX_Package
+	xmlns:HTTPSessionObj="http://cybox.mitre.org/objects#HTTPSessionObject-2"
+	xmlns:cyboxCommon="http://cybox.mitre.org/common-2"
+	xmlns:stix="http://stix.mitre.org/stix-1"
+	xmlns:cybox="http://cybox.mitre.org/cybox-2"
+	xmlns:example="http://example.com"
+	xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	 id="example:Package-5d881a21-d889-49a5-af07-766258a66152" version="1.2">
+    <stix:Observables cybox_major_version="2" cybox_minor_version="1" cybox_update_version="0">
+        <cybox:Observable id="example:Observable-fca4bd90-906e-4566-97eb-1afd6bc50043">
+            <cybox:Object id="example:HTTPSession-982d94c6-0e4f-482c-9014-9969aa7e9083">
+                <cybox:Properties xsi:type="HTTPSessionObj:HTTPSessionObjectType">
+                    <HTTPSessionObj:HTTP_Request_Response>
+                        <HTTPSessionObj:HTTP_Client_Request>
+                            <HTTPSessionObj:HTTP_Request_Header>
+                                <HTTPSessionObj:Parsed_Header>
+                                    <HTTPSessionObj:User_Agent>Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:25.0) Gecko/20100101 Firefox/25.0</HTTPSessionObj:User_Agent>
+                                </HTTPSessionObj:Parsed_Header>
+                            </HTTPSessionObj:HTTP_Request_Header>
+                        </HTTPSessionObj:HTTP_Client_Request>
+                        <HTTPSessionObj:HTTP_Server_Response>
+                            <HTTPSessionObj:HTTP_Message_Body>
+                                <HTTPSessionObj:Length>69</HTTPSessionObj:Length>
+                                <HTTPSessionObj:Message_Body>&lt;html&gt;&lt;title&gt;An HTML page&lt;/title&gt;&lt;body&gt;&lt;p&gt;Body text&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</HTTPSessionObj:Message_Body>
+                            </HTTPSessionObj:HTTP_Message_Body>
+                        </HTTPSessionObj:HTTP_Server_Response>
+                    </HTTPSessionObj:HTTP_Request_Response>
+                </cybox:Properties>
+            </cybox:Object>
+        </cybox:Observable>
+    </stix:Observables>
+</stix:STIX_Package>

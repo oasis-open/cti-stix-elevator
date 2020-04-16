@@ -1250,11 +1250,15 @@ def convert_http_session(session, obj1x_id):
             warn("HTTPServerResponse type is not supported in STIX 2.x", 429)
         if len(requests) >= 1:
             cybox_traffic = create_base_sco("network-traffic")
-            cybox_traffic["extensions"] = {"http-request-ext": convert_http_client_request(requests[0])}
+            request_ext, body_obj = convert_http_client_request(requests[0])
+            cybox_traffic["extensions"] = {"http-request-ext": request_ext}
             if len(requests) > 1:
                 warn("Only HTTP_Request_Response used for http-request-ext, using first value", 512)
             finish_sco(cybox_traffic, obj1x_id)
-            return cybox_traffic
+            if body_obj:
+                return [body_obj, cybox_traffic]
+            else:
+                return [cybox_traffic]
 
 
 def create_icmp_extension(icmp_header):
@@ -1469,7 +1473,7 @@ def convert_cybox_object20(obj1x):
     elif isinstance(prop, Port):
         objs["0"] = convert_port(prop, obj1x.id_)
     elif isinstance(prop, HTTPSession):
-        objs["0"] = convert_http_session(prop, obj1x.id_)
+        objs = convert_http_session(prop, obj1x.id_)
     elif isinstance(prop, NetworkPacket):
         objs["0"] = convert_network_packet(prop, obj1x.id_)
     elif isinstance(prop, NetworkSocket):
@@ -1530,7 +1534,7 @@ def convert_cybox_object21(obj1x):
     elif isinstance(prop, Port):
         objs = [convert_port(prop, obj1x.id_)]
     elif isinstance(prop, HTTPSession):
-        objs = [convert_http_session(prop, obj1x.id_)]
+        objs = convert_http_session(prop, obj1x.id_)
     elif isinstance(prop, NetworkPacket):
         objs = [convert_network_packet(prop, obj1x.id_)]
     elif isinstance(prop, NetworkSocket):
