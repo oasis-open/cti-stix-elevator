@@ -1,0 +1,28 @@
+{
+    "id": "bundle--5d881a21-d889-49a5-af07-766258a66152",
+    "objects": [
+        {
+            "created": "2020-04-25T11:24:28.763Z",
+            "first_observed": "2020-04-25T11:24:28.763Z",
+            "id": "observed-data--fca4bd90-906e-4566-97eb-1afd6bc50043",
+            "last_observed": "2020-04-25T11:24:28.763Z",
+            "modified": "2020-04-25T11:24:28.763Z",
+            "number_observed": 1,
+            "objects": {
+                "0": {
+                    "extensions": {
+                        "http-request-ext": {
+                            "request_header": {
+                                "User-Agent": "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:25.0) Gecko/20100101 Firefox/25.0"
+                            }
+                        }
+                    },
+                    "type": "network-traffic"
+                }
+            },
+            "type": "observed-data"
+        }
+    ],
+    "spec_version": "2.0",
+    "type": "bundle"
+}

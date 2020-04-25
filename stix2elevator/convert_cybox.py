@@ -1254,11 +1254,18 @@ def convert_http_session(session, obj1x_id):
             cybox_traffic["extensions"] = {"http-request-ext": request_ext}
             if len(requests) > 1:
                 warn("Only HTTP_Request_Response used for http-request-ext, using first value", 512)
-            finish_sco(cybox_traffic, obj1x_id)
-            if body_obj:
-                return [body_obj, cybox_traffic]
+            if get_option_value("spec_version") == "2.0":
+                objs = dict()
+                objs["0"] = cybox_traffic
+                if body_obj:
+                    objs["0"] = body_obj
+                return objs
             else:
-                return [cybox_traffic]
+                finish_sco(cybox_traffic, obj1x_id)
+                if body_obj:
+                    return [body_obj, cybox_traffic]
+                else:
+                    return [cybox_traffic]
 
 
 def create_icmp_extension(icmp_header):

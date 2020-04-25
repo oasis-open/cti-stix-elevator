@@ -1,0 +1,30 @@
+{
+    "id": "bundle--5d881a21-d889-49a5-af07-766258a66152",
+    "objects": [
+        {
+            "extensions": {
+                "http-request-ext": {
+                    "request_header": {
+                        "User-Agent": "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:25.0) Gecko/20100101 Firefox/25.0"
+                    }
+                }
+            },
+            "id": "network-traffic--43eb2b04-b199-4e34-824c-c33c897c72ed",
+            "type": "network-traffic"
+        },
+        {
+            "created": "2020-04-16T16:36:15.528Z",
+            "first_observed": "2020-04-16T16:36:15.528Z",
+            "id": "observed-data--fca4bd90-906e-4566-97eb-1afd6bc50043",
+            "last_observed": "2020-04-16T16:36:15.528Z",
+            "modified": "2020-04-16T16:36:15.528Z",
+            "number_observed": 1,
+            "object_refs": [
+                "network-traffic--43eb2b04-b199-4e34-824c-c33c897c72ed"
+            ],
+            "spec_version": "2.1",
+            "type": "observed-data"
+        }
+    ],
+    "type": "bundle"
+}
