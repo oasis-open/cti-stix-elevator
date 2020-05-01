@@ -214,6 +214,8 @@ def main():
     stix2validator.output.set_level(validator_options.verbose)
     stix2validator.output.set_silent(validator_options.silent)
 
+    step_file(stepper_args.file_, validator_options)
+
 
 if __name__ == '__main__':
     main()
