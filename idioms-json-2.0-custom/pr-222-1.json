@@ -1,0 +1,34 @@
+{
+    "id": "bundle--5d881a21-d889-49a5-af07-766258a66152",
+    "objects": [
+        {
+            "created": "2020-05-04T15:02:34.445Z",
+            "first_observed": "2020-05-04T15:02:34.445Z",
+            "id": "observed-data--fca4bd90-906e-4566-97eb-1afd6bc50043",
+            "last_observed": "2020-05-04T15:02:34.445Z",
+            "modified": "2020-05-04T15:02:34.445Z",
+            "number_observed": 1,
+            "objects": {
+                "0": {
+                    "extensions": {
+                        "http-request-ext": {
+                            "message_body_data_ref": "1",
+                            "message_body_length": 69,
+                            "request_header": {
+                                "User-Agent": "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:25.0) Gecko/20100101 Firefox/25.0"
+                            }
+                        }
+                    },
+                    "type": "network-traffic"
+                },
+                "1": {
+                    "payload_bin": "PGh0bWw+PHRpdGxlPkFuIEhUTUwgcGFnZTwvdGl0bGU+PGJvZHk+PHA+Qm9keSB0ZXh0PC9wPjwvYm9keT48L2h0bWw+",
+                    "type": "artifact"
+                }
+            },
+            "type": "observed-data"
+        }
+    ],
+    "spec_version": "2.0",
+    "type": "bundle"
+}

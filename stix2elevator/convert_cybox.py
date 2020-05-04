@@ -1083,6 +1083,8 @@ def convert_http_client_request(request):
             finish_sco(body_obj, None)
             if get_option_value("spec_version") == "2.1":
                 http_extension["message_body_data_ref"] = body_obj["id"]
+            else:
+                http_extension["message_body_data_ref"] = "1"
     return http_extension, body_obj
 
 
@@ -1258,7 +1260,7 @@ def convert_http_session(session, obj1x_id):
                 objs = dict()
                 objs["0"] = cybox_traffic
                 if body_obj:
-                    objs["0"] = body_obj
+                    objs["1"] = body_obj
                 return objs
             else:
                 finish_sco(cybox_traffic, obj1x_id)
