@@ -12,7 +12,7 @@ For each STIX 1.x object that was converted the following options are possible:
    notation indicates the the STIX 1.x property is found on target object.
  - **STIX 1.x property handled based on the "missing policy" option.**  This property has no corresponding property in STIX 2.x, but its value
    can be (optionally) included using custom properties or in the description property of the 2.x object as text,
-   depending upon the **--missing-property** option.
+   depending upon the **--missing-policy** option.
  - **STIX 1.x property not mapped.**  This property will not be included in the converted 2.x object.
 
 All examples were generated using the missing policy of **add-to-description**.
@@ -22,7 +22,7 @@ Top Level Object Mappings
 
 This table describes the mapping between STIX 1.x and STIX 2.x top-level objects.  Notice that certain object types in STIX 1.x
 that were not top-level objects are in STIX 2.x (e.g., Malware).  In STIX 2.1, cyber observable objects are also top-level
-objects - but their mapping can be foiund in the :ref:`cyber_observables` section
+objects - but their mapping can be found in the :ref:`cyber_observables` section
 
 +-----------------------------+----------------------------+
 | **STIX 1.x object**         | **STIX 2.x object**        |
