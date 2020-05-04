@@ -5,7 +5,7 @@
             "hashes": {
                 "SHA-256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
             },
-            "id": "file--49959589-27c4-5873-8e23-82f6c909d4ca",
+            "id": "file--8304ca58-2dde-5381-b0bb-0184724f631c",
             "name": "iprip32.dll",
             "parent_directory_ref": "directory--4aa982e3-4aac-5d5b-a699-d08c8c11f5f3",
             "type": "file"
@@ -28,7 +28,7 @@
             "modified": "2017-01-27T13:49:41.345Z",
             "number_observed": 1,
             "object_refs": [
-                "file--49959589-27c4-5873-8e23-82f6c909d4ca",
+                "file--8304ca58-2dde-5381-b0bb-0184724f631c",
                 "directory--4aa982e3-4aac-5d5b-a699-d08c8c11f5f3",
                 "x-windows-hook--156fa3a8-01e9-44a2-a1f3-59738767179c"
             ],

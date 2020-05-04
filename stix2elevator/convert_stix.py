@@ -2092,7 +2092,7 @@ def convert_package(stix_package, env):
 
     # ttps
     if stix_package.ttps:
-        for ttp in stix_package.ttps:
+        for ttp in stix_package.ttps.ttp:
             convert_ttp(ttp, env)
 
     finalize_bundle(env)

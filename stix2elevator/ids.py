@@ -112,7 +112,7 @@ def generate_sco_id(type, instance):
         # compute it once
         module = importlib.import_module("stix2.v21")
         for k, c in inspect.getmembers(module, inspect.isclass):
-            if "type" in c._properties:
+            if hasattr(c, "_properties") and "type" in c._properties:
                 _SCO_CLASSES[c._properties["type"]._fixed_value] = c
     if type in _SCO_CLASSES:
         klass = _SCO_CLASSES[type]
