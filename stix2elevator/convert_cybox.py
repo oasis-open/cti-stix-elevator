@@ -312,10 +312,10 @@ def convert_pdf_file(f):
                 value = getattr(dict1x, key, None)
                 if value:
                     if isinstance(value.value, datetime):
-                        dict2x[key] = convert_timestamp_to_string(value.value)
+                        dict2x[PDF_DOC_INFO_DICT_KEYS[key]] = convert_timestamp_to_string(value.value)
                     else:
-                        dict2x[key] = value.value
-            pdf_file_dict["document_info_dict "] = dict2x
+                        dict2x[PDF_DOC_INFO_DICT_KEYS[key]] = value.value
+            pdf_file_dict["document_info_dict"] = dict2x
     if f.trailers:
         count = 0
         for t in f.trailers:
@@ -1303,7 +1303,10 @@ def convert_socket_options(options):
     socket_options = {}
     for prop_name in SOCKET_OPTIONS:
         if getattr(options, prop_name):
-            socket_options[prop_name.upper()] = getattr(options, prop_name)
+            value = getattr(options, prop_name)
+            if isinstance(value, bool):
+                value = 1 if value else 0
+            socket_options[prop_name.upper()] = value
     return socket_options
 
 
@@ -1673,7 +1676,7 @@ def fix_cybox_relationships(observed_data):
             if co["type"] == "email-message":
                 if "body_multipart" in co:
                     for mp in co["body_multipart"]:
-                        change_1x_ids_to_2x_objs(mp, "body_raw_ref", next_id, o, objs_to_add, ["artifact", "file"])
+                        change_1x_id_to_2x_obj(mp, "body_raw_ref", next_id, o, objs_to_add, ["artifact", "file"])
             elif co["type"] in ["domain-name", "ipv4-addr", "ipv6-addr"]:
                 if "resolves_to_refs" in co and co["resolves_to_refs"]:
                     change_1x_ids_to_2x_objs(co, "resolves_to_refs", next_id, o, objs_to_add, ["domain-name", "ipv4-addr", "ipv6-addr"])

@@ -970,6 +970,9 @@ def convert_ciq_addresses2_1(ciq_info_addresses, identity_instance, env, parent_
 def convert_identity(identity, env, parent_id=None, temp_marking_id=None, from_package=False):
     identity_instance = create_basic_object("identity", identity, env, parent_id)
     identity_instance["sectors"] = []
+    spec_version = get_option_value("spec_version")
+    if (spec_version == "2.0"):
+        identity_instance["identity_class"] = "unknown"
     if identity.name is not None:
         identity_instance["name"] = identity.name
     if isinstance(identity, CIQIdentity3_0Instance):
@@ -993,7 +996,7 @@ def convert_identity(identity, env, parent_id=None, temp_marking_id=None, from_p
                 industry = industry.split(",")
                 convert_controlled_vocabs_to_open_vocabs(identity_instance, "sectors", industry, SECTORS_MAP, False)
         if ciq_info.addresses:
-            if get_option_value("spec_version") == "2.1":
+            if spec_version == "2.1":
                 convert_ciq_addresses2_1(ciq_info.addresses, identity_instance, env, parent_id)
         if ciq_info.free_text_lines:
             handle_free_text_lines(identity_instance, ciq_info.free_text_lines)
