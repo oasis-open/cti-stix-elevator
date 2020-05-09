@@ -58,7 +58,7 @@ from stix2elevator.ids import (
     get_id_values, get_type_from_id, is_stix1x_id, record_ids
 )
 from stix2elevator.missing_policy import (
-    convert_to_custom_property_name, handle_missing_confidence_property,
+    convert_to_custom_name, handle_missing_confidence_property,
     handle_missing_statement_properties, handle_missing_string_property,
     handle_missing_tool_property, handle_multiple_missing_statement_properties
 )
@@ -181,7 +181,7 @@ def process_description_and_short_description(so, entity, parent_info=False):
                     so["description"] += short_description_as_text
             elif get_option_value("missing_policy") == "use_custom_properties":
                 warn("Used custom property for short_description of %s", 308, so["id"])
-                so[convert_to_custom_property_name("short_description")] = short_description_as_text
+                so[convert_to_custom_name("short_description")] = short_description_as_text
             else:
                 warn("Missing property 'short_description' of %s is ignored", 307, so["id"])
 
@@ -350,7 +350,7 @@ def handle_free_text_lines(sdo_instance, free_text_lines):
             warn("Appended free text lines to description of %s", 302, sdo_instance["id"])
         else:
             warn("Used custom property for free_text_lines of %s", 308, sdo_instance["id"])
-            sdo_instance[convert_to_custom_property_name("free_text_lines")] = lines
+            sdo_instance[convert_to_custom_name("free_text_lines")] = lines
 
 
 # Sightings
@@ -725,7 +725,7 @@ def handle_missing_objective_property(sdo_instance, objective):
                 sdo_instance["description"] += "\n\n" + "OBJECTIVE: "
                 sdo_instance["description"] += "\n\n\t".join(all_text)
             elif get_option_value("missing_policy") == "use-custom-properties":
-                sdo_instance[convert_to_custom_property_name("objective")] = " ".join(all_text)
+                sdo_instance[convert_to_custom_name("objective")] = " ".join(all_text)
                 warn("Used custom property for objective of %s", 308, sdo_instance["id"])
             if objective.applicability_confidence:
                 handle_missing_confidence_property(sdo_instance, objective.applicability_confidence, "objective")
@@ -1012,7 +1012,7 @@ def convert_identity(identity, env, parent_id=None, temp_marking_id=None, from_p
 
 
 def convert_incident(incident, env):
-    incident_instance = create_basic_object("incident", incident, env)
+    incident_instance = create_basic_object(convert_to_custom_name("incident", separator="-"), incident, env)
     new_env = env.newEnv(timestamp=incident_instance["created"])
     process_description_and_short_description(incident_instance, incident)
     if incident.title is not None:
@@ -1913,7 +1913,7 @@ def finalize_bundle(env):
     _TO_MAP = ("id", "idref", "created_by_ref", "external_references",
                "marking_ref", "object_marking_refs", "object_refs",
                "sighting_of_ref", "observed_data_refs", "where_sighted_refs",
-               convert_to_custom_property_name("link_refs"))
+               convert_to_custom_name("link_refs"))
 
     _LOOK_UP = ("", u"", [], None, dict())
 

@@ -49,7 +49,7 @@ from stix2elevator.ids import (
     add_id_value, exists_id_of_obs_in_characterizations, exists_object_id_key,
     get_id_value
 )
-from stix2elevator.missing_policy import convert_to_custom_property_name
+from stix2elevator.missing_policy import convert_to_custom_name
 from stix2elevator.options import error, get_option_value, info, warn
 from stix2elevator.utils import identifying_info, map_vocabs_to_label
 from stix2elevator.vocab_mappings import WINDOWS_PEBINARY
@@ -934,7 +934,7 @@ def convert_custom_properties(cps, object_type_name):
             warn("The custom property name %s does not adhere to the specification rules", 617, cp.name)
             if " " in cp.name:
                 warn("The custom property name %s contains whitespace, replacing it with underscores", 624, cp.name)
-        custom_name = convert_to_custom_property_name(cp.name.replace(" ", "_"))
+        custom_name = convert_to_custom_name(cp.name.replace(" ", "_"))
         expressions.append(
             create_term(object_type_name + ":" + custom_name, cp.condition, make_constant(cp.value)))
     return create_boolean_expression("AND", expressions)
@@ -1159,7 +1159,7 @@ def convert_email_message_to_pattern(mess):
             for l in mess.links:
                 expressions.append(
                     ComparisonExpressionForElevator("=",
-                                                    "email-message:" + convert_to_custom_property_name("link_refs[*]"),
+                                                    "email-message:" + convert_to_custom_name("link_refs[*]"),
                                                     IdrefPlaceHolder(l.object_reference)))
                 warn("Used custom property for %s", 308, "links")
         else:
@@ -1227,7 +1227,7 @@ def convert_windows_executable_file_to_pattern(f):
                     if get_option_value("missing_policy") == "use-custom-properties":
                         section_expressions.append(
                             create_term("file:extensions.'windows-pebinary-ext'.sections[*]." +
-                                        convert_to_custom_property_name("entropy_min"),
+                                        convert_to_custom_name("entropy_min"),
                                         s.entropy.min.condition,
                                         stix2.FloatConstant(s.entropy.min.value)))
                         warn("Used custom property for %s", 308, "entropy_min")
@@ -1237,7 +1237,7 @@ def convert_windows_executable_file_to_pattern(f):
                     if get_option_value("missing_policy") == "use-custom-properties":
                         section_expressions.append(
                             create_term("file:extensions.'windows-pebinary-ext'.sections[*]." +
-                                        convert_to_custom_property_name("entropy_max"),
+                                        convert_to_custom_name("entropy_max"),
                                         s.entropy.max.condition,
                                         stix2.FloatConstant(s.entropy.max.value)))
                         warn("Used custom property for %s", 308, "entropy_max")
@@ -1263,7 +1263,7 @@ def convert_windows_executable_file_to_pattern(f):
                 for export_func in f.exports.exported_functions:
                     export_expressions.append(
                         create_term(
-                            "file:extensions.'windows-pebinary-ext'." + convert_to_custom_property_name("exports[*]"),
+                            "file:extensions.'windows-pebinary-ext'." + convert_to_custom_name("exports[*]"),
                             export_func.function_name.condition,
                             stix2.StringConstant(export_func.function_name.value)))
                     warn("Used custom property for %s", 308, "exports")
@@ -1281,7 +1281,7 @@ def convert_windows_executable_file_to_pattern(f):
                     file_name = i.file_name + ":" if hasattr(i, "file_name") and i.file_name else ""
                     for imported_func in i.imported_functions:
                         import_expressions.append(
-                            create_term("file:extensions.'windows-pebinary-ext'." + convert_to_custom_property_name("imports[*]"),
+                            create_term("file:extensions.'windows-pebinary-ext'." + convert_to_custom_name("imports[*]"),
                                         imported_func.function_name.condition,
                                         stix2.StringConstant(file_name + imported_func.function_name.value)))
                         warn("Used custom property for %s", 308, "imports")
@@ -1649,7 +1649,7 @@ def convert_process_to_pattern(process):
             warn("The argument_list property of ProcessObj is not part of STIX 2.1", 418)
             if get_option_value("missing_policy") == "use-custom-properties":
                 for a in process.argument_list:
-                    argument_expressions.append(create_term("process:" + convert_to_custom_property_name("argument_list[*]"),
+                    argument_expressions.append(create_term("process:" + convert_to_custom_name("argument_list[*]"),
                                                             a.condition,
                                                             stix2.StringConstant(a.value)))
                     warn("Used custom property for %s", 308, "argument_list")
@@ -2017,7 +2017,7 @@ def convert_network_packet_to_pattern(packet):
                 if get_option_value("missing_policy") == "use-custom-properties":
                     expressions.append(
                         create_term("network-traffic:extensions.'icmp-ext'." +
-                                    convert_to_custom_property_name("icmp_checksum"),
+                                    convert_to_custom_name("icmp_checksum"),
                                     icmp_header.checksum.condition,
                                     stix2.HexConstant(icmp_header.checksum.value)))
                     warn("Used custom property for %s", 308, "icmp_checksum")
@@ -2079,7 +2079,7 @@ def convert_network_socket_to_pattern(socket):
         if get_option_value("missing_policy") == "use-custom-properties":
             expressions.append(
                 create_term("network-traffic:extensions.'socket-ext'." +
-                            convert_to_custom_property_name("local_address"),
+                            convert_to_custom_name("local_address"),
                             socket.local_address.ip_address.condition,
                             stix2.StringConstant(socket.local_address.ip_address.address_value.value)))
             warn("Used custom property for %s", 308, "local_address")
