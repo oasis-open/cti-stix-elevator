@@ -118,21 +118,26 @@ def generate_sco_id(type, instance):
         klass = _SCO_CLASSES[type]
         if klass and hasattr(klass, "_id_contributing_properties") and klass._id_contributing_properties:
             contributing_properties = klass._id_contributing_properties
-            streamlined_obj_vals = []
+            # streamlined_obj_vals = []
+            streamlined_object = {}
             possible_hash = None
             if "hashes" in instance and "hashes" in contributing_properties:
                 possible_hash = _choose_one_hash(instance["hashes"])
             if possible_hash:
-                streamlined_obj_vals.append(possible_hash)
+                # streamlined_obj_vals.append(possible_hash)
+                streamlined_object["hashes"] = possible_hash
             for key in contributing_properties:
                 if key != "hashes" and key in instance:
                     # We don't need to handle the isinstance(...) cases here
                     # because the elevator uses Python default containers
                     # to represent its content.
-                    streamlined_obj_vals.append(instance[key])
+                    # streamlined_obj_vals.append(instance[key])
+                    streamlined_object[key] = instance[key]
 
-            if streamlined_obj_vals:
-                data = canonicalize(streamlined_obj_vals, utf8=False)
+            #if streamlined_obj_vals:
+            if streamlined_object:
+                # data = canonicalize(streamlined_obj_vals, utf8=False)
+                data = canonicalize(streamlined_object, utf8=False)
 
                 # try/except here to enable python 2 compatibility
                 try:
