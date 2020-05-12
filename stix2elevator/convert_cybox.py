@@ -22,6 +22,7 @@ from cybox.objects.pdf_file_object import PDFFile
 from cybox.objects.port_object import Port
 from cybox.objects.process_object import Process
 from cybox.objects.product_object import Product
+from cybox.objects.socket_address_object import SocketAddress
 from cybox.objects.unix_user_account_object import UnixUserAccount
 from cybox.objects.uri_object import URI
 from cybox.objects.user_account_object import UserAccount
@@ -54,8 +55,15 @@ from stix2elevator.vocab_mappings import (
 )
 
 
-def create_base_sco(type, other_properties=None):
-    if other_properties:
+def create_base_sco(type, other_properties=None, id_1x=None, env=None):
+    if id_1x and id_1x in _OBJECT_REFERENCES_SHELLS:
+        shell = _OBJECT_REFERENCES_SHELLS[id_1x]
+        shell.update(other_properties)
+        if env:
+            # remove shell, it will be added back when more complete
+            env.bundle_instance["objects"].remove(shell)
+        return shell
+    elif other_properties:
         new_dict = other_properties
         new_dict["type"] = type
     else:
@@ -139,19 +147,49 @@ def handle_related_objects_as_embedded_relationships(sco, related_objects, stix1
                 else:
                     sco[stix2x_rel_name] = text_type(ro.idref)
 
+_OBJECT_REFERENCES_SHELLS = {}
 
-def convert_address(add, related_objects=None, obj1x_id=None):
+def handle_object_reference(obj1x, type_, env):
+    objs2x = get_object_id_value(obj1x.object_reference)
+    if objs2x:
+        # more than one - warning?
+        obj2x = objs2x[0]
+
+        return obj2x
+    else:
+        shell_sco = create_base_sco(type_, {"id": obj1x.object_reference} if get_option_value("spec_version") == "2.1" else {})
+        _OBJECT_REFERENCES_SHELLS[obj1x.object_reference] = shell_sco
+        return shell_sco
+
+
+def get_address_type(add):
     if add.category == add.CAT_IPV4:
-        instance = create_base_sco("ipv4-addr", {"value": handle_inclusive_ip_addresses(add.address_value, obj1x_id)})
+        return "ipv4-addr"
+    elif add.category == add.CAT_IPV6:
+        return "ipv6-addr"
+    elif add.category == add.CAT_MAC:
+        return "mac-addr"
+    elif add.category == add.CAT_EMAIL:
+        return "email-addr"
+
+
+def convert_address(add, related_objects=None, obj1x_id=None, env=None):
+    if add.address_value is None:
+        if add.object_reference is None:
+            return None
+        else:
+            return handle_object_reference(add, get_address_type(add), env)
+    if add.category == add.CAT_IPV4:
+        instance = create_base_sco("ipv4-addr", {"value": handle_inclusive_ip_addresses(add.address_value, obj1x_id)}, obj1x_id, env)
         handle_related_objects_as_embedded_relationships(instance, related_objects, "Resolved_To", "resolves_to_refs")
     elif add.category == add.CAT_IPV6:
         # TODO: handle ipv6 CIDRs
-        instance = create_base_sco("ipv6-addr", {"value": text_type(add.address_value)})
+        instance = create_base_sco("ipv6-addr", {"value": text_type(add.address_value)}, obj1x_id, env)
         handle_related_objects_as_embedded_relationships(instance, related_objects, "Resolved_To", "resolves_to_refs")
     elif add.category == add.CAT_MAC:
-        instance = create_base_sco("mac-addr", {"value": text_type(add.address_value)})
+        instance = create_base_sco("mac-addr", {"value": text_type(add.address_value)}, obj1x_id, env)
     elif add.category == add.CAT_EMAIL:
-        instance = create_base_sco("email-addr", {"value": text_type(add.address_value)})
+        instance = create_base_sco("email-addr", {"value": text_type(add.address_value)}, obj1x_id, env)
         handle_related_objects_as_embedded_relationships(instance, related_objects, "Related_To", "belongs_to_ref", more_than_one=False)
     else:
         warn("The address type %s is not part of STIX 2.x", 421, add.category)
@@ -639,7 +677,6 @@ def convert_email_message(email_message, obj1x_id):
             from_ref = convert_address(header.from_)
             if spec_version == "2.0":
                 objs[text_type(index)] = from_ref
-
             else:
                 objs.append(from_ref)
             email_dict["from_ref"] = text_type(index) if spec_version == "2.0" else from_ref["id"]
@@ -1093,19 +1130,59 @@ def convert_http_network_connection_extension(http):
         return convert_http_client_request(http.http_client_request)
 
 
-def convert_network_connection(conn, obj1x_id):
-    index = 0
+def create_domain_name_object(dn, obj1x_id):
+    instance = create_base_sco("domain-name", {"value": text_type(dn.value)})
+    finish_sco(instance, obj1x_id)
+    return instance
+
+
+def convert_socket_address_1(sock_add_1x, cybox_traffic, objs, spec_version, index, src_or_dst, env):
+    if sock_add_1x.port is not None:
+        if sock_add_1x.port.port_value is not None:
+            cybox_traffic[src_or_dst + "_port"] = int(sock_add_1x.port.port_value)
+        if sock_add_1x.port.layer4_protocol is not None:
+            cybox_traffic["protocols"].append(text_type(sock_add_1x.port.layer4_protocol.value.lower()))
+    if sock_add_1x.ip_address is not None:
+        add = convert_address(sock_add_1x.ip_address, None, sock_add_1x.parent.id_, env)
+        if spec_version == "2.0":
+            cybox_traffic[src_or_dst + "_ref"] = text_type(index)
+            objs[text_type(index)] = add
+            index += 1
+        else:
+            if add:
+                cybox_traffic[src_or_dst + "_ref"] = add["id"]
+                objs.append(add)
+
+    elif sock_add_1x.hostname is not None:
+        if sock_add_1x.hostname.is_domain_name and sock_add_1x.hostname.hostname_value is not None:
+            domain = create_domain_name_object(sock_add_1x.hostname.hostname_value, sock_add_1x.parent.id_)
+            cybox_traffic[src_or_dst + "_ref"] = text_type(index) if spec_version == "2.0" else domain["id"]
+            if spec_version == "2.0":
+                objs[text_type(index)] = domain
+                index += 1
+            else:
+                objs.append(domain)
+
+        elif (sock_add_1x.hostname.naming_system is not None and
+              any(x.value == "DNS" for x in sock_add_1x.hostname.naming_system)):
+            domain = create_domain_name_object(sock_add_1x.hostname.hostname_value, sock_add_1x.parent.id_)
+            cybox_traffic[src_or_dst + "_ref"] = text_type(index) if spec_version == "2.0" else domain["id"]
+            if spec_version == "2.0":
+                objs[text_type(index)] = domain
+                index += 1
+            else:
+                objs.append(domain)
+    return index
+
+
+def convert_network_connection(conn, obj1x_id, env):
+    index = 1
     spec_version = get_option_value("spec_version")
     cybox_traffic = {}
     if spec_version == "2.0":
         objs = {}
     else:
         objs = []
-
-    def create_domain_name_object(dn, obj1x_id):
-        instance = create_base_sco("domain-name", {"value": text_type(dn.value)})
-        finish_sco(instance, obj1x_id)
-        return instance
 
     if conn.creation_time is not None:
         cybox_traffic["start"] = convert_timestamp_to_string(conn.creation_time.value, None, None)
@@ -1117,73 +1194,11 @@ def convert_network_connection(conn, obj1x_id):
 
     if conn.source_socket_address is not None:
         # The source, if present will have index "0".
-        if conn.source_socket_address.port is not None:
-            if conn.source_socket_address.port.port_value is not None:
-                cybox_traffic["src_port"] = int(conn.source_socket_address.port.port_value)
-            if conn.source_socket_address.port.layer4_protocol is not None:
-                cybox_traffic["protocols"].append(text_type(conn.source_socket_address.port.layer4_protocol.value.lower()))
-        if conn.source_socket_address.ip_address is not None:
-            source = convert_address(conn.source_socket_address.ip_address)
-            cybox_traffic["src_ref"] = text_type(index) if spec_version == "2.0" else source["id"]
-            if spec_version == "2.0":
-                objs[text_type(index)] = source
-                index += 1
-            else:
-                objs.append(source)
-
-        elif conn.source_socket_address.hostname is not None:
-            if conn.source_socket_address.hostname.is_domain_name and conn.source_socket_address.hostname.hostname_value is not None:
-                source_domain = create_domain_name_object(conn.source_socket_address.hostname.hostname_value, None)
-                cybox_traffic["src_ref"] = text_type(index) if spec_version == "2.0" else source_domain["id"]
-                if spec_version == "2.0":
-                    objs[text_type(index)] = source_domain
-                    index += 1
-                else:
-                    objs.append(source_domain)
-
-            elif (conn.source_socket_address.hostname.naming_system is not None and
-                    any(x.value == "DNS" for x in conn.source_socket_address.hostname.naming_system)):
-                source_domain = create_domain_name_object(conn.source_socket_address.hostname.hostname_value, None)
-                cybox_traffic["src_ref"] = text_type(index) if spec_version == "2.0" else source_domain["id"]
-                if spec_version == "2.0":
-                    objs[text_type(index)] = source_domain
-                    index += 1
-                else:
-                    objs.append(source_domain)
+        index = convert_socket_address_1(conn.source_socket_address, cybox_traffic, objs, spec_version, index, "src", env)
 
     if conn.destination_socket_address is not None:
         # The destination will have index "1" if there is a source.
-        if conn.destination_socket_address.port is not None:
-            if conn.destination_socket_address.port is not None:
-                cybox_traffic["dst_port"] = int(conn.destination_socket_address.port.port_value)
-            if conn.destination_socket_address.port.layer4_protocol is not None:
-                cybox_traffic["protocols"].append(text_type(conn.destination_socket_address.port.layer4_protocol.value.lower()))
-        if conn.destination_socket_address.ip_address is not None:
-            destination = convert_address(conn.destination_socket_address.ip_address)
-            cybox_traffic["dst_ref"] = text_type(index) if spec_version == "2.0" else destination["id"]
-            if spec_version == "2.0":
-                objs[text_type(index)] = destination
-                index += 1
-            else:
-                objs.append(destination)
-        elif conn.destination_socket_address.hostname is not None:
-            if conn.destination_socket_address.hostname.is_domain_name and conn.destination_socket_address.hostname.hostname_value is not None:
-                destination_domain = create_domain_name_object(conn.destination_socket_address.hostname.hostname_value, None)
-                cybox_traffic["dst_ref"] = text_type(index) if spec_version == "2.0" else destination_domain["id"]
-                if spec_version == "2.0":
-                    objs[text_type(index)] = destination_domain
-                    index += 1
-                else:
-                    objs.append(destination_domain)
-            elif (conn.destination_socket_address.hostname.naming_system is not None and
-                    any(x.value == "DNS" for x in conn.destination_socket_address.hostname.naming_system)):
-                destination_domain = create_domain_name_object(conn.destination_socket_address.hostname.hostname_value, None)
-                cybox_traffic["dst_ref"] = text_type(index) if spec_version == "2.0" else destination_domain["id"]
-                if spec_version == "2.0":
-                    objs[text_type(index)] = destination_domain
-                    index += 1
-                else:
-                    objs.append(destination_domain)
+        index = convert_socket_address_1(conn.destination_socket_address, cybox_traffic, objs, spec_version, index, "dst", env)
 
     if conn.layer4_protocol is not None:
         cybox_traffic["protocols"].append(text_type(conn.layer4_protocol.value).lower())
@@ -1215,11 +1230,12 @@ def convert_network_connection(conn, obj1x_id):
     if cybox_traffic:
         cybox_traffic["type"] = "network-traffic"
         if spec_version == "2.0":
-            objs[text_type(index)] = cybox_traffic
+            objs["0"] = cybox_traffic
             index += 1
         else:
             finish_sco(cybox_traffic, obj1x_id)
-            objs.append(cybox_traffic)
+            # network traffic object must be first
+            objs.insert(0, cybox_traffic)
 
     # no STIX 1.x date for the following STIX 2.x properties:
     #   end, is_active,
@@ -1341,6 +1357,17 @@ def convert_network_socket(socket, obj1x_id):
     return cybox_traffic
 
 
+def convert_socket_address(sock_add_1x, obj1x_id, env=None):
+    spec_version = get_option_value("spec_version")
+    instance = create_base_sco("network-traffic")
+    if spec_version == "2.0":
+        objs = {}
+    else:
+        objs = []
+    convert_socket_address_1(sock_add_1x, instance, objs, spec_version, 0, "src", env)
+    return objs
+
+
 def convert_product(prod, obj1x_id):
     instance = create_base_sco("software")
     if prod.product:
@@ -1451,7 +1478,7 @@ def convert_cybox_object20(obj1x):
     if prop is None:
         return None
     elif isinstance(prop, Address):
-        objs["0"] = convert_address(prop, related_objects, obj1x_id=obj1x.id_)
+        objs["0"] = convert_address(prop, related_objects, obj1x.id_)
     elif isinstance(prop, Artifact):
         objs["0"] = convert_artifact(prop, obj1x.id_)
     elif isinstance(prop, AutonomousSystem):
@@ -1476,7 +1503,7 @@ def convert_cybox_object20(obj1x):
         objs["0"] = convert_mutex(prop, obj1x.id_)
     elif isinstance(prop, NetworkConnection):
         # potentially returns multiple objects
-        objs = convert_network_connection(prop, obj1x.id_)
+        objs = convert_network_connection(prop, obj1x.id_, env)
     elif isinstance(prop, Account):
         objs["0"] = convert_account(prop, obj1x.id_)
     elif isinstance(prop, Port):
@@ -1489,6 +1516,9 @@ def convert_cybox_object20(obj1x):
         objs["0"] = convert_network_socket(prop, obj1x.id_)
     elif isinstance(prop, X509Certificate):
         objs["0"] = convert_x509_certificate(prop, obj1x.id_)
+    elif isinstance(prop, SocketAddress):
+        # returns a dict
+        objs = convert_socket_address(prop, obj1x.id_)
     else:
         warn("CybOX object %s not handled yet", 805, text_type(type(prop)))
         return None
@@ -1496,8 +1526,8 @@ def convert_cybox_object20(obj1x):
         warn("%s did not yield any STIX 2.x object", 417, text_type(type(prop)))
         return None
     else:
-        primary_obj = objs["0"]
         if prop.custom_properties:
+            primary_obj = objs["0"]
             for cp in prop.custom_properties.property_:
                 primary_obj["x_" + cp.name] = cp.value
         if obj1x.id_:
@@ -1505,14 +1535,14 @@ def convert_cybox_object20(obj1x):
         return objs
 
 
-def convert_cybox_object21(obj1x):
+def convert_cybox_object21(obj1x, env):
     # TODO:  should related objects be handled on a case-by-case basis or just ignored
     related_objects = obj1x.related_objects
     prop = obj1x.properties
     if prop is None:
         return None
     elif isinstance(prop, Address):
-        objs = [convert_address(prop, related_objects, obj1x.id_)]
+        objs = [convert_address(prop, related_objects, obj1x.id_, env)]
     elif isinstance(prop, Artifact):
         objs = [convert_artifact(prop, obj1x.id_)]
     elif isinstance(prop, AutonomousSystem):
@@ -1537,7 +1567,7 @@ def convert_cybox_object21(obj1x):
         objs = [convert_mutex(prop, obj1x.id_)]
     elif isinstance(prop, NetworkConnection):
         # potentially returns multiple objects
-        objs = convert_network_connection(prop, obj1x.id_)
+        objs = convert_network_connection(prop, obj1x.id_, env)
     elif isinstance(prop, Account):
         objs = [convert_account(prop, obj1x.id_)]
     elif isinstance(prop, Port):
@@ -1550,6 +1580,8 @@ def convert_cybox_object21(obj1x):
         objs = [convert_network_socket(prop, obj1x.id_)]
     elif isinstance(prop, X509Certificate):
         objs = [convert_x509_certificate(prop, obj1x.id_)]
+    elif isinstance(prop, SocketAddress):
+        objs = convert_socket_address(prop, obj1x.id_, env)
     else:
         warn("CybOX object %s not handled yet", 805, text_type(type(prop)))
         return None
@@ -1557,8 +1589,9 @@ def convert_cybox_object21(obj1x):
         warn("%s did not yield any STIX 2.x object", 417, text_type(type(prop)))
         return None
     else:
-        primary_obj = objs[0]
         if prop.custom_properties:
+            # make sure the original object is always first in the objs array
+            primary_obj = objs[0]
             for cp in prop.custom_properties.property_:
                 primary_obj[convert_to_custom_property_name(cp.name)] = cp.value
         if obj1x.id_:
@@ -1673,10 +1706,15 @@ def fix_cybox_relationships(observed_data):
             if co["type"] == "email-message":
                 if "body_multipart" in co:
                     for mp in co["body_multipart"]:
-                        change_1x_ids_to_2x_objs(mp, "body_raw_ref", next_id, o, objs_to_add, ["artifact", "file"])
+                        change_1x_id_to_2x_obj(mp, "body_raw_ref", next_id, o, objs_to_add, ["artifact", "file"])
             elif co["type"] in ["domain-name", "ipv4-addr", "ipv6-addr"]:
                 if "resolves_to_refs" in co and co["resolves_to_refs"]:
                     change_1x_ids_to_2x_objs(co, "resolves_to_refs", next_id, o, objs_to_add, ["domain-name", "ipv4-addr", "ipv6-addr"])
+            elif co["type"] == "network-traffic":
+                if "src_ref" in co:
+                    change_1x_id_to_2x_obj(co, "src_ref", next_id, o, objs_to_add, ["domain-name", "ipv4-addr", "ipv6-addr"])
+                if "dst_ref" in co:
+                    change_1x_id_to_2x_obj(co, "dst_ref", next_id, o, objs_to_add, ["domain-name", "ipv4-addr", "ipv6-addr"])
         if objs_to_add:
             o["objects"].update(objs_to_add)
 
@@ -1732,3 +1770,7 @@ def fix_sco_embedded_refs(objects):
         elif obj["type"] == "file":
             change_ids_from_1x_to_2x(obj, "contains_refs")
             change_id_from_1x_to_2x(obj, "content_ref")
+        elif obj["type"] == "network-traffic":
+            change_id_from_1x_to_2x(obj, "src_ref")
+            change_id_from_1x_to_2x(obj, "dst_ref")
+        # TODO: other embedded refs

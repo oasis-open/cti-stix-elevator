@@ -1251,11 +1251,11 @@ correctly in STIX 2.x - please check this pattern",
 
 # observables
 
-def convert_cybox_object(o):
+def convert_cybox_object(o, env=None):
     if get_option_value("spec_version") == "2.0":
         return convert_cybox_object20(o)
     else:
-        return convert_cybox_object21(o)
+        return convert_cybox_object21(o, env)
 
 
 def set_embedded_ref_property_2_1(sco, ro, stix2x_rel_name):
@@ -1283,12 +1283,12 @@ def create_scos(obs, observed_data_instance, env):
              635, obs.id_)
     else:
         observed_data_instance["object_refs"] = []
-        scos = convert_cybox_object(obs.object_)
+        scos = convert_cybox_object(obs.object_, env)
         if obs.object_.related_objects:
             for o in obs.object_.related_objects:
                 if not o.idref:
                     # it is embedded - for idrefs see convert_cybox.py
-                    related = convert_cybox_object(o)
+                    related = convert_cybox_object(o, env)
                     if related:
                         scos.extend(related)
                         property_name = embedded_property_ref_name(obs.object_.properties, o.relationship)
