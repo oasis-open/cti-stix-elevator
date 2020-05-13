@@ -1156,11 +1156,11 @@ def convert_email_message_to_pattern(mess):
     if mess.links is not None:
         if get_option_value("missing_policy") == "use-custom-properties":
             # we use the property-name "link_refs" to be consistent with the SCO, even though here its the actual url
-            for l in mess.links:
+            for link in mess.links:
                 expressions.append(
                     ComparisonExpressionForElevator("=",
                                                     "email-message:" + convert_to_custom_property_name("link_refs[*]"),
-                                                    IdrefPlaceHolder(l.object_reference)))
+                                                    IdrefPlaceHolder(link.object_reference)))
                 warn("Used custom property for %s", 308, "links")
         else:
             warn("Email links not handled yet", 806)
@@ -2355,12 +2355,15 @@ def convert_observable_to_pattern_without_negate(obs):
             if obs.object_.related_objects:
                 related_patterns = []
                 for o in obs.object_.related_objects:
-                    # save pattern for later use
-                    if o.id_ and not id_in_pattern_cache(o.id_):
+                    if not id_in_pattern_cache(o.id_):
                         new_pattern = convert_object_to_pattern(o, o.id_)
-                        if new_pattern:
+                        # A related_object may have neither an id or idref.
+                        # If doesn't have idref, it belongs in the new_pattern
+                        if new_pattern and not o.idref:
                             related_patterns.append(new_pattern)
-                            add_to_pattern_cache(o.id_, new_pattern)
+                            if o.id_:
+                                # save pattern for later use
+                                add_to_pattern_cache(o.id_, new_pattern)
                 if pattern:
                     related_patterns.append(pattern)
                 return create_boolean_expression("AND", related_patterns)

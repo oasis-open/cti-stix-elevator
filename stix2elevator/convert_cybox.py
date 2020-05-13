@@ -692,8 +692,8 @@ def convert_email_message(email_message, obj1x_id):
             if get_option_value("spec_version") == "2.1":
                 property_name = convert_to_custom_property_name("link_refs")
                 email_dict[property_name] = list()
-                for l in email_message.links:
-                    sco_id = get_id_value(l.object_reference)
+                for link in email_message.links:
+                    sco_id = get_id_value(link.object_reference)
                     email_dict[property_name].extend(sco_id)
                 warn("Used custom property for %s", 308, "links")
             else:
