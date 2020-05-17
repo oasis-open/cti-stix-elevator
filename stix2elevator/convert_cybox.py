@@ -37,11 +37,11 @@ from six import text_type
 
 # internal
 from stix2elevator.common import (
-    ADDRESS_FAMILY_ENUMERATION, PDF_DOC_INFO_DICT_KEYS, SOCKET_OPTIONS
+    ADDRESS_FAMILY_ENUMERATION, PDF_DOC_INFO_DICT_KEYS, SOCKET_OPTIONS, determine_socket_address_direction
 )
 from stix2elevator.ids import (
     add_id_value, add_object_id_value, generate_sco_id, get_id_value,
-    get_object_id_value, is_stix1x_id
+    get_object_id_value, is_stix1x_id, property_contains_stix1x_id
 )
 from stix2elevator.missing_policy import (
     convert_to_custom_property_name, handle_missing_string_property
@@ -149,15 +149,14 @@ def handle_related_objects_as_embedded_relationships(sco, related_objects, stix1
 
 _OBJECT_REFERENCES_SHELLS = {}
 
-def handle_object_reference(obj1x, type_, env):
+def handle_object_reference(obj1x, type_, env, property="id"):
     objs2x = get_object_id_value(obj1x.object_reference)
     if objs2x:
         # more than one - warning?
         obj2x = objs2x[0]
-
         return obj2x
     else:
-        shell_sco = create_base_sco(type_, {"id": obj1x.object_reference} if get_option_value("spec_version") == "2.1" else {})
+        shell_sco = create_base_sco(type_, {property: obj1x.object_reference}, env=env)
         _OBJECT_REFERENCES_SHELLS[obj1x.object_reference] = shell_sco
         return shell_sco
 
@@ -266,6 +265,9 @@ def convert_artifact_packaging(packaging, instance, obj1x_id):
 
 
 def convert_artifact(art, obj1x_id):
+    if art.object_reference:
+        warn("Object references of artifact %s is not handled, yet", 0, obj1x_id)
+        return None
     instance = create_base_sco("artifact")
     if art.content_type:
         instance["mime_type"] = art.content_type
@@ -855,8 +857,8 @@ def convert_opened_connection_refs21(process, process_dict, objs):
         nc_dicts = convert_network_connection(nc, None)
         for obj in nc_dicts:
             objs.append(obj)
-        # network-traffic is always the last obj
-        process_dict["opened_connection_refs"].append(obj["id"])
+        # network-traffic is always the first obj
+        process_dict["opened_connection_refs"].append(nc_dicts[0]["id"])
 
 
 def convert_process(process, obj1x_id):
@@ -1175,7 +1177,7 @@ def convert_socket_address_1(sock_add_1x, cybox_traffic, objs, spec_version, ind
     return index
 
 
-def convert_network_connection(conn, obj1x_id, env):
+def convert_network_connection(conn, obj1x_id, env=None):
     index = 1
     spec_version = get_option_value("spec_version")
     cybox_traffic = {}
@@ -1208,22 +1210,26 @@ def convert_network_connection(conn, obj1x_id, env):
 
     if conn.layer7_connections is not None:
         if conn.layer7_connections.http_session is not None:
+            if conn.layer7_connections.http_session.object_reference:
+                nt = handle_object_reference(conn.layer7_connections.http_session, "network-traffic", env, "extensions")
+                cybox_traffic["extensions"] = nt["extensions"]
+            else:
             # HTTP extension
-            cybox_traffic["extensions"] = {}
-            request_responses = conn.layer7_connections.http_session.http_request_response
-            if request_responses:
-                cybox_traffic["extensions"] = dict()
-                request_ext, body_obj = convert_http_network_connection_extension(request_responses[0])
-                cybox_traffic["extensions"]["http-request-ext"] = request_ext
-                if body_obj:
-                    if get_option_value("spec_version") == "2.0":
-                        objs[text_type(index)] = body_obj
-                        request_ext["message_body_data_ref"] = text_type(index)
-                        index += 1
-                    else:
-                        objs.append(body_obj)
-                if len(conn.layer7_connections.http_session.http_request_response) > 1:
-                    warn("Only one HTTP_Request_Response used for http-request-ext, using first value", 512)
+                cybox_traffic["extensions"] = {}
+                request_responses = conn.layer7_connections.http_session.http_request_response
+                if request_responses:
+                    cybox_traffic["extensions"] = dict()
+                    request_ext, body_obj = convert_http_network_connection_extension(request_responses[0])
+                    cybox_traffic["extensions"]["http-request-ext"] = request_ext
+                    if body_obj:
+                        if get_option_value("spec_version") == "2.0":
+                            objs[text_type(index)] = body_obj
+                            request_ext["message_body_data_ref"] = text_type(index)
+                            index += 1
+                        else:
+                            objs.append(body_obj)
+                    if len(conn.layer7_connections.http_session.http_request_response) > 1:
+                        warn("Only one HTTP_Request_Response used for http-request-ext, using first value", 512)
         if conn.layer7_connections.dns_query:
             warn("Layer7_Connections/DNS_Query content not supported in STIX 2.x", 424)
 
@@ -1281,7 +1287,7 @@ def convert_http_session(session, obj1x_id):
             else:
                 finish_sco(cybox_traffic, obj1x_id)
                 if body_obj:
-                    return [body_obj, cybox_traffic]
+                    return [cybox_traffic, body_obj]
                 else:
                     return [cybox_traffic]
 
@@ -1364,7 +1370,8 @@ def convert_socket_address(sock_add_1x, obj1x_id, env=None):
         objs = {}
     else:
         objs = []
-    convert_socket_address_1(sock_add_1x, instance, objs, spec_version, 0, "src", env)
+
+    convert_socket_address_1(sock_add_1x, instance, objs, spec_version, 0, direction, env)
     return objs
 
 
@@ -1503,7 +1510,7 @@ def convert_cybox_object20(obj1x):
         objs["0"] = convert_mutex(prop, obj1x.id_)
     elif isinstance(prop, NetworkConnection):
         # potentially returns multiple objects
-        objs = convert_network_connection(prop, obj1x.id_, env)
+        objs = convert_network_connection(prop, obj1x.id_)
     elif isinstance(prop, Account):
         objs["0"] = convert_account(prop, obj1x.id_)
     elif isinstance(prop, Port):
@@ -1529,7 +1536,7 @@ def convert_cybox_object20(obj1x):
         if prop.custom_properties:
             primary_obj = objs["0"]
             for cp in prop.custom_properties.property_:
-                primary_obj["x_" + cp.name] = cp.value
+                primary_obj[convert_to_custom_property_name(cp.name)] = cp.value
         if obj1x.id_:
             add_object_id_value(obj1x.id_, objs)
         return objs
@@ -1774,3 +1781,29 @@ def fix_sco_embedded_refs(objects):
             change_id_from_1x_to_2x(obj, "src_ref")
             change_id_from_1x_to_2x(obj, "dst_ref")
         # TODO: other embedded refs
+
+
+def resolve_object_references20(obsers):
+    for obs in obsers:
+        for k, obj in obs["objects"].items():
+            if obj["type"] == "network-traffic":
+                if "extensions" in obj and property_contains_stix1x_id(obj, "extensions"):
+                    object2x = get_object_id_value(obj["extensions"])
+                    if len(object2x) ==  1:
+                        if "extensions" in object2x["0"]:
+                            obj["extensions"] = object2x["0"]["extensions"]
+                        # what if no extensions property?
+                    else:
+                        warn("Object references for http sessions in %s not handled yet", 804, obs["id"])
+
+
+def resolve_object_references21(objects):
+    for obj in objects:
+        if obj["type"] == "network-traffic":
+            if "extensions" in obj and property_contains_stix1x_id(obj, "extensions"):
+                object2x = get_object_id_value(obj["extensions"])
+                if object2x:
+                    # what if more than 1?
+                    if "extensions" in object2x[0]:
+                        obj["extensions"] = object2x[0]["extensions"]
+                    # what if no extensions property?

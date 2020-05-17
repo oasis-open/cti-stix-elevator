@@ -22,15 +22,15 @@
             "type": "process"
         },
         {
-            "id": "ipv4-addr--c5a216ae-2184-5acd-b145-2d1321457d0b",
-            "type": "ipv4-addr",
-            "value": "198.49.123.10"
-        },
-        {
             "dst_port": 80,
             "dst_ref": "ipv4-addr--c5a216ae-2184-5acd-b145-2d1321457d0b",
             "id": "network-traffic--a26259f7-6c47-5ded-9c9b-2284b4522184",
             "type": "network-traffic"
+        },
+        {
+            "id": "ipv4-addr--c5a216ae-2184-5acd-b145-2d1321457d0b",
+            "type": "ipv4-addr",
+            "value": "198.49.123.10"
         },
         {
             "id": "user-account--74591c17-1215-5a14-b5ac-e3d6058c4125",
@@ -96,8 +96,8 @@
             "number_observed": 1,
             "object_refs": [
                 "process--fcf907a8-2445-42e5-a7c6-db784b510422",
-                "ipv4-addr--c5a216ae-2184-5acd-b145-2d1321457d0b",
                 "network-traffic--a26259f7-6c47-5ded-9c9b-2284b4522184",
+                "ipv4-addr--c5a216ae-2184-5acd-b145-2d1321457d0b",
                 "user-account--74591c17-1215-5a14-b5ac-e3d6058c4125",
                 "process--f5904d0d-874f-45b4-91a0-2e97dbe43507",
                 "process--33fd6baf-4936-41e7-8a07-95070d59ddc3"

@@ -41,7 +41,8 @@ from stixmarx import navigator
 from stix2elevator.confidence import convert_confidence
 from stix2elevator.convert_cybox import (
     convert_cybox_object20, convert_cybox_object21, embedded_property_ref_name,
-    fix_cybox_relationships, fix_sco_embedded_refs
+    fix_cybox_relationships, fix_sco_embedded_refs, resolve_object_references20,
+    resolve_object_references21
 )
 from stix2elevator.convert_pattern import (
     ComparisonExpressionForElevator, CompoundObservationExpressionForElevator,
@@ -1901,8 +1902,10 @@ def finalize_bundle(env):
 
     if get_option_value("spec_version") == "2.0":
         fix_cybox_relationships(bundle_instance["observed_data"])
+        resolve_object_references20(bundle_instance["observed_data"])
     else:
         fix_sco_embedded_refs(bundle_instance["objects"])
+        resolve_object_references21(bundle_instance["objects"])
 
     # need to remove observed-data not used at the top level
 

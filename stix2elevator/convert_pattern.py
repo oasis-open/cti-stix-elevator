@@ -23,6 +23,7 @@ from cybox.objects.pdf_file_object import PDFFile
 from cybox.objects.port_object import Port
 from cybox.objects.process_object import Process
 from cybox.objects.product_object import Product
+from cybox.objects.socket_address_object import SocketAddress
 from cybox.objects.unix_user_account_object import UnixUserAccount
 from cybox.objects.uri_object import URI
 from cybox.objects.win_computer_account_object import WinComputerAccount
@@ -42,7 +43,7 @@ import stixmarx
 
 # internal
 from stix2elevator.common import (
-    ADDRESS_FAMILY_ENUMERATION, PDF_DOC_INFO_DICT_KEYS, SOCKET_OPTIONS
+    ADDRESS_FAMILY_ENUMERATION, PDF_DOC_INFO_DICT_KEYS, SOCKET_OPTIONS, determine_socket_address_direction
 )
 from stix2elevator.convert_cybox import split_into_requests_and_responses
 from stix2elevator.ids import (
@@ -1820,6 +1821,38 @@ def convert_port_to_pattern(prop):
     return create_boolean_expression("AND", expressions)
 
 
+def convert_socket_address_to_pattern(sock_add, direction):
+    expressions = list()
+    if sock_add.port is not None:
+        if sock_add.port.port_value is not None:
+            expressions.append(create_term("network-traffic:" + direction + "_port",
+                                           sock_add.port.port_value.condition,
+                                           stix2.IntegerConstant(int(sock_add.port.port_value))))
+        if sock_add.port.layer4_protocol is not None:
+            expressions.append(
+                create_term("network-traffic:protocols[*]",
+                            sock_add.port.layer4_protocol.condition,
+                            make_constant(sock_add.port.layer4_protocol.value.lower())))
+    if sock_add.ip_address is not None:
+        expressions.append(
+            create_term("network-traffic:" + direction + "_ref.value",
+                        sock_add.ip_address.address_value.condition,
+                        make_constant(sock_add.ip_address.address_value.value)))
+    elif sock_add.hostname is not None:
+        if sock_add.hostname.is_domain_name and sock_add.hostname.hostname_value is not None:
+            expressions.append(
+                create_term("network-traffic:" + direction + "_ref.value",
+                            sock_add.hostname.condition,
+                            make_constant(sock_add.hostname.hostname_value)))
+        elif (sock_add.hostname.naming_system is not None and
+              any(x.value == "DNS" for x in sock_add.hostname.naming_system)):
+            expressions.append(
+                create_term("network-traffic:" + direction + "_ref.value",
+                            sock_add.hostname.condition,
+                            make_constant(sock_add.hostname.hostname_value)))
+    return expressions
+
+
 def convert_network_connection_to_pattern(conn):
     expressions = []
 
@@ -1839,65 +1872,10 @@ def convert_network_connection_to_pattern(conn):
                                        make_constant(conn.layer7_protocol.value.lower())))
 
     if conn.source_socket_address is not None:
-        if conn.source_socket_address.port is not None:
-            if conn.source_socket_address.port.port_value is not None:
-                expressions.append(create_term("network-traffic:src_port",
-                                               conn.source_socket_address.port.port_value.condition,
-                                               stix2.IntegerConstant(int(conn.source_socket_address.port.port_value))))
-            if conn.source_socket_address.port.layer4_protocol is not None:
-                expressions.append(
-                    create_term("network-traffic:protocols[*]",
-                                conn.source_socket_address.port.layer4_protocol.condition,
-                                make_constant(conn.source_socket_address.port.layer4_protocol.value.lower())))
-        if conn.source_socket_address.ip_address is not None:
-            expressions.append(
-                create_term("network-traffic:src_ref.value",
-                            conn.source_socket_address.ip_address.address_value.condition,
-                            make_constant(conn.source_socket_address.ip_address.address_value.value)))
-        elif conn.source_socket_address.hostname is not None:
-            if conn.source_socket_address.hostname.is_domain_name and conn.source_socket_address.hostname.hostname_value is not None:
-                expressions.append(
-                    create_term("network-traffic:src_ref.value",
-                                conn.source_socket_address.hostname.condition,
-                                make_constant(conn.source_socket_address.hostname.hostname_value)))
-            elif (conn.source_socket_address.hostname.naming_system is not None and
-                  any(x.value == "DNS" for x in conn.source_socket_address.hostname.naming_system)):
-                expressions.append(
-                    create_term("network-traffic:src_ref.value",
-                                conn.source_socket_address.hostname.condition,
-                                make_constant(conn.source_socket_address.hostname.hostname_value)))
+        expressions.extend(convert_socket_address_to_pattern(conn.source_socket_address, "src"))
 
     if conn.destination_socket_address is not None:
-        if conn.destination_socket_address.port is not None:
-            if conn.destination_socket_address.port.port_value is not None:
-                expressions.append(
-                    create_term("network-traffic:dst_port",
-                                conn.destination_socket_address.port.port_value.condition,
-                                stix2.IntegerConstant(int(conn.destination_socket_address.port.port_value))))
-            if conn.destination_socket_address.port.layer4_protocol is not None:
-                expressions.append(
-                    create_term("network-traffic:protocols[*]",
-                                conn.destination_socket_address.port.layer4_protocol.condition,
-                                make_constant(
-                                    conn.destination_socket_address.port.layer4_protocol.value.lower())))
-        if conn.destination_socket_address.ip_address is not None:
-            expressions.append(
-                create_term("network-traffic:dst_ref.value",
-                            conn.destination_socket_address.ip_address.address_value.condition,
-                            make_constant(conn.destination_socket_address.ip_address.address_value.value)))
-        elif conn.destination_socket_address.hostname is not None:
-            hostname = conn.destination_socket_address.hostname
-            if hostname.is_domain_name and hostname.hostname_value is not None:
-                expressions.append(
-                    create_term("network-traffic:dst_ref.value",
-                                conn.destination_socket_address.hostname.condition,
-                                make_constant(conn.destination_socket_address.hostname.hostname_value)))
-            elif (conn.destination_socket_address.hostname.naming_system is not None and
-                  any(x.value == "DNS" for x in conn.destination_socket_address.hostname.naming_system)):
-                expressions.append(
-                    create_term("network-traffic:dst_ref.value",
-                                conn.destination_socket_address.hostname.condition,
-                                make_constant(conn.destination_socket_address.hostname.hostname_value)))
+        expressions.extend(convert_socket_address_to_pattern(conn.destination_socket_address, "dst"))
 
     if conn.layer7_connections is not None:
         if conn.layer7_connections.http_session is not None:
@@ -2274,6 +2252,10 @@ def convert_object_to_pattern(obj, obs_id):
             expression = convert_network_socket_to_pattern(prop)
         elif isinstance(prop, X509Certificate):
             expression = convert_x509_certificate_to_pattern(prop)
+        elif isinstance(prop, SocketAddress):
+            expression = convert_socket_address_to_pattern(prop, determine_socket_address_direction(prop, obs_id))
+            if expression:
+                expression = create_boolean_expression("AND", expression)
         else:
             warn("%s found in %s cannot be converted to a pattern, yet.", 808, text_type(obj.properties), obs_id)
             if not get_option_value("missing_policy") == "ignore":

@@ -2,11 +2,6 @@
     "id": "bundle--5d881a21-d889-49a5-af07-766258a66152",
     "objects": [
         {
-            "id": "artifact--6a96f241-0f48-5f93-be99-05d75cf5d6d4",
-            "payload_bin": "PGh0bWw+PHRpdGxlPkFuIEhUTUwgcGFnZTwvdGl0bGU+PGJvZHk+PHA+Qm9keSB0ZXh0PC9wPjwvYm9keT48L2h0bWw+",
-            "type": "artifact"
-        },
-        {
             "extensions": {
                 "http-request-ext": {
                     "message_body_data_ref": "artifact--6a96f241-0f48-5f93-be99-05d75cf5d6d4",
@@ -20,6 +15,10 @@
             "type": "network-traffic"
         },
         {
+            "id": "artifact--6a96f241-0f48-5f93-be99-05d75cf5d6d4",
+            "payload_bin": "PGh0bWw+PHRpdGxlPkFuIEhUTUwgcGFnZTwvdGl0bGU+PGJvZHk+PHA+Qm9keSB0ZXh0PC9wPjwvYm9keT48L2h0bWw+",
+            "type": "artifact"
+        },        {
             "created": "2020-05-04T15:03:50.484Z",
             "first_observed": "2020-05-04T15:03:50.484Z",
             "id": "observed-data--fca4bd90-906e-4566-97eb-1afd6bc50043",
@@ -27,8 +26,8 @@
             "modified": "2020-05-04T15:03:50.484Z",
             "number_observed": 1,
             "object_refs": [
-                "artifact--6a96f241-0f48-5f93-be99-05d75cf5d6d4",
-                "network-traffic--11956850-bf6a-49cd-a214-98a9ef17131b"
+                "network-traffic--11956850-bf6a-49cd-a214-98a9ef17131b",
+                "artifact--6a96f241-0f48-5f93-be99-05d75cf5d6d4"
             ],
             "spec_version": "2.1",
             "type": "observed-data"

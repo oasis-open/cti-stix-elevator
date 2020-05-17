@@ -1,3 +1,5 @@
+from stix2elevator.options import warn
+
 SOCKET_OPTIONS = [
     "ip_multicast_if",
     "ip_multicast_if2",
@@ -34,3 +36,19 @@ ADDRESS_FAMILY_ENUMERATION = [
 ]
 
 PDF_DOC_INFO_DICT_KEYS = ["author", "subject", "keywords", "creator", "producer", "creationdate", "moddate", "trapped"]
+
+
+def determine_socket_address_direction(sock_add_1x, obj1x_id):
+    if sock_add_1x.ip_address:
+        if sock_add_1x.ip_address.is_destination and not sock_add_1x.ip_address.is_source:
+            return "dst"
+        elif sock_add_1x.ip_address.is_source and not sock_add_1x.ip_address.is_destination:
+            return "src"
+        else:
+            # ((sock_add_1x.ip_address.is_destination and sock_add_1x.ip_address.is_source) or
+            # (not sock_add_1x.ip_address.is_destination and not sock_add_1x.ip_address.is_source)):
+            warn("Address direction in %s is inconsistent, using 'src'", 614, obj1x_id)
+            return "src"
+    else:
+        warn("Address direction in %s is not provided, using 'src'", 636, obj1x_id)
+        return "src"

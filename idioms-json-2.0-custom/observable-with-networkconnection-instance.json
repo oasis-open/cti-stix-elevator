@@ -10,23 +10,11 @@
             "number_observed": 1,
             "objects": {
                 "0": {
-                    "type": "domain-name",
-                    "value": "example.com"
-                },
-                "1": {
-                    "type": "ipv4-addr",
-                    "value": "198.49.123.10"
-                },
-                "2": {
-                    "payload_bin": "YWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFh",
-                    "type": "artifact"
-                },
-                "3": {
                     "dst_port": 80,
-                    "dst_ref": "1",
+                    "dst_ref": "2",
                     "extensions": {
                         "http-request-ext": {
-                            "message_body_data_ref": "2",
+                            "message_body_data_ref": "3",
                             "message_body_length": 200,
                             "request_header": {
                                 "Accept": "text/plain",
@@ -52,9 +40,21 @@
                         "https"
                     ],
                     "src_port": 5525,
-                    "src_ref": "0",
+                    "src_ref": "1",
                     "start": "2011-08-05T07:14:55.000000Z",
                     "type": "network-traffic"
+                },
+                "1": {
+                    "type": "domain-name",
+                    "value": "example.com"
+                },
+                "2": {
+                    "type": "ipv4-addr",
+                    "value": "198.49.123.10"
+                },
+                "3": {
+                    "payload_bin": "YWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFh",
+                    "type": "artifact"
                 }
             },
             "type": "observed-data"
