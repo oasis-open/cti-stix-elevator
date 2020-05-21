@@ -1,0 +1,100 @@
+<stix:STIX_Package
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:cybox="http://cybox.mitre.org/cybox-2"
+        xmlns:stix="http://stix.mitre.org/stix-1"
+        xmlns:AddressObj="http://cybox.mitre.org/objects#AddressObject-2"
+        xmlns:PortObj="http://cybox.mitre.org/objects#PortObject-2"
+        xmlns:SocketAddressObj="http://cybox.mitre.org/objects#SocketAddressObject-1"
+        xmlns:HostnameObj="http://cybox.mitre.org/objects#HostnameObject-1"
+        xmlns:NetworkConnectionObj="http://cybox.mitre.org/objects#NetworkConnectionObject-2"
+        xmlns:HTTPSessionObj="http://cybox.mitre.org/objects#HTTPSessionObject-2"
+        xmlns:example="http://example.com/"
+        xsi:schemaLocation="
+    http://stix.mitre.org/stix-1 http://stix.mitre.org/XMLSchema/core/1.2/stix_core.xsd
+    http://cybox.mitre.org/cybox-2 http://cybox.mitre.org/XMLSchema/cybox_core.xsd
+    http://cybox.mitre.org/objects#NetworkConnectionObject-2 http://cybox.mitre.org/XMLSchema/objects/Network_Connection_Object.xsd"
+        id="example:package-e33ffe07-2f4c-48d8-b0af-ee2619d765cf" version="1.2">
+    <stix:Observables cybox_major_version="2" cybox_minor_version="1" cybox_update_version="1">
+
+        <cybox:Observable id="example:Observable-1aec7752-29e1-4018-806c-7a9a21ddb20e">
+            <cybox:Description>
+                This Observable specifies an example instance of a Network Connection Object.
+            </cybox:Description>
+            <cybox:Object id="example:Object-54400c36-5038-478b-bffe-808c40b2f04e">
+                <cybox:Properties xsi:type="NetworkConnectionObj:NetworkConnectionObjectType">
+                    <NetworkConnectionObj:Creation_Time datatype="datetime">2011-08-05T07:14:55Z
+                    </NetworkConnectionObj:Creation_Time>
+                    <NetworkConnectionObj:Layer3_Protocol datatype="string">IPv4</NetworkConnectionObj:Layer3_Protocol>
+                    <NetworkConnectionObj:Layer4_Protocol datatype="string">TCP</NetworkConnectionObj:Layer4_Protocol>
+                    <NetworkConnectionObj:Layer7_Protocol datatype="string">HTTPS</NetworkConnectionObj:Layer7_Protocol>
+                    <NetworkConnectionObj:Source_Socket_Address>
+                        <SocketAddressObj:Hostname is_domain_name="true">
+                            <HostnameObj:Hostname_Value>example.com</HostnameObj:Hostname_Value>
+                        </SocketAddressObj:Hostname>
+                        <SocketAddressObj:Port>
+                            <PortObj:Port_Value>5525</PortObj:Port_Value>
+                            <PortObj:Layer4_Protocol>UDP</PortObj:Layer4_Protocol>
+                        </SocketAddressObj:Port>
+                    </NetworkConnectionObj:Source_Socket_Address>
+                    <NetworkConnectionObj:Destination_Socket_Address>
+                        <SocketAddressObj:IP_Address>
+                            <AddressObj:Address_Value>198.49.123.10</AddressObj:Address_Value>
+                        </SocketAddressObj:IP_Address>
+                        <SocketAddressObj:Port>
+                            <PortObj:Port_Value>80</PortObj:Port_Value>
+                            <PortObj:Layer4_Protocol>DCCP</PortObj:Layer4_Protocol>
+                        </SocketAddressObj:Port>
+                    </NetworkConnectionObj:Destination_Socket_Address>
+                    <NetworkConnectionObj:Layer7_Connections>
+                        <NetworkConnectionObj:HTTP_Session object_reference="example:Object-f39f745f-d36b-4dca-9a3e-16bb1c5516f0"/>
+                    </NetworkConnectionObj:Layer7_Connections>
+                </cybox:Properties>
+            </cybox:Object>
+        </cybox:Observable>
+        <cybox:Observable id="example:Observable-72cdd00a-ec5e-4b84-ab09-f83ea5147961">
+            <cybox:Object id="example:Object-f39f745f-d36b-4dca-9a3e-16bb1c5516f0">
+                <cybox:Properties xsi:type="HTTPSessionObj:HTTPSessionObjectType">
+                    <HTTPSessionObj:HTTP_Request_Response>
+                        <HTTPSessionObj:HTTP_Client_Request>
+                            <HTTPSessionObj:HTTP_Request_Line>
+                                <HTTPSessionObj:HTTP_Method datatype="string">GET</HTTPSessionObj:HTTP_Method>
+                                <HTTPSessionObj:Value>/download.html</HTTPSessionObj:Value>
+                                <HTTPSessionObj:Version>HTTP/1.1</HTTPSessionObj:Version>
+                            </HTTPSessionObj:HTTP_Request_Line>
+                            <HTTPSessionObj:HTTP_Request_Header>
+                                <HTTPSessionObj:Parsed_Header>
+                                    <HTTPSessionObj:Accept>text/plain</HTTPSessionObj:Accept>
+                                    <HTTPSessionObj:Accept_Charset>utf-8</HTTPSessionObj:Accept_Charset>
+                                    <HTTPSessionObj:Authorization>Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==</HTTPSessionObj:Authorization>
+                                    <HTTPSessionObj:Cache_Control>no-cache</HTTPSessionObj:Cache_Control>
+                                    <HTTPSessionObj:Accept_Datetime>Thu, 31 May 2007 20:35:00 GMT</HTTPSessionObj:Accept_Datetime>
+                                    <HTTPSessionObj:Accept_Encoding>gzip, deflate</HTTPSessionObj:Accept_Encoding>
+                                    <HTTPSessionObj:Connection>close</HTTPSessionObj:Connection>
+                                    <HTTPSessionObj:User_Agent>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.6) Gecko/20040113</HTTPSessionObj:User_Agent>
+                                    <HTTPSessionObj:Cookie>PHPSESSID=r2t5uvjq435r4q7ib3vtdjq120</HTTPSessionObj:Cookie>
+                                </HTTPSessionObj:Parsed_Header>
+                            </HTTPSessionObj:HTTP_Request_Header>
+                            <HTTPSessionObj:HTTP_Message_Body>
+                                <HTTPSessionObj:Length>200</HTTPSessionObj:Length>
+                                <HTTPSessionObj:Message_Body>aaaaaaaaaaaaaaaaaaaaaaaa</HTTPSessionObj:Message_Body>
+                            </HTTPSessionObj:HTTP_Message_Body>
+                        </HTTPSessionObj:HTTP_Client_Request>
+                        <HTTPSessionObj:HTTP_Server_Response>
+                            <HTTPSessionObj:HTTP_Status_Line>
+                                <HTTPSessionObj:Version>HTTP/1.1</HTTPSessionObj:Version>
+                                <HTTPSessionObj:Status_Code>200</HTTPSessionObj:Status_Code>
+                                <HTTPSessionObj:Reason_Phrase>OK</HTTPSessionObj:Reason_Phrase>
+                            </HTTPSessionObj:HTTP_Status_Line>
+                            <HTTPSessionObj:HTTP_Response_Header>
+                                <HTTPSessionObj:Parsed_Header>
+                                    <HTTPSessionObj:Server>Apache</HTTPSessionObj:Server>
+                                    <HTTPSessionObj:Transfer_Encoding>chunked</HTTPSessionObj:Transfer_Encoding>
+                                </HTTPSessionObj:Parsed_Header>
+                            </HTTPSessionObj:HTTP_Response_Header>
+                        </HTTPSessionObj:HTTP_Server_Response>
+                    </HTTPSessionObj:HTTP_Request_Response>
+                </cybox:Properties>
+            </cybox:Object>
+        </cybox:Observable>
+    </stix:Observables>
+</stix:STIX_Package>

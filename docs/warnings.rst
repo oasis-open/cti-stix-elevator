@@ -67,7 +67,7 @@ Kill Chains type in *[id]* not supported in STIX 2.x                            
 Victim Target in *[id]* did not yield any STIX 2.x object                                                                                      414     warn
 TTP *[id]* did not generate any STIX 2.x object                                                                                                415     error
 No STIX 2.x object generated from embedded object *[id]*                                                                                       416     warn
-[object type] did not yield any STIX 2.x object                                                                                                417     warn
+*[object type]* did not yield any STIX 2.x object                                                                                              417     warn
 The *[property]* property of *[STIX 1.x object type]* is not part of STIX 2.x                                                                  418     warn
 ``NO MESSAGE ASSIGNED``                                                                                                                        419
 Windows Handles are not a part of STIX 2.x                                                                                                     420     warn
@@ -126,7 +126,7 @@ No object mapped to *[old_id]*                                                  
 Could not associate *[old_id]* with None                                                                                                    611     error
 Identity *[id]* must have a name, using 'None'                                                                                              612     error
 No *[type]* properties found in *[object]*                                                                                                  613     warn
-``NO MESSAGE ASSIGNED``                                                                                                                     614
+Address direction in *[id]* is inconsistent, using 'src'"                                                                                   614     warn
 No ``WinProcess`` properties found in *[WinProcess]*                                                                                        615     warn
 No ``WinService`` properties found in *[WinService]*                                                                                        616     warn
 The custom property name *[property name]* does not adhere to the specification rules                                                       617     warn
@@ -148,6 +148,7 @@ Unknown phase_id *[phase_id]* in *[id]*                                         
 File path directory is empty *[file_path]*                                                                                                  633     warn
 Any artifact packaging data on *[id]* is not recoverable                                                                                    634     warn
 *[id]* contains a observable composition, which implies it not an observation, but a pattern and needs to be contained within an indicator. 635     warn
+Address direction in *[id]* is not provided, using 'src'                                                                                    636     warn
 =========================================================================================================================================== ====    =====
 
 STIX Elevator conversion based on assumptions
@@ -195,7 +196,7 @@ Message                                                                         
 Could not resolve Marking Structure *[id]*                                                                                                  801  warn
 1.x full file paths are not processed, yet                                                                                                  802  warn
 Location *[id]* may not contain all aspects of the STIX 1.x address object                                                                  803  warn
-``NO MESSAGE ASSIGNED``                                                                                                                     804
+Object reference *[id]* may not handled correctly                                                                                           804  warn
 CybOX object *[object]* not handled yet                                                                                                     805  warn
 Email *[property]* not handled yet                                                                                                          806  warn
 ``file:extended_properties:windows_pebinary_ext:optional_header`` is not implemented yet                                                    807  warn
