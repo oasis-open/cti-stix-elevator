@@ -4,6 +4,7 @@ from datetime import datetime
 import re
 
 # external
+from cybox.common import ObjectProperties
 from cybox.objects.account_object import Account
 from cybox.objects.address_object import Address
 from cybox.objects.archive_file_object import ArchiveFile
@@ -37,7 +38,8 @@ from six import text_type
 
 # internal
 from stix2elevator.common import (
-    ADDRESS_FAMILY_ENUMERATION, PDF_DOC_INFO_DICT_KEYS, SOCKET_OPTIONS, determine_socket_address_direction
+    ADDRESS_FAMILY_ENUMERATION, PDF_DOC_INFO_DICT_KEYS, SOCKET_OPTIONS,
+    determine_socket_address_direction
 )
 from stix2elevator.ids import (
     add_id_value, add_object_id_value, generate_sco_id, get_id_value,
@@ -55,15 +57,22 @@ from stix2elevator.vocab_mappings import (
 )
 
 
-def create_base_sco(type, other_properties=None, id_1x=None, env=None):
-    if id_1x and id_1x in _OBJECT_REFERENCES_SHELLS:
-        shell = _OBJECT_REFERENCES_SHELLS[id_1x]
-        shell.update(other_properties)
-        if env:
-            # remove shell, it will be added back when more complete
-            env.bundle_instance["objects"].remove(shell)
-        return shell
-    elif other_properties:
+def create_base_sco(type, prop1x=None, other_properties=None, env=None, generate_shell=False):
+    if prop1x and isinstance(prop1x, ObjectProperties):
+        obj1x = prop1x.parent
+        id_1x = obj1x.id_
+        if prop1x.object_reference and not generate_shell:
+            warn("Object references for %s in %s not handled yet", 804, type, id_1x)
+            return None
+        elif id_1x and id_1x in _OBJECT_REFERENCES_SHELLS:
+            shell = _OBJECT_REFERENCES_SHELLS[id_1x]
+            if other_properties:
+                shell.update(other_properties)
+            if env:
+                # remove shell, it will be added back when more complete
+                env.bundle_instance["objects"].remove(shell)
+            return shell
+    if other_properties:
         new_dict = other_properties
         new_dict["type"] = type
     else:
@@ -78,8 +87,8 @@ def finish_sco(instance, stix1x_id):
             add_id_value(stix1x_id, instance["id"])
 
 
-def convert_account(acc, obj1x_id):
-    account_dict = create_base_sco("user-account")
+def convert_account(acc):
+    account_dict = create_base_sco("user-account", acc)
     if acc.creation_date:
         account_dict["account_created"] = acc.creation_date.value
     if acc.last_accessed_time:
@@ -118,7 +127,7 @@ def convert_account(acc, obj1x_id):
                 account_dict["account_type"] = "windows-domain"
             else:
                 account_dict["account_type"] = "windows-local"
-    finish_sco(account_dict, obj1x_id)
+    finish_sco(account_dict, acc.parent.id_)
     return account_dict
 
 
@@ -147,7 +156,9 @@ def handle_related_objects_as_embedded_relationships(sco, related_objects, stix1
                 else:
                     sco[stix2x_rel_name] = text_type(ro.idref)
 
+
 _OBJECT_REFERENCES_SHELLS = {}
+
 
 def handle_object_reference(obj1x, type_, env, property="id"):
     objs2x = get_object_id_value(obj1x.object_reference)
@@ -156,7 +167,7 @@ def handle_object_reference(obj1x, type_, env, property="id"):
         obj2x = objs2x[0]
         return obj2x
     else:
-        shell_sco = create_base_sco(type_, {property: obj1x.object_reference}, env=env)
+        shell_sco = create_base_sco(type_, obj1x, other_properties={property: obj1x.object_reference}, env=env, generate_shell=True)
         _OBJECT_REFERENCES_SHELLS[obj1x.object_reference] = shell_sco
         return shell_sco
 
@@ -172,23 +183,24 @@ def get_address_type(add):
         return "email-addr"
 
 
-def convert_address(add, related_objects=None, obj1x_id=None, env=None):
+def convert_address(add, related_objects=None, env=None):
+    obj1x_id = add.parent.id_
     if add.address_value is None:
         if add.object_reference is None:
             return None
         else:
             return handle_object_reference(add, get_address_type(add), env)
     if add.category == add.CAT_IPV4:
-        instance = create_base_sco("ipv4-addr", {"value": handle_inclusive_ip_addresses(add.address_value, obj1x_id)}, obj1x_id, env)
+        instance = create_base_sco("ipv4-addr", add, other_properties={"value": handle_inclusive_ip_addresses(add.address_value, obj1x_id)}, env=env)
         handle_related_objects_as_embedded_relationships(instance, related_objects, "Resolved_To", "resolves_to_refs")
     elif add.category == add.CAT_IPV6:
         # TODO: handle ipv6 CIDRs
-        instance = create_base_sco("ipv6-addr", {"value": text_type(add.address_value)}, obj1x_id, env)
+        instance = create_base_sco("ipv6-addr", add, other_properties={"value": text_type(add.address_value)}, env=env)
         handle_related_objects_as_embedded_relationships(instance, related_objects, "Resolved_To", "resolves_to_refs")
     elif add.category == add.CAT_MAC:
-        instance = create_base_sco("mac-addr", {"value": text_type(add.address_value)}, obj1x_id, env)
+        instance = create_base_sco("mac-addr", add, other_properties={"value": text_type(add.address_value)}, env=env)
     elif add.category == add.CAT_EMAIL:
-        instance = create_base_sco("email-addr", {"value": text_type(add.address_value)}, obj1x_id, env)
+        instance = create_base_sco("email-addr", add, other_properties={"value": text_type(add.address_value)}, env=env)
         handle_related_objects_as_embedded_relationships(instance, related_objects, "Related_To", "belongs_to_ref", more_than_one=False)
     else:
         warn("The address type %s is not part of STIX 2.x", 421, add.category)
@@ -264,11 +276,12 @@ def convert_artifact_packaging(packaging, instance, obj1x_id):
                      obj1x_id)
 
 
-def convert_artifact(art, obj1x_id):
+def convert_artifact(art):
+    obj1x_id = art.parent.id_
     if art.object_reference:
         warn("Object references of artifact %s is not handled, yet", 0, obj1x_id)
         return None
-    instance = create_base_sco("artifact")
+    instance = create_base_sco("artifact", art)
     if art.content_type:
         instance["mime_type"] = art.content_type
     if art.raw_artifact:
@@ -284,21 +297,21 @@ def convert_artifact(art, obj1x_id):
     return instance
 
 
-def convert_as(a_s, obj1x_id):
-    instance = create_base_sco("autonomous-system")
+def convert_as(a_s):
+    instance = create_base_sco("autonomous-system", a_s)
     if a_s.number:
         instance["number"] = int(a_s.number.value)
     if a_s.name:
         instance["name"] = a_s.name.value
     if a_s.regional_internet_registry:
         instance["rir"] = a_s.regional_internet_registry.value
-    finish_sco(instance, obj1x_id)
+    finish_sco(instance, a_s.parent.id_)
     return instance
 
 
-def convert_uri(uri, obj1x_id):
-    instance = create_base_sco("url", {"value": uri.value.value})
-    finish_sco(instance, obj1x_id)
+def convert_uri(uri):
+    instance = create_base_sco("url", uri, other_properties={"value": uri.value.value})
+    finish_sco(instance, uri.parent.id_)
     return instance
 
 
@@ -439,7 +452,7 @@ def convert_windows_executable_file(f):
     return w_ex_dict
 
 
-def convert_archive_file20(f, obj1x_id):
+def convert_archive_file20(f):
     index = 0
     archive_dict = dict()
     file_objs = dict()
@@ -451,12 +464,12 @@ def convert_archive_file20(f, obj1x_id):
         archive_dict["contains_refs"] = list()
         for ar_file in f.archived_file:
             archive_dict["contains_refs"].append(text_type(index))
-            ar_file2x, index = convert_file(ar_file, None, obj1x_id, index)
+            ar_file2x, index = convert_file(ar_file, None, f.parent.id_, index)
             file_objs.update(ar_file2x)
     return archive_dict, file_objs
 
 
-def convert_archive_file21(f, obj1x_id):
+def convert_archive_file21(f):
     archive_dict = {}
     file_objs = []
     if f.comment:
@@ -467,7 +480,7 @@ def convert_archive_file21(f, obj1x_id):
             archive_dict[property_name] = f.version
     if f.archived_file:
         for ar_file in f.archived_file:
-            ar_file2x, ignore = convert_file(ar_file, None, obj1x_id)
+            ar_file2x, ignore = convert_file(ar_file, None, f.parent.id_)
             file_objs.extend(ar_file2x)
         archive_dict["contains_refs"] = [x["id"] for x in file_objs]
     return archive_dict, file_objs
@@ -515,8 +528,9 @@ def clear_directory_path_mappings():
     _DIRECTORY_PATHS = {}
 
 
-def convert_file_properties(f, obj1x_id):
-    file_dict = create_base_sco("file")
+def convert_file_properties(f):
+    file_dict = create_base_sco("file", f)
+    obj1x_id = f.parent.id_
     extended_properties = {}
     dir_dict = None
     if f.size is not None:
@@ -565,7 +579,7 @@ def convert_file_properties(f, obj1x_id):
         dir_path = f.file_path.value[0: index]
         if dir_path:
             full_path = f.device_path.value if f.device_path else ""
-            dir_dict = create_base_sco("directory", {"path": full_path + dir_path})
+            dir_dict = create_base_sco("directory", other_properties={"path": full_path + dir_path})
             finish_sco(dir_dict, None)
     if f.full_path:
         warn("1.x full file paths are not processed, yet", 802)
@@ -577,9 +591,9 @@ def convert_file_properties(f, obj1x_id):
             warn("No WinExecutableFile properties found in %s", 613, text_type(f))
     if isinstance(f, ArchiveFile):
         if get_option_value("spec_version") == "2.0":
-            archive_file_dict, file_objs = convert_archive_file20(f, obj1x_id)
+            archive_file_dict, file_objs = convert_archive_file20(f)
         else:
-            archive_file_dict, file_objs = convert_archive_file21(f, obj1x_id)
+            archive_file_dict, file_objs = convert_archive_file21(f)
         if archive_file_dict:
             extended_properties["archive-ext"] = archive_file_dict
         else:
@@ -604,10 +618,10 @@ def convert_file_properties(f, obj1x_id):
     return file_dict, dir_dict, file_objs
 
 
-def convert_file20(f, related_objects, obj1x_id, index=0):
+def convert_file20(f, related_objects, index=0):
     objs = {}
     file_obj_index = index
-    objs[text_type(index)], dir_dict, file_objs = convert_file_properties(f, obj1x_id)
+    objs[text_type(index)], dir_dict, file_objs = convert_file_properties(f)
     if dir_dict:
         if index_in_directory_path_mapping(dir_dict["path"]):
             objs[text_type(index)]["parent_directory_ref"] = text_type(get_index_from_directory_path_mapping(dir_dict["path"]))
@@ -628,8 +642,8 @@ def convert_file20(f, related_objects, obj1x_id, index=0):
     return objs, index
 
 
-def convert_file21(f, related_objects, obj1x_id):
-    file_dict, dir_dict, file_objs = convert_file_properties(f, obj1x_id)
+def convert_file21(f, related_objects):
+    file_dict, dir_dict, file_objs = convert_file_properties(f)
     objs = [file_dict]
     if dir_dict:
         objs.append(dir_dict)
@@ -644,11 +658,11 @@ def convert_file21(f, related_objects, obj1x_id):
     return objs
 
 
-def convert_file(f, related_objects, obj1x_id, index=0):
+def convert_file(f, related_objects, index=0):
     if get_option_value("spec_version") == "2.0":
-        return convert_file20(f, related_objects, obj1x_id, index)
+        return convert_file20(f, related_objects, index)
     else:
-        return convert_file21(f, related_objects, obj1x_id), None
+        return convert_file21(f, related_objects,), None
 
 
 def convert_attachment(attachment):
@@ -656,10 +670,10 @@ def convert_attachment(attachment):
     return {"body_raw_ref": attachment.object_reference, "content_type": "text/plain"}
 
 
-def convert_email_message(email_message, obj1x_id):
+def convert_email_message(email_message):
     index = 0
     spec_version = get_option_value("spec_version")
-    email_dict = create_base_sco("email-message", {"is_multipart": False})  # the default
+    email_dict = create_base_sco("email-message", email_message, {"is_multipart": False})  # the default
     if spec_version == "2.0":
         objs = dict()
         objs[text_type(index)] = email_dict
@@ -741,7 +755,7 @@ def convert_email_message(email_message, obj1x_id):
         else:
             warn("Missing property '%s' is ignored", 307, "links")
     if email_message.raw_body:
-        raw_body_obj = create_base_sco("artifact", {"payload_bin": encode_in_base64(text_type(email_message.raw_body))})
+        raw_body_obj = create_base_sco("artifact", other_properties={"payload_bin": encode_in_base64(text_type(email_message.raw_body))})
         finish_sco(raw_body_obj, None)
         if get_option_value("spec_version") == "2.0":
             if raw_body_obj:
@@ -752,12 +766,12 @@ def convert_email_message(email_message, obj1x_id):
             if raw_body_obj:
                 email_dict["raw_email_ref"] = raw_body_obj["id"]
                 objs.append(raw_body_obj)
-    finish_sco(email_dict, obj1x_id)
+    finish_sco(email_dict, email_message.parent.id_)
     return objs
 
 
-def convert_registry_key(reg_key, obj1x_id):
-    cybox_reg = create_base_sco("windows-registry-key")
+def convert_registry_key(reg_key):
+    cybox_reg = create_base_sco("windows-registry-key", reg_key)
     user_obj = None
     if reg_key.key or reg_key.hive:
         full_key = ""
@@ -784,9 +798,9 @@ def convert_registry_key(reg_key, obj1x_id):
             cybox_reg["modified"] = convert_timestamp_to_string(reg_key.modified_time.value)
         else:
             cybox_reg["modified_time"] = convert_timestamp_to_string(reg_key.modified_time.value)
-    finish_sco(cybox_reg, obj1x_id)
+    finish_sco(cybox_reg, reg_key.parent.id_)
     if reg_key.creator_username:
-        user_obj = create_base_sco("user-account", {"user_id": text_type(reg_key.creator_username)})
+        user_obj = create_base_sco("user-account", other_properties={"user_id": text_type(reg_key.creator_username)})
         finish_sco(user_obj, None)
     if get_option_value("spec_version") == "2.0":
         result = dict()
@@ -804,7 +818,7 @@ def convert_registry_key(reg_key, obj1x_id):
 
 def create_process_ref(cp, process_dict, objs, index, prop):
     spec_version = get_option_value("spec_version")
-    cp_ref = create_base_sco("process", {"pid": cp.value})
+    cp_ref = create_base_sco("process", other_properties={"pid": cp.value})
     if get_option_value("spec_version") == "2.0":
         objs[text_type(index)] = cp_ref
     else:
@@ -824,14 +838,14 @@ def create_process_ref(cp, process_dict, objs, index, prop):
             process_dict[prop] = cp_ref["id"]
 
 
-def convert_port(prop, obj1x_id):
-    traffic_2x = create_base_sco("network-traffic")
+def convert_port(prop):
+    traffic_2x = create_base_sco("network-traffic", prop)
     if prop.port_value:
         warn("port number is assumed to be a destination port", 725)
         traffic_2x["dst_port"] = prop.port_value.value
     if prop.layer4_protocol:
         traffic_2x["protocols"] = [prop.layer4_protocol.value.lower()]
-    finish_sco(traffic_2x, obj1x_id)
+    finish_sco(traffic_2x, prop.parent.id_)
     return traffic_2x
 
 
@@ -861,9 +875,9 @@ def convert_opened_connection_refs21(process, process_dict, objs):
         process_dict["opened_connection_refs"].append(nc_dicts[0]["id"])
 
 
-def convert_process(process, obj1x_id):
+def convert_process(process):
     index = 0
-    process_dict = create_base_sco("process")
+    process_dict = create_base_sco("process", process)
     if get_option_value("spec_version") == "2.0":
         objs = {}
         objs[text_type(index)] = process_dict
@@ -892,7 +906,7 @@ def convert_process(process, obj1x_id):
         ii = process.image_info
         if ii.file_name:
             # TODO: check ii.current_directory and ii.path for more info
-            image_obj = create_base_sco("file", {"name": text_type(ii.file_name)})
+            image_obj = create_base_sco("file", other_properties={"name": text_type(ii.file_name)})
             finish_sco(image_obj, None)
             if get_option_value("spec_version") == "2.0":
                 process_dict["image_ref"] = text_type(index)
@@ -904,7 +918,7 @@ def convert_process(process, obj1x_id):
         if ii.command_line and get_option_value("spec_version") == "2.1":
             process_dict["command_line"] = text_type(ii.command_line)
     if process.username:
-        user_obj = create_base_sco("user-account", {"user_id": text_type(process.username)})
+        user_obj = create_base_sco("user-account", other_properties={"user_id": text_type(process.username)})
         finish_sco(user_obj, None)
         if get_option_value("spec_version") == "2.0":
             process_dict["creator_user_ref"] = text_type(index)
@@ -932,7 +946,7 @@ def convert_process(process, obj1x_id):
 
         if extended_properties:
             process_dict["extensions"] = extended_properties
-    finish_sco(process_dict, obj1x_id)
+    finish_sco(process_dict, process.parent.id_)
     if process.child_pid_list:
         for cp in process.child_pid_list:
             create_process_ref(cp, process_dict, objs, index, "child_refs")
@@ -985,7 +999,7 @@ def convert_windows_service(service):
         cybox_ws["service_status"] = map_vocabs_to_label(service.service_status, SERVICE_STATUS)
     if hasattr(service, "service_dll") and service.service_dll:
         # There is only one in STIX 1.x
-        ddl_file2x = create_base_sco("file", {"name": text_type(service.service_dll)})
+        ddl_file2x = create_base_sco("file", other_properties={"name": text_type(service.service_dll)})
         finish_sco(ddl_file2x, None)
         if get_option_value("spec_version") == "2.1":
             cybox_ws["service_dll_refs"] = [ddl_file2x["id"]]
@@ -993,20 +1007,20 @@ def convert_windows_service(service):
     return cybox_ws, None
 
 
-def convert_domain_name(domain_name, related_objects, obj1x_id):
-    cybox_dm = create_base_sco("domain-name")
+def convert_domain_name(domain_name, related_objects):
+    cybox_dm = create_base_sco("domain-name", domain_name)
     if domain_name.value:
         cybox_dm["value"] = text_type(domain_name.value.value)
     handle_related_objects_as_embedded_relationships(cybox_dm, related_objects, "Resolved_To", "resolves_to_refs")
-    finish_sco(cybox_dm, obj1x_id)
+    finish_sco(cybox_dm, domain_name.parent.id_)
     return cybox_dm
 
 
-def convert_mutex(mutex, obj1x_id):
-    cybox_mutex = create_base_sco("mutex")
+def convert_mutex(mutex):
+    cybox_mutex = create_base_sco("mutex", mutex)
     if mutex.name:
         cybox_mutex["name"] = text_type(mutex.name.value)
-    finish_sco(cybox_mutex, obj1x_id)
+    finish_sco(cybox_mutex, mutex.parent.id_)
     return cybox_mutex
 
 
@@ -1118,7 +1132,7 @@ def convert_http_client_request(request):
         if mb.length:
             http_extension["message_body_length"] = mb.length.value
         if mb.message_body:
-            body_obj = create_base_sco("artifact", {"payload_bin": encode_in_base64(text_type(mb.message_body))})
+            body_obj = create_base_sco("artifact", other_properties={"payload_bin": encode_in_base64(text_type(mb.message_body))})
             finish_sco(body_obj, None)
             if get_option_value("spec_version") == "2.1":
                 http_extension["message_body_data_ref"] = body_obj["id"]
@@ -1132,9 +1146,9 @@ def convert_http_network_connection_extension(http):
         return convert_http_client_request(http.http_client_request)
 
 
-def create_domain_name_object(dn, obj1x_id):
-    instance = create_base_sco("domain-name", {"value": text_type(dn.value)})
-    finish_sco(instance, obj1x_id)
+def create_domain_name_object(dn):
+    instance = create_base_sco("domain-name", dn, other_properties={"value": text_type(dn.value)})
+    finish_sco(instance, None)
     return instance
 
 
@@ -1145,7 +1159,7 @@ def convert_socket_address_1(sock_add_1x, cybox_traffic, objs, spec_version, ind
         if sock_add_1x.port.layer4_protocol is not None:
             cybox_traffic["protocols"].append(text_type(sock_add_1x.port.layer4_protocol.value.lower()))
     if sock_add_1x.ip_address is not None:
-        add = convert_address(sock_add_1x.ip_address, None, sock_add_1x.parent.id_, env)
+        add = convert_address(sock_add_1x.ip_address, env=env)
         if spec_version == "2.0":
             cybox_traffic[src_or_dst + "_ref"] = text_type(index)
             objs[text_type(index)] = add
@@ -1157,7 +1171,7 @@ def convert_socket_address_1(sock_add_1x, cybox_traffic, objs, spec_version, ind
 
     elif sock_add_1x.hostname is not None:
         if sock_add_1x.hostname.is_domain_name and sock_add_1x.hostname.hostname_value is not None:
-            domain = create_domain_name_object(sock_add_1x.hostname.hostname_value, sock_add_1x.parent.id_)
+            domain = create_domain_name_object(sock_add_1x.hostname.hostname_value)
             cybox_traffic[src_or_dst + "_ref"] = text_type(index) if spec_version == "2.0" else domain["id"]
             if spec_version == "2.0":
                 objs[text_type(index)] = domain
@@ -1167,7 +1181,7 @@ def convert_socket_address_1(sock_add_1x, cybox_traffic, objs, spec_version, ind
 
         elif (sock_add_1x.hostname.naming_system is not None and
               any(x.value == "DNS" for x in sock_add_1x.hostname.naming_system)):
-            domain = create_domain_name_object(sock_add_1x.hostname.hostname_value, sock_add_1x.parent.id_)
+            domain = create_domain_name_object(sock_add_1x.hostname.hostname_value)
             cybox_traffic[src_or_dst + "_ref"] = text_type(index) if spec_version == "2.0" else domain["id"]
             if spec_version == "2.0":
                 objs[text_type(index)] = domain
@@ -1177,7 +1191,7 @@ def convert_socket_address_1(sock_add_1x, cybox_traffic, objs, spec_version, ind
     return index
 
 
-def convert_network_connection(conn, obj1x_id, env=None):
+def convert_network_connection(conn, env=None):
     index = 1
     spec_version = get_option_value("spec_version")
     cybox_traffic = {}
@@ -1214,7 +1228,7 @@ def convert_network_connection(conn, obj1x_id, env=None):
                 nt = handle_object_reference(conn.layer7_connections.http_session, "network-traffic", env, "extensions")
                 cybox_traffic["extensions"] = nt["extensions"]
             else:
-            # HTTP extension
+                # HTTP extension
                 cybox_traffic["extensions"] = {}
                 request_responses = conn.layer7_connections.http_session.http_request_response
                 if request_responses:
@@ -1239,7 +1253,7 @@ def convert_network_connection(conn, obj1x_id, env=None):
             objs["0"] = cybox_traffic
             index += 1
         else:
-            finish_sco(cybox_traffic, obj1x_id)
+            finish_sco(cybox_traffic, conn.parent.id_)
             # network traffic object must be first
             objs.insert(0, cybox_traffic)
 
@@ -1267,13 +1281,13 @@ def split_into_requests_and_responses(req_resp_list):
     return requests, responses
 
 
-def convert_http_session(session, obj1x_id):
+def convert_http_session(session):
     if session.http_request_response:
         requests, responses = split_into_requests_and_responses(session.http_request_response)
         if len(responses) != 0:
             warn("HTTPServerResponse type is not supported in STIX 2.x", 429)
         if len(requests) >= 1:
-            cybox_traffic = create_base_sco("network-traffic")
+            cybox_traffic = create_base_sco("network-traffic", session)
             request_ext, body_obj = convert_http_client_request(requests[0])
             cybox_traffic["extensions"] = {"http-request-ext": request_ext}
             if len(requests) > 1:
@@ -1285,7 +1299,7 @@ def convert_http_session(session, obj1x_id):
                     objs["1"] = body_obj
                 return objs
             else:
-                finish_sco(cybox_traffic, obj1x_id)
+                finish_sco(cybox_traffic, session.parent.id_)
                 if body_obj:
                     return [cybox_traffic, body_obj]
                 else:
@@ -1303,7 +1317,7 @@ def create_icmp_extension(icmp_header):
     return imcp_extension
 
 
-def convert_network_packet(packet, obj1x_id):
+def convert_network_packet(packet):
     if packet.internet_layer:
         internet_layer = packet.internet_layer
         if internet_layer.ipv4 or internet_layer.ipv6:
@@ -1315,9 +1329,9 @@ def convert_network_packet(packet, obj1x_id):
                 icmp_header = internet_layer.icmpv6.icmpv6_header
             else:
                 return None
-            cybox_traffic = create_base_sco("network-traffic")
+            cybox_traffic = create_base_sco("network-traffic", packet)
             cybox_traffic["extensions"] = {"icmp-ext": create_icmp_extension(icmp_header)}
-            finish_sco(cybox_traffic, obj1x_id)
+            finish_sco(cybox_traffic, packet.parent.id_)
             return cybox_traffic
 
 
@@ -1329,8 +1343,8 @@ def convert_socket_options(options):
     return socket_options
 
 
-def convert_network_socket(socket, obj1x_id):
-    cybox_traffic = create_base_sco("network-traffic")
+def convert_network_socket(socket):
+    cybox_traffic = create_base_sco("network-traffic", socket)
     socket_extension = {}
     if socket.is_blocking:
         socket_extension["is_blocking"] = socket.is_blocking
@@ -1359,24 +1373,30 @@ def convert_network_socket(socket, obj1x_id):
     if socket.protocol:
         cybox_traffic["protocols"] = [socket.protocol.value.lower()]
     cybox_traffic["extensions"] = {"socket-ext": socket_extension}
-    finish_sco(cybox_traffic, obj1x_id)
+    finish_sco(cybox_traffic, socket.parent.id_)
     return cybox_traffic
 
 
-def convert_socket_address(sock_add_1x, obj1x_id, env=None):
+def convert_socket_address(sock_add_1x, env=None):
     spec_version = get_option_value("spec_version")
-    instance = create_base_sco("network-traffic")
+    instance = create_base_sco("network-traffic", sock_add_1x)
     if spec_version == "2.0":
         objs = {}
     else:
         objs = []
 
-    convert_socket_address_1(sock_add_1x, instance, objs, spec_version, 0, direction, env)
+    convert_socket_address_1(sock_add_1x,
+                             instance,
+                             objs,
+                             spec_version,
+                             0,
+                             determine_socket_address_direction(sock_add_1x, sock_add_1x.parent.id_),
+                             env)
     return objs
 
 
-def convert_product(prod, obj1x_id):
-    instance = create_base_sco("software")
+def convert_product(prod):
+    instance = create_base_sco("software", prod)
     if prod.product:
         instance["name"] = prod.product.value
     if prod.vendor:
@@ -1385,7 +1405,7 @@ def convert_product(prod, obj1x_id):
         instance["version"] = prod.version.value
     if prod.language:
         instance["languages"] = [prod.language.value]
-    finish_sco(instance, obj1x_id)
+    finish_sco(instance, prod.parent.id_)
     return instance
 
 
@@ -1438,8 +1458,8 @@ _X509_PROPERTY_MAP = \
 # version
 
 
-def convert_x509_certificate(x509, obj1x_id):
-    x509_obj = create_base_sco("x509-certificate")
+def convert_x509_certificate(x509):
+    x509_obj = create_base_sco("x509-certificate", x509)
     if x509.certificate:
         cert = x509.certificate
         for prop_tuple in _X509_PROPERTY_MAP:
@@ -1467,7 +1487,7 @@ def convert_x509_certificate(x509, obj1x_id):
             ext_dict = convert_v3_extension(cert.standard_extensions)
             if ext_dict:
                 x509_obj["x509_v3_extensions"] = ext_dict
-    finish_sco(x509_obj, obj1x_id)
+    finish_sco(x509_obj, x509.parent.id_)
     return x509_obj
 
 
@@ -1485,47 +1505,47 @@ def convert_cybox_object20(obj1x):
     if prop is None:
         return None
     elif isinstance(prop, Address):
-        objs["0"] = convert_address(prop, related_objects, obj1x.id_)
+        objs["0"] = convert_address(prop, related_objects)
     elif isinstance(prop, Artifact):
-        objs["0"] = convert_artifact(prop, obj1x.id_)
+        objs["0"] = convert_artifact(prop)
     elif isinstance(prop, AutonomousSystem):
-        objs["0"] = convert_as(prop, obj1x.id_)
+        objs["0"] = convert_as(prop)
     elif isinstance(prop, URI):
-        objs["0"] = convert_uri(prop, obj1x.id_)
+        objs["0"] = convert_uri(prop)
     elif isinstance(prop, EmailMessage):
         # potentially returns multiple objects
-        objs = convert_email_message(prop, obj1x.id_)
+        objs = convert_email_message(prop)
     elif isinstance(prop, File):
         # potentially returns multiple objects
-        objs, ignore = convert_file20(prop, related_objects, obj1x.id_)
+        objs, ignore = convert_file20(prop, related_objects)
     elif isinstance(prop, WinRegistryKey):
-        objs = convert_registry_key(prop, obj1x.id_)
+        objs = convert_registry_key(prop)
     elif isinstance(prop, Process):
-        objs = convert_process(prop, obj1x.id_)
+        objs = convert_process(prop)
     elif isinstance(prop, Product):
-        objs["0"] = convert_product(prop, obj1x.id_)
+        objs["0"] = convert_product(prop)
     elif isinstance(prop, DomainName):
-        objs["0"] = convert_domain_name(prop, related_objects, obj1x.id_)
+        objs["0"] = convert_domain_name(prop, related_objects)
     elif isinstance(prop, Mutex):
-        objs["0"] = convert_mutex(prop, obj1x.id_)
+        objs["0"] = convert_mutex(prop)
     elif isinstance(prop, NetworkConnection):
         # potentially returns multiple objects
-        objs = convert_network_connection(prop, obj1x.id_)
+        objs = convert_network_connection(prop)
     elif isinstance(prop, Account):
-        objs["0"] = convert_account(prop, obj1x.id_)
+        objs["0"] = convert_account(prop)
     elif isinstance(prop, Port):
-        objs["0"] = convert_port(prop, obj1x.id_)
+        objs["0"] = convert_port(prop)
     elif isinstance(prop, HTTPSession):
-        objs = convert_http_session(prop, obj1x.id_)
+        objs = convert_http_session(prop)
     elif isinstance(prop, NetworkPacket):
-        objs["0"] = convert_network_packet(prop, obj1x.id_)
+        objs["0"] = convert_network_packet(prop)
     elif isinstance(prop, NetworkSocket):
-        objs["0"] = convert_network_socket(prop, obj1x.id_)
+        objs["0"] = convert_network_socket(prop)
     elif isinstance(prop, X509Certificate):
-        objs["0"] = convert_x509_certificate(prop, obj1x.id_)
+        objs["0"] = convert_x509_certificate(prop)
     elif isinstance(prop, SocketAddress):
         # returns a dict
-        objs = convert_socket_address(prop, obj1x.id_)
+        objs = convert_socket_address(prop)
     else:
         warn("CybOX object %s not handled yet", 805, text_type(type(prop)))
         return None
@@ -1549,46 +1569,46 @@ def convert_cybox_object21(obj1x, env):
     if prop is None:
         return None
     elif isinstance(prop, Address):
-        objs = [convert_address(prop, related_objects, obj1x.id_, env)]
+        objs = [convert_address(prop, related_objects, env)]
     elif isinstance(prop, Artifact):
-        objs = [convert_artifact(prop, obj1x.id_)]
+        objs = [convert_artifact(prop)]
     elif isinstance(prop, AutonomousSystem):
-        objs = [convert_as(prop, obj1x.id_)]
+        objs = [convert_as(prop)]
     elif isinstance(prop, URI):
-        objs = [convert_uri(prop, obj1x.id_)]
+        objs = [convert_uri(prop)]
     elif isinstance(prop, EmailMessage):
         # potentially returns multiple objects
-        objs = convert_email_message(prop, obj1x.id_)
+        objs = convert_email_message(prop)
     elif isinstance(prop, File):
         # potentially returns multiple objects
-        objs = convert_file21(prop, related_objects, obj1x.id_)
+        objs = convert_file21(prop, related_objects)
     elif isinstance(prop, WinRegistryKey):
-        objs = convert_registry_key(prop, obj1x.id_)
+        objs = convert_registry_key(prop)
     elif isinstance(prop, Process):
-        objs = convert_process(prop, obj1x.id_)
+        objs = convert_process(prop)
     elif isinstance(prop, Product):
-        objs = [convert_product(prop, obj1x.id_)]
+        objs = [convert_product(prop)]
     elif isinstance(prop, DomainName):
-        objs = [convert_domain_name(prop, related_objects, obj1x.id_)]
+        objs = [convert_domain_name(prop, related_objects)]
     elif isinstance(prop, Mutex):
-        objs = [convert_mutex(prop, obj1x.id_)]
+        objs = [convert_mutex(prop)]
     elif isinstance(prop, NetworkConnection):
         # potentially returns multiple objects
-        objs = convert_network_connection(prop, obj1x.id_, env)
+        objs = convert_network_connection(prop, env)
     elif isinstance(prop, Account):
-        objs = [convert_account(prop, obj1x.id_)]
+        objs = [convert_account(prop)]
     elif isinstance(prop, Port):
-        objs = [convert_port(prop, obj1x.id_)]
+        objs = [convert_port(prop)]
     elif isinstance(prop, HTTPSession):
-        objs = convert_http_session(prop, obj1x.id_)
+        objs = convert_http_session(prop)
     elif isinstance(prop, NetworkPacket):
-        objs = [convert_network_packet(prop, obj1x.id_)]
+        objs = [convert_network_packet(prop)]
     elif isinstance(prop, NetworkSocket):
-        objs = [convert_network_socket(prop, obj1x.id_)]
+        objs = [convert_network_socket(prop)]
     elif isinstance(prop, X509Certificate):
-        objs = [convert_x509_certificate(prop, obj1x.id_)]
+        objs = [convert_x509_certificate(prop)]
     elif isinstance(prop, SocketAddress):
-        objs = convert_socket_address(prop, obj1x.id_, env)
+        objs = convert_socket_address(prop, env)
     else:
         warn("CybOX object %s not handled yet", 805, text_type(type(prop)))
         return None
@@ -1631,7 +1651,6 @@ def renumber_co(co, number_mapping):
 
 
 def renumber_objs(objs, number_mapping):
-
     new_objects = {}
     for k, v in objs.items():
         new_objects[number_mapping[k]] = renumber_co(v, number_mapping)
@@ -1789,7 +1808,7 @@ def resolve_object_references20(obsers):
             if obj["type"] == "network-traffic":
                 if "extensions" in obj and property_contains_stix1x_id(obj, "extensions"):
                     object2x = get_object_id_value(obj["extensions"])
-                    if len(object2x) ==  1:
+                    if len(object2x) == 1:
                         if "extensions" in object2x["0"]:
                             obj["extensions"] = object2x["0"]["extensions"]
                         # what if no extensions property?

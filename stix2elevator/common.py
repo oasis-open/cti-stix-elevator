@@ -1,3 +1,4 @@
+# internal
 from stix2elevator.options import warn
 
 SOCKET_OPTIONS = [

@@ -43,7 +43,8 @@ import stixmarx
 
 # internal
 from stix2elevator.common import (
-    ADDRESS_FAMILY_ENUMERATION, PDF_DOC_INFO_DICT_KEYS, SOCKET_OPTIONS, determine_socket_address_direction
+    ADDRESS_FAMILY_ENUMERATION, PDF_DOC_INFO_DICT_KEYS, SOCKET_OPTIONS,
+    determine_socket_address_direction
 )
 from stix2elevator.convert_cybox import split_into_requests_and_responses
 from stix2elevator.ids import (

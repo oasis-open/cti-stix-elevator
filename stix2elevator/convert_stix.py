@@ -41,8 +41,8 @@ from stixmarx import navigator
 from stix2elevator.confidence import convert_confidence
 from stix2elevator.convert_cybox import (
     convert_cybox_object20, convert_cybox_object21, embedded_property_ref_name,
-    fix_cybox_relationships, fix_sco_embedded_refs, resolve_object_references20,
-    resolve_object_references21
+    fix_cybox_relationships, fix_sco_embedded_refs,
+    resolve_object_references20, resolve_object_references21
 )
 from stix2elevator.convert_pattern import (
     ComparisonExpressionForElevator, CompoundObservationExpressionForElevator,
@@ -1034,11 +1034,11 @@ def convert_incident(incident, env):
     else:  # 2.1
         add_confidence_to_object(incident_instance, incident.confidence)
 
-    # process information source before any relationships
-    if incident.related_indicators is not None:
-        handle_relationship_from_refs(incident.related_indicators, incident_instance["id"], new_env, "indicates")
+    # process related observables first
     if incident.related_observables is not None:
         handle_relationship_from_refs(incident.related_observables, incident_instance["id"], new_env, "part-of")
+    if incident.related_indicators is not None:
+        handle_relationship_from_refs(incident.related_indicators, incident_instance["id"], new_env, "indicates")
     if incident.leveraged_ttps is not None:
         warn("Using %s for the %s of %s", 718, "related-to", "leveraged TTPs", incident.id_)
         handle_relationship_to_refs(incident.leveraged_ttps, incident_instance["id"], new_env, "related-to")

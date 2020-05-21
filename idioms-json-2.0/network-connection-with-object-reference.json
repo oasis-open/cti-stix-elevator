@@ -1,0 +1,80 @@
+{
+    "id": "bundle--e33ffe07-2f4c-48d8-b0af-ee2619d765cf",
+    "objects": [
+        {
+            "created": "2020-05-21T12:20:38.222Z",
+            "first_observed": "2020-05-21T12:20:38.222Z",
+            "id": "observed-data--1aec7752-29e1-4018-806c-7a9a21ddb20e",
+            "last_observed": "2020-05-21T12:20:38.222Z",
+            "modified": "2020-05-21T12:20:38.222Z",
+            "number_observed": 1,
+            "objects": {
+                "0": {
+                    "dst_port": 80,
+                    "dst_ref": "2",
+                    "extensions": "example:Object-f39f745f-d36b-4dca-9a3e-16bb1c5516f0",
+                    "protocols": [
+                        "ipv4",
+                        "udp",
+                        "dccp",
+                        "tcp",
+                        "https"
+                    ],
+                    "src_port": 5525,
+                    "src_ref": "1",
+                    "start": "2011-08-05T07:14:55.000000Z",
+                    "type": "network-traffic"
+                },
+                "1": {
+                    "type": "domain-name",
+                    "value": "example.com"
+                },
+                "2": {
+                    "type": "ipv4-addr",
+                    "value": "198.49.123.10"
+                }
+            },
+            "type": "observed-data"
+        },
+        {
+            "created": "2020-05-21T12:20:38.222Z",
+            "first_observed": "2020-05-21T12:20:38.222Z",
+            "id": "observed-data--72cdd00a-ec5e-4b84-ab09-f83ea5147961",
+            "last_observed": "2020-05-21T12:20:38.222Z",
+            "modified": "2020-05-21T12:20:38.222Z",
+            "number_observed": 1,
+            "objects": {
+                "0": {
+                    "extensions": {
+                        "http-request-ext": {
+                            "message_body_data_ref": "1",
+                            "message_body_length": 200,
+                            "request_header": {
+                                "Accept": "text/plain",
+                                "Accept-Charset": "utf-8",
+                                "Accept-Datetime": "Thu, 31 May 2007 20:35:00 GMT",
+                                "Accept-Encoding": "gzip, deflate",
+                                "Authorization": "Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==",
+                                "Cache-Control": "no-cache",
+                                "Connection": "close",
+                                "Cookie": "PHPSESSID=r2t5uvjq435r4q7ib3vtdjq120",
+                                "User-Agent": "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.6) Gecko/20040113"
+                            },
+                            "request_method": "get",
+                            "request_value": "/download.html",
+                            "request_version": "http/1.1"
+                        }
+                    },
+                    "type": "network-traffic"
+                },
+                "1": {
+                    "payload_bin": "YWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFh",
+                    "type": "artifact"
+                }
+            },
+            "type": "observed-data"
+        }
+    ],
+    "spec_version": "2.0",
+    "type": "bundle"
+}
