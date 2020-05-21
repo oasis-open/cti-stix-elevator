@@ -70,20 +70,20 @@
                     },
                     "name": "VirusShare_5d8129be965fab8115eca34fc84bd7f0",
                     "opened_connection_refs": [
-                        "2"
+                        "1"
                     ],
                     "parent_ref": "5",
                     "pid": 1700,
                     "type": "process"
                 },
                 "1": {
-                    "type": "ipv4-addr",
-                    "value": "198.49.123.10"
+                    "dst_port": 80,
+                    "dst_ref": "2",
+                    "type": "network-traffic"
                 },
                 "2": {
-                    "dst_port": 80,
-                    "dst_ref": "1",
-                    "type": "network-traffic"
+                    "type": "ipv4-addr",
+                    "value": "198.49.123.10"
                 },
                 "3": {
                     "type": "user-account",

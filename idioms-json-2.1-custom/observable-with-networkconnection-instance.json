@@ -2,21 +2,6 @@
     "id": "bundle--e33ffe07-2f4c-48d8-b0af-ee2619d765cf",
     "objects": [
         {
-            "id": "domain-name--220a2699-5ebf-5b57-bf02-424964bb19c0",
-            "type": "domain-name",
-            "value": "example.com"
-        },
-        {
-            "id": "ipv4-addr--c5a216ae-2184-5acd-b145-2d1321457d0b",
-            "type": "ipv4-addr",
-            "value": "198.49.123.10"
-        },
-        {
-            "id": "artifact--8a7bf821-70fd-5624-88f2-e2fd2464aea0",
-            "payload_bin": "YWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFh",
-            "type": "artifact"
-        },
-        {
             "dst_port": 80,
             "dst_ref": "ipv4-addr--c5a216ae-2184-5acd-b145-2d1321457d0b",
             "extensions": {
@@ -51,7 +36,22 @@
             "src_ref": "domain-name--220a2699-5ebf-5b57-bf02-424964bb19c0",
             "start": "2011-08-05T07:14:55.000000Z",
             "type": "network-traffic"
+        },{
+            "id": "domain-name--220a2699-5ebf-5b57-bf02-424964bb19c0",
+            "type": "domain-name",
+            "value": "example.com"
         },
+        {
+            "id": "ipv4-addr--c5a216ae-2184-5acd-b145-2d1321457d0b",
+            "type": "ipv4-addr",
+            "value": "198.49.123.10"
+        },
+        {
+            "id": "artifact--8a7bf821-70fd-5624-88f2-e2fd2464aea0",
+            "payload_bin": "YWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFh",
+            "type": "artifact"
+        },
+
         {
             "created": "2019-08-21T13:10:48.439Z",
             "first_observed": "2019-08-21T13:10:48.439Z",
@@ -60,10 +60,10 @@
             "modified": "2019-08-21T13:10:48.439Z",
             "number_observed": 1,
             "object_refs": [
+                "network-traffic--d6c8c747-f552-5525-b498-ac02312d556c",
                 "domain-name--220a2699-5ebf-5b57-bf02-424964bb19c0",
                 "ipv4-addr--c5a216ae-2184-5acd-b145-2d1321457d0b",
-                "artifact--8a7bf821-70fd-5624-88f2-e2fd2464aea0",
-                "network-traffic--d6c8c747-f552-5525-b498-ac02312d556c"
+                "artifact--8a7bf821-70fd-5624-88f2-e2fd2464aea0"
             ],
             "spec_version": "2.1",
             "type": "observed-data"

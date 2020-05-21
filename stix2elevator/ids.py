@@ -248,3 +248,9 @@ def get_type_from_id(id, separator="--"):
 
 def is_stix1x_id(id):
     return id and id.find("--") == -1 and id.find("-") != -1
+
+
+def property_contains_stix1x_id(obj, property):
+    if property in obj:
+        value = obj[property]
+        return isinstance(value, text_type) and is_stix1x_id(value)

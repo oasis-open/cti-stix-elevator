@@ -48,22 +48,58 @@
             "value": "198.49.123.10"
         },
         {
+            "extensions": {
+                "http-request-ext": {
+                    "message_body_data_ref": "artifact--8a7bf821-70fd-5624-88f2-e2fd2464aea0",
+                    "message_body_length": 200,
+                    "request_header": {
+                        "Accept": "text/plain",
+                        "Accept-Charset": "utf-8",
+                        "Accept-Datetime": "Thu, 31 May 2007 20:35:00 GMT",
+                        "Accept-Encoding": "gzip, deflate",
+                        "Authorization": "Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==",
+                        "Cache-Control": "no-cache",
+                        "Connection": "close",
+                        "Cookie": "PHPSESSID=r2t5uvjq435r4q7ib3vtdjq120",
+                        "User-Agent": "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.6) Gecko/20040113"
+                    },
+                    "request_method": "get",
+                    "request_value": "/download.html",
+                    "request_version": "http/1.1"
+                }
+            },
+            "id": "network-traffic--8b3fd72b-be81-4da0-a8e8-d1cd31136aaf",
+            "type": "network-traffic"
+        },
+        {
             "id": "artifact--8a7bf821-70fd-5624-88f2-e2fd2464aea0",
             "payload_bin": "YWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFh",
             "type": "artifact"
         },
-
         {
-            "created": "2019-08-21T13:10:48.439Z",
-            "first_observed": "2019-08-21T13:10:48.439Z",
+            "created": "2020-05-17T10:06:22.030Z",
+            "first_observed": "2020-05-17T10:06:22.030Z",
             "id": "observed-data--1aec7752-29e1-4018-806c-7a9a21ddb20e",
-            "last_observed": "2019-08-21T13:10:48.439Z",
-            "modified": "2019-08-21T13:10:48.439Z",
+            "last_observed": "2020-05-17T10:06:22.030Z",
+            "modified": "2020-05-17T10:06:22.030Z",
             "number_observed": 1,
             "object_refs": [
                 "network-traffic--d6c8c747-f552-5525-b498-ac02312d556c",
                 "domain-name--220a2699-5ebf-5b57-bf02-424964bb19c0",
-                "ipv4-addr--c5a216ae-2184-5acd-b145-2d1321457d0b",
+                "ipv4-addr--c5a216ae-2184-5acd-b145-2d1321457d0b"
+            ],
+            "spec_version": "2.1",
+            "type": "observed-data"
+        },
+        {
+            "created": "2020-05-17T10:06:22.030Z",
+            "first_observed": "2020-05-17T10:06:22.030Z",
+            "id": "observed-data--72cdd00a-ec5e-4b84-ab09-f83ea5147961",
+            "last_observed": "2020-05-17T10:06:22.030Z",
+            "modified": "2020-05-17T10:06:22.030Z",
+            "number_observed": 1,
+            "object_refs": [
+                "network-traffic--8b3fd72b-be81-4da0-a8e8-d1cd31136aaf",
                 "artifact--8a7bf821-70fd-5624-88f2-e2fd2464aea0"
             ],
             "spec_version": "2.1",

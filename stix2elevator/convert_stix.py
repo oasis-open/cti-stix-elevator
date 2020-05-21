@@ -41,7 +41,8 @@ from stixmarx import navigator
 from stix2elevator.confidence import convert_confidence
 from stix2elevator.convert_cybox import (
     convert_cybox_object20, convert_cybox_object21, embedded_property_ref_name,
-    fix_cybox_relationships, fix_sco_embedded_refs
+    fix_cybox_relationships, fix_sco_embedded_refs,
+    resolve_object_references20, resolve_object_references21
 )
 from stix2elevator.convert_pattern import (
     ComparisonExpressionForElevator, CompoundObservationExpressionForElevator,
@@ -1033,11 +1034,11 @@ def convert_incident(incident, env):
     else:  # 2.1
         add_confidence_to_object(incident_instance, incident.confidence)
 
-    # process information source before any relationships
-    if incident.related_indicators is not None:
-        handle_relationship_from_refs(incident.related_indicators, incident_instance["id"], new_env, "indicates")
+    # process related observables first
     if incident.related_observables is not None:
         handle_relationship_from_refs(incident.related_observables, incident_instance["id"], new_env, "part-of")
+    if incident.related_indicators is not None:
+        handle_relationship_from_refs(incident.related_indicators, incident_instance["id"], new_env, "indicates")
     if incident.leveraged_ttps is not None:
         warn("Using %s for the %s of %s", 718, "related-to", "leveraged TTPs", incident.id_)
         handle_relationship_to_refs(incident.leveraged_ttps, incident_instance["id"], new_env, "related-to")
@@ -1251,11 +1252,11 @@ correctly in STIX 2.x - please check this pattern",
 
 # observables
 
-def convert_cybox_object(o):
+def convert_cybox_object(o, env=None):
     if get_option_value("spec_version") == "2.0":
         return convert_cybox_object20(o)
     else:
-        return convert_cybox_object21(o)
+        return convert_cybox_object21(o, env)
 
 
 def set_embedded_ref_property_2_1(sco, ro, stix2x_rel_name):
@@ -1283,12 +1284,12 @@ def create_scos(obs, observed_data_instance, env):
              635, obs.id_)
     else:
         observed_data_instance["object_refs"] = []
-        scos = convert_cybox_object(obs.object_)
+        scos = convert_cybox_object(obs.object_, env)
         if obs.object_.related_objects:
             for o in obs.object_.related_objects:
                 if not o.idref:
                     # it is embedded - for idrefs see convert_cybox.py
-                    related = convert_cybox_object(o)
+                    related = convert_cybox_object(o, env)
                     if related:
                         scos.extend(related)
                         property_name = embedded_property_ref_name(obs.object_.properties, o.relationship)
@@ -1901,8 +1902,10 @@ def finalize_bundle(env):
 
     if get_option_value("spec_version") == "2.0":
         fix_cybox_relationships(bundle_instance["observed_data"])
+        resolve_object_references20(bundle_instance["observed_data"])
     else:
         fix_sco_embedded_refs(bundle_instance["objects"])
+        resolve_object_references21(bundle_instance["objects"])
 
     # need to remove observed-data not used at the top level
 
