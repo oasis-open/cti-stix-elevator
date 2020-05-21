@@ -15,7 +15,7 @@
             },
             "id": "process--fcf907a8-2445-42e5-a7c6-db784b510422",
             "opened_connection_refs": [
-                "network-traffic--a26259f7-6c47-5ded-9c9b-2284b4522184"
+                "network-traffic--39227b59-b978-5111-90bf-688bbbc4e1f6"
             ],
             "parent_ref": "process--33fd6baf-4936-41e7-8a07-95070d59ddc3",
             "pid": 1700,
@@ -24,7 +24,7 @@
         {
             "dst_port": 80,
             "dst_ref": "ipv4-addr--c5a216ae-2184-5acd-b145-2d1321457d0b",
-            "id": "network-traffic--a26259f7-6c47-5ded-9c9b-2284b4522184",
+            "id": "network-traffic--39227b59-b978-5111-90bf-688bbbc4e1f6",
             "type": "network-traffic"
         },
         {
@@ -96,7 +96,7 @@
             "number_observed": 1,
             "object_refs": [
                 "process--fcf907a8-2445-42e5-a7c6-db784b510422",
-                "network-traffic--a26259f7-6c47-5ded-9c9b-2284b4522184",
+                "network-traffic--39227b59-b978-5111-90bf-688bbbc4e1f6",
                 "ipv4-addr--c5a216ae-2184-5acd-b145-2d1321457d0b",
                 "user-account--74591c17-1215-5a14-b5ac-e3d6058c4125",
                 "process--f5904d0d-874f-45b4-91a0-2e97dbe43507",

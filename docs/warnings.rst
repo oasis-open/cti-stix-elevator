@@ -196,7 +196,7 @@ Message                                                                         
 Could not resolve Marking Structure *[id]*                                                                                                  801  warn
 1.x full file paths are not processed, yet                                                                                                  802  warn
 Location *[id]* may not contain all aspects of the STIX 1.x address object                                                                  803  warn
-Object references for *[object type]* in *[id]* not handled yet                                                                             804  warn
+Object reference *[id]* may not handled correctly                                                                                           804  warn
 CybOX object *[object]* not handled yet                                                                                                     805  warn
 Email *[property]* not handled yet                                                                                                          806  warn
 ``file:extended_properties:windows_pebinary_ext:optional_header`` is not implemented yet                                                    807  warn

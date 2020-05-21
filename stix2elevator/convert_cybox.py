@@ -62,8 +62,7 @@ def create_base_sco(type, prop1x=None, other_properties=None, env=None, generate
         obj1x = prop1x.parent
         id_1x = obj1x.id_
         if prop1x.object_reference and not generate_shell:
-            warn("Object references for %s in %s not handled yet", 804, type, id_1x)
-            return None
+            warn("Object reference %s may not handled correctly", 804, prop1x.object_reference)
         elif id_1x and id_1x in _OBJECT_REFERENCES_SHELLS:
             shell = _OBJECT_REFERENCES_SHELLS[id_1x]
             if other_properties:
@@ -464,7 +463,7 @@ def convert_archive_file20(f):
         archive_dict["contains_refs"] = list()
         for ar_file in f.archived_file:
             archive_dict["contains_refs"].append(text_type(index))
-            ar_file2x, index = convert_file(ar_file, None, f.parent.id_, index)
+            ar_file2x, index = convert_file(ar_file, None, index)
             file_objs.update(ar_file2x)
     return archive_dict, file_objs
 
@@ -480,7 +479,7 @@ def convert_archive_file21(f):
             archive_dict[property_name] = f.version
     if f.archived_file:
         for ar_file in f.archived_file:
-            ar_file2x, ignore = convert_file(ar_file, None, f.parent.id_)
+            ar_file2x = convert_file(ar_file, None)
             file_objs.extend(ar_file2x)
         archive_dict["contains_refs"] = [x["id"] for x in file_objs]
     return archive_dict, file_objs
@@ -662,7 +661,7 @@ def convert_file(f, related_objects, index=0):
     if get_option_value("spec_version") == "2.0":
         return convert_file20(f, related_objects, index)
     else:
-        return convert_file21(f, related_objects,), None
+        return convert_file21(f, related_objects)
 
 
 def convert_attachment(attachment):
@@ -1194,7 +1193,7 @@ def convert_socket_address_1(sock_add_1x, cybox_traffic, objs, spec_version, ind
 def convert_network_connection(conn, env=None):
     index = 1
     spec_version = get_option_value("spec_version")
-    cybox_traffic = {}
+    cybox_traffic = create_base_sco("network-traffic", conn)
     if spec_version == "2.0":
         objs = {}
     else:
@@ -1203,9 +1202,9 @@ def convert_network_connection(conn, env=None):
     if conn.creation_time is not None:
         cybox_traffic["start"] = convert_timestamp_to_string(conn.creation_time.value, None, None)
 
-    cybox_traffic["protocols"] = []
-
     if conn.layer3_protocol is not None:
+        if not "protocols" in cybox_traffic:
+            cybox_traffic["protocols"] = []
         cybox_traffic["protocols"].append(text_type(conn.layer3_protocol.value).lower())
 
     if conn.source_socket_address is not None:
@@ -1217,9 +1216,13 @@ def convert_network_connection(conn, env=None):
         index = convert_socket_address_1(conn.destination_socket_address, cybox_traffic, objs, spec_version, index, "dst", env)
 
     if conn.layer4_protocol is not None:
+        if not "protocols" in cybox_traffic:
+            cybox_traffic["protocols"] = []
         cybox_traffic["protocols"].append(text_type(conn.layer4_protocol.value).lower())
 
     if conn.layer7_protocol is not None:
+        if not "protocols" in cybox_traffic:
+            cybox_traffic["protocols"] = []
         cybox_traffic["protocols"].append(text_type(conn.layer7_protocol.value).lower())
 
     if conn.layer7_connections is not None:
@@ -1804,6 +1807,9 @@ def fix_sco_embedded_refs(objects):
 
 def resolve_object_references20(obsers):
     for obs in obsers:
+        if not obs["objects"]:
+            # TODO: strange that there are no objects
+            return None
         for k, obj in obs["objects"].items():
             if obj["type"] == "network-traffic":
                 if "extensions" in obj and property_contains_stix1x_id(obj, "extensions"):
