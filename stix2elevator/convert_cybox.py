@@ -1203,7 +1203,7 @@ def convert_network_connection(conn, env=None):
         cybox_traffic["start"] = convert_timestamp_to_string(conn.creation_time.value, None, None)
 
     if conn.layer3_protocol is not None:
-        if not "protocols" in cybox_traffic:
+        if "protocols" not in cybox_traffic:
             cybox_traffic["protocols"] = []
         cybox_traffic["protocols"].append(text_type(conn.layer3_protocol.value).lower())
 
@@ -1216,12 +1216,12 @@ def convert_network_connection(conn, env=None):
         index = convert_socket_address_1(conn.destination_socket_address, cybox_traffic, objs, spec_version, index, "dst", env)
 
     if conn.layer4_protocol is not None:
-        if not "protocols" in cybox_traffic:
+        if "protocols" not in cybox_traffic:
             cybox_traffic["protocols"] = []
         cybox_traffic["protocols"].append(text_type(conn.layer4_protocol.value).lower())
 
     if conn.layer7_protocol is not None:
-        if not "protocols" in cybox_traffic:
+        if "protocols" not in cybox_traffic:
             cybox_traffic["protocols"] = []
         cybox_traffic["protocols"].append(text_type(conn.layer7_protocol.value).lower())
 
