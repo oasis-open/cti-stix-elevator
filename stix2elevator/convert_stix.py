@@ -464,16 +464,16 @@ def handle_existing_refs(ref, id, env, verb, to_direction):
         handle_existing_ref(ref, ref_id, id, env, verb, to_direction)
 
 
-def handle_relationship_ref(ref, id, env, default_verb, to_direction=True):
-    if ref.item.idref is None:
+def handle_relationship_ref(ref, item, id, env, default_verb, to_direction=True):
+    if item.idref is None:
         handle_embedded_ref(ref, id, env, default_verb, to_direction)
-    elif exists_id_key(ref.item.idref):
+    elif exists_id_key(item.idref):
         handle_existing_refs(ref, id, env, default_verb, to_direction)
     else:
         # a forward reference, fix later
-        source_id = id if to_direction else ref.item.idref
-        target_id = text_type(ref.item.idref) if to_direction else id
-        rel_obj = create_relationship(source_id, target_id, env, default_verb, ref.item)
+        source_id = id if to_direction else item.idref
+        target_id = text_type(item.idref) if to_direction else id
+        rel_obj = create_relationship(source_id, target_id, env, default_verb, item)
         if hasattr(ref, "relationship") and ref.relationship is not None:
             rel_obj["description"] = ref.relationship.value
         env.bundle_instance["relationships"].append(rel_obj)
@@ -481,12 +481,16 @@ def handle_relationship_ref(ref, id, env, default_verb, to_direction=True):
 
 def handle_relationship_to_refs(refs, source_id, env, default_verb):
     for ref in refs:
-        handle_relationship_ref(ref, source_id, env, default_verb, to_direction=True)
+        if hasattr(ref, "item"):
+            item = ref.item
+        handle_relationship_ref(ref, item, source_id, env, default_verb, to_direction=True)
 
 
 def handle_relationship_from_refs(refs, target_id, env, default_verb):
     for ref in refs:
-        handle_relationship_ref(ref, target_id, env, default_verb, to_direction=False)
+        if hasattr(ref, "item"):
+            item = ref.item
+        handle_relationship_ref(ref, item, target_id, env, default_verb, to_direction=False)
 
 
 def handle_observable_characterization_list(obs_list, source_id, env):
@@ -1609,7 +1613,9 @@ def process_ttp_properties(sdo_instance, ttp, env, kill_chains_in_sdo=True):
                         verb, to_direction = determine_ttp_relationship_type_and_direction(source_type, target_type, text_type(rel.relationship))
                         handle_existing_ref(rel, id20, sdo_instance["id"], env, verb, to_direction)
                 else:
-                    handle_relationship_ref(rel, sdo_instance["id"], env, "related-to", to_direction=True)
+                    if hasattr(rel, "item"):
+                        item = rel.item
+                    handle_relationship_ref(rel, item, sdo_instance["id"], env, "related-to", to_direction=True)
     if hasattr(ttp, "related_packages") and ttp.related_packages is not None:
         for p in ttp.related_packages:
             warn("Related_Packages type in %s not supported in STIX 2.x", 402, ttp.id_)
