@@ -433,8 +433,8 @@ def handle_relationship_to_objs(items, source_id, env, verb):
                                                                             item))
 
 
-def handle_embedded_ref(ref, id, env, default_verb, to_direction):
-    new20s = handle_embedded_object(ref.item, env)
+def handle_embedded_ref(ref, item, id, env, default_verb, to_direction):
+    new20s = handle_embedded_object(item, env)
     for new20 in new20s:
         if to_direction:
             source_id = id
@@ -466,7 +466,7 @@ def handle_existing_refs(ref, id, env, verb, to_direction):
 
 def handle_relationship_ref(ref, item, id, env, default_verb, to_direction=True):
     if item.idref is None:
-        handle_embedded_ref(ref, id, env, default_verb, to_direction)
+        handle_embedded_ref(ref, item, id, env, default_verb, to_direction)
     elif exists_id_key(item.idref):
         handle_existing_refs(ref, id, env, default_verb, to_direction)
     else:
@@ -483,6 +483,8 @@ def handle_relationship_to_refs(refs, source_id, env, default_verb):
     for ref in refs:
         if hasattr(ref, "item"):
             item = ref.item
+        elif hasattr(ref, "course_of_action"):
+            item = ref.course_of_action
         handle_relationship_ref(ref, item, source_id, env, default_verb, to_direction=True)
 
 
@@ -490,6 +492,8 @@ def handle_relationship_from_refs(refs, target_id, env, default_verb):
     for ref in refs:
         if hasattr(ref, "item"):
             item = ref.item
+        elif hasattr(ref, "course_of_action"):
+            item = ref.course_of_action
         handle_relationship_ref(ref, item, target_id, env, default_verb, to_direction=False)
 
 
@@ -1046,6 +1050,8 @@ def convert_incident(incident, env):
     if incident.leveraged_ttps is not None:
         warn("Using %s for the %s of %s", 718, "related-to", "leveraged TTPs", incident.id_)
         handle_relationship_to_refs(incident.leveraged_ttps, incident_instance["id"], new_env, "related-to")
+    if incident.coa_taken is not None:
+        handle_relationship_to_refs(incident.coa_taken, incident_instance["id"], new_env, "used")
 
     if incident.reporter is not None:
         # FIXME: add reporter to description
@@ -1603,7 +1609,7 @@ def process_ttp_properties(sdo_instance, ttp, env, kill_chains_in_sdo=True):
                 target_type = get_type_from_id(rel.item.id_)
                 verb, to_direction = determine_ttp_relationship_type_and_direction(source_type, target_type,
                                                                                    text_type(rel.relationship))
-                handle_embedded_ref(rel, rel.item.id_, env, verb, to_direction)
+                handle_embedded_ref(rel, rel.item, rel.item.id_, env, verb, to_direction)
             else:
                 target_id = rel.item.idref
                 stix20_target_ids = get_id_value(target_id)
@@ -1613,9 +1619,7 @@ def process_ttp_properties(sdo_instance, ttp, env, kill_chains_in_sdo=True):
                         verb, to_direction = determine_ttp_relationship_type_and_direction(source_type, target_type, text_type(rel.relationship))
                         handle_existing_ref(rel, id20, sdo_instance["id"], env, verb, to_direction)
                 else:
-                    if hasattr(rel, "item"):
-                        item = rel.item
-                    handle_relationship_ref(rel, item, sdo_instance["id"], env, "related-to", to_direction=True)
+                    handle_relationship_ref(rel, rel.item, sdo_instance["id"], env, "related-to", to_direction=True)
     if hasattr(ttp, "related_packages") and ttp.related_packages is not None:
         for p in ttp.related_packages:
             warn("Related_Packages type in %s not supported in STIX 2.x", 402, ttp.id_)
