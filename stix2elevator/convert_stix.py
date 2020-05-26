@@ -48,7 +48,7 @@ from stix2elevator.convert_pattern import (
     ComparisonExpressionForElevator, CompoundObservationExpressionForElevator,
     ParentheticalExpressionForElevator, UnconvertedTerm,
     add_to_observable_mappings, add_to_pattern_cache,
-    convert_indicator_to_pattern, convert_observable_to_pattern,
+    convert_indicator_to_pattern, convert_observable_to_pattern, convert_observable_list_to_pattern,
     create_boolean_expression, fix_pattern, get_obs_from_mapping,
     id_in_observable_mappings, interatively_resolve_placeholder_refs,
     remove_pattern_objects
@@ -59,7 +59,7 @@ from stix2elevator.ids import (
     get_id_values, get_type_from_id, is_stix1x_id, record_ids
 )
 from stix2elevator.missing_policy import (
-    convert_to_custom_name, handle_missing_confidence_property,
+    add_string_property_to_description, convert_to_custom_name, handle_missing_confidence_property,
     handle_missing_statement_properties, handle_missing_string_property,
     handle_missing_tool_property, handle_multiple_missing_statement_properties
 )
@@ -497,13 +497,15 @@ def handle_relationship_from_refs(refs, target_id, env, default_verb):
         handle_relationship_ref(ref, item, target_id, env, default_verb, to_direction=False)
 
 
-def handle_observable_characterization_list(obs_list, source_id, env):
-    verb = "consists-of"
+def handle_observable_information_list_as_pattern(obs_list):
+    return convert_observable_list_to_pattern(obs_list)
+
+def handle_observable_information_list(obs_list, source_id, env, verb):
     for o in obs_list:
         if o.idref is None and o.object_ and not o.object_.idref:
             # embedded
             new_od = convert_observed_data(o, env)
-            env.bundle_instance["objects"].append(new_od)
+            # env.bundle_instance["objects"].append(new_od)
             add_id_of_obs_in_characterizations(new_od["id"])
             env.bundle_instance["relationships"].append(create_relationship(source_id,
                                                                             new_od["id"] if new_od else None,
@@ -751,8 +753,8 @@ def convert_course_of_action(coa, env):
     handle_missing_objective_property(coa_instance, coa.objective)
 
     if coa.parameter_observables is not None:
-        # parameter observables, maybe turn into pattern expressions and put in description???
-        warn("Parameter Observables in %s are not handled, yet.", 814, coa_instance["id"])
+        parameter_expression = handle_observable_information_list_as_pattern(coa.parameter_observables)
+        handle_missing_string_property(coa_instance, "parameter_expression", parameter_expression)
     if coa.structured_coa:
         warn("Structured COAs type in %s are not supported in STIX 2.x", 404, coa_instance["id"])
     handle_missing_statement_properties(coa_instance, coa.impact, "impact")
@@ -1053,21 +1055,44 @@ def convert_incident(incident, env):
     if incident.coa_taken is not None:
         handle_relationship_to_refs(incident.coa_taken, incident_instance["id"], new_env, "used")
 
+    if incident.contacts is not None:
+        for contact in incident.contacts:
+            incident_instance["contacts"] = []
+            if contact.identity:
+                id2x = convert_identity(contact.identity, env)
+                env.bundle_instance["objects"].append(id2x)
+                incident_instance["contacts"].append(id2x["id"])
+
     if incident.reporter is not None:
-        # FIXME: add reporter to description
-        info("Incident Reporter in %s is not handled, yet.", 815, incident_instance["id"])
+        reporter = incident.reporter
+        if reporter.identity:
+            id2x = convert_identity(reporter.identity, env)
+            env.bundle_instance["objects"].append(id2x)
+            incident_instance["reporter"] = id2x["id"]
 
     if incident.responders is not None:
-        # FIXME: add responders to description
-        info("Incident Responders in %s is not handled, yet.", 815, incident_instance["id"])
+        for responder in incident.responders:
+            incident_instance["responders"] = []
+            if responder.identity:
+                id2x = convert_identity(responder.identity, env)
+                env.bundle_instance["objects"].append(id2x)
+                incident_instance["responders"].append(id2x["id"])
 
     if incident.coordinators is not None:
-        # FIXME: add coordinators to description
-        info("Incident Coordinators in %s is not handled, yet.", 815, incident_instance["id"])
+        for coordinator in incident.coordinators:
+            incident_instance["coordinators"] = []
+            if coordinator.identity:
+                id2x = convert_identity(coordinator.identity, env)
+                env.bundle_instance["objects"].append(id2x)
+                incident_instance["coordinators"].append(id2x["id"])
 
     if incident.victims is not None:
-        # FIXME: add victim to description
-        info("Incident Victims in %s is not handled, yet.", 815, incident_instance["id"])
+        for victim in incident.victims:
+            incident_instance["victims"] = []
+            if victim.identity:
+                id2x = convert_identity(victim.identity, env)
+                env.bundle_instance["objects"].append(id2x)
+                incident_instance["victims"].append(id2x["id"])
 
     if incident.affected_assets is not None:
         # FIXME: add affected_assets to description
@@ -1076,6 +1101,7 @@ def convert_incident(incident, env):
     if incident.impact_assessment is not None:
         # FIXME: add impact_assessment to description
         info("Incident Impact Assessment in %s is not handled, yet", 815, incident_instance["id"])
+
     handle_missing_string_property(incident_instance, "status", incident.status)
     if incident.related_incidents:
         info("All 'associated incidents' relationships of %s are assumed to not represent STIX 1.2 versioning",
@@ -1740,7 +1766,7 @@ def convert_infrastructure(infra, ttp, env, first_one):
     info("No 'first_seen' data on %s - using timestamp", 904, infra.id_ if infra.id_ else ttp.id_)
     infrastructure_instance["first_seen"] = convert_timestamp_of_stix_object(infra, infrastructure_instance["created"])
     if infra.observable_characterization is not None:
-        handle_observable_characterization_list(infra.observable_characterization, infrastructure_instance["id"], env)
+        handle_observable_information_list(infra.observable_characterization, infrastructure_instance["id"], env, "consists-of")
     process_ttp_properties(infrastructure_instance, ttp, env)
     finish_basic_object(ttp.id_, infrastructure_instance, env, infra)
     return infrastructure_instance

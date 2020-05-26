@@ -16,6 +16,7 @@
             "x_elevator_impact_description": "This IP address is not used for legitimate hosting so there should be no operational impact.",
             "x_elevator_objective": "Block communication between the PIVY agents and the C2 Server",
             "x_elevator_objective_confidence": "High",
+            "x_elevator_parameter_expression": "ipv4-addr:value = '10.10.10.10'",
             "x_elevator_stage": "Response"
         }
     ],

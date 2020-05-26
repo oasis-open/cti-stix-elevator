@@ -669,6 +669,38 @@ def convert_attachment(attachment):
     return {"body_raw_ref": attachment.object_reference, "content_type": "text/plain"}
 
 
+_EMAIL_ADDITIONAL_HEADERS_PROPERTIES = {
+     "Message-ID": "message_id",
+     "In-Reply-To": "in_reply_to",
+     "Errors-To": "errors_to",
+     "MIME-Version": "mime_version",
+     "Precedence": "precedence",
+     "User-Agent:": "user_agent",
+     "Boundary": "boundary",
+     "X-Priority": "x_priority",
+     "X-Mailer": "x_mailer"
+}
+
+
+def convert_email_additional_headers(head):
+    additional_header_fields_dict = dict()
+    for key2x, prop1x in _EMAIL_ADDITIONAL_HEADERS_PROPERTIES.items():
+        if hasattr(head, prop1x):
+            value = getattr(head, prop1x)
+            if value:
+                additional_header_fields_dict[key2x] = text_type(value)
+    if head.in_reply_to:
+        to_list = list()
+        for to in head.in_reply_to:
+            to_list.append(text_type(to.address_value))
+        additional_header_fields_dict["In-Reply-To"] = to_list
+    if head.x_originating_ip:
+        additional_header_fields_dict["X-Originating-IP"] = head.x_originating_ip.address_value
+    if head.received_lines:
+        warn("Email received lines not handled yet", 806)
+    return additional_header_fields_dict
+
+
 def convert_email_message(email_message):
     index = 0
     spec_version = get_option_value("spec_version")
@@ -695,6 +727,15 @@ def convert_email_message(email_message):
             else:
                 objs.append(from_ref)
             email_dict["from_ref"] = text_type(index) if spec_version == "2.0" else from_ref["id"]
+            index += 1
+        if header.sender:
+            # should there ever be more than one?
+            sender_ref = convert_address(header.sender)
+            if spec_version == "2.0":
+                objs[text_type(index)] = sender_ref
+            else:
+                objs.append(sender_ref)
+            email_dict["sender_ref"] = text_type(index) if spec_version == "2.0" else from_ref["id"]
             index += 1
         if header.to:
             for t in header.to:
@@ -731,7 +772,9 @@ def convert_email_message(email_message):
                 if "bcc_refs" not in email_dict:
                     email_dict["bcc_refs"] = []
                 email_dict["bcc_refs"].append(text_type(index) if spec_version == "2.0" else bcc_ref["id"])
-        # TODO: handle additional headers
+        add_headers2x = convert_email_additional_headers(header)
+        if add_headers2x != {}:
+            email_dict["additional_header_fields"] = add_headers2x
     if email_message.attachments:
         email_dict["is_multipart"] = True
         multiparts = []
@@ -1559,7 +1602,7 @@ def convert_cybox_object20(obj1x):
         if prop.custom_properties:
             primary_obj = objs["0"]
             for cp in prop.custom_properties.property_:
-                primary_obj[convert_to_custom_property_name(cp.name)] = cp.value
+                primary_obj[convert_to_custom_name(cp.name)] = cp.value
         if obj1x.id_:
             add_object_id_value(obj1x.id_, objs)
         return objs

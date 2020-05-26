@@ -615,6 +615,8 @@ class ParentheticalExpressionForElevator(stix2.ParentheticalExpression):
 def create_boolean_expression(operator, operands, use_parens=True):
     if len(operands) == 1:
         return operands[0]
+    elif len(operands) == 0:
+        return None
     exp = BooleanExpressionForElevator(operator, [])
     for arg in operands:
         if not isinstance(arg, IdrefPlaceHolder) and hasattr(arg, "root_type"):
@@ -1024,7 +1026,17 @@ def convert_unix_user_to_pattern(account):
         return create_boolean_expression("AND", expressions)
 
 
+def handle_object_reference_for_pattern(obj1x_obj_ref):
+    pattern = handle_pattern_idref(obj1x_obj_ref)
+    return pattern
+
+
 def convert_address_to_pattern(add):
+    if add.address_value is None:
+        if add.object_reference is None:
+            return None
+        else:
+            return handle_object_reference_for_pattern(add)
     cond = add.address_value.condition
     if add.category == add.CAT_IPV4:
         return create_term("ipv4-addr:value", cond, make_constant(add.address_value.value))
@@ -1835,10 +1847,18 @@ def convert_socket_address_to_pattern(sock_add, direction):
                             sock_add.port.layer4_protocol.condition,
                             make_constant(sock_add.port.layer4_protocol.value.lower())))
     if sock_add.ip_address is not None:
-        expressions.append(
-            create_term("network-traffic:" + direction + "_ref.value",
-                        sock_add.ip_address.address_value.condition,
-                        make_constant(sock_add.ip_address.address_value.value)))
+        if sock_add.ip_address.address_value:
+            expressions.append(
+                create_term("network-traffic:" + direction + "_ref.value",
+                            sock_add.ip_address.address_value.condition,
+                            make_constant(sock_add.ip_address.address_value.value)))
+        elif sock_add.ip_address.object_reference:
+            new_pattern = handle_object_reference_for_pattern(sock_add.ip_address.object_reference)
+            if isinstance(new_pattern, IdrefPlaceHolder):
+                expressions.append(new_pattern)
+            else:
+                expressions.append(new_pattern.collapse_reference(
+                    ObjectPathForElevator.make_object_path("network-traffic:" + direction + "_ref")))
     elif sock_add.hostname is not None:
         if sock_add.hostname.is_domain_name and sock_add.hostname.hostname_value is not None:
             expressions.append(
@@ -2068,7 +2088,7 @@ def convert_network_socket_to_pattern(socket):
         if get_option_value("missing_policy") == "use-custom-properties":
             expressions.append(
                 create_term("network-traffic:extensions.'socket-ext'." +
-                            convert_to_custom_property_name("remote_address"),
+                            convert_to_custom_name("remote_address"),
                             socket.remote_address.ip_address.condition,
                             stix2.StringConstant(socket.remote_address.ip_address.address_value.value)))
             warn("Used custom property for %s", 308, "remote_address")
@@ -2187,17 +2207,23 @@ def convert_x509_certificate_to_pattern(x509):
 
 ####################################################################################################################
 
-
-def convert_observable_composition_to_pattern(obs_comp):
+def convert_observable_list_to_pattern(obs_list, op="AND"):
     expressions = []
-    for obs in obs_comp.observables:
+    for obs in obs_list:
         term = convert_observable_to_pattern(obs)
         if term:
             expressions.append(term)
     if expressions:
-        return create_boolean_expression(obs_comp.operator, expressions)
+        if len(expressions) == 1:
+            return expressions[0]
+        else:
+            return create_boolean_expression(op, expressions)
     else:
         return ""
+
+
+def convert_observable_composition_to_pattern(obs_comp):
+    return convert_observable_list_to_pattern(obs_comp.observables, obs_comp.operator)
 
 
 def determine_term_type(stix1_obj):
@@ -2310,15 +2336,15 @@ def convert_observable_to_pattern(obs):
         pop_dynamic_variable("current_observable")
 
 
-def handle_pattern_idref(obj):
-    if id_in_pattern_cache(obj.idref):
-        return get_pattern_from_cache(obj.idref)
+def handle_pattern_idref(idref):
+    if id_in_pattern_cache(idref):
+        return get_pattern_from_cache(idref)
     else:
         # resolve now if possible
-        if id_in_observable_mappings(obj.idref):
-            referenced_obs = get_obs_from_mapping(obj.idref)
+        if id_in_observable_mappings(idref):
+            referenced_obs = get_obs_from_mapping(idref)
             return convert_observable_to_pattern(referenced_obs)
-        return IdrefPlaceHolder(obj.idref)
+        return IdrefPlaceHolder(idref)
 
 
 def convert_observable_to_pattern_without_negate(obs):
@@ -2329,7 +2355,7 @@ def convert_observable_to_pattern_without_negate(obs):
         return pattern
     elif obs.object_ is not None:
         if obs.object_.idref is not None:
-            return handle_pattern_idref(obs.object_)
+            return handle_pattern_idref(obs.object_.idref)
         else:
             pattern = convert_object_to_pattern(obs.object_, obs.id_)
             # TODO: seems redundant
@@ -2353,7 +2379,7 @@ def convert_observable_to_pattern_without_negate(obs):
             else:
                 return pattern
     elif obs.idref is not None:
-        return handle_pattern_idref(obs)
+        return handle_pattern_idref(obs.idref)
 
 
 # patterns can contain idrefs which might need to be resolved because the order in which the ids and idrefs appear

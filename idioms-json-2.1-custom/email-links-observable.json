@@ -7,6 +7,10 @@
             "value": "http://thereelin.com/mac/htm"
         },
         {
+            "additional_header_fields": {
+                "Message-ID": "201602112058.u1BKfrXh004925@mail-gw-01.oit.duke.edu",
+                "X-Mailer": "Microsoft Outlook Express 6.00.2800.1437"
+            },
             "from_ref": "email-addr--f09c1287-7a14-51c2-bc89-f83ef944dd01",
             "id": "email-message--feb2c5bf-dd52-5bc2-a355-ad7e7498583e",
             "is_multipart": false,
