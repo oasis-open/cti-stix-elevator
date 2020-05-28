@@ -1036,7 +1036,7 @@ def convert_address_to_pattern(add):
         if add.object_reference is None:
             return None
         else:
-            return handle_object_reference_for_pattern(add)
+            return handle_object_reference_for_pattern(add.object_reference)
     cond = add.address_value.condition
     if add.category == add.CAT_IPV4:
         return create_term("ipv4-addr:value", cond, make_constant(add.address_value.value))
@@ -1148,7 +1148,7 @@ def convert_email_header_to_pattern(head, properties):
 
 
 def convert_attachment_to_ref(attachment):
-    return IdrefPlaceHolder(attachment.object_reference)
+    return handle_object_reference_for_pattern(attachment.object_reference)
 
 
 def convert_email_message_to_pattern(mess):
@@ -1160,8 +1160,13 @@ def convert_email_message_to_pattern(mess):
             expressions.append(add_headers)
     if mess.attachments is not None:
         for attachment in mess.attachments:
-            expressions.append(ComparisonExpressionForElevator("=", "email-message:body_multipart[*].body_raw_ref",
-                                                               convert_attachment_to_ref(attachment)))
+            new_pattern = convert_attachment_to_ref(attachment)
+            if isinstance(new_pattern, IdrefPlaceHolder):
+                expressions.append(ComparisonExpressionForElevator("=", "email-message:body_multipart[*].body_raw_ref",
+                                                                    new_pattern))
+            else:
+                expressions.append(new_pattern.collapse_reference(
+                    ObjectPathForElevator.make_object_path("email-message:body_multipart[*].body_raw_ref")))
     if mess.raw_body is not None:
         if not mess.raw_body.value:
             warn("%s contains no value", 621, "Email raw body")
@@ -2412,9 +2417,7 @@ def is_placeholder(thing):
 
 def fix_pattern(pattern):
     if not pattern_cache_is_empty():
-        # info(text_type(PATTERN_CACHE))
-        # info("pattern is: " +  pattern)
-        if pattern and pattern.contains_placeholder:
+        if pattern and pattern.contains_placeholder():
             for idref in get_ids_from_pattern_cache():
                 pattern.replace_placeholder_with_idref_pattern(idref)
     return pattern

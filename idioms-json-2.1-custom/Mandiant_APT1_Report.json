@@ -113,22 +113,6 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "first_observed": "2015-05-15T09:00:00.000Z",
-            "id": "observed-data--f6a5d8be-e5ec-4522-a4a1-e9895454ad2a",
-            "last_observed": "2015-05-15T09:00:00.000Z",
-            "modified": "2015-05-15T09:00:00.000Z",
-            "number_observed": 1,
-            "object_marking_refs": [
-                "marking-definition--506430d1-c7c8-41a7-855a-291759e600c6"
-            ],
-            "object_refs": [
-                "url--7638df5b-415e-53ea-80eb-ee8507ea3616"
-            ],
-            "spec_version": "2.1",
-            "type": "observed-data"
-        },
-        {
-            "created": "2015-05-15T09:00:00.000Z",
             "created_by_ref": "identity--1c2dcc0d-412f-4586-88cb-f695ec7a7a1f",
             "first_seen": "2015-05-15T09:00:00.000Z",
             "id": "infrastructure--b50ec80c-0c85-4b3f-ab07-6ff9c12ef968",
@@ -854,22 +838,6 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "first_observed": "2015-05-15T09:00:00.000Z",
-            "id": "observed-data--cfbe33ad-8b25-4ed8-99f4-fe5575f754ea",
-            "last_observed": "2015-05-15T09:00:00.000Z",
-            "modified": "2015-05-15T09:00:00.000Z",
-            "number_observed": 1,
-            "object_marking_refs": [
-                "marking-definition--506430d1-c7c8-41a7-855a-291759e600c6"
-            ],
-            "object_refs": [
-                "ipv4-addr--90e8b6b8-54fe-5fbc-830e-2cffb0b7487a"
-            ],
-            "spec_version": "2.1",
-            "type": "observed-data"
-        },
-        {
-            "created": "2015-05-15T09:00:00.000Z",
             "created_by_ref": "identity--1c2dcc0d-412f-4586-88cb-f695ec7a7a1f",
             "first_seen": "2015-05-15T09:00:00.000Z",
             "id": "infrastructure--36b89158-ae9e-40b2-8d27-6976a0486f27",
@@ -895,42 +863,11 @@
             "type": "ipv4-addr",
             "value": "223.166.0.0/15"
         },
-        {
-            "created": "2015-05-15T09:00:00.000Z",
-            "first_observed": "2015-05-15T09:00:00.000Z",
-            "id": "observed-data--312e065d-ae1a-4084-9421-3c49218d8a33",
-            "last_observed": "2015-05-15T09:00:00.000Z",
-            "modified": "2015-05-15T09:00:00.000Z",
-            "number_observed": 1,
-            "object_marking_refs": [
-                "marking-definition--506430d1-c7c8-41a7-855a-291759e600c6"
-            ],
-            "object_refs": [
-                "ipv4-addr--c015256f-82b1-5161-bf41-0fc65f4eaa47"
-            ],
-            "spec_version": "2.1",
-            "type": "observed-data"
-        },
+
         {
             "id": "ipv4-addr--a228d39a-df8c-52b9-9942-7bb34bab4d45",
             "type": "ipv4-addr",
             "value": "58.246.0.0/15"
-        },
-        {
-            "created": "2015-05-15T09:00:00.000Z",
-            "first_observed": "2015-05-15T09:00:00.000Z",
-            "id": "observed-data--20598a64-8287-4aca-b11f-f8dee39658ad",
-            "last_observed": "2015-05-15T09:00:00.000Z",
-            "modified": "2015-05-15T09:00:00.000Z",
-            "number_observed": 1,
-            "object_marking_refs": [
-                "marking-definition--506430d1-c7c8-41a7-855a-291759e600c6"
-            ],
-            "object_refs": [
-                "ipv4-addr--a228d39a-df8c-52b9-9942-7bb34bab4d45"
-            ],
-            "spec_version": "2.1",
-            "type": "observed-data"
         },
         {
             "id": "ipv4-addr--46c77b1b-4dfa-5911-aa9f-8d71660a44eb",
@@ -938,41 +875,9 @@
             "value": "112.64.0.0/15"
         },
         {
-            "created": "2015-05-15T09:00:00.000Z",
-            "first_observed": "2015-05-15T09:00:00.000Z",
-            "id": "observed-data--b41cc3c3-4b50-468d-a4b7-604617acd8c0",
-            "last_observed": "2015-05-15T09:00:00.000Z",
-            "modified": "2015-05-15T09:00:00.000Z",
-            "number_observed": 1,
-            "object_marking_refs": [
-                "marking-definition--506430d1-c7c8-41a7-855a-291759e600c6"
-            ],
-            "object_refs": [
-                "ipv4-addr--46c77b1b-4dfa-5911-aa9f-8d71660a44eb"
-            ],
-            "spec_version": "2.1",
-            "type": "observed-data"
-        },
-        {
             "id": "ipv4-addr--418bacc0-f953-55f6-9c70-a80c9c1901cb",
             "type": "ipv4-addr",
             "value": "139.226.0.0/15"
-        },
-        {
-            "created": "2015-05-15T09:00:00.000Z",
-            "first_observed": "2015-05-15T09:00:00.000Z",
-            "id": "observed-data--5e151098-ca2d-4d87-8490-f6e7cebd6033",
-            "last_observed": "2015-05-15T09:00:00.000Z",
-            "modified": "2015-05-15T09:00:00.000Z",
-            "number_observed": 1,
-            "object_marking_refs": [
-                "marking-definition--506430d1-c7c8-41a7-855a-291759e600c6"
-            ],
-            "object_refs": [
-                "ipv4-addr--418bacc0-f953-55f6-9c70-a80c9c1901cb"
-            ],
-            "spec_version": "2.1",
-            "type": "observed-data"
         },
         {
             "id": "ipv4-addr--6733a117-63f1-54eb-ab13-d7db628e6f1c",
@@ -980,41 +885,9 @@
             "value": "114.80.0.0/12"
         },
         {
-            "created": "2015-05-15T09:00:00.000Z",
-            "first_observed": "2015-05-15T09:00:00.000Z",
-            "id": "observed-data--c5838a53-dfbc-4efc-874d-2bae6eb40a04",
-            "last_observed": "2015-05-15T09:00:00.000Z",
-            "modified": "2015-05-15T09:00:00.000Z",
-            "number_observed": 1,
-            "object_marking_refs": [
-                "marking-definition--506430d1-c7c8-41a7-855a-291759e600c6"
-            ],
-            "object_refs": [
-                "ipv4-addr--6733a117-63f1-54eb-ab13-d7db628e6f1c"
-            ],
-            "spec_version": "2.1",
-            "type": "observed-data"
-        },
-        {
             "id": "ipv4-addr--9fcf5bb4-c975-559c-a010-671976b3f2e1",
             "type": "ipv4-addr",
             "value": "101.80.0.0/12"
-        },
-        {
-            "created": "2015-05-15T09:00:00.000Z",
-            "first_observed": "2015-05-15T09:00:00.000Z",
-            "id": "observed-data--def1a5cd-7b1a-4ea5-aaca-60c361fc4f71",
-            "last_observed": "2015-05-15T09:00:00.000Z",
-            "modified": "2015-05-15T09:00:00.000Z",
-            "number_observed": 1,
-            "object_marking_refs": [
-                "marking-definition--506430d1-c7c8-41a7-855a-291759e600c6"
-            ],
-            "object_refs": [
-                "ipv4-addr--9fcf5bb4-c975-559c-a010-671976b3f2e1"
-            ],
-            "spec_version": "2.1",
-            "type": "observed-data"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
@@ -1703,7 +1576,7 @@
             "relationship_type": "consists-of",
             "source_ref": "infrastructure--b50ec80c-0c85-4b3f-ab07-6ff9c12ef968",
             "spec_version": "2.1",
-            "target_ref": "observed-data--f6a5d8be-e5ec-4522-a4a1-e9895454ad2a",
+            "target_ref": "url--7638df5b-415e-53ea-80eb-ee8507ea3616",
             "type": "relationship"
         },
         {
@@ -2061,7 +1934,7 @@
             "relationship_type": "consists-of",
             "source_ref": "infrastructure--36b89158-ae9e-40b2-8d27-6976a0486f27",
             "spec_version": "2.1",
-            "target_ref": "observed-data--cfbe33ad-8b25-4ed8-99f4-fe5575f754ea",
+            "target_ref": "ipv4-addr--90e8b6b8-54fe-5fbc-830e-2cffb0b7487a",
             "type": "relationship"
         },
         {
@@ -2116,7 +1989,7 @@
             "relationship_type": "consists-of",
             "source_ref": "infrastructure--a35bc05a-247d-49a9-b954-c5c7344c55cc",
             "spec_version": "2.1",
-            "target_ref": "observed-data--312e065d-ae1a-4084-9421-3c49218d8a33",
+            "target_ref": "ipv4-addr--c015256f-82b1-5161-bf41-0fc65f4eaa47",
             "type": "relationship"
         },
         {
@@ -2127,7 +2000,7 @@
             "relationship_type": "consists-of",
             "source_ref": "infrastructure--a35bc05a-247d-49a9-b954-c5c7344c55cc",
             "spec_version": "2.1",
-            "target_ref": "observed-data--20598a64-8287-4aca-b11f-f8dee39658ad",
+            "target_ref": "ipv4-addr--a228d39a-df8c-52b9-9942-7bb34bab4d45",
             "type": "relationship"
         },
         {
@@ -2138,7 +2011,7 @@
             "relationship_type": "consists-of",
             "source_ref": "infrastructure--a35bc05a-247d-49a9-b954-c5c7344c55cc",
             "spec_version": "2.1",
-            "target_ref": "observed-data--b41cc3c3-4b50-468d-a4b7-604617acd8c0",
+            "target_ref": "ipv4-addr--46c77b1b-4dfa-5911-aa9f-8d71660a44eb",
             "type": "relationship"
         },
         {
@@ -2149,7 +2022,7 @@
             "relationship_type": "consists-of",
             "source_ref": "infrastructure--a35bc05a-247d-49a9-b954-c5c7344c55cc",
             "spec_version": "2.1",
-            "target_ref": "observed-data--5e151098-ca2d-4d87-8490-f6e7cebd6033",
+            "target_ref": "ipv4-addr--418bacc0-f953-55f6-9c70-a80c9c1901cb",
             "type": "relationship"
         },
         {
@@ -2160,7 +2033,7 @@
             "relationship_type": "consists-of",
             "source_ref": "infrastructure--a35bc05a-247d-49a9-b954-c5c7344c55cc",
             "spec_version": "2.1",
-            "target_ref": "observed-data--c5838a53-dfbc-4efc-874d-2bae6eb40a04",
+            "target_ref": "ipv4-addr--6733a117-63f1-54eb-ab13-d7db628e6f1c",
             "type": "relationship"
         },
         {
@@ -2171,7 +2044,7 @@
             "relationship_type": "consists-of",
             "source_ref": "infrastructure--a35bc05a-247d-49a9-b954-c5c7344c55cc",
             "spec_version": "2.1",
-            "target_ref": "observed-data--def1a5cd-7b1a-4ea5-aaca-60c361fc4f71",
+            "target_ref": "ipv4-addr--9fcf5bb4-c975-559c-a010-671976b3f2e1",
             "type": "relationship"
         },
         {
