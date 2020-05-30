@@ -48,18 +48,18 @@ from stix2elevator.convert_pattern import (
     ComparisonExpressionForElevator, CompoundObservationExpressionForElevator,
     ParentheticalExpressionForElevator, UnconvertedTerm,
     add_to_observable_mappings, add_to_pattern_cache,
-    convert_indicator_to_pattern, convert_observable_to_pattern, convert_observable_list_to_pattern,
-    create_boolean_expression, fix_pattern, get_obs_from_mapping,
-    id_in_observable_mappings, interatively_resolve_placeholder_refs,
-    remove_pattern_objects
+    convert_indicator_to_pattern, convert_observable_list_to_pattern,
+    convert_observable_to_pattern, create_boolean_expression, fix_pattern,
+    get_obs_from_mapping, id_in_observable_mappings,
+    interatively_resolve_placeholder_refs, remove_pattern_objects
 )
 from stix2elevator.ids import (
     add_id_of_obs_in_characterizations, add_id_value, exists_id_key,
-    exists_ids_with_no_1x_object, exists_object_id_key, generate_stix2x_id, get_id_value,
-    get_id_values, get_object_id_value, get_type_from_id, is_stix1x_id, record_ids
+    exists_ids_with_no_1x_object, generate_stix2x_id, get_id_value,
+    get_id_values, get_type_from_id, is_stix1x_id, record_ids
 )
 from stix2elevator.missing_policy import (
-    add_string_property_to_description, convert_to_custom_name, handle_missing_confidence_property,
+    convert_to_custom_name, handle_missing_confidence_property,
     handle_missing_statement_properties, handle_missing_string_property,
     handle_missing_tool_property, handle_multiple_missing_statement_properties
 )
@@ -1397,9 +1397,8 @@ def get_observed_data_from_mapping(id_):
 
 
 def clear_observed_data_mappings():
-    global OBSERVABLE_TO_OBSERVED_DATA_MAPPINGS
-    OBSERVABLE_TO_OBSERVED_DATA_MAPPINGS = {}
-
+    global _OBSERVABLE_TO_OBSERVED_DATA_MAPPINGS
+    _OBSERVABLE_TO_OBSERVED_DATA_MAPPINGS = {}
 
 
 def convert_observed_data(obs, env, keep_scos=True):

@@ -20,7 +20,8 @@ from stix2elevator.convert_pattern import (
     clear_observable_mappings, clear_pattern_cache
 )
 from stix2elevator.convert_stix import (
-    clear_kill_chains_phases_mapping, clear_observed_data_mappings, convert_package
+    clear_kill_chains_phases_mapping, clear_observed_data_mappings,
+    convert_package
 )
 from stix2elevator.ids import (
     clear_id_mapping, clear_id_of_obs_in_characterizations,
@@ -52,7 +53,8 @@ log.addHandler(ch)
 # _PATTERN_CACHE:                           stix1x_id (Object) -> stix2x Pattern
 # _IDS_TO_CYBER_OBSERVABLES                 stix1x_id (Object) -> stix2.1 SCO* | stix2.0 dict
 # _OBSERVABLE_MAPPINGS                      stix1x_id (Object) | stix1x_id (Observable) -> stix1x (Observable)
-# _ID_OF_OBSERVABLES_IN_CHARACTERIZATIONS   stix2x_id (ObservedData)
+# _ID_OF_OBSERVABLES_IN_CHARACTERIZATIONS   stix2x_id* (ObservedData)
+# _OBSERVABLE_TO_OBSERVED_DATA_MAPPINGS     stix1x_id (Observable) -> stix2x (ObservedData)
 
 
 def clear_globals():

@@ -670,15 +670,15 @@ def convert_attachment(attachment):
 
 
 _EMAIL_ADDITIONAL_HEADERS_PROPERTIES = {
-     "Message-ID": "message_id",
-     "In-Reply-To": "in_reply_to",
-     "Errors-To": "errors_to",
-     "MIME-Version": "mime_version",
-     "Precedence": "precedence",
-     "User-Agent:": "user_agent",
-     "Boundary": "boundary",
-     "X-Priority": "x_priority",
-     "X-Mailer": "x_mailer"
+    "Message-ID": "message_id",
+    "In-Reply-To": "in_reply_to",
+    "Errors-To": "errors_to",
+    "MIME-Version": "mime_version",
+    "Precedence": "precedence",
+    "User-Agent:": "user_agent",
+    "Boundary": "boundary",
+    "X-Priority": "x_priority",
+    "X-Mailer": "x_mailer"
 }
 
 

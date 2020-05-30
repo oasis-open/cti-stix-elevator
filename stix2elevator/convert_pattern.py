@@ -1163,7 +1163,7 @@ def convert_email_message_to_pattern(mess):
             new_pattern = convert_attachment_to_ref(attachment)
             if isinstance(new_pattern, IdrefPlaceHolder):
                 expressions.append(ComparisonExpressionForElevator("=", "email-message:body_multipart[*].body_raw_ref",
-                                                                    new_pattern))
+                                                                   new_pattern))
             else:
                 expressions.append(new_pattern.collapse_reference(
                     ObjectPathForElevator.make_object_path("email-message:body_multipart[*].body_raw_ref")))
@@ -2485,8 +2485,8 @@ def remove_pattern_objects(bundle_instance):
             if obj["type"] != "observed-data" or obj["id"] not in all_new_ids_with_patterns and not exists_id_of_obs_in_characterizations(obj["id"]):
                 remaining_objects.append(obj)
             elif exists_id_of_obs_in_characterizations(obj["id"]):
-                 warn("%s is used as a characteristic in an infrastructure object, therefore it is not included as an observed_data instance", 419,
-                      obj["id"])
+                warn("%s is used as a characteristic in an infrastructure object, therefore it is not included as an observed_data instance", 419,
+                     obj["id"])
             else:
                 warn("%s is used as a pattern, therefore it is not included as an observed_data instance", 423,
                      obj["id"])
