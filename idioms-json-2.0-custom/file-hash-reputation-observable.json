@@ -34,9 +34,9 @@
                 "0": {
                     "extensions": {
                         "pdf-ext": {
-                            "document_info_dict ": {
-                                "creationdate": "2015-07-20T19:52:13.853585Z",
-                                "subject": "Fudge"
+                            "document_info_dict": {
+                                "CreationDate": "2015-07-20T19:52:13.853585Z",
+                                "Subject": "Fudge"
                             },
                             "pdfid0": "DFCE52BD827ECF765649852119D",
                             "version": "4.5"

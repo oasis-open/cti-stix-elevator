@@ -7,7 +7,7 @@
                     "address_family": "AF_INET",
                     "is_listening": true,
                     "options": {
-                        "IP_MULTICAST_LOOP": true
+                        "IP_MULTICAST_LOOP": 1
                     }
                 }
             },

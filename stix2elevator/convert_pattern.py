@@ -1384,7 +1384,7 @@ def convert_pdf_file_to_pattern(f):
             for key in PDF_DOC_INFO_DICT_KEYS:
                 value = getattr(dict1x, key, None)
                 if value:
-                    and_expressions.append(create_term("file:extensions.'pdf-ext'." + key,
+                    and_expressions.append(create_term("file:extensions.'pdf-ext'.document_info_dict." + PDF_DOC_INFO_DICT_KEYS[key],
                                                        value.condition,
                                                        make_constant(value.value)))
     if f.trailers:
@@ -2045,11 +2045,13 @@ def convert_http_session_to_pattern(session):
 def convert_socket_options_to_pattern(options):
     expressions = []
     for prop_name in SOCKET_OPTIONS:
-        prop = getattr(options, prop_name)
-        if prop:
+        value = getattr(options, prop_name)
+        if isinstance(value, bool):
+            value = 1 if value else 0
+        if value:
             expressions.append(create_term("network-traffic:extensions.'socket-ext'.options." + prop_name.upper(),
                                            "Equals",
-                                           prop))
+                                           value))
     return create_boolean_expression("AND", expressions)
 
 
@@ -2068,7 +2070,10 @@ def convert_network_socket_to_pattern(socket):
         prop_1x = prop_spec[0]
         object_path = prop_spec[1]
         if hasattr(socket, prop_1x) and getattr(socket, prop_1x):
-            term = add_comparison_expression(getattr(socket, prop_1x), object_path)
+            value = getattr(socket, prop_1x)
+            if isinstance(value, bool):
+                value = 1 if value else 0
+            term = add_comparison_expression(value, object_path)
             if term:
                 expressions.append(term)
     if socket.address_family:

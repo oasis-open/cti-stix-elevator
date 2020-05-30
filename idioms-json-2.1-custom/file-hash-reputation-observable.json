@@ -16,15 +16,15 @@
         {
             "extensions": {
                 "pdf-ext": {
-                    "document_info_dict ": {
-                        "creationdate": "2015-07-20T19:52:13.853585Z",
-                        "subject": "Fudge"
+                    "document_info_dict": {
+                        "CreationDate": "2015-07-20T19:52:13.853585Z",
+                        "Subject": "Fudge"
                     },
                     "pdfid0": "DFCE52BD827ECF765649852119D",
                     "version": "4.5"
                 }
             },
-            "id": "file--7354bcad-077b-5c5b-8287-f48fc9c0ce02",
+            "id": "file--ed513ada-88fd-5e69-8bac-ed77d26cea3f",
             "type": "file"
         },
         {
@@ -48,7 +48,7 @@
             "modified": "2020-03-29T10:43:39.850Z",
             "number_observed": 1,
             "object_refs": [
-                "file--7354bcad-077b-5c5b-8287-f48fc9c0ce02"
+                "file--ed513ada-88fd-5e69-8bac-ed77d26cea3f"
             ],
             "spec_version": "2.1",
             "type": "observed-data"
