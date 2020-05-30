@@ -2482,8 +2482,11 @@ def remove_pattern_objects(bundle_instance):
 
         remaining_objects = []
         for obj in bundle_instance["objects"]:
-            if obj["type"] != "observed-data" or obj["id"] not in all_new_ids_with_patterns or exists_id_of_obs_in_characterizations(obj["id"]):
+            if obj["type"] != "observed-data" or obj["id"] not in all_new_ids_with_patterns and not exists_id_of_obs_in_characterizations(obj["id"]):
                 remaining_objects.append(obj)
+            elif exists_id_of_obs_in_characterizations(obj["id"]):
+                 warn("%s is used as a characteristic in an infrastructure object, therefore it is not included as an observed_data instance", 419,
+                      obj["id"])
             else:
                 warn("%s is used as a pattern, therefore it is not included as an observed_data instance", 423,
                      obj["id"])

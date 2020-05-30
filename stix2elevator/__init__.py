@@ -20,7 +20,7 @@ from stix2elevator.convert_pattern import (
     clear_observable_mappings, clear_pattern_cache
 )
 from stix2elevator.convert_stix import (
-    clear_kill_chains_phases_mapping, convert_package
+    clear_kill_chains_phases_mapping, clear_observed_data_mappings, convert_package
 )
 from stix2elevator.ids import (
     clear_id_mapping, clear_id_of_obs_in_characterizations,
@@ -46,6 +46,14 @@ ch = logging.StreamHandler()
 ch.setFormatter(formatter)
 log.addHandler(ch)
 
+# global lists
+
+# _IDS_TO_NEW_IDS:                          stix1x_id -> stix2x_id*
+# _PATTERN_CACHE:                           stix1x_id (Object) -> stix2x Pattern
+# _IDS_TO_CYBER_OBSERVABLES                 stix1x_id (Object) -> stix2.1 SCO* | stix2.0 dict
+# _OBSERVABLE_MAPPINGS                      stix1x_id (Object) | stix1x_id (Observable) -> stix1x (Observable)
+# _ID_OF_OBSERVABLES_IN_CHARACTERIZATIONS   stix2x_id (ObservedData)
+
 
 def clear_globals():
     clear_id_mapping()
@@ -54,6 +62,7 @@ def clear_globals():
     clear_object_id_mapping()
     clear_observable_mappings()
     clear_kill_chains_phases_mapping()
+    clear_observed_data_mappings()
     clear_id_of_obs_in_characterizations()
     clear_directory_mappings()
     cybox.utils.caches.cache_clear()

@@ -55,8 +55,8 @@ from stix2elevator.convert_pattern import (
 )
 from stix2elevator.ids import (
     add_id_of_obs_in_characterizations, add_id_value, exists_id_key,
-    exists_ids_with_no_1x_object, generate_stix2x_id, get_id_value,
-    get_id_values, get_type_from_id, is_stix1x_id, record_ids
+    exists_ids_with_no_1x_object, exists_object_id_key, generate_stix2x_id, get_id_value,
+    get_id_values, get_object_id_value, get_type_from_id, is_stix1x_id, record_ids
 )
 from stix2elevator.missing_policy import (
     add_string_property_to_description, convert_to_custom_name, handle_missing_confidence_property,
@@ -500,40 +500,49 @@ def handle_relationship_from_refs(refs, target_id, env, default_verb):
 def handle_observable_information_list_as_pattern(obs_list):
     return convert_observable_list_to_pattern(obs_list)
 
+
 def handle_observable_information_list(obs_list, source_id, env, verb):
     for o in obs_list:
         if o.idref is None and o.object_ and not o.object_.idref:
-            # embedded
+            # embedded, so generate scos too
             new_od = convert_observed_data(o, env)
-            # env.bundle_instance["objects"].append(new_od)
             add_id_of_obs_in_characterizations(new_od["id"])
-            env.bundle_instance["relationships"].append(create_relationship(source_id,
-                                                                            new_od["id"] if new_od else None,
-                                                                            env,
-                                                                            verb))
+            for obj_ref in new_od["object_refs"]:
+                env.bundle_instance["relationships"].append(create_relationship(source_id,
+                                                                                obj_ref,
+                                                                                env,
+                                                                                verb))
         else:
             if o.idref:
                 idref = o.idref
             elif o.idref is None and o.object_ and o.object_.idref:
                 idref = generate_stix2x_id("observed-data", o.object_.idref)
-            add_id_of_obs_in_characterizations(idref)
-            if exists_id_key(idref):
-                for to_ref in get_id_value(o.idref):
-                    add_id_of_obs_in_characterizations(to_ref)
+
+            if id_in_observed_data_mappings(idref):
+                obs2x = get_observed_data_from_mapping(idref)
+                add_id_of_obs_in_characterizations(obs2x["id"])
+                for ref in obs2x["object_refs"]:
                     env.bundle_instance["relationships"].append(create_relationship(source_id,
-                                                                                    to_ref,
+                                                                                    ref,
                                                                                     env,
                                                                                     verb))
             else:
                 if id_in_observable_mappings(idref):
-                    new_od = convert_observed_data(get_obs_from_mapping(idref), env)
+                    # handling a reference, scos generated later
+                    new_od = convert_observed_data(get_obs_from_mapping(idref), env, keep_scos=False)
                     add_id_of_obs_in_characterizations(new_od["id"])
                     env.bundle_instance["objects"].append(new_od)
-                # a forward reference, fix later
-                env.bundle_instance["relationships"].append(create_relationship(source_id,
-                                                                                idref,
-                                                                                env,
-                                                                                verb))
+                    for ref in new_od["object_refs"]:
+                        env.bundle_instance["relationships"].append(create_relationship(source_id,
+                                                                                        ref,
+                                                                                        env,
+                                                                                        verb))
+                else:
+                    # a forward reference, fix later
+                    env.bundle_instance["relationships"].append(create_relationship(source_id,
+                                                                                    idref,
+                                                                                    env,
+                                                                                    verb))
 
 
 def reference_needs_fixing(ref):
@@ -1313,7 +1322,7 @@ def set_embedded_ref_property_2_0(sco, co_id, stix2x_rel_name):
         sco[stix2x_rel_name] = co_id
 
 
-def create_scos(obs, observed_data_instance, env):
+def create_scos(obs, observed_data_instance, env, keep_scos):
     if not obs.object_ and obs.observable_composition:
         warn("%s contains a observable composition, which implies it not an observation, but a pattern and needs " +
              "to be contained within an indicator.",
@@ -1341,7 +1350,8 @@ def create_scos(obs, observed_data_instance, env):
         if scos:
             for obj in scos:
                 observed_data_instance["object_refs"].append(obj["id"])
-                env.bundle_instance["objects"].append(obj)
+                if keep_scos:
+                    env.bundle_instance["objects"].append(obj)
 
 
 def create_cyber_observables(obs, observed_data_instance):
@@ -1369,24 +1379,45 @@ def create_cyber_observables(obs, observed_data_instance):
                                                           property_name)
 
 
-def convert_observed_data(obs, env):
-    # TODO: is this commented out code necessary?
-    # if not obs.id_ and obs.object_ and obs.object_.id_:
-    #    obj = obs.object_
+_OBSERVABLE_TO_OBSERVED_DATA_MAPPINGS = {}
+
+
+def add_to_observed_data_mappings(obs1x_id, od2x):
+    global _OBSERVABLE_TO_OBSERVED_DATA_MAPPINGS
+
+    _OBSERVABLE_TO_OBSERVED_DATA_MAPPINGS[obs1x_id] = od2x
+
+
+def id_in_observed_data_mappings(id_):
+    return id_ in _OBSERVABLE_TO_OBSERVED_DATA_MAPPINGS
+
+
+def get_observed_data_from_mapping(id_):
+    return _OBSERVABLE_TO_OBSERVED_DATA_MAPPINGS[id_]
+
+
+def clear_observed_data_mappings():
+    global OBSERVABLE_TO_OBSERVED_DATA_MAPPINGS
+    OBSERVABLE_TO_OBSERVED_DATA_MAPPINGS = {}
+
+
+
+def convert_observed_data(obs, env, keep_scos=True):
     observed_data_instance = create_basic_object("observed-data", obs, env)
     if get_option_value("spec_version") == "2.0":
         create_cyber_observables(obs, observed_data_instance)
     else:
-        create_scos(obs, observed_data_instance, env)
+        create_scos(obs, observed_data_instance, env, keep_scos)
     # remember the original 1.x observable, in case it has to be turned into a pattern later
     add_to_observable_mappings(obs)
+    add_to_observed_data_mappings(obs.id_, observed_data_instance)
     if "objects" not in observed_data_instance and "object_refs" not in observed_data_instance:
         return None
     info("'first_observed' and 'last_observed' data not available directly on %s - using timestamp", 901, obs.id_)
     observed_data_instance["first_observed"] = observed_data_instance["created"]
     observed_data_instance["last_observed"] = observed_data_instance["created"]
     observed_data_instance["number_observed"] = 1 if obs.sighting_count is None else obs.sighting_count
-    # created_by
+    # TODO: created_by
     finish_basic_object(obs.id_, observed_data_instance, env, obs)
     return observed_data_instance
 
@@ -1942,8 +1973,6 @@ def finalize_bundle(env):
     else:
         fix_sco_embedded_refs(bundle_instance["objects"])
         resolve_object_references21(bundle_instance["objects"])
-
-    # need to remove observed-data not used at the top level
 
     if stix.__version__ >= "1.2.0.0":
         add_relationships_to_reports(bundle_instance)

@@ -17,7 +17,6 @@ from stix2elevator.utils import map_1x_type_to_20
 def record_ids(stix_id, new_id):
     if stix_id in _IDS_TO_NEW_IDS:
         info("%s is already associated other ids: %s", 703, text_type(stix_id), tuple(_IDS_TO_NEW_IDS[stix_id]))
-    # info("associating " + new_id + " with " + id)
     if new_id is None:
         error("Could not associate %s with None", 611, stix_id)
         return
