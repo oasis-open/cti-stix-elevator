@@ -5,19 +5,19 @@
             "extensions": {
                 "archive-ext": {
                     "contains_refs": [
-                        "file--d430772f-bd71-550b-b1c4-107085a1d0b9",
-                        "directory--4aa982e3-4aac-5d5b-a699-d08c8c11f5f3",
-                        "file--5439248a-519f-5963-8abb-bbe52987b661"
+                        "file--122337b0-b9df-55ec-aced-97009486851e",
+                        "directory--5254394b-9d52-51d5-8a7b-613a7b0f89c0",
+                        "file--34348c5a-2a26-5c0f-82f5-bbbe61fd61bc"
                     ]
                 }
             },
-            "id": "file--e8b2f5bc-0302-51c8-bf89-51b60e47fb20",
+            "id": "file--cc10c968-cda0-54ca-8300-0c85c6acba65",
             "name": "iprip32.zip",
-            "parent_directory_ref": "directory--4aa982e3-4aac-5d5b-a699-d08c8c11f5f3",
+            "parent_directory_ref": "directory--5254394b-9d52-51d5-8a7b-613a7b0f89c0",
             "type": "file"
         },
         {
-            "id": "directory--4aa982e3-4aac-5d5b-a699-d08c8c11f5f3",
+            "id": "directory--5254394b-9d52-51d5-8a7b-613a7b0f89c0",
             "path": "/usr/local",
             "type": "directory"
         },
@@ -25,16 +25,16 @@
             "hashes": {
                 "SHA-256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
             },
-            "id": "file--d430772f-bd71-550b-b1c4-107085a1d0b9",
+            "id": "file--122337b0-b9df-55ec-aced-97009486851e",
             "name": "fred.doc",
-            "parent_directory_ref": "directory--4aa982e3-4aac-5d5b-a699-d08c8c11f5f3",
+            "parent_directory_ref": "directory--5254394b-9d52-51d5-8a7b-613a7b0f89c0",
             "type": "file"
         },
         {
             "hashes": {
                 "MD5": "5d8129be965fab8115eca34fc84bd7f0"
             },
-            "id": "file--5439248a-519f-5963-8abb-bbe52987b661",
+            "id": "file--34348c5a-2a26-5c0f-82f5-bbbe61fd61bc",
             "type": "file"
         },
         {
@@ -45,10 +45,10 @@
             "modified": "2019-12-19T13:16:43.501Z",
             "number_observed": 1,
             "object_refs": [
-                "file--e8b2f5bc-0302-51c8-bf89-51b60e47fb20",
-                "directory--4aa982e3-4aac-5d5b-a699-d08c8c11f5f3",
-                "file--d430772f-bd71-550b-b1c4-107085a1d0b9",
-                "file--5439248a-519f-5963-8abb-bbe52987b661"
+                "file--cc10c968-cda0-54ca-8300-0c85c6acba65",
+                "directory--5254394b-9d52-51d5-8a7b-613a7b0f89c0",
+                "file--122337b0-b9df-55ec-aced-97009486851e",
+                "file--34348c5a-2a26-5c0f-82f5-bbbe61fd61bc"
             ],
             "spec_version": "2.1",
             "type": "observed-data"
