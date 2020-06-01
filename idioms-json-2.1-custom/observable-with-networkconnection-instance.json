@@ -3,10 +3,10 @@
     "objects": [
         {
             "dst_port": 80,
-            "dst_ref": "ipv4-addr--c5a216ae-2184-5acd-b145-2d1321457d0b",
+            "dst_ref": "ipv4-addr--96d215a5-eb23-527a-ae22-9507313d32ca",
             "extensions": {
                 "http-request-ext": {
-                    "message_body_data_ref": "artifact--8a7bf821-70fd-5624-88f2-e2fd2464aea0",
+                    "message_body_data_ref": "artifact--b59d53f1-00da-508c-be83-638974fd12eb",
                     "message_body_length": 200,
                     "request_header": {
                         "Accept": "text/plain",
@@ -24,7 +24,7 @@
                     "request_version": "http/1.1"
                 }
             },
-            "id": "network-traffic--d6c8c747-f552-5525-b498-ac02312d556c",
+            "id": "network-traffic--c24a5769-0072-591d-8712-83661431fc12",
             "protocols": [
                 "ipv4",
                 "udp",
@@ -33,37 +33,37 @@
                 "https"
             ],
             "src_port": 5525,
-            "src_ref": "domain-name--220a2699-5ebf-5b57-bf02-424964bb19c0",
+            "src_ref": "domain-name--bedb4899-d24b-5401-bc86-8f6b4cc18ec7",
             "start": "2011-08-05T07:14:55.000000Z",
             "type": "network-traffic"
-        },{
-            "id": "domain-name--220a2699-5ebf-5b57-bf02-424964bb19c0",
+        },
+        {
+            "id": "domain-name--bedb4899-d24b-5401-bc86-8f6b4cc18ec7",
             "type": "domain-name",
             "value": "example.com"
         },
         {
-            "id": "ipv4-addr--c5a216ae-2184-5acd-b145-2d1321457d0b",
+            "id": "ipv4-addr--96d215a5-eb23-527a-ae22-9507313d32ca",
             "type": "ipv4-addr",
             "value": "198.49.123.10"
         },
         {
-            "id": "artifact--8a7bf821-70fd-5624-88f2-e2fd2464aea0",
+            "id": "artifact--b59d53f1-00da-508c-be83-638974fd12eb",
             "payload_bin": "YWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFh",
             "type": "artifact"
         },
-
         {
-            "created": "2019-08-21T13:10:48.439Z",
-            "first_observed": "2019-08-21T13:10:48.439Z",
+            "created": "2020-05-31T15:12:07.291Z",
+            "first_observed": "2020-05-31T15:12:07.291Z",
             "id": "observed-data--1aec7752-29e1-4018-806c-7a9a21ddb20e",
-            "last_observed": "2019-08-21T13:10:48.439Z",
-            "modified": "2019-08-21T13:10:48.439Z",
+            "last_observed": "2020-05-31T15:12:07.291Z",
+            "modified": "2020-05-31T15:12:07.291Z",
             "number_observed": 1,
             "object_refs": [
-                "network-traffic--d6c8c747-f552-5525-b498-ac02312d556c",
-                "domain-name--220a2699-5ebf-5b57-bf02-424964bb19c0",
-                "ipv4-addr--c5a216ae-2184-5acd-b145-2d1321457d0b",
-                "artifact--8a7bf821-70fd-5624-88f2-e2fd2464aea0"
+                "network-traffic--c24a5769-0072-591d-8712-83661431fc12",
+                "domain-name--bedb4899-d24b-5401-bc86-8f6b4cc18ec7",
+                "ipv4-addr--96d215a5-eb23-527a-ae22-9507313d32ca",
+                "artifact--b59d53f1-00da-508c-be83-638974fd12eb"
             ],
             "spec_version": "2.1",
             "type": "observed-data"

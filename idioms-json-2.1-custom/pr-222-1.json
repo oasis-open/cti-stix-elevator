@@ -4,30 +4,31 @@
         {
             "extensions": {
                 "http-request-ext": {
-                    "message_body_data_ref": "artifact--6a96f241-0f48-5f93-be99-05d75cf5d6d4",
+                    "message_body_data_ref": "artifact--1172c096-674f-567f-991a-761ecb419e0c",
                     "message_body_length": 69,
                     "request_header": {
                         "User-Agent": "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:25.0) Gecko/20100101 Firefox/25.0"
                     }
                 }
             },
-            "id": "network-traffic--11956850-bf6a-49cd-a214-98a9ef17131b",
+            "id": "network-traffic--3b087202-88b4-4684-838b-074f601d4f10",
             "type": "network-traffic"
         },
         {
-            "id": "artifact--6a96f241-0f48-5f93-be99-05d75cf5d6d4",
+            "id": "artifact--1172c096-674f-567f-991a-761ecb419e0c",
             "payload_bin": "PGh0bWw+PHRpdGxlPkFuIEhUTUwgcGFnZTwvdGl0bGU+PGJvZHk+PHA+Qm9keSB0ZXh0PC9wPjwvYm9keT48L2h0bWw+",
             "type": "artifact"
-        },        {
-            "created": "2020-05-04T15:03:50.484Z",
-            "first_observed": "2020-05-04T15:03:50.484Z",
+        },
+        {
+            "created": "2020-05-31T15:12:07.752Z",
+            "first_observed": "2020-05-31T15:12:07.752Z",
             "id": "observed-data--fca4bd90-906e-4566-97eb-1afd6bc50043",
-            "last_observed": "2020-05-04T15:03:50.484Z",
-            "modified": "2020-05-04T15:03:50.484Z",
+            "last_observed": "2020-05-31T15:12:07.752Z",
+            "modified": "2020-05-31T15:12:07.752Z",
             "number_observed": 1,
             "object_refs": [
-                "network-traffic--11956850-bf6a-49cd-a214-98a9ef17131b",
-                "artifact--6a96f241-0f48-5f93-be99-05d75cf5d6d4"
+                "network-traffic--3b087202-88b4-4684-838b-074f601d4f10",
+                "artifact--1172c096-674f-567f-991a-761ecb419e0c"
             ],
             "spec_version": "2.1",
             "type": "observed-data"

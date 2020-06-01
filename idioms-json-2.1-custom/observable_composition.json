@@ -2,12 +2,12 @@
     "id": "bundle--75bcecfe-c577-4ce5-8ec6-5e04b6ec8067",
     "objects": [
         {
-            "id": "file--5956efbb-a7b0-566d-a7f9-a202eb05c70f",
+            "id": "file--7af1312c-4402-5d2f-b169-b118d73b85c4",
             "name": "foo.exe",
             "type": "file"
         },
         {
-            "id": "file--51f1be98-e988-5af2-8894-1be0a0d8ba6d",
+            "id": "file--7c83a32c-7ef0-50dd-a7a9-21295767dacd",
             "name": "foo",
             "size": 1896000,
             "type": "file"
@@ -43,27 +43,27 @@
             "valid_from": "2018-09-06T16:14:38.950721Z"
         },
         {
-            "created": "2019-08-21T13:13:48.359Z",
-            "first_observed": "2019-08-21T13:13:48.359Z",
+            "created": "2020-05-31T15:12:07.493Z",
+            "first_observed": "2020-05-31T15:12:07.493Z",
             "id": "observed-data--45e44a73-7074-4316-88f4-5e884026f017",
-            "last_observed": "2019-08-21T13:13:48.359Z",
-            "modified": "2019-08-21T13:13:48.359Z",
+            "last_observed": "2020-05-31T15:12:07.493Z",
+            "modified": "2020-05-31T15:12:07.493Z",
             "number_observed": 1,
             "object_refs": [
-                "file--5956efbb-a7b0-566d-a7f9-a202eb05c70f"
+                "file--7af1312c-4402-5d2f-b169-b118d73b85c4"
             ],
             "spec_version": "2.1",
             "type": "observed-data"
         },
         {
-            "created": "2019-08-21T13:13:48.360Z",
-            "first_observed": "2019-08-21T13:13:48.360Z",
+            "created": "2020-05-31T15:12:07.493Z",
+            "first_observed": "2020-05-31T15:12:07.493Z",
             "id": "observed-data--20a830a0-7878-4320-b8b2-08a5d91cfd94",
-            "last_observed": "2019-08-21T13:13:48.360Z",
-            "modified": "2019-08-21T13:13:48.360Z",
+            "last_observed": "2020-05-31T15:12:07.493Z",
+            "modified": "2020-05-31T15:12:07.493Z",
             "number_observed": 1,
             "object_refs": [
-                "file--51f1be98-e988-5af2-8894-1be0a0d8ba6d"
+                "file--7c83a32c-7ef0-50dd-a7a9-21295767dacd"
             ],
             "spec_version": "2.1",
             "type": "observed-data"

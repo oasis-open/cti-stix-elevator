@@ -2,27 +2,27 @@
     "id": "bundle--2bf5c12d-11cf-4248-87be-cf4aed89a7e0",
     "objects": [
         {
-            "creator_user_ref": "user-account--bde0514f-3926-5535-a23e-030fc14d15f8",
-            "id": "windows-registry-key--d37b122f-81f4-5b22-b13e-f3cb62e25a30",
+            "creator_user_ref": "user-account--31c34ae4-90ea-5999-98f0-d8558554cab4",
+            "id": "windows-registry-key--96b641bb-2dd9-5267-906c-da4d3b5d88f2",
             "key": "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\User Shell Folders",
             "modified_time": "2013-02-19T00:00:00.000000Z",
             "type": "windows-registry-key"
         },
         {
-            "id": "user-account--bde0514f-3926-5535-a23e-030fc14d15f8",
+            "id": "user-account--31c34ae4-90ea-5999-98f0-d8558554cab4",
             "type": "user-account",
             "user_id": "Fred"
         },
         {
-            "created": "2020-02-11T12:18:08.425Z",
-            "first_observed": "2020-02-11T12:18:08.425Z",
+            "created": "2020-05-31T15:12:07.869Z",
+            "first_observed": "2020-05-31T15:12:07.869Z",
             "id": "observed-data--8f4bc37b-1b96-43a2-b99c-b8a31cf00fa8",
-            "last_observed": "2020-02-11T12:18:08.425Z",
-            "modified": "2020-02-11T12:18:08.425Z",
+            "last_observed": "2020-05-31T15:12:07.869Z",
+            "modified": "2020-05-31T15:12:07.869Z",
             "number_observed": 1,
             "object_refs": [
-                "windows-registry-key--d37b122f-81f4-5b22-b13e-f3cb62e25a30",
-                "user-account--bde0514f-3926-5535-a23e-030fc14d15f8"
+                "windows-registry-key--96b641bb-2dd9-5267-906c-da4d3b5d88f2",
+                "user-account--31c34ae4-90ea-5999-98f0-d8558554cab4"
             ],
             "spec_version": "2.1",
             "type": "observed-data"

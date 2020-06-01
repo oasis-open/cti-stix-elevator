@@ -5,7 +5,7 @@
             "account_last_login": "2010-12-09T20:17:34.934295Z",
             "account_login": "fred",
             "account_type": "unix",
-            "id": "user-account--720a01f1-a744-553e-8571-0bd1ee40081a",
+            "id": "user-account--230fa84f-1fef-58a6-bd79-1332f28d2b23",
             "is_disabled": true,
             "type": "user-account",
             "user_id": "1001"
@@ -32,18 +32,18 @@
             "modified": "2013-02-09T10:17:34.934Z",
             "number_observed": 1,
             "object_refs": [
-                "user-account--720a01f1-a744-553e-8571-0bd1ee40081a"
+                "user-account--230fa84f-1fef-58a6-bd79-1332f28d2b23"
             ],
             "spec_version": "2.1",
             "type": "observed-data"
         },
         {
             "created": "2018-09-12T00:00:16.906Z",
-            "id": "report--c243ad2c-1326-4e6c-9ee7-2b13dd41299c",
+            "id": "report--46c8e176-76ee-4b37-a6ee-917247429b9c",
             "modified": "2018-09-12T00:00:16.906Z",
             "published": "2018-09-12T00:00:16.906Z",
             "report_types": [
-               "unknown"
+                "unknown"
             ],
             "spec_version": "2.1",
             "type": "report"

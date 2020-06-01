@@ -12,21 +12,21 @@
                     "x_elevator_local_address": "198.51.100.2"
                 }
             },
-            "id": "network-traffic--fb055025-dd4f-5fd0-bf8a-c81de67d1eb9",
+            "id": "network-traffic--bc151ba0-c40b-5777-8457-dc595b2fa727",
             "protocols": [
                 "tcp"
             ],
             "type": "network-traffic"
         },
         {
-            "created": "2019-08-21T11:45:07.854Z",
-            "first_observed": "2019-08-21T11:45:07.854Z",
+            "created": "2020-05-31T15:12:07.150Z",
+            "first_observed": "2020-05-31T15:12:07.150Z",
             "id": "observed-data--175e561f-3ced-4cf7-8a17-654ca651ff97",
-            "last_observed": "2019-08-21T11:45:07.854Z",
-            "modified": "2019-08-21T11:45:07.854Z",
+            "last_observed": "2020-05-31T15:12:07.150Z",
+            "modified": "2020-05-31T15:12:07.150Z",
             "number_observed": 1,
             "object_refs": [
-                "network-traffic--fb055025-dd4f-5fd0-bf8a-c81de67d1eb9"
+                "network-traffic--bc151ba0-c40b-5777-8457-dc595b2fa727"
             ],
             "spec_version": "2.1",
             "type": "observed-data"
@@ -34,4 +34,3 @@
     ],
     "type": "bundle"
 }
-
