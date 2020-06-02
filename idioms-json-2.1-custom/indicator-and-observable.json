@@ -5,18 +5,18 @@
             "hashes": {
                 "SHA-256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
             },
-            "id": "file--49959589-27c4-5873-8e23-82f6c909d4ca",
+            "id": "file--b72f0bbc-da0c-5d04-9c11-b78809283af8",
             "name": "iprip32.dll",
-            "parent_directory_ref": "directory--4aa982e3-4aac-5d5b-a699-d08c8c11f5f3",
+            "parent_directory_ref": "directory--5254394b-9d52-51d5-8a7b-613a7b0f89c0",
             "type": "file"
         },
         {
-            "id": "directory--4aa982e3-4aac-5d5b-a699-d08c8c11f5f3",
+            "id": "directory--5254394b-9d52-51d5-8a7b-613a7b0f89c0",
             "path": "/usr/local",
             "type": "directory"
         },
         {
-            "id": "software--4adc35c1-5adc-574b-86f4-1bef1b0be25d",
+            "id": "software--c616478f-891e-5ddb-bb5c-f6d497d2a513",
             "languages": [
                 "eng"
             ],
@@ -26,41 +26,41 @@
             "version": "2002"
         },
         {
-            "created": "2020-04-01T13:28:33.250Z",
+            "created": "2020-05-31T15:12:05.608Z",
             "id": "indicator--6116b44e-a7e9-41e3-a82f-000c29b241af",
             "indicator_types": [
                 "ip-watchlist"
             ],
-            "modified": "2020-04-01T13:28:33.250Z",
+            "modified": "2020-05-31T15:12:05.608Z",
             "pattern": "[domain-name:value = 'microsoftb.byinter.net' AND domain-name:resolves_to_refs[*].value = '202.65.222.45']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
-            "valid_from": "2020-04-01T13:28:33.250Z"
+            "valid_from": "2020-05-31T15:12:05.608Z"
         },
         {
-            "created": "2020-04-01T13:28:33.250Z",
-            "first_observed": "2020-04-01T13:28:33.250Z",
+            "created": "2020-05-31T15:12:05.608Z",
+            "first_observed": "2020-05-31T15:12:05.608Z",
             "id": "observed-data--c8c32b6e-2ea8-41c4-9446-7f5218072f27",
-            "last_observed": "2020-04-01T13:28:33.250Z",
-            "modified": "2020-04-01T13:28:33.250Z",
+            "last_observed": "2020-05-31T15:12:05.608Z",
+            "modified": "2020-05-31T15:12:05.608Z",
             "number_observed": 1,
             "object_refs": [
-                "file--49959589-27c4-5873-8e23-82f6c909d4ca",
-                "directory--4aa982e3-4aac-5d5b-a699-d08c8c11f5f3"
+                "file--b72f0bbc-da0c-5d04-9c11-b78809283af8",
+                "directory--5254394b-9d52-51d5-8a7b-613a7b0f89c0"
             ],
             "spec_version": "2.1",
             "type": "observed-data"
         },
         {
-            "created": "2020-04-01T13:28:33.250Z",
-            "first_observed": "2020-04-01T13:28:33.250Z",
+            "created": "2020-05-31T15:12:05.608Z",
+            "first_observed": "2020-05-31T15:12:05.608Z",
             "id": "observed-data--1a9e6bc3-7665-4413-8f07-75cceef20856",
-            "last_observed": "2020-04-01T13:28:33.250Z",
-            "modified": "2020-04-01T13:28:33.250Z",
+            "last_observed": "2020-05-31T15:12:05.608Z",
+            "modified": "2020-05-31T15:12:05.608Z",
             "number_observed": 1,
             "object_refs": [
-                "software--4adc35c1-5adc-574b-86f4-1bef1b0be25d"
+                "software--c616478f-891e-5ddb-bb5c-f6d497d2a513"
             ],
             "spec_version": "2.1",
             "type": "observed-data"

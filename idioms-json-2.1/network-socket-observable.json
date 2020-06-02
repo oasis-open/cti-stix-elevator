@@ -7,11 +7,11 @@
                     "address_family": "AF_INET",
                     "is_listening": true,
                     "options": {
-                        "IP_MULTICAST_LOOP": true
+                        "IP_MULTICAST_LOOP": 1
                     }
                 }
             },
-            "id": "network-traffic--fb055025-dd4f-5fd0-bf8a-c81de67d1eb9",
+            "id": "network-traffic--bc151ba0-c40b-5777-8457-dc595b2fa727",
             "protocols": [
                 "tcp"
             ],
@@ -25,7 +25,7 @@
             "modified": "2019-08-21T11:45:07.854Z",
             "number_observed": 1,
             "object_refs": [
-                "network-traffic--fb055025-dd4f-5fd0-bf8a-c81de67d1eb9"
+                "network-traffic--bc151ba0-c40b-5777-8457-dc595b2fa727"
             ],
             "spec_version": "2.1",
             "type": "observed-data"

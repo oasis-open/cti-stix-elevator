@@ -6,25 +6,25 @@
             "id": "relationship--b3ecf2e7-fe67-4df4-b767-f321081fe912",
             "modified": "2019-09-13T13:15:59.362Z",
             "relationship_type": "contains",
-            "source_ref": "email-message--bab8c54d-f27d-4982-b6b9-7f6220f4fd5d",
+            "source_ref": "email-message--69999a2b-a948-55af-b7ae-9bc614c72542",
             "spec_version": "2.1",
-            "target_ref": "file--46a9b360-48bf-54d6-9802-5496e6fa4c27",
+            "target_ref": "file--307d531c-7d74-5be6-b968-71ffb812b220",
             "type": "relationship"
         },
         {
             "body_multipart": [
                 {
-                    "body_raw_ref": "file--741ed95f-e16e-5c97-8c38-8f610cf1f0e8",
+                    "body_raw_ref": "file--307d531c-7d74-5be6-b968-71ffb812b220",
                     "content_type": "text/plain"
                 }
             ],
-            "id": "email-message--3ccde5f8-82e1-5781-b354-26b800df3692",
+            "id": "email-message--69999a2b-a948-55af-b7ae-9bc614c72542",
             "is_multipart": true,
             "subject": "[IMPORTANT] Please Review Before",
             "type": "email-message"
         },
         {
-            "id": "file--741ed95f-e16e-5c97-8c38-8f610cf1f0e8",
+            "id": "file--307d531c-7d74-5be6-b968-71ffb812b220",
             "name": "Final Report.doc.exe",
             "type": "file"
         },
@@ -108,8 +108,8 @@
             "modified": "2019-08-21T11:45:07.751Z",
             "number_observed": 1,
             "object_refs": [
-                "email-message--3ccde5f8-82e1-5781-b354-26b800df3692",
-                "file--741ed95f-e16e-5c97-8c38-8f610cf1f0e8"
+                "email-message--69999a2b-a948-55af-b7ae-9bc614c72542",
+                "file--307d531c-7d74-5be6-b968-71ffb812b220"
             ],
             "spec_version": "2.1",
             "type": "observed-data"

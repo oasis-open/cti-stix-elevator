@@ -69,7 +69,7 @@ TTP *[id]* did not generate any STIX 2.x object                                 
 No STIX 2.x object generated from embedded object *[id]*                                                                                       416     warn
 *[object type]* did not yield any STIX 2.x object                                                                                              417     warn
 The *[property]* property of *[STIX 1.x object type]* is not part of STIX 2.x                                                                  418     warn
-``NO MESSAGE ASSIGNED``                                                                                                                        419
+*[id]* is used as a characteristic in an infrastructure object, therefore it is not included as an observed_data instance                      419     warn
 Windows Handles are not a part of STIX 2.x                                                                                                     420     warn
 The address type [address] is not part of STIX 2.x                                                                                             421     warn
 No pattern term was created from *[id]*                                                                                                        422     warn

@@ -2,25 +2,29 @@
     "id": "bundle--7d188f68-9b6d-40d8-96a6-667ce3677874",
     "objects": [
         {
-            "id": "url--c784e9dc-6559-5d6c-8d97-06ff2113d14c",
+            "id": "url--85336f56-d406-530a-a485-f28a369e6b36",
             "type": "url",
             "value": "http://thereelin.com/mac/htm"
         },
         {
-            "from_ref": "email-addr--f09c1287-7a14-51c2-bc89-f83ef944dd01",
-            "id": "email-message--feb2c5bf-dd52-5bc2-a355-ad7e7498583e",
+            "additional_header_fields": {
+                "Message-ID": "201602112058.u1BKfrXh004925@mail-gw-01.oit.duke.edu",
+                "X-Mailer": "Microsoft Outlook Express 6.00.2800.1437"
+            },
+            "from_ref": "email-addr--b5c16ad8-a113-5b9b-82f9-1d54ddcae49b",
+            "id": "email-message--1a205fb0-7ab4-5786-bb7b-0e8bd60be8ae",
             "is_multipart": false,
-            "raw_email_ref": "artifact--f618c62c-f42c-50fe-8e46-8cdb24528b4c",
+            "raw_email_ref": "artifact--9a975970-092c-56e0-9b23-e586774acb51",
             "subject": "Fix The Error On Your Account.",
             "type": "email-message"
         },
         {
-            "id": "email-addr--f09c1287-7a14-51c2-bc89-f83ef944dd01",
+            "id": "email-addr--b5c16ad8-a113-5b9b-82f9-1d54ddcae49b",
             "type": "email-addr",
             "value": "chase@ee.duke.edu"
         },
         {
-            "id": "artifact--f618c62c-f42c-50fe-8e46-8cdb24528b4c",
+            "id": "artifact--9a975970-092c-56e0-9b23-e586774acb51",
             "payload_bin": "PCFET0NUWVBFIGh0bWw+UmVjZWl2ZWQ6IGZyb20gQkwwUFIwOTAxTUIzMTI0Lm5hbXByZDA5LnByb2Qub3V0bG9vay5jb20KICgyNjAzOjEwYjY6MjA4OmQ0OjoyMikgYnkgQkwwUFIwOTAxTUIzMjA0Lm5hbXByZDA5LnByb2Qub3V0bG9vay5jb20gd2l0aAogSFRUUFMgdmlhIE1OMlBSMDRDQTAwMDkuTkFNUFJEMDQuUFJPRC5PVVRMT09LLkNPTTsgV2VkLCAxMiBGZWIgMjAyMCAxODo0NTo0MwogKzAwMDAKQXV0aGVudGljYXRpb24tUmVzdWx0czogbWl0cmUub3JnOyBka2ltPW5vbmUgKG1lc3NhZ2Ugbm90IHNpZ25lZCkKIGhlYWRlci5kPW5vbmU7bWl0cmUub3JnOyBkbWFyYz1ub25lIGFjdGlvbj1ub25lIGhlYWRlci5mcm9tPW1pdHJlLm9yZzsKUmVjZWl2ZWQ6IGZyb20gQkwwUFIwOTAxTUIzMjA0Lm5hbXByZDA5LnByb2Qub3V0bG9vay5jb20gKDIwLjE3Ny4yNDMuMTYpIGJ5CiBCTDBQUjA5MDFNQjMxMjQubmFtcHJkMDkucHJvZC5vdXRsb29rLmNvbSAoMjAuMTc3LjI0MS43NSkgd2l0aCBNaWNyb3NvZnQgU01UUAogU2VydmVyICh2ZXJzaW9uPVRMUzFfMiwgY2lwaGVyPVRMU19FQ0RIRV9SU0FfV0lUSF9BRVNfMjU2X0dDTV9TSEEzODQpIGlkCiAxNS4yMC4yNzA3LjIzOyBXZWQsIDEyIEZlYiAyMDIwIDE4OjQ1OjQyICswMDAwClJlY2VpdmVkOiBmcm9tIEJMMFBSMDkwMU1CMzIwNC5uYW1wcmQwOS5wcm9kLm91dGxvb2suY29tCiAoW2ZlODA6OmM4YjY6OGQwNjozYmJkOmNlZjNdKSBieSBCTDBQUjA5MDFNQjMyMDQubmFtcHJkMDkucHJvZC5vdXRsb29rLmNvbQogKFtmZTgwOjpjOGI2OjhkMDY6M2JiZDpjZWYzJTZdKSB3aXRoIG1hcGkgaWQgMTUuMjAuMjcwNy4wMzA7IFdlZCwgMTIgRmViIDIwMjAKIDE4OjQ1OjQyICswMDAwCkZyb206ICJQaWF6emEsIFJpY2giIDxycGlhenphQG1pdHJlLm9yZz4KVG86ICJQaWF6emEsIFJpY2giIDxycGlhenphQG1pdHJlLm9yZz4KU3ViamVjdDogdGVzdGluZwpUaHJlYWQtVG9waWM6IHRlc3RpbmcKVGhyZWFkLUluZGV4OiBBUUhWNGRTZ2U4UGdvTWdmUlVxaXB4aDNobzd4RGc9PQpEYXRlOiBXZWQsIDEyIEZlYiAyMDIwIDE4OjQ1OjQxICswMDAwCk1lc3NhZ2UtSUQ6IDw0ODQ3NTlDMi1DQzY5LTRBRDEtODY4Ny03RTFBM0Y3QzYxQTdAbWl0cmUub3JnPgpBY2NlcHQtTGFuZ3VhZ2U6IGVuLVVTCkNvbnRlbnQtTGFuZ3VhZ2U6IGVuLVVTCgo+IFRoaXMgbWVzc2FnZSBpcyBpbiBNSU1FIGZvcm1hdC4gU2luY2UgeW91ciBtYWlsIHJlYWRlciBkb2VzIG5vdCB1bmRlcnN0YW5kCnRoaXMgZm9ybWF0LCBzb21lIG9yIGFsbCBvZiB0aGlzIG1lc3NhZ2UgbWF5IG5vdCBiZSBsZWdpYmxlLgoKLS1CXzM2NjQzNTk5NTZfNjkwNDQxNTUyCkNvbnRlbnQtdHlwZTogdGV4dC9wbGFpbjsKCWNoYXJzZXQ9IlVURi04IgpDb250ZW50LXRyYW5zZmVyLWVuY29kaW5nOiA3Yml0CgotLUJfMzY2NDM1OTk1Nl82OTA0NDE1NTIKQ29udGVudC10eXBlOiB0ZXh0L2h0bWw7CgljaGFyc2V0PSJVVEYtOCIKQ29udGVudC10cmFuc2Zlci1lbmNvZGluZzogcXVvdGVkLXByaW50YWJsZQoKPGh0bWwgeG1sbnM6bz0zRCJ1cm46c2NoZW1hcy1taWNyb3NvZnQtY29tOm9mZmljZTpvZmZpY2UiIHhtbG5zOnc9M0QidXJuOnNjaGVtYT0Kcy1taWNyb3NvZnQtY29tOm9mZmljZTp3b3JkIiB4bWxuczptPTNEImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vb2ZmaWNlLzIwPQowNC8xMi9vbW1sIiB4bWxucz0zRCJodHRwOi8vd3d3LnczLm9yZy9UUi9SRUMtaHRtbDQwIj4KPGhlYWQ+CjxtZXRhIGh0dHAtZXF1aXY9M0QiQ29udGVudC1UeXBlIiBjb250ZW50PTNEInRleHQvaHRtbDsgY2hhcnNldD0zRHV0Zi04Ij4KPG1ldGEgbmFtZT0zRCJHZW5lcmF0b3IiIGNvbnRlbnQ9M0QiTWljcm9zb2Z0IFdvcmQgMTUgKGZpbHRlcmVkIG1lZGl1bSkiPgo8L2hlYWQ+Cjxib2R5IGxhbmc9M0QiRU4tVVMiIGxpbms9M0QiIzA1NjNDMSIgdmxpbms9M0QiIzk1NEY3MiI+CjxkaXYgY2xhc3M9M0QiV29yZFNlY3Rpb24xIj4KPHAgY2xhc3M9M0QiTXNvTm9ybWFsIj48c3BhbiBzdHlsZT0zRCJmb250LXNpemU6MTEuMHB0Ij48bzpwPiZuYnNwOzwvbzpwPjwvc3Bhbj0KPjwvcD4KPC9kaXY+CjwvYm9keT4KPC9odG1sPgoKCi0tQl8zNjY0MzU5OTU2XzY5MDQ0MTU1Mi0tCg==",
             "type": "artifact"
         },
@@ -32,7 +36,7 @@
             "modified": "2019-11-01T12:44:50.549Z",
             "number_observed": 1,
             "object_refs": [
-                "url--c784e9dc-6559-5d6c-8d97-06ff2113d14c"
+                "url--85336f56-d406-530a-a485-f28a369e6b36"
             ],
             "spec_version": "2.1",
             "type": "observed-data"
@@ -45,9 +49,9 @@
             "modified": "2019-11-01T12:44:50.549Z",
             "number_observed": 1,
             "object_refs": [
-                "email-message--feb2c5bf-dd52-5bc2-a355-ad7e7498583e",
-                "email-addr--f09c1287-7a14-51c2-bc89-f83ef944dd01",
-                "artifact--f618c62c-f42c-50fe-8e46-8cdb24528b4c"
+                "email-message--1a205fb0-7ab4-5786-bb7b-0e8bd60be8ae",
+                "email-addr--b5c16ad8-a113-5b9b-82f9-1d54ddcae49b",
+                "artifact--9a975970-092c-56e0-9b23-e586774acb51"
             ],
             "spec_version": "2.1",
             "type": "observed-data"

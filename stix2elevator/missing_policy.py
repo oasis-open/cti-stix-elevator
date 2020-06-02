@@ -8,10 +8,11 @@ from six import text_type
 from stix2elevator.options import get_option_value, info, warn
 
 
-def convert_to_custom_property_name(prop_name):
-    if re.search('[A-Z]', prop_name):
-        warn("Custom property name %s has been converted to all lower case", 727, prop_name)
-    return "x_" + get_option_value("custom_property_prefix") + "_" + prop_name.lower()
+def convert_to_custom_name(name, separator="_"):
+    if re.search('[A-Z]', name):
+        warn("Custom name %s has been converted to all lower case", 727, name)
+    # use custom_property_prefix for all custom names
+    return "x" + separator + get_option_value("custom_property_prefix") + separator + name.lower()
 
 
 def add_string_property_to_description(sdo_instance, property_name, property_value, is_list=False):
@@ -31,9 +32,9 @@ def add_string_property_as_custom_property(sdo_instance, property_name, property
         property_values = list()
         for v in property_value:
             property_values.append(text_type(v))
-        sdo_instance[convert_to_custom_property_name(property_name)] = ",".join(property_values)
+        sdo_instance[convert_to_custom_name(property_name)] = ",".join(property_values)
     else:
-        sdo_instance[convert_to_custom_property_name(property_name)] = text_type(property_value)
+        sdo_instance[convert_to_custom_name(property_name)] = text_type(property_value)
     warn("Used custom property for %s", 308, property_name + (" of " + sdo_instance["id"] if "id" in sdo_instance else ""))
 
 
@@ -61,9 +62,9 @@ def add_confidence_property_to_description(sdo_instance, confidence, parent_prop
 def add_confidence_property_as_custom_property(sdo_instance, confidence, parent_property_name=None):
     prefix = parent_property_name + "_" if parent_property_name else ""
     if confidence.value is not None:
-        sdo_instance[convert_to_custom_property_name(prefix + "confidence")] = text_type(confidence.value)
+        sdo_instance[convert_to_custom_name(prefix + "confidence")] = text_type(confidence.value)
     if confidence.description is not None:
-        sdo_instance[convert_to_custom_property_name(prefix + "confidence_description")] = text_type(confidence.description)
+        sdo_instance[convert_to_custom_name(prefix + "confidence_description")] = text_type(confidence.description)
     warn("Used custom properties for Confidence type content of %s", 308, sdo_instance["id"])
 
 
@@ -115,12 +116,12 @@ def add_statement_type_as_custom_property(statement):
 
 def statement_type_as_properties(sdo_instance, statement, property_name):
     if statement.value:
-        sdo_instance[convert_to_custom_property_name(property_name)] = text_type(statement.value)
+        sdo_instance[convert_to_custom_name(property_name)] = text_type(statement.value)
     if statement.descriptions:
         descriptions = []
         for d in statement.descriptions:
             descriptions.append(text_type(d.value))
-        sdo_instance[convert_to_custom_property_name(property_name) + "_description"] = " ".join(descriptions)
+        sdo_instance[convert_to_custom_name(property_name) + "_description"] = " ".join(descriptions)
     if statement.source is not None:
         # FIXME: Handle source
         info("Source property in STIX 1.x statement is not handled, yet.", 815)
@@ -151,7 +152,7 @@ def handle_multiple_missing_statement_properties(sdo_instance, statements, prope
                 statements_json = []
                 for s in statements:
                     statements_json.append(add_statement_type_as_custom_property(s))
-                sdo_instance[convert_to_custom_property_name(property_name + "s")] = statements_json
+                sdo_instance[convert_to_custom_name(property_name + "s")] = statements_json
             else:
                 warn("Missing property %s of %s is ignored", 307, property_name, sdo_instance["id"])
 
@@ -163,6 +164,6 @@ def handle_missing_tool_property(sdo_instance, tool):
             sdo_instance["description"] += "\n\tname: " + text_type(tool.name)
         warn("Appended Tool type content to description of %s", 306, sdo_instance["id"])
     elif get_option_value("missing_policy") == "use-custom-properties":
-        sdo_instance[convert_to_custom_property_name("tool_source")] = text_type(tool.name)
+        sdo_instance[convert_to_custom_name("tool_source")] = text_type(tool.name)
     else:
         warn("Missing property name of %s is ignored", 307, sdo_instance["id"])

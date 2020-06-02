@@ -4,6 +4,7 @@
         {
             "created": "2020-03-12T15:49:11.512Z",
             "id": "identity--e3e84ffb-15c9-47a6-9964-26e48adc566b",
+            "identity_class": "unknown",
             "modified": "2020-03-12T15:49:11.512Z",
             "name": "Charlie Tango",
             "type": "identity"

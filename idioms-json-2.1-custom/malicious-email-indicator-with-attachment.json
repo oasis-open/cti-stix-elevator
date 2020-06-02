@@ -2,29 +2,29 @@
     "id": "bundle--8b8ed1c1-f01d-4393-ac65-97017ed15876",
     "objects": [
         {
-            "created": "2019-09-13T13:15:59.362Z",
-            "id": "relationship--b3ecf2e7-fe67-4df4-b767-f321081fe912",
-            "modified": "2019-09-13T13:15:59.362Z",
+            "created": "2020-05-31T15:12:06.532Z",
+            "id": "relationship--77201c10-bd6a-4a49-a1ea-4751e263fcc6",
+            "modified": "2020-05-31T15:12:06.532Z",
             "relationship_type": "contains",
-            "source_ref": "email-message--3ccde5f8-82e1-5781-b354-26b800df3692",
+            "source_ref": "email-message--69999a2b-a948-55af-b7ae-9bc614c72542",
             "spec_version": "2.1",
-            "target_ref": "file--741ed95f-e16e-5c97-8c38-8f610cf1f0e8",
+            "target_ref": "file--307d531c-7d74-5be6-b968-71ffb812b220",
             "type": "relationship"
         },
         {
             "body_multipart": [
                 {
-                    "body_raw_ref": "file--741ed95f-e16e-5c97-8c38-8f610cf1f0e8",
+                    "body_raw_ref": "file--307d531c-7d74-5be6-b968-71ffb812b220",
                     "content_type": "text/plain"
                 }
             ],
-            "id": "email-message--3ccde5f8-82e1-5781-b354-26b800df3692",
+            "id": "email-message--69999a2b-a948-55af-b7ae-9bc614c72542",
             "is_multipart": true,
             "subject": "[IMPORTANT] Please Review Before",
             "type": "email-message"
         },
         {
-            "id": "file--741ed95f-e16e-5c97-8c38-8f610cf1f0e8",
+            "id": "file--307d531c-7d74-5be6-b968-71ffb812b220",
             "name": "Final Report.doc.exe",
             "type": "file"
         },
@@ -75,7 +75,7 @@
         },
         {
             "created": "2014-10-31T15:52:13.127Z",
-            "id": "relationship--21e05794-26b6-4ef8-9ccf-6f1ca01a95d0",
+            "id": "relationship--6d965041-8c3f-4e91-ba3b-520dc2202b81",
             "modified": "2014-10-31T15:52:13.127Z",
             "relationship_type": "indicates",
             "source_ref": "indicator--8cf9236f-1b96-493d-98be-0c1c1e8b62d7",
@@ -84,7 +84,7 @@
         },
         {
             "created": "2014-10-31T15:52:13.126Z",
-            "id": "relationship--01d832b7-bf37-4377-b8b7-acba398bfb76",
+            "id": "relationship--997f1fd4-5454-45a2-b252-44bf6a8b5db2",
             "modified": "2014-10-31T15:52:13.126Z",
             "relationship_type": "indicates",
             "source_ref": "indicator--b06b0eb7-61dd-4338-a094-0290c380fbd8",
@@ -93,7 +93,7 @@
         },
         {
             "created": "2014-10-31T15:52:13.127Z",
-            "id": "relationship--4c24da3e-9f8e-431d-9550-1c004b04edbb",
+            "id": "relationship--91385ad9-0abf-4334-99e4-c411bac3c307",
             "modified": "2014-10-31T15:52:13.127Z",
             "relationship_type": "indicates",
             "source_ref": "indicator--2e17f6fe-3a4d-438a-911a-e509ba1b9933",
@@ -101,15 +101,15 @@
             "type": "relationship"
         },
         {
-            "created": "2019-08-21T11:45:07.751Z",
-            "first_observed": "2019-08-21T11:45:07.751Z",
+            "created": "2020-05-31T15:12:06.532Z",
+            "first_observed": "2020-05-31T15:12:06.532Z",
             "id": "observed-data--2305f359-ab46-4932-acaf-953c31cd8b22",
-            "last_observed": "2019-08-21T11:45:07.751Z",
-            "modified": "2019-08-21T11:45:07.751Z",
+            "last_observed": "2020-05-31T15:12:06.532Z",
+            "modified": "2020-05-31T15:12:06.532Z",
             "number_observed": 1,
             "object_refs": [
-                "email-message--3ccde5f8-82e1-5781-b354-26b800df3692",
-                "file--741ed95f-e16e-5c97-8c38-8f610cf1f0e8"
+                "email-message--69999a2b-a948-55af-b7ae-9bc614c72542",
+                "file--307d531c-7d74-5be6-b968-71ffb812b220"
             ],
             "spec_version": "2.1",
             "type": "observed-data"

@@ -46,7 +46,7 @@ from stix2elevator.ids import (
     get_object_id_value, is_stix1x_id, property_contains_stix1x_id
 )
 from stix2elevator.missing_policy import (
-    convert_to_custom_property_name, handle_missing_string_property
+    convert_to_custom_name, handle_missing_string_property
 )
 from stix2elevator.options import error, get_option_value, info, warn
 from stix2elevator.utils import (
@@ -212,20 +212,20 @@ def convert_address(add, related_objects=None, env=None):
 def convert_artifact_compression(c):
     compression_dict = dict()
     if c.compression_mechanism:
-        compression_dict[convert_to_custom_property_name("compression_mechanism")] = c.compression_mechanism
+        compression_dict[convert_to_custom_name("compression_mechanism")] = c.compression_mechanism
     if c.compression_mechanism_ref:
-        compression_dict[convert_to_custom_property_name("compression_mechanism_ref")] = c.compression_mechanism_ref
+        compression_dict[convert_to_custom_name("compression_mechanism_ref")] = c.compression_mechanism_ref
     return compression_dict
 
 
 def convert_artifact_encoding(e):
     encoding_dict = dict()
     if e.algorithm:
-        encoding_dict[convert_to_custom_property_name("algorithmm")] = e.algorithm
+        encoding_dict[convert_to_custom_name("algorithmm")] = e.algorithm
     if e.character_set:
-        encoding_dict[convert_to_custom_property_name("character_set")] = e.character_set
+        encoding_dict[convert_to_custom_name("character_set")] = e.character_set
     if e.custom_character_set_ref:
-        encoding_dict[convert_to_custom_property_name("custom_character_set_ref")] = e.custom_character_set_ref
+        encoding_dict[convert_to_custom_name("custom_character_set_ref")] = e.custom_character_set_ref
     return encoding_dict
 
 
@@ -235,7 +235,7 @@ def convert_artifact_packaging(packaging, instance, obj1x_id):
             result = []
             for c in packaging.compression:
                 result.append(convert_artifact_compression(c))
-            instance[convert_to_custom_property_name("compression")] = result
+            instance[convert_to_custom_name("compression")] = result
         else:
             warn("Any artifact compression info on %s is not recoverable", 634, obj1x_id)
     if packaging.encoding:
@@ -243,7 +243,7 @@ def convert_artifact_packaging(packaging, instance, obj1x_id):
             result = []
             for e in packaging.encoding:
                 result.append(convert_artifact_encoding(e))
-            instance[convert_to_custom_property_name("encoding")] = result
+            instance[convert_to_custom_name("encoding")] = result
         else:
             warn("Any artifact encoding info on %s is not recoverable", 634, obj1x_id)
     if packaging.encryption:
@@ -252,13 +252,13 @@ def convert_artifact_packaging(packaging, instance, obj1x_id):
             if first:
                 if e.encryption_key:
                     if get_option_value("spec_version") == "2.0":
-                        property_name = convert_to_custom_property_name("encryption_key")
+                        property_name = convert_to_custom_name("encryption_key")
                     else:
                         property_name = "decryption_key"
                     instance[property_name] = e.encryption_key
                 if e.encryption_mechanism:
                     if get_option_value("spec_version") == "2.0":
-                        property_name = convert_to_custom_property_name("encryption_mechanism")
+                        property_name = convert_to_custom_name("encryption_mechanism")
                     else:
                         property_name = "encryption_algorithm"
                     instance[property_name] = e.encryption_mechanism
@@ -364,10 +364,10 @@ def convert_pdf_file(f):
                 value = getattr(dict1x, key, None)
                 if value:
                     if isinstance(value.value, datetime):
-                        dict2x[key] = convert_timestamp_to_string(value.value)
+                        dict2x[PDF_DOC_INFO_DICT_KEYS[key]] = convert_timestamp_to_string(value.value)
                     else:
-                        dict2x[key] = value.value
-            pdf_file_dict["document_info_dict "] = dict2x
+                        dict2x[PDF_DOC_INFO_DICT_KEYS[key]] = value.value
+            pdf_file_dict["document_info_dict"] = dict2x
     if f.trailers:
         count = 0
         for t in f.trailers:
@@ -475,7 +475,7 @@ def convert_archive_file21(f):
         archive_dict["comment"] = f.comment
     if f.version:
         if get_option_value("missing_policy") == "use-custom-properties":
-            property_name = convert_to_custom_property_name("version")
+            property_name = convert_to_custom_name("version")
             archive_dict[property_name] = f.version
     if f.archived_file:
         for ar_file in f.archived_file:
@@ -669,6 +669,38 @@ def convert_attachment(attachment):
     return {"body_raw_ref": attachment.object_reference, "content_type": "text/plain"}
 
 
+_EMAIL_ADDITIONAL_HEADERS_PROPERTIES = {
+    "Message-ID": "message_id",
+    "In-Reply-To": "in_reply_to",
+    "Errors-To": "errors_to",
+    "MIME-Version": "mime_version",
+    "Precedence": "precedence",
+    "User-Agent:": "user_agent",
+    "Boundary": "boundary",
+    "X-Priority": "x_priority",
+    "X-Mailer": "x_mailer"
+}
+
+
+def convert_email_additional_headers(head):
+    additional_header_fields_dict = dict()
+    for key2x, prop1x in _EMAIL_ADDITIONAL_HEADERS_PROPERTIES.items():
+        if hasattr(head, prop1x):
+            value = getattr(head, prop1x)
+            if value:
+                additional_header_fields_dict[key2x] = text_type(value)
+    if head.in_reply_to:
+        to_list = list()
+        for to in head.in_reply_to:
+            to_list.append(text_type(to.address_value))
+        additional_header_fields_dict["In-Reply-To"] = to_list
+    if head.x_originating_ip:
+        additional_header_fields_dict["X-Originating-IP"] = head.x_originating_ip.address_value
+    if head.received_lines:
+        warn("Email received lines not handled yet", 806)
+    return additional_header_fields_dict
+
+
 def convert_email_message(email_message):
     index = 0
     spec_version = get_option_value("spec_version")
@@ -695,6 +727,15 @@ def convert_email_message(email_message):
             else:
                 objs.append(from_ref)
             email_dict["from_ref"] = text_type(index) if spec_version == "2.0" else from_ref["id"]
+            index += 1
+        if header.sender:
+            # should there ever be more than one?
+            sender_ref = convert_address(header.sender)
+            if spec_version == "2.0":
+                objs[text_type(index)] = sender_ref
+            else:
+                objs.append(sender_ref)
+            email_dict["sender_ref"] = text_type(index) if spec_version == "2.0" else from_ref["id"]
             index += 1
         if header.to:
             for t in header.to:
@@ -731,7 +772,9 @@ def convert_email_message(email_message):
                 if "bcc_refs" not in email_dict:
                     email_dict["bcc_refs"] = []
                 email_dict["bcc_refs"].append(text_type(index) if spec_version == "2.0" else bcc_ref["id"])
-        # TODO: handle additional headers
+        add_headers2x = convert_email_additional_headers(header)
+        if add_headers2x != {}:
+            email_dict["additional_header_fields"] = add_headers2x
     if email_message.attachments:
         email_dict["is_multipart"] = True
         multiparts = []
@@ -742,7 +785,7 @@ def convert_email_message(email_message):
         if get_option_value("missing_policy") == "use-custom-properties":
             # this would be to another observable - which is not allowed in 2.0
             if get_option_value("spec_version") == "2.1":
-                property_name = convert_to_custom_property_name("link_refs")
+                property_name = convert_to_custom_name("link_refs")
                 email_dict[property_name] = list()
                 for link in email_message.links:
                     sco_id = get_id_value(link.object_reference)
@@ -1342,7 +1385,10 @@ def convert_socket_options(options):
     socket_options = {}
     for prop_name in SOCKET_OPTIONS:
         if getattr(options, prop_name):
-            socket_options[prop_name.upper()] = getattr(options, prop_name)
+            value = getattr(options, prop_name)
+            if isinstance(value, bool):
+                value = 1 if value else 0
+            socket_options[prop_name.upper()] = value
     return socket_options
 
 
@@ -1559,7 +1605,7 @@ def convert_cybox_object20(obj1x):
         if prop.custom_properties:
             primary_obj = objs["0"]
             for cp in prop.custom_properties.property_:
-                primary_obj[convert_to_custom_property_name(cp.name)] = cp.value
+                primary_obj[convert_to_custom_name(cp.name)] = cp.value
         if obj1x.id_:
             add_object_id_value(obj1x.id_, objs)
         return objs
@@ -1623,7 +1669,7 @@ def convert_cybox_object21(obj1x, env):
             # make sure the original object is always first in the objs array
             primary_obj = objs[0]
             for cp in prop.custom_properties.property_:
-                primary_obj[convert_to_custom_property_name(cp.name)] = cp.value
+                primary_obj[convert_to_custom_name(cp.name)] = cp.value
         if obj1x.id_:
             add_object_id_value(obj1x.id_, objs)
         return objs

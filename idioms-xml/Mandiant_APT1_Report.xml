@@ -301,7 +301,7 @@
 						</cybox:Object>
 					</cybox:Observable>
 					<cybox:Observable>
-						<cybox:Object idref="mandiant:object-232deffc-063f-4e83-9027-1b930af4a09f5"/> <!-- 223.166.0.0 - 223.167.255.255  -->
+						<cybox:Object idref="mandiant:object-232deffc-063f-4e83-9027-1b930af4a09f"/> <!-- 223.166.0.0 - 223.167.255.255  -->
 					</cybox:Observable>
 					<cybox:Observable>
 						<cybox:Object idref="mandiant:object-da1d061b-2bc9-467a-b16f-8d14f468e1f0"/> <!-- 58.246.0.0 - 58.247.255.255  -->
