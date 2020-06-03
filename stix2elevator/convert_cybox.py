@@ -670,7 +670,6 @@ def convert_attachment(attachment):
 
 
 _EMAIL_ADDITIONAL_HEADERS_PROPERTIES = {
-    "Message-ID": "message_id",
     "In-Reply-To": "in_reply_to",
     "Errors-To": "errors_to",
     "MIME-Version": "mime_version",
@@ -772,6 +771,8 @@ def convert_email_message(email_message):
                 if "bcc_refs" not in email_dict:
                     email_dict["bcc_refs"] = []
                 email_dict["bcc_refs"].append(text_type(index) if spec_version == "2.0" else bcc_ref["id"])
+        if header.message_id:
+            email_dict["message_id"] = text_type(header.message_id)
         add_headers2x = convert_email_additional_headers(header)
         if add_headers2x != {}:
             email_dict["additional_header_fields"] = add_headers2x

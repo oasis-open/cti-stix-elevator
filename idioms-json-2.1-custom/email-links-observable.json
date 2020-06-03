@@ -8,12 +8,12 @@
         },
         {
             "additional_header_fields": {
-                "Message-ID": "201602112058.u1BKfrXh004925@mail-gw-01.oit.duke.edu",
                 "X-Mailer": "Microsoft Outlook Express 6.00.2800.1437"
             },
             "from_ref": "email-addr--b5c16ad8-a113-5b9b-82f9-1d54ddcae49b",
             "id": "email-message--1a205fb0-7ab4-5786-bb7b-0e8bd60be8ae",
             "is_multipart": false,
+            "message_id": "201602112058.u1BKfrXh004925@mail-gw-01.oit.duke.edu",
             "raw_email_ref": "artifact--9a975970-092c-56e0-9b23-e586774acb51",
             "subject": "Fix The Error On Your Account.",
             "type": "email-message",

@@ -10,17 +10,49 @@
             ],
             "modified": "2014-10-31T15:52:13.126Z",
             "name": "Malicious E-mail Addresses",
-            "pattern": "[email-message:from_ref.value IN ('fred@abc.com', 'betty@abc.com') AND (email-message:to_refs[*].value = 'barney@abc.com' OR email-message:to_refs[*].value = 'wilma@abc.com')]",
+            "pattern": "[email-message:from_ref.value IN ('fred@abc.com', 'betty@abc.com') AND (email-message:to_refs[*].value = 'barney@abc.com' OR email-message:to_refs[*].value = 'wilma@abc.com') AND email-message:message_id = '20131031123417.u1BKfrXh004925@mail-gw-01.abc.com']",
             "type": "indicator",
             "valid_from": "2014-10-31T15:52:13.126999Z"
         },
         {
             "created": "2014-10-31T15:52:13.126Z",
-            "id": "relationship--67b8cf7b-f8b1-4df5-8903-ab9028b098f7",
+            "id": "relationship--acbdcc6e-1ba3-47de-97d9-3a160ca9fdaa",
             "modified": "2014-10-31T15:52:13.126Z",
             "relationship_type": "indicates",
             "source_ref": "indicator--b06b0eb7-61dd-4338-a094-0290c380fbd8",
             "type": "relationship"
+        },
+        {
+            "created": "2020-06-03T13:04:06.068Z",
+            "first_observed": "2020-06-03T13:04:06.068Z",
+            "id": "observed-data--da84c823-199b-4e76-a4b9-f8565b952979",
+            "last_observed": "2020-06-03T13:04:06.068Z",
+            "modified": "2020-06-03T13:04:06.068Z",
+            "number_observed": 1,
+            "objects": {
+                "0": {
+                    "from_ref": "1",
+                    "is_multipart": false,
+                    "to_refs": [
+                        "2",
+                        "3"
+                    ],
+                    "type": "email-message"
+                },
+                "1": {
+                    "type": "email-addr",
+                    "value": "fred@abc.com"
+                },
+                "2": {
+                    "type": "email-addr",
+                    "value": "barney@abc.com"
+                },
+                "3": {
+                    "type": "email-addr",
+                    "value": "wilma@abc.com"
+                }
+            },
+            "type": "observed-data"
         }
     ],
     "spec_version": "2.0",

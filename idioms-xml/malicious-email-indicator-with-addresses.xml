@@ -27,8 +27,8 @@
 	http://stix.mitre.org/default_vocabularies-1 http://stix.mitre.org/XMLSchema/default_vocabularies/1.2.0/stix_default_vocabularies.xsd
 	http://stix.mitre.org/stix-1 http://stix.mitre.org/XMLSchema/core/1.2/stix_core.xsd" id="example:Package-8b8ed1c1-f01d-4393-ac65-97017ed15876" version="1.2" >
     <stix:Observables>
-        <cybox:Observable id="example:Observable-e9926796-6b52-463c-8be1-0ab66e9adb1c">
-                <cybox:Object id="example:EmailMessage-38afa5c9-ef26-4948-928b-0230521c67b7">
+        <cybox:Observable id="example:Observable-da84c823-199b-4e76-a4b9-f8565b952979">
+                <cybox:Object id="example:EmailMessage-e1643536-920d-46f2-a23e-2b08196a701a">
                     <cybox:Properties xsi:type="EmailMessageObj:EmailMessageObjectType">
                         <EmailMessageObj:Header>
                             <EmailMessageObj:To>
@@ -66,6 +66,7 @@
                             <EmailMessageObj:From category="e-mail">
                                 <AddressObj:Address_Value condition="Equals">fred@abc.com##comma##betty@abc.com</AddressObj:Address_Value>
                             </EmailMessageObj:From>
+                            <EmailMessageObj:Message_ID>20131031123417.u1BKfrXh004925@mail-gw-01.abc.com</EmailMessageObj:Message_ID>
                         </EmailMessageObj:Header>
                     </cybox:Properties>
                 </cybox:Object>
