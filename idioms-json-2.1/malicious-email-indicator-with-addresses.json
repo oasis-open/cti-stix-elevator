@@ -2,6 +2,31 @@
     "id": "bundle--8b8ed1c1-f01d-4393-ac65-97017ed15876",
     "objects": [
         {
+            "from_ref": "email-addr--bc2a920c-1b53-5abf-b42c-86ff94037f7f",
+            "id": "email-message--42ca7002-f633-5adf-93ad-58dbaf4aec20",
+            "is_multipart": false,
+            "to_refs": [
+                "email-addr--a8a46314-8fe6-59f5-9a42-85ba5c9bd6fb",
+                "email-addr--03dd34f1-adba-578b-8109-d91eb868044c"
+            ],
+            "type": "email-message"
+        },
+        {
+            "id": "email-addr--bc2a920c-1b53-5abf-b42c-86ff94037f7f",
+            "type": "email-addr",
+            "value": "fred@abc.com"
+        },
+        {
+            "id": "email-addr--a8a46314-8fe6-59f5-9a42-85ba5c9bd6fb",
+            "type": "email-addr",
+            "value": "barney@abc.com"
+        },
+        {
+            "id": "email-addr--03dd34f1-adba-578b-8109-d91eb868044c",
+            "type": "email-addr",
+            "value": "wilma@abc.com"
+        },
+        {
             "confidence": 15,
             "created": "2014-10-31T15:52:13.126Z",
             "id": "indicator--b06b0eb7-61dd-4338-a094-0290c380fbd8",
@@ -10,7 +35,7 @@
             ],
             "modified": "2014-10-31T15:52:13.126Z",
             "name": "Malicious E-mail Addresses",
-            "pattern": "[email-message:from_ref.value IN ('fred@abc.com', 'betty@abc.com') AND (email-message:to_refs[*].value = 'barney@abc.com' OR email-message:to_refs[*].value = 'wilma@abc.com')]",
+            "pattern": "[email-message:from_ref.value IN ('fred@abc.com', 'betty@abc.com') AND (email-message:to_refs[*].value = 'barney@abc.com' OR email-message:to_refs[*].value = 'wilma@abc.com') AND email-message:message_id = '20131031123417.u1BKfrXh004925@mail-gw-01.abc.com']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -18,12 +43,28 @@
         },
         {
             "created": "2014-10-31T15:52:13.126Z",
-            "id": "relationship--2aa8e6ab-1e92-4273-afe2-4bde574be7b8",
+            "id": "relationship--37568485-7e9d-49d2-9817-916979edded7",
             "modified": "2014-10-31T15:52:13.126Z",
             "relationship_type": "indicates",
             "source_ref": "indicator--b06b0eb7-61dd-4338-a094-0290c380fbd8",
             "spec_version": "2.1",
             "type": "relationship"
+        },
+        {
+            "created": "2020-06-03T13:05:07.828Z",
+            "first_observed": "2020-06-03T13:05:07.828Z",
+            "id": "observed-data--da84c823-199b-4e76-a4b9-f8565b952979",
+            "last_observed": "2020-06-03T13:05:07.828Z",
+            "modified": "2020-06-03T13:05:07.828Z",
+            "number_observed": 1,
+            "object_refs": [
+                "email-message--42ca7002-f633-5adf-93ad-58dbaf4aec20",
+                "email-addr--bc2a920c-1b53-5abf-b42c-86ff94037f7f",
+                "email-addr--a8a46314-8fe6-59f5-9a42-85ba5c9bd6fb",
+                "email-addr--03dd34f1-adba-578b-8109-d91eb868044c"
+            ],
+            "spec_version": "2.1",
+            "type": "observed-data"
         }
     ],
     "type": "bundle"

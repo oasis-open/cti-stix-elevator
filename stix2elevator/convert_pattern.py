@@ -53,7 +53,7 @@ from stix2elevator.ids import (
 )
 from stix2elevator.missing_policy import convert_to_custom_name
 from stix2elevator.options import error, get_option_value, info, warn
-from stix2elevator.utils import identifying_info, map_vocabs_to_label
+from stix2elevator.utils import encode_in_base64, identifying_info, map_vocabs_to_label
 from stix2elevator.vocab_mappings import WINDOWS_PEBINARY
 
 if sys.version_info > (3,):
@@ -734,7 +734,7 @@ def pop_dynamic_variable(var):
 
 
 _CLASS_NAME_MAPPING = {"File": "file",
-                       "URI": "uri",
+                       "URI": "url",
                        "EmailMessage": "email-message",
                        "WinRegistryKey": "windows-registry-key",
                        "Process": "process",
@@ -1074,11 +1074,12 @@ _EMAIL_HEADER_PROPERTIES = [["email-message:subject", ["subject"]],
                             ["email-message:content_type", ["content_type"]],
                             ["email-message:to_refs[*].value", ["to*", "address_value"]],
                             ["email-message:cc_refs[*].value", ["cc*", "address_value"]],
-                            ["email-message:bcc_refs[*].value", ["bcc*", "address_value"]]]
+                            ["email-message:bcc_refs[*].value", ["bcc*", "address_value"]],
+                            ["email-message:message_id", ["message_id"]]]
+
 
 _EMAIL_ADDITIONAL_HEADERS_PROPERTIES = \
     [["email-message:additional_header_fields.Reply-To", ["reply-to*", "address_value"]],
-     ["email-message:additional_header_fields.Message-ID", ["message_id"]],
      ["email-message:additional_header_fields.In-Reply-To", ["in_reply_to"]],
      ["email-message:additional_header_fields.Errors-To", ["errors_to"]],
      ["email-message:additional_header_fields.MIME-Version", ["mime_version"]],
@@ -1100,10 +1101,11 @@ def cannonicalize_prop_name(name):
 def create_terms_from_prop_list(prop_list, obj, object_path):
     if len(prop_list) == 1:
         prop_1x = prop_list[0]
-        if hasattr(obj, cannonicalize_prop_name(prop_1x)):
+        canonical_prop1x_name = cannonicalize_prop_name(prop_1x)
+        if hasattr(obj, canonical_prop1x_name):
             if multi_valued_property(prop_1x):
                 prop_exprs = []
-                for c in getattr(obj, cannonicalize_prop_name(prop_1x)):
+                for c in getattr(obj, canonical_prop1x_name):
                     term = add_comparison_expression(c, object_path)
                     if term:
                         prop_exprs.append(term)
@@ -1111,13 +1113,14 @@ def create_terms_from_prop_list(prop_list, obj, object_path):
                 if prop_exprs:
                     return create_boolean_expression("OR", prop_exprs)
             else:
-                return add_comparison_expression(getattr(obj, cannonicalize_prop_name(prop_1x)), object_path)
+                return add_comparison_expression(getattr(obj, canonical_prop1x_name), object_path)
     else:
         prop_1x, rest_of_prop_list = prop_list[0], prop_list[1:]
-        if hasattr(obj, cannonicalize_prop_name(prop_1x)):
+        canonical_prop1x_name = cannonicalize_prop_name(prop_1x)
+        if hasattr(obj, canonical_prop1x_name):
             if multi_valued_property(prop_1x):
                 prop_exprs = []
-                values = getattr(obj, cannonicalize_prop_name(prop_1x))
+                values = getattr(obj, canonical_prop1x_name)
                 if values:
                     for c in values:
                         term = create_terms_from_prop_list(rest_of_prop_list, c, object_path)
@@ -1128,7 +1131,7 @@ def create_terms_from_prop_list(prop_list, obj, object_path):
                     return create_boolean_expression("OR", prop_exprs)
             else:
                 return create_terms_from_prop_list(rest_of_prop_list,
-                                                   getattr(obj, cannonicalize_prop_name(prop_1x)),
+                                                   getattr(obj, canonical_prop1x_name),
                                                    object_path)
 
 
@@ -1949,6 +1952,18 @@ def convert_http_client_request_to_pattern(http_request):
                     term = add_comparison_expression(value, object_path)
                     if term:
                         expressions.append(term)
+    if http_request.http_message_body is not None:
+        mb = http_request.http_message_body
+        if mb.length:
+            term = add_comparison_expression(mb.length,
+                                             "network-traffic:extensions.'http-request-ext'.message_body_length")
+            if term:
+                expressions.append(term)
+        if mb.message_body:
+            expressions.append(
+                    create_term("network-traffic:extensions.'http-request-ext'.message_body_data_ref.payload_bin",
+                                'Equals',
+                                encode_in_base64(text_type(mb.message_body))))
     return create_boolean_expression("AND", expressions)
 
 
@@ -2478,7 +2493,7 @@ def convert_indicator_composition_to_pattern(ind_comp):
 def remove_pattern_objects(bundle_instance):
     if not KEEP_OBSERVABLE_DATA_USED_IN_PATTERNS:
         # fix any ids
-        sco_ids_to_delete = []
+        obj_ids_to_delete = []
         all_new_ids_with_patterns = []
         for old_id in get_ids_from_pattern_cache():
             new_id = get_id_value(old_id)
@@ -2492,18 +2507,20 @@ def remove_pattern_objects(bundle_instance):
             elif exists_id_of_obs_in_characterizations(obj["id"]):
                 warn("%s is used as a characteristic in an infrastructure object, therefore it is not included as an observed_data instance", 419,
                      obj["id"])
+                obj_ids_to_delete.append(obj["id"])
             else:
                 warn("%s is used as a pattern, therefore it is not included as an observed_data instance", 423,
                      obj["id"])
                 if "object_refs" in obj:
-                    sco_ids_to_delete.extend(obj["object_refs"])
+                    obj_ids_to_delete.extend(obj["object_refs"])
+                    obj_ids_to_delete.append(obj["id"])
         new_remaining_objects = []
         for obj in remaining_objects:
             if obj["type"] == "relationship" and "source_ref" in obj and "target_ref" in obj:
-                if obj["source_ref"] not in sco_ids_to_delete and obj["target_ref"] not in sco_ids_to_delete:
+                if obj["source_ref"] not in obj_ids_to_delete and obj["target_ref"] not in obj_ids_to_delete:
                     new_remaining_objects.append(obj)
             else:
-                if obj["id"] not in sco_ids_to_delete:
+                if obj["id"] not in obj_ids_to_delete:
                     new_remaining_objects.append(obj)
 
         bundle_instance["objects"] = new_remaining_objects
@@ -2514,7 +2531,7 @@ def remove_pattern_objects(bundle_instance):
                 if "object_refs" in obj:
                     for ident in obj["object_refs"]:
                         if (not ident.startswith("observed-data") or
-                                (ident not in all_new_ids_with_patterns and ident not in sco_ids_to_delete)):
+                                (ident not in all_new_ids_with_patterns and ident not in obj_ids_to_delete)):
                             remaining_object_refs.append(ident)
                     obj["object_refs"] = remaining_object_refs
 
