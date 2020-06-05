@@ -10,6 +10,7 @@ from cybox.objects.address_object import Address
 from cybox.objects.archive_file_object import ArchiveFile
 from cybox.objects.artifact_object import Artifact
 from cybox.objects.as_object import AutonomousSystem
+from cybox.objects.custom_object import Custom
 from cybox.objects.domain_name_object import DomainName
 from cybox.objects.email_message_object import EmailMessage
 from cybox.objects.file_object import File
@@ -1541,6 +1542,17 @@ def convert_x509_certificate(x509):
     return x509_obj
 
 
+def convert_custom_object(custom_obj1x):
+    if custom_obj1x.custom_name:
+        custom_object_type = convert_to_custom_name(custom_obj1x.custom_name, separator="-")
+        custom_obj2x = create_base_sco(custom_object_type, custom_obj1x)
+        finish_sco(custom_obj2x, custom_obj1x.parent.id_)
+        return custom_obj2x
+    else:
+        warn("Custom object with no name cannot be handled yet", 811)
+        return None
+
+
 # def convert_netflow_object(obj1x):
 #     cybox_traffic = create_base_sco("network-traffic")
 #     if obj1x.unidirectional_flow_record
@@ -1596,6 +1608,8 @@ def convert_cybox_object20(obj1x):
     elif isinstance(prop, SocketAddress):
         # returns a dict
         objs = convert_socket_address(prop)
+    elif isinstance(prop, Custom):
+        objs["0"] = convert_custom_object(prop)
     else:
         warn("CybOX object %s not handled yet", 805, text_type(type(prop)))
         return None
@@ -1606,7 +1620,11 @@ def convert_cybox_object20(obj1x):
         if prop.custom_properties:
             primary_obj = objs["0"]
             for cp in prop.custom_properties.property_:
-                primary_obj[convert_to_custom_name(cp.name)] = cp.value
+                if isinstance(prop, Custom):
+                    prop_name = cp.name
+                else:
+                    prop_name = convert_to_custom_name(cp.name)
+                primary_obj[prop_name] = cp.value
         if obj1x.id_:
             add_object_id_value(obj1x.id_, objs)
         return objs
@@ -1659,6 +1677,8 @@ def convert_cybox_object21(obj1x, env):
         objs = [convert_x509_certificate(prop)]
     elif isinstance(prop, SocketAddress):
         objs = convert_socket_address(prop, env)
+    elif isinstance(prop, Custom):
+        objs = [convert_custom_object(prop)]
     else:
         warn("CybOX object %s not handled yet", 805, text_type(type(prop)))
         return None
@@ -1670,7 +1690,11 @@ def convert_cybox_object21(obj1x, env):
             # make sure the original object is always first in the objs array
             primary_obj = objs[0]
             for cp in prop.custom_properties.property_:
-                primary_obj[convert_to_custom_name(cp.name)] = cp.value
+                if isinstance(prop, Custom):
+                    prop_name = cp.name
+                else:
+                    prop_name = convert_to_custom_name(cp.name)
+                primary_obj[prop_name] = cp.value
         if obj1x.id_:
             add_object_id_value(obj1x.id_, objs)
         return objs

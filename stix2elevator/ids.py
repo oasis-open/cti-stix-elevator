@@ -133,7 +133,7 @@ def generate_sco_id(type, instance):
                     # streamlined_obj_vals.append(instance[key])
                     streamlined_object[key] = instance[key]
 
-            #if streamlined_obj_vals:
+            # if streamlined_obj_vals:
             if streamlined_object:
                 # data = canonicalize(streamlined_obj_vals, utf8=False)
                 data = canonicalize(streamlined_object, utf8=False)

@@ -10,6 +10,7 @@ from cybox.objects.address_object import Address
 from cybox.objects.archive_file_object import ArchiveFile
 from cybox.objects.artifact_object import Artifact
 from cybox.objects.as_object import AutonomousSystem
+from cybox.objects.custom_object import Custom
 from cybox.objects.domain_name_object import DomainName
 from cybox.objects.email_message_object import EmailMessage
 from cybox.objects.file_object import File
@@ -53,7 +54,9 @@ from stix2elevator.ids import (
 )
 from stix2elevator.missing_policy import convert_to_custom_name
 from stix2elevator.options import error, get_option_value, info, warn
-from stix2elevator.utils import encode_in_base64, identifying_info, map_vocabs_to_label
+from stix2elevator.utils import (
+    encode_in_base64, identifying_info, map_vocabs_to_label
+)
 from stix2elevator.vocab_mappings import WINDOWS_PEBINARY
 
 if sys.version_info > (3,):
@@ -891,12 +894,15 @@ def create_term(lhs, condition, rhs, negated=False):
         return create_term_with_range(lhs, condition, rhs, negated)
     else:
         if condition == "Contains" and not isinstance(rhs, ListConstant):
+            # for substring matches
             info("Used MATCHES operator for %s", 715, condition)
             return create_term_with_regex(lhs, condition, rhs, negated)
         elif condition == "DoesNotContain":
             info("Used MATCHES operator for %s", 715, condition)
             return create_term_with_regex(lhs, condition, rhs, not negated)
-        # return lhs + " " + negate_if_needed(convert_condition(condition), negated) + " '" + convert_to_text_type(rhs) + "'"
+        elif condition == "FitsPattern":
+            info("Used MATCHES operator for %s", 715, condition)
+            return create_term_with_regex(lhs, condition, rhs, negated)
         return ComparisonExpressionForElevator(convert_condition(condition), lhs, rhs, negated)
 
 
@@ -931,14 +937,16 @@ def add_comparison_expression(prop, object_path):
     return None
 
 
-def convert_custom_properties(cps, object_type_name):
+def convert_custom_properties(cps, object_type_name, use_custom_prefix=True):
     expressions = []
     for cp in cps.property_:
         if not re.match("[a-z0-9_]+", cp.name):
             warn("The custom property name %s does not adhere to the specification rules", 617, cp.name)
             if " " in cp.name:
                 warn("The custom property name %s contains whitespace, replacing it with underscores", 624, cp.name)
-        custom_name = convert_to_custom_name(cp.name.replace(" ", "_"))
+        custom_name = cp.name.replace(" ", "_")
+        if use_custom_prefix:
+            custom_name = convert_to_custom_name(cp.name.replace(" ", "_"))
         expressions.append(
             create_term(object_type_name + ":" + custom_name, cp.condition, make_constant(cp.value)))
     return create_boolean_expression("AND", expressions)
@@ -1960,10 +1968,9 @@ def convert_http_client_request_to_pattern(http_request):
             if term:
                 expressions.append(term)
         if mb.message_body:
-            expressions.append(
-                    create_term("network-traffic:extensions.'http-request-ext'.message_body_data_ref.payload_bin",
-                                'Equals',
-                                encode_in_base64(text_type(mb.message_body))))
+            expressions.append(create_term("network-traffic:extensions.'http-request-ext'.message_body_data_ref.payload_bin",
+                                           'Equals',
+                                           encode_in_base64(text_type(mb.message_body))))
     return create_boolean_expression("AND", expressions)
 
 
@@ -2308,20 +2315,31 @@ def convert_object_to_pattern(obj, obs_id):
             expression = convert_socket_address_to_pattern(prop, determine_socket_address_direction(prop, obs_id))
             if expression:
                 expression = create_boolean_expression("AND", expression)
+        elif isinstance(prop, Custom):
+            if prop.custom_name:
+                object_path_root = convert_to_custom_name(prop.custom_name, separator="-")
+                term = convert_custom_properties(prop.custom_properties, object_path_root, use_custom_prefix=False)
+                if expression:
+                    expression = create_boolean_expression("AND", [expression, term])
+                else:
+                    expression = term
+            else:
+                warn("Custom object with no name cannot be handled yet", 811)
+                if not get_option_value("missing_policy") == "ignore":
+                    expression = UnconvertedTerm(obs_id)
         else:
             warn("%s found in %s cannot be converted to a pattern, yet.", 808, text_type(obj.properties), obs_id)
             if not get_option_value("missing_policy") == "ignore":
                 expression = UnconvertedTerm(obs_id)
-
+        # custom properties of custom objects handled above
         if prop.custom_properties is not None:
             object_path_root = convert_cybox_class_name_to_object_path_root_name(prop)
             if object_path_root:
+                term = convert_custom_properties(prop.custom_properties, object_path_root)
                 if expression:
-                    expression = create_boolean_expression("AND", [expression,
-                                                                   convert_custom_properties(prop.custom_properties,
-                                                                                             object_path_root)])
+                    expression = create_boolean_expression("AND", [expression, term])
                 else:
-                    expression = convert_custom_properties(prop.custom_properties, object_path_root)
+                    expression = term
     if not expression:
         warn("No pattern term was created from %s", 422, obs_id)
         if not get_option_value("missing_policy") == "ignore":

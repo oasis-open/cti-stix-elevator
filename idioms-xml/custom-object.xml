@@ -1,0 +1,75 @@
+<stix:STIX_Package
+  xmlns:cyboxCommon="http://cybox.mitre.org/common-2"
+  xmlns:cybox="http://cybox.mitre.org/cybox-2"
+  xmlns:cyboxVocabs="http://cybox.mitre.org/default_vocabularies-2"
+  xmlns:CustomObj="http://cybox.mitre.org/objects#CustomObject-1"
+  xmlns:example="http://example.com"
+  xmlns:coa="http://stix.mitre.org/CourseOfAction-1"
+  xmlns:indicator="http://stix.mitre.org/Indicator-2"
+  xmlns:stixCommon="http://stix.mitre.org/common-1"
+  xmlns:stixVocabs="http://stix.mitre.org/default_vocabularies-1"
+  xmlns:stix="http://stix.mitre.org/stix-1"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+
+  xsi:schemaLocation="http://stix.mitre.org/default_vocabularies-1 http://stix.mitre.org/XMLSchema/default_vocabularies/1.2.0/stix_default_vocabularies.xsd
+    http://cybox.mitre.org/objects#CustomObject-1 http://cybox.mitre.org/XMLSchema/objects/Custom/1.1/Custom_Object.xsd
+    http://cybox.mitre.org/cybox-2 http://cybox.mitre.org/XMLSchema/core/2.1/cybox_core.xsd
+    http://stix.mitre.org/Indicator-2 http://stix.mitre.org/XMLSchema/indicator/2.2/indicator.xsd
+    http://stix.mitre.org/stix-1 http://stix.mitre.org/XMLSchema/core/1.2/stix_core.xsd
+    http://stix.mitre.org/common-1 http://stix.mitre.org/XMLSchema/common/1.2/stix_common.xsd
+    http://cybox.mitre.org/common-2 http://cybox.mitre.org/XMLSchema/common/2.1/cybox_common.xsd
+    http://stix.mitre.org/CourseOfAction-1 http://stix.mitre.org/XMLSchema/course_of_action/1.2/course_of_action.xsd" id="example:Package-cad0c65f-3415-4ec6-84df-c01e427ec3b6" version="1.2" timestamp="2015-07-31T11:24:39.090000+00:00">
+  <stix:Indicators>
+    <stix:Indicator id="example:indicator-2cb76e88-2734-4a6c-a28c-52ae05f627be" timestamp="2015-07-31T11:24:39.090000+00:00" xsi:type='indicator:IndicatorType'>
+      <indicator:Type>FTP</indicator:Type>
+      <indicator:Observable id="example:Observable-f082e299-c98e-4928-a7a8-2a84b2eb4719">
+        <cybox:Object id="example:Custom-427791d2-f25a-4de3-9e4a-f74c14b48c10">
+          <cybox:Properties xsi:type="CustomObj:CustomObjectType" custom_name="fooz">
+            <cyboxCommon:Custom_Properties>
+              <cyboxCommon:Property condition="FitsPattern" name="ftp_command">fp[a-zA-Z0-9]{44}\.bin</cyboxCommon:Property>
+            </cyboxCommon:Custom_Properties>
+          </cybox:Properties>
+        </cybox:Object>
+      </indicator:Observable>
+      <indicator:Likely_Impact timestamp="2015-07-31T11:24:39.090000+00:00">
+        <stixCommon:Value xsi:type="stixVocabs:HighMediumLowVocab-1.0">Medium</stixCommon:Value>
+      </indicator:Likely_Impact>
+      <indicator:Suggested_COAs>
+        <indicator:Suggested_COA>
+          <stixCommon:Course_Of_Action id="example:coa-3dbfccad-1fbb-4e9f-8307-f2d1a5c651cc" timestamp="2015-07-31T11:24:39.090000+00:00" xsi:type='coa:CourseOfActionType'>
+            <coa:Title>Block outbound traffic</coa:Title>
+            <coa:Stage xsi:type="stixVocabs:COAStageVocab-1.0">Response</coa:Stage>
+            <coa:Type xsi:type="stixVocabs:CourseOfActionTypeVocab-1.0">Perimeter Blocking</coa:Type>
+            <coa:Objective>
+              <coa:Description>Block outbound traffic</coa:Description>
+              <coa:Applicability_Confidence timestamp="2015-07-31T11:24:39.090000+00:00">
+                <stixCommon:Value xsi:type="stixVocabs:HighMediumLowVocab-1.0">High</stixCommon:Value>
+              </coa:Applicability_Confidence>
+            </coa:Objective>
+            <coa:Impact timestamp="2015-07-31T11:24:39.090000+00:00">
+              <stixCommon:Value xsi:type="stixVocabs:HighMediumLowVocab-1.0">Medium</stixCommon:Value>
+              <stixCommon:Description>Some description about the indicator.</stixCommon:Description>
+            </coa:Impact>
+          </stixCommon:Course_Of_Action>
+        </indicator:Suggested_COA>
+      </indicator:Suggested_COAs>
+      <indicator:Producer>
+        <stixCommon:Time>
+          <cyboxCommon:Produced_Time precision="day">2014-03-12T00:00:00Z</cyboxCommon:Produced_Time>
+        </stixCommon:Time>
+      </indicator:Producer>
+    </stix:Indicator>
+  </stix:Indicators>
+  <stix:Observables cybox_major_version="" cybox_minor_version="">
+    <cybox:Observable>
+      <cybox:Object id="example:Custom-e124be0b-b6f2-4ec5-94de-db0257859b51">
+          <cybox:Properties xsi:type="CustomObj:CustomObjectType" custom_name="fooz">
+            <cyboxCommon:Custom_Properties>
+              <cyboxCommon:Property name="ftp_command">fpuwe8bmsD56ns.bin</cyboxCommon:Property>
+            </cyboxCommon:Custom_Properties>
+          </cybox:Properties>
+        </cybox:Object>
+    </cybox:Observable>
+  </stix:Observables>
+</stix:STIX_Package>
+

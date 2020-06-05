@@ -48,7 +48,6 @@ PDF_DOC_INFO_DICT_KEYS = {
 }
 
 
-
 def determine_socket_address_direction(sock_add_1x, obj1x_id):
     if sock_add_1x.ip_address:
         if sock_add_1x.ip_address.is_destination and not sock_add_1x.ip_address.is_source:

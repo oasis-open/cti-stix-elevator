@@ -1,0 +1,58 @@
+{
+    "id": "bundle--cad0c65f-3415-4ec6-84df-c01e427ec3b6",
+    "objects": [
+        {
+            "created": "2015-07-31T11:24:39.090Z",
+            "id": "course-of-action--3dbfccad-1fbb-4e9f-8307-f2d1a5c651cc",
+            "labels": [
+                "perimeter-blocking"
+            ],
+            "modified": "2015-07-31T11:24:39.090Z",
+            "name": "Block outbound traffic",
+            "type": "course-of-action",
+            "x_elevator_impact": "Medium",
+            "x_elevator_impact_description": "Some description about the indicator.",
+            "x_elevator_objective": "Block outbound traffic",
+            "x_elevator_objective_confidence": "High",
+            "x_elevator_stage": "Response"
+        },
+        {
+            "created": "2015-07-31T11:24:39.090Z",
+            "id": "indicator--2cb76e88-2734-4a6c-a28c-52ae05f627be",
+            "labels": [
+                "ftp"
+            ],
+            "modified": "2015-07-31T11:24:39.090Z",
+            "pattern": "[x-elevator-fooz:ftp_command MATCHES 'fp[a-zA-Z0-9]{44}\\\\.bin']",
+            "type": "indicator",
+            "valid_from": "2015-07-31T11:24:39.090000Z",
+            "x_elevator_likely_impact": "Medium"
+        },
+        {
+            "created": "2015-07-31T11:24:39.090Z",
+            "id": "relationship--b7e4e7c3-36b6-4e93-bc47-e6e65fc21168",
+            "modified": "2015-07-31T11:24:39.090Z",
+            "relationship_type": "investigates",
+            "source_ref": "course-of-action--3dbfccad-1fbb-4e9f-8307-f2d1a5c651cc",
+            "target_ref": "indicator--2cb76e88-2734-4a6c-a28c-52ae05f627be",
+            "type": "relationship"
+        },
+        {
+            "created": "2015-07-31T11:24:39.090Z",
+            "first_observed": "2015-07-31T11:24:39.090Z",
+            "id": "observed-data--b6a16349-c7ae-463e-9b74-8fd81efb14b7",
+            "last_observed": "2015-07-31T11:24:39.090Z",
+            "modified": "2015-07-31T11:24:39.090Z",
+            "number_observed": 1,
+            "objects": {
+                "0": {
+                    "ftp_command": "fpuwe8bmsD56ns.bin",
+                    "type": "x-elevator-fooz"
+                }
+            },
+            "type": "observed-data"
+        }
+    ],
+    "spec_version": "2.0",
+    "type": "bundle"
+}

@@ -203,7 +203,7 @@ Email *[property]* not handled yet                                              
 *[object]* found in *[id]* cannot be converted to a pattern, yet.                                                                           808  warn
 Related Objects of cyber observables for *[id]* are not handled yet                                                                         809  warn
 Negation of *[id]* is not handled yet                                                                                                       810  warn
-``NO MESSAGE ASSIGNED``                                                                                                                     811
+Custom object with no name cannot be handled yet                                                                                            811  warn
 Condition on a hive property not handled.                                                                                                   812  warn
 Cannot convert CybOX 2.x class name *[name]* to an object_path_root_name                                                                    813  error
 Parameter Observables in *[id]* are not handled, yet.                                                                                       814  warn
