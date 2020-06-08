@@ -32,7 +32,7 @@
             "valid_from": "2018-09-06T16:14:38.950721Z"
         },
         {
-            "id": "file--5956efbb-a7b0-566d-a7f9-a202eb05c70f",
+            "id": "file--7af1312c-4402-5d2f-b169-b118d73b85c4",
             "name": "foo.exe",
             "type": "file"
         },
@@ -44,13 +44,13 @@
             "modified": "2018-09-06T13:11:26.587Z",
             "number_observed": 1,
             "object_refs": [
-                "file--5956efbb-a7b0-566d-a7f9-a202eb05c70f"
+                "file--7af1312c-4402-5d2f-b169-b118d73b85c4"
             ],
             "spec_version": "2.1",
             "type": "observed-data"
         },
         {
-            "id": "file--51f1be98-e988-5af2-8894-1be0a0d8ba6d",
+            "id": "file--7c83a32c-7ef0-50dd-a7a9-21295767dacd",
             "name": "foo",
             "size": 1896000,
             "type": "file"
@@ -63,7 +63,7 @@
             "modified": "2018-09-06T13:11:26.587Z",
             "number_observed": 1,
             "object_refs": [
-                "file--51f1be98-e988-5af2-8894-1be0a0d8ba6d"
+                "file--7c83a32c-7ef0-50dd-a7a9-21295767dacd"
             ],
             "spec_version": "2.1",
             "type": "observed-data"
