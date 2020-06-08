@@ -38,12 +38,12 @@ ADDRESS_FAMILY_ENUMERATION = [
 
 PDF_DOC_INFO_DICT_KEYS = {
     "author": "Author",
-    "subject": "Subject",
-    "keywords": "Keywords",
-    "creator": "Creator",
-    "producer": "Producer",
     "creationdate": "CreationDate",
+    "creator": "Creator",
+    "keywords": "Keywords",
+    "producer": "Producer",
     "moddate": "ModDate",
+    "subject": "Subject",
     "trapped": "Trapped"
 }
 
