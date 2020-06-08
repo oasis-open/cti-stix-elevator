@@ -2,15 +2,15 @@
     "id": "bundle--cc0ca596-70e6-4dac-9bef-603166d17db8",
     "objects": [
         {
-            "id": "ipv4-addr--7e4a9c21-50df-5298-97ce-42044f79472e",
+            "id": "ipv4-addr--9cf4a8ec-7640-5f40-a006-79942896168b",
             "resolves_to_refs": [
-                "domain-name--a5cb3d9e-4635-5956-8ccb-814a839a77c3"
+                "domain-name--abb3d416-f520-5cee-a95f-26dd017e6c1f"
             ],
             "type": "ipv4-addr",
             "value": "198.51.100.2"
         },
         {
-            "id": "domain-name--a5cb3d9e-4635-5956-8ccb-814a839a77c3",
+            "id": "domain-name--abb3d416-f520-5cee-a95f-26dd017e6c1f",
             "type": "domain-name",
             "value": "example.foo.com"
         },
@@ -22,14 +22,14 @@
             "modified": "2017-01-27T13:49:41.329Z",
             "number_observed": 1,
             "object_refs": [
-                "ipv4-addr--7e4a9c21-50df-5298-97ce-42044f79472e",
-                "domain-name--a5cb3d9e-4635-5956-8ccb-814a839a77c3"
+                "ipv4-addr--9cf4a8ec-7640-5f40-a006-79942896168b",
+                "domain-name--abb3d416-f520-5cee-a95f-26dd017e6c1f"
             ],
             "spec_version": "2.1",
             "type": "observed-data"
         },
         {
-            "id": "ipv4-addr--aa3e1cc2-0c65-5358-82ae-9a7e508e939f",
+            "id": "ipv4-addr--b8ced3a0-d0c3-5301-8292-0ac39f24274e",
             "type": "ipv4-addr",
             "value": "198.51.100.17"
         },
@@ -41,13 +41,13 @@
             "modified": "2017-01-27T13:49:41.329Z",
             "number_observed": 1,
             "object_refs": [
-                "ipv4-addr--aa3e1cc2-0c65-5358-82ae-9a7e508e939f"
+                "ipv4-addr--b8ced3a0-d0c3-5301-8292-0ac39f24274e"
             ],
             "spec_version": "2.1",
             "type": "observed-data"
         },
         {
-            "id": "ipv4-addr--179b9f2b-745f-5421-a6d1-701872c15d4c",
+            "id": "ipv4-addr--eb780e48-1e2d-5f9b-bc12-aeb03136d2d9",
             "type": "ipv4-addr",
             "value": "203.0.113.19"
         },
@@ -59,7 +59,7 @@
             "modified": "2017-01-27T13:49:41.329Z",
             "number_observed": 1,
             "object_refs": [
-                "ipv4-addr--179b9f2b-745f-5421-a6d1-701872c15d4c"
+                "ipv4-addr--eb780e48-1e2d-5f9b-bc12-aeb03136d2d9"
             ],
             "spec_version": "2.1",
             "type": "observed-data"

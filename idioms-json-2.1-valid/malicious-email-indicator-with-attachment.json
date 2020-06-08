@@ -73,17 +73,17 @@
         {
             "body_multipart": [
                 {
-                    "body_raw_ref": "file--46a9b360-48bf-54d6-9802-5496e6fa4c27",
+                    "body_raw_ref": "file--4777a80e-b334-56ed-b8a1-7b19fe5c57ec",
                     "content_type": "text/plain"
                 }
             ],
-            "id": "email-message--3ccde5f8-82e1-5781-b354-26b800df3692",
+            "id": "email-message--69999a2b-a948-55af-b7ae-9bc614c72542",
             "is_multipart": true,
             "subject": "[IMPORTANT] Please Review Before",
             "type": "email-message"
         },
         {
-            "id": "file--46a9b360-48bf-54d6-9802-5496e6fa4c27",
+            "id": "file--4777a80e-b334-56ed-b8a1-7b19fe5c57ec",
             "name": "Final Report",
             "type": "file"
         },
@@ -95,8 +95,8 @@
             "modified": "2018-08-18T14:14:42.346Z",
             "number_observed": 1,
             "object_refs": [
-                "email-message--3ccde5f8-82e1-5781-b354-26b800df3692",
-                "file--46a9b360-48bf-54d6-9802-5496e6fa4c27"
+                "email-message--69999a2b-a948-55af-b7ae-9bc614c72542",
+                "file--4777a80e-b334-56ed-b8a1-7b19fe5c57ec"
             ],
             "spec_version": "2.1",
             "type": "observed-data"
