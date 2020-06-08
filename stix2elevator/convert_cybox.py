@@ -1206,6 +1206,9 @@ def convert_socket_address_1(sock_add_1x, cybox_traffic, objs, spec_version, ind
         add = convert_address(sock_add_1x.ip_address, env=env)
         if spec_version == "2.0":
             cybox_traffic[src_or_dst + "_ref"] = text_type(index)
+            # its a 2.0 object, remove its uuid, if it has one
+            if "id" in add:
+                del add["id"]
             objs[text_type(index)] = add
             index += 1
         else:
@@ -1218,6 +1221,9 @@ def convert_socket_address_1(sock_add_1x, cybox_traffic, objs, spec_version, ind
             domain = create_domain_name_object(sock_add_1x.hostname.hostname_value)
             cybox_traffic[src_or_dst + "_ref"] = text_type(index) if spec_version == "2.0" else domain["id"]
             if spec_version == "2.0":
+                # its a 2.0 object, remove its uuid, if it has one
+                if "id" in domain:
+                    del domain["id"]
                 objs[text_type(index)] = domain
                 index += 1
             else:
@@ -1228,6 +1234,9 @@ def convert_socket_address_1(sock_add_1x, cybox_traffic, objs, spec_version, ind
             domain = create_domain_name_object(sock_add_1x.hostname.hostname_value)
             cybox_traffic[src_or_dst + "_ref"] = text_type(index) if spec_version == "2.0" else domain["id"]
             if spec_version == "2.0":
+                # its a 2.0 object, remove its uuid, if it has one
+                if "id" in domain:
+                    del domain["id"]
                 objs[text_type(index)] = domain
                 index += 1
             else:
