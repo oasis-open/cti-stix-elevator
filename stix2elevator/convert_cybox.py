@@ -1890,16 +1890,30 @@ def resolve_object_references20(obsers):
         if not obs["objects"]:
             # TODO: strange that there are no objects
             return None
+        new_objects = dict()
         for k, obj in obs["objects"].items():
+            index_mapping = dict()
             if obj["type"] == "network-traffic":
                 if "extensions" in obj and property_contains_stix1x_id(obj, "extensions"):
                     object2x = get_object_id_value(obj["extensions"])
-                    if len(object2x) == 1:
+                    if object2x:
                         if "extensions" in object2x["0"]:
-                            obj["extensions"] = object2x["0"]["extensions"]
-                        # what if no extensions property?
+                            obj["extensions"] = copy.deepcopy(object2x["0"]["extensions"])
+                        if len(object2x) > 1:
+                            next_id = int(max(obs["objects"].keys())) + 1
+                            for k, v in object2x.items():
+                                if k == "0":
+                                    continue
+                                new_objects[text_type(next_id)] = v
+                                index_mapping[k] = text_type(next_id)
+                                next_id += 1
+
                     else:
                         warn("Object references for http sessions in %s not handled yet", 804, obs["id"])
+                    # only need to renumber the co that was subbed in for the object reference
+                    for k, v in obj["extensions"].items():
+                        renumber_co(v, index_mapping)
+        obs["objects"].update(new_objects)
 
 
 def resolve_object_references21(objects):
