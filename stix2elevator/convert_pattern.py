@@ -2527,11 +2527,10 @@ def remove_pattern_objects(bundle_instance):
                      obj["id"])
                 obj_ids_to_delete.append(obj["id"])
             else:
-                warn("%s is used as a pattern, therefore it is not included as an observed_data instance", 423,
-                     obj["id"])
+                warn("%s is used as a pattern, therefore it is not included as an observed_data instance", 423, obj["id"])
                 if "object_refs" in obj:
                     obj_ids_to_delete.extend(obj["object_refs"])
-                    obj_ids_to_delete.append(obj["id"])
+                obj_ids_to_delete.append(obj["id"])
         new_remaining_objects = []
         for obj in remaining_objects:
             if obj["type"] == "relationship" and "source_ref" in obj and "target_ref" in obj:
