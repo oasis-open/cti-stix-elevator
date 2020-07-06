@@ -67,3 +67,5 @@ other_xml_files/stix-*.xml
 cache.sqlite
 /performance_test.py
 /cyber observable changes for 2.1.xlsx
+icd-xml
+misc-xml

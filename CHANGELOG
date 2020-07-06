@@ -1,6 +1,44 @@
 CHANGELOG
 =========
 
+3.0.0 - 2020-06-13
+
+    **The elevator and stepper are compliant with STIX 2.1 CS01**
+
+    **Python 2.7 and 3.4 are no longer supported**
+
+    * Other changes:
+        - Handle STIX 1.x (CybOX 2.1) custom cyber objects
+        - Handle SCOs: x509-certificate, autonomous-system, software
+        - Handle File extensions: raster-image-ext, pdf-ext
+        - Correct deterministic id generation algorithm
+        - Handle observable characteristics in infrastructure
+        - Handle parameter observables in COA
+        - *_types property is now optional in 2.1
+        - Handle some STIX 1.x object references
+        - Improved handling of STIX 1.x RelatedObjects
+        - Handle aliases for threat actors better
+        - Threat_actor goal set correctly
+        - Handle socket address
+        - Handle more headers in email-message
+        - Improved handling of composite observable conversion
+        - Add general elevate() method, deprecate all other methods
+        - Consolidate timestamp logic
+        - Use uuid4s for custom SCOs in the stepper
+        - Check stepper results with stix-validator
+        - In external-references, the reference property must be in URI format
+
+    * Testing changes
+        - Added testing for python 3.8
+        - Add new file to test main methods to interact with the elevator, use new method in test_idioms.py
+
+    * Fixes for issues:
+        #174 - In test case identifying-a-threat-actor-group, a uuid is reused inappropriately
+        #182 - Message 905 about package timestamp is misleading
+        #186 - generate_sco_id fails to generate deterministic ID for some objects that contain special characters
+        #191 - Required attributes not added when upgrading from v2.0 -> v2.1
+        #193 - 'MarkableText' object has no attribute 'reference'
+
 2.1.1 - 2019-12-20
 
     * Handle archive files correctly
