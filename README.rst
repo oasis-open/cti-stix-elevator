@@ -118,7 +118,7 @@ STIX 1.1.1 - 1.2.1 content to STIX 2.0 or 2.1 content:
               [-v {2.0,2.1}]
               file
 
-stix2-elevator v2.1.1
+stix2-elevator v3.0.0
 
 
 
