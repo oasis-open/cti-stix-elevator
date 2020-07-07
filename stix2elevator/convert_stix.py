@@ -78,9 +78,8 @@ from stix2elevator.vocab_mappings import (
     THREAT_ACTOR_SOPHISTICATION_MAP, TOOL_LABELS_MAP
 )
 
-if stix.__version__ >= "1.2.0.0":
-    # external
-    from stix.report import Report
+if stix.__version__ >= "1.2.0.0":  # isort:skip
+    from stix.report import Report  # isort:skip
 
 # collect kill chains
 _KILL_CHAINS_PHASES = {}
