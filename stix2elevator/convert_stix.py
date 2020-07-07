@@ -79,6 +79,7 @@ from stix2elevator.vocab_mappings import (
 )
 
 if stix.__version__ >= "1.2.0.0":
+    # external
     from stix.report import Report
 
 # collect kill chains
