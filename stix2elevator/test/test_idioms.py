@@ -111,12 +111,12 @@ def setup_elevator_tests(version, missing_policy):
 
 
 def ignorable_id_types(type):
-    return type in ("attack-pattern", "campaign", "course-of-action", "grouping", "identity", "indicator", "infrastructure",
-                    "intrusion-set", "location", "malware", "malware-analysis", "note", "observed-data", "opinion",
-                    "report", "threat-actor", "tool", "vulnerability",
-                    "relationship", "sighting",
-                    "bundle",
-                    "process")
+    types = {
+        "attack-pattern", "campaign", "course-of-action", "grouping", "identity", "indicator", "infrastructure",
+        "intrusion-set", "location", "malware", "malware-analysis", "note", "observed-data", "opinion",
+        "report", "threat-actor", "tool", "vulnerability", "relationship", "sighting", "bundle", "process"
+    }
+    return type in types
 
 
 def ignore_this_id(uuid_of_good_id, uuid_of_check_id):
@@ -131,6 +131,7 @@ def id_2x(id):
 
 
 def test_elevator_idiom_mapping(test_file, stored_master, version, missing_policy, ignore):
+    errors = []
     for good_path, check_path in idiom_elevator_mappings(test_file, stored_master, version, missing_policy, ignore):
         if id_property(check_path) and id_property(good_path):
             if id_2x(good_path[1]) and id_2x(check_path[1]):
@@ -140,7 +141,13 @@ def test_elevator_idiom_mapping(test_file, stored_master, version, missing_polic
                     continue
         if good_path != check_path:
             find_index_of_difference(good_path, check_path)
-            assert good_path == check_path
+            try:
+                assert good_path == check_path
+            except AssertionError:
+                errors.append({"Expect": json.dumps(good_path), "Actual": json.dumps(check_path)})
+    if errors:
+        print(json.dumps(errors, indent=4), file=sys.stderr)
+        raise Exception(errors)
 
 
 def pytest_generate_tests(metafunc):
@@ -165,16 +172,16 @@ def find_index_of_difference(str1, str2):
     while True:
         if i < str1_len and j < str2_len:
             if str1[1][i] != str2[1][j]:
-                print("difference at " + str(i))
+                print("difference at " + str(i), file=sys.stderr)
                 break
         elif i == str1_len and j == str2_len:
-            print("no difference")
+            print("no difference", file=sys.stderr)
             break
         elif i == str1_len:
-            print("str1 ended at " + str(i))
+            print("str1 ended at " + str(i), file=sys.stderr)
             break
         elif j == str2_len:
-            print("str2 ended at " + str(j))
+            print("str2 ended at " + str(j), file=sys.stderr)
             break
         i = i + 1
         j = j + 1
