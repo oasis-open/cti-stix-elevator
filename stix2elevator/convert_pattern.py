@@ -204,7 +204,7 @@ class ComparisonExpressionForElevator(_ComparisonExpression):
             warn("apply_condition assumed to be 'ANY' in %s",
                  721, identifying_info(get_dynamic_variable("current_observable")))
             self.operator = "IN"
-        if isinstance(lhs, stix2.ObjectPath):
+        if isinstance(lhs, ObjectPathForElevator):
             self.lhs = lhs
         else:
             self.lhs = ObjectPathForElevator.make_object_path(lhs)
@@ -214,7 +214,7 @@ class ComparisonExpressionForElevator(_ComparisonExpression):
         else:
             self.rhs = make_constant(rhs)
         self.negated = negated
-        self.root_type = self.lhs.object_type_name
+        self.root_types = {self.lhs.object_type_name}
 
     def contains_placeholder(self):
         return isinstance(self.rhs, IdrefPlaceHolder)
@@ -329,10 +329,11 @@ class BooleanExpressionForElevator(_BooleanExpression):
         for args in self.operands:
             change_made_this_time, new_operand = args.replace_placeholder_with_idref_pattern(idref)
             if change_made_this_time:
-                if not hasattr(self, "root_type"):
-                    self.root_type = new_operand.root_type
-                elif self.root_type and hasattr(new_operand, "root_type") and (self.root_type != new_operand.root_type):
-                    self.root_type = None
+                if self.root_types and hasattr(new_operand, "root_types"):
+                    if self.operator == "AND":
+                        self.root_types &= new_operand.root_types
+                    else:
+                        self.root_types |= new_operand.root_types
             change_made = change_made or change_made_this_time
             new_operands.append(new_operand)
         self.operands = new_operands
@@ -352,17 +353,22 @@ class BooleanExpressionForElevator(_BooleanExpression):
             term = term.partition_according_to_object_path()
             # see which subexpression to add to, if any
             for sub in subexpressions:
-                if not hasattr(term, "root_type") and not hasattr(sub[0], "root_type"):
-                    sub.append(term)
-                    term_was_appended = True
-                    break
-                elif (hasattr(term, "root_type") and
-                      hasattr(sub[0], "root_type") and
-                      term.root_type == sub[0].root_type and
-                      (new_property(term, sub) or self.operator == "OR")):
-                    sub.append(term)
-                    term_was_appended = True
-                    break
+                if self.operator == "AND":
+                    new_root_types = term.root_types & sub[0].root_types
+                    if new_root_types and new_property(term, sub):
+                        sub.append(term)
+                        for s in sub:
+                            s.root_types = new_root_types.copy()
+                        term_was_appended = True
+                        break
+                elif self.operator == "OR":
+                    if sub[0].root_types and term.root_types:
+                        new_root_types = term.root_types | sub[0].root_types
+                        sub.append(term)
+                        for s in sub:
+                            s.root_types = new_root_types.copy()
+                        term_was_appended = True
+                        break
             # it wasn't added to any current subexpression, add it as new subexpression
             if not term_was_appended:
                 subexpressions.append([term])
@@ -384,6 +390,9 @@ class BooleanExpressionForElevator(_BooleanExpression):
             if args.contains_unconverted_term():
                 return True
         return False
+
+    def get_property(self):
+        return None
 
     def toSTIX21(self):
         for args in self.operands:
@@ -446,7 +455,11 @@ class IdrefPlaceHolder(object):
 class UnconvertedTerm(object):
     def __init__(self, term_info, root_type=None):
         self.term_info = term_info
-        self.root_type = root_type
+        if root_type:
+            self.root_types = {root_type}
+        else:
+            self.root_types = {"unknown"}
+
 
     def __str__(self):
         return "unconverted_term:%s" % self.term_info
@@ -517,10 +530,11 @@ class CompoundObservationExpressionForElevator(_CompoundObservationExpression):
         for args in self.operands:
             change_made_this_time, new_operand = args.replace_placeholder_with_idref_pattern(idref)
             if change_made_this_time:
-                if not hasattr(self, "root_type"):
-                    self.root_type = new_operand.root_type
-                elif self.root_type and hasattr(new_operand, "root_type") and (self.root_type != new_operand.root_type):
-                    self.root_type = None
+                if self.root_types and hasattr(new_operand, "root_types"):
+                    if self.operator == "AND":
+                        self.root_types &= new_operand.root_types
+                    else:
+                        self.root_types |= new_operand.root_types
             change_made = change_made or change_made_this_time
             new_operands.append(new_operand)
         self.operands = new_operands
@@ -582,6 +596,9 @@ class QualifiedObservationExpressionForElevator(QualifiedObservationExpression):
 
 
 class ParentheticalExpressionForElevator(stix2.ParentheticalExpression):
+    def __init__(self, exp):
+        super().__init__(exp)
+
     def contains_placeholder(self):
         return self.expression.contains_placeholder()
 
@@ -591,8 +608,8 @@ class ParentheticalExpressionForElevator(stix2.ParentheticalExpression):
     def replace_placeholder_with_idref_pattern(self, idref):
         change_made, new_expression = self.expression.replace_placeholder_with_idref_pattern(idref)
         self.expression = new_expression
-        if hasattr(new_expression, "root_type"):
-            self.root_type = new_expression.root_type
+        if hasattr(new_expression, "root_types"):
+            self.root_types = new_expression.root_types.copy()
         return change_made, self
 
     def collapse_reference(self, prefix):
@@ -621,17 +638,21 @@ def create_boolean_expression(operator, operands, use_parens=True):
     elif len(operands) == 0:
         return None
     exp = BooleanExpressionForElevator(operator, [])
+    exp.root_types = set()
     for arg in operands:
-        if not isinstance(arg, IdrefPlaceHolder) and hasattr(arg, "root_type"):
-            if not hasattr(exp, "root_type"):
-                exp.root_type = arg.root_type
-            elif exp.root_type and (exp.root_type != arg.root_type):
-                exp.root_type = None
+        if not isinstance(arg, IdrefPlaceHolder):
+                if exp.operator == "AND":
+                    if not exp.root_types:
+                        exp.root_types = arg.root_types.copy()
+                    else:
+                        exp.root_types &= arg.root_types
+                else:
+                    exp.root_types |= arg.root_types
         exp.add_operand(arg)
     if use_parens:
         pexp = ParentheticalExpressionForElevator(exp)
-        if hasattr(exp, "root_type"):
-            pexp.root_type = exp.root_type
+        if hasattr(exp, "root_types"):
+            pexp.root_types = exp.root_types.copy()
         return pexp
     else:
         return exp
@@ -1486,6 +1507,14 @@ def convert_file_name_and_path_to_pattern(f):
                 file_name_path_expressions.append(create_term("file:name",
                                                               f.file_path.condition,
                                                               make_constant(f.file_path.value[index + 1:])))
+                path_string_constant = make_constant(((f.device_path.value if f.device_path else "") +
+                                                      f.file_path.value[0: index]))
+                if path_string_constant == '':
+                    warn("File path directory is empty %s", 633, f.file_path.value)
+                file_name_path_expressions.append(create_term("file:parent_directory_ref.path",
+                                                              f.file_path.condition,
+                                                              path_string_constant))
+            elif f.file_name:
                 path_string_constant = make_constant(((f.device_path.value if f.device_path else "") +
                                                       f.file_path.value[0: index]))
                 if path_string_constant == '':
@@ -2441,7 +2470,7 @@ def interatively_resolve_placeholder_refs():
         change_made = False
         for fr_idref in fully_resolved_idrefs:
             for idref, expr in get_items_from_pattern_cache():
-                if expr:
+                if expr and expr.contains_placeholder():
                     change_made, expr = expr.replace_placeholder_with_idref_pattern(fr_idref)
                     # a change will be made, which could introduce a new placeholder id into the expr
                     if change_made:

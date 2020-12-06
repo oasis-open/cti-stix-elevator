@@ -98,7 +98,30 @@ def process_kill_chain(kc):
         else:
             _KILL_CHAINS_PHASES[kcp] = {"kill_chain_name": kc.name, "phase_name": kcp.name}
 
+# collect locations
 
+_LOCATIONS = {}
+
+def clear_location_objects():
+    global _LOCATIONS
+    _LOCATIONS = {}
+
+
+def exists_location_object(key):
+    return key in _LOCATIONS
+
+
+def get_location_object(key):
+    if exists_location_object(key):
+        return _LOCATIONS[key]
+    else:
+        return []
+
+
+def add_location_object(key, location_object):
+    global _LOCATIONS
+    if not exists_location_object(key):
+        _LOCATIONS[key] = location_object
 #
 # identities
 #
@@ -904,9 +927,6 @@ def convert_party_name(party_name, obj, is_identity_obj):
     return aliases
 
 
-_LOCATIONS = {}
-
-
 def determine_country_code(geo):
     if geo.name_code:
         return geo.name_code
@@ -957,8 +977,8 @@ def convert_ciq_addresses2_1(ciq_info_addresses, identity_instance, env, parent_
             # only remember locations with no free text address
             warn("Location with free text address in %s not handled yet", 433, identity_instance["id"])
         for key in location_keys:
-            if key in _LOCATIONS:
-                location = _LOCATIONS[key]
+            if exists_location_object(key):
+                location = get_location_object(key)
             else:
                 aa = None
                 c = None
@@ -978,7 +998,7 @@ def convert_ciq_addresses2_1(ciq_info_addresses, identity_instance, env, parent_
                     location["administrative_area"] = aa
                 if c:
                     location["country"] = c
-                _LOCATIONS[key] = location
+                add_location_object(key, location)
                 warn("Location %s may not contain all aspects of the STIX 1.x address object", 803, location["id"])
                 env.bundle_instance["objects"].append(location)
             env.bundle_instance["objects"].append(create_relationship(identity_instance["id"],

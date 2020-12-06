@@ -1,0 +1,93 @@
+{
+    "id": "bundle--42ad7e43-2769-4247-8044-b2bd6f4f09d6",
+    "objects": [
+        {
+            "created": "2020-11-23T14:26:05.000Z",
+            "id": "identity--e19332cf-2b98-4da7-8e97-39121073f529",
+            "identity_class": "organization",
+            "modified": "2020-11-23T14:26:05.000Z",
+            "name": "CISA",
+            "object_marking_refs": [
+                "marking-definition--b415ab98-233a-4b7d-9c07-2e90aefb4d4a"
+            ],
+            "sectors": [
+                "government"
+            ],
+            "type": "identity"
+        },
+        {
+            "created": "2020-11-23T14:26:05.000Z",
+            "created_by_ref": "identity--e19332cf-2b98-4da7-8e97-39121073f529",
+            "definition": {
+                "consent": "everyone",
+                "is_cisa_proprietary": "true",
+                "is_proprietary": "true",
+                "tlp": "white"
+            },
+            "definition_type": "ais",
+            "id": "marking-definition--b415ab98-233a-4b7d-9c07-2e90aefb4d4a",
+            "type": "marking-definition"
+        },
+        {
+            "created": "2020-11-23T14:26:05.000Z",
+            "id": "identity--23e29b58-0111-4357-b81e-75461892d683",
+            "identity_class": "organization",
+            "modified": "2020-11-23T14:26:05.000Z",
+            "name": "CISA",
+            "object_marking_refs": [
+                "marking-definition--b415ab98-233a-4b7d-9c07-2e90aefb4d4a"
+            ],
+            "sectors": [
+                "government"
+            ],
+            "type": "identity"
+        },
+        {
+            "created": "2020-11-23T14:26:05.000Z",
+            "id": "identity--fe59e550-43b8-4826-855d-bae2a18a6ff0",
+            "identity_class": "organization",
+            "modified": "2020-11-23T14:26:05.000Z",
+            "name": "CISA",
+            "object_marking_refs": [
+                "marking-definition--b415ab98-233a-4b7d-9c07-2e90aefb4d4a"
+            ],
+            "sectors": [
+                "government"
+            ],
+            "type": "identity"
+        },
+        {
+            "count": 1,
+            "created": "2018-03-13T20:42:24.000Z",
+            "id": "sighting--cb3af25a-a814-4f8d-b72d-3ba86c744adc",
+            "modified": "2018-03-13T20:42:24.000Z",
+            "sighting_of_ref": "indicator--a35dbed6-9b9c-442e-aaff-4aeeb88a43ef",
+            "summary": false,
+            "type": "sighting"
+        },
+        {
+            "created": "2020-11-23T19:26:05.255Z",
+            "created_by_ref": "identity--23e29b58-0111-4357-b81e-75461892d683",
+            "description": "This is the E-Mail indicator",
+            "id": "indicator--a35dbed6-9b9c-442e-aaff-4aeeb88a43ef",
+            "kill_chain_phases": [
+                {
+                    "kill_chain_name": "stix:KillChain-af3e707f-2fb9-49e5-8c37-14026ca0a5ff",
+                    "phase_name": "Delivery"
+                }
+            ],
+            "labels": [
+                "anonymization"
+            ],
+            "modified": "2020-11-23T19:26:05.255Z",
+            "object_marking_refs": [
+                "marking-definition--b415ab98-233a-4b7d-9c07-2e90aefb4d4a"
+            ],
+            "pattern": "[file:hashes.MD5 = 'd41d8cd98f00b204e9800998ecf8427e' AND (file:name = 'TheFileName.exe' AND file:parent_directory_ref.path = '/usr/local/bin') AND file:size = 123456]",
+            "type": "indicator",
+            "valid_from": "2020-11-23T19:26:05.255205Z"
+        }
+    ],
+    "spec_version": "2.0",
+    "type": "bundle"
+}

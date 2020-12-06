@@ -26,7 +26,7 @@
             "created": "2018-09-06T16:14:38.950Z",
             "id": "indicator--66c7e55d-5b74-42fc-8cb2-169ec592573b",
             "modified": "2018-09-06T16:14:38.950Z",
-            "pattern": "([mutex:name MATCHES 'foo'] OR [file:name = 'barfoobar']) AND [network-traffic:dst_ref.value = '46.123.99.25']",
+            "pattern": "[(mutex:name MATCHES 'foo' OR file:name = 'barfoobar')] AND [network-traffic:dst_ref.value = '46.123.99.25']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",

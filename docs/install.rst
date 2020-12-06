@@ -4,7 +4,7 @@ Installing
 Requirements
 ------------
 
-- Python 2.7, or 3.4+
+- Python 3.5+
 - `python-stix <https://stix.readthedocs.io/en/stable/>`_ and its dependencies
 
   .. note::

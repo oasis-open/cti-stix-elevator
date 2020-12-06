@@ -15,12 +15,13 @@ import stixmarx
 from stixmarx.container import MarkingContainer
 
 # internal
+
 from stix2elevator.convert_cybox import clear_directory_mappings
 from stix2elevator.convert_pattern import (
     clear_observable_mappings, clear_pattern_cache
 )
 from stix2elevator.convert_stix import (
-    clear_kill_chains_phases_mapping, clear_observed_data_mappings,
+    clear_kill_chains_phases_mapping, clear_location_objects, clear_observed_data_mappings,
     convert_package
 )
 from stix2elevator.ids import (
@@ -67,6 +68,7 @@ def clear_globals():
     clear_observed_data_mappings()
     clear_id_of_obs_in_characterizations()
     clear_directory_mappings()
+    clear_location_objects()
     cybox.utils.caches.cache_clear()
 
 
