@@ -98,9 +98,11 @@ def process_kill_chain(kc):
         else:
             _KILL_CHAINS_PHASES[kcp] = {"kill_chain_name": kc.name, "phase_name": kcp.name}
 
+
 # collect locations
 
 _LOCATIONS = {}
+
 
 def clear_location_objects():
     global _LOCATIONS

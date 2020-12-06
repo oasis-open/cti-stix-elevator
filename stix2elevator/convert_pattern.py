@@ -460,7 +460,6 @@ class UnconvertedTerm(object):
         else:
             self.root_types = {"unknown"}
 
-
     def __str__(self):
         return "unconverted_term:%s" % self.term_info
 
@@ -641,13 +640,13 @@ def create_boolean_expression(operator, operands, use_parens=True):
     exp.root_types = set()
     for arg in operands:
         if not isinstance(arg, IdrefPlaceHolder):
-                if exp.operator == "AND":
-                    if not exp.root_types:
-                        exp.root_types = arg.root_types.copy()
-                    else:
-                        exp.root_types &= arg.root_types
+            if exp.operator == "AND":
+                if not exp.root_types:
+                    exp.root_types = arg.root_types.copy()
                 else:
-                    exp.root_types |= arg.root_types
+                    exp.root_types &= arg.root_types
+            else:
+                exp.root_types |= arg.root_types
         exp.add_operand(arg)
     if use_parens:
         pexp = ParentheticalExpressionForElevator(exp)
