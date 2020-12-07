@@ -39,10 +39,10 @@ setup(
         'pycountry>=19.8.18',
         'netaddr',
         'stix>=1.1.1.9,<1.2.1.0',
-        'stix2-validator>=2.1.0',
-        'stixmarx>=1.0.7',
+        'stix2-validator>=2.0.2',
+        'stixmarx>=1.0.8',
         'six>=1.12.0',
-        'stix2'
+        'stix2>=2.1.0'
     ],
     entry_points={
         'console_scripts': [
