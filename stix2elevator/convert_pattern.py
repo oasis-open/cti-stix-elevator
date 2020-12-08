@@ -44,8 +44,8 @@ import stixmarx
 
 # internal
 from stix2elevator.common import (
-    ADDRESS_FAMILY_ENUMERATION, PDF_DOC_INFO_DICT_KEYS, SOCKET_OPTIONS,
-    determine_socket_address_direction
+    ADDRESS_FAMILY_ENUMERATION, PDF_DOC_INFO, PDF_DOC_INFO_DICT,
+    SOCKET_OPTIONS, determine_socket_address_direction
 )
 from stix2elevator.convert_cybox import split_into_requests_and_responses
 from stix2elevator.ids import (
@@ -1412,10 +1412,10 @@ def convert_pdf_file_to_pattern(f):
                                                make_constant(f.metadata.optimized.value)))
         if f.metadata.document_information_dictionary:
             dict1x = f.metadata.document_information_dictionary
-            for key in PDF_DOC_INFO_DICT_KEYS:
+            for key in PDF_DOC_INFO:
                 value = getattr(dict1x, key, None)
                 if value:
-                    and_expressions.append(create_term("file:extensions.'pdf-ext'.document_info_dict." + PDF_DOC_INFO_DICT_KEYS[key],
+                    and_expressions.append(create_term("file:extensions.'pdf-ext'.document_info_dict." + PDF_DOC_INFO_DICT[key],
                                                        value.condition,
                                                        make_constant(value.value)))
     if f.trailers:
