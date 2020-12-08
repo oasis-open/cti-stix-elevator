@@ -141,13 +141,11 @@ def test_elevator_idiom_mapping(test_file, stored_master, version, missing_polic
                     continue
         if good_path != check_path:
             find_index_of_difference(good_path, check_path)
-            try:
-                assert good_path == check_path
-            except AssertionError:
-                errors.append({"Expect": json.dumps(good_path), "Actual": json.dumps(check_path)})
+            errors.append({"Expect": json.dumps(good_path), "Actual": json.dumps(check_path)})
+
     if errors:
         print(json.dumps(errors, indent=4), file=sys.stderr)
-        raise Exception(errors)
+        raise AssertionError(errors)
 
 
 def pytest_generate_tests(metafunc):
