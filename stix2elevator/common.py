@@ -36,7 +36,18 @@ ADDRESS_FAMILY_ENUMERATION = [
     "AF_BTH",
 ]
 
-PDF_DOC_INFO_DICT_KEYS = {
+PDF_DOC_INFO = [
+    "author",
+    "creationdate",
+    "creator",
+    "keywords",
+    "producer",
+    "moddate",
+    "subject",
+    "trapped"
+]
+
+PDF_DOC_INFO_DICT = {
     "author": "Author",
     "creationdate": "CreationDate",
     "creator": "Creator",

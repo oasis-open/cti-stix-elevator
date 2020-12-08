@@ -39,8 +39,8 @@ from six import text_type
 
 # internal
 from stix2elevator.common import (
-    ADDRESS_FAMILY_ENUMERATION, PDF_DOC_INFO_DICT_KEYS, SOCKET_OPTIONS,
-    determine_socket_address_direction
+    ADDRESS_FAMILY_ENUMERATION, PDF_DOC_INFO, PDF_DOC_INFO_DICT,
+    SOCKET_OPTIONS, determine_socket_address_direction
 )
 from stix2elevator.ids import (
     add_id_value, add_object_id_value, generate_sco_id, get_id_value,
@@ -361,13 +361,13 @@ def convert_pdf_file(f):
         if f.metadata.document_information_dictionary:
             dict2x = dict()
             dict1x = f.metadata.document_information_dictionary
-            for key in PDF_DOC_INFO_DICT_KEYS:
+            for key in PDF_DOC_INFO:
                 value = getattr(dict1x, key, None)
                 if value:
                     if isinstance(value.value, datetime):
-                        dict2x[PDF_DOC_INFO_DICT_KEYS[key]] = convert_timestamp_to_string(value.value)
+                        dict2x[PDF_DOC_INFO_DICT[key]] = convert_timestamp_to_string(value.value)
                     else:
-                        dict2x[PDF_DOC_INFO_DICT_KEYS[key]] = value.value
+                        dict2x[PDF_DOC_INFO_DICT[key]] = value.value
             pdf_file_dict["document_info_dict"] = dict2x
     if f.trailers:
         count = 0
