@@ -1,6 +1,19 @@
 CHANGELOG
 =========
 
+3.0.1 - 2020-12-09
+
+   * Update dependencies
+        - python-stix2 (2.1.0)
+        - stix2validator (2.0.2)
+        - stixmarx (1.0.8)
+
+   * Other changes:
+        - Implement semantics of patterns more correctly
+        - Impose predicable order for terms in pattern expression involving pdf files
+        - Clear location object cache
+
+
 3.0.0 - 2020-07-08
 
     **The elevator and stepper are compliant with STIX 2.1 CS01**
