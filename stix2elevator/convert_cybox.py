@@ -47,7 +47,8 @@ from stix2elevator.ids import (
     get_object_id_value, is_stix1x_id, property_contains_stix1x_id
 )
 from stix2elevator.missing_policy import (
-    convert_to_custom_name, handle_missing_string_property
+    check_for_missing_policy, convert_to_custom_name, determine_container_for_missing_properties,
+    fill_in_extension_properties, get_extension_definition_id, handle_missing_string_property
 )
 from stix2elevator.options import error, get_option_value, info, warn
 from stix2elevator.utils import (
@@ -80,7 +81,7 @@ def create_base_sco(type, prop1x=None, other_properties=None, env=None, generate
     return new_dict
 
 
-def finish_sco(instance, stix1x_id):
+def generate_sco_id_for_2_1(instance, stix1x_id):
     if get_option_value("spec_version") == "2.1":
         instance["id"] = generate_sco_id(instance["type"], instance)
         if stix1x_id:
@@ -127,7 +128,7 @@ def convert_account(acc):
                 account_dict["account_type"] = "windows-domain"
             else:
                 account_dict["account_type"] = "windows-local"
-    finish_sco(account_dict, acc.parent.id_)
+    generate_sco_id_for_2_1(account_dict, acc.parent.id_)
     return account_dict
 
 
@@ -206,7 +207,7 @@ def convert_address(add, related_objects=None, env=None):
         warn("The address type %s is not part of STIX 2.x", 421, add.category)
         return None
     if instance:
-        finish_sco(instance, obj1x_id)
+        generate_sco_id_for_2_1(instance, obj1x_id)
         return instance
 
 
@@ -231,49 +232,55 @@ def convert_artifact_encoding(e):
 
 
 def convert_artifact_packaging(packaging, instance, obj1x_id):
-    if packaging.compression:
-        if get_option_value("missing_policy") == "use-custom-properties":
+    if not (check_for_missing_policy("add-to-description") or check_for_missing_policy("ignore")):
+        if packaging.compression:
+            if check_for_missing_policy("use-custom-properties"):
+                property_name = convert_to_custom_name("compression")
+            else:
+                property_name = "compression"
             result = []
             for c in packaging.compression:
                 result.append(convert_artifact_compression(c))
-            instance[convert_to_custom_name("compression")] = result
-        else:
-            warn("Any artifact compression info on %s is not recoverable", 634, obj1x_id)
-    if packaging.encoding:
-        if get_option_value("missing_policy") == "use-custom-properties":
+            instance[property_name] = result
+
+        if packaging.encoding:
+            if check_for_missing_policy("use-custom-properties"):
+                property_name = convert_to_custom_name("encoding")
+            else:
+                property_name = "encoding"
             result = []
             for e in packaging.encoding:
                 result.append(convert_artifact_encoding(e))
-            instance[convert_to_custom_name("encoding")] = result
-        else:
-            warn("Any artifact encoding info on %s is not recoverable", 634, obj1x_id)
-    if packaging.encryption:
-        first = True
-        for e in packaging.encryption:
-            if first:
-                if e.encryption_key:
-                    if get_option_value("spec_version") == "2.0":
-                        property_name = convert_to_custom_name("encryption_key")
-                    else:
-                        property_name = "decryption_key"
-                    instance[property_name] = e.encryption_key
-                if e.encryption_mechanism:
-                    if get_option_value("spec_version") == "2.0":
-                        property_name = convert_to_custom_name("encryption_mechanism")
-                    else:
-                        property_name = "encryption_algorithm"
-                    instance[property_name] = e.encryption_mechanism
-                if e.encryption_key_ref:
-                    handle_missing_string_property(instance, "encryption_key_ref", e.encryption_key_ref, is_sco=True)
-                if e.encryption_mechanism_ref:
-                    if get_option_value("missing_policy") == "use-custom-properties":
+            instance[property_name] = result
+
+        if packaging.encryption:
+            first = True
+            for e in packaging.encryption:
+                if first:
+                    if e.encryption_key:
+                        if get_option_value("spec_version") == "2.0" and check_for_missing_policy("use-custom-properties"):
+                            property_name = convert_to_custom_name("encryption_key")
+                        else:
+                            property_name = "decryption_key"
+                        instance[property_name] = e.encryption_key
+                    if e.encryption_mechanism:
+                        if get_option_value("spec_version") == "2.0" and check_for_missing_policy("use-custom-properties"):
+                            property_name = convert_to_custom_name("encryption_mechanism")
+                        else:
+                            property_name = "encryption_algorithm"
+                        instance[property_name] = e.encryption_mechanism
+                    if e.encryption_key_ref:
+                        handle_missing_string_property(instance, "encryption_key_ref", e.encryption_key_ref, is_sco=True)
+                    if e.encryption_mechanism_ref:
                         handle_missing_string_property(instance, "encryption_mechanism_ref", e.encryption_mechanism_ref, is_sco=True)
-                first = False
-            else:
-                warn("Only one encryption algorithm or key allowed in STIX 2.1 - used %s in %s",
-                     510,
-                     instance[property_name],
-                     obj1x_id)
+                    first = False
+                else:
+                    warn("Only one encryption algorithm or key allowed in STIX 2.1 - used %s in %s",
+                         510,
+                         instance[property_name],
+                         obj1x_id)
+    else:
+        warn("Any additional artifact info on %s is not recoverable", 634, obj1x_id)
 
 
 def convert_artifact(art):
@@ -293,7 +300,7 @@ def convert_artifact(art):
     if art.packaging:
         convert_artifact_packaging(art.packaging, instance, obj1x_id)
 
-    finish_sco(instance, obj1x_id)
+    generate_sco_id_for_2_1(instance, obj1x_id)
     return instance
 
 
@@ -305,13 +312,13 @@ def convert_as(a_s):
         instance["name"] = a_s.name.value
     if a_s.regional_internet_registry:
         instance["rir"] = a_s.regional_internet_registry.value
-    finish_sco(instance, a_s.parent.id_)
+    generate_sco_id_for_2_1(instance, a_s.parent.id_)
     return instance
 
 
 def convert_uri(uri):
     instance = create_base_sco("url", uri, other_properties={"value": uri.value.value})
-    finish_sco(instance, uri.parent.id_)
+    generate_sco_id_for_2_1(instance, uri.parent.id_)
     return instance
 
 
@@ -430,12 +437,18 @@ def convert_windows_executable_file(f):
                     if getattr(s.section_header, prop_name1x, None):
                         section_dict[prop_name2x] = getattr(s.section_header, prop_name1x).value
             if s.entropy:
-                if s.entropy.min:
-                    handle_missing_string_property(section_dict, "entropy_min", s.entropy.min, is_sco=True)
-                if s.entropy.max:
-                    handle_missing_string_property(section_dict, "entropy_max", s.entropy.max, is_sco=True)
                 if s.entropy.value:
                     section_dict["entropy"] = s.entropy.value.value
+                if s.entropy.min and not check_for_missing_policy("use-extensions"):
+                    handle_missing_string_property(section_dict, "entropy_min", s.entropy.min, is_sco=True)
+                else:
+                    warn("Missing entropy min %s is ignored, because it can't be represented using the extensions policy",
+                         314)
+                if s.entropy.max and not check_for_missing_policy("use-extensions"):
+                    handle_missing_string_property(section_dict, "entropy_max", s.entropy.max, is_sco=True)
+                else:
+                    warn("Missing entropy max %s is ignored, because it can't be represented using the extensions policy",
+                         314)
             # need to merge hash lists - worry about duplicate keys
             if s.data_hashes:
                 section_dict["hashes"] = convert_hashes(s.data_hashes)
@@ -459,7 +472,7 @@ def convert_archive_file20(f):
     if f.comment:
         archive_dict["comment"] = f.comment
     if f.version:
-        archive_dict["version"] = f.version
+        archive_dict["version"] = text_type(f.version)
     if f.archived_file:
         archive_dict["contains_refs"] = list()
         for ar_file in f.archived_file:
@@ -470,20 +483,33 @@ def convert_archive_file20(f):
 
 
 def convert_archive_file21(f):
-    archive_dict = {}
+    extensions_dict = dict()
     file_objs = []
     if f.comment:
-        archive_dict["comment"] = f.comment
+        if "archive-ext" not in extensions_dict:
+            extensions_dict["archive-ext"] = dict()
+        extensions_dict["archive-ext"]["comment"] = f.comment
     if f.version:
-        if get_option_value("missing_policy") == "use-custom-properties":
-            property_name = convert_to_custom_name("version")
-            archive_dict[property_name] = f.version
+        if check_for_missing_policy("use-custom-properties"):
+            if "archive-ext" not in extensions_dict:
+                extensions_dict["archive-ext"] = dict()
+            extensions_dict["archive-ext"][convert_to_custom_name("version")] = text_type(f.version)
+        elif check_for_missing_policy("use-extensions"):
+            extension_definition_id = get_extension_definition_id("archive-file")
+            if not extension_definition_id:
+                warn("No extension-definition was found for STIX 1 type archive-file", 312)
+            else:
+                if extension_definition_id not in extensions_dict:
+                    extensions_dict[extension_definition_id] = dict()
+                extensions_dict[extension_definition_id]["version"] = text_type(f.version)
     if f.archived_file:
+        if "archive-ext" not in extensions_dict:
+            extensions_dict["archive-ext"] = dict()
         for ar_file in f.archived_file:
             ar_file2x = convert_file(ar_file, None)
             file_objs.extend(ar_file2x)
-        archive_dict["contains_refs"] = [x["id"] for x in file_objs]
-    return archive_dict, file_objs
+        extensions_dict["archive-ext"]["contains_refs"] = [x["id"] for x in file_objs]
+    return extensions_dict, file_objs
 
 
 _DIRECTORY_SCOS = {}
@@ -580,7 +606,7 @@ def convert_file_properties(f):
         if dir_path:
             full_path = f.device_path.value if f.device_path else ""
             dir_dict = create_base_sco("directory", other_properties={"path": full_path + dir_path})
-            finish_sco(dir_dict, None)
+            generate_sco_id_for_2_1(dir_dict, None)
     if f.full_path:
         warn("1.x full file paths are not processed, yet", 802)
     if isinstance(f, WinExecutableFile):
@@ -592,11 +618,13 @@ def convert_file_properties(f):
     if isinstance(f, ArchiveFile):
         if get_option_value("spec_version") == "2.0":
             archive_file_dict, file_objs = convert_archive_file20(f)
+            if archive_file_dict:
+                extended_properties["archive-ext"] = archive_file_dict
         else:
             archive_file_dict, file_objs = convert_archive_file21(f)
-        if archive_file_dict:
-            extended_properties["archive-ext"] = archive_file_dict
-        else:
+            if archive_file_dict:
+                extended_properties.update(archive_file_dict)
+        if not archive_file_dict:
             warn("No ArchiveFile properties found in %s", 613, text_type(f))
     else:
         file_objs = None
@@ -614,7 +642,7 @@ def convert_file_properties(f):
             warn("No ImageFile properties found in %s", 613, text_type(f))
     if extended_properties:
         file_dict["extensions"] = extended_properties
-    finish_sco(file_dict, obj1x_id)
+    generate_sco_id_for_2_1(file_dict, obj1x_id)
     return file_dict, dir_dict, file_objs
 
 
@@ -784,7 +812,7 @@ def convert_email_message(email_message):
             multiparts.append(convert_attachment(a))
         email_dict["body_multipart"] = multiparts
     if email_message.links:
-        if get_option_value("missing_policy") == "use-custom-properties":
+        if check_for_missing_policy("use-custom-properties"):
             # this would be to another observable - which is not allowed in 2.0
             if get_option_value("spec_version") == "2.1":
                 property_name = convert_to_custom_name("link_refs")
@@ -800,7 +828,7 @@ def convert_email_message(email_message):
             warn("Missing property '%s' is ignored", 307, "links")
     if email_message.raw_body:
         raw_body_obj = create_base_sco("artifact", other_properties={"payload_bin": encode_in_base64(text_type(email_message.raw_body))})
-        finish_sco(raw_body_obj, None)
+        generate_sco_id_for_2_1(raw_body_obj, None)
         if get_option_value("spec_version") == "2.0":
             if raw_body_obj:
                 email_dict["raw_email_ref"] = text_type(index)
@@ -810,7 +838,7 @@ def convert_email_message(email_message):
             if raw_body_obj:
                 email_dict["raw_email_ref"] = raw_body_obj["id"]
                 objs.append(raw_body_obj)
-    finish_sco(email_dict, email_message.parent.id_)
+    generate_sco_id_for_2_1(email_dict, email_message.parent.id_)
     return objs
 
 
@@ -842,10 +870,10 @@ def convert_registry_key(reg_key):
             cybox_reg["modified"] = convert_timestamp_to_string(reg_key.modified_time.value)
         else:
             cybox_reg["modified_time"] = convert_timestamp_to_string(reg_key.modified_time.value)
-    finish_sco(cybox_reg, reg_key.parent.id_)
+    generate_sco_id_for_2_1(cybox_reg, reg_key.parent.id_)
     if reg_key.creator_username:
         user_obj = create_base_sco("user-account", other_properties={"user_id": text_type(reg_key.creator_username)})
-        finish_sco(user_obj, None)
+        generate_sco_id_for_2_1(user_obj, None)
     if get_option_value("spec_version") == "2.0":
         result = dict()
         result["0"] = cybox_reg
@@ -866,7 +894,7 @@ def create_process_ref(cp, process_dict, objs, index, prop):
     if get_option_value("spec_version") == "2.0":
         objs[text_type(index)] = cp_ref
     else:
-        finish_sco(cp_ref, None)
+        generate_sco_id_for_2_1(cp_ref, None)
         objs.append(cp_ref)
     if prop == "child_refs":
         if prop not in process_dict:
@@ -889,7 +917,7 @@ def convert_port(prop):
         traffic_2x["dst_port"] = prop.port_value.value
     if prop.layer4_protocol:
         traffic_2x["protocols"] = [prop.layer4_protocol.value.lower()]
-    finish_sco(traffic_2x, prop.parent.id_)
+    generate_sco_id_for_2_1(traffic_2x, prop.parent.id_)
     return traffic_2x
 
 
@@ -951,7 +979,7 @@ def convert_process(process):
         if ii.file_name:
             # TODO: check ii.current_directory and ii.path for more info
             image_obj = create_base_sco("file", other_properties={"name": text_type(ii.file_name)})
-            finish_sco(image_obj, None)
+            generate_sco_id_for_2_1(image_obj, None)
             if get_option_value("spec_version") == "2.0":
                 process_dict["image_ref"] = text_type(index)
                 objs[text_type(index)] = image_obj
@@ -963,7 +991,7 @@ def convert_process(process):
             process_dict["command_line"] = text_type(ii.command_line)
     if process.username:
         user_obj = create_base_sco("user-account", other_properties={"user_id": text_type(process.username)})
-        finish_sco(user_obj, None)
+        generate_sco_id_for_2_1(user_obj, None)
         if get_option_value("spec_version") == "2.0":
             process_dict["creator_user_ref"] = text_type(index)
             objs[text_type(index)] = user_obj
@@ -990,7 +1018,7 @@ def convert_process(process):
 
         if extended_properties:
             process_dict["extensions"] = extended_properties
-    finish_sco(process_dict, process.parent.id_)
+    generate_sco_id_for_2_1(process_dict, process.parent.id_)
     if process.child_pid_list:
         for cp in process.child_pid_list:
             create_process_ref(cp, process_dict, objs, index, "child_refs")
@@ -1044,7 +1072,7 @@ def convert_windows_service(service):
     if hasattr(service, "service_dll") and service.service_dll:
         # There is only one in STIX 1.x
         ddl_file2x = create_base_sco("file", other_properties={"name": text_type(service.service_dll)})
-        finish_sco(ddl_file2x, None)
+        generate_sco_id_for_2_1(ddl_file2x, None)
         if get_option_value("spec_version") == "2.1":
             cybox_ws["service_dll_refs"] = [ddl_file2x["id"]]
         return cybox_ws, ddl_file2x
@@ -1056,7 +1084,7 @@ def convert_domain_name(domain_name, related_objects):
     if domain_name.value:
         cybox_dm["value"] = text_type(domain_name.value.value)
     handle_related_objects_as_embedded_relationships(cybox_dm, related_objects, "Resolved_To", "resolves_to_refs")
-    finish_sco(cybox_dm, domain_name.parent.id_)
+    generate_sco_id_for_2_1(cybox_dm, domain_name.parent.id_)
     return cybox_dm
 
 
@@ -1064,7 +1092,7 @@ def convert_mutex(mutex):
     cybox_mutex = create_base_sco("mutex", mutex)
     if mutex.name:
         cybox_mutex["name"] = text_type(mutex.name.value)
-    finish_sco(cybox_mutex, mutex.parent.id_)
+    generate_sco_id_for_2_1(cybox_mutex, mutex.parent.id_)
     return cybox_mutex
 
 
@@ -1177,7 +1205,7 @@ def convert_http_client_request(request):
             http_extension["message_body_length"] = mb.length.value
         if mb.message_body:
             body_obj = create_base_sco("artifact", other_properties={"payload_bin": encode_in_base64(text_type(mb.message_body))})
-            finish_sco(body_obj, None)
+            generate_sco_id_for_2_1(body_obj, None)
             if get_option_value("spec_version") == "2.1":
                 http_extension["message_body_data_ref"] = body_obj["id"]
             else:
@@ -1192,7 +1220,7 @@ def convert_http_network_connection_extension(http):
 
 def create_domain_name_object(dn):
     instance = create_base_sco("domain-name", dn, other_properties={"value": text_type(dn.value)})
-    finish_sco(instance, None)
+    generate_sco_id_for_2_1(instance, None)
     return instance
 
 
@@ -1310,7 +1338,7 @@ def convert_network_connection(conn, env=None):
             objs["0"] = cybox_traffic
             index += 1
         else:
-            finish_sco(cybox_traffic, conn.parent.id_)
+            generate_sco_id_for_2_1(cybox_traffic, conn.parent.id_)
             # network traffic object must be first
             objs.insert(0, cybox_traffic)
 
@@ -1356,21 +1384,29 @@ def convert_http_session(session):
                     objs["1"] = body_obj
                 return objs
             else:
-                finish_sco(cybox_traffic, session.parent.id_)
+                generate_sco_id_for_2_1(cybox_traffic, session.parent.id_)
                 if body_obj:
                     return [cybox_traffic, body_obj]
                 else:
                     return [cybox_traffic]
 
 
-def create_icmp_extension(icmp_header):
-    imcp_extension = {}
+def handle_extensions_of_icmp_extension(icmp_header, imcp_extension, cybox_traffic):
+    container, extension_definition_id = determine_container_for_missing_properties("icmp_extension", imcp_extension)
+
+    if container != None:
+        if icmp_header.checksum:
+            handle_missing_string_property(container, "checksum", icmp_header.checksum, None, is_sco=True)
+
+        fill_in_extension_properties(cybox_traffic, container, extension_definition_id)
+
+
+def create_icmp_extension(icmp_header, imcp_extension, cybox_traffic):
     if icmp_header.type_:
         imcp_extension["icmp_type_hex"] = icmp_header.type_.value
     if icmp_header.code:
         imcp_extension["icmp_code_hex"] = icmp_header.code.value
-    if icmp_header.checksum:
-        handle_missing_string_property(imcp_extension, "checksum", icmp_header.checksum, is_sco=True)
+    handle_extensions_of_icmp_extension(icmp_header, imcp_extension, cybox_traffic)
     return imcp_extension
 
 
@@ -1387,8 +1423,10 @@ def convert_network_packet(packet):
             else:
                 return None
             cybox_traffic = create_base_sco("network-traffic", packet)
-            cybox_traffic["extensions"] = {"icmp-ext": create_icmp_extension(icmp_header)}
-            finish_sco(cybox_traffic, packet.parent.id_)
+            imcp_extension = {}
+            cybox_traffic["extensions"] = {"icmp-ext": imcp_extension}
+            create_icmp_extension(icmp_header, imcp_extension, cybox_traffic)
+            generate_sco_id_for_2_1(cybox_traffic, packet.parent.id_)
             return cybox_traffic
 
 
@@ -1403,8 +1441,29 @@ def convert_socket_options(options):
     return socket_options
 
 
+def handle_extensions_of_network_socket(socket, socket_extension, cybox_traffic):
+    container, extension_definition_id = determine_container_for_missing_properties("network-socket", socket_extension)
+
+    if container != None:
+        sco_id = cybox_traffic["id"] if "id" in cybox_traffic else None
+        if socket.domain:
+            if get_option_value("spec_version") == "2.0":
+                cybox_traffic["extensions"]["socket-ext"]["protocol_family"] = socket.domain
+            else:
+                handle_missing_string_property(container, "protocol_family", socket.domain, sco_id, is_sco=True)
+
+        if socket.local_address:
+            handle_missing_string_property(container, "local_address", socket.local_address.ip_address, sco_id, is_sco=True)
+        if socket.remote_address:
+            handle_missing_string_property(container, "remote_address", socket.remote_address.ip_address, sco_id, is_sco=True)
+
+        fill_in_extension_properties(cybox_traffic, container, extension_definition_id)
+
+
 def convert_network_socket(socket):
     cybox_traffic = create_base_sco("network-traffic", socket)
+    if socket.protocol:
+        cybox_traffic["protocols"] = [socket.protocol.value.lower()]
     socket_extension = {}
     if socket.is_blocking:
         socket_extension["is_blocking"] = socket.is_blocking
@@ -1417,23 +1476,14 @@ def convert_network_socket(socket):
             warn("%s is not a member of the %s enumeration", 627, socket.address_family, "address family")
     if socket.type_:
         socket_extension["socket_type"] = socket.type_
-    if socket.domain:
-        if get_option_value("spec_version") == "2.0":
-            socket_extension["protocol_family"] = socket.domain
-        else:
-            handle_missing_string_property(socket_extension, "protocol_family", socket.domain, is_sco=True)
     if socket.options:
         socket_extension["options"] = convert_socket_options(socket.options)
     if socket.socket_descriptor:
         socket_extension["socket_descriptor"] = socket.socket_descriptor
-    if socket.local_address:
-        handle_missing_string_property(socket_extension, "local_address", socket.local_address.ip_address, is_sco=True)
-    if socket.remote_address:
-        handle_missing_string_property(socket_extension, "remote_address", socket.remote_address.ip_address, is_sco=True)
-    if socket.protocol:
-        cybox_traffic["protocols"] = [socket.protocol.value.lower()]
+
     cybox_traffic["extensions"] = {"socket-ext": socket_extension}
-    finish_sco(cybox_traffic, socket.parent.id_)
+    generate_sco_id_for_2_1(cybox_traffic, socket.parent.id_)
+    handle_extensions_of_network_socket(socket, socket_extension, cybox_traffic)
     return cybox_traffic
 
 
@@ -1465,7 +1515,7 @@ def convert_product(prod):
         instance["version"] = prod.version.value
     if prod.language:
         instance["languages"] = [prod.language.value]
-    finish_sco(instance, prod.parent.id_)
+    generate_sco_id_for_2_1(instance, prod.parent.id_)
     return instance
 
 
@@ -1547,7 +1597,7 @@ def convert_x509_certificate(x509):
             ext_dict = convert_v3_extension(cert.standard_extensions)
             if ext_dict:
                 x509_obj["x509_v3_extensions"] = ext_dict
-    finish_sco(x509_obj, x509.parent.id_)
+    generate_sco_id_for_2_1(x509_obj, x509.parent.id_)
     return x509_obj
 
 
@@ -1555,7 +1605,7 @@ def convert_custom_object(custom_obj1x):
     if custom_obj1x.custom_name:
         custom_object_type = convert_to_custom_name(custom_obj1x.custom_name, separator="-")
         custom_obj2x = create_base_sco(custom_object_type, custom_obj1x)
-        finish_sco(custom_obj2x, custom_obj1x.parent.id_)
+        generate_sco_id_for_2_1(custom_obj2x, custom_obj1x.parent.id_)
         return custom_obj2x
     else:
         warn("Custom object with no name cannot be handled yet", 811)

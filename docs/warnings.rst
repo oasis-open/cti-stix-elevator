@@ -42,6 +42,12 @@ Appended ``Statement`` type content to description of *[id]*                    
 Appended ``Tool`` type content to description of *[id]*                                                                        306     warn
 Missing property *[property_name]* of *[id]* is ignored                                                                        307     warn
 Used custom property for *[property_name]* of *[id]*                                                                           308     warn
+Missing property *[property_name]* of *[id]* is ignored, because there is no description property                              309     warn
+The Short_Description property in *[id]* is not supported in STIX 2.x.                                                         310     warn
+Used an extension for objective of *[id]*                                                                                      311     warn
+No extension-definition was found for STIX 1 type *[type]* in *[id]*                                                           312     warn
+Used extension property for *[property_name]* of *[id]*                                                                        313     warn
+Missing property *[property_name]* of *[id]* is ignored, because it can't be represented in an extension                       314     warn
 ============================================================================================================================== ====    =====
 
 
@@ -146,7 +152,7 @@ Unable to determine the STIX 2.x type for *[id]*, which is malformed            
 Multiple administrative areas with multiple countries in *[id]* is not handled"                                                             631     warn
 Unknown phase_id *[phase_id]* in *[id]*                                                                                                     632     warn
 File path directory is empty *[file_path]*                                                                                                  633     warn
-Any artifact packaging data on *[id]* is not recoverable                                                                                    634     warn
+Any artifact additional artifact info on *[id]* is not recoverable                                                                          634     warn
 *[id]* contains a observable composition, which implies it not an observation, but a pattern and needs to be contained within an indicator. 635     warn
 Address direction in *[id]* is not provided, using 'src'                                                                                    636     warn
 =========================================================================================================================================== ====    =====

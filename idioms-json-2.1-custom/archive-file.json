@@ -8,10 +8,11 @@
                         "file--122337b0-b9df-55ec-aced-97009486851e",
                         "directory--5254394b-9d52-51d5-8a7b-613a7b0f89c0",
                         "file--34348c5a-2a26-5c0f-82f5-bbbe61fd61bc"
-                    ]
+                    ],
+                    "x_elevator_version": "1.2"
                 }
             },
-            "id": "file--cc10c968-cda0-54ca-8300-0c85c6acba65",
+            "id": "file--3e6f44fe-353e-5e76-b32d-7411731219e7",
             "name": "iprip32.zip",
             "parent_directory_ref": "directory--5254394b-9d52-51d5-8a7b-613a7b0f89c0",
             "type": "file"
@@ -45,7 +46,7 @@
             "modified": "2020-05-31T15:10:24.593Z",
             "number_observed": 1,
             "object_refs": [
-                "file--cc10c968-cda0-54ca-8300-0c85c6acba65",
+                "file--3e6f44fe-353e-5e76-b32d-7411731219e7",
                 "directory--5254394b-9d52-51d5-8a7b-613a7b0f89c0",
                 "file--122337b0-b9df-55ec-aced-97009486851e",
                 "file--34348c5a-2a26-5c0f-82f5-bbbe61fd61bc"

@@ -264,6 +264,9 @@ def initialize_options(options=None):
         if not ALL_OPTIONS.custom_property_prefix == "elevator" and not ALL_OPTIONS.missing_policy == "use-custom-properties":
             warn("custom_property_prefix option is provided, but the missing policy option is not 'use-custom-properies'.  It will be ignored.", 213)
 
+        if ALL_OPTIONS.missing_policy == "use-extensions" and ALL_OPTIONS.spec_version == "2.0":
+            error("The missing policy option of 'use-extensions' cannot be used with version 2.0. 'use-custom-properies' is suggested", 0)
+
 
 def get_validator_options():
     if ALL_OPTIONS:
@@ -299,7 +302,7 @@ def msg_id_enabled(msg_id):
 # These codes are aligned with elevator_log_messages spreadsheet.
 CHECK_CODES = [201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213,
 
-               301, 302, 303, 304, 305, 306, 307, 308,
+               301, 302, 303, 304, 305, 306, 307, 308, 309, 310, 311, 312, 313,
 
                401, 402, 403, 404, 405, 406, 407, 408, 409, 410, 411, 412, 413,
                414, 415, 416, 417, 418, 419, 420, 421, 422, 423, 424, 425, 426,

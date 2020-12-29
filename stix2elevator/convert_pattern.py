@@ -52,7 +52,7 @@ from stix2elevator.ids import (
     add_id_value, exists_id_of_obs_in_characterizations, exists_object_id_key,
     get_id_value
 )
-from stix2elevator.missing_policy import convert_to_custom_name
+from stix2elevator.missing_policy import check_for_missing_policy, convert_to_custom_name
 from stix2elevator.options import error, get_option_value, info, warn
 from stix2elevator.utils import (
     encode_in_base64, identifying_info, map_vocabs_to_label
@@ -1204,7 +1204,7 @@ def convert_email_message_to_pattern(mess):
         else:
             warn("Email raw body not handled yet", 806)
     if mess.links is not None:
-        if get_option_value("missing_policy") == "use-custom-properties":
+        if check_for_missing_policy("use-custom-properties"):
             # we use the property-name "link_refs" to be consistent with the SCO, even though here its the actual url
             for link in mess.links:
                 expressions.append(
@@ -1274,7 +1274,7 @@ def convert_windows_executable_file_to_pattern(f):
                             section_expressions.append(term)
             if s.entropy:
                 if s.entropy.min:
-                    if get_option_value("missing_policy") == "use-custom-properties":
+                    if check_for_missing_policy("use-custom-properties"):
                         section_expressions.append(
                             create_term("file:extensions.'windows-pebinary-ext'.sections[*]." +
                                         convert_to_custom_name("entropy_min"),
@@ -1284,7 +1284,7 @@ def convert_windows_executable_file_to_pattern(f):
                     else:
                         warn("Entropy.min is not supported in STIX 2.x", 424)
                 if s.entropy.max:
-                    if get_option_value("missing_policy") == "use-custom-properties":
+                    if check_for_missing_policy("use-custom-properties"):
                         section_expressions.append(
                             create_term("file:extensions.'windows-pebinary-ext'.sections[*]." +
                                         convert_to_custom_name("entropy_max"),
@@ -1307,7 +1307,7 @@ def convert_windows_executable_file_to_pattern(f):
             expressions.append(create_boolean_expression("AND", sections_expressions))
     if f.exports:
         warn("The exports property of WinExecutableFileObj is not part of STIX 2.x", 418)
-        if get_option_value("missing_policy") == "use-custom-properties":
+        if check_for_missing_policy("use-custom-properties"):
             export_expressions = list()
             if hasattr(f.exports, "exported_functions"):
                 for export_func in f.exports.exported_functions:
@@ -1320,11 +1320,11 @@ def convert_windows_executable_file_to_pattern(f):
             if export_expressions:
                 expressions.append(create_boolean_expression("AND", export_expressions))
         else:
-            if not get_option_value("missing_policy") == "ignore":
+            if not check_for_missing_policy("ignore"):
                 expressions.append(UnconvertedTerm("WinExecutableFileObj.exports", "file"))
     if f.imports:
         warn("The imports property of WinExecutableFileObj is not part of STIX 2.x", 418)
-        if get_option_value("missing_policy") == "use-custom-properties":
+        if check_for_missing_policy("use-custom-properties"):
             import_expressions = list()
             for i in f.imports:
                 if hasattr(i, "imported_functions"):
@@ -1338,7 +1338,7 @@ def convert_windows_executable_file_to_pattern(f):
             if import_expressions:
                 expressions.append(create_boolean_expression("AND", import_expressions))
         else:
-            if not get_option_value("missing_policy") == "ignore":
+            if not check_for_missing_policy("ignore"):
                 expressions.append(UnconvertedTerm("WinExecutableFileObj.imports", "file"))
     if expressions:
         return create_boolean_expression("AND", expressions)
@@ -1705,7 +1705,7 @@ def convert_process_to_pattern(process):
                 expressions.append(create_boolean_expression("AND", argument_expressions))
         else:
             warn("The argument_list property of ProcessObj is not part of STIX 2.1", 418)
-            if get_option_value("missing_policy") == "use-custom-properties":
+            if check_for_missing_policy("use-custom-properties"):
                 for a in process.argument_list:
                     argument_expressions.append(create_term("process:" + convert_to_custom_name("argument_list[*]"),
                                                             a.condition,
@@ -1714,7 +1714,7 @@ def convert_process_to_pattern(process):
                 if argument_expressions:
                     expressions.append(create_boolean_expression("AND", argument_expressions))
             else:
-                if not get_option_value("missing_policy") == "ignore":
+                if not check_for_missing_policy("ignore"):
                     expressions.append(UnconvertedTerm("ProcessObj.argument_list", "process"))
     if hasattr(process, "environment_variable_list") and process.environment_variable_list:
         ev_expressions = []
@@ -1780,7 +1780,7 @@ def convert_windows_process_to_pattern(process):
             warn("Windows Handles are not a part of STIX 2.x", 420)
     if process.startup_info:
         warn("The startup_info property of ProcessObj is not part of STIX 2.x", 418)
-        if not get_option_value("missing_policy") == "ignore":
+        if not check_for_missing_policy("ignore"):
             expressions.append(UnconvertedTerm("ProcessObj.startup_info", "process"))
     if expressions:
         return create_boolean_expression("AND", expressions)
@@ -2068,7 +2068,7 @@ def convert_network_packet_to_pattern(packet):
                                                icmp_header.code.condition,
                                                stix2.HexConstant(text_type(icmp_header.code))))
             if icmp_header.checksum:
-                if get_option_value("missing_policy") == "use-custom-properties":
+                if check_for_missing_policy("use-custom-properties"):
                     expressions.append(
                         create_term("network-traffic:extensions.'icmp-ext'." +
                                     convert_to_custom_name("icmp_checksum"),
@@ -2135,7 +2135,7 @@ def convert_network_socket_to_pattern(socket):
     if socket.options:
         expressions.append(convert_socket_options_to_pattern(socket.options))
     if socket.local_address:
-        if get_option_value("missing_policy") == "use-custom-properties":
+        if check_for_missing_policy("use-custom-properties"):
             expressions.append(
                 create_term("network-traffic:extensions.'socket-ext'." +
                             convert_to_custom_name("local_address"),
@@ -2145,7 +2145,7 @@ def convert_network_socket_to_pattern(socket):
         else:
             warn("Network_Socket.local_address content not supported in STIX 2.x", 424)
     if socket.remote_address:
-        if get_option_value("missing_policy") == "use-custom-properties":
+        if check_for_missing_policy("use-custom-properties"):
             expressions.append(
                 create_term("network-traffic:extensions.'socket-ext'." +
                             convert_to_custom_name("remote_address"),
@@ -2353,11 +2353,11 @@ def convert_object_to_pattern(obj, obs_id):
                     expression = term
             else:
                 warn("Custom object with no name cannot be handled yet", 811)
-                if not get_option_value("missing_policy") == "ignore":
+                if not check_for_missing_policy("ignore"):
                     expression = UnconvertedTerm(obs_id)
         else:
             warn("%s found in %s cannot be converted to a pattern, yet.", 808, text_type(obj.properties), obs_id)
-            if not get_option_value("missing_policy") == "ignore":
+            if not check_for_missing_policy("ignore"):
                 expression = UnconvertedTerm(obs_id)
         # custom properties of custom objects handled above
         if prop.custom_properties is not None:
@@ -2370,7 +2370,7 @@ def convert_object_to_pattern(obj, obs_id):
                     expression = term
     if not expression:
         warn("No pattern term was created from %s", 422, obs_id)
-        if not get_option_value("missing_policy") == "ignore":
+        if not check_for_missing_policy("ignore"):
             expression = UnconvertedTerm(obs_id, determine_term_type(prop))
     elif obj.id_:
         add_id_value(obj.id_, obs_id)
