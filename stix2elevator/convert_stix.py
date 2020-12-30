@@ -685,7 +685,7 @@ def handle_missing_properties_of_campaign(campaign_instance, camp):
     # handle missing properties
     container, extension_definition_id = determine_container_for_missing_properties("campaign", campaign_instance)
 
-    if container != None:
+    if container is not None:
         handle_multiple_missing_statement_properties(container, camp.intended_effects, "intended_effect",
                                                      campaign_instance["id"])
         handle_missing_string_property(container, "status", camp.status, campaign_instance["id"])
@@ -790,7 +790,7 @@ def handle_missing_objective_property(container, objective, id):
 def handle_missing_properties_of_course_of_action(coa_instance, coa):
     container, extension_definition_id = determine_container_for_missing_properties("course-of-action", coa_instance)
 
-    if container != None:
+    if container is not None:
         handle_missing_string_property(container, "stage", coa.stage, coa_instance["id"])
         handle_missing_objective_property(container, coa.objective, coa_instance["id"])
         if coa.parameter_observables is not None:
@@ -851,7 +851,7 @@ def handle_missing_properties_of_vulnerability(vulnerability_instance, v):
     container, extension_definition_id = determine_container_for_missing_properties("vulnerability",
                                                                                     vulnerability_instance)
 
-    if container != None:
+    if container is not None:
         if v.source is not None:
             handle_missing_string_property(container, "source", v.source, vulnerability_instance["id"], False)
 
@@ -1042,10 +1042,11 @@ def convert_ciq_addresses2_1(ciq_info_addresses, identity_instance, env, parent_
                                                                       env,
                                                                       "located-at"))
 
+
 def handle_missing_properties_of_ciq_instance(identity_instance, ciq):
     container, extension_definition_id = determine_container_for_missing_properties("identity-ciq", identity_instance)
 
-    if container != None:
+    if container is not None:
         if ciq.roles:
             handle_missing_string_property(identity_instance,
                                            "information_source_role",
@@ -1275,7 +1276,7 @@ def negate_indicator(indicator):
 def handle_missing_properties_of_indicator(indicator_instance, indicator):
     container, extension_definition_id = determine_container_for_missing_properties("indicator",
                                                                                     indicator_instance)
-    if container != None:
+    if container is not None:
         if indicator.likely_impact:
             handle_missing_statement_properties(container, indicator.likely_impact, "likely_impact", indicator_instance["id"])
 
@@ -1653,7 +1654,7 @@ def add_motivations_to_threat_actor(sdo_instance, motivations):
 def handle_missing_properties_of_threat_actor(threat_actor_instance, threat_actor):
     container, extension_definition_id = determine_container_for_missing_properties("threat-actor",
                                                                                     threat_actor_instance)
-    if container != None:
+    if container is not None:
         handle_multiple_missing_statement_properties(container, threat_actor.planning_and_operational_supports,
                                                      "planning_and_operational_support", threat_actor_instance["id"])
         if get_option_value("spec_version") == "2.0":
@@ -1734,7 +1735,7 @@ def determine_ttp_relationship_type_and_direction(source_type, target_type, rela
 def handle_missing_properties_of_ttp(sdo_instance, ttp):
     container, extension_definition_id = determine_container_for_missing_properties(sdo_instance["type"],
                                                                                     sdo_instance)
-    if container != None:
+    if container is not None:
         handle_multiple_missing_statement_properties(container, ttp.intended_effects, "intended_effect",
                                                      sdo_instance["id"])
         if hasattr(ttp, "title"):
@@ -1798,7 +1799,7 @@ def convert_attack_pattern(ap, ttp, env, ttp_id_used):
 def handle_missing_properties_of_malware_instance(sdo_instance, malware1x_instance):
     container, extension_definition_id = determine_container_for_missing_properties("malware",
                                                                                     sdo_instance)
-    if container != None and not check_for_missing_policy("ignore"):
+    if container is not None and not check_for_missing_policy("ignore"):
         # first name populated in convert_malware_instance
         if malware1x_instance.names is not None and len(malware1x_instance.names) > 1:
             handle_missing_string_property(container, "other_names", malware1x_instance.names[1:], sdo_instance["id"],
@@ -1872,7 +1873,7 @@ def convert_behavior(behavior, ttp, env):
 def handle_missing_properties_of_tool(tool_instance, tool):
     container, extension_definition_id = determine_container_for_missing_properties("tool",
                                                                                     tool_instance)
-    if container != None:
+    if container is not None:
         handle_missing_string_property(container, "vendor", tool.vendor, tool_instance["id"])
         handle_missing_string_property(container, "service_pack", tool.service_pack, tool_instance["id"])
         # TODO: add tool_specific_data to descriptor <-- Not Implemented!
@@ -1968,7 +1969,7 @@ def handle_missing_properties_of_victim_target(identity_instance, victim_targeti
     container, extension_definition_id = determine_container_for_missing_properties("identity",
                                                                                     identity_instance)
 
-    if container != None:
+    if container is not None:
         if victim_targeting.targeted_systems:
             handle_missing_string_property(container, "targeted_systems", victim_targeting.targeted_systems, identity_instance["id"],
                                            True)

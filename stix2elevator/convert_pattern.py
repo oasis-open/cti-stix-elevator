@@ -52,7 +52,7 @@ from stix2elevator.ids import (
     add_id_value, exists_id_of_obs_in_characterizations, exists_object_id_key,
     get_id_value
 )
-from stix2elevator.missing_policy import check_for_missing_policy, convert_to_custom_name
+from stix2elevator.missing_policy import check_for_missing_policy, convert_to_custom_name, get_extension_definition_id
 from stix2elevator.options import error, get_option_value, info, warn
 from stix2elevator.utils import (
     encode_in_base64, identifying_info, map_vocabs_to_label
@@ -1204,16 +1204,24 @@ def convert_email_message_to_pattern(mess):
         else:
             warn("Email raw body not handled yet", 806)
     if mess.links is not None:
-        if check_for_missing_policy("use-custom-properties"):
-            # we use the property-name "link_refs" to be consistent with the SCO, even though here its the actual url
-            for link in mess.links:
-                expressions.append(
-                    ComparisonExpressionForElevator("=",
-                                                    "email-message:" + convert_to_custom_name("link_refs[*]"),
-                                                    IdrefPlaceHolder(link.object_reference)))
-                warn("Used custom property for %s", 308, "links")
+        if get_option_value("spec_version") == "2.1":
+            lhs = generate_lhs_for_missing_property("email-message:", None, "link_refs[*].value", "email-message")
+            if lhs:
+                # we use the property-name "link_refs" to be consistent with the SCO, even though here its the actual url
+                for link in mess.links:
+                    if id_in_observable_mappings(link.object_reference):
+                        referenced_obs = get_obs_from_mapping(link.object_reference)
+                        exp = convert_observable_to_pattern(referenced_obs)
+                        rhs = exp.rhs
+                    else:
+                        rhs = IdrefPlaceHolder(link.object_reference)
+                    expressions.append(
+                        ComparisonExpressionForElevator("=", lhs, rhs))
+            else:
+                warn("Email links not handled yet", 806)
         else:
-            warn("Email links not handled yet", 806)
+            warn("Observed Data objects cannot refer to other external objects (in STIX 2.0): %s in %s",
+                 434, "links", "email-message")
     if expressions:
         return create_boolean_expression("AND", expressions)
 
@@ -1281,6 +1289,10 @@ def convert_windows_executable_file_to_pattern(f):
                                         s.entropy.min.condition,
                                         stix2.FloatConstant(s.entropy.min.value)))
                         warn("Used custom property for %s", 308, "entropy_min")
+                    elif check_for_missing_policy("use-extensions"):
+                        warn(
+                            "Missing entropy min %s is ignored, because it can't be represented using the extensions policy",
+                            314)
                     else:
                         warn("Entropy.min is not supported in STIX 2.x", 424)
                 if s.entropy.max:
@@ -1291,6 +1303,10 @@ def convert_windows_executable_file_to_pattern(f):
                                         s.entropy.max.condition,
                                         stix2.FloatConstant(s.entropy.max.value)))
                         warn("Used custom property for %s", 308, "entropy_max")
+                    elif check_for_missing_policy("use-extensions"):
+                        warn(
+                            "Missing entropy max %s is ignored, because it can't be represented using the extensions policy",
+                            314)
                     else:
                         warn("Entropy.max is not supported in STIX 2.x", 424)
                 if s.entropy.value:
@@ -1307,16 +1323,15 @@ def convert_windows_executable_file_to_pattern(f):
             expressions.append(create_boolean_expression("AND", sections_expressions))
     if f.exports:
         warn("The exports property of WinExecutableFileObj is not part of STIX 2.x", 418)
-        if check_for_missing_policy("use-custom-properties"):
+        lhs = generate_lhs_for_missing_property("file:", "windows-pebinary-ext", "exports[*]", "file")
+        if lhs:
             export_expressions = list()
             if hasattr(f.exports, "exported_functions"):
                 for export_func in f.exports.exported_functions:
                     export_expressions.append(
-                        create_term(
-                            "file:extensions.'windows-pebinary-ext'." + convert_to_custom_name("exports[*]"),
-                            export_func.function_name.condition,
-                            stix2.StringConstant(export_func.function_name.value)))
-                    warn("Used custom property for %s", 308, "exports")
+                        create_term(lhs,
+                                    export_func.function_name.condition,
+                                    stix2.StringConstant(export_func.function_name.value)))
             if export_expressions:
                 expressions.append(create_boolean_expression("AND", export_expressions))
         else:
@@ -1324,17 +1339,17 @@ def convert_windows_executable_file_to_pattern(f):
                 expressions.append(UnconvertedTerm("WinExecutableFileObj.exports", "file"))
     if f.imports:
         warn("The imports property of WinExecutableFileObj is not part of STIX 2.x", 418)
-        if check_for_missing_policy("use-custom-properties"):
+        lhs = generate_lhs_for_missing_property("file:", "windows-pebinary-ext", "imports[*]", "file")
+        if lhs:
             import_expressions = list()
             for i in f.imports:
                 if hasattr(i, "imported_functions"):
                     file_name = i.file_name + ":" if hasattr(i, "file_name") and i.file_name else ""
                     for imported_func in i.imported_functions:
                         import_expressions.append(
-                            create_term("file:extensions.'windows-pebinary-ext'." + convert_to_custom_name("imports[*]"),
+                            create_term(lhs,
                                         imported_func.function_name.condition,
                                         stix2.StringConstant(file_name + imported_func.function_name.value)))
-                        warn("Used custom property for %s", 308, "imports")
             if import_expressions:
                 expressions.append(create_boolean_expression("AND", import_expressions))
         else:
@@ -1705,12 +1720,12 @@ def convert_process_to_pattern(process):
                 expressions.append(create_boolean_expression("AND", argument_expressions))
         else:
             warn("The argument_list property of ProcessObj is not part of STIX 2.1", 418)
-            if check_for_missing_policy("use-custom-properties"):
+            lhs = generate_lhs_for_missing_property("process:", None, "argument_list[*]", "process")
+            if lhs:
                 for a in process.argument_list:
-                    argument_expressions.append(create_term("process:" + convert_to_custom_name("argument_list[*]"),
-                                                            a.condition,
-                                                            stix2.StringConstant(a.value)))
-                    warn("Used custom property for %s", 308, "argument_list")
+                    argument_expressions.append(create_term(lhs,
+                                                   a.condition,
+                                                   stix2.StringConstant(a.value)))
                 if argument_expressions:
                     expressions.append(create_boolean_expression("AND", argument_expressions))
             else:
@@ -2046,6 +2061,34 @@ _NETWORK_CONNECTION_PROPERTIES = [
 ]
 
 
+def generate_lhs_for_missing_property(prefix, predefined_extension_name, property_name, object_type):
+    if check_for_missing_policy("use-custom-properties"):
+        warn("Used custom property for %s", 308, property_name)
+        if predefined_extension_name:
+            return prefix + "extensions." + predefined_extension_name + "." + convert_to_custom_name(property_name)
+        else:
+            return prefix + convert_to_custom_name(property_name)
+    elif check_for_missing_policy("use-extensions"):
+        extension_definition_id = get_extension_definition_id(object_type)
+        if extension_definition_id:
+            return prefix + "extensions." + extension_definition_id + "." + property_name
+        else:
+            warn("No extension-definition was found for STIX 1 type %s", 312, object_type)
+            return None
+    else:
+        warn("%s not supported in STIX 2.x", 424, property_name)
+        return None
+
+
+def handle_missing_properties_in_expression_for_icmp_header(expressions, icmp_header):
+    if icmp_header.checksum:
+        lhs = generate_lhs_for_missing_property("network-traffic:", "icmp-ext", "icmp_checksum", "icmp-header")
+        if lhs:
+            expressions.append(create_term(lhs,
+                                           icmp_header.checksum.condition,
+                                           stix2.HexConstant(icmp_header.checksum.value)))
+
+
 def convert_network_packet_to_pattern(packet):
     if packet.internet_layer:
         internet_layer = packet.internet_layer
@@ -2067,16 +2110,7 @@ def convert_network_packet_to_pattern(packet):
                 expressions.append(create_term("network-traffic:extensions.'icmp-ext'.icmp_type_code",
                                                icmp_header.code.condition,
                                                stix2.HexConstant(text_type(icmp_header.code))))
-            if icmp_header.checksum:
-                if check_for_missing_policy("use-custom-properties"):
-                    expressions.append(
-                        create_term("network-traffic:extensions.'icmp-ext'." +
-                                    convert_to_custom_name("icmp_checksum"),
-                                    icmp_header.checksum.condition,
-                                    stix2.HexConstant(icmp_header.checksum.value)))
-                    warn("Used custom property for %s", 308, "icmp_checksum")
-            else:
-                warn("_ICMPHeader.checksum content not supported in STIX 2.x", 424)
+            handle_missing_properties_in_expression_for_icmp_header(expressions, icmp_header)
             return create_boolean_expression("AND", expressions)
 
 
@@ -2114,6 +2148,21 @@ _SOCKET_MAP = {
 }
 
 
+def handle_missing_properties_in_expression_for_network_socket(expressions, socket):
+    if socket.local_address:
+        lhs = generate_lhs_for_missing_property("network-traffic:", "socket-ext", "local_address", "network-socket")
+        if lhs:
+            expressions.append(create_term(lhs,
+                                           socket.local_address.ip_address.condition,
+                                           stix2.StringConstant(socket.local_address.ip_address.address_value.value)))
+    if socket.remote_address:
+        lhs = generate_lhs_for_missing_property("network-traffic:", "socket-ext", "remote_address", "network-socket")
+        if lhs:
+            expressions.append(create_term(lhs,
+                                           socket.remote_address.ip_address.condition,
+                                           stix2.StringConstant(socket.remote_address.ip_address.address_value.value)))
+
+
 def convert_network_socket_to_pattern(socket):
     expressions = []
     for prop_spec in _SOCKET_MAP:
@@ -2134,29 +2183,11 @@ def convert_network_socket_to_pattern(socket):
             warn("%s in is not a member of the %s enumeration", 627, socket.address_family, "address family")
     if socket.options:
         expressions.append(convert_socket_options_to_pattern(socket.options))
-    if socket.local_address:
-        if check_for_missing_policy("use-custom-properties"):
-            expressions.append(
-                create_term("network-traffic:extensions.'socket-ext'." +
-                            convert_to_custom_name("local_address"),
-                            socket.local_address.ip_address.condition,
-                            stix2.StringConstant(socket.local_address.ip_address.address_value.value)))
-            warn("Used custom property for %s", 308, "local_address")
-        else:
-            warn("Network_Socket.local_address content not supported in STIX 2.x", 424)
-    if socket.remote_address:
-        if check_for_missing_policy("use-custom-properties"):
-            expressions.append(
-                create_term("network-traffic:extensions.'socket-ext'." +
-                            convert_to_custom_name("remote_address"),
-                            socket.remote_address.ip_address.condition,
-                            stix2.StringConstant(socket.remote_address.ip_address.address_value.value)))
-            warn("Used custom property for %s", 308, "remote_address")
-        else:
-            warn("Network_Socket.remote_address content not supported in STIX 2.x", 424)
+
     if socket.protocol:
         expressions.append(add_comparison_expression(socket.protocol,
                                                      "network-traffic:protocols[*]"))
+    handle_missing_properties_in_expression_for_network_socket(expressions, socket)
     return create_boolean_expression("AND", expressions)
 
 

@@ -86,7 +86,23 @@ EXTENSION_DEFINITION_FOR_STIX_1_X = {
         "version": "1.0.0",
         "extension_types": ["property-extension"]
     },
-    "icmp_extension": {
+    "email-message": {
+        "id": "extension-definition--a46b18de-0b41-4a95-9d2d-67a360f2d859",
+        "type": "extension-definition",
+        "spec_version": "2.1",
+        "name": "Extension to support STIX 1.x email-message",
+        "description": "This schema adds two properties to a STIX object",
+        "created": "2020-12-22T00:00:00.000000Z",
+        "modified": "2020-12-22T00:00:00.000000Z",
+        "created_by_ref": MITRE_IDENTITY_OBJECT["id"],
+        "object_marking_refs": [
+            MITRE_COPYRIGHT_STATEMENT_DATA_MARKING["id"]
+        ],
+        "schema": "https://https://github.com/mitre/cti/extension-definitions/stix-1-email-message/",
+        "version": "1.0.0",
+        "extension_types": ["property-extension"]
+    },
+    "icmp-header": {
           "id": "extension-definition--6f6973cb-70be-40cb-b1ac-15ed78cebe56",
           "type": "extension-definition",
           "spec_version": "2.1",
@@ -98,7 +114,7 @@ EXTENSION_DEFINITION_FOR_STIX_1_X = {
           "object_marking_refs": [
             MITRE_COPYRIGHT_STATEMENT_DATA_MARKING["id"]
           ],
-          "schema": "https://https://github.com/mitre/cti/extension-definitions/stix-1-icmp_extension/",
+          "schema": "https://https://github.com/mitre/cti/extension-definitions/stix-1-icmp-header/",
           "version": "1.0.0",
           "extension_types": [ "property-extension" ]
     },

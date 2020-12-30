@@ -59,7 +59,7 @@ from stix2elevator.vocab_mappings import (
 )
 
 
-def create_base_sco(type, prop1x=None, other_properties=None, env=None, generate_shell=False):
+def create_base_sco(sco_type, prop1x=None, other_properties=None, env=None, generate_shell=False):
     if prop1x and isinstance(prop1x, ObjectProperties):
         obj1x = prop1x.parent
         id_1x = obj1x.id_
@@ -75,9 +75,9 @@ def create_base_sco(type, prop1x=None, other_properties=None, env=None, generate
             return shell
     if other_properties:
         new_dict = other_properties
-        new_dict["type"] = type
+        new_dict["type"] = sco_type
     else:
-        new_dict = {"type": type}
+        new_dict = {"type": sco_type}
     return new_dict
 
 
@@ -270,9 +270,11 @@ def convert_artifact_packaging(packaging, instance, obj1x_id):
                             property_name = "encryption_algorithm"
                         instance[property_name] = e.encryption_mechanism
                     if e.encryption_key_ref:
-                        handle_missing_string_property(instance, "encryption_key_ref", e.encryption_key_ref, is_sco=True)
+                        handle_missing_string_property(instance, "encryption_key_ref",
+                                                       e.encryption_key_ref, None, is_sco=True)
                     if e.encryption_mechanism_ref:
-                        handle_missing_string_property(instance, "encryption_mechanism_ref", e.encryption_mechanism_ref, is_sco=True)
+                        handle_missing_string_property(instance, "encryption_mechanism_ref",
+                                                       e.encryption_mechanism_ref, None, is_sco=True)
                     first = False
                 else:
                     warn("Only one encryption algorithm or key allowed in STIX 2.1 - used %s in %s",
@@ -440,12 +442,12 @@ def convert_windows_executable_file(f):
                 if s.entropy.value:
                     section_dict["entropy"] = s.entropy.value.value
                 if s.entropy.min and not check_for_missing_policy("use-extensions"):
-                    handle_missing_string_property(section_dict, "entropy_min", s.entropy.min, is_sco=True)
+                    handle_missing_string_property(section_dict, "entropy_min", s.entropy.min, None, is_sco=True)
                 else:
                     warn("Missing entropy min %s is ignored, because it can't be represented using the extensions policy",
                          314)
                 if s.entropy.max and not check_for_missing_policy("use-extensions"):
-                    handle_missing_string_property(section_dict, "entropy_max", s.entropy.max, is_sco=True)
+                    handle_missing_string_property(section_dict, "entropy_max", s.entropy.max, None, is_sco=True)
                 else:
                     warn("Missing entropy max %s is ignored, because it can't be represented using the extensions policy",
                          314)
@@ -515,17 +517,17 @@ def convert_archive_file21(f):
 _DIRECTORY_SCOS = {}
 
 
-def add_to_directory_mapping(id, sco):
+def add_to_directory_mapping(id_, sco):
     global _DIRECTORY_SCOS
-    _DIRECTORY_SCOS[id] = sco
+    _DIRECTORY_SCOS[id_] = sco
 
 
-def id_in_directory_mapping(id):
-    return id in _DIRECTORY_SCOS
+def id_in_directory_mapping(id_):
+    return id_ in _DIRECTORY_SCOS
 
 
-def get_sco_from_directory_mapping(id):
-    return _DIRECTORY_SCOS[id]
+def get_sco_from_directory_mapping(id_):
+    return _DIRECTORY_SCOS[id_]
 
 
 def clear_directory_mappings():
@@ -729,6 +731,33 @@ def convert_email_additional_headers(head):
     return additional_header_fields_dict
 
 
+def handle_extensions_of_email_message(sco_instance, email_message):
+    container, extension_definition_id = determine_container_for_missing_properties("email-message", sco_instance)
+
+    if container is not None:
+        if email_message.links:
+            if not (check_for_missing_policy("add-to-description") or check_for_missing_policy("ignore")):
+                # this would be to another observable - which is not allowed in 2.0
+                if get_option_value("spec_version") == "2.1":
+                    if check_for_missing_policy("use-custom-properties"):
+                        property_name = convert_to_custom_name("link_refs")
+                        warn("Used custom property for %s", 308, "links")
+                    elif check_for_missing_policy("use-extensions"):
+                        property_name = "link_refs"
+                        warn("Used extension property for %s", 313, "links")
+                    container[property_name] = list()
+                    for link in email_message.links:
+                        sco_id = get_id_value(link.object_reference)
+                        container[property_name].extend(sco_id)
+                else:
+                    warn("Observed Data objects cannot refer to other external objects (in STIX 2.0): %s in %s",
+                         434, "links", "email-message")
+            else:
+                warn("Missing property '%s' is ignored", 307, "links")
+
+        fill_in_extension_properties(sco_instance, container, extension_definition_id)
+
+
 def convert_email_message(email_message):
     index = 0
     spec_version = get_option_value("spec_version")
@@ -811,21 +840,7 @@ def convert_email_message(email_message):
         for a in email_message.attachments:
             multiparts.append(convert_attachment(a))
         email_dict["body_multipart"] = multiparts
-    if email_message.links:
-        if check_for_missing_policy("use-custom-properties"):
-            # this would be to another observable - which is not allowed in 2.0
-            if get_option_value("spec_version") == "2.1":
-                property_name = convert_to_custom_name("link_refs")
-                email_dict[property_name] = list()
-                for link in email_message.links:
-                    sco_id = get_id_value(link.object_reference)
-                    email_dict[property_name].extend(sco_id)
-                warn("Used custom property for %s", 308, "links")
-            else:
-                warn("Observed Data objects cannot refer to other external objects (in STIX 2.0): %s in %s",
-                     434, "links", "email-message")
-        else:
-            warn("Missing property '%s' is ignored", 307, "links")
+
     if email_message.raw_body:
         raw_body_obj = create_base_sco("artifact", other_properties={"payload_bin": encode_in_base64(text_type(email_message.raw_body))})
         generate_sco_id_for_2_1(raw_body_obj, None)
@@ -839,6 +854,7 @@ def convert_email_message(email_message):
                 email_dict["raw_email_ref"] = raw_body_obj["id"]
                 objs.append(raw_body_obj)
     generate_sco_id_for_2_1(email_dict, email_message.parent.id_)
+    handle_extensions_of_email_message(email_dict, email_message)
     return objs
 
 
@@ -951,7 +967,7 @@ def convert_process(process):
     index = 0
     process_dict = create_base_sco("process", process)
     if get_option_value("spec_version") == "2.0":
-        objs = {}
+        objs = dict()
         objs[text_type(index)] = process_dict
         index += 1
     else:
@@ -1051,7 +1067,6 @@ def convert_windows_process(process):
 
 def convert_windows_service(service):
     cybox_ws = {}
-    ddl_file2x = None
     if hasattr(service, "service_name") and service.service_name:
         cybox_ws["service_name"] = service.service_name.value
     if hasattr(service, "description_list") and service.description_list:
@@ -1392,9 +1407,9 @@ def convert_http_session(session):
 
 
 def handle_extensions_of_icmp_extension(icmp_header, imcp_extension, cybox_traffic):
-    container, extension_definition_id = determine_container_for_missing_properties("icmp_extension", imcp_extension)
+    container, extension_definition_id = determine_container_for_missing_properties("icmp_header", imcp_extension)
 
-    if container != None:
+    if container is not None:
         if icmp_header.checksum:
             handle_missing_string_property(container, "checksum", icmp_header.checksum, None, is_sco=True)
 
@@ -1444,7 +1459,7 @@ def convert_socket_options(options):
 def handle_extensions_of_network_socket(socket, socket_extension, cybox_traffic):
     container, extension_definition_id = determine_container_for_missing_properties("network-socket", socket_extension)
 
-    if container != None:
+    if container is not None:
         sco_id = cybox_traffic["id"] if "id" in cybox_traffic else None
         if socket.domain:
             if get_option_value("spec_version") == "2.0":
@@ -1759,9 +1774,9 @@ def convert_cybox_object21(obj1x, env):
         return objs
 
 
-def find_index_of_type(objs, type):
+def find_index_of_type(objs, stix_type):
     for k, v in objs.items():
-        if v["type"] == type:
+        if v["type"] == stix_type:
             return k
     return None
 
@@ -1961,7 +1976,7 @@ def resolve_object_references20(obsers):
                     else:
                         warn("Object references for http sessions in %s not handled yet", 804, obs["id"])
                     # only need to renumber the co that was subbed in for the object reference
-                    for k, v in obj["extensions"].items():
+                    for m, v in obj["extensions"].items():
                         renumber_co(v, index_mapping)
         obs["objects"].update(new_objects)
 
