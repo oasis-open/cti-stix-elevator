@@ -47,8 +47,9 @@ from stix2elevator.ids import (
     get_object_id_value, is_stix1x_id, property_contains_stix1x_id
 )
 from stix2elevator.missing_policy import (
-    check_for_missing_policy, convert_to_custom_name, determine_container_for_missing_properties,
-    fill_in_extension_properties, get_extension_definition_id, handle_missing_string_property
+    check_for_missing_policy, convert_to_custom_name,
+    determine_container_for_missing_properties, fill_in_extension_properties,
+    get_extension_definition_id, handle_missing_string_property
 )
 from stix2elevator.options import error, get_option_value, info, warn
 from stix2elevator.utils import (

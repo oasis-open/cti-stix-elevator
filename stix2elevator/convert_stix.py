@@ -59,9 +59,11 @@ from stix2elevator.ids import (
     get_id_values, get_type_from_id, is_stix1x_id, record_ids
 )
 from stix2elevator.missing_policy import (
-    check_for_missing_policy, convert_to_custom_name, determine_container_for_missing_properties, 
-    fill_in_extension_properties, handle_missing_confidence_property, handle_missing_statement_properties, 
-    handle_missing_string_property, handle_missing_tool_property, handle_multiple_missing_statement_properties
+    check_for_missing_policy, convert_to_custom_name,
+    determine_container_for_missing_properties, fill_in_extension_properties,
+    handle_missing_confidence_property, handle_missing_statement_properties,
+    handle_missing_string_property, handle_missing_tool_property,
+    handle_multiple_missing_statement_properties
 )
 from stix2elevator.options import error, get_option_value, info, warn
 from stix2elevator.utils import (
@@ -698,7 +700,6 @@ def handle_missing_properties_of_campaign(campaign_instance, camp):
         fill_in_extension_properties(campaign_instance, container, extension_definition_id)
 
 
-
 def convert_campaign(camp, env):
     campaign_instance = create_basic_object("campaign", camp, env)
     process_description_and_short_description(campaign_instance, camp)
@@ -717,8 +718,6 @@ def convert_campaign(camp, env):
         new_env = env.newEnv(timestamp=campaign_instance["created"])
     # process information source before any relationships
     new_env.add_to_env(created_by_ref=process_information_source(camp.information_source, campaign_instance, new_env))
-
-
 
     if camp.activity is not None:
         for a in camp.activity:
@@ -1050,13 +1049,12 @@ def handle_missing_properties_of_ciq_instance(identity_instance, ciq):
         if ciq.roles:
             handle_missing_string_property(identity_instance,
                                            "information_source_role",
-                                            ciq.roles,
-                                            identity_instance["id"],
-                                            True)
-            warn(
-                "Roles is not a property of an identity (%s).  Perhaps the roles are associated with a related Threat Actor",
-                428,
-                identity_instance["id"])
+                                           ciq.roles,
+                                           identity_instance["id"],
+                                           True)
+            warn("Roles is not a property of an identity (%s).  Perhaps the roles are associated with a related Threat Actor",
+                 428,
+                 identity_instance["id"])
 
         fill_in_extension_properties(identity_instance, container, extension_definition_id)
 
@@ -1071,7 +1069,7 @@ def convert_identity(identity, env, parent_id=None, temp_marking_id=None, from_p
         identity_instance["name"] = identity.name
     if isinstance(identity, CIQIdentity3_0Instance):
         handle_missing_properties_of_ciq_instance(identity_instance, identity)
-            # convert_controlled_vocabs_to_open_vocabs(identity_instance, "roles", identity.roles, ROLES_MAP, False)
+        # convert_controlled_vocabs_to_open_vocabs(identity_instance, "roles", identity.roles, ROLES_MAP, False)
         ciq_info = identity._specification
         if ciq_info.party_name:
             if "name" in identity_instance:
@@ -1286,7 +1284,6 @@ def handle_missing_properties_of_indicator(indicator_instance, indicator):
             add_confidence_to_object(indicator_instance, indicator.confidence)
 
         fill_in_extension_properties(indicator_instance, container, extension_definition_id)
-
 
 
 def convert_indicator(indicator, env):
@@ -1696,7 +1693,6 @@ def convert_threat_actor(threat_actor, env):
                                              THREAT_ACTOR_LABEL_MAP,
                                              False,
                                              required=spec_version == "2.0")
-
 
     if threat_actor.motivations:
         add_motivations_to_threat_actor(threat_actor_instance, threat_actor.motivations)

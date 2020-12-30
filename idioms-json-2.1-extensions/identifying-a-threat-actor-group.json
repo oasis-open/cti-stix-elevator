@@ -1,0 +1,53 @@
+{
+    "id": "bundle--c9567f73-3803-415c-b06e-2b0622830e5d",
+    "objects": [
+        {
+            "administrative_area": "California",
+            "country": "US",
+            "created": "2014-11-19T23:39:03.893Z",
+            "id": "location--9638d862-51bf-4f34-8f44-02d0dda470a2",
+            "modified": "2014-11-19T23:39:03.893Z",
+            "spec_version": "2.1",
+            "type": "location"
+        },
+        {
+            "created": "2014-11-19T23:39:03.893Z",
+            "id": "relationship--b255b174-1e6c-415e-8e1c-16729b73370b",
+            "modified": "2014-11-19T23:39:03.893Z",
+            "relationship_type": "located-at",
+            "source_ref": "identity--733c5838-34d9-4fbf-949c-62aba761184c",
+            "spec_version": "2.1",
+            "target_ref": "location--9638d862-51bf-4f34-8f44-02d0dda470a2",
+            "type": "relationship"
+        },
+        {
+            "created": "2014-11-19T23:39:03.893Z",
+            "id": "identity--733c5838-34d9-4fbf-949c-62aba761184c",
+            "identity_class": "organization",
+            "modified": "2014-11-19T23:39:03.893Z",
+            "name": "Disco Tean",
+            "spec_version": "2.1",
+            "type": "identity"
+        },
+        {
+            "created": "2014-11-19T23:39:03.893Z",
+            "id": "threat-actor--dfaa8d77-07e2-4e28-b2c8-92e9f7b04428",
+            "modified": "2014-11-19T23:39:03.893Z",
+            "name": "Disco Team Threat Actor Group",
+            "sophistication": "unknown",
+            "spec_version": "2.1",
+            "type": "threat-actor"
+        },
+        {
+            "created": "2014-11-19T23:39:03.893Z",
+            "id": "relationship--733c5838-34d9-4fbf-949c-62aba761184c",
+            "modified": "2014-11-19T23:39:03.893Z",
+            "relationship_type": "attributed-to",
+            "source_ref": "threat-actor--dfaa8d77-07e2-4e28-b2c8-92e9f7b04428",
+            "spec_version": "2.1",
+            "target_ref": "identity--733c5838-34d9-4fbf-949c-62aba761184c",
+            "type": "relationship"
+        }
+    ],
+    "type": "bundle"
+}

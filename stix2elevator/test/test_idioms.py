@@ -11,6 +11,7 @@ from six.moves import zip
 
 # internal
 from stix2elevator import elevate
+from stix2elevator.missing_policy import check_for_missing_policy
 from stix2elevator.options import (
     get_option_value, initialize_options, set_option_value
 )
@@ -103,10 +104,13 @@ def setup_tests(before_idioms_dir, after_idioms_dir, before_suffix, after_suffix
 
 def setup_elevator_tests(version, missing_policy):
     directory = os.path.dirname(__file__)
-
+    json_directory_suffix = ""
+    if check_for_missing_policy("use-custom-properties"):
+        json_directory_suffix = "-custom"
+    elif check_for_missing_policy("use-extensions"):
+        json_directory_suffix = "-extensions"
     xml_idioms_dir = find_dir(directory, "idioms-xml")
-    json_idioms_dir = find_dir(directory, "idioms-json" + "-" + version +
-                               ("-custom" if missing_policy == "use-custom-properties" else ""))
+    json_idioms_dir = find_dir(directory, "idioms-json" + "-" + version + json_directory_suffix)
     setup_tests(xml_idioms_dir, json_idioms_dir, ".xml", ".json")
 
 

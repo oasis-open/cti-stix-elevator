@@ -5,9 +5,7 @@ import re
 from six import text_type
 
 # internal
-from stix2elevator.extension_definitions import (
-    get_extension_definition_id
-)
+from stix2elevator.extension_definitions import get_extension_definition_id
 from stix2elevator.options import get_option_value, info, warn
 
 
@@ -235,7 +233,10 @@ def determine_container_for_missing_properties(object_type, object_instance):
         if "extensions" in object_instance and extension_definition_id in object_instance["extensions"]:
             return object_instance["extensions"][extension_definition_id], extension_definition_id
         elif not extension_definition_id:
-            warn("No extension-definition was found for STIX 1 type %s %s", 312, object_type, (("of " + object_instance["id"]) if "id" in object_instance else ""))
+            warn("No extension-definition was found for STIX 1 type %s %s",
+                 312,
+                 object_type,
+                 (("of " + object_instance["id"]) if "id" in object_instance else ""))
             return None, None
         else:
             container = dict()
@@ -251,5 +252,3 @@ def fill_in_extension_properties(instance, container, extension_definition_id):
                 instance["extensions"] = dict()
             if extension_definition_id not in instance["extensions"]:
                 instance["extensions"][extension_definition_id] = container
-
-

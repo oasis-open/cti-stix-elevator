@@ -52,7 +52,10 @@ from stix2elevator.ids import (
     add_id_value, exists_id_of_obs_in_characterizations, exists_object_id_key,
     get_id_value
 )
-from stix2elevator.missing_policy import check_for_missing_policy, convert_to_custom_name, get_extension_definition_id
+from stix2elevator.missing_policy import (
+    check_for_missing_policy, convert_to_custom_name,
+    get_extension_definition_id
+)
 from stix2elevator.options import error, get_option_value, info, warn
 from stix2elevator.utils import (
     encode_in_base64, identifying_info, map_vocabs_to_label
@@ -1724,8 +1727,8 @@ def convert_process_to_pattern(process):
             if lhs:
                 for a in process.argument_list:
                     argument_expressions.append(create_term(lhs,
-                                                   a.condition,
-                                                   stix2.StringConstant(a.value)))
+                                                            a.condition,
+                                                            stix2.StringConstant(a.value)))
                 if argument_expressions:
                     expressions.append(create_boolean_expression("AND", argument_expressions))
             else:

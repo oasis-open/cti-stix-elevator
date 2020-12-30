@@ -1,0 +1,38 @@
+{
+    "id": "bundle--5d881a21-d889-49a5-af07-766258a66152",
+    "objects": [
+        {
+            "extensions": {
+                "http-request-ext": {
+                    "message_body_data_ref": "artifact--1172c096-674f-567f-991a-761ecb419e0c",
+                    "message_body_length": 69,
+                    "request_header": {
+                        "User-Agent": "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:25.0) Gecko/20100101 Firefox/25.0"
+                    }
+                }
+            },
+            "id": "network-traffic--06d657c0-d7fb-4c47-b75b-ff1080b72820",
+            "type": "network-traffic"
+        },
+        {
+            "id": "artifact--1172c096-674f-567f-991a-761ecb419e0c",
+            "payload_bin": "PGh0bWw+PHRpdGxlPkFuIEhUTUwgcGFnZTwvdGl0bGU+PGJvZHk+PHA+Qm9keSB0ZXh0PC9wPjwvYm9keT48L2h0bWw+",
+            "type": "artifact"
+        },
+        {
+            "created": "2020-12-30T16:03:22.563Z",
+            "first_observed": "2020-12-30T16:03:22.563Z",
+            "id": "observed-data--fca4bd90-906e-4566-97eb-1afd6bc50043",
+            "last_observed": "2020-12-30T16:03:22.563Z",
+            "modified": "2020-12-30T16:03:22.563Z",
+            "number_observed": 1,
+            "object_refs": [
+                "network-traffic--06d657c0-d7fb-4c47-b75b-ff1080b72820",
+                "artifact--1172c096-674f-567f-991a-761ecb419e0c"
+            ],
+            "spec_version": "2.1",
+            "type": "observed-data"
+        }
+    ],
+    "type": "bundle"
+}
