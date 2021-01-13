@@ -378,8 +378,8 @@ Staff at
 repository-admin@oasis-open.org and any specific CLA-related questions
 to repository-cla@oasis-open.org.
 
-.. |Build_Status| image:: https://travis-ci.org/oasis-open/cti-stix-elevator.svg?branch=master
-   :target: https://travis-ci.org/oasis-open/cti-stix-elevator
+.. |Build_Status| image:: https://github.com/oasis-open/cti-stix-elevator/workflows/cti-stix-elevator%20test%20harness/badge.svg
+   :target: https://github.com/oasis-open/cti-stix-elevator/actions?query=workflow%3A%22cti-stix-elevator+test+harness%22
 .. |Coverage| image:: https://codecov.io/gh/oasis-open/cti-stix-elevator/branch/master/graph/badge.svg
    :target: https://codecov.io/gh/oasis-open/cti-stix-elevator
 .. |Version| image:: https://img.shields.io/pypi/v/stix2-elevator.svg?maxAge=3600

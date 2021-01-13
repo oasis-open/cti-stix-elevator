@@ -21,14 +21,9 @@ jobs:
       run: |
         pip install -U pip setuptools
         pip install tox-gh-actions
-        pip install codecov
-        pip install pre-commit
     - name: Test with Tox
       run: |
         tox
-    - name: Check project format and styling with pre-commit
-      run: |
-        pre-commit run --all-files
     - name: Upload coverage information to Codecov
       uses: codecov/codecov-action@v1
       with:
