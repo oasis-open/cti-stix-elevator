@@ -29,6 +29,7 @@ setup(
     version=get_version(),
     description='Utility to upgrade STIX 1.X and CybOX content to STIX 2.X',
     long_description=readme,
+    long_description_content_type='text/x-rst',
     url='https://oasis-open.github.io/cti-documentation/',
     author='OASIS Cyber Threat Intelligence Technical Committee',
     author_email='cti-users@lists.oasis-open.org',
