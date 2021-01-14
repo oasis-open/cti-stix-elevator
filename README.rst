@@ -44,7 +44,7 @@ Please enter any comments on how to improve the elevator into the issue tracker.
 Requirements
 ------------
 
-- Python 3.5+
+- Python 3.6+
 - `python-stix <https://stix.readthedocs.io/en/stable/>`_ and its dependencies
 
   .. note::
