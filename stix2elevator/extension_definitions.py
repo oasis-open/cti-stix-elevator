@@ -150,6 +150,22 @@ EXTENSION_DEFINITION_FOR_STIX_1_X = {
         "version": "1.0.0",
         "extension_types": ["property-extension"]
     },
+    "incident": {
+        "id": "extension-definition--7a8eaf47-9b0f-487d-b280-1e6cc4cccee9",
+        "type": "extension-definition",
+        "spec_version": "2.1",
+        "name": "Extension to support STIX 1.x Incident",
+        "description": "This schema adds two properties to a STIX object",
+        "created": "2020-12-22T00:00:00.000000Z",
+        "modified": "2020-12-22T00:00:00.000000Z",
+        "created_by_ref": MITRE_IDENTITY_OBJECT["id"],
+        "object_marking_refs": [
+            MITRE_COPYRIGHT_STATEMENT_DATA_MARKING["id"]
+        ],
+        "schema": "https://https://github.com/mitre/cti/extension-definitions/stix-1-incident/",
+        "version": "1.0.0",
+        "extension_types": ["property-extension"]
+    },
     "indicator": {
         "id": "extension-definition--7c8ca481-f0e9-4389-94f5-90df472eb01d",
         "type": "extension-definition",
@@ -163,6 +179,22 @@ EXTENSION_DEFINITION_FOR_STIX_1_X = {
             MITRE_COPYRIGHT_STATEMENT_DATA_MARKING["id"]
         ],
         "schema": "https://https://github.com/mitre/cti/extension-definitions/stix-1-indicator/",
+        "version": "1.0.0",
+        "extension_types": ["property-extension"]
+    },
+    "information_source": {
+        "id": "extension-definition--58c914a2-0b19-4f62-8221-0af0b542e130",
+        "type": "extension-definition",
+        "spec_version": "2.1",
+        "name": "Extension to support STIX 1.x information_source",
+        "description": "This schema adds two properties to a STIX object",
+        "created": "2020-12-22T00:00:00.000000Z",
+        "modified": "2020-12-22T00:00:00.000000Z",
+        "created_by_ref": MITRE_IDENTITY_OBJECT["id"],
+        "object_marking_refs": [
+            MITRE_COPYRIGHT_STATEMENT_DATA_MARKING["id"]
+        ],
+        "schema": "https://https://github.com/mitre/cti/extension-definitions/stix-1-information-source/",
         "version": "1.0.0",
         "extension_types": ["property-extension"]
     },

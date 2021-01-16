@@ -5,7 +5,11 @@
             "created": "2020-02-24T16:07:27.201Z",
             "extensions": {
                 "extension-definition--6f6973cb-70be-40cb-b1ac-15ed78cebe56": {
-                    "other_names": "twexts,sdra64,ntos",
+                    "other_names": [
+                        "twexts",
+                        "sdra64",
+                        "ntos"
+                    ],
                     "title": "Zeus"
                 }
             },

@@ -70,7 +70,7 @@ def _get_arg_parser(is_script=True):
 
     parser.add_argument(
         "--incidents",
-        help="Incidents will be included in the conversion.  This argument is deprecated.",
+        help="Incidents will be included in the conversion.  Default for version 2.1 is true.",
         dest="incidents",
         action="store_true",
         default=False

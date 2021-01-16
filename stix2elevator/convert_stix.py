@@ -148,6 +148,19 @@ def get_identity_ref(identity, env, temp_marking_id=None, from_package=False):
         return ident20["id"]
 
 
+def handle_missing_properties_of_information_source(so, information_source):
+    # handle missing properties
+    container, extension_definition_id = determine_container_for_missing_properties("information_source", so)
+
+    if container is not None:
+        if information_source.roles:
+            handle_missing_string_property(container, "information_source_roles", information_source.roles, so["id"], True)
+        if information_source.tools:
+            for tool in information_source.tools:
+                handle_missing_tool_property(container, tool)
+        fill_in_extension_properties(so, container, extension_definition_id)
+
+
 def process_information_source(information_source, so, env, temp_marking_id=None):
     if information_source:
         if information_source.identity is not None:
@@ -163,11 +176,8 @@ def process_information_source(information_source, so, env, temp_marking_id=None
             if information_source.references:
                 for ref in information_source.references:
                     so["external_references"].append({"source_name": "unknown", "url": ref})
-            if information_source.roles:
-                handle_missing_string_property(so, "information_source_role", information_source.roles, so["id"], True)
-            if information_source.tools:
-                for tool in information_source.tools:
-                    handle_missing_tool_property(so, tool)
+            handle_missing_properties_of_information_source(so, information_source)
+
     else:
         so["created_by_ref"] = env.created_by_ref
     return so["created_by_ref"]
@@ -405,7 +415,7 @@ def process_information_source_for_sighting(sighting, sighting_instance, env):
                 for ref in information_source.references:
                     sighting_instance["external_references"].append({"url": ref})
             if information_source.roles:
-                handle_missing_string_property(sighting_instance, "information_source_role", information_source.roles, True)
+                handle_missing_string_property(sighting_instance, "information_source_roles", information_source.roles, True)
             if information_source.tools:
                 for tool in information_source.tools:
                     handle_missing_tool_property(sighting_instance, tool)
@@ -1047,8 +1057,8 @@ def handle_missing_properties_of_ciq_instance(identity_instance, ciq):
 
     if container is not None:
         if ciq.roles:
-            handle_missing_string_property(identity_instance,
-                                           "information_source_role",
+            handle_missing_string_property(container,
+                                           "information_source_roles",
                                            ciq.roles,
                                            identity_instance["id"],
                                            True)
@@ -1098,12 +1108,71 @@ def convert_identity(identity, env, parent_id=None, temp_marking_id=None, from_p
                         temp_marking_id=temp_marking_id)
     return identity_instance
 
-
+def handle_missing_identity_ref_properties(container, instance2x, sources, env, property_name):
+    identities = list()
+    for s in sources:
+        if s.identity:
+            if check_for_missing_policy("add-to-description"):
+                id_info = s.identity.name
+            else:
+                id2x = convert_identity(s.identity, env)
+                env.bundle_instance["objects"].append(id2x)
+                id_info = id2x["id"]
+            identities.append(id_info)
+    if not identities == list():
+        handle_missing_string_property(container, property_name, identities, instance2x["id"], True)
 # incident
 
-# TODO: handle extensions
+def handle_missing_properties_of_incident(incident_instance, incident, env):
+    # handle missing properties
+    container, extension_definition_id = determine_container_for_missing_properties("incident", incident_instance)
+
+    if container is not None:
+
+        if get_option_value("spec_version") == "2.0":
+            handle_missing_confidence_property(container, incident.confidence, incident_instance["id"])
+        else:  # 2.1
+            add_confidence_to_object(incident_instance, incident.confidence)
+
+        if incident.contacts is not None:
+            handle_missing_identity_ref_properties(container, incident_instance, incident.contacts, env, "contacts")
+
+        if incident.reporter is not None:
+            reporter = incident.reporter
+            if reporter.identity:
+                id2x = convert_identity(reporter.identity, env)
+                env.bundle_instance["objects"].append(id2x)
+                handle_missing_string_property(container, "reporter", id2x["id"], incident_instance["id"])
+
+        if incident.responders is not None:
+            handle_missing_identity_ref_properties(container, incident_instance, incident.responders, env, "responders")
+
+        if incident.coordinators is not None:
+            handle_missing_identity_ref_properties(container, incident_instance, incident.coordinators, env, "coordinators")
+
+
+        if incident.victims is not None:
+            handle_missing_identity_ref_properties(container, incident_instance, incident.victims, env, "victims")
+
+        if incident.affected_assets is not None:
+            # FIXME: add affected_assets to description
+            info("Incident Affected Assets in %s is not handled, yet.", 815, incident_instance["id"])
+
+        if incident.impact_assessment is not None:
+            # FIXME: add impact_assessment to description
+            info("Incident Impact Assessment in %s is not handled, yet", 815, incident_instance["id"])
+
+        handle_missing_string_property(container, "status", incident.status, incident_instance["id"])
+
+        fill_in_extension_properties(incident_instance, container, extension_definition_id)
+
+
 def convert_incident(incident, env):
-    incident_instance = create_basic_object(convert_to_custom_name("incident", separator="-"), incident, env)
+    if get_option_value("spec_version") == "2.0":
+        incident_type_name = convert_to_custom_name("incident", separator="-")
+    else:
+        incident_type_name = "incident"
+    incident_instance = create_basic_object(incident_type_name, incident, env)
     new_env = env.newEnv(timestamp=incident_instance["created"])
     process_description_and_short_description(incident_instance, incident)
     if incident.title is not None:
@@ -1119,11 +1188,6 @@ def convert_incident(incident, env):
     # process information source before any relationships
     new_env.add_to_env(created_by_ref=process_information_source(incident.information_source, incident_instance, new_env))
 
-    if get_option_value("spec_version") == "2.0":
-        handle_missing_confidence_property(incident_instance, incident.confidence)
-    else:  # 2.1
-        add_confidence_to_object(incident_instance, incident.confidence)
-
     # process related observables first
     if incident.related_observables is not None:
         handle_relationship_from_refs(incident.related_observables, incident_instance["id"], new_env, "part-of")
@@ -1135,54 +1199,8 @@ def convert_incident(incident, env):
     if incident.coa_taken is not None:
         handle_relationship_to_refs(incident.coa_taken, incident_instance["id"], new_env, "used")
 
-    if incident.contacts is not None:
-        for contact in incident.contacts:
-            incident_instance["contacts"] = []
-            if contact.identity:
-                id2x = convert_identity(contact.identity, env)
-                env.bundle_instance["objects"].append(id2x)
-                incident_instance["contacts"].append(id2x["id"])
+    handle_missing_properties_of_incident(incident_instance, incident, new_env)
 
-    if incident.reporter is not None:
-        reporter = incident.reporter
-        if reporter.identity:
-            id2x = convert_identity(reporter.identity, env)
-            env.bundle_instance["objects"].append(id2x)
-            incident_instance["reporter"] = id2x["id"]
-
-    if incident.responders is not None:
-        for responder in incident.responders:
-            incident_instance["responders"] = []
-            if responder.identity:
-                id2x = convert_identity(responder.identity, env)
-                env.bundle_instance["objects"].append(id2x)
-                incident_instance["responders"].append(id2x["id"])
-
-    if incident.coordinators is not None:
-        for coordinator in incident.coordinators:
-            incident_instance["coordinators"] = []
-            if coordinator.identity:
-                id2x = convert_identity(coordinator.identity, env)
-                env.bundle_instance["objects"].append(id2x)
-                incident_instance["coordinators"].append(id2x["id"])
-
-    if incident.victims is not None:
-        for victim in incident.victims:
-            incident_instance["victims"] = []
-            if victim.identity:
-                id2x = convert_identity(victim.identity, env)
-                env.bundle_instance["objects"].append(id2x)
-                incident_instance["victims"].append(id2x["id"])
-
-    if incident.affected_assets is not None:
-        # FIXME: add affected_assets to description
-        info("Incident Affected Assets in %s is not handled, yet.", 815, incident_instance["id"])
-
-    if incident.impact_assessment is not None:
-        # FIXME: add impact_assessment to description
-        info("Incident Impact Assessment in %s is not handled, yet", 815, incident_instance["id"])
-
-    handle_missing_string_property(incident_instance, "status", incident.status)
     if incident.related_incidents:
         info("All 'associated incidents' relationships of %s are assumed to not represent STIX 1.2 versioning",
              710, incident_instance["id"])

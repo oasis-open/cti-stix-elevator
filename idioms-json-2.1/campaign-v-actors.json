@@ -30,7 +30,7 @@
                 "NewsBeef"
             ],
             "created": "2014-08-08T15:50:10.983Z",
-            "description": "Fred\n\nINFORMATION_SOURCE_ROLE:\nAggregator,\nInitial Author",
+            "description": "Fred\n\nINFORMATION_SOURCE_ROLES:\nAggregator,\nInitial Author",
             "external_references": [
                 {
                     "source_name": "unknown",

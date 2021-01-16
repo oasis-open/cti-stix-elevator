@@ -5,7 +5,9 @@
             "created": "2014-08-08T15:50:10.983Z",
             "extensions": {
                 "extension-definition--8f0b8ed7-c7ad-4650-babe-c4c45cac4a0b": {
-                    "targeted_information": "Information Assets - Financial Data"
+                    "targeted_information": [
+                        "Information Assets - Financial Data"
+                    ]
                 }
             },
             "id": "identity--2d1c6ab3-5e4e-48ac-a32b-f0c01c2836a8",
@@ -35,6 +37,14 @@
             ],
             "created": "2014-08-08T15:50:10.983Z",
             "description": "Fred",
+            "extensions": {
+                "extension-definition--58c914a2-0b19-4f62-8221-0af0b542e130": {
+                    "information_source_roles": [
+                        "Aggregator",
+                        "Initial Author"
+                    ]
+                }
+            },
             "external_references": [
                 {
                     "source_name": "unknown",
@@ -42,7 +52,6 @@
                 }
             ],
             "id": "campaign--e5268b6e-4931-42f1-b379-87f48eb41b1e",
-            "information_source_role": "Aggregator,Initial Author",
             "modified": "2014-08-08T15:50:10.983Z",
             "name": "Compromise of ATM Machines",
             "spec_version": "2.1",
@@ -56,6 +65,36 @@
             "source_ref": "campaign--e5268b6e-4931-42f1-b379-87f48eb41b1e",
             "spec_version": "2.1",
             "target_ref": "identity--2d1c6ab3-5e4e-48ac-a32b-f0c01c2836a8",
+            "type": "relationship"
+        },
+        {
+            "created": "2014-08-08T15:50:10.983Z",
+            "id": "relationship--16ad44c0-f47c-4dd4-98c4-ca6b547cbf40",
+            "modified": "2014-08-08T15:50:10.983Z",
+            "relationship_type": "attributed-to",
+            "source_ref": "incident--229ab6ba-0eb2-415b-bdf2-079e6b42f51e",
+            "spec_version": "2.1",
+            "target_ref": "campaign--e5268b6e-4931-42f1-b379-87f48eb41b1e",
+            "type": "relationship"
+        },
+        {
+            "created": "2014-08-08T15:50:10.983Z",
+            "id": "relationship--318e8908-8d6a-4f0e-810c-4e1570f65941",
+            "modified": "2014-08-08T15:50:10.983Z",
+            "relationship_type": "attributed-to",
+            "source_ref": "incident--517cf274-038d-4ed4-a3ec-3ac18ad9db8a",
+            "spec_version": "2.1",
+            "target_ref": "campaign--e5268b6e-4931-42f1-b379-87f48eb41b1e",
+            "type": "relationship"
+        },
+        {
+            "created": "2014-08-08T15:50:10.983Z",
+            "id": "relationship--a1e34621-f9b1-43f1-bbee-c33a76f77bd9",
+            "modified": "2014-08-08T15:50:10.983Z",
+            "relationship_type": "attributed-to",
+            "source_ref": "incident--7d8cf96f-91cb-42d0-a1e0-bfa38ea08621",
+            "spec_version": "2.1",
+            "target_ref": "campaign--e5268b6e-4931-42f1-b379-87f48eb41b1e",
             "type": "relationship"
         },
         {

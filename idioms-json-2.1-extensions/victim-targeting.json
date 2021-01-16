@@ -13,7 +13,10 @@
             "created": "2014-05-08T09:00:00.000Z",
             "extensions": {
                 "extension-definition--8f0b8ed7-c7ad-4650-babe-c4c45cac4a0b": {
-                    "targeted_information": "Information Assets - Customer PII,Information Assets - Financial Data"
+                    "targeted_information": [
+                        "Information Assets - Customer PII",
+                        "Information Assets - Financial Data"
+                    ]
                 }
             },
             "id": "identity--4fde045a-b25f-f035-e8d0-29c9d5130cd9",

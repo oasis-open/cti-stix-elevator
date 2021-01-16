@@ -26,7 +26,7 @@ def identifying_info(stix1x_obj):
         if hasattr(stix1x_obj, "id_") and stix1x_obj.id_:
             return text_type(stix1x_obj.id_)
         elif hasattr(stix1x_obj, "idref") and stix1x_obj.idref:
-            return "with idref " + text_type(stix1x_obj.idref)
+            return "idref " + text_type(stix1x_obj.idref)
         elif hasattr(stix1x_obj, "title") and stix1x_obj.title:
             return "'" + text_type(stix1x_obj.title) + "'"
         elif hasattr(stix1x_obj, "name") and stix1x_obj.name:
@@ -87,7 +87,7 @@ def convert_timestamp_to_string(timestamp, entity=None, parent_timestamp=None, m
     if timestamp is not None:
         return strftime_with_appropriate_fractional_seconds(timestamp, milliseconds_only)
     elif parent_timestamp is not None:
-        info("Using parent object timestamp on %s", 902, identifying_info(entity))
+        info("Using parent object timestamp with %s", 902, identifying_info(entity))
         return strftime_with_appropriate_fractional_seconds(parent_timestamp, milliseconds_only)
     else:
         warn("Timestamp not available for %s, using current time", 905, identifying_info(entity))
@@ -99,7 +99,7 @@ def convert_timestamp_of_stix_object(entity, parent_timestamp=None, milliseconds
         if entity.timestamp is not None:
             return strftime_with_appropriate_fractional_seconds(entity.timestamp, milliseconds_only)
     if parent_timestamp is not None:
-        info("Using parent object timestamp on %s", 902, identifying_info(entity))
+        info("Using parent object timestamp with %s", 902, identifying_info(entity))
         # parent_timestamp might have already been converted to a string in a previous call
         if isinstance(parent_timestamp, text_type):
             return parent_timestamp

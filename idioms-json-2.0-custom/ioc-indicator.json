@@ -10,7 +10,11 @@
             "modified": "2020-02-24T16:07:27.201Z",
             "name": "Zeus",
             "type": "malware",
-            "x_elevator_other_names": "twexts,sdra64,ntos",
+            "x_elevator_other_names": [
+                "twexts",
+                "sdra64",
+                "ntos"
+            ],
             "x_elevator_title": "Zeus"
         },
         {

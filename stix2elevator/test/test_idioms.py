@@ -28,7 +28,9 @@ _ID_IGNORE_2_0 = (u"id", u"idref", u"created_by_ref", u"object_refs", u"target_r
 _IGNORE_2_x = (u"created", u"modified", u"first_seen", u"valid_from", u"valid_until", u"last_seen",
                u"first_observed", u"last_observed", u"published",
                u"external_references",
-               u"created_by_ref", u"marking_ref", u"object_marking_refs", u"where_sighted_refs", u"source_ref", u"target_ref")
+               u"created_by_ref", u"marking_ref", u"object_marking_refs", u"where_sighted_refs", u"source_ref", u"target_ref",
+               # extensions
+               u"x_elevator_contacts", u"contacts")
 
 
 def idiom_elevator_mappings(before_file_path, stored_json, version, missing_policy, ignore):
@@ -39,6 +41,7 @@ def idiom_elevator_mappings(before_file_path, stored_json, version, missing_poli
     initialize_options()
     set_option_value("missing_policy", missing_policy)
     set_option_value("log_level", "INFO")
+    set_option_value("incidents", True)
     set_option_value("spec_version", version)
     set_option_value("validator_args", "--version " + version)
     if not get_option_value("policy") == "no_policy":

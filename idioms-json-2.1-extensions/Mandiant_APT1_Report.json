@@ -67,9 +67,16 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
+            "extensions": {
+                "extension-definition--ec1760d6-6e8a-4a13-8237-574e5bbcc785": {
+                    "information_source_roles": [
+                        "Nation-State",
+                        "Military"
+                    ]
+                }
+            },
             "id": "identity--7def5fe6-7449-44cb-9fc5-a584272faa21",
             "identity_class": "organization",
-            "information_source_role": "Nation-State,Military",
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "People's Liberation Army",
             "object_marking_refs": [
@@ -186,9 +193,15 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
+            "extensions": {
+                "extension-definition--ec1760d6-6e8a-4a13-8237-574e5bbcc785": {
+                    "information_source_roles": [
+                        "Research and Development"
+                    ]
+                }
+            },
             "id": "identity--e5c3f314-d520-43c5-9aa3-e6b788a2a14c",
             "identity_class": "individual",
-            "information_source_role": "Research and Development",
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "SuperHard",
             "object_marking_refs": [
@@ -404,9 +417,15 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
+            "extensions": {
+                "extension-definition--ec1760d6-6e8a-4a13-8237-574e5bbcc785": {
+                    "information_source_roles": [
+                        "Nation-State"
+                    ]
+                }
+            },
             "id": "identity--f5ad16c7-1192-4e04-8012-8fdf330a33a8",
             "identity_class": "organization",
-            "information_source_role": "Nation-State",
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "Communist Part of China",
             "object_marking_refs": [
@@ -441,9 +460,15 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
+            "extensions": {
+                "extension-definition--ec1760d6-6e8a-4a13-8237-574e5bbcc785": {
+                    "information_source_roles": [
+                        "State-influenced Commercial Entity"
+                    ]
+                }
+            },
             "id": "identity--167beca0-d700-427a-81f2-702a92ab1f34",
             "identity_class": "organization",
-            "information_source_role": "State-influenced Commercial Entity",
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "China Telecom",
             "object_marking_refs": [

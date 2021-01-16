@@ -25,6 +25,7 @@ OSError *[message]*                                                             
 silent option is not compatible with a policy                                                                   211     warn
 Created Marking Structure for *[id]*                                                                            212     warn
 custom_property_prefix is provided, but the missing policy is not 'use-custom-properies'.  It will be ignored.  213     warn
+*[type]* option was not given, but it defaults to true for version 2.1"                                         214     warn
 =============================================================================================================== ====    =====
 
 

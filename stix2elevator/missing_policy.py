@@ -37,7 +37,7 @@ def add_string_property_as_custom_property(sdo_instance, property_name, property
         property_values = list()
         for v in property_value:
             property_values.append(text_type(v))
-        sdo_instance[convert_to_custom_name(property_name)] = ",".join(property_values)
+        sdo_instance[convert_to_custom_name(property_name)] = property_values
     else:
         sdo_instance[convert_to_custom_name(property_name)] = text_type(property_value)
     warn("Used custom property for %s", 308, property_name + (" of " + sdo_instance["id"] if "id" in sdo_instance else ""))
@@ -48,7 +48,7 @@ def add_string_property_as_extension_property(container, property_name, property
         property_values = list()
         for v in property_value:
             property_values.append(text_type(v))
-        container[property_name] = ",".join(property_values)
+        container[property_name] = property_values
     else:
         container[property_name] = text_type(property_value)
     warn("Used extension property for %s", 313, property_name + (" of " + sdo_id if sdo_id else ""))

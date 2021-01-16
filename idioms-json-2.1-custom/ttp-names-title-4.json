@@ -10,7 +10,10 @@
             "name": "Poison Ivy (PIVY) 1",
             "spec_version": "2.1",
             "type": "malware",
-            "x_elevator_other_names": "Poison Ivy (PIVY) 2,Poison Ivy (PIVY) 3"
+            "x_elevator_other_names": [
+                "Poison Ivy (PIVY) 2",
+                "Poison Ivy (PIVY) 3"
+            ]
         }
     ],
     "type": "bundle"
