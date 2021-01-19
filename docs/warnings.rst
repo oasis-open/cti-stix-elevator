@@ -9,24 +9,26 @@ When the elevator makes an assumption during the conversion of some content, or 
 General
 ---------------
 
-=============================================================================================================== ====    =====
-Message                                                                                                         Code    Level
-=============================================================================================================== ====    =====
-Results produced by the stix2-elevator may generate warning messages which should be investigated               201     warn
-Observable Expressions should not contain placeholders                                                          202     error
-Placeholder *[id]* should be resolved                                                                           203     error
-Found definition for *[id]*                                                                                     204     info
-At least one PLACEHOLDER idref was not resolved in *[id]*                                                       205     error
-At least one observable could not be converted in *[id]*                                                        206     error
-Options not initialized                                                                                         207     error
-EMPTY BUNDLE -- No objects created from 1.x input document!                                                     208     warn
-Both console and output log have disabled messages.                                                             209     warn
-OSError *[message]*                                                                                             210     error
-silent option is not compatible with a policy                                                                   211     warn
-Created Marking Structure for *[id]*                                                                            212     warn
-custom_property_prefix is provided, but the missing policy is not 'use-custom-properies'.  It will be ignored.  213     warn
-*[type]* option was not given, but it defaults to true for version 2.1"                                         214     warn
-=============================================================================================================== ====    =====
+================================================================================================================== ====    =====
+Message                                                                                                            Code    Level
+================================================================================================================== ====    =====
+Results produced by the stix2-elevator may generate warning messages which should be investigated                  201     warn
+Observable Expressions should not contain placeholders                                                             202     error
+Placeholder *[id]* should be resolved                                                                              203     error
+Found definition for *[id]*                                                                                        204     info
+At least one PLACEHOLDER idref was not resolved in *[id]*                                                          205     error
+At least one observable could not be converted in *[id]*                                                           206     error
+Options not initialized                                                                                            207     error
+EMPTY BUNDLE -- No objects created from 1.x input document!                                                        208     warn
+Both console and output log have disabled messages.                                                                209     warn
+OSError *[message]*                                                                                                210     error
+silent option is not compatible with a policy                                                                      211     warn
+Created Marking Structure for *[id]*                                                                               212     warn
+custom_property_prefix is provided, but the missing policy is not 'use-custom-properies'.  It will be ignored.     213     warn
+*[type]* option was not given, but it defaults to true for version 2.1"                                            214     warn
+Custom properties/objects/extensions are deprecated in version 2.1.  Suggest using 'use-extensions' instead        215     warn
+The missing policy option of 'use-extensions' cannot be used with version 2.0. 'use-custom-properies' is suggested 216     error
+================================================================================================================== ====    =====
 
 
 Handle STIX 1.x Content not supported in STIX 2.x
