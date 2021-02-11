@@ -171,8 +171,8 @@ def process_information_source(information_source, so, env, temp_marking_id=None
     return so["created_by_ref"]
 
 
-def convert_to_open_vocabs(stix20_obj, stix20_property_name, value, vocab_mapping):
-    stix20_obj[stix20_property_name].append(map_vocabs_to_label(value, vocab_mapping))
+def convert_to_open_vocabs(stix2x_obj, stix2x_property_name, value, vocab_mapping):
+    stix2x_obj[stix2x_property_name].append(map_vocabs_to_label(value, vocab_mapping))
 
 
 def process_structured_text_list(text_list):
@@ -349,9 +349,9 @@ def finish_basic_object(old_id, instance, env, stix1x_obj, temp_marking_id=None)
             elif temp_marking_id:
                 object_marking_refs.append(temp_marking_id)
             elif not check_map_1x_markings_to_2x(marking_structure):
-                stix20_markings = convert_marking_specification(marking_specification, env)
-                env.bundle_instance["objects"].extend(stix20_markings)
-                for m in stix20_markings:
+                stix2x_markings = convert_marking_specification(marking_specification, env)
+                env.bundle_instance["objects"].extend(stix2x_markings)
+                for m in stix2x_markings:
                     if instance["id"] != m["id"] and m["id"] not in object_marking_refs:
                         object_marking_refs.append(m["id"])
 
@@ -1693,9 +1693,9 @@ def process_ttp_properties(sdo_instance, ttp, env, kill_chains_in_sdo=True):
                 handle_embedded_ref(rel, rel.item, rel.item.id_, env, verb, to_direction)
             else:
                 target_id = rel.item.idref
-                stix20_target_ids = get_id_value(target_id)
-                if stix20_target_ids != []:
-                    for id20 in stix20_target_ids:
+                stix2x_target_ids = get_id_value(target_id)
+                if stix2x_target_ids != []:
+                    for id20 in stix2x_target_ids:
                         target_type = get_type_from_id(id20)
                         verb, to_direction = determine_ttp_relationship_type_and_direction(source_type, target_type, text_type(rel.relationship))
                         handle_existing_ref(rel, id20, sdo_instance["id"], env, verb, to_direction)
@@ -2061,14 +2061,14 @@ def finalize_bundle(env):
 
         if last_field in _TO_MAP or iter_field in _TO_MAP:
             if is_stix1x_id(value) and exists_id_key(value):
-                stix20_id = get_id_value(value)
+                stix2x_id = get_id_value(value)
 
-                if stix20_id[0] is None:
+                if stix2x_id[0] is None:
                     warn("STIX 1.X ID: %s was not mapped to STIX 2.x ID", 603, value)
                     continue
 
-                operation_on_path(bundle_instance, path, stix20_id[0])
-                info("Found STIX 1.X ID: %s replaced by %s", 702, value, stix20_id[0])
+                operation_on_path(bundle_instance, path, stix2x_id[0])
+                info("Found STIX 1.X ID: %s replaced by %s", 702, value, stix2x_id[0])
             elif is_stix1x_id(value) and not exists_id_key(value):
                 warn("1.X ID: %s was not mapped to STIX 2.x ID", 603, value)
 
