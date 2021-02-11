@@ -945,7 +945,7 @@ def determine_country_code(geo):
 
 
 # spec doesn't indicate that code is preferred
-def determine_aa(geo):
+def determine_administrative_area(geo):
     if geo.name_code:
         return geo.name_code
     elif geo.value:
@@ -956,25 +956,27 @@ def determine_aa(geo):
 
 def convert_ciq_addresses2_1(ciq_info_addresses, identity_instance, env, parent_id=None):
     location_keys = []
-    for add in ciq_info_addresses:
-        if not add.free_text_address:
+    for ciq_info_address in ciq_info_addresses:
+        if not ciq_info_address.free_text_address:
             # only reuse if administrative area and country match, and no free text address
-            if hasattr(add, "administrative_area") and add.administrative_area and hasattr(add,
-                                                                                           "country") and add.country:
-                if len(add.country.name_elements) == 1:
-                    cc = determine_country_code(add.country.name_elements[0])
-                    for aa in add.administrative_area.name_elements:
-                        location_keys.append("c:" + text_type(cc) +
+            if (hasattr(ciq_info_address, "administrative_area") and
+                    ciq_info_address.administrative_area and
+                    hasattr(ciq_info_address, "country") and
+                    ciq_info_address.country):
+                if len(ciq_info_address.country.name_elements) == 1:
+                    country_code = determine_country_code(ciq_info_address.country.name_elements[0])
+                    for administrative_area in ciq_info_address.administrative_area.name_elements:
+                        location_keys.append("c:" + text_type(country_code) +
                                              "," +
-                                             "aa:" + text_type(determine_aa(aa)))
+                                             "aa:" + text_type(determine_administrative_area(administrative_area)))
                 else:
                     warn("Multiple administrative areas with multiple countries in %s is not handled", 631, None)
-            elif hasattr(add, "administrative_area") and add.administrative_area:
-                for aa in add.adminstrative_area.name_elements:
-                    location_keys.append("aa:" + text_type(determine_aa(aa)))
-            elif hasattr(add, "country") and add.country:
-                for c in add.country.name_elements:
-                    location_keys.append("c:" + text_type(determine_country_code(c)))
+            elif hasattr(ciq_info_address, "administrative_area") and ciq_info_address.administrative_area:
+                for administrative_area in ciq_info_address.adminstrative_area.name_elements:
+                    location_keys.append("aa:" + text_type(determine_administrative_area(administrative_area)))
+            elif hasattr(ciq_info_address, "country") and ciq_info_address.country:
+                for country_code in ciq_info_address.country.name_elements:
+                    location_keys.append("c:" + text_type(determine_country_code(country_code)))
         else:
             # only remember locations with no free text address
             warn("Location with free text address in %s not handled yet", 433, identity_instance["id"])
@@ -982,38 +984,37 @@ def convert_ciq_addresses2_1(ciq_info_addresses, identity_instance, env, parent_
             if exists_location_object(key):
                 location = get_location_object(key)
             else:
-                aa = None
-                c = None
-                location = create_basic_object("location", add, env)
+                administrative_area = None
+                country_code = None
+                location = create_basic_object("location", ciq_info_address, env)
                 location["spec_version"] = "2.1"
                 if key.find(",") != -1:
                     both_parts = key.split(",")
-                    c = both_parts[0].split(":")[1]
-                    aa = both_parts[1].split(":")[1]
+                    country_code = both_parts[0].split(":")[1]
+                    administrative_area = both_parts[1].split(":")[1]
                 else:
                     part = key.split(":")
                     if part[0] == "c":
-                        c = part[1]
+                        country_code = part[1]
                     elif part[0] == "aa":
-                        aa = part[1]
-                if aa:
-                    location["administrative_area"] = aa
-                if c:
-                    location["country"] = c
+                        administrative_area = part[1]
+                if administrative_area:
+                    location["administrative_area"] = administrative_area
+                if country_code:
+                    location["country"] = country_code
                 add_location_object(key, location)
                 warn("Location %s may not contain all aspects of the STIX 1.x address object", 803, location["id"])
                 env.bundle_instance["objects"].append(location)
-            env.bundle_instance["objects"].append(create_relationship(identity_instance["id"],
-                                                                      location["id"],
-                                                                      env,
-                                                                      "located-at"))
+            env.bundle_instance["objects"].append(
+                create_relationship(identity_instance["id"], location["id"], env, "located-at")
+            )
 
 
 def convert_identity(identity, env, parent_id=None, temp_marking_id=None, from_package=False):
     identity_instance = create_basic_object("identity", identity, env, parent_id)
     identity_instance["sectors"] = []
     spec_version = get_option_value("spec_version")
-    if (spec_version == "2.0"):
+    if spec_version == "2.0":
         identity_instance["identity_class"] = "unknown"
     if identity.name is not None:
         identity_instance["name"] = identity.name
