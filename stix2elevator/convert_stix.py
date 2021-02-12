@@ -1,5 +1,7 @@
 # Standard Library
+from collections import Counter
 from datetime import datetime
+from inspect import stack
 
 # external
 from cybox.core import Observable
@@ -65,10 +67,11 @@ from stix2elevator.missing_policy import (
 )
 from stix2elevator.options import error, get_option_value, info, warn
 from stix2elevator.utils import (
-    add_marking_map_entry, check_map_1x_markings_to_2x,
-    convert_controlled_vocabs_to_open_vocabs, convert_timestamp_of_stix_object,
-    convert_timestamp_to_string, identifying_info, iterpath,
-    map_1x_markings_to_2x, map_vocabs_to_label, operation_on_path,
+    add_label, add_marking_map_entry, apply_ais_markings,
+    check_map_1x_markings_to_2x, convert_controlled_vocabs_to_open_vocabs,
+    convert_timestamp_of_stix_object, convert_timestamp_to_string,
+    identifying_info, iterpath, map_1x_markings_to_2x, map_vocabs_to_label,
+    operation_on_path, set_tlp_reference,
     strftime_with_appropriate_fractional_seconds
 )
 from stix2elevator.vocab_mappings import (
@@ -142,7 +145,10 @@ def get_identity_ref(identity, env, temp_marking_id=None, from_package=False):
         return identity.idref
     else:
         ident20 = convert_identity(identity, env, temp_marking_id=temp_marking_id, from_package=from_package)
-        env.bundle_instance["objects"].append(ident20)
+        call_inspect = Counter(x.function for x in stack())
+        if call_inspect.get("get_identity_ref", 1) <= 1:
+            # On some occasions excessive recursion may add identity objects that are not needed
+            env.bundle_instance["objects"].append(ident20)
         return ident20["id"]
 
 
@@ -249,19 +255,7 @@ def convert_marking_specification(marking_specification, env):
             if isinstance(marking_structure, TLPMarkingStructure):
                 if marking_structure.color is not None:
                     color = text_type(marking_structure.color).lower()
-                    if color == "white":
-                        marking_definition_instance["id"] = "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
-                    elif color == "green":
-                        marking_definition_instance["id"] = "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
-                    elif color == "amber":
-                        marking_definition_instance["id"] = "marking-definition--f88d31f6-486f-44da-b317-01333bde0b82"
-                    elif color == "red":
-                        marking_definition_instance["id"] = "marking-definition--5e57c739-391a-4eb3-b6be-7d15ca92d5ed"
-
-            process_information_source(marking_specification.information_source,
-                                       marking_definition_instance,
-                                       env,
-                                       temp_marking_id=marking_definition_instance["id"])
+                    set_tlp_reference(marking_definition_instance, color, "id")
 
             if "modified" in marking_definition_instance:
                 del marking_definition_instance["modified"]
@@ -293,21 +287,31 @@ def convert_marking_specification(marking_specification, env):
                     if (marking_structure.is_proprietary.ais_consent is not None and
                             marking_structure.is_proprietary.ais_consent.consent is not None):
                         definition["consent"] = text_type(marking_structure.is_proprietary.ais_consent.consent).lower()
+                        consent_label = "ais-consent-" + definition["consent"]
+                        add_label(marking_definition_instance, consent_label)
                     if (marking_structure.is_proprietary.tlp_marking is not None and
                             marking_structure.is_proprietary.tlp_marking.color is not None):
                         definition["tlp"] = text_type(marking_structure.is_proprietary.tlp_marking.color).lower()
+                        set_tlp_reference(marking_definition_instance, definition["tlp"], "marking_ref")
                     if marking_structure.is_proprietary.cisa_proprietary is not None:
                         definition["is_cisa_proprietary"] = text_type(marking_structure.is_proprietary.cisa_proprietary).lower()
+                        proprietary_label = "cisa-proprietary-" + definition["is_cisa_proprietary"]
+                        add_label(marking_definition_instance, proprietary_label)
                 elif marking_structure.not_proprietary is not None:
                     definition["is_proprietary"] = "false"
                     if (marking_structure.not_proprietary.ais_consent is not None and
                             marking_structure.not_proprietary.ais_consent.consent is not None):
                         definition["consent"] = text_type(marking_structure.not_proprietary.ais_consent.consent).lower()
+                        consent_label = "ais-consent-" + definition["consent"]
+                        add_label(marking_definition_instance, consent_label)
                     if (marking_structure.not_proprietary.tlp_marking is not None and
                             marking_structure.not_proprietary.tlp_marking.color is not None):
                         definition["tlp"] = text_type(marking_structure.not_proprietary.tlp_marking.color).lower()
+                        set_tlp_reference(marking_definition_instance, definition["tlp"], "marking_ref")
                     if marking_structure.not_proprietary.cisa_proprietary is not None:
                         definition["is_cisa_proprietary"] = text_type(marking_structure.not_proprietary.cisa_proprietary).lower()
+                        proprietary_label = "cisa-proprietary-" + definition["is_cisa_proprietary"]
+                        add_label(marking_definition_instance, proprietary_label)
                 marking_definition_instance["definition"] = definition
             else:
                 if marking_structure.__class__.__name__ in get_option_value("markings_allowed"):
@@ -316,14 +320,24 @@ def convert_marking_specification(marking_specification, env):
                     error("Could not resolve Marking Structure %s", 425, identifying_info(marking_structure))
                     raise NameError("Could not resolve Marking Structure %s" % identifying_info(marking_structure))
 
+            if marking_definition_instance["definition_type"] == "ais":
+                temp_marking_id = marking_definition_instance["marking_ref"]
+            else:
+                temp_marking_id = marking_definition_instance["id"]
+
             if "definition_type" in marking_definition_instance:
-                val = add_marking_map_entry(marking_structure, marking_definition_instance["id"])
+                val = add_marking_map_entry(marking_structure, marking_definition_instance)
                 info("Created Marking Structure for %s", 212, identifying_info(marking_structure))
                 if val is not None and not isinstance(val, MarkingStructure):
                     info("Found same marking structure %s, using %s", 625, identifying_info(marking_specification), val)
                 else:
                     finish_basic_object(marking_specification.id_, marking_definition_instance, env, marking_structure)
                     return_obj.append(marking_definition_instance)
+
+            process_information_source(marking_specification.information_source,
+                                       marking_definition_instance,
+                                       env,
+                                       temp_marking_id=temp_marking_id)
 
     return return_obj
 
@@ -343,17 +357,29 @@ def finish_basic_object(old_id, instance, env, stix1x_obj, temp_marking_id=None)
         for marking_structure in marking_specification.marking_structures:
             stix2x_marking = map_1x_markings_to_2x(marking_structure)
             if (not isinstance(stix2x_marking, MarkingStructure) and
-                    instance["id"] != stix2x_marking and
-                    stix2x_marking not in object_marking_refs):
-                object_marking_refs.append(stix2x_marking)
+                    instance["id"] != stix2x_marking["id"] and
+                    stix2x_marking["id"] not in object_marking_refs):
+                if stix2x_marking["definition_type"] == "ais":
+                    apply_ais_markings(instance, stix2x_marking)
+                    object_marking_refs.append(stix2x_marking["marking_ref"])
+                else:
+                    object_marking_refs.append(stix2x_marking["id"])
             elif temp_marking_id:
                 object_marking_refs.append(temp_marking_id)
             elif not check_map_1x_markings_to_2x(marking_structure):
                 stix2x_markings = convert_marking_specification(marking_specification, env)
-                env.bundle_instance["objects"].extend(stix2x_markings)
                 for m in stix2x_markings:
-                    if instance["id"] != m["id"] and m["id"] not in object_marking_refs:
+                    if m["definition_type"] == "ais":
+                        apply_ais_markings(instance, m)
+                        object_marking_refs.append(m["marking_ref"])
+                    elif instance["id"] != m["id"] and m["id"] not in object_marking_refs:
                         object_marking_refs.append(m["id"])
+                        env.bundle_instance["objects"].append(m)
+                    else:
+                        env.bundle_instance["objects"].append(m)
+
+    if env.created_by_ref and instance["id"] != env.created_by_ref:
+        instance["created_by_ref"] = env.created_by_ref
 
     if object_marking_refs:
         instance["object_marking_refs"] = object_marking_refs
@@ -423,6 +449,7 @@ def handle_sighting(sighting, sighted_object_id, env):
         process_information_source_for_sighting(sighting, sighting_instance, env)
     # assumption is that the observation is a singular, not a summary of observations
     sighting_instance["summary"] = False
+    finish_basic_object(None, sighting_instance, env, sighting)
     return sighting_instance
 
 
@@ -1003,7 +1030,7 @@ def convert_ciq_addresses2_1(ciq_info_addresses, identity_instance, env, parent_
                 if country_code:
                     location["country"] = country_code
                 add_location_object(key, location)
-                warn("Location %s may not contain all aspects of the STIX 1.x address object", 803, location["id"])
+                warn("Location %s may not contain all aspects of the STIX 1.x CIQAddress object (or data markings) ", 803, location["id"])
                 env.bundle_instance["objects"].append(location)
             env.bundle_instance["objects"].append(
                 create_relationship(identity_instance["id"], location["id"], env, "located-at")
@@ -1047,7 +1074,8 @@ def convert_identity(identity, env, parent_id=None, temp_marking_id=None, from_p
         msg = "All 'associated identities' relationships of %s are assumed to not represent STIX 1.2 versioning"
         info(msg, 710, identity_instance["id"])
         handle_relationship_to_refs(identity.related_identities, identity_instance["id"], env, "related-to")
-    finish_basic_object(identity.id_, identity_instance,
+    finish_basic_object(identity.id_,
+                        identity_instance,
                         env.newEnv(created_by_ref=identity_instance["id"] if from_package else parent_id),
                         identity,
                         temp_marking_id=temp_marking_id)
@@ -2124,7 +2152,10 @@ def convert_package(stix_package, env):
     # Markings are processed in the beginning for handling later for each SDO.
     for marking_specification in navigator.iterwalk(stix_package):
         if isinstance(marking_specification, MarkingSpecification):
-            bundle_instance["objects"].extend(convert_marking_specification(marking_specification, env))
+            stix2x_markings = convert_marking_specification(marking_specification, env)
+            for marking in stix2x_markings:
+                if marking["definition_type"] != "ais":
+                    bundle_instance["objects"].append(marking)
 
     # do observables first, especially before indicators!
 
