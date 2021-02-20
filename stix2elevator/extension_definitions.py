@@ -1,7 +1,7 @@
 MITRE_COPYRIGHT_STATEMENT_DATA_MARKING = {
     "created": "2020-12-22T00:00:00.000000Z",
     "definition": {
-        "statement": "Copyright 2013 FireEye, Inc."
+        "statement": "Copyright 2020 - The MITRE Corporation, Inc."
     },
     "definition_type": "statement",
     "id": "marking-definition--3cd55916-d34b-4747-a8e0-dedec14b711b",
@@ -34,12 +34,12 @@ EXTENSION_DEFINITION_FOR_STIX_1_X = {
         "object_marking_refs": [
             MITRE_COPYRIGHT_STATEMENT_DATA_MARKING["id"]
         ],
-        "schema": "https://https://github.com/mitre/cti/extension-definitions/stix-1-archive-file/",
+        "schema": "https://github.com/mitre/cti/extension-definitions/stix-1-archive-file/",
         "version": "1.0.0",
         "extension_types": ["property-extension"]
     },
     "attack-pattern": {
-        "id": "extension-definition--d83fce45-ef58-4c6c-a3f4-1fbc32e98c6e",
+        "id": "extension-definition--abfeb963-42a9-45a7-841a-e1d97838e2c9",
         "type": "extension-definition",
         "spec_version": "2.1",
         "name": "Extension to support STIX 1.x Attack Pattern",
@@ -50,7 +50,7 @@ EXTENSION_DEFINITION_FOR_STIX_1_X = {
         "object_marking_refs": [
             MITRE_COPYRIGHT_STATEMENT_DATA_MARKING["id"]
         ],
-        "schema": "https://https://github.com/mitre/cti/extension-definitions/stix-1-attack-pattern/",
+        "schema": "https://github.com/mitre/cti/extension-definitions/stix-1-attack-pattern/",
         "version": "1.0.0",
         "extension_types": ["property-extension"]
     },
@@ -66,7 +66,7 @@ EXTENSION_DEFINITION_FOR_STIX_1_X = {
         "object_marking_refs": [
             MITRE_COPYRIGHT_STATEMENT_DATA_MARKING["id"]
         ],
-        "schema": "https://https://github.com/mitre/cti/extension-definitions/stix-1-campaign/",
+        "schema": "https://github.com/mitre/cti/extension-definitions/stix-1-campaign/",
         "version": "1.0.0",
         "extension_types": ["property-extension"]
     },
@@ -82,12 +82,12 @@ EXTENSION_DEFINITION_FOR_STIX_1_X = {
         "object_marking_refs": [
             MITRE_COPYRIGHT_STATEMENT_DATA_MARKING["id"]
         ],
-        "schema": "https://https://github.com/mitre/cti/extension-definitions/stix-1-course-of-action/",
+        "schema": "https://github.com/mitre/cti/extension-definitions/stix-1-course-of-action/",
         "version": "1.0.0",
         "extension_types": ["property-extension"]
     },
     "email-message": {
-        "id": "extension-definition--a46b18de-0b41-4a95-9d2d-67a360f2d859",
+        "id": "extension-definition--0d4dda28-1b6c-446a-be85-38b9d9cd297c",
         "type": "extension-definition",
         "spec_version": "2.1",
         "name": "Extension to support STIX 1.x email-message",
@@ -98,7 +98,7 @@ EXTENSION_DEFINITION_FOR_STIX_1_X = {
         "object_marking_refs": [
             MITRE_COPYRIGHT_STATEMENT_DATA_MARKING["id"]
         ],
-        "schema": "https://https://github.com/mitre/cti/extension-definitions/stix-1-email-message/",
+        "schema": "https://github.com/mitre/cti/extension-definitions/stix-1-email-message/",
         "version": "1.0.0",
         "extension_types": ["property-extension"]
     },
@@ -114,7 +114,7 @@ EXTENSION_DEFINITION_FOR_STIX_1_X = {
         "object_marking_refs": [
             MITRE_COPYRIGHT_STATEMENT_DATA_MARKING["id"]
         ],
-        "schema": "https://https://github.com/mitre/cti/extension-definitions/stix-1-icmp-header/",
+        "schema": "https://github.com/mitre/cti/extension-definitions/stix-1-icmp-header/",
         "version": "1.0.0",
         "extension_types": ["property-extension"]
     },
@@ -146,7 +146,7 @@ EXTENSION_DEFINITION_FOR_STIX_1_X = {
         "object_marking_refs": [
             MITRE_COPYRIGHT_STATEMENT_DATA_MARKING["id"]
         ],
-        "schema": "https://https://github.com/mitre/cti/extension-definitions/stix-1-identity-ciq/",
+        "schema": "https://github.com/mitre/cti/extension-definitions/stix-1-identity-ciq/",
         "version": "1.0.0",
         "extension_types": ["property-extension"]
     },
@@ -162,7 +162,7 @@ EXTENSION_DEFINITION_FOR_STIX_1_X = {
         "object_marking_refs": [
             MITRE_COPYRIGHT_STATEMENT_DATA_MARKING["id"]
         ],
-        "schema": "https://https://github.com/mitre/cti/extension-definitions/stix-1-incident/",
+        "schema": "https://github.com/mitre/cti/extension-definitions/stix-1-incident/",
         "version": "1.0.0",
         "extension_types": ["property-extension"]
     },
@@ -178,7 +178,7 @@ EXTENSION_DEFINITION_FOR_STIX_1_X = {
         "object_marking_refs": [
             MITRE_COPYRIGHT_STATEMENT_DATA_MARKING["id"]
         ],
-        "schema": "https://https://github.com/mitre/cti/extension-definitions/stix-1-indicator/",
+        "schema": "https://github.com/mitre/cti/extension-definitions/stix-1-indicator/",
         "version": "1.0.0",
         "extension_types": ["property-extension"]
     },
@@ -194,7 +194,7 @@ EXTENSION_DEFINITION_FOR_STIX_1_X = {
         "object_marking_refs": [
             MITRE_COPYRIGHT_STATEMENT_DATA_MARKING["id"]
         ],
-        "schema": "https://https://github.com/mitre/cti/extension-definitions/stix-1-information-source/",
+        "schema": "https://github.com/mitre/cti/extension-definitions/stix-1-information-source/",
         "version": "1.0.0",
         "extension_types": ["property-extension"]
     },
@@ -210,12 +210,12 @@ EXTENSION_DEFINITION_FOR_STIX_1_X = {
         "object_marking_refs": [
             MITRE_COPYRIGHT_STATEMENT_DATA_MARKING["id"]
         ],
-        "schema": "https://https://github.com/mitre/cti/extension-definitions/stix-1-infrastucture/",
+        "schema": "https://github.com/mitre/cti/extension-definitions/stix-1-infrastucture/",
         "version": "1.0.0",
         "extension_types": ["property-extension"]
     },
     "malware": {
-        "id": "extension-definition--6f6973cb-70be-40cb-b1ac-15ed78cebe56",
+        "id": "extension-definition--5efa53f9-cf17-4867-bb4f-4cd2ac055e7c",
         "type": "extension-definition",
         "spec_version": "2.1",
         "name": "Extension to support STIX 1.x Malware Instances",
@@ -226,12 +226,12 @@ EXTENSION_DEFINITION_FOR_STIX_1_X = {
         "object_marking_refs": [
             MITRE_COPYRIGHT_STATEMENT_DATA_MARKING["id"]
         ],
-        "schema": "https://https://github.com/mitre/cti/extension-definitions/stix-1-malware/",
+        "schema": "https://github.com/mitre/cti/extension-definitions/stix-1-malware/",
         "version": "1.0.0",
         "extension_types": ["property-extension"]
     },
     "network-socket": {
-        "id": "extension-definition--6f6973cb-70be-40cb-b1ac-15ed78cebe56",
+        "id": "extension-definition--005e229c-fffc-42b0-a912-84671ab2829d",
         "type": "extension-definition",
         "spec_version": "2.1",
         "name": "Extension to support STIX 1.x Malware Instances",
@@ -242,7 +242,7 @@ EXTENSION_DEFINITION_FOR_STIX_1_X = {
         "object_marking_refs": [
             MITRE_COPYRIGHT_STATEMENT_DATA_MARKING["id"]
         ],
-        "schema": "https://https://github.com/mitre/cti/extension-definitions/stix-1-network-socket/",
+        "schema": "https://github.com/mitre/cti/extension-definitions/stix-1-network-socket/",
         "version": "1.0.0",
         "extension_types": ["property-extension"]
     },
@@ -258,7 +258,7 @@ EXTENSION_DEFINITION_FOR_STIX_1_X = {
         "object_marking_refs": [
             MITRE_COPYRIGHT_STATEMENT_DATA_MARKING["id"]
         ],
-        "schema": "https://https://github.com/mitre/cti/extension-definitions/stix-1-threat-actor/",
+        "schema": "https://github.com/mitre/cti/extension-definitions/stix-1-threat-actor/",
         "version": "1.0.0",
         "extension_types": ["property-extension"]
     },
@@ -274,7 +274,7 @@ EXTENSION_DEFINITION_FOR_STIX_1_X = {
         "object_marking_refs": [
             MITRE_COPYRIGHT_STATEMENT_DATA_MARKING["id"]
         ],
-        "schema": "https://https://github.com/mitre/cti/extension-definitions/stix-1-tool/",
+        "schema": "https://github.com/mitre/cti/extension-definitions/stix-1-tool/",
         "version": "1.0.0",
         "extension_types": ["property-extension"]
     },
@@ -290,7 +290,7 @@ EXTENSION_DEFINITION_FOR_STIX_1_X = {
         "object_marking_refs": [
             MITRE_COPYRIGHT_STATEMENT_DATA_MARKING["id"]
         ],
-        "schema": "https://https://github.com/mitre/cti/extension-definitions/stix-1-vulnerabilities/",
+        "schema": "https://github.com/mitre/cti/extension-definitions/stix-1-vulnerabilities/",
         "version": "1.0.0",
         "extension_types": ["property-extension"]
     }
