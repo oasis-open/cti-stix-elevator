@@ -164,7 +164,7 @@ def test_deprecated_elevate_package():
     with pytest.warns(DeprecationWarning):
         with io.open(archive_file, mode="r", encoding="utf-8") as f:
             input_stix = f.read()
-        json_result = elevate_package(STIXPackage.from_xml(StringIO(input_stix)))
+        json_result = elevate_package(STIXPackage.from_xml(io.StringIO(input_stix)))
 
     assert json_result
     print(json_result)
