@@ -33,7 +33,6 @@ from cybox.objects.win_process_object import WinProcess
 from cybox.objects.win_registry_key_object import WinRegistryKey
 from cybox.objects.win_service_object import WinService
 from cybox.objects.x509_certificate_object import X509Certificate
-from six import string_types, text_type
 import stix2
 from stix2.patterns import (
     ListConstant, ObjectPath, ObservationExpression,
@@ -888,12 +887,12 @@ def create_term_with_range(lhs, condition, rhs, negated=False):
         return "'range term underspecified'"
     else:
         if condition == "InclusiveBetween":
-            # return "(" + lhs + " GE " + text_type(rhs[0]) + " AND " + lhs + " LE " + text_type(rhs[1]) + ")"
+            # return "(" + lhs + " GE " + str(rhs[0]) + " AND " + lhs + " LE " + str(rhs[1]) + ")"
             lower_bound = ComparisonExpressionForElevator(process_comparison_negation(">=", negated), lhs, rhs.value[0])
             upper_bound = ComparisonExpressionForElevator(process_comparison_negation("<=", negated), lhs, rhs.value[1])
 
         else:  # "ExclusiveBetween"
-            # return "(" + lhs + " GT " + text_type(rhs[0]) + " AND " + lhs + " LT " + text_type(rhs[1]) + ")"
+            # return "(" + lhs + " GT " + str(rhs[0]) + " AND " + lhs + " LT " + str(rhs[1]) + ")"
             lower_bound = ComparisonExpressionForElevator(process_comparison_negation(">", negated), lhs, rhs.value[0])
             upper_bound = ComparisonExpressionForElevator(process_comparison_negation("<", negated), lhs, rhs.value[1])
         return create_boolean_expression(process_boolean_negation("AND", negated), [lower_bound, upper_bound])
@@ -937,7 +936,7 @@ def make_constant(obj):
         return stix2.IntegerConstant(obj)
     elif isinstance(obj, float):
         return stix2.FloatConstant(obj)
-    elif isinstance(obj, string_types) or isinstance(obj, stixmarx.api.types.MarkableText):
+    elif isinstance(obj, str) or isinstance(obj, stixmarx.api.types.MarkableText):
         return stix2.StringConstant(obj.strip())
     elif isinstance(obj, list):
         return stix2.ListConstant([make_constant(x) for x in obj])
@@ -1006,7 +1005,7 @@ def convert_account_to_pattern(account):
         if win_process_expression:
             expressions.append(win_process_expression)
         else:
-            warn("No UnixUserAccount properties found in %s", 615, text_type(account))
+            warn("No UnixUserAccount properties found in %s", 615, str(account))
     elif isinstance(account, WinComputerAccount):
         expressions.append(create_term("user-account:account_type",
                                        "Equals",
@@ -1045,7 +1044,7 @@ def convert_unix_user_to_pattern(account):
     if hasattr(account, "user_id") and account.user_id:
         expressions.append(create_term("user-account:user_id",
                                        account.user_id.condition,
-                                       stix2.StringConstant(text_type(account.user_id.value))))
+                                       stix2.StringConstant(str(account.user_id.value))))
     for prop_spec in _UNIX_ACCOUNT_PROPERTIES:
         prop_1x = prop_spec[0]
         object_path = prop_spec[1]
@@ -1467,14 +1466,14 @@ def convert_hashes_to_pattern(hashes):
             hash_value = h.simple_hash_value
         else:
             hash_value = h.fuzzy_hash_value
-        if text_type(h.type_).startswith("SHA"):
-            hash_type = "'" + "SHA" + "-" + text_type(h.type_)[3:] + "'"
-        elif text_type(h.type_) == "SSDEEP":
-            hash_type = text_type(h.type_).lower()
+        if str(h.type_).startswith("SHA"):
+            hash_type = "'" + "SHA" + "-" + str(h.type_)[3:] + "'"
+        elif str(h.type_) == "SSDEEP":
+            hash_type = str(h.type_).lower()
         else:
-            hash_type = text_type(h.type_)
+            hash_type = str(h.type_)
         try:
-            hc = stix2.HashConstant(hash_value.value, text_type(h.type_))
+            hc = stix2.HashConstant(hash_value.value, str(h.type_))
         except ValueError as err:
             # don't cause exception if hash value isn't correct
             warn(err, 626)
@@ -1598,25 +1597,25 @@ def convert_file_to_pattern(f):
         if windows_executable_file_expression:
             expressions.append(windows_executable_file_expression)
         else:
-            warn("No WinExecutableFile properties found in %s", 613, text_type(f))
+            warn("No WinExecutableFile properties found in %s", 613, str(f))
     if isinstance(f, ArchiveFile):
         archive_file_expressions = convert_archive_file_to_pattern(f)
         if archive_file_expressions:
             expressions.append(archive_file_expressions)
         else:
-            warn("No ArchiveFile properties found in %s", 613, text_type(f))
+            warn("No ArchiveFile properties found in %s", 613, str(f))
     if isinstance(f, ImageFile):
         image_file_expressions = convert_image_file_to_pattern(f)
         if image_file_expressions:
             expressions.append(image_file_expressions)
         else:
-            warn("No ImageFile properties found in %s", 613, text_type(f))
+            warn("No ImageFile properties found in %s", 613, str(f))
     if isinstance(f, PDFFile):
         pdf_file_expressions = convert_pdf_file_to_pattern(f)
         if pdf_file_expressions:
             expressions.append(pdf_file_expressions)
         else:
-            warn("No PDFFile properties found in %s", 613, text_type(f))
+            warn("No PDFFile properties found in %s", 613, str(f))
     if expressions:
         return create_boolean_expression("AND", expressions)
 
@@ -1738,9 +1737,9 @@ def convert_process_to_pattern(process):
         ev_expressions = []
         for ev in process.environment_variable_list:
             # TODO: handle variable names with '-'
-            ev_expressions.append(create_term("process:environment_variables[*]." + text_type(ev.name),
+            ev_expressions.append(create_term("process:environment_variables[*]." + str(ev.name),
                                               ev.value.condition,
-                                              stix2.StringConstant(text_type(ev.value))))
+                                              stix2.StringConstant(str(ev.value))))
         if ev_expressions:
             expressions.append(create_boolean_expression("AND", ev_expressions))
     if hasattr(process, "child_pid_list") and process.child_pid_list:
@@ -1764,13 +1763,13 @@ def convert_process_to_pattern(process):
         if win_process_expression:
             expressions.append(win_process_expression)
         else:
-            warn("No WinProcess properties found in %s", 615, text_type(process))
+            warn("No WinProcess properties found in %s", 615, str(process))
         if isinstance(process, WinService):
             service_expression = convert_windows_service_to_pattern(process)
             if service_expression:
                 expressions.append(service_expression)
             else:
-                warn("No WinService properties found in %s", 616, text_type(process))
+                warn("No WinService properties found in %s", 616, str(process))
     if expressions:
         return create_boolean_expression("AND", expressions)
 
@@ -2016,7 +2015,7 @@ def convert_http_client_request_to_pattern(http_request):
         if mb.message_body:
             expressions.append(create_term("network-traffic:extensions.'http-request-ext'.message_body_data_ref.payload_bin",
                                            'Equals',
-                                           encode_in_base64(text_type(mb.message_body))))
+                                           encode_in_base64(str(mb.message_body))))
     return create_boolean_expression("AND", expressions)
 
 
@@ -2108,11 +2107,11 @@ def convert_network_packet_to_pattern(packet):
             if icmp_header.type_:
                 expressions.append(create_term("network-traffic:extensions.'icmp-ext'.icmp_type_hex",
                                                icmp_header.type_.condition,
-                                               stix2.HexConstant(text_type(icmp_header.type_))))
+                                               stix2.HexConstant(str(icmp_header.type_))))
             if icmp_header.code:
                 expressions.append(create_term("network-traffic:extensions.'icmp-ext'.icmp_type_code",
                                                icmp_header.code.condition,
-                                               stix2.HexConstant(text_type(icmp_header.code))))
+                                               stix2.HexConstant(str(icmp_header.code))))
             handle_missing_properties_in_expression_for_icmp_header(expressions, icmp_header)
             return create_boolean_expression("AND", expressions)
 
@@ -2390,7 +2389,7 @@ def convert_object_to_pattern(obj, obs_id):
                 if not check_for_missing_policy("ignore"):
                     expression = UnconvertedTerm(obs_id)
         else:
-            warn("%s found in %s cannot be converted to a pattern, yet.", 808, text_type(obj.properties), obs_id)
+            warn("%s found in %s cannot be converted to a pattern, yet.", 808, str(obj.properties), obs_id)
             if not check_for_missing_policy("ignore"):
                 expression = UnconvertedTerm(obs_id)
         # custom properties of custom objects handled above

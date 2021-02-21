@@ -5,7 +5,6 @@ import os
 import shlex
 
 # external
-from six import string_types
 from stix2validator.scripts import stix2_validator
 
 ALL_OPTIONS = None
@@ -107,7 +106,7 @@ def _convert_to_int_list(check_codes):
             return check_codes  # good input
         else:
             return [int(x) for x in check_codes]  # list of str
-    elif isinstance(check_codes, string_types):
+    elif isinstance(check_codes, str):
         return [int(x) for x in check_codes.split(",")]  # str, comma-separated expected
     raise RuntimeError("Could not convert values: {} of type {}".format(check_codes, type(check_codes)))
 

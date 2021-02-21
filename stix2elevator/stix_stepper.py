@@ -7,7 +7,6 @@ import shlex
 import sys
 
 # external
-from six import text_type
 from stix2.pattern_visitor import create_pattern_object
 import stix2validator
 
@@ -111,7 +110,7 @@ def step_observable_data(observed_data):
 def step_pattern(pattern):
     pattern_obj = create_pattern_object(pattern, module_suffix="Elevator", module_name="stix2elevator.convert_pattern")
     # replacing property names performed in toSTIX21
-    return text_type(pattern_obj.toSTIX21())
+    return str(pattern_obj.toSTIX21())
 
 
 def step_object(stix_object):

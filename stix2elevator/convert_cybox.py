@@ -35,7 +35,6 @@ from cybox.objects.win_registry_key_object import WinRegistryKey
 from cybox.objects.win_service_object import WinService
 from cybox.objects.x509_certificate_object import X509Certificate
 import netaddr
-from six import text_type
 
 # internal
 from stix2elevator.common import (
@@ -113,7 +112,7 @@ def convert_account(acc):
             if acc.group_id:
                 ext_dict["gid"] = acc.group_id.value
             if acc.user_id:
-                account_dict["user_id"] = text_type(acc.user_id.value)
+                account_dict["user_id"] = str(acc.user_id.value)
             if acc.login_shell:
                 ext_dict["shell"] = acc.login_shell.value
             if acc.home_directory:
@@ -121,7 +120,7 @@ def convert_account(acc):
             if acc.group_list:
                 ext_dict["groups"] = []
                 for g in acc.group_list:
-                    ext_dict["groups"].append(text_type(g.group_id.value))
+                    ext_dict["groups"].append(str(g.group_id.value))
             if ext_dict != {}:
                 account_dict["extensions"] = {"unix-account-ext": ext_dict}
         elif isinstance(acc, WinComputerAccount):
@@ -135,7 +134,7 @@ def convert_account(acc):
 
 def handle_inclusive_ip_addresses(add_value, obj1x_id):
     if add_value.condition == 'InclusiveBetween' and isinstance(add_value.value, list):
-        x = text_type(netaddr.iprange_to_cidrs(text_type(add_value.value[0]), text_type(add_value.value[1])))
+        x = str(netaddr.iprange_to_cidrs(str(add_value.value[0]), str(add_value.value[1])))
         m = re.match(r".*'(\d+.\d+.\d+.\d+/\d+).*", x)
         if m:
             return m.group(1)
@@ -143,7 +142,7 @@ def handle_inclusive_ip_addresses(add_value, obj1x_id):
             warn("Cannot convert range of %s to %s in %s to a CIDR", 501, add_value.value[0], add_value.value[1], obj1x_id)
             return None
     else:
-        return text_type(add_value.value)
+        return str(add_value.value)
 
 
 def handle_related_objects_as_embedded_relationships(sco, related_objects, stix1x_rel_name, stix2x_rel_name, more_than_one=True):
@@ -154,9 +153,9 @@ def handle_related_objects_as_embedded_relationships(sco, related_objects, stix1
                 if more_than_one:
                     if stix2x_rel_name not in sco:
                         sco[stix2x_rel_name] = list()
-                    sco[stix2x_rel_name].append(text_type(ro.idref))
+                    sco[stix2x_rel_name].append(str(ro.idref))
                 else:
-                    sco[stix2x_rel_name] = text_type(ro.idref)
+                    sco[stix2x_rel_name] = str(ro.idref)
 
 
 _OBJECT_REFERENCES_SHELLS = {}
@@ -197,12 +196,12 @@ def convert_address(add, related_objects=None, env=None):
         handle_related_objects_as_embedded_relationships(instance, related_objects, "Resolved_To", "resolves_to_refs")
     elif add.category == add.CAT_IPV6:
         # TODO: handle ipv6 CIDRs
-        instance = create_base_sco("ipv6-addr", add, other_properties={"value": text_type(add.address_value)}, env=env)
+        instance = create_base_sco("ipv6-addr", add, other_properties={"value": str(add.address_value)}, env=env)
         handle_related_objects_as_embedded_relationships(instance, related_objects, "Resolved_To", "resolves_to_refs")
     elif add.category == add.CAT_MAC:
-        instance = create_base_sco("mac-addr", add, other_properties={"value": text_type(add.address_value)}, env=env)
+        instance = create_base_sco("mac-addr", add, other_properties={"value": str(add.address_value)}, env=env)
     elif add.category == add.CAT_EMAIL:
-        instance = create_base_sco("email-addr", add, other_properties={"value": text_type(add.address_value)}, env=env)
+        instance = create_base_sco("email-addr", add, other_properties={"value": str(add.address_value)}, env=env)
         handle_related_objects_as_embedded_relationships(instance, related_objects, "Related_To", "belongs_to_ref", more_than_one=False)
     else:
         warn("The address type %s is not part of STIX 2.x", 421, add.category)
@@ -332,12 +331,12 @@ def convert_hashes(hashes):
             hash_value = h.simple_hash_value
         else:
             hash_value = h.fuzzy_hash_value
-        if text_type(h.type_).startswith("SHA"):
-            hash_type = "'" + "SHA" + "-" + text_type(h.type_)[3:] + "'"
-        elif text_type(h.type_) == "SSDEEP":
-            hash_type = text_type(h.type_).lower()
+        if str(h.type_).startswith("SHA"):
+            hash_type = "'" + "SHA" + "-" + str(h.type_)[3:] + "'"
+        elif str(h.type_) == "SSDEEP":
+            hash_type = str(h.type_).lower()
         else:
-            hash_type = text_type(h.type_)
+            hash_type = str(h.type_)
         hash_dict[hash_type] = hash_value.value
     return hash_dict
 
@@ -364,7 +363,7 @@ def convert_pdf_file(f):
     pdf_file_dict = dict()
     file_ids = list()
     if f.version:
-        pdf_file_dict["version"] = text_type(f.version)
+        pdf_file_dict["version"] = str(f.version)
     if f.metadata:
         if f.metadata.optimized:
             pdf_file_dict["is_optimized"] = f.metadata.optimized
@@ -475,11 +474,11 @@ def convert_archive_file20(f):
     if f.comment:
         archive_dict["comment"] = f.comment
     if f.version:
-        archive_dict["version"] = text_type(f.version)
+        archive_dict["version"] = str(f.version)
     if f.archived_file:
         archive_dict["contains_refs"] = list()
         for ar_file in f.archived_file:
-            archive_dict["contains_refs"].append(text_type(index))
+            archive_dict["contains_refs"].append(str(index))
             ar_file2x, index = convert_file(ar_file, None, index)
             file_objs.update(ar_file2x)
     return archive_dict, file_objs
@@ -496,7 +495,7 @@ def convert_archive_file21(f):
         if check_for_missing_policy("use-custom-properties"):
             if "archive-ext" not in extensions_dict:
                 extensions_dict["archive-ext"] = dict()
-            extensions_dict["archive-ext"][convert_to_custom_name("version")] = text_type(f.version)
+            extensions_dict["archive-ext"][convert_to_custom_name("version")] = str(f.version)
         elif check_for_missing_policy("use-extensions"):
             extension_definition_id = get_extension_definition_id("archive-file")
             if not extension_definition_id:
@@ -504,7 +503,7 @@ def convert_archive_file21(f):
             else:
                 if extension_definition_id not in extensions_dict:
                     extensions_dict[extension_definition_id] = dict()
-                extensions_dict[extension_definition_id]["version"] = text_type(f.version)
+                extensions_dict[extension_definition_id]["version"] = str(f.version)
     if f.archived_file:
         if "archive-ext" not in extensions_dict:
             extensions_dict["archive-ext"] = dict()
@@ -586,18 +585,18 @@ def convert_file_properties(f):
     if f.hashes is not None:
         hashes = {}
         for h in f.hashes:
-            if text_type(h.type_).startswith("SHA"):
-                hash_type = "SHA" + "-" + text_type(h.type_)[3:]
-            elif text_type(h.type_) == "SSDEEP":
-                hash_type = text_type(h.type_).lower()
+            if str(h.type_).startswith("SHA"):
+                hash_type = "SHA" + "-" + str(h.type_)[3:]
+            elif str(h.type_) == "SSDEEP":
+                hash_type = str(h.type_).lower()
             else:
-                hash_type = text_type(h.type_)
+                hash_type = str(h.type_)
             hashes[hash_type] = h.simple_hash_value.value
         file_dict["hashes"] = hashes
     if f.file_name:
-        file_dict["name"] = text_type(f.file_name)
+        file_dict["name"] = str(f.file_name)
         if f.file_extension:
-            file_dict["name"] += "." + text_type(f.file_extension)
+            file_dict["name"] += "." + str(f.file_extension)
     elif f.file_path and f.file_path.value:
         # this index is an array index, not for the objects dict
         index = f.file_path.value.rfind("/")
@@ -617,7 +616,7 @@ def convert_file_properties(f):
         if windows_executable_file_dict:
             extended_properties["windows-pebinary-ext"] = windows_executable_file_dict
         else:
-            warn("No WinExecutableFile properties found in %s", 613, text_type(f))
+            warn("No WinExecutableFile properties found in %s", 613, str(f))
     if isinstance(f, ArchiveFile):
         if get_option_value("spec_version") == "2.0":
             archive_file_dict, file_objs = convert_archive_file20(f)
@@ -628,7 +627,7 @@ def convert_file_properties(f):
             if archive_file_dict:
                 extended_properties.update(archive_file_dict)
         if not archive_file_dict:
-            warn("No ArchiveFile properties found in %s", 613, text_type(f))
+            warn("No ArchiveFile properties found in %s", 613, str(f))
     else:
         file_objs = None
     if isinstance(f, ImageFile):
@@ -636,13 +635,13 @@ def convert_file_properties(f):
         if image_file_dict:
             extended_properties["raster-image-ext"] = image_file_dict
         else:
-            warn("No ImageFile properties found in %s", 613, text_type(f))
+            warn("No ImageFile properties found in %s", 613, str(f))
     if isinstance(f, PDFFile):
         pdf_file_dict = convert_pdf_file(f)
         if pdf_file_dict:
             extended_properties["pdf-ext"] = pdf_file_dict
         else:
-            warn("No ImageFile properties found in %s", 613, text_type(f))
+            warn("No ImageFile properties found in %s", 613, str(f))
     if extended_properties:
         file_dict["extensions"] = extended_properties
     generate_sco_id_for_2_1(file_dict, obj1x_id)
@@ -652,24 +651,24 @@ def convert_file_properties(f):
 def convert_file20(f, related_objects, index=0):
     objs = {}
     file_obj_index = index
-    objs[text_type(index)], dir_dict, file_objs = convert_file_properties(f)
+    objs[str(index)], dir_dict, file_objs = convert_file_properties(f)
     if dir_dict:
         if index_in_directory_path_mapping(dir_dict["path"]):
-            objs[text_type(index)]["parent_directory_ref"] = text_type(get_index_from_directory_path_mapping(dir_dict["path"]))
+            objs[str(index)]["parent_directory_ref"] = str(get_index_from_directory_path_mapping(dir_dict["path"]))
             index += 1
         else:
-            objs[text_type(index + 1)] = dir_dict
+            objs[str(index + 1)] = dir_dict
             add_to_directory_path_mapping(dir_dict["path"], index + 1)
-            objs[text_type(index)]["parent_directory_ref"] = text_type(index + 1)
+            objs[str(index)]["parent_directory_ref"] = str(index + 1)
             index += 2
     if file_objs:
         number_mapping = {}
         for k in sorted(file_objs.keys()):
-            number_mapping[text_type(k)] = text_type(index)
+            number_mapping[str(k)] = str(index)
             index += 1
         new_objs = renumber_objs(file_objs, number_mapping)
         objs.update(new_objs)
-        renumber_co(objs[text_type(file_obj_index)], number_mapping)
+        renumber_co(objs[str(file_obj_index)], number_mapping)
     return objs, index
 
 
@@ -719,11 +718,11 @@ def convert_email_additional_headers(head):
         if hasattr(head, prop1x):
             value = getattr(head, prop1x)
             if value:
-                additional_header_fields_dict[key2x] = text_type(value)
+                additional_header_fields_dict[key2x] = str(value)
     if head.in_reply_to:
         to_list = list()
         for to in head.in_reply_to:
-            to_list.append(text_type(to.address_value))
+            to_list.append(str(to.address_value))
         additional_header_fields_dict["In-Reply-To"] = to_list
     if head.x_originating_ip:
         additional_header_fields_dict["X-Originating-IP"] = head.x_originating_ip.address_value
@@ -765,7 +764,7 @@ def convert_email_message(email_message):
     email_dict = create_base_sco("email-message", email_message, {"is_multipart": False})  # the default
     if spec_version == "2.0":
         objs = dict()
-        objs[text_type(index)] = email_dict
+        objs[str(index)] = email_dict
     else:
         objs = [email_dict]
     index += 1
@@ -774,64 +773,64 @@ def convert_email_message(email_message):
         if header.date:
             email_dict["date"] = convert_timestamp_to_string(header.date.value)
         if header.content_type:
-            email_dict["content_type"] = text_type(header.content_type)
+            email_dict["content_type"] = str(header.content_type)
         if header.subject:
-            email_dict["subject"] = text_type(header.subject)
+            email_dict["subject"] = str(header.subject)
         if header.from_:
             # should there ever be more than one?
             from_ref = convert_address(header.from_)
             if spec_version == "2.0":
-                objs[text_type(index)] = from_ref
+                objs[str(index)] = from_ref
             else:
                 objs.append(from_ref)
-            email_dict["from_ref"] = text_type(index) if spec_version == "2.0" else from_ref["id"]
+            email_dict["from_ref"] = str(index) if spec_version == "2.0" else from_ref["id"]
             index += 1
         if header.sender:
             # should there ever be more than one?
             sender_ref = convert_address(header.sender)
             if spec_version == "2.0":
-                objs[text_type(index)] = sender_ref
+                objs[str(index)] = sender_ref
             else:
                 objs.append(sender_ref)
-            email_dict["sender_ref"] = text_type(index) if spec_version == "2.0" else from_ref["id"]
+            email_dict["sender_ref"] = str(index) if spec_version == "2.0" else from_ref["id"]
             index += 1
         if header.to:
             for t in header.to:
                 to_ref = convert_address(t)
                 if spec_version == "2.0":
-                    objs[text_type(index)] = to_ref
+                    objs[str(index)] = to_ref
 
                 else:
                     objs.append(to_ref)
                 if "to_refs" not in email_dict:
                     email_dict["to_refs"] = []
-                email_dict["to_refs"].append(text_type(index) if spec_version == "2.0" else to_ref["id"])
+                email_dict["to_refs"].append(str(index) if spec_version == "2.0" else to_ref["id"])
                 index += 1
         if header.cc:
             for t in header.cc:
                 cc_ref = convert_address(t)
                 if spec_version == "2.0":
-                    objs[text_type(index)] = cc_ref
+                    objs[str(index)] = cc_ref
 
                 else:
                     objs.append(cc_ref)
                 if "cc_refs" not in email_dict:
                     email_dict["cc_refs"] = []
-                email_dict["cc_refs"].append(text_type(index) if spec_version == "2.0" else cc_ref["id"])
+                email_dict["cc_refs"].append(str(index) if spec_version == "2.0" else cc_ref["id"])
                 index += 1
         if header.bcc:
             for t in header.bcc:
                 bcc_ref = convert_address(t)
                 if spec_version == "2.0":
-                    objs[text_type(index)] = bcc_ref
+                    objs[str(index)] = bcc_ref
                     index += 1
                 else:
                     objs.append(bcc_ref)
                 if "bcc_refs" not in email_dict:
                     email_dict["bcc_refs"] = []
-                email_dict["bcc_refs"].append(text_type(index) if spec_version == "2.0" else bcc_ref["id"])
+                email_dict["bcc_refs"].append(str(index) if spec_version == "2.0" else bcc_ref["id"])
         if header.message_id:
-            email_dict["message_id"] = text_type(header.message_id)
+            email_dict["message_id"] = str(header.message_id)
         add_headers2x = convert_email_additional_headers(header)
         if add_headers2x != {}:
             email_dict["additional_header_fields"] = add_headers2x
@@ -843,12 +842,12 @@ def convert_email_message(email_message):
         email_dict["body_multipart"] = multiparts
 
     if email_message.raw_body:
-        raw_body_obj = create_base_sco("artifact", other_properties={"payload_bin": encode_in_base64(text_type(email_message.raw_body))})
+        raw_body_obj = create_base_sco("artifact", other_properties={"payload_bin": encode_in_base64(str(email_message.raw_body))})
         generate_sco_id_for_2_1(raw_body_obj, None)
         if get_option_value("spec_version") == "2.0":
             if raw_body_obj:
-                email_dict["raw_email_ref"] = text_type(index)
-                objs[text_type(index)] = raw_body_obj
+                email_dict["raw_email_ref"] = str(index)
+                objs[str(index)] = raw_body_obj
                 index += 1
         else:
             if raw_body_obj:
@@ -876,11 +875,11 @@ def convert_registry_key(reg_key):
         for v in reg_key.values:
             reg_value = {}
             if hasattr(v, "data") and v.data:
-                reg_value["data"] = text_type(v.data)
+                reg_value["data"] = str(v.data)
             if hasattr(v, "name") and v.name:
-                reg_value["name"] = text_type(v.name)
+                reg_value["name"] = str(v.name)
             if hasattr(v, "datatype") and v.datatype:
-                reg_value["data_type"] = text_type(v.datatype)
+                reg_value["data_type"] = str(v.datatype)
             cybox_reg["values"].append(reg_value)
     if reg_key.modified_time:
         if get_option_value("spec_version") == "2.0":
@@ -889,7 +888,7 @@ def convert_registry_key(reg_key):
             cybox_reg["modified_time"] = convert_timestamp_to_string(reg_key.modified_time.value)
     generate_sco_id_for_2_1(cybox_reg, reg_key.parent.id_)
     if reg_key.creator_username:
-        user_obj = create_base_sco("user-account", other_properties={"user_id": text_type(reg_key.creator_username)})
+        user_obj = create_base_sco("user-account", other_properties={"user_id": str(reg_key.creator_username)})
         generate_sco_id_for_2_1(user_obj, None)
     if get_option_value("spec_version") == "2.0":
         result = dict()
@@ -909,7 +908,7 @@ def create_process_ref(cp, process_dict, objs, index, prop):
     spec_version = get_option_value("spec_version")
     cp_ref = create_base_sco("process", other_properties={"pid": cp.value})
     if get_option_value("spec_version") == "2.0":
-        objs[text_type(index)] = cp_ref
+        objs[str(index)] = cp_ref
     else:
         generate_sco_id_for_2_1(cp_ref, None)
         objs.append(cp_ref)
@@ -917,12 +916,12 @@ def create_process_ref(cp, process_dict, objs, index, prop):
         if prop not in process_dict:
             process_dict["child_refs"] = []
         if spec_version == "2.0":
-            process_dict[prop].append(text_type(index))
+            process_dict[prop].append(str(index))
         else:
             process_dict[prop].append(cp_ref["id"])
     else:  # parent_ref
         if spec_version == "2.0":
-            process_dict[prop] = text_type(index)
+            process_dict[prop] = str(index)
         else:
             process_dict[prop] = cp_ref["id"]
 
@@ -949,7 +948,7 @@ def convert_opened_connection_refs20(process, process_dict, objs, index):
                                                             root_obj_index,
                                                             renumbered_nc_dicts)
         objs.update(renumbered_nc_dicts)
-        process_dict["opened_connection_refs"].append(text_type(number_mapping[root_obj_index]))
+        process_dict["opened_connection_refs"].append(str(number_mapping[root_obj_index]))
         index = current_largest_id
     return index
 
@@ -969,13 +968,13 @@ def convert_process(process):
     process_dict = create_base_sco("process", process)
     if get_option_value("spec_version") == "2.0":
         objs = dict()
-        objs[text_type(index)] = process_dict
+        objs[str(index)] = process_dict
         index += 1
     else:
         objs = [process_dict]
 
     if process.name and get_option_value("spec_version") == "2.0":
-        process_dict["name"] = text_type(process.name)
+        process_dict["name"] = str(process.name)
     if process.pid:
         process_dict["pid"] = process.pid.value
     if process.creation_time:
@@ -995,23 +994,23 @@ def convert_process(process):
         ii = process.image_info
         if ii.file_name:
             # TODO: check ii.current_directory and ii.path for more info
-            image_obj = create_base_sco("file", other_properties={"name": text_type(ii.file_name)})
+            image_obj = create_base_sco("file", other_properties={"name": str(ii.file_name)})
             generate_sco_id_for_2_1(image_obj, None)
             if get_option_value("spec_version") == "2.0":
-                process_dict["image_ref"] = text_type(index)
-                objs[text_type(index)] = image_obj
+                process_dict["image_ref"] = str(index)
+                objs[str(index)] = image_obj
                 index += 1
             else:
                 process_dict["image_ref"] = image_obj["id"]
                 objs.append(image_obj)
         if ii.command_line and get_option_value("spec_version") == "2.1":
-            process_dict["command_line"] = text_type(ii.command_line)
+            process_dict["command_line"] = str(ii.command_line)
     if process.username:
-        user_obj = create_base_sco("user-account", other_properties={"user_id": text_type(process.username)})
+        user_obj = create_base_sco("user-account", other_properties={"user_id": str(process.username)})
         generate_sco_id_for_2_1(user_obj, None)
         if get_option_value("spec_version") == "2.0":
-            process_dict["creator_user_ref"] = text_type(index)
-            objs[text_type(index)] = user_obj
+            process_dict["creator_user_ref"] = str(index)
+            objs[str(index)] = user_obj
             index += 1
         else:
             process_dict["creator_user_ref"] = user_obj["id"]
@@ -1028,7 +1027,7 @@ def convert_process(process):
                 extended_properties["windows-service-ext"] = service_properties
             if dll_file_obj:
                 if get_option_value("spec_version") == "2.0":
-                    objs[text_type(index)] = dll_file_obj
+                    objs[str(index)] = dll_file_obj
                     index += 1
                 else:
                     objs.append(dll_file_obj)
@@ -1056,11 +1055,11 @@ def convert_windows_process(process):
     if process.dep_enabled:
         ext["dep_enabled"] = bool(process.dep_enabled)
     if process.priority:
-        ext["priority"] = text_type(process.priority)
+        ext["priority"] = str(process.priority)
     if process.security_id:
-        ext["owner_sid"] = text_type(process.security_id)
+        ext["owner_sid"] = str(process.security_id)
     if process.window_title:
-        ext["window_title"] = text_type(process.window_title)
+        ext["window_title"] = str(process.window_title)
     if process.startup_info:
         warn("CybOX object %s not handled yet not handled yet", 805, "process:startup_info")
     return ext
@@ -1087,7 +1086,7 @@ def convert_windows_service(service):
         cybox_ws["service_status"] = map_vocabs_to_label(service.service_status, SERVICE_STATUS)
     if hasattr(service, "service_dll") and service.service_dll:
         # There is only one in STIX 1.x
-        ddl_file2x = create_base_sco("file", other_properties={"name": text_type(service.service_dll)})
+        ddl_file2x = create_base_sco("file", other_properties={"name": str(service.service_dll)})
         generate_sco_id_for_2_1(ddl_file2x, None)
         if get_option_value("spec_version") == "2.1":
             cybox_ws["service_dll_refs"] = [ddl_file2x["id"]]
@@ -1098,7 +1097,7 @@ def convert_windows_service(service):
 def convert_domain_name(domain_name, related_objects):
     cybox_dm = create_base_sco("domain-name", domain_name)
     if domain_name.value:
-        cybox_dm["value"] = text_type(domain_name.value.value)
+        cybox_dm["value"] = str(domain_name.value.value)
     handle_related_objects_as_embedded_relationships(cybox_dm, related_objects, "Resolved_To", "resolves_to_refs")
     generate_sco_id_for_2_1(cybox_dm, domain_name.parent.id_)
     return cybox_dm
@@ -1107,7 +1106,7 @@ def convert_domain_name(domain_name, related_objects):
 def convert_mutex(mutex):
     cybox_mutex = create_base_sco("mutex", mutex)
     if mutex.name:
-        cybox_mutex["name"] = text_type(mutex.name.value)
+        cybox_mutex["name"] = str(mutex.name.value)
     generate_sco_id_for_2_1(cybox_mutex, mutex.parent.id_)
     return cybox_mutex
 
@@ -1117,102 +1116,102 @@ def convert_http_client_request(request):
     body_obj = None
     if request.http_request_line is not None:
         if request.http_request_line.http_method is not None:
-            http_extension["request_method"] = text_type(request.http_request_line.http_method.value.lower())
+            http_extension["request_method"] = str(request.http_request_line.http_method.value.lower())
         if request.http_request_line.value is not None:
-            http_extension["request_value"] = text_type(request.http_request_line.value.value.lower())
+            http_extension["request_value"] = str(request.http_request_line.value.value.lower())
         if request.http_request_line.version is not None:
-            http_extension["request_version"] = text_type(request.http_request_line.version.value.lower())
+            http_extension["request_version"] = str(request.http_request_line.version.value.lower())
 
     if request.http_request_header is not None:
         if request.http_request_header.parsed_header is not None:
             header = {}
             if request.http_request_header.parsed_header.accept is not None:
-                header["Accept"] = text_type(request.http_request_header.parsed_header.accept.value)
+                header["Accept"] = str(request.http_request_header.parsed_header.accept.value)
             if request.http_request_header.parsed_header.accept_charset is not None:
-                header["Accept-Charset"] = text_type(request.http_request_header.parsed_header.accept_charset.value)
+                header["Accept-Charset"] = str(request.http_request_header.parsed_header.accept_charset.value)
             if request.http_request_header.parsed_header.accept_language is not None:
-                header["Accept-Language"] = text_type(request.http_request_header.parsed_header.accept_language.value)
+                header["Accept-Language"] = str(request.http_request_header.parsed_header.accept_language.value)
             if request.http_request_header.parsed_header.accept_datetime is not None:
-                header["Accept-Datetime"] = text_type(request.http_request_header.parsed_header.accept_datetime.value)
+                header["Accept-Datetime"] = str(request.http_request_header.parsed_header.accept_datetime.value)
             if request.http_request_header.parsed_header.accept_encoding is not None:
-                header["Accept-Encoding"] = text_type(request.http_request_header.parsed_header.accept_encoding.value)
+                header["Accept-Encoding"] = str(request.http_request_header.parsed_header.accept_encoding.value)
             if request.http_request_header.parsed_header.authorization is not None:
-                header["Authorization"] = text_type(request.http_request_header.parsed_header.authorization.value)
+                header["Authorization"] = str(request.http_request_header.parsed_header.authorization.value)
             if request.http_request_header.parsed_header.cache_control is not None:
-                header["Cache-Control"] = text_type(request.http_request_header.parsed_header.cache_control.value)
+                header["Cache-Control"] = str(request.http_request_header.parsed_header.cache_control.value)
             if request.http_request_header.parsed_header.connection is not None:
-                header["Connection"] = text_type(request.http_request_header.parsed_header.connection.value)
+                header["Connection"] = str(request.http_request_header.parsed_header.connection.value)
             if request.http_request_header.parsed_header.cookie is not None:
-                header["Cookie"] = text_type(request.http_request_header.parsed_header.cookie.value)
+                header["Cookie"] = str(request.http_request_header.parsed_header.cookie.value)
             if request.http_request_header.parsed_header.content_length is not None:
-                header["Content-Length"] = text_type(request.http_request_header.parsed_header.content_length.value)
+                header["Content-Length"] = str(request.http_request_header.parsed_header.content_length.value)
             if request.http_request_header.parsed_header.content_md5 is not None:
-                header["Content-MD5"] = text_type(request.http_request_header.parsed_header.content_md5.value)
+                header["Content-MD5"] = str(request.http_request_header.parsed_header.content_md5.value)
             if request.http_request_header.parsed_header.content_type is not None:
-                header["Content-Type"] = text_type(request.http_request_header.parsed_header.content_type.value)
+                header["Content-Type"] = str(request.http_request_header.parsed_header.content_type.value)
             if request.http_request_header.parsed_header.date is not None:
-                header["Date"] = text_type(request.http_request_header.parsed_header.date)
+                header["Date"] = str(request.http_request_header.parsed_header.date)
             if request.http_request_header.parsed_header.expect is not None:
-                header["Expect"] = text_type(request.http_request_header.parsed_header.expect.value)
+                header["Expect"] = str(request.http_request_header.parsed_header.expect.value)
             if request.http_request_header.parsed_header.from_ is not None:
                 from_ = request.http_request_header.parsed_header.from_
                 if from_.address_value is not None:
-                    header["From"] = text_type(from_.address_value.value)
+                    header["From"] = str(from_.address_value.value)
             if request.http_request_header.parsed_header.host is not None:
                 host = request.http_request_header.parsed_header.host
                 value = ""
                 has_domain = False
                 if host.domain_name is not None:
                     has_domain = True
-                    value += text_type(host.domain_name.value)
+                    value += str(host.domain_name.value)
                 if host.port is not None:
                     if has_domain:
-                        value += ":" + text_type(host.port.port_value)
+                        value += ":" + str(host.port.port_value)
                     else:
-                        value += text_type(host.port.port_value)
+                        value += str(host.port.port_value)
                 if value:
                     header["Host"] = value
             if request.http_request_header.parsed_header.if_match is not None:
-                header["If-Match"] = text_type(request.http_request_header.parsed_header.if_match.value)
+                header["If-Match"] = str(request.http_request_header.parsed_header.if_match.value)
             if request.http_request_header.parsed_header.if_modified_since is not None:
-                header["If-Modified-Since"] = text_type(
+                header["If-Modified-Since"] = str(
                     request.http_request_header.parsed_header.if_modified_since.value)
             if request.http_request_header.parsed_header.if_none_match is not None:
-                header["If-None-Match"] = text_type(request.http_request_header.parsed_header.if_none_match.value)
+                header["If-None-Match"] = str(request.http_request_header.parsed_header.if_none_match.value)
             if request.http_request_header.parsed_header.if_range is not None:
-                header["If-Range"] = text_type(request.http_request_header.parsed_header.if_range.value)
+                header["If-Range"] = str(request.http_request_header.parsed_header.if_range.value)
             if request.http_request_header.parsed_header.if_unmodified_since is not None:
-                header["If-Unmodified-Since"] = text_type(
+                header["If-Unmodified-Since"] = str(
                     request.http_request_header.parsed_header.if_unmodified_since.value)
             if request.http_request_header.parsed_header.max_forwards is not None:
-                header["Max-Forwards"] = text_type(request.http_request_header.parsed_header.max_forwards.value)
+                header["Max-Forwards"] = str(request.http_request_header.parsed_header.max_forwards.value)
             if request.http_request_header.parsed_header.pragma is not None:
-                header["Pragma"] = text_type(request.http_request_header.parsed_header.pragma.value)
+                header["Pragma"] = str(request.http_request_header.parsed_header.pragma.value)
             if request.http_request_header.parsed_header.proxy_authorization is not None:
-                header["Proxy-Authorization"] = text_type(
+                header["Proxy-Authorization"] = str(
                     request.http_request_header.parsed_header.proxy_authorization.value)
             if request.http_request_header.parsed_header.range_ is not None:
-                header["Range"] = text_type(request.http_request_header.parsed_header.range_.value)
+                header["Range"] = str(request.http_request_header.parsed_header.range_.value)
             if request.http_request_header.parsed_header.referer is not None:
-                header["Referer"] = text_type(request.http_request_header.parsed_header.referer.value)
+                header["Referer"] = str(request.http_request_header.parsed_header.referer.value)
             if request.http_request_header.parsed_header.te is not None:
-                header["TE"] = text_type(request.http_request_header.parsed_header.te.value)
+                header["TE"] = str(request.http_request_header.parsed_header.te.value)
             if request.http_request_header.parsed_header.user_agent is not None:
-                header["User-Agent"] = text_type(request.http_request_header.parsed_header.user_agent.value)
+                header["User-Agent"] = str(request.http_request_header.parsed_header.user_agent.value)
             if request.http_request_header.parsed_header.via is not None:
-                header["Via"] = text_type(request.http_request_header.parsed_header.via.value)
+                header["Via"] = str(request.http_request_header.parsed_header.via.value)
             if request.http_request_header.parsed_header.warning is not None:
-                header["Warning"] = text_type(request.http_request_header.parsed_header.warning.value)
+                header["Warning"] = str(request.http_request_header.parsed_header.warning.value)
             if request.http_request_header.parsed_header.dnt is not None:
-                header["DNT"] = text_type(request.http_request_header.parsed_header.dnt.value)
+                header["DNT"] = str(request.http_request_header.parsed_header.dnt.value)
             if request.http_request_header.parsed_header.x_requested_with is not None:
-                header["X-Requested-With"] = text_type(request.http_request_header.parsed_header.x_requested_with.value)
+                header["X-Requested-With"] = str(request.http_request_header.parsed_header.x_requested_with.value)
             if request.http_request_header.parsed_header.x_forwarded_for is not None:
-                header["X-Forwarded-For"] = text_type(request.http_request_header.parsed_header.x_forwarded_for.value)
+                header["X-Forwarded-For"] = str(request.http_request_header.parsed_header.x_forwarded_for.value)
             if request.http_request_header.parsed_header.x_att_deviceid is not None:
-                header["X-ATT-DeviceId"] = text_type(request.http_request_header.parsed_header.x_att_deviceid.value)
+                header["X-ATT-DeviceId"] = str(request.http_request_header.parsed_header.x_att_deviceid.value)
             if request.http_request_header.parsed_header.x_wap_profile is not None:
-                header["X-Wap-Profile"] = text_type(request.http_request_header.parsed_header.x_wap_profile.value)
+                header["X-Wap-Profile"] = str(request.http_request_header.parsed_header.x_wap_profile.value)
 
             http_extension["request_header"] = header
     if request.http_message_body is not None:
@@ -1220,7 +1219,7 @@ def convert_http_client_request(request):
         if mb.length:
             http_extension["message_body_length"] = mb.length.value
         if mb.message_body:
-            body_obj = create_base_sco("artifact", other_properties={"payload_bin": encode_in_base64(text_type(mb.message_body))})
+            body_obj = create_base_sco("artifact", other_properties={"payload_bin": encode_in_base64(str(mb.message_body))})
             generate_sco_id_for_2_1(body_obj, None)
             if get_option_value("spec_version") == "2.1":
                 http_extension["message_body_data_ref"] = body_obj["id"]
@@ -1235,7 +1234,7 @@ def convert_http_network_connection_extension(http):
 
 
 def create_domain_name_object(dn):
-    instance = create_base_sco("domain-name", dn, other_properties={"value": text_type(dn.value)})
+    instance = create_base_sco("domain-name", dn, other_properties={"value": str(dn.value)})
     generate_sco_id_for_2_1(instance, None)
     return instance
 
@@ -1245,15 +1244,15 @@ def convert_socket_address_1(sock_add_1x, cybox_traffic, objs, spec_version, ind
         if sock_add_1x.port.port_value is not None:
             cybox_traffic[src_or_dst + "_port"] = int(sock_add_1x.port.port_value)
         if sock_add_1x.port.layer4_protocol is not None:
-            cybox_traffic["protocols"].append(text_type(sock_add_1x.port.layer4_protocol.value.lower()))
+            cybox_traffic["protocols"].append(str(sock_add_1x.port.layer4_protocol.value.lower()))
     if sock_add_1x.ip_address is not None:
         add = convert_address(sock_add_1x.ip_address, env=env)
         if spec_version == "2.0":
-            cybox_traffic[src_or_dst + "_ref"] = text_type(index)
+            cybox_traffic[src_or_dst + "_ref"] = str(index)
             # its a 2.0 object, remove its uuid, if it has one
             if "id" in add:
                 del add["id"]
-            objs[text_type(index)] = add
+            objs[str(index)] = add
             index += 1
         else:
             if add:
@@ -1263,12 +1262,12 @@ def convert_socket_address_1(sock_add_1x, cybox_traffic, objs, spec_version, ind
     elif sock_add_1x.hostname is not None:
         if sock_add_1x.hostname.is_domain_name and sock_add_1x.hostname.hostname_value is not None:
             domain = create_domain_name_object(sock_add_1x.hostname.hostname_value)
-            cybox_traffic[src_or_dst + "_ref"] = text_type(index) if spec_version == "2.0" else domain["id"]
+            cybox_traffic[src_or_dst + "_ref"] = str(index) if spec_version == "2.0" else domain["id"]
             if spec_version == "2.0":
                 # its a 2.0 object, remove its uuid, if it has one
                 if "id" in domain:
                     del domain["id"]
-                objs[text_type(index)] = domain
+                objs[str(index)] = domain
                 index += 1
             else:
                 objs.append(domain)
@@ -1276,12 +1275,12 @@ def convert_socket_address_1(sock_add_1x, cybox_traffic, objs, spec_version, ind
         elif (sock_add_1x.hostname.naming_system is not None and
               any(x.value == "DNS" for x in sock_add_1x.hostname.naming_system)):
             domain = create_domain_name_object(sock_add_1x.hostname.hostname_value)
-            cybox_traffic[src_or_dst + "_ref"] = text_type(index) if spec_version == "2.0" else domain["id"]
+            cybox_traffic[src_or_dst + "_ref"] = str(index) if spec_version == "2.0" else domain["id"]
             if spec_version == "2.0":
                 # its a 2.0 object, remove its uuid, if it has one
                 if "id" in domain:
                     del domain["id"]
-                objs[text_type(index)] = domain
+                objs[str(index)] = domain
                 index += 1
             else:
                 objs.append(domain)
@@ -1303,7 +1302,7 @@ def convert_network_connection(conn, env=None):
     if conn.layer3_protocol is not None:
         if "protocols" not in cybox_traffic:
             cybox_traffic["protocols"] = []
-        cybox_traffic["protocols"].append(text_type(conn.layer3_protocol.value).lower())
+        cybox_traffic["protocols"].append(str(conn.layer3_protocol.value).lower())
 
     if conn.source_socket_address is not None:
         # The source, if present will have index "0".
@@ -1316,12 +1315,12 @@ def convert_network_connection(conn, env=None):
     if conn.layer4_protocol is not None:
         if "protocols" not in cybox_traffic:
             cybox_traffic["protocols"] = []
-        cybox_traffic["protocols"].append(text_type(conn.layer4_protocol.value).lower())
+        cybox_traffic["protocols"].append(str(conn.layer4_protocol.value).lower())
 
     if conn.layer7_protocol is not None:
         if "protocols" not in cybox_traffic:
             cybox_traffic["protocols"] = []
-        cybox_traffic["protocols"].append(text_type(conn.layer7_protocol.value).lower())
+        cybox_traffic["protocols"].append(str(conn.layer7_protocol.value).lower())
 
     if conn.layer7_connections is not None:
         if conn.layer7_connections.http_session is not None:
@@ -1338,8 +1337,8 @@ def convert_network_connection(conn, env=None):
                     cybox_traffic["extensions"]["http-request-ext"] = request_ext
                     if body_obj:
                         if get_option_value("spec_version") == "2.0":
-                            objs[text_type(index)] = body_obj
-                            request_ext["message_body_data_ref"] = text_type(index)
+                            objs[str(index)] = body_obj
+                            request_ext["message_body_data_ref"] = str(index)
                             index += 1
                         else:
                             objs.append(body_obj)
@@ -1562,7 +1561,7 @@ def convert_v3_extension(v3_ext):
         if getattr(v3_ext, prop_name1x, None):
             v3_ext_dict[prop_name2x] = getattr(v3_ext, prop_name1x).value
     if v3_ext.inhibit_any_policy:
-        v3_ext_dict["inhibit_any_policy"] = text_type(v3_ext.inhibit_any_policy.value)
+        v3_ext_dict["inhibit_any_policy"] = str(v3_ext.inhibit_any_policy.value)
     if v3_ext.private_key_usage_period:
         if v3_ext.private_key_usage_period.not_before:
             v3_ext_dict["private_key_usage_period_not_before"] = convert_timestamp_to_string(v3_ext.private_key_usage_period.not_before.value)
@@ -1594,7 +1593,7 @@ def convert_x509_certificate(x509):
             if getattr(cert, prop_name1x, None):
                 x509_obj[prop_name2x] = getattr(cert, prop_name1x).value
         if cert.version:
-            x509_obj["version"] = text_type(cert.version.value)
+            x509_obj["version"] = str(cert.version.value)
         if cert.validity:
             if cert.validity.not_before:
                 x509_obj["validity_not_before"] = convert_timestamp_to_string(cert.validity.not_before.value)
@@ -1686,10 +1685,10 @@ def convert_cybox_object20(obj1x):
     elif isinstance(prop, Custom):
         objs["0"] = convert_custom_object(prop)
     else:
-        warn("CybOX object %s not handled yet", 805, text_type(type(prop)))
+        warn("CybOX object %s not handled yet", 805, str(type(prop)))
         return None
     if not objs:
-        warn("%s did not yield any STIX 2.x object", 417, text_type(type(prop)))
+        warn("%s did not yield any STIX 2.x object", 417, str(type(prop)))
         return None
     else:
         if prop.custom_properties:
@@ -1755,10 +1754,10 @@ def convert_cybox_object21(obj1x, env):
     elif isinstance(prop, Custom):
         objs = [convert_custom_object(prop)]
     else:
-        warn("CybOX object %s not handled yet", 805, text_type(type(prop)))
+        warn("CybOX object %s not handled yet", 805, str(type(prop)))
         return None
     if not objs:
-        warn("%s did not yield any STIX 2.x object", 417, text_type(type(prop)))
+        warn("%s did not yield any STIX 2.x object", 417, str(type(prop)))
         return None
     else:
         if prop.custom_properties:
@@ -1809,7 +1808,7 @@ def renumber_objs(objs, number_mapping):
 def do_renumbering(objs, next_id, root_obj_index, objs_to_add):
     number_mapping = {}
     for k in sorted(objs.keys()):
-        number_mapping[text_type(k)] = text_type(next_id)
+        number_mapping[str(k)] = str(next_id)
         next_id += 1
     new_objs = renumber_objs(objs, number_mapping)
     objs_to_add.update(new_objs)
@@ -1843,7 +1842,7 @@ def change_1x_ids_to_2x_objs(co, stix2x_property_name, next_id, all_objs, objs_t
                                 index_to_use = number_mapping[root_obj_index]
                             else:
                                 index_to_use = present_obj_index
-                            result.append(text_type(index_to_use))
+                            result.append(str(index_to_use))
     # no result means they were already local indicies
     if result:
         co[stix2x_property_name] = result
@@ -1868,7 +1867,7 @@ def change_1x_id_to_2x_obj(mp, stix2x_property_name, next_id, all_objs, objs_to_
                             index_to_use = number_mapping[root_obj_index]
                         else:
                             index_to_use = present_obj_index
-                        mp[stix2x_property_name] = text_type(index_to_use)
+                        mp[stix2x_property_name] = str(index_to_use)
 
 
 def fix_cybox_relationships(observed_data):
@@ -1970,8 +1969,8 @@ def resolve_object_references20(obsers):
                             for k, v in object2x.items():
                                 if k == "0":
                                     continue
-                                new_objects[text_type(next_id)] = v
-                                index_mapping[k] = text_type(next_id)
+                                new_objects[str(next_id)] = v
+                                index_mapping[k] = str(next_id)
                                 next_id += 1
 
                     else:

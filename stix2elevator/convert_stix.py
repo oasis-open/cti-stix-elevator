@@ -5,7 +5,6 @@ from datetime import datetime
 from cybox.core import Observable
 from lxml import etree
 import pycountry
-from six import ensure_text, string_types, text_type
 import stix
 from stix.campaign import Campaign
 from stix.coa import CourseOfAction
@@ -196,7 +195,7 @@ def process_structured_text_list(text_list):
 
 def process_description_and_short_description(so, entity, parent_info=False):
     if hasattr(entity, "descriptions") and entity.descriptions is not None:
-        description_as_text = text_type(process_structured_text_list(entity.descriptions))
+        description_as_text = str(process_structured_text_list(entity.descriptions))
         if description_as_text:
             if parent_info and so["description"]:
                 so["description"] += "\nPARENT_DESCRIPTION: \n" + description_as_text
@@ -206,9 +205,9 @@ def process_description_and_short_description(so, entity, parent_info=False):
     # could be short_description or description (in STIX 1.1.1)
     # seems like in STIX 2.x - description and descriptionS are both populated with the same content
     elif hasattr(entity, "description") and entity.description is not None:
-        so["description"] += text_type(entity.description.value)
+        so["description"] += str(entity.description.value)
     if hasattr(entity, "short_description") and entity.short_description is not None:
-        short_description_as_text = text_type(entity.short_description)
+        short_description_as_text = str(entity.short_description)
         if short_description_as_text:
             warn("The Short_Description property in %s is not supported in STIX 2.x.", 310, so["id"])
             if not check_for_missing_policy("ignore"):
@@ -257,7 +256,7 @@ def convert_marking_specification(marking_specification, env):
 
             if isinstance(marking_structure, TLPMarkingStructure):
                 if marking_structure.color is not None:
-                    color = text_type(marking_structure.color).lower()
+                    color = str(marking_structure.color).lower()
                     if color == "white":
                         marking_definition_instance["id"] = "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
                     elif color == "green":
@@ -280,19 +279,19 @@ def convert_marking_specification(marking_specification, env):
                 marking_definition_instance["created"] = "2017-01-20T00:00:00.000Z"
                 definition = {}
                 if marking_structure.color is not None:
-                    definition["tlp"] = text_type(marking_structure.color).lower()
+                    definition["tlp"] = str(marking_structure.color).lower()
                 marking_definition_instance["definition"] = definition
             elif isinstance(marking_structure, TermsOfUseMarkingStructure):
                 marking_definition_instance["definition_type"] = "statement"
                 definition = {}
                 if marking_structure.terms_of_use is not None:
-                    definition["statement"] = text_type(marking_structure.terms_of_use)
+                    definition["statement"] = str(marking_structure.terms_of_use)
                 marking_definition_instance["definition"] = definition
             elif isinstance(marking_structure, SimpleMarkingStructure):
                 marking_definition_instance["definition_type"] = "statement"
                 definition = {}
                 if marking_structure.statement is not None:
-                    definition["statement"] = text_type(marking_structure.statement)
+                    definition["statement"] = str(marking_structure.statement)
                 marking_definition_instance["definition"] = definition
             elif isinstance(marking_structure, AISMarkingStructure):
                 marking_definition_instance["definition_type"] = "ais"
@@ -301,22 +300,22 @@ def convert_marking_specification(marking_specification, env):
                     definition["is_proprietary"] = "true"
                     if (marking_structure.is_proprietary.ais_consent is not None and
                             marking_structure.is_proprietary.ais_consent.consent is not None):
-                        definition["consent"] = text_type(marking_structure.is_proprietary.ais_consent.consent).lower()
+                        definition["consent"] = str(marking_structure.is_proprietary.ais_consent.consent).lower()
                     if (marking_structure.is_proprietary.tlp_marking is not None and
                             marking_structure.is_proprietary.tlp_marking.color is not None):
-                        definition["tlp"] = text_type(marking_structure.is_proprietary.tlp_marking.color).lower()
+                        definition["tlp"] = str(marking_structure.is_proprietary.tlp_marking.color).lower()
                     if marking_structure.is_proprietary.cisa_proprietary is not None:
-                        definition["is_cisa_proprietary"] = text_type(marking_structure.is_proprietary.cisa_proprietary).lower()
+                        definition["is_cisa_proprietary"] = str(marking_structure.is_proprietary.cisa_proprietary).lower()
                 elif marking_structure.not_proprietary is not None:
                     definition["is_proprietary"] = "false"
                     if (marking_structure.not_proprietary.ais_consent is not None and
                             marking_structure.not_proprietary.ais_consent.consent is not None):
-                        definition["consent"] = text_type(marking_structure.not_proprietary.ais_consent.consent).lower()
+                        definition["consent"] = str(marking_structure.not_proprietary.ais_consent.consent).lower()
                     if (marking_structure.not_proprietary.tlp_marking is not None and
                             marking_structure.not_proprietary.tlp_marking.color is not None):
-                        definition["tlp"] = text_type(marking_structure.not_proprietary.tlp_marking.color).lower()
+                        definition["tlp"] = str(marking_structure.not_proprietary.tlp_marking.color).lower()
                     if marking_structure.not_proprietary.cisa_proprietary is not None:
-                        definition["is_cisa_proprietary"] = text_type(marking_structure.not_proprietary.cisa_proprietary).lower()
+                        definition["is_cisa_proprietary"] = str(marking_structure.not_proprietary.cisa_proprietary).lower()
                 marking_definition_instance["definition"] = definition
             else:
                 if marking_structure.__class__.__name__ in get_option_value("markings_allowed"):
@@ -506,7 +505,7 @@ def handle_relationship_ref(ref, item, id, env, default_verb, to_direction=True)
     else:
         # a forward reference, fix later
         source_id = id if to_direction else item.idref
-        target_id = text_type(item.idref) if to_direction else id
+        target_id = str(item.idref) if to_direction else id
         rel_obj = create_relationship(source_id, target_id, env, default_verb, item)
         if hasattr(ref, "relationship") and ref.relationship is not None:
             rel_obj["description"] = ref.relationship.value
@@ -717,7 +716,7 @@ def convert_campaign(camp, env):
     if camp.names is not None:
         campaign_instance["aliases"] = []
         for name in camp.names:
-            if isinstance(name, string_types):
+            if isinstance(name, str):
                 campaign_instance["aliases"].append(name)
             else:
                 campaign_instance["aliases"].append(name.value)
@@ -777,11 +776,11 @@ def handle_missing_objective_property(container, objective, id):
 
             if objective.descriptions:
                 for d in objective.descriptions:
-                    all_text.append(text_type(d.value))
+                    all_text.append(str(d.value))
 
             if objective.short_descriptions:
                 for sd in objective.short_descriptions:
-                    all_text.append(text_type(sd.value))
+                    all_text.append(str(sd.value))
 
             if check_for_missing_policy("add-to-description"):
                 container["description"] += "\n\n" + "OBJECTIVE: "
@@ -1007,17 +1006,17 @@ def convert_ciq_addresses2_1(ciq_info_addresses, identity_instance, env, parent_
                 if len(add.country.name_elements) == 1:
                     cc = determine_country_code(add.country.name_elements[0])
                     for aa in add.administrative_area.name_elements:
-                        location_keys.append("c:" + text_type(cc) +
+                        location_keys.append("c:" + str(cc) +
                                              "," +
-                                             "aa:" + text_type(determine_aa(aa)))
+                                             "aa:" + str(determine_aa(aa)))
                 else:
                     warn("Multiple administrative areas with multiple countries in %s is not handled", 631, None)
             elif hasattr(add, "administrative_area") and add.administrative_area:
                 for aa in add.adminstrative_area.name_elements:
-                    location_keys.append("aa:" + text_type(determine_aa(aa)))
+                    location_keys.append("aa:" + str(determine_aa(aa)))
             elif hasattr(add, "country") and add.country:
                 for c in add.country.name_elements:
-                    location_keys.append("c:" + text_type(determine_country_code(c)))
+                    location_keys.append("c:" + str(determine_country_code(c)))
         else:
             # only remember locations with no free text address
             warn("Location with free text address in %s not handled yet", 433, identity_instance["id"])
@@ -1271,17 +1270,17 @@ def convert_test_mechanism(indicator, indicator_instance):
                     warn(msg, 506, indicator_instance["id"], indicator_instance["pattern_type"], determine_pattern_type(tm))
                 else:
                     if isinstance(tm, YaraTestMechanism):
-                        indicator_instance["pattern"] = text_type(tm.rule.value)
+                        indicator_instance["pattern"] = str(tm.rule.value)
                         indicator_instance["pattern_type"] = "yara"
                     elif isinstance(tm, SnortTestMechanism):
                         list_of_strings = []
                         for rule in tm.rules:
-                            list_of_strings.append(text_type(rule.value))
+                            list_of_strings.append(str(rule.value))
                         indicator_instance["pattern"] = ", ".join(list_of_strings)
                         indicator_instance["pattern_type"] = "snort"
                     elif isinstance(tm, OpenIOCTestMechanism):
                         warn("IOC indicator in %s cannot be converted to a STIX pattern", 410, indicator_instance["id"])
-                        indicator_instance["pattern"] = ensure_text(etree.tostring(tm.ioc))
+                        indicator_instance["pattern"] = bytes.decode(etree.tostring(tm.ioc))
                         indicator_instance["pattern_type"] = "openioc"
 
 
@@ -1469,11 +1468,11 @@ def create_cyber_observables(obs, observed_data_instance):
                     related = convert_cybox_object(o)
                     if related:
                         for index, obj in related.items():
-                            observed_data_instance["objects"][text_type(int(index) + int(current_largest_id) + 1)] = obj
+                            observed_data_instance["objects"][str(int(index) + int(current_largest_id) + 1)] = obj
                         property_name = embedded_property_ref_name(obs.object_.properties, o.relationship)
                         if property_name and o.relationship and o.relationship.value:
                             set_embedded_ref_property_2_0(observed_data_instance["objects"]['0'],
-                                                          text_type(int(current_largest_id) + 1),
+                                                          str(int(current_largest_id) + 1),
                                                           property_name)
 
 
@@ -1653,7 +1652,7 @@ def add_motivations_to_threat_actor(sdo_instance, motivations):
     info("Using first Threat Actor motivation as primary_motivation. If more, as secondary_motivation", 719)
 
     if motivations[0].value is not None:
-        sdo_instance["primary_motivation"] = map_vocabs_to_label(text_type(motivations[0].value), ATTACK_MOTIVATION_MAP)
+        sdo_instance["primary_motivation"] = map_vocabs_to_label(str(motivations[0].value), ATTACK_MOTIVATION_MAP)
 
     values = []
 
@@ -1702,7 +1701,7 @@ def convert_threat_actor(threat_actor, env):
     if threat_actor.intended_effects is not None:
         threat_actor_instance["goals"] = list()
         for g in threat_actor.intended_effects:
-            threat_actor_instance["goals"].append(text_type(g.value))
+            threat_actor_instance["goals"].append(str(g.value))
     handle_missing_properties_of_threat_actor(threat_actor_instance, threat_actor)
     spec_version = get_option_value("spec_version")
     convert_controlled_vocabs_to_open_vocabs(threat_actor_instance,
@@ -1780,7 +1779,7 @@ def process_ttp_properties(sdo_instance, ttp, env, kill_chains_in_sdo=True):
             if rel.item.idref is None:
                 target_type = get_type_from_id(rel.item.id_)
                 verb, to_direction = determine_ttp_relationship_type_and_direction(source_type, target_type,
-                                                                                   text_type(rel.relationship))
+                                                                                   str(rel.relationship))
                 handle_embedded_ref(rel, rel.item, rel.item.id_, env, verb, to_direction)
             else:
                 target_id = rel.item.idref
@@ -1788,7 +1787,7 @@ def process_ttp_properties(sdo_instance, ttp, env, kill_chains_in_sdo=True):
                 if stix20_target_ids != []:
                     for id20 in stix20_target_ids:
                         target_type = get_type_from_id(id20)
-                        verb, to_direction = determine_ttp_relationship_type_and_direction(source_type, target_type, text_type(rel.relationship))
+                        verb, to_direction = determine_ttp_relationship_type_and_direction(source_type, target_type, str(rel.relationship))
                         handle_existing_ref(rel, id20, sdo_instance["id"], env, verb, to_direction)
                 else:
                     handle_relationship_ref(rel, rel.item, sdo_instance["id"], env, "related-to", to_direction=True)
@@ -1836,13 +1835,13 @@ def convert_malware_instance(mal, ttp, env, ttp_id_used):
     if mal.names is not None:
         for n in mal.names:
             if "name" not in malware_instance_instance:
-                malware_instance_instance["name"] = text_type(n)
+                malware_instance_instance["name"] = str(n)
             elif check_for_missing_policy("ignore"):
                 warn("Only one name for malware is allowed for %s in STIX 2.x - used %s, dropped %s",
                      508,
                      malware_instance_instance["id"],
                      malware_instance_instance["name"],
-                     text_type(n))
+                     str(n))
     if mal.title is not None:
         if "name" not in malware_instance_instance:
             malware_instance_instance["name"] = mal.title
@@ -2108,7 +2107,7 @@ def finalize_bundle(env):
             if "kill_chain_phases" in ind20:
                 fixed_kill_chain_phases = []
                 for kcp in ind20["kill_chain_phases"]:
-                    if isinstance(kcp, string_types):
+                    if isinstance(kcp, str):
                         # noinspection PyBroadException
                         try:
                             kill_chain_phase_in_20 = _KILL_CHAINS_PHASES[kcp]
@@ -2147,7 +2146,7 @@ def finalize_bundle(env):
         for ind in bundle_instance["indicators"]:
             if "pattern" in ind:
                 pattern = ind["pattern"]
-                if isinstance(pattern, string_types):
+                if isinstance(pattern, str):
                     continue
                 final_pattern = fix_pattern(pattern)
                 if final_pattern:
@@ -2165,7 +2164,7 @@ def finalize_bundle(env):
                         else:
                             ind["pattern"] = "[%s]" % result
                     else:
-                        ind["pattern"] = text_type(final_pattern.partition_according_to_object_path())
+                        ind["pattern"] = str(final_pattern.partition_according_to_object_path())
 
     bundle_instance["objects"].extend(bundle_instance["indicators"])
     bundle_instance["indicators"] = []
