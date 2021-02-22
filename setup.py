@@ -36,9 +36,11 @@ setup(
     maintainer='Rich Piazza',
     maintainer_email='rpiazza@mitre.org',
     packages=find_packages(exclude=['*.test', '*.test.*']),
+    python_requires='>=3.6',
     install_requires=[
-        'pycountry>=19.8.18',
+        'maec',
         'netaddr',
+        'pycountry>=19.8.18',
         'stix>=1.1.1.9,<1.2.1.0',
         'stix2-validator>=2.0.2',
         'stixmarx>=1.0.8',
