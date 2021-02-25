@@ -1,0 +1,16 @@
+{
+    "id": "bundle--6f8bfbf8-2e54-4321-9316-2ce80f33322d",
+    "objects": [
+        {
+            "created": "2015-05-15T09:00:00.000Z",
+            "description": "Poison Ivy is a remote access tool that is freely available for download from its official web site at www.poisonivy-rat.com. First released in 2005, the tool has gone unchanged since 2008 with version 2.3.2. Poison Ivy includes features common to most Windows-based RATs, including key logging, screen capturing, video capturing, file transfers, system administration, password theft, and traffic relaying.\n\nPoison Ivy's wide availability and easy-to-use features make it a popular choice for all kinds of criminals. But it is probably most notable for its role in many high profile, targeted APT attacks.\n\nThese APTs pursue specific targets, using RATs to maintain a persistent presence within the target's network. They move laterally and escalate system privileges to extract sensitive information-whenever the attacker wants to do so.4,5 Because some RATs used in targeted attacks are widely available, determining whether an attack is part of a broader APT campaign can be difficult. Equally challenging is identifying malicious traffic to determine the attacker's post-compromise activities and assess overall damage-these RATs often encrypt their network communications after the initial exploit.\n\nIn 2011, three years after the most recent release of PIVY, attackers used the RAT to compromise security firm RSA and steal data about its SecureID authentication system. That data was subsequently used in other attacks. The RSA attack was linked to Chinese threat actors and described at the time as extremely sophisticated. Exploiting a zero-day vulnerability, the attack delivered PIVY as the payload. It was not an isolated incident. The campaign appears to have started in 2010, with many other companies compromised.\n\nPIVY also played a key role in the 2011 campaign known as Nitro that targeted chemical makers, government agencies, defense contractors, and human rights groups. Still active a year later, the Nitro attackers used a zero-day vulnerability in Java to deploy PIVY in 2012. Just recently, PIVY was the payload of a zero-day exploit in Internet Explorer used in what is known as a \"strategic web compromise\" attack against visitors to a U.S. government website and a variety of others.\n\nRATs require live, direct, real-time human interaction by the APT attacker. This characteristic is distinctly different from crimeware (malware focused on cybercrime), where the criminal can issue commands to their botnet of compromised endpoints whenever they please and set them to work on a common goal such as a spam relay. In contrast, RATs are much more personal and may indicate that you are dealing with a dedicated threat actor that is interested in your organization specifically.\n\n\nOTHER_NAMES:\nPoison Ivy (PIVY) 2,\nPoison Ivy (PIVY) 3",
+            "id": "malware--497d1999-1dad-4977-9158-e25bb6b4fc42",
+            "is_family": false,
+            "modified": "2015-05-15T09:00:00.000Z",
+            "name": "Poison Ivy (PIVY) 1",
+            "spec_version": "2.1",
+            "type": "malware"
+        }
+    ],
+    "type": "bundle"
+}

@@ -1,0 +1,73 @@
+{
+    "id": "bundle--6116aed6-a7e9-11e3-a82f-000c29b241af",
+    "objects": [
+        {
+            "id": "domain-name--3fa3b1c7-15bb-58a8-80ed-5c50c5c7baee",
+            "resolves_to_refs": [
+                "ipv4-addr--5a1e46bb-e014-52cf-a97e-3e781684636e",
+                "ipv4-addr--499a5781-4ce8-50d0-a0cc-0ef61787204c"
+            ],
+            "type": "domain-name",
+            "value": "www.dhcpserver.ns01.us"
+        },
+        {
+            "id": "ipv4-addr--5a1e46bb-e014-52cf-a97e-3e781684636e",
+            "resolves_to_refs": [
+                "mac-addr--e74408fe-cef4-5890-8bf6-3e4d8a5d9808"
+            ],
+            "type": "ipv4-addr",
+            "value": "219.90.112.203"
+        },
+        {
+            "id": "mac-addr--e74408fe-cef4-5890-8bf6-3e4d8a5d9808",
+            "type": "mac-addr",
+            "value": "d4:be:d9:17:d8:59"
+        },
+        {
+            "id": "ipv4-addr--499a5781-4ce8-50d0-a0cc-0ef61787204c",
+            "type": "ipv4-addr",
+            "value": "202.65.220.64"
+        },
+        {
+            "created": "2020-12-30T16:03:22.620Z",
+            "first_observed": "2020-12-30T16:03:22.620Z",
+            "id": "observed-data--42f1ec7e-2a32-4ff7-84a7-fbcb6288c8c9",
+            "last_observed": "2020-12-30T16:03:22.620Z",
+            "modified": "2020-12-30T16:03:22.620Z",
+            "number_observed": 1,
+            "object_refs": [
+                "domain-name--3fa3b1c7-15bb-58a8-80ed-5c50c5c7baee"
+            ],
+            "spec_version": "2.1",
+            "type": "observed-data"
+        },
+        {
+            "created": "2020-12-30T16:03:22.620Z",
+            "first_observed": "2020-12-30T16:03:22.620Z",
+            "id": "observed-data--a9579acb-62fb-4c4f-9af3-5571c0600edc",
+            "last_observed": "2020-12-30T16:03:22.620Z",
+            "modified": "2020-12-30T16:03:22.620Z",
+            "number_observed": 1,
+            "object_refs": [
+                "ipv4-addr--5a1e46bb-e014-52cf-a97e-3e781684636e",
+                "mac-addr--e74408fe-cef4-5890-8bf6-3e4d8a5d9808"
+            ],
+            "spec_version": "2.1",
+            "type": "observed-data"
+        },
+        {
+            "created": "2020-12-30T16:03:22.620Z",
+            "first_observed": "2020-12-30T16:03:22.620Z",
+            "id": "observed-data--4b3b859b-d682-47e7-8e27-fbadca8e3b72",
+            "last_observed": "2020-12-30T16:03:22.620Z",
+            "modified": "2020-12-30T16:03:22.620Z",
+            "number_observed": 1,
+            "object_refs": [
+                "ipv4-addr--499a5781-4ce8-50d0-a0cc-0ef61787204c"
+            ],
+            "spec_version": "2.1",
+            "type": "observed-data"
+        }
+    ],
+    "type": "bundle"
+}

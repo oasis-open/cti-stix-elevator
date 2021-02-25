@@ -7,7 +7,6 @@ from inspect import stack
 from cybox.core import Observable
 from lxml import etree
 import pycountry
-from six import ensure_text, string_types, text_type
 import stix
 from stix.campaign import Campaign
 from stix.coa import CourseOfAction
@@ -61,9 +60,11 @@ from stix2elevator.ids import (
     get_id_values, get_type_from_id, is_stix1x_id, record_ids
 )
 from stix2elevator.missing_policy import (
-    convert_to_custom_name, handle_missing_confidence_property,
-    handle_missing_statement_properties, handle_missing_string_property,
-    handle_missing_tool_property, handle_multiple_missing_statement_properties
+    check_for_missing_policy, convert_to_custom_name,
+    determine_container_for_missing_properties, fill_in_extension_properties,
+    handle_missing_confidence_property, handle_missing_statement_properties,
+    handle_missing_string_property, handle_missing_tool_property,
+    handle_multiple_missing_statement_properties
 )
 from stix2elevator.options import error, get_option_value, info, warn
 from stix2elevator.utils import (
@@ -152,6 +153,19 @@ def get_identity_ref(identity, env, temp_marking_id=None, from_package=False):
         return ident20["id"]
 
 
+def handle_missing_properties_of_information_source(so, information_source):
+    # handle missing properties
+    container, extension_definition_id = determine_container_for_missing_properties("information_source", so)
+
+    if container is not None:
+        if information_source.roles:
+            handle_missing_string_property(container, "information_source_roles", information_source.roles, so["id"], True)
+        if information_source.tools:
+            for tool in information_source.tools:
+                handle_missing_tool_property(container, tool)
+        fill_in_extension_properties(so, container, extension_definition_id)
+
+
 def process_information_source(information_source, so, env, temp_marking_id=None):
     if information_source:
         if information_source.identity is not None:
@@ -167,11 +181,8 @@ def process_information_source(information_source, so, env, temp_marking_id=None
             if information_source.references:
                 for ref in information_source.references:
                     so["external_references"].append({"source_name": "unknown", "url": ref})
-            if information_source.roles:
-                handle_missing_string_property(so, "information_source_role", information_source.roles, True)
-            if information_source.tools:
-                for tool in information_source.tools:
-                    handle_missing_tool_property(so, tool)
+            handle_missing_properties_of_information_source(so, information_source)
+
     else:
         so["created_by_ref"] = env.created_by_ref
     return so["created_by_ref"]
@@ -190,7 +201,7 @@ def process_structured_text_list(text_list):
 
 def process_description_and_short_description(so, entity, parent_info=False):
     if hasattr(entity, "descriptions") and entity.descriptions is not None:
-        description_as_text = text_type(process_structured_text_list(entity.descriptions))
+        description_as_text = str(process_structured_text_list(entity.descriptions))
         if description_as_text:
             if parent_info and so["description"]:
                 so["description"] += "\nPARENT_DESCRIPTION: \n" + description_as_text
@@ -200,20 +211,17 @@ def process_description_and_short_description(so, entity, parent_info=False):
     # could be short_description or description (in STIX 1.1.1)
     # seems like in STIX 2.x - description and descriptionS are both populated with the same content
     elif hasattr(entity, "description") and entity.description is not None:
-        so["description"] += text_type(entity.description.value)
+        so["description"] += str(entity.description.value)
     if hasattr(entity, "short_description") and entity.short_description is not None:
-        short_description_as_text = text_type(entity.short_description)
+        short_description_as_text = str(entity.short_description)
         if short_description_as_text:
-            warn("The Short_Description property in %s is not supported in STIX 2.x.", 0, so["id"])
-            if get_option_value("missing_policy") == "add-to-description":
+            warn("The Short_Description property in %s is not supported in STIX 2.x.", 310, so["id"])
+            if not check_for_missing_policy("ignore"):
                 warn("The text was appended to the description property of %s", 301, so["id"])
                 if parent_info and so["description"]:
                     so["description"] += "\nPARENT_SHORT_DESCRIPTION: \n" + short_description_as_text
                 else:
                     so["description"] += short_description_as_text
-            elif get_option_value("missing_policy") == "use_custom_properties":
-                warn("Used custom property for short_description of %s", 308, so["id"])
-                so[convert_to_custom_name("short_description")] = short_description_as_text
             else:
                 warn("Missing property 'short_description' of %s is ignored", 307, so["id"])
 
@@ -254,7 +262,7 @@ def convert_marking_specification(marking_specification, env):
 
             if isinstance(marking_structure, TLPMarkingStructure):
                 if marking_structure.color is not None:
-                    color = text_type(marking_structure.color).lower()
+                    color = str(marking_structure.color).lower()
                     set_tlp_reference(marking_definition_instance, color, "id")
 
             if "modified" in marking_definition_instance:
@@ -265,19 +273,19 @@ def convert_marking_specification(marking_specification, env):
                 marking_definition_instance["created"] = "2017-01-20T00:00:00.000Z"
                 definition = {}
                 if marking_structure.color is not None:
-                    definition["tlp"] = text_type(marking_structure.color).lower()
+                    definition["tlp"] = str(marking_structure.color).lower()
                 marking_definition_instance["definition"] = definition
             elif isinstance(marking_structure, TermsOfUseMarkingStructure):
                 marking_definition_instance["definition_type"] = "statement"
                 definition = {}
                 if marking_structure.terms_of_use is not None:
-                    definition["statement"] = text_type(marking_structure.terms_of_use)
+                    definition["statement"] = str(marking_structure.terms_of_use)
                 marking_definition_instance["definition"] = definition
             elif isinstance(marking_structure, SimpleMarkingStructure):
                 marking_definition_instance["definition_type"] = "statement"
                 definition = {}
                 if marking_structure.statement is not None:
-                    definition["statement"] = text_type(marking_structure.statement)
+                    definition["statement"] = str(marking_structure.statement)
                 marking_definition_instance["definition"] = definition
             elif isinstance(marking_structure, AISMarkingStructure):
                 marking_definition_instance["definition_type"] = "ais"
@@ -286,30 +294,30 @@ def convert_marking_specification(marking_specification, env):
                     definition["is_proprietary"] = "true"
                     if (marking_structure.is_proprietary.ais_consent is not None and
                             marking_structure.is_proprietary.ais_consent.consent is not None):
-                        definition["consent"] = text_type(marking_structure.is_proprietary.ais_consent.consent).lower()
+                        definition["consent"] = str(marking_structure.is_proprietary.ais_consent.consent).lower()
                         consent_label = "ais-consent-" + definition["consent"]
                         add_label(marking_definition_instance, consent_label)
                     if (marking_structure.is_proprietary.tlp_marking is not None and
                             marking_structure.is_proprietary.tlp_marking.color is not None):
-                        definition["tlp"] = text_type(marking_structure.is_proprietary.tlp_marking.color).lower()
+                        definition["tlp"] = str(marking_structure.is_proprietary.tlp_marking.color).lower()
                         set_tlp_reference(marking_definition_instance, definition["tlp"], "marking_ref")
                     if marking_structure.is_proprietary.cisa_proprietary is not None:
-                        definition["is_cisa_proprietary"] = text_type(marking_structure.is_proprietary.cisa_proprietary).lower()
+                        definition["is_cisa_proprietary"] = str(marking_structure.is_proprietary.cisa_proprietary).lower()
                         proprietary_label = "cisa-proprietary-" + definition["is_cisa_proprietary"]
                         add_label(marking_definition_instance, proprietary_label)
                 elif marking_structure.not_proprietary is not None:
                     definition["is_proprietary"] = "false"
                     if (marking_structure.not_proprietary.ais_consent is not None and
                             marking_structure.not_proprietary.ais_consent.consent is not None):
-                        definition["consent"] = text_type(marking_structure.not_proprietary.ais_consent.consent).lower()
+                        definition["consent"] = str(marking_structure.not_proprietary.ais_consent.consent).lower()
                         consent_label = "ais-consent-" + definition["consent"]
                         add_label(marking_definition_instance, consent_label)
                     if (marking_structure.not_proprietary.tlp_marking is not None and
                             marking_structure.not_proprietary.tlp_marking.color is not None):
-                        definition["tlp"] = text_type(marking_structure.not_proprietary.tlp_marking.color).lower()
+                        definition["tlp"] = str(marking_structure.not_proprietary.tlp_marking.color).lower()
                         set_tlp_reference(marking_definition_instance, definition["tlp"], "marking_ref")
                     if marking_structure.not_proprietary.cisa_proprietary is not None:
-                        definition["is_cisa_proprietary"] = text_type(marking_structure.not_proprietary.cisa_proprietary).lower()
+                        definition["is_cisa_proprietary"] = str(marking_structure.not_proprietary.cisa_proprietary).lower()
                         proprietary_label = "cisa-proprietary-" + definition["is_cisa_proprietary"]
                         add_label(marking_definition_instance, proprietary_label)
                 marking_definition_instance["definition"] = definition
@@ -391,13 +399,13 @@ def finish_basic_object(old_id, instance, env, stix1x_obj, temp_marking_id=None)
 
 
 def handle_free_text_lines(sdo_instance, free_text_lines):
-    if get_option_value("missing_policy") == "ignore":
+    if check_for_missing_policy("ignore"):
         warn("Missing property 'free_text_lines' of %s is ignored", 307, sdo_instance["id"])
     else:
         lines = ""
         for line in free_text_lines:
             lines += line.value
-        if get_option_value("missing_policy") == "add-to-description":
+        if check_for_missing_policy("add-to-description"):
             sdo_instance["description"] = lines
             warn("Appended free text lines to description of %s", 302, sdo_instance["id"])
         else:
@@ -432,7 +440,7 @@ def process_information_source_for_sighting(sighting, sighting_instance, env):
                 for ref in information_source.references:
                     sighting_instance["external_references"].append({"url": ref})
             if information_source.roles:
-                handle_missing_string_property(sighting_instance, "information_source_role", information_source.roles, True)
+                handle_missing_string_property(sighting_instance, "information_source_roles", information_source.roles, True)
             if information_source.tools:
                 for tool in information_source.tools:
                     handle_missing_tool_property(sighting_instance, tool)
@@ -524,7 +532,7 @@ def handle_relationship_ref(ref, item, id, env, default_verb, to_direction=True)
     else:
         # a forward reference, fix later
         source_id = id if to_direction else item.idref
-        target_id = text_type(item.idref) if to_direction else id
+        target_id = str(item.idref) if to_direction else id
         rel_obj = create_relationship(source_id, target_id, env, default_verb, item)
         if hasattr(ref, "relationship") and ref.relationship is not None:
             rel_obj["description"] = ref.relationship.value
@@ -705,12 +713,27 @@ def add_relationships_to_reports(bundle_instance):
 
 # confidence
 
-def add_confidence_to_object(sdo_instance, confidence):
+def add_confidence_to_object(instance, confidence):
     if confidence is not None and confidence.value is not None:
-        sdo_instance["confidence"] = convert_confidence(confidence, sdo_instance["id"])
+        instance["confidence"] = convert_confidence(confidence, instance["id"])
 
 
 # campaign
+def handle_missing_properties_of_campaign(campaign_instance, camp):
+    # handle missing properties
+    container, extension_definition_id = determine_container_for_missing_properties("campaign", campaign_instance)
+
+    if container is not None:
+        handle_multiple_missing_statement_properties(container, camp.intended_effects, "intended_effect",
+                                                     campaign_instance["id"])
+        handle_missing_string_property(container, "status", camp.status, campaign_instance["id"])
+
+        if get_option_value("spec_version") == "2.0":
+            handle_missing_confidence_property(container, camp.confidence, campaign_instance["id"])
+        else:  # 2.1
+            add_confidence_to_object(campaign_instance, camp.confidence)
+
+        fill_in_extension_properties(campaign_instance, container, extension_definition_id)
 
 
 def convert_campaign(camp, env):
@@ -720,24 +743,17 @@ def convert_campaign(camp, env):
     if camp.names is not None:
         campaign_instance["aliases"] = []
         for name in camp.names:
-            if isinstance(name, string_types):
+            if isinstance(name, str):
                 campaign_instance["aliases"].append(name)
             else:
                 campaign_instance["aliases"].append(name.value)
+    handle_missing_properties_of_campaign(campaign_instance, camp)
     if "created_by_ref" in campaign_instance:
         new_env = env.newEnv(timestamp=campaign_instance["created"], created_by_ref=campaign_instance["created_by_ref"])
     else:
         new_env = env.newEnv(timestamp=campaign_instance["created"])
     # process information source before any relationships
     new_env.add_to_env(created_by_ref=process_information_source(camp.information_source, campaign_instance, new_env))
-
-    handle_multiple_missing_statement_properties(campaign_instance, camp.intended_effects, "intended_effect")
-    handle_missing_string_property(campaign_instance, "status", camp.status)
-
-    if get_option_value("spec_version") == "2.0":
-        handle_missing_confidence_property(campaign_instance, camp.confidence)
-    else:  # 2.1
-        add_confidence_to_object(campaign_instance, camp.confidence)
 
     if camp.activity is not None:
         for a in camp.activity:
@@ -778,29 +794,48 @@ def convert_campaign(camp, env):
 # course of action
 
 
-def handle_missing_objective_property(sdo_instance, objective):
+def handle_missing_objective_property(container, objective, id):
     if objective is not None:
-        if get_option_value("missing_policy") == "ignore":
-            warn("Missing property 'objective' of %s is ignored", 307, sdo_instance["id"])
+        if check_for_missing_policy("ignore"):
+            warn("Missing property 'objective' of %s is ignored", 307, id)
         else:
             all_text = []
 
             if objective.descriptions:
                 for d in objective.descriptions:
-                    all_text.append(text_type(d.value))
+                    all_text.append(str(d.value))
 
             if objective.short_descriptions:
                 for sd in objective.short_descriptions:
-                    all_text.append(text_type(sd.value))
+                    all_text.append(str(sd.value))
 
-            if get_option_value("missing_policy") == "add-to-description":
-                sdo_instance["description"] += "\n\n" + "OBJECTIVE: "
-                sdo_instance["description"] += "\n\n\t".join(all_text)
-            elif get_option_value("missing_policy") == "use-custom-properties":
-                sdo_instance[convert_to_custom_name("objective")] = " ".join(all_text)
-                warn("Used custom property for objective of %s", 308, sdo_instance["id"])
+            if check_for_missing_policy("add-to-description"):
+                container["description"] += "\n\n" + "OBJECTIVE: "
+                container["description"] += "\n\n\t".join(all_text)
+            elif check_for_missing_policy("use-custom-properties"):
+                container[convert_to_custom_name("objective")] = " ".join(all_text)
+                warn("Used custom property for objective of %s", 308, id)
+            elif check_for_missing_policy("use-extensions"):
+                container["objective"] = " ".join(all_text)
+                warn("Used an extension for objective of %s", 311, id)
             if objective.applicability_confidence:
-                handle_missing_confidence_property(sdo_instance, objective.applicability_confidence, "objective")
+                handle_missing_confidence_property(container, objective.applicability_confidence, id, "objective")
+
+
+def handle_missing_properties_of_course_of_action(coa_instance, coa):
+    container, extension_definition_id = determine_container_for_missing_properties("course-of-action", coa_instance)
+
+    if container is not None:
+        handle_missing_string_property(container, "stage", coa.stage, coa_instance["id"])
+        handle_missing_objective_property(container, coa.objective, coa_instance["id"])
+        if coa.parameter_observables is not None:
+            parameter_expression = handle_observable_information_list_as_pattern(coa.parameter_observables)
+            handle_missing_string_property(container, "parameter_expression", parameter_expression, coa_instance["id"])
+        handle_missing_statement_properties(container, coa.impact, "impact", coa_instance["id"])
+        handle_missing_statement_properties(container, coa.cost, "cost", coa_instance["id"])
+        handle_missing_statement_properties(container, coa.efficacy, "efficacy", coa_instance["id"])
+
+    fill_in_extension_properties(coa_instance, container, extension_definition_id)
 
 
 def convert_course_of_action(coa, env):
@@ -808,19 +843,14 @@ def convert_course_of_action(coa, env):
     new_env = env.newEnv(timestamp=coa_instance["created"])
     process_description_and_short_description(coa_instance, coa)
     coa_instance["name"] = coa.title
-    handle_missing_string_property(coa_instance, "stage", coa.stage)
+
     if coa.type_:
         convert_controlled_vocabs_to_open_vocabs(coa_instance, "labels", [coa.type_], COA_LABEL_MAP, False)
-    handle_missing_objective_property(coa_instance, coa.objective)
-
-    if coa.parameter_observables is not None:
-        parameter_expression = handle_observable_information_list_as_pattern(coa.parameter_observables)
-        handle_missing_string_property(coa_instance, "parameter_expression", parameter_expression)
     if coa.structured_coa:
         warn("Structured COAs type in %s are not supported in STIX 2.x", 404, coa_instance["id"])
-    handle_missing_statement_properties(coa_instance, coa.impact, "impact")
-    handle_missing_statement_properties(coa_instance, coa.cost, "cost")
-    handle_missing_statement_properties(coa_instance, coa.efficacy, "efficacy")
+
+    handle_missing_properties_of_course_of_action(coa_instance, coa)
+
     new_env.add_to_env(created_by_ref=process_information_source(coa.information_source,
                                                                  coa_instance,
                                                                  new_env))
@@ -852,6 +882,38 @@ def process_et_properties(sdo_instance, et, env):
                                       "mitigates")
 
 
+def handle_missing_properties_of_vulnerability(vulnerability_instance, v):
+    container, extension_definition_id = determine_container_for_missing_properties("vulnerability",
+                                                                                    vulnerability_instance)
+
+    if container is not None:
+        if v.source is not None:
+            handle_missing_string_property(container, "source", v.source, vulnerability_instance["id"], False)
+
+        if v.cvss_score is not None:
+            # FIXME: add CVSS score into description
+            info("CVSS Score in %s is not handled, yet.", 815, vulnerability_instance["id"])
+
+        if v.discovered_datetime is not None:
+            handle_missing_string_property(container,
+                                           "discovered_datetime",
+                                           v.discovered_datetime.value.strftime("%Y-%m-%dT%H:%M:%S.%fZ"),
+                                           vulnerability_instance["id"],
+                                           False)
+
+        if v.published_datetime is not None:
+            handle_missing_string_property(container,
+                                           "published_datetime",
+                                           v.published_datetime.value.strftime("%Y-%m-%dT%H:%M:%S.%fZ"),
+                                           vulnerability_instance["id"],
+                                           False)
+
+        if v.affected_software is not None:
+            info("Affected Software in %s is not handled, yet.", 815, vulnerability_instance["id"])
+
+        fill_in_extension_properties(vulnerability_instance, container, extension_definition_id)
+
+
 def convert_vulnerability(v, et, env):
     vulnerability_instance = create_basic_object("vulnerability", v, env, et.id_)
     if v.title is not None:
@@ -862,27 +924,7 @@ def convert_vulnerability(v, et, env):
     if v.osvdb_id is not None:
         vulnerability_instance["external_references"].append({"source_name": "osvdb", "external_id": v.osvdb_id})
 
-    if v.source is not None:
-        handle_missing_string_property(vulnerability_instance, "source", v.source, False)
-
-    if v.cvss_score is not None:
-        # FIXME: add CVSS score into description
-        info("CVSS Score in %s is not handled, yet.", 815, vulnerability_instance["id"])
-
-    if v.discovered_datetime is not None:
-        handle_missing_string_property(vulnerability_instance,
-                                       "discovered_datetime",
-                                       v.discovered_datetime.value.strftime("%Y-%m-%dT%H:%M:%S.%fZ"),
-                                       False)
-
-    if v.published_datetime is not None:
-        handle_missing_string_property(vulnerability_instance,
-                                       "published_datetime",
-                                       v.published_datetime.value.strftime("%Y-%m-%dT%H:%M:%S.%fZ"),
-                                       False)
-
-    if v.affected_software is not None:
-        info("Affected Software in %s is not handled, yet.", 815, vulnerability_instance["id"])
+    handle_missing_properties_of_vulnerability(vulnerability_instance, v)
 
     if v.references is not None:
         for ref in v.references:
@@ -993,17 +1035,17 @@ def convert_ciq_addresses2_1(ciq_info_addresses, identity_instance, env, parent_
                 if len(ciq_info_address.country.name_elements) == 1:
                     country_code = determine_country_code(ciq_info_address.country.name_elements[0])
                     for administrative_area in ciq_info_address.administrative_area.name_elements:
-                        location_keys.append("c:" + text_type(country_code) +
+                        location_keys.append("c:" + str(country_code) +
                                              "," +
-                                             "aa:" + text_type(determine_administrative_area(administrative_area)))
+                                             "aa:" + str(determine_administrative_area(administrative_area)))
                 else:
                     warn("Multiple administrative areas with multiple countries in %s is not handled", 631, None)
             elif hasattr(ciq_info_address, "administrative_area") and ciq_info_address.administrative_area:
                 for administrative_area in ciq_info_address.adminstrative_area.name_elements:
-                    location_keys.append("aa:" + text_type(determine_administrative_area(administrative_area)))
+                    location_keys.append("aa:" + str(determine_administrative_area(administrative_area)))
             elif hasattr(ciq_info_address, "country") and ciq_info_address.country:
                 for country_code in ciq_info_address.country.name_elements:
-                    location_keys.append("c:" + text_type(determine_country_code(country_code)))
+                    location_keys.append("c:" + str(determine_country_code(country_code)))
         else:
             # only remember locations with no free text address
             warn("Location with free text address in %s not handled yet", 433, identity_instance["id"])
@@ -1037,6 +1079,23 @@ def convert_ciq_addresses2_1(ciq_info_addresses, identity_instance, env, parent_
             )
 
 
+def handle_missing_properties_of_ciq_instance(identity_instance, ciq):
+    container, extension_definition_id = determine_container_for_missing_properties("identity-ciq", identity_instance)
+
+    if container is not None:
+        if ciq.roles:
+            handle_missing_string_property(container,
+                                           "information_source_roles",
+                                           ciq.roles,
+                                           identity_instance["id"],
+                                           True)
+            warn("Roles is not a property of an identity (%s).  Perhaps the roles are associated with a related Threat Actor",
+                 428,
+                 identity_instance["id"])
+
+        fill_in_extension_properties(identity_instance, container, extension_definition_id)
+
+
 def convert_identity(identity, env, parent_id=None, temp_marking_id=None, from_package=False):
     identity_instance = create_basic_object("identity", identity, env, parent_id)
     identity_instance["sectors"] = []
@@ -1046,12 +1105,8 @@ def convert_identity(identity, env, parent_id=None, temp_marking_id=None, from_p
     if identity.name is not None:
         identity_instance["name"] = identity.name
     if isinstance(identity, CIQIdentity3_0Instance):
-        if identity.roles:
-            handle_missing_string_property(identity_instance, "information_source_role", identity.roles, True)
-            warn("Roles is not a property of an identity (%s).  Perhaps the roles are associated with a related Threat Actor",
-                 428,
-                 identity_instance["id"])
-            # convert_controlled_vocabs_to_open_vocabs(identity_instance, "roles", identity.roles, ROLES_MAP, False)
+        handle_missing_properties_of_ciq_instance(identity_instance, identity)
+        # convert_controlled_vocabs_to_open_vocabs(identity_instance, "roles", identity.roles, ROLES_MAP, False)
         ciq_info = identity._specification
         if ciq_info.party_name:
             if "name" in identity_instance:
@@ -1082,11 +1137,71 @@ def convert_identity(identity, env, parent_id=None, temp_marking_id=None, from_p
     return identity_instance
 
 
+def handle_missing_identity_ref_properties(container, instance2x, sources, env, property_name):
+    identities = list()
+    for s in sources:
+        if s.identity:
+            if check_for_missing_policy("add-to-description"):
+                id_info = s.identity.name
+            else:
+                id2x = convert_identity(s.identity, env)
+                env.bundle_instance["objects"].append(id2x)
+                id_info = id2x["id"]
+            identities.append(id_info)
+    if not identities == list():
+        handle_missing_string_property(container, property_name, identities, instance2x["id"], True)
 # incident
 
 
+def handle_missing_properties_of_incident(incident_instance, incident, env):
+    # handle missing properties
+    container, extension_definition_id = determine_container_for_missing_properties("incident", incident_instance)
+
+    if container is not None:
+
+        if get_option_value("spec_version") == "2.0":
+            handle_missing_confidence_property(container, incident.confidence, incident_instance["id"])
+        else:  # 2.1
+            add_confidence_to_object(incident_instance, incident.confidence)
+
+        if incident.contacts is not None:
+            handle_missing_identity_ref_properties(container, incident_instance, incident.contacts, env, "contacts")
+
+        if incident.reporter is not None:
+            reporter = incident.reporter
+            if reporter.identity:
+                id2x = convert_identity(reporter.identity, env)
+                env.bundle_instance["objects"].append(id2x)
+                handle_missing_string_property(container, "reporter", id2x["id"], incident_instance["id"])
+
+        if incident.responders is not None:
+            handle_missing_identity_ref_properties(container, incident_instance, incident.responders, env, "responders")
+
+        if incident.coordinators is not None:
+            handle_missing_identity_ref_properties(container, incident_instance, incident.coordinators, env, "coordinators")
+
+        if incident.victims is not None:
+            handle_missing_identity_ref_properties(container, incident_instance, incident.victims, env, "victims")
+
+        if incident.affected_assets is not None:
+            # FIXME: add affected_assets to description
+            info("Incident Affected Assets in %s is not handled, yet.", 815, incident_instance["id"])
+
+        if incident.impact_assessment is not None:
+            # FIXME: add impact_assessment to description
+            info("Incident Impact Assessment in %s is not handled, yet", 815, incident_instance["id"])
+
+        handle_missing_string_property(container, "status", incident.status, incident_instance["id"])
+
+        fill_in_extension_properties(incident_instance, container, extension_definition_id)
+
+
 def convert_incident(incident, env):
-    incident_instance = create_basic_object(convert_to_custom_name("incident", separator="-"), incident, env)
+    if get_option_value("spec_version") == "2.0":
+        incident_type_name = convert_to_custom_name("incident", separator="-")
+    else:
+        incident_type_name = "incident"
+    incident_instance = create_basic_object(incident_type_name, incident, env)
     new_env = env.newEnv(timestamp=incident_instance["created"])
     process_description_and_short_description(incident_instance, incident)
     if incident.title is not None:
@@ -1102,11 +1217,6 @@ def convert_incident(incident, env):
     # process information source before any relationships
     new_env.add_to_env(created_by_ref=process_information_source(incident.information_source, incident_instance, new_env))
 
-    if get_option_value("spec_version") == "2.0":
-        handle_missing_confidence_property(incident_instance, incident.confidence)
-    else:  # 2.1
-        add_confidence_to_object(incident_instance, incident.confidence)
-
     # process related observables first
     if incident.related_observables is not None:
         handle_relationship_from_refs(incident.related_observables, incident_instance["id"], new_env, "part-of")
@@ -1118,54 +1228,8 @@ def convert_incident(incident, env):
     if incident.coa_taken is not None:
         handle_relationship_to_refs(incident.coa_taken, incident_instance["id"], new_env, "used")
 
-    if incident.contacts is not None:
-        for contact in incident.contacts:
-            incident_instance["contacts"] = []
-            if contact.identity:
-                id2x = convert_identity(contact.identity, env)
-                env.bundle_instance["objects"].append(id2x)
-                incident_instance["contacts"].append(id2x["id"])
+    handle_missing_properties_of_incident(incident_instance, incident, new_env)
 
-    if incident.reporter is not None:
-        reporter = incident.reporter
-        if reporter.identity:
-            id2x = convert_identity(reporter.identity, env)
-            env.bundle_instance["objects"].append(id2x)
-            incident_instance["reporter"] = id2x["id"]
-
-    if incident.responders is not None:
-        for responder in incident.responders:
-            incident_instance["responders"] = []
-            if responder.identity:
-                id2x = convert_identity(responder.identity, env)
-                env.bundle_instance["objects"].append(id2x)
-                incident_instance["responders"].append(id2x["id"])
-
-    if incident.coordinators is not None:
-        for coordinator in incident.coordinators:
-            incident_instance["coordinators"] = []
-            if coordinator.identity:
-                id2x = convert_identity(coordinator.identity, env)
-                env.bundle_instance["objects"].append(id2x)
-                incident_instance["coordinators"].append(id2x["id"])
-
-    if incident.victims is not None:
-        for victim in incident.victims:
-            incident_instance["victims"] = []
-            if victim.identity:
-                id2x = convert_identity(victim.identity, env)
-                env.bundle_instance["objects"].append(id2x)
-                incident_instance["victims"].append(id2x["id"])
-
-    if incident.affected_assets is not None:
-        # FIXME: add affected_assets to description
-        info("Incident Affected Assets in %s is not handled, yet.", 815, incident_instance["id"])
-
-    if incident.impact_assessment is not None:
-        # FIXME: add impact_assessment to description
-        info("Incident Impact Assessment in %s is not handled, yet", 815, incident_instance["id"])
-
-    handle_missing_string_property(incident_instance, "status", incident.status)
     if incident.related_incidents:
         info("All 'associated incidents' relationships of %s are assumed to not represent STIX 1.2 versioning",
              710, incident_instance["id"])
@@ -1236,22 +1300,37 @@ def convert_test_mechanism(indicator, indicator_instance):
                     warn(msg, 506, indicator_instance["id"], indicator_instance["pattern_type"], determine_pattern_type(tm))
                 else:
                     if isinstance(tm, YaraTestMechanism):
-                        indicator_instance["pattern"] = text_type(tm.rule.value)
+                        indicator_instance["pattern"] = str(tm.rule.value)
                         indicator_instance["pattern_type"] = "yara"
                     elif isinstance(tm, SnortTestMechanism):
                         list_of_strings = []
                         for rule in tm.rules:
-                            list_of_strings.append(text_type(rule.value))
+                            list_of_strings.append(str(rule.value))
                         indicator_instance["pattern"] = ", ".join(list_of_strings)
                         indicator_instance["pattern_type"] = "snort"
                     elif isinstance(tm, OpenIOCTestMechanism):
                         warn("IOC indicator in %s cannot be converted to a STIX pattern", 410, indicator_instance["id"])
-                        indicator_instance["pattern"] = ensure_text(etree.tostring(tm.ioc))
+                        indicator_instance["pattern"] = bytes.decode(etree.tostring(tm.ioc))
                         indicator_instance["pattern_type"] = "openioc"
 
 
 def negate_indicator(indicator):
     return hasattr(indicator, "negate") and indicator.negate
+
+
+def handle_missing_properties_of_indicator(indicator_instance, indicator):
+    container, extension_definition_id = determine_container_for_missing_properties("indicator",
+                                                                                    indicator_instance)
+    if container is not None:
+        if indicator.likely_impact:
+            handle_missing_statement_properties(container, indicator.likely_impact, "likely_impact", indicator_instance["id"])
+
+        if get_option_value("spec_version") == "2.0":
+            handle_missing_confidence_property(container, indicator.confidence, indicator_instance["id"])
+        else:  # 2.1
+            add_confidence_to_object(indicator_instance, indicator.confidence)
+
+        fill_in_extension_properties(indicator_instance, container, extension_definition_id)
 
 
 def convert_indicator(indicator, env):
@@ -1286,13 +1365,7 @@ def convert_indicator(indicator, env):
                  903, indicator_instance["id"])
             indicator_instance["valid_from"] = convert_timestamp_of_stix_object(indicator, env.timestamp)
     convert_kill_chains(indicator.kill_chain_phases, indicator_instance)
-    if indicator.likely_impact:
-        handle_missing_statement_properties(indicator_instance, indicator.likely_impact, "likely_impact")
-
-    if get_option_value("spec_version") == "2.0":
-        handle_missing_confidence_property(indicator_instance, indicator.confidence)
-    else:  # 2.1
-        add_confidence_to_object(indicator_instance, indicator.confidence)
+    handle_missing_properties_of_indicator(indicator_instance, indicator)
     if indicator.observable is not None:
         # remember observable in case it is used outside of the indicator
         add_to_observable_mappings(indicator.observable)
@@ -1425,11 +1498,11 @@ def create_cyber_observables(obs, observed_data_instance):
                     related = convert_cybox_object(o)
                     if related:
                         for index, obj in related.items():
-                            observed_data_instance["objects"][text_type(int(index) + int(current_largest_id) + 1)] = obj
+                            observed_data_instance["objects"][str(int(index) + int(current_largest_id) + 1)] = obj
                         property_name = embedded_property_ref_name(obs.object_.properties, o.relationship)
                         if property_name and o.relationship and o.relationship.value:
                             set_embedded_ref_property_2_0(observed_data_instance["objects"]['0'],
-                                                          text_type(int(current_largest_id) + 1),
+                                                          str(int(current_largest_id) + 1),
                                                           property_name)
 
 
@@ -1609,7 +1682,7 @@ def add_motivations_to_threat_actor(sdo_instance, motivations):
     info("Using first Threat Actor motivation as primary_motivation. If more, as secondary_motivation", 719)
 
     if motivations[0].value is not None:
-        sdo_instance["primary_motivation"] = map_vocabs_to_label(text_type(motivations[0].value), ATTACK_MOTIVATION_MAP)
+        sdo_instance["primary_motivation"] = map_vocabs_to_label(str(motivations[0].value), ATTACK_MOTIVATION_MAP)
 
     values = []
 
@@ -1620,6 +1693,20 @@ def add_motivations_to_threat_actor(sdo_instance, motivations):
 
         if values:
             convert_controlled_vocabs_to_open_vocabs(sdo_instance, "secondary_motivations", values, ATTACK_MOTIVATION_MAP, False)
+
+
+def handle_missing_properties_of_threat_actor(threat_actor_instance, threat_actor):
+    container, extension_definition_id = determine_container_for_missing_properties("threat-actor",
+                                                                                    threat_actor_instance)
+    if container is not None:
+        handle_multiple_missing_statement_properties(container, threat_actor.planning_and_operational_supports,
+                                                     "planning_and_operational_support", threat_actor_instance["id"])
+        if get_option_value("spec_version") == "2.0":
+            handle_missing_confidence_property(container, threat_actor.confidence, threat_actor_instance["id"])
+        else:  # 2.1
+            add_confidence_to_object(threat_actor_instance, threat_actor.confidence)
+
+        fill_in_extension_properties(threat_actor_instance, container, extension_definition_id)
 
 
 def convert_threat_actor(threat_actor, env):
@@ -1644,7 +1731,8 @@ def convert_threat_actor(threat_actor, env):
     if threat_actor.intended_effects is not None:
         threat_actor_instance["goals"] = list()
         for g in threat_actor.intended_effects:
-            threat_actor_instance["goals"].append(text_type(g.value))
+            threat_actor_instance["goals"].append(str(g.value))
+    handle_missing_properties_of_threat_actor(threat_actor_instance, threat_actor)
     spec_version = get_option_value("spec_version")
     convert_controlled_vocabs_to_open_vocabs(threat_actor_instance,
                                              "labels" if spec_version == "2.0" else "threat_actor_types",
@@ -1652,12 +1740,6 @@ def convert_threat_actor(threat_actor, env):
                                              THREAT_ACTOR_LABEL_MAP,
                                              False,
                                              required=spec_version == "2.0")
-    handle_multiple_missing_statement_properties(threat_actor_instance, threat_actor.planning_and_operational_supports,
-                                                 "planning_and_operational_support")
-    if get_option_value("spec_version") == "2.0":
-        handle_missing_confidence_property(threat_actor_instance, threat_actor.confidence)
-    else:  # 2.1
-        add_confidence_to_object(threat_actor_instance, threat_actor.confidence)
 
     if threat_actor.motivations:
         add_motivations_to_threat_actor(threat_actor_instance, threat_actor.motivations)
@@ -1693,14 +1775,23 @@ def determine_ttp_relationship_type_and_direction(source_type, target_type, rela
         return "related-to", True
 
 
+def handle_missing_properties_of_ttp(sdo_instance, ttp):
+    container, extension_definition_id = determine_container_for_missing_properties(sdo_instance["type"],
+                                                                                    sdo_instance)
+    if container is not None:
+        handle_multiple_missing_statement_properties(container, ttp.intended_effects, "intended_effect",
+                                                     sdo_instance["id"])
+        if hasattr(ttp, "title"):
+            if ("name" not in sdo_instance or sdo_instance["name"] is None):
+                sdo_instance["name"] = ttp.title
+            else:
+                handle_missing_string_property(container, "title", ttp.title, sdo_instance["id"], False)
+
+        fill_in_extension_properties(sdo_instance, container, extension_definition_id)
+
+
 def process_ttp_properties(sdo_instance, ttp, env, kill_chains_in_sdo=True):
     process_description_and_short_description(sdo_instance, ttp, True)
-    handle_multiple_missing_statement_properties(sdo_instance, ttp.intended_effects, "intended_effect")
-    if hasattr(ttp, "title"):
-        if ("name" not in sdo_instance or sdo_instance["name"] is None):
-            sdo_instance["name"] = ttp.title
-        else:
-            handle_missing_string_property(sdo_instance, "title", ttp.title, False)
 
     # only populate kill chain phases if that is a property of the sdo_instance type, as indicated by kill_chains_in_sdo
     if kill_chains_in_sdo and hasattr(ttp, "kill_chain_phases"):
@@ -1718,7 +1809,7 @@ def process_ttp_properties(sdo_instance, ttp, env, kill_chains_in_sdo=True):
             if rel.item.idref is None:
                 target_type = get_type_from_id(rel.item.id_)
                 verb, to_direction = determine_ttp_relationship_type_and_direction(source_type, target_type,
-                                                                                   text_type(rel.relationship))
+                                                                                   str(rel.relationship))
                 handle_embedded_ref(rel, rel.item, rel.item.id_, env, verb, to_direction)
             else:
                 target_id = rel.item.idref
@@ -1726,13 +1817,14 @@ def process_ttp_properties(sdo_instance, ttp, env, kill_chains_in_sdo=True):
                 if stix2x_target_ids != []:
                     for id20 in stix2x_target_ids:
                         target_type = get_type_from_id(id20)
-                        verb, to_direction = determine_ttp_relationship_type_and_direction(source_type, target_type, text_type(rel.relationship))
+                        verb, to_direction = determine_ttp_relationship_type_and_direction(source_type, target_type, str(rel.relationship))
                         handle_existing_ref(rel, id20, sdo_instance["id"], env, verb, to_direction)
                 else:
                     handle_relationship_ref(rel, rel.item, sdo_instance["id"], env, "related-to", to_direction=True)
     if hasattr(ttp, "related_packages") and ttp.related_packages is not None:
         for p in ttp.related_packages:
             warn("Related_Packages type in %s not supported in STIX 2.x", 402, ttp.id_)
+    handle_missing_properties_of_ttp(sdo_instance, ttp)
 
 
 def convert_attack_pattern(ap, ttp, env, ttp_id_used):
@@ -1747,14 +1839,42 @@ def convert_attack_pattern(ap, ttp, env, ttp_id_used):
     return attack_Pattern_instance
 
 
+def handle_missing_properties_of_malware_instance(sdo_instance, malware1x_instance):
+    container, extension_definition_id = determine_container_for_missing_properties("malware",
+                                                                                    sdo_instance)
+    if container is not None and not check_for_missing_policy("ignore"):
+        # first name populated in convert_malware_instance
+        if malware1x_instance.names is not None and len(malware1x_instance.names) > 1:
+            handle_missing_string_property(container, "other_names", malware1x_instance.names[1:], sdo_instance["id"],
+                                           is_list=True)
+        if hasattr(malware1x_instance, "title"):
+            if ("name" not in container or container["name"] is None):
+                # this case is handled in convert_malware_instance
+                pass
+            else:
+                handle_missing_string_property(container, "title", malware1x_instance.title, sdo_instance["id"], False)
+
+        fill_in_extension_properties(sdo_instance, container, extension_definition_id)
+
+
 def convert_malware_instance(mal, ttp, env, ttp_id_used):
     malware_instance_instance = create_basic_object("malware", mal, env, ttp.id_, not ttp_id_used)
     if get_option_value("spec_version") == "2.1":
         malware_instance_instance["is_family"] = False
         info("The is_family property of malware instance %s is assumed to be false", 728, malware_instance_instance["id"])
-    # TODO: names?
+    if mal.names is not None:
+        for n in mal.names:
+            if "name" not in malware_instance_instance:
+                malware_instance_instance["name"] = str(n)
+            elif check_for_missing_policy("ignore"):
+                warn("Only one name for malware is allowed for %s in STIX 2.x - used %s, dropped %s",
+                     508,
+                     malware_instance_instance["id"],
+                     malware_instance_instance["name"],
+                     str(n))
     if mal.title is not None:
-        malware_instance_instance["name"] = mal.title
+        if "name" not in malware_instance_instance:
+            malware_instance_instance["name"] = mal.title
     process_description_and_short_description(malware_instance_instance, mal)
     spec_version = get_option_value("spec_version")
     convert_controlled_vocabs_to_open_vocabs(malware_instance_instance,
@@ -1763,20 +1883,11 @@ def convert_malware_instance(mal, ttp, env, ttp_id_used):
                                              MALWARE_LABELS_MAP,
                                              False,
                                              required=spec_version == "2.0")
-    if mal.names is not None:
-        for n in mal.names:
-            if "name" not in malware_instance_instance:
-                malware_instance_instance["name"] = text_type(n)
-            else:
-                # TODO: add to description?
-                warn("Only one name for malware is allowed for %s in STIX 2.x - used %s, dropped %s",
-                     508,
-                     malware_instance_instance["id"],
-                     malware_instance_instance["name"],
-                     text_type(n))
+
     if isinstance(mal, MAECInstance):
         warn("MAEC content in %s cannot be represented in STIX 2.x", 426, ttp.id_)
     process_ttp_properties(malware_instance_instance, ttp, env)
+    handle_missing_properties_of_malware_instance(malware_instance_instance, mal)
     finish_basic_object(ttp.id_, malware_instance_instance, env, mal)
     return malware_instance_instance
 
@@ -1802,6 +1913,26 @@ def convert_behavior(behavior, ttp, env):
     return resources_generated
 
 
+def handle_missing_properties_of_tool(tool_instance, tool):
+    container, extension_definition_id = determine_container_for_missing_properties("tool",
+                                                                                    tool_instance)
+    if container is not None:
+        handle_missing_string_property(container, "vendor", tool.vendor, tool_instance["id"])
+        handle_missing_string_property(container, "service_pack", tool.service_pack, tool_instance["id"])
+        # TODO: add tool_specific_data to descriptor <-- Not Implemented!
+
+        if tool.tool_hashes is not None:
+            # FIXME: add tool_hashes to descriptor
+            info("Tool Tool_Hashes in %s is not handled, yet.", 815, tool_instance["id"])
+
+        # TODO: add tool_configuration to descriptor <-- Not Implemented!
+        # TODO: add execution_environment to descriptor <-- Not Implemented!
+        # TODO: add errors to descriptor <-- Not Implemented!
+        # TODO: add compensation_model to descriptor <-- Not Implemented!
+
+        fill_in_extension_properties(tool_instance, container, extension_definition_id)
+
+
 def convert_tool(tool, ttp, env, first_one):
     tool_instance = create_basic_object("tool", tool, env, ttp.id_, not first_one)
     if tool.name is not None:
@@ -1811,18 +1942,7 @@ def convert_tool(tool, ttp, env, first_one):
     elif tool.title is not None:
         tool_instance["name"] = tool.title
     process_description_and_short_description(tool_instance, tool)
-    handle_missing_string_property(tool_instance, "vendor", tool.vendor)
-    handle_missing_string_property(tool_instance, "service_pack", tool.service_pack)
-    # TODO: add tool_specific_data to descriptor <-- Not Implemented!
-
-    if tool.tool_hashes is not None:
-        # FIXME: add tool_hashes to descriptor
-        info("Tool Tool_Hashes in %s is not handled, yet.", 815, tool_instance["id"])
-
-    # TODO: add tool_configuration to descriptor <-- Not Implemented!
-    # TODO: add execution_environment to descriptor <-- Not Implemented!
-    # TODO: add errors to descriptor <-- Not Implemented!
-    # TODO: add compensation_model to descriptor <-- Not Implemented!
+    handle_missing_properties_of_tool(tool_instance, tool)
     spec_version = get_option_value("spec_version")
     convert_controlled_vocabs_to_open_vocabs(tool_instance,
                                              "labels" if spec_version == "2.0" else "tool_types",
@@ -1888,18 +2008,29 @@ def convert_identity_for_victim_target(identity, ttp, env, ttp_generated):
     return identity_instance
 
 
+def handle_missing_properties_of_victim_target(identity_instance, victim_targeting):
+    container, extension_definition_id = determine_container_for_missing_properties("identity",
+                                                                                    identity_instance)
+
+    if container is not None:
+        if victim_targeting.targeted_systems:
+            handle_missing_string_property(container, "targeted_systems", victim_targeting.targeted_systems, identity_instance["id"],
+                                           True)
+        if victim_targeting.targeted_information:
+            handle_missing_string_property(container, "targeted_information",
+                                           victim_targeting.targeted_information, identity_instance["id"], True)
+        if hasattr(victim_targeting, "technical_details") and victim_targeting.targeted_technical_details is not None:
+            handle_missing_string_property(container, "technical_details",
+                                           victim_targeting.targeted_technical_details, identity_instance["id"], True)
+
+        fill_in_extension_properties(identity_instance, container, extension_definition_id)
+
+
 def convert_victim_targeting(victim_targeting, ttp, env, ttps_generated):
     identity_instance = convert_identity_for_victim_target(victim_targeting.identity, ttp, env, ttps_generated)
     info("%s generated an identity associated with a victim", 713, ttp.id_)
-    if victim_targeting.targeted_systems:
-        handle_missing_string_property(identity_instance, "targeted_systems", victim_targeting.targeted_systems,
-                                       True)
-    if victim_targeting.targeted_information:
-        handle_missing_string_property(identity_instance, "targeted_information",
-                                       victim_targeting.targeted_information, True)
-    if hasattr(victim_targeting, "technical_details") and victim_targeting.targeted_technical_details is not None:
-        handle_missing_string_property(identity_instance, "technical_details",
-                                       victim_targeting.targeted_technical_details, True)
+    handle_missing_properties_of_victim_target(identity_instance, victim_targeting)
+
     if ttps_generated:
         for generated_ttp in ttps_generated:
             env.bundle_instance["relationships"].append(
@@ -2006,7 +2137,7 @@ def finalize_bundle(env):
             if "kill_chain_phases" in ind20:
                 fixed_kill_chain_phases = []
                 for kcp in ind20["kill_chain_phases"]:
-                    if isinstance(kcp, string_types):
+                    if isinstance(kcp, str):
                         # noinspection PyBroadException
                         try:
                             kill_chain_phase_in_20 = _KILL_CHAINS_PHASES[kcp]
@@ -2045,7 +2176,7 @@ def finalize_bundle(env):
         for ind in bundle_instance["indicators"]:
             if "pattern" in ind:
                 pattern = ind["pattern"]
-                if isinstance(pattern, string_types):
+                if isinstance(pattern, str):
                     continue
                 final_pattern = fix_pattern(pattern)
                 if final_pattern:
@@ -2063,7 +2194,7 @@ def finalize_bundle(env):
                         else:
                             ind["pattern"] = "[%s]" % result
                     else:
-                        ind["pattern"] = text_type(final_pattern.partition_according_to_object_path())
+                        ind["pattern"] = str(final_pattern.partition_according_to_object_path())
 
     bundle_instance["objects"].extend(bundle_instance["indicators"])
     bundle_instance["indicators"] = []

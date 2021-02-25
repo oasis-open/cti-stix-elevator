@@ -1,0 +1,61 @@
+{
+    "id": "bundle--cc0ca596-70e6-4dac-9bef-603166d17db8",
+    "objects": [
+        {
+            "extensions": {
+                "archive-ext": {
+                    "contains_refs": [
+                        "file--122337b0-b9df-55ec-aced-97009486851e",
+                        "directory--5254394b-9d52-51d5-8a7b-613a7b0f89c0",
+                        "file--34348c5a-2a26-5c0f-82f5-bbbe61fd61bc"
+                    ]
+                },
+                "extension-definition--db4b5429-6927-4d0c-a194-4695f05c629a": {
+                    "version": "1.2"
+                }
+            },
+            "id": "file--bbb02d45-46c7-50a6-97d3-e6082d428d0a",
+            "name": "iprip32.zip",
+            "parent_directory_ref": "directory--5254394b-9d52-51d5-8a7b-613a7b0f89c0",
+            "type": "file"
+        },
+        {
+            "id": "directory--5254394b-9d52-51d5-8a7b-613a7b0f89c0",
+            "path": "/usr/local",
+            "type": "directory"
+        },
+        {
+            "hashes": {
+                "SHA-256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "id": "file--122337b0-b9df-55ec-aced-97009486851e",
+            "name": "fred.doc",
+            "parent_directory_ref": "directory--5254394b-9d52-51d5-8a7b-613a7b0f89c0",
+            "type": "file"
+        },
+        {
+            "hashes": {
+                "MD5": "5d8129be965fab8115eca34fc84bd7f0"
+            },
+            "id": "file--34348c5a-2a26-5c0f-82f5-bbbe61fd61bc",
+            "type": "file"
+        },
+        {
+            "created": "2020-12-30T16:02:49.452Z",
+            "first_observed": "2020-12-30T16:02:49.452Z",
+            "id": "observed-data--c8c32b6e-2ea8-4678-8446-7f5218072f27",
+            "last_observed": "2020-12-30T16:02:49.452Z",
+            "modified": "2020-12-30T16:02:49.452Z",
+            "number_observed": 1,
+            "object_refs": [
+                "file--bbb02d45-46c7-50a6-97d3-e6082d428d0a",
+                "directory--5254394b-9d52-51d5-8a7b-613a7b0f89c0",
+                "file--122337b0-b9df-55ec-aced-97009486851e",
+                "file--34348c5a-2a26-5c0f-82f5-bbbe61fd61bc"
+            ],
+            "spec_version": "2.1",
+            "type": "observed-data"
+        }
+    ],
+    "type": "bundle"
+}

@@ -1,0 +1,104 @@
+<stix:STIX_Package
+        xmlns:URIObj="http://cybox.mitre.org/objects#URIObject-2"
+        xmlns:example="http://example.com"
+        xmlns:AddressObj="http://cybox.mitre.org/objects#AddressObject-2"
+        xmlns:stix="http://stix.mitre.org/stix-1"
+        xmlns:EmailMessageObj="http://cybox.mitre.org/objects#EmailMessageObject-2"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:cybox="http://cybox.mitre.org/cybox-2"
+        xmlns:indicator="http://stix.mitre.org/Indicator-2"
+        xmlns:stixVocabs="http://stix.mitre.org/default_vocabularies-1"
+        id="example:STIXPackage-7d188f68-9b6d-40d8-96a6-667ce3677874" version="1.1.1">
+    <stix:Observables>
+        <stix:Observable id="NCCIC:Observable-6355649f-ad9a-4cc1-8edc-28effcf451c5">
+            <cybox:Object id="NCCIC:Object-9fa06372-e150-11e5-8ccf-180373b1ea03">
+                <cybox:Properties type="URL" xsi:type="URIObj:URIObjectType">
+                    <URIObj:Value>http://thereelin.com/mac/htm</URIObj:Value>
+                </cybox:Properties>
+            </cybox:Object>
+        </stix:Observable>
+        <stix:Observable id="NCCIC:Observable-5e1bff77-0150-4deb-8e17-1ae29588b501">
+            <cybox:Object id="NCCIC:Object-e61ece42-e150-11e5-8f8a-180373b1ea03">
+                <cybox:Properties xsi:type="EmailMessageObj:EmailMessageObjectType">
+                    <EmailMessageObj:Header>
+                        <EmailMessageObj:From category="e-mail" xsi:type="AddressObj:AddressObjectType">
+                            <AddressObj:Address_Value>chase@ee.duke.edu</AddressObj:Address_Value>
+                        </EmailMessageObj:From>
+                        <EmailMessageObj:Subject>Fix The Error On Your Account.</EmailMessageObj:Subject>
+                        <EmailMessageObj:Message_ID>201602112058.u1BKfrXh004925@mail-gw-01.oit.duke.edu</EmailMessageObj:Message_ID>
+                        <EmailMessageObj:X_Mailer>Microsoft Outlook Express 6.00.2800.1437</EmailMessageObj:X_Mailer>
+                    </EmailMessageObj:Header>
+                    <EmailMessageObj:Raw_Body><![CDATA[<!DOCTYPE html>Received: from BL0PR0901MB3124.namprd09.prod.outlook.com
+ (2603:10b6:208:d4::22) by BL0PR0901MB3204.namprd09.prod.outlook.com with
+ HTTPS via MN2PR04CA0009.NAMPRD04.PROD.OUTLOOK.COM; Wed, 12 Feb 2020 18:45:43
+ +0000
+Authentication-Results: mitre.org; dkim=none (message not signed)
+ header.d=none;mitre.org; dmarc=none action=none header.from=mitre.org;
+Received: from BL0PR0901MB3204.namprd09.prod.outlook.com (20.177.243.16) by
+ BL0PR0901MB3124.namprd09.prod.outlook.com (20.177.241.75) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.2707.23; Wed, 12 Feb 2020 18:45:42 +0000
+Received: from BL0PR0901MB3204.namprd09.prod.outlook.com
+ ([fe80::c8b6:8d06:3bbd:cef3]) by BL0PR0901MB3204.namprd09.prod.outlook.com
+ ([fe80::c8b6:8d06:3bbd:cef3%6]) with mapi id 15.20.2707.030; Wed, 12 Feb 2020
+ 18:45:42 +0000
+From: "Piazza, Rich" <rpiazza@mitre.org>
+To: "Piazza, Rich" <rpiazza@mitre.org>
+Subject: testing
+Thread-Topic: testing
+Thread-Index: AQHV4dSge8PgoMgfRUqipxh3ho7xDg==
+Date: Wed, 12 Feb 2020 18:45:41 +0000
+Message-ID: <484759C2-CC69-4AD1-8687-7E1A3F7C61A7@mitre.org>
+Accept-Language: en-US
+Content-Language: en-US
+
+> This message is in MIME format. Since your mail reader does not understand
+this format, some or all of this message may not be legible.
+
+--B_3664359956_690441552
+Content-type: text/plain;
+	charset="UTF-8"
+Content-transfer-encoding: 7bit
+
+--B_3664359956_690441552
+Content-type: text/html;
+	charset="UTF-8"
+Content-transfer-encoding: quoted-printable
+
+<html xmlns:o=3D"urn:schemas-microsoft-com:office:office" xmlns:w=3D"urn:schema=
+s-microsoft-com:office:word" xmlns:m=3D"http://schemas.microsoft.com/office/20=
+04/12/omml" xmlns=3D"http://www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8">
+<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
+</head>
+<body lang=3D"EN-US" link=3D"#0563C1" vlink=3D"#954F72">
+<div class=3D"WordSection1">
+<p class=3D"MsoNormal"><span style=3D"font-size:11.0pt"><o:p>&nbsp;</o:p></span=
+></p>
+</div>
+</body>
+</html>
+
+
+--B_3664359956_690441552--
+]]>
+                    </EmailMessageObj:Raw_Body>
+                    <EmailMessageObj:Links>
+                        <!-- <EmailMessageObj:Link object_reference="NCCIC:Object-8ba6199f-e150-11e5-95b9-180373b1ea03"/> -->
+                        <EmailMessageObj:Link object_reference="NCCIC:Object-9fa06372-e150-11e5-8ccf-180373b1ea03"/>
+                        <!-- <EmailMessageObj:Link object_reference="NCCIC:Object-a85cde82-e150-11e5-9d35-180373b1ea03"/> -->
+                    </EmailMessageObj:Links>
+                </cybox:Properties>
+            </cybox:Object>
+        </stix:Observable>
+    </stix:Observables>
+    <stix:Indicators>
+        <stix:Indicator xsi:type="indicator:IndicatorType"
+                        id="example:Indicator-53fe3b22-0201-47cf-85d0-97c02164528d"
+                        timestamp="2014-05-08T09:00:00.000000Z">
+            <indicator:Type xsi:type="stixVocabs:IndicatorTypeVocab-1.1">IP Watchlist</indicator:Type>
+            <indicator:Observable  idref="NCCIC:Observable-5e1bff77-0150-4deb-8e17-1ae29588b501"/>
+        </stix:Indicator>
+    </stix:Indicators>
+</stix:STIX_Package>

@@ -5,7 +5,6 @@ import os
 
 # external
 import pytest
-from six import StringIO
 from stix.core import STIXPackage
 import stixmarx
 
@@ -62,7 +61,7 @@ def test_elevate_with_marking_container():
     with io.open(archive_file, mode="r", encoding="utf-8") as f:
         input_stix = f.read()
 
-    container = stixmarx.parse(StringIO(input_stix))
+    container = stixmarx.parse(io.StringIO(input_stix))
     json_result = elevate(container)
     assert json_result
     print(json_result)
@@ -78,7 +77,7 @@ def test_elevate_with_stix_package():
     with io.open(archive_file, mode="r", encoding="utf-8") as f:
         input_stix = f.read()
 
-    json_result = elevate(STIXPackage.from_xml(StringIO(input_stix)))
+    json_result = elevate(STIXPackage.from_xml(io.StringIO(input_stix)))
     assert json_result
     print(json_result)
 
@@ -165,7 +164,7 @@ def test_deprecated_elevate_package():
     with pytest.warns(DeprecationWarning):
         with io.open(archive_file, mode="r", encoding="utf-8") as f:
             input_stix = f.read()
-        json_result = elevate_package(STIXPackage.from_xml(StringIO(input_stix)))
+        json_result = elevate_package(STIXPackage.from_xml(io.StringIO(input_stix)))
 
     assert json_result
     print(json_result)

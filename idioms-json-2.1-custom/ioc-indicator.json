@@ -9,6 +9,11 @@
             "name": "Zeus",
             "spec_version": "2.1",
             "type": "malware",
+            "x_elevator_other_names": [
+                "twexts",
+                "sdra64",
+                "ntos"
+            ],
             "x_elevator_title": "Zeus"
         },
         {

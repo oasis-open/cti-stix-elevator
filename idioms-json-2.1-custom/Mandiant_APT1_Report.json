@@ -79,7 +79,10 @@
             ],
             "spec_version": "2.1",
             "type": "identity",
-            "x_elevator_information_source_role": "Nation-State,Military"
+            "x_elevator_information_source_roles": [
+                "Nation-State",
+                "Military"
+            ]
         },
         {
             "aliases": [
@@ -201,7 +204,9 @@
             ],
             "spec_version": "2.1",
             "type": "identity",
-            "x_elevator_information_source_role": "Research and Development"
+            "x_elevator_information_source_roles": [
+                "Research and Development"
+            ]
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
@@ -426,7 +431,9 @@
             ],
             "spec_version": "2.1",
             "type": "identity",
-            "x_elevator_information_source_role": "Nation-State"
+            "x_elevator_information_source_roles": [
+                "Nation-State"
+            ]
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
@@ -464,7 +471,9 @@
             ],
             "spec_version": "2.1",
             "type": "identity",
-            "x_elevator_information_source_role": "State-influenced Commercial Entity"
+            "x_elevator_information_source_roles": [
+                "State-influenced Commercial Entity"
+            ]
         },
         {
             "created": "2015-05-15T09:00:00.000Z",

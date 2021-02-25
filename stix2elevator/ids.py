@@ -5,7 +5,6 @@ import re
 import uuid
 
 # external
-from six import text_type
 from stix2.base import SCO_DET_ID_NAMESPACE
 from stix2.canonicalization.Canonicalize import canonicalize
 
@@ -16,7 +15,7 @@ from stix2elevator.utils import map_1x_type_to_20
 
 def record_ids(stix_id, new_id):
     if stix_id in _IDS_TO_NEW_IDS:
-        info("%s is already associated other ids: %s", 703, text_type(stix_id), tuple(_IDS_TO_NEW_IDS[stix_id]))
+        info("%s is already associated other ids: %s", 703, str(stix_id), tuple(_IDS_TO_NEW_IDS[stix_id]))
     if new_id is None:
         error("Could not associate %s with None", 611, stix_id)
         return
@@ -60,7 +59,7 @@ def add_ids_with_no_1x_object(sdo_id):
 
 def generate_stix2x_id(stix2x_so_name, stix12_id=None, id_used=False):
     if not stix12_id or id_used:
-        new_id = stix2x_so_name + "--" + text_type(uuid.uuid4())
+        new_id = stix2x_so_name + "--" + str(uuid.uuid4())
         add_ids_with_no_1x_object(new_id)
         return new_id
     else:
@@ -81,7 +80,7 @@ def generate_stix2x_id(stix2x_so_name, stix12_id=None, id_used=False):
         else:
             if stix2x_so_name:
                 warn("Malformed id %s. Generated a new uuid", 605, stix12_id)
-                return stix2x_so_name + "--" + text_type(uuid.uuid4())
+                return stix2x_so_name + "--" + str(uuid.uuid4())
             else:
                 error("Unable to determine the STIX 2.x type for %s, which is malformed", 629, stix12_id)
                 return None
@@ -140,11 +139,11 @@ def generate_sco_id(type, instance):
 
                 # try/except here to enable python 2 compatibility
                 try:
-                    return required_prefix + text_type(uuid.uuid5(SCO_DET_ID_NAMESPACE, data))
+                    return required_prefix + str(uuid.uuid5(SCO_DET_ID_NAMESPACE, data))
                 except UnicodeDecodeError:
-                    return required_prefix + text_type(uuid.uuid5(SCO_DET_ID_NAMESPACE, data.encode("utf-8")))
+                    return required_prefix + str(uuid.uuid5(SCO_DET_ID_NAMESPACE, data.encode("utf-8")))
 
-    return required_prefix + text_type(uuid.uuid4())
+    return required_prefix + str(uuid.uuid4())
 
 
 _IDS_TO_NEW_IDS = {}
@@ -257,4 +256,4 @@ def is_stix1x_id(id):
 def property_contains_stix1x_id(obj, property):
     if property in obj:
         value = obj[property]
-        return isinstance(value, text_type) and is_stix1x_id(value)
+        return isinstance(value, str) and is_stix1x_id(value)

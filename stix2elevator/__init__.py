@@ -1,4 +1,5 @@
 # Standard Library
+import io
 import json
 import logging
 import os
@@ -8,7 +9,6 @@ import warnings
 # external
 import cybox.utils.caches
 import lxml.etree
-from six import BytesIO, StringIO, binary_type, text_type
 from stix2validator import ValidationError, codes, output
 from stix.core import STIXPackage
 import stixmarx
@@ -88,25 +88,25 @@ def elevate(stix_package):
             # No need to re-parse the MarkingContainer.
             container = stix_package
         elif isinstance(stix_package, STIXPackage):
-            io = BytesIO(stix_package.to_xml())
-            container = stixmarx.parse(io)
-        elif isinstance(stix_package, text_type):
+            bytes_obj = io.BytesIO(stix_package.to_xml())
+            container = stixmarx.parse(bytes_obj)
+        elif isinstance(stix_package, str):
             if stix_package.endswith(".xml") or os.path.isfile(stix_package):
                 # a path-like string was passed
                 fn = stix_package
                 if os.path.exists(fn) is False:
                     raise IOError("The file '{}' was not found.".format(fn))
             else:
-                stix_package = StringIO(stix_package)
+                stix_package = io.StringIO(stix_package)
             container = stixmarx.parse(stix_package)
-        elif isinstance(stix_package, binary_type):
+        elif isinstance(stix_package, bytes):
             if stix_package.endswith(b".xml") or os.path.isfile(stix_package):
                 # a path-like string was passed
                 fn = stix_package
                 if os.path.exists(fn) is False:
                     raise IOError("The file '{}' was not found.".format(fn))
             else:
-                stix_package = BytesIO(stix_package)
+                stix_package = io.BytesIO(stix_package)
             container = stixmarx.parse(stix_package)
         else:
             raise RuntimeError("Unable to resolve object {} of type {}".format(stix_package, type(stix_package)))
@@ -215,8 +215,8 @@ def elevate_string(string):
         output.set_level(validator_options.verbose)
         output.set_silent(validator_options.silent)
 
-        io = StringIO(string)
-        container = stixmarx.parse(io)
+        bytes_obj = io.StringIO(string)
+        container = stixmarx.parse(bytes_obj)
         stix_package = container.package
         set_option_value("marking_container", container)
 
@@ -265,7 +265,7 @@ def elevate_package(package):
         output.set_silent(validator_options.silent)
 
         # It needs to be re-parsed.
-        container = stixmarx.parse(BytesIO(package.to_xml()))
+        container = stixmarx.parse(io.BytesIO(package.to_xml()))
         stix_package = container.package
         set_option_value("marking_container", container)
 

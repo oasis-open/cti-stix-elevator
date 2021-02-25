@@ -6,7 +6,6 @@ import os
 import textwrap
 
 # external
-from six import binary_type, iteritems, text_type
 from stix2validator import validate_string
 from stix2validator.validator import FileValidationResults
 
@@ -24,13 +23,13 @@ def id_property(path):
 def identifying_info(stix1x_obj):
     if stix1x_obj:
         if hasattr(stix1x_obj, "id_") and stix1x_obj.id_:
-            return text_type(stix1x_obj.id_)
+            return str(stix1x_obj.id_)
         elif hasattr(stix1x_obj, "idref") and stix1x_obj.idref:
-            return "with idref " + text_type(stix1x_obj.idref)
+            return "idref " + str(stix1x_obj.idref)
         elif hasattr(stix1x_obj, "title") and stix1x_obj.title:
-            return "'" + text_type(stix1x_obj.title) + "'"
+            return "'" + str(stix1x_obj.title) + "'"
         elif hasattr(stix1x_obj, "name") and stix1x_obj.name:
-            return "'" + text_type(stix1x_obj.name) + "'"
+            return "'" + str(stix1x_obj.name) + "'"
         elif hasattr(stix1x_obj, "item") and stix1x_obj.item:
             # Useful in Related Types.
             return "parent of object " + identifying_info(stix1x_obj.item)
@@ -47,7 +46,7 @@ def add_label(stix2x_instance, label):
 
 
 def canonicalize_label(t):
-    t = text_type(t)
+    t = str(t)
     t = t.lower()
 
     t = t.replace(" ", "-")
@@ -73,16 +72,16 @@ def convert_controlled_vocabs_to_open_vocabs(new_obj, new_property_name, old_voc
         new_obj[new_property_name] = []
         for t in old_vocabs:
             if new_obj[new_property_name] is None or not only_one:
-                if isinstance(t, (text_type, binary_type)):
+                if isinstance(t, (str, bytes)):
                     new_obj[new_property_name].append(map_vocabs_to_label(t, vocab_mapping))
                 else:
-                    new_obj[new_property_name].append(map_vocabs_to_label(text_type(t.value), vocab_mapping))
+                    new_obj[new_property_name].append(map_vocabs_to_label(str(t.value), vocab_mapping))
             else:
                 warn("Only one %s allowed in STIX 2.0 - used first one", 510, new_property_name)
 
 
 def strftime_with_appropriate_fractional_seconds(timestamp, milliseconds_only):
-    if isinstance(timestamp, (text_type, binary_type)):
+    if isinstance(timestamp, (str, bytes)):
         timestamp = datetime.strptime(timestamp, "%Y-%m-%dT%H:%M:%S.%fZ")
     if milliseconds_only:
         return timestamp.strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3] + "Z"
@@ -94,7 +93,7 @@ def convert_timestamp_to_string(timestamp, entity=None, parent_timestamp=None, m
     if timestamp is not None:
         return strftime_with_appropriate_fractional_seconds(timestamp, milliseconds_only)
     elif parent_timestamp is not None:
-        info("Using parent object timestamp on %s", 902, identifying_info(entity))
+        info("Using parent object timestamp with %s", 902, identifying_info(entity))
         return strftime_with_appropriate_fractional_seconds(parent_timestamp, milliseconds_only)
     else:
         warn("Timestamp not available for %s, using current time", 905, identifying_info(entity))
@@ -106,9 +105,9 @@ def convert_timestamp_of_stix_object(entity, parent_timestamp=None, milliseconds
         if entity.timestamp is not None:
             return strftime_with_appropriate_fractional_seconds(entity.timestamp, milliseconds_only)
     if parent_timestamp is not None:
-        info("Using parent object timestamp on %s", 902, identifying_info(entity))
+        info("Using parent object timestamp with %s", 902, identifying_info(entity))
         # parent_timestamp might have already been converted to a string in a previous call
-        if isinstance(parent_timestamp, text_type):
+        if isinstance(parent_timestamp, str):
             return parent_timestamp
         else:
             return strftime_with_appropriate_fractional_seconds(parent_timestamp, milliseconds_only)
@@ -200,7 +199,7 @@ def iterpath(obj, path=None):
     if path is None:
         path = []
 
-    for varname, varobj in iter(sorted(iteritems(obj))):
+    for varname, varobj in iter(sorted(obj.items())):
         path.append(varname)
         yield (path, varobj)
 
@@ -292,17 +291,13 @@ class NewlinesHelpFormatter(argparse.RawDescriptionHelpFormatter):
 
 
 def validate_stix2_string(json_string, validator_options, file_path=None):
-    # Ensure the json_string is a Unicode text string. json.dumps() sometimes
-    # returns a byte-"str" on Python 2.
-    if isinstance(json_string, binary_type):
-        json_string = json_string.decode("utf-8")
     results = validate_string(json_string, validator_options)
     fvr = FileValidationResults(results.is_valid, file_path, results)
     return fvr
 
 
 def encode_in_base64(s):
-    return base64.b64encode(text_type(s).encode('utf-8')).decode('utf-8')
+    return base64.b64encode(str(s).encode('utf-8')).decode('utf-8')
 
 
 class Environment():

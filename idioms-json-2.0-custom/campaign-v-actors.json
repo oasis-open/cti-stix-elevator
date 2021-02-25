@@ -8,7 +8,9 @@
             "modified": "2014-08-08T15:50:10.983Z",
             "name": "Victim Targeting: Customer PII and Financial Data",
             "type": "identity",
-            "x_elevator_targeted_information": "Information Assets - Financial Data"
+            "x_elevator_targeted_information": [
+                "Information Assets - Financial Data"
+            ]
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
@@ -42,11 +44,14 @@
             "modified": "2014-08-08T15:50:10.983Z",
             "name": "Compromise of ATM Machines",
             "type": "campaign",
-            "x_elevator_information_source_role": "Aggregator,Initial Author"
+            "x_elevator_information_source_roles": [
+                "Aggregator",
+                "Initial Author"
+            ]
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
-            "id": "relationship--fd297788-9c1f-4701-ab1e-9a35f11e6dd9",
+            "id": "relationship--c6ad8a94-edd3-4625-b5b3-24061c615a4b",
             "modified": "2014-08-08T15:50:10.983Z",
             "relationship_type": "targets",
             "source_ref": "campaign--e5268b6e-4931-42f1-b379-87f48eb41b1e",
@@ -55,7 +60,34 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
-            "id": "relationship--3dcf59c3-30e3-4aa5-9c05-2cbffcee5922",
+            "id": "relationship--5dcfc21e-c88c-4a3b-b68a-9d207995b0c8",
+            "modified": "2014-08-08T15:50:10.983Z",
+            "relationship_type": "attributed-to",
+            "source_ref": "incident--229ab6ba-0eb2-415b-bdf2-079e6b42f51e",
+            "target_ref": "campaign--e5268b6e-4931-42f1-b379-87f48eb41b1e",
+            "type": "relationship"
+        },
+        {
+            "created": "2014-08-08T15:50:10.983Z",
+            "id": "relationship--66602cba-bf53-4d70-a8c3-83f089f6b693",
+            "modified": "2014-08-08T15:50:10.983Z",
+            "relationship_type": "attributed-to",
+            "source_ref": "incident--517cf274-038d-4ed4-a3ec-3ac18ad9db8a",
+            "target_ref": "campaign--e5268b6e-4931-42f1-b379-87f48eb41b1e",
+            "type": "relationship"
+        },
+        {
+            "created": "2014-08-08T15:50:10.983Z",
+            "id": "relationship--7611b8f0-5869-495f-9a97-ff5b81d95d03",
+            "modified": "2014-08-08T15:50:10.983Z",
+            "relationship_type": "attributed-to",
+            "source_ref": "incident--7d8cf96f-91cb-42d0-a1e0-bfa38ea08621",
+            "target_ref": "campaign--e5268b6e-4931-42f1-b379-87f48eb41b1e",
+            "type": "relationship"
+        },
+        {
+            "created": "2014-08-08T15:50:10.983Z",
+            "id": "relationship--6a592f33-f088-4211-860a-9121bd5059b6",
             "modified": "2014-08-08T15:50:10.983Z",
             "relationship_type": "attributed-to",
             "source_ref": "campaign--e5268b6e-4931-42f1-b379-87f48eb41b1e",
