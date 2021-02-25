@@ -1,7 +1,6 @@
 # Standard Library
 import re
 
-
 # internal
 from stix2elevator.extension_definitions import get_extension_definition_id
 from stix2elevator.options import get_option_value, info, warn

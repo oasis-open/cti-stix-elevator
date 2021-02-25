@@ -11,6 +11,7 @@
         },
         {
             "created": "2020-12-30T16:03:21.847Z",
+            "created_by_ref": "identity--4ec4d0a2-80e3-41e6-ae22-56b6b6499611",
             "id": "identity--1621d4d4-b67d-41e3-9670-f01faf20d111",
             "modified": "2020-12-30T16:03:21.847Z",
             "name": "Adversary Bravo",
