@@ -1,0 +1,29 @@
+{
+    "id": "bundle--7d188f68-9b6d-40d8-96a6-667ce3677874",
+    "objects": [
+        {
+            "extensions": {
+                "icmp-ext": {
+                    "icmp_code_hex": "00",
+                    "icmp_type_hex": "08"
+                }
+            },
+            "id": "network-traffic--1e96b7d5-1747-4489-a3e3-d83830849f6b",
+            "type": "network-traffic"
+        },
+        {
+            "created": "2020-12-30T16:03:21.869Z",
+            "first_observed": "2020-12-30T16:03:21.869Z",
+            "id": "observed-data--381eb489-04a1-4387-b486-0b34e284796c",
+            "last_observed": "2020-12-30T16:03:21.869Z",
+            "modified": "2020-12-30T16:03:21.869Z",
+            "number_observed": 1,
+            "object_refs": [
+                "network-traffic--1e96b7d5-1747-4489-a3e3-d83830849f6b"
+            ],
+            "spec_version": "2.1",
+            "type": "observed-data"
+        }
+    ],
+    "type": "bundle"
+}

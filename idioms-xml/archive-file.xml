@@ -25,6 +25,7 @@
             <cybox:Object id="example:object-d7fcce87-0e98-4537-81bf-1e7ca9ad3734">
                  <cybox:Properties xsi:type="ArchiveFileObj:ArchiveFileObjectType">
                      <FileObj:File_Path>/usr/local/iprip32.zip</FileObj:File_Path>
+                     <ArchiveFileObj:Version>1.2</ArchiveFileObj:Version>
                      <ArchiveFileObj:Archived_File>
                          <FileObj:File_Path>/usr/local/fred.doc</FileObj:File_Path>
                         <FileObj:Hashes>

@@ -1,0 +1,106 @@
+{
+    "id": "bundle--195373a4-d596-41f4-8192-f3e5530c4a57",
+    "objects": [
+        {
+            "created": "2019-08-23T13:10:55.465Z",
+            "external_references": [
+                {
+                    "external_id": "CVE-2015-2808",
+                    "source_name": "cve"
+                }
+            ],
+            "id": "vulnerability--0d9a952d-aca5-4134-b399-5760a3ab2392",
+            "modified": "2019-08-23T13:10:55.465Z",
+            "spec_version": "2.1",
+            "type": "vulnerability"
+        },
+        {
+            "created": "2020-12-30T16:03:21.997Z",
+            "external_references": [
+                {
+                    "external_id": "T1068",
+                    "source_name": "capec"
+                }
+            ],
+            "id": "attack-pattern--1a9c3244-cc05-4d6c-8355-5fd9c681ffa9",
+            "modified": "2020-12-30T16:03:21.997Z",
+            "name": "Exploitaiton of Vulnerability",
+            "spec_version": "2.1",
+            "type": "attack-pattern"
+        },
+        {
+            "created": "2020-12-30T16:03:21.997Z",
+            "id": "identity--5d253f21-e0ef-4b12-8f4a-2d4f14e77c5b",
+            "identity_class": "organization",
+            "modified": "2020-12-30T16:03:21.997Z",
+            "name": "Finance",
+            "sectors": [
+                "finance"
+            ],
+            "spec_version": "2.1",
+            "type": "identity"
+        },
+        {
+            "created": "2020-12-30T16:03:21.997Z",
+            "id": "indicator--dea1bdab-bff8-4b5e-9160-94b06732b7b5",
+            "indicator_types": [
+                "ip-watchlist"
+            ],
+            "kill_chain_phases": [
+                {
+                    "kill_chain_name": "stix:TTP-af3e707f-2fb9-49e5-8c37-14026ca0a5ff",
+                    "phase_name": "stix:TTP-f706e4e7-53d8-44ef-967f-81535c9db7d0"
+                }
+            ],
+            "modified": "2020-12-30T16:03:21.997Z",
+            "pattern": "[ipv4-addr:value = '199.81.216.51']",
+            "pattern_type": "stix",
+            "spec_version": "2.1",
+            "type": "indicator",
+            "valid_from": "2020-12-30T16:03:21.997Z"
+        },
+        {
+            "created": "2020-12-30T16:03:21.997Z",
+            "id": "relationship--53ecc102-ed3a-4aeb-ae5d-39ed96ed45e6",
+            "modified": "2020-12-30T16:03:21.997Z",
+            "relationship_type": "targets",
+            "source_ref": "attack-pattern--1a9c3244-cc05-4d6c-8355-5fd9c681ffa9",
+            "spec_version": "2.1",
+            "target_ref": "vulnerability--0d9a952d-aca5-4134-b399-5760a3ab2392",
+            "type": "relationship"
+        },
+        {
+            "created": "2020-12-30T16:03:21.997Z",
+            "id": "relationship--13cad922-3311-44c3-bfbf-acedf9388c02",
+            "modified": "2020-12-30T16:03:21.997Z",
+            "relationship_type": "targets",
+            "source_ref": "attack-pattern--1a9c3244-cc05-4d6c-8355-5fd9c681ffa9",
+            "spec_version": "2.1",
+            "target_ref": "identity--5d253f21-e0ef-4b12-8f4a-2d4f14e77c5b",
+            "type": "relationship"
+        },
+        {
+            "created": "2020-12-30T16:03:21.997Z",
+            "description": "Related_To",
+            "id": "relationship--86b8862d-e2de-477f-8625-45e7e5df7583",
+            "modified": "2020-12-30T16:03:21.997Z",
+            "relationship_type": "indicates",
+            "source_ref": "indicator--dea1bdab-bff8-4b5e-9160-94b06732b7b5",
+            "spec_version": "2.1",
+            "target_ref": "attack-pattern--1a9c3244-cc05-4d6c-8355-5fd9c681ffa9",
+            "type": "relationship"
+        },
+        {
+            "created": "2020-12-30T16:03:21.997Z",
+            "description": "Related_To",
+            "id": "relationship--a1a247d9-1e0c-41b4-821f-0395cdc37e72",
+            "modified": "2020-12-30T16:03:21.997Z",
+            "relationship_type": "indicates",
+            "source_ref": "indicator--dea1bdab-bff8-4b5e-9160-94b06732b7b5",
+            "spec_version": "2.1",
+            "target_ref": "identity--5d253f21-e0ef-4b12-8f4a-2d4f14e77c5b",
+            "type": "relationship"
+        }
+    ],
+    "type": "bundle"
+}

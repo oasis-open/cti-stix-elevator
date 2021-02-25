@@ -17,7 +17,10 @@
             "name": "Victim Targeting: Customer PII and Financial Data",
             "spec_version": "2.1",
             "type": "identity",
-            "x_elevator_targeted_information": "Information Assets - Customer PII,Information Assets - Financial Data"
+            "x_elevator_targeted_information": [
+                "Information Assets - Customer PII",
+                "Information Assets - Financial Data"
+            ]
         },
         {
             "created": "2014-05-08T09:00:00.000Z",

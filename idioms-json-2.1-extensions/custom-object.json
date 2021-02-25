@@ -1,0 +1,72 @@
+{
+    "id": "bundle--cad0c65f-3415-4ec6-84df-c01e427ec3b6",
+    "objects": [
+        {
+            "ftp_command": "fpuwe8bmsD56ns.bin",
+            "id": "x-elevator-fooz--12fde06a-1344-4feb-b8b7-11c5096928ac",
+            "type": "x-elevator-fooz"
+        },
+        {
+            "created": "2015-07-31T11:24:39.090Z",
+            "extensions": {
+                "extension-definition--a46b18de-0b41-4a95-9d2d-67a360f2d859": {
+                    "impact": "Medium",
+                    "impact_description": "Some description about the indicator.",
+                    "objective": "Block outbound traffic",
+                    "objective_confidence": "High",
+                    "stage": "Response"
+                }
+            },
+            "id": "course-of-action--3dbfccad-1fbb-4e9f-8307-f2d1a5c651cc",
+            "labels": [
+                "perimeter-blocking"
+            ],
+            "modified": "2015-07-31T11:24:39.090Z",
+            "name": "Block outbound traffic",
+            "spec_version": "2.1",
+            "type": "course-of-action"
+        },
+        {
+            "created": "2015-07-31T11:24:39.090Z",
+            "extensions": {
+                "extension-definition--7c8ca481-f0e9-4389-94f5-90df472eb01d": {
+                    "likely_impact": "Medium"
+                }
+            },
+            "id": "indicator--2cb76e88-2734-4a6c-a28c-52ae05f627be",
+            "indicator_types": [
+                "ftp"
+            ],
+            "modified": "2015-07-31T11:24:39.090Z",
+            "pattern": "[x-elevator-fooz:ftp_command MATCHES 'fp[a-zA-Z0-9]{44}\\\\.bin']",
+            "pattern_type": "stix",
+            "spec_version": "2.1",
+            "type": "indicator",
+            "valid_from": "2015-07-31T11:24:39.090000Z"
+        },
+        {
+            "created": "2015-07-31T11:24:39.090Z",
+            "id": "relationship--3ba6b346-e1ff-40d7-a22a-7aee89cc2a91",
+            "modified": "2015-07-31T11:24:39.090Z",
+            "relationship_type": "investigates",
+            "source_ref": "course-of-action--3dbfccad-1fbb-4e9f-8307-f2d1a5c651cc",
+            "spec_version": "2.1",
+            "target_ref": "indicator--2cb76e88-2734-4a6c-a28c-52ae05f627be",
+            "type": "relationship"
+        },
+        {
+            "created": "2015-07-31T11:24:39.090Z",
+            "first_observed": "2015-07-31T11:24:39.090Z",
+            "id": "observed-data--10af324b-4071-4010-bcd5-ec51d00860be",
+            "last_observed": "2015-07-31T11:24:39.090Z",
+            "modified": "2015-07-31T11:24:39.090Z",
+            "number_observed": 1,
+            "object_refs": [
+                "x-elevator-fooz--12fde06a-1344-4feb-b8b7-11c5096928ac"
+            ],
+            "spec_version": "2.1",
+            "type": "observed-data"
+        }
+    ],
+    "type": "bundle"
+}

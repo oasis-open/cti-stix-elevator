@@ -54,7 +54,10 @@
                 "marking-definition--7dbf637e-40c3-4c7a-8ec9-ce575a5d061d"
             ],
             "type": "identity",
-            "x_elevator_information_source_role": "Nation-State,Military"
+            "x_elevator_information_source_roles": [
+                "Nation-State",
+                "Military"
+            ]
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
@@ -147,7 +150,9 @@
                 "marking-definition--40983c4a-6b5b-4d8b-8aff-13f0c894ab0f"
             ],
             "type": "identity",
-            "x_elevator_information_source_role": "Research and Development"
+            "x_elevator_information_source_roles": [
+                "Research and Development"
+            ]
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
@@ -358,7 +363,9 @@
                 "marking-definition--40983c4a-6b5b-4d8b-8aff-13f0c894ab0f"
             ],
             "type": "identity",
-            "x_elevator_information_source_role": "Nation-State"
+            "x_elevator_information_source_roles": [
+                "Nation-State"
+            ]
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
@@ -385,7 +392,9 @@
                 "marking-definition--40983c4a-6b5b-4d8b-8aff-13f0c894ab0f"
             ],
             "type": "identity",
-            "x_elevator_information_source_role": "State-influenced Commercial Entity"
+            "x_elevator_information_source_roles": [
+                "State-influenced Commercial Entity"
+            ]
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
