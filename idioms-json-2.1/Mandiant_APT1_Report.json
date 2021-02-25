@@ -45,6 +45,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
+            "created_by_ref": "identity--a957579f-7388-4553-af4e-3aa044c52444",
             "id": "identity--befb158b-5ce3-4494-b02d-ae0742971fe4",
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "Harbin Institute of Technology (哈尔滨工业大学)",
@@ -56,6 +57,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
+            "created_by_ref": "identity--a957579f-7388-4553-af4e-3aa044c52444",
             "id": "identity--4ab5f821-ea58-4dc1-b441-9cf2a3accaa1",
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "Zhejiang University School of Computer Science and Technology (浙江大学计算机学院)",
@@ -67,6 +69,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
+            "created_by_ref": "identity--a957579f-7388-4553-af4e-3aa044c52444",
             "description": "\n\nINFORMATION_SOURCE_ROLE:\nNation-State,\nMilitary",
             "id": "identity--afeecea4-8a97-4a41-985b-ee5f619ab7ea",
             "identity_class": "organization",
@@ -96,6 +99,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
+            "created_by_ref": "identity--a957579f-7388-4553-af4e-3aa044c52444",
             "id": "identity--eb17878a-d8bc-4560-be05-662699ba7d26",
             "identity_class": "individual",
             "modified": "2015-05-15T09:00:00.000Z",
@@ -156,6 +160,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
+            "created_by_ref": "identity--a957579f-7388-4553-af4e-3aa044c52444",
             "id": "identity--e6817d21-1c87-4cb8-bc77-623c1ae08eaf",
             "identity_class": "individual",
             "modified": "2015-05-15T09:00:00.000Z",
@@ -186,6 +191,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
+            "created_by_ref": "identity--a957579f-7388-4553-af4e-3aa044c52444",
             "description": "\n\nINFORMATION_SOURCE_ROLE:\nResearch and Development",
             "id": "identity--af5b7fd0-7807-4c6b-8027-803e8f52e910",
             "identity_class": "individual",
@@ -241,6 +247,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
+            "created_by_ref": "identity--a957579f-7388-4553-af4e-3aa044c52444",
             "id": "identity--dec984a9-5bfe-4b56-96c1-62c66165309c",
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "Comment Crew",
@@ -265,6 +272,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
+            "created_by_ref": "identity--a957579f-7388-4553-af4e-3aa044c52444",
             "id": "identity--fde977ca-f65c-4bf2-8072-d9516520de2d",
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "Comment Group",
@@ -289,6 +297,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
+            "created_by_ref": "identity--a957579f-7388-4553-af4e-3aa044c52444",
             "id": "identity--7b27e64e-23f1-4e31-9bce-402bbe3eea4f",
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "Shady Rat",
@@ -313,6 +322,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
+            "created_by_ref": "identity--a957579f-7388-4553-af4e-3aa044c52444",
             "id": "identity--b9ffa0c7-763b-4a11-bb7d-70cb4519daba",
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "GSD 3rd Department / 2nd Bureau",
@@ -337,6 +347,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
+            "created_by_ref": "identity--a957579f-7388-4553-af4e-3aa044c52444",
             "id": "identity--9cd9425e-0a56-44a8-92b5-33b7f7d1ce63",
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "GSD 3rd Department",
@@ -361,6 +372,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
+            "created_by_ref": "identity--a957579f-7388-4553-af4e-3aa044c52444",
             "id": "identity--6621b47b-22b2-40d9-aa90-99ea0b7e6cc8",
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "PLA General Staff",
@@ -404,6 +416,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
+            "created_by_ref": "identity--a957579f-7388-4553-af4e-3aa044c52444",
             "description": "\n\nINFORMATION_SOURCE_ROLE:\nNation-State",
             "id": "identity--4d289304-5039-43e8-aab7-344cba0c4d63",
             "identity_class": "organization",
@@ -441,6 +454,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
+            "created_by_ref": "identity--a957579f-7388-4553-af4e-3aa044c52444",
             "description": "\n\nINFORMATION_SOURCE_ROLE:\nState-influenced Commercial Entity",
             "id": "identity--18fc9cbb-642e-45c8-a534-3b77819c64fa",
             "identity_class": "organization",

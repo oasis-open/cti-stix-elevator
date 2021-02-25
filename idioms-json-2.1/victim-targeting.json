@@ -12,8 +12,8 @@
         {
             "created": "2014-05-08T09:00:00.000Z",
             "description": "\n\nTARGETED_INFORMATION:\nInformation Assets - Customer PII,\nInformation Assets - Financial Data",
-            "identity_class": "unknown",
             "id": "identity--4fde045a-b25f-f035-e8d0-29c9d5130cd9",
+            "identity_class": "unknown",
             "modified": "2014-05-08T09:00:00.000Z",
             "name": "Victim Targeting: Customer PII and Financial Data",
             "spec_version": "2.1",

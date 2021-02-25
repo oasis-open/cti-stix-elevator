@@ -24,6 +24,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
+            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
             "id": "identity--f3bcbd2e-7ae1-4a02-9f85-8243a53b3085",
             "identity_class": "unknown",
             "modified": "2015-05-15T09:00:00.000Z",
@@ -35,6 +36,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
+            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
             "id": "identity--0652ac78-8b89-46d6-b4fe-8526baa6bb10",
             "identity_class": "unknown",
             "modified": "2015-05-15T09:00:00.000Z",
@@ -46,6 +48,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
+            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
             "description": "\n\nINFORMATION_SOURCE_ROLE:\nNation-State,\nMilitary",
             "id": "identity--5fe58321-4639-4c21-8b69-f46554abfeb1",
             "identity_class": "organization",
@@ -73,6 +76,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
+            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
             "id": "identity--e393ace2-a58f-47c8-b5f9-98f7399d6b01",
             "identity_class": "individual",
             "modified": "2015-05-15T09:00:00.000Z",
@@ -113,6 +117,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
+            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
             "id": "identity--d5693107-a4bd-45cd-9945-13d1c9de6e01",
             "identity_class": "individual",
             "modified": "2015-05-15T09:00:00.000Z",
@@ -139,6 +144,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
+            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
             "description": "\n\nINFORMATION_SOURCE_ROLE:\nResearch and Development",
             "id": "identity--ea1b414c-ee23-4232-8d03-3fe5f62b6585",
             "identity_class": "individual",
@@ -194,6 +200,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
+            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
             "id": "identity--950f1c88-4641-4dfb-abd2-0bb14279b5b5",
             "identity_class": "unknown",
             "modified": "2015-05-15T09:00:00.000Z",
@@ -220,6 +227,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
+            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
             "id": "identity--7c2ad953-0bd3-43bc-9b0f-631d1d77a703",
             "identity_class": "unknown",
             "modified": "2015-05-15T09:00:00.000Z",
@@ -246,6 +254,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
+            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
             "id": "identity--8ca3fc2d-0ccc-4db1-9a5c-3d9ed876ac5b",
             "identity_class": "unknown",
             "modified": "2015-05-15T09:00:00.000Z",
@@ -272,6 +281,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
+            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
             "id": "identity--1e2841a1-4bf8-4483-bde5-10c73d0d83f8",
             "identity_class": "unknown",
             "modified": "2015-05-15T09:00:00.000Z",
@@ -298,6 +308,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
+            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
             "id": "identity--a0a49a2a-866c-438a-aa03-32c9328753d1",
             "identity_class": "unknown",
             "modified": "2015-05-15T09:00:00.000Z",
@@ -324,6 +335,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
+            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
             "id": "identity--da92c2e4-88c9-40da-9813-b0caeacc04f2",
             "identity_class": "unknown",
             "modified": "2015-05-15T09:00:00.000Z",
@@ -350,6 +362,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
+            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
             "description": "\n\nINFORMATION_SOURCE_ROLE:\nNation-State",
             "id": "identity--0ae42e63-8c18-4c16-b505-d8e195547b25",
             "identity_class": "organization",
@@ -377,6 +390,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
+            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
             "description": "\n\nINFORMATION_SOURCE_ROLE:\nState-influenced Commercial Entity",
             "id": "identity--cb9891d0-0ad3-45a4-bc04-9df6621400fd",
             "identity_class": "organization",
@@ -404,7 +418,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--e5613ca8-9dc8-4c55-97a8-882a304bd41c",
+            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
             "description": " The group does not target industries systematically but\n\t\t\t\t\t\t\tmore likely steals from an enormous range of industries on a continuous\n\t\t\t\t\t\t\tbasis.  Organizations in all industries related to China’s\n\t\t\t\t\t\t\tstrategic priorities are potential targets of APT1’s comprehensive cyber\n\t\t\t\t\t\t\tespionage campaign. \n\nINTENDED_EFFECT:<!DOCTYPE html>\n\t\t\t\t\t<html><body>\n\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tOur evidence indicates that APT1 has been stealing\n\t\t\t\t\t\t\thundreds of terabytes of data from at least 141 organizations across a diverse\n\t\t\t\t\t\t\tset of industries beginning as early as 2006. Remarkably, we have witnessed APT1\n\t\t\t\t\t\t\ttarget dozens of organizations simultaneously. Once the group establishes access\n\t\t\t\t\t\t\tto a victim’s network, they continue to access it periodically over several\n\t\t\t\t\t\t\tmonths or years to steal large volumes of valuable intellectual property,\n\t\t\t\t\t\t\tincluding technology blueprints, proprietary manufacturing processes, test\n\t\t\t\t\t\t\tresults, business plans, pricing documents, partnership agreements, emails and\n\t\t\t\t\t\t\tcontact lists from victim organizations’ leadership. We believe that the\n\t\t\t\t\t\t\textensive activity we have directly observed represents only a small fraction of\n\t\t\t\t\t\t\tthe cyber espionage that APT1 has committed. \n\t\t\t\t\t\t\t</P>\n\t\t\t\t\t</body></html>\n\nINTENDED_EFFECT:Advantage - Economic\n\nINTENDED_EFFECT:Theft - Intellectual Property\n\nINTENDED_EFFECT:Competitive Advantage\n\nINTENDED_EFFECT:Theft - Credential Theft\n\nINTENDED_EFFECT:Unauthorized Access",
             "id": "identity--c63f31ac-871b-4846-aa25-de1926f4f3c8",
             "identity_class": "unknown",

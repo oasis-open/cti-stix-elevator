@@ -3,39 +3,16 @@
     "objects": [
         {
             "created": "2020-11-23T14:26:05.000Z",
-            "id": "identity--db478e38-aa32-44ba-8217-a96f6c8ef4f8",
-            "identity_class": "organization",
-            "modified": "2020-11-23T14:26:05.000Z",
-            "name": "CISA",
-            "object_marking_refs": [
-                "marking-definition--c9c3ca1c-77b2-451d-8bb8-b1696abf3793"
-            ],
-            "sectors": [
-                "government"
-            ],
-            "type": "identity"
-        },
-        {
-            "created": "2020-11-23T14:26:05.000Z",
-            "created_by_ref": "identity--db478e38-aa32-44ba-8217-a96f6c8ef4f8",
-            "definition": {
-                "consent": "everyone",
-                "is_cisa_proprietary": "true",
-                "is_proprietary": "true",
-                "tlp": "white"
-            },
-            "definition_type": "ais",
-            "id": "marking-definition--c9c3ca1c-77b2-451d-8bb8-b1696abf3793",
-            "type": "marking-definition"
-        },
-        {
-            "created": "2020-11-23T14:26:05.000Z",
             "id": "identity--2bac9939-6d1e-487c-a06f-73772bc2065d",
             "identity_class": "organization",
+            "labels": [
+                "ais-consent-everyone",
+                "cisa-proprietary-true"
+            ],
             "modified": "2020-11-23T14:26:05.000Z",
             "name": "CISA",
             "object_marking_refs": [
-                "marking-definition--c9c3ca1c-77b2-451d-8bb8-b1696abf3793"
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
             ],
             "sectors": [
                 "government"
@@ -44,12 +21,17 @@
         },
         {
             "created": "2020-11-23T14:26:05.000Z",
-            "id": "identity--cb959457-74c6-4127-ad9c-cb0d1a2a9e8d",
+            "created_by_ref": "identity--2bac9939-6d1e-487c-a06f-73772bc2065d",
+            "id": "identity--db478e38-aa32-44ba-8217-a96f6c8ef4f8",
             "identity_class": "organization",
+            "labels": [
+                "ais-consent-everyone",
+                "cisa-proprietary-true"
+            ],
             "modified": "2020-11-23T14:26:05.000Z",
             "name": "CISA",
             "object_marking_refs": [
-                "marking-definition--c9c3ca1c-77b2-451d-8bb8-b1696abf3793"
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
             ],
             "sectors": [
                 "government"
@@ -59,8 +41,16 @@
         {
             "count": 1,
             "created": "2018-03-13T20:42:24.000Z",
+            "created_by_ref": "identity--2bac9939-6d1e-487c-a06f-73772bc2065d",
             "id": "sighting--6586ce12-e552-47a6-b929-d1b599751a4e",
+            "labels": [
+                "ais-consent-everyone",
+                "cisa-proprietary-true"
+            ],
             "modified": "2018-03-13T20:42:24.000Z",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
+            ],
             "sighting_of_ref": "indicator--a35dbed6-9b9c-442e-aaff-4aeeb88a43ef",
             "summary": false,
             "type": "sighting"
@@ -77,11 +67,13 @@
                 }
             ],
             "labels": [
-                "anonymization"
+                "anonymization",
+                "ais-consent-everyone",
+                "cisa-proprietary-true"
             ],
             "modified": "2020-11-23T19:26:05.255Z",
             "object_marking_refs": [
-                "marking-definition--c9c3ca1c-77b2-451d-8bb8-b1696abf3793"
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
             ],
             "pattern": "[file:hashes.MD5 = 'd41d8cd98f00b204e9800998ecf8427e' AND (file:name = 'TheFileName.exe' AND file:parent_directory_ref.path = '/usr/local/bin') AND file:size = 123456]",
             "type": "indicator",
