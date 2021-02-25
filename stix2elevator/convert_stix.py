@@ -1884,7 +1884,7 @@ def convert_identity_for_victim_target(identity, ttp, env, ttp_generated):
         identity_instance["identity_class"] = "unknown"
     env.bundle_instance["objects"].append(identity_instance)
     process_ttp_properties(identity_instance, ttp, env, False)
-    finish_basic_object(ttp.id_, identity_instance, env, identity, identity_instance["id"])
+    finish_basic_object(ttp.id_, identity_instance, env, identity)
     return identity_instance
 
 
