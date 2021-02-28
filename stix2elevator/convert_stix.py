@@ -423,6 +423,7 @@ def process_information_source_for_sighting(sighting, sighting_instance, env):
 def handle_sighting(sighting, sighted_object_id, env):
     sighting_instance = create_basic_object("sighting", sighting, env)
     sighting_instance["count"] = 1
+    sighting_instance["created_by_ref"] = env.created_by_ref
     sighting_instance["sighting_of_ref"] = sighted_object_id
     process_description_and_short_description(sighting_instance, sighting)
     if sighting.related_observables:
@@ -832,7 +833,7 @@ def convert_course_of_action(coa, env):
         info("All 'associated coas' relationships of %s are assumed to not represent STIX 1.2 versioning", 710, coa.id_)
         handle_relationship_to_refs(coa.related_coas, coa_instance["id"], new_env,
                                     "related-to")
-    finish_basic_object(coa.id_, coa_instance, env, coa)
+    finish_basic_object(coa.id_, coa_instance, new_env, coa)
     return coa_instance
 
 
@@ -996,7 +997,7 @@ def determine_aa(geo):
         return None
 
 
-def convert_ciq_addresses2_1(ciq_info_addresses, identity_instance, env, parent_id=None):
+def convert_ciq_addresses2_1(ciq_info_addresses, identity_instance, env, parent_id=None, use_created_by_ref=True):
     location_keys = []
     for add in ciq_info_addresses:
         if not add.free_text_address:
@@ -1043,11 +1044,15 @@ def convert_ciq_addresses2_1(ciq_info_addresses, identity_instance, env, parent_
                 if c:
                     location["country"] = c
                 add_location_object(key, location)
+                if use_created_by_ref:
+                    location["created_by_ref"] = identity_instance["id"]
+                else:
+                    location["created_by_ref"] = env.created_by_ref
                 warn("Location %s may not contain all aspects of the STIX 1.x address object", 803, location["id"])
                 env.bundle_instance["objects"].append(location)
             env.bundle_instance["objects"].append(create_relationship(identity_instance["id"],
                                                                       location["id"],
-                                                                      env,
+                                                                      env.newEnv(created_by_ref=identity_instance["id"]) if use_created_by_ref else env,
                                                                       "located-at"))
 
 
@@ -1068,7 +1073,7 @@ def handle_missing_properties_of_ciq_instance(identity_instance, ciq):
         fill_in_extension_properties(identity_instance, container, extension_definition_id)
 
 
-def convert_identity(identity, env, parent_id=None, temp_marking_id=None, from_package=False):
+def convert_identity(identity, env, parent_id=None, temp_marking_id=None, from_package=False, use_created_by_ref=True):
     identity_instance = create_basic_object("identity", identity, env, parent_id)
     identity_instance["sectors"] = []
     spec_version = get_option_value("spec_version")
@@ -1094,7 +1099,7 @@ def convert_identity(identity, env, parent_id=None, temp_marking_id=None, from_p
                 convert_controlled_vocabs_to_open_vocabs(identity_instance, "sectors", industry, SECTORS_MAP, False)
         if ciq_info.addresses:
             if spec_version == "2.1":
-                convert_ciq_addresses2_1(ciq_info.addresses, identity_instance, env, parent_id)
+                convert_ciq_addresses2_1(ciq_info.addresses, identity_instance, env, parent_id, use_created_by_ref)
         if ciq_info.free_text_lines:
             handle_free_text_lines(identity_instance, ciq_info.free_text_lines)
     if identity.related_identities:
@@ -1204,7 +1209,7 @@ def convert_incident(incident, env):
         info("All 'associated incidents' relationships of %s are assumed to not represent STIX 1.2 versioning",
              710, incident_instance["id"])
         handle_relationship_to_refs(incident.related_incidents, incident_instance["id"], new_env, "related-to")
-    finish_basic_object(incident.id_, incident_instance, env, incident)
+    finish_basic_object(incident.id_, incident_instance, new_env, incident)
     return incident_instance
 
 
@@ -1968,7 +1973,10 @@ def convert_resources(resources, ttp, env, generated_ttps):
 
 def convert_identity_for_victim_target(identity, ttp, env, ttp_generated):
     if identity:
-        identity_instance = convert_identity(identity, env, parent_id=ttp.id_ if not ttp_generated else None)
+        identity_instance = convert_identity(identity,
+                                             env,
+                                             parent_id=ttp.id_ if not ttp_generated else None,
+                                             use_created_by_ref=False)
     else:
         identity_instance = create_basic_object("identity", None, env, ttp.id_)
         identity_instance["identity_class"] = "unknown"
@@ -2058,7 +2066,7 @@ def handle_embedded_object(obj, env):
         new20s = convert_exploit_target(obj, env)
     # identities
     elif isinstance(obj, Identity) or isinstance(obj, CIQIdentity3_0Instance):
-        new20 = convert_identity(obj, env)
+        new20 = convert_identity(obj, env, use_created_by_ref=False)
         env.bundle_instance["objects"].append(new20)
     # incidents
     elif get_option_value("incidents") and isinstance(obj, Incident):

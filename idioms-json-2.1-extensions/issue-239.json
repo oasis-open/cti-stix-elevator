@@ -5,6 +5,7 @@
             "administrative_area": "US-DC",
             "country": "US",
             "created": "2020-11-23T14:26:05.000Z",
+            "created_by_ref": "identity--057e0557-f75c-4efb-bd3e-835094e2d3d3",
             "id": "location--86de9d6c-ed2b-477e-84ac-9f38fad37df6",
             "modified": "2020-11-23T14:26:05.000Z",
             "spec_version": "2.1",
@@ -12,6 +13,7 @@
         },
         {
             "created": "2020-11-23T14:26:05.000Z",
+            "created_by_ref": "identity--057e0557-f75c-4efb-bd3e-835094e2d3d3",
             "id": "relationship--ae5452ad-a506-4266-961d-65d1e148c52e",
             "modified": "2020-11-23T14:26:05.000Z",
             "relationship_type": "located-at",
@@ -22,7 +24,7 @@
         },
         {
             "created": "2020-11-23T14:26:05.000Z",
-            "created_by_ref": "identity--69ab19d0-9aeb-429b-9184-aacd9798b7bd",
+            "created_by_ref": "identity--057e0557-f75c-4efb-bd3e-835094e2d3d3",
             "id": "relationship--92888d00-4334-4247-8a8a-5749b2163d55",
             "modified": "2020-11-23T14:26:05.000Z",
             "relationship_type": "located-at",
@@ -88,6 +90,7 @@
         },
         {
             "created": "2020-11-23T14:26:05.000Z",
+            "created_by_ref": "identity--69ab19d0-9aeb-429b-9184-aacd9798b7bd",
             "id": "identity--332f06d1-0196-4896-a613-eb0495101861",
             "identity_class": "organization",
             "modified": "2020-11-23T14:26:05.000Z",
@@ -104,6 +107,7 @@
         {
             "count": 1,
             "created": "2018-03-13T20:42:24.000Z",
+            "created_by_ref": "identity--69ab19d0-9aeb-429b-9184-aacd9798b7bd",
             "id": "sighting--20208ae8-fb95-4502-8d7e-35b7cf97c017",
             "modified": "2018-03-13T20:42:24.000Z",
             "sighting_of_ref": "indicator--a35dbed6-9b9c-442e-aaff-4aeeb88a43ef",

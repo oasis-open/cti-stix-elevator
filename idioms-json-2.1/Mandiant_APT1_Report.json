@@ -25,6 +25,7 @@
         },
         {
             "administrative_area": "Pudong New Area",
+	    "created_by_ref": "identity--a957579f-7388-4553-af4e-3aa044c52444",
             "country": "CN",
             "created": "2015-05-15T09:00:00.000Z",
             "id": "location--1c649fc7-ef2d-4c80-b0e7-4c81a1048668",
@@ -386,6 +387,7 @@
         {
             "country": "CN",
             "created": "2015-05-15T09:00:00.000Z",
+	    "created_by_ref": "identity--a957579f-7388-4553-af4e-3aa044c52444",
             "id": "location--652ee744-a7ad-4eb7-8669-4e90d4fcee79",
             "modified": "2015-05-15T09:00:00.000Z",
             "spec_version": "2.1",
@@ -468,6 +470,7 @@
         {
             "country": "US",
             "created": "2015-05-15T09:00:00.000Z",
+	    "created_by_ref": "identity--a957579f-7388-4553-af4e-3aa044c52444",
             "id": "location--36309305-ccc7-48ec-84a5-0d9c4dc1a09a",
             "modified": "2015-05-15T09:00:00.000Z",
             "spec_version": "2.1",
@@ -487,6 +490,7 @@
         {
             "country": "CA",
             "created": "2015-05-15T09:00:00.000Z",
+	    "created_by_ref": "identity--a957579f-7388-4553-af4e-3aa044c52444",
             "id": "location--08693127-eb56-4a47-b713-c94a50628fbe",
             "modified": "2015-05-15T09:00:00.000Z",
             "spec_version": "2.1",
@@ -506,6 +510,7 @@
         {
             "country": "GB",
             "created": "2015-05-15T09:00:00.000Z",
+	    "created_by_ref": "identity--a957579f-7388-4553-af4e-3aa044c52444",
             "id": "location--b12371df-f92c-452f-9fed-e681ca113f15",
             "modified": "2015-05-15T09:00:00.000Z",
             "spec_version": "2.1",
@@ -525,6 +530,7 @@
         {
             "country": "NO",
             "created": "2015-05-15T09:00:00.000Z",
+	    "created_by_ref": "identity--a957579f-7388-4553-af4e-3aa044c52444",
             "id": "location--fe2d76c0-d8a5-4022-b17e-f30ca28b5599",
             "modified": "2015-05-15T09:00:00.000Z",
             "spec_version": "2.1",
@@ -544,6 +550,7 @@
         {
             "country": "FR",
             "created": "2015-05-15T09:00:00.000Z",
+	    "created_by_ref": "identity--a957579f-7388-4553-af4e-3aa044c52444",
             "id": "location--0794a197-7ffe-4684-a57b-0f6f957211ba",
             "modified": "2015-05-15T09:00:00.000Z",
             "spec_version": "2.1",
@@ -563,6 +570,7 @@
         {
             "country": "BE",
             "created": "2015-05-15T09:00:00.000Z",
+	    "created_by_ref": "identity--a957579f-7388-4553-af4e-3aa044c52444",
             "id": "location--0049b6f1-abd3-446d-99d9-ddc4cb99ea40",
             "modified": "2015-05-15T09:00:00.000Z",
             "spec_version": "2.1",
@@ -582,6 +590,7 @@
         {
             "country": "LU",
             "created": "2015-05-15T09:00:00.000Z",
+	    "created_by_ref": "identity--a957579f-7388-4553-af4e-3aa044c52444",
             "id": "location--d4486d10-cf7e-487c-a54c-1e0e334478b5",
             "modified": "2015-05-15T09:00:00.000Z",
             "spec_version": "2.1",
@@ -601,6 +610,7 @@
         {
             "country": "CH",
             "created": "2015-05-15T09:00:00.000Z",
+	    "created_by_ref": "identity--a957579f-7388-4553-af4e-3aa044c52444",
             "id": "location--94eae71b-4901-45be-814f-abf7ec875eb1",
             "modified": "2015-05-15T09:00:00.000Z",
             "spec_version": "2.1",
@@ -620,6 +630,7 @@
         {
             "country": "IL",
             "created": "2015-05-15T09:00:00.000Z",
+	    "created_by_ref": "identity--a957579f-7388-4553-af4e-3aa044c52444",
             "id": "location--1a9f6d96-334d-43aa-bc2a-389f5e5dee94",
             "modified": "2015-05-15T09:00:00.000Z",
             "spec_version": "2.1",
@@ -639,6 +650,7 @@
         {
             "country": "UAE",
             "created": "2015-05-15T09:00:00.000Z",
+	    "created_by_ref": "identity--a957579f-7388-4553-af4e-3aa044c52444",
             "id": "location--1795605f-2800-42c0-87d7-9148461b4c92",
             "modified": "2015-05-15T09:00:00.000Z",
             "spec_version": "2.1",
@@ -658,6 +670,7 @@
         {
             "country": "ZA",
             "created": "2015-05-15T09:00:00.000Z",
+	    "created_by_ref": "identity--a957579f-7388-4553-af4e-3aa044c52444",
             "id": "location--7bab61b8-10b1-4813-9dd5-0ac2c5d65313",
             "modified": "2015-05-15T09:00:00.000Z",
             "spec_version": "2.1",
@@ -677,6 +690,7 @@
         {
             "country": "IN",
             "created": "2015-05-15T09:00:00.000Z",
+	    "created_by_ref": "identity--a957579f-7388-4553-af4e-3aa044c52444",
             "id": "location--71d6520f-6244-403b-9ae4-d42e055ed056",
             "modified": "2015-05-15T09:00:00.000Z",
             "spec_version": "2.1",
@@ -696,6 +710,7 @@
         {
             "country": "JP",
             "created": "2015-05-15T09:00:00.000Z",
+	    "created_by_ref": "identity--a957579f-7388-4553-af4e-3aa044c52444",
             "id": "location--5bc1bfbe-063b-49c2-91b7-5b973e18e198",
             "modified": "2015-05-15T09:00:00.000Z",
             "spec_version": "2.1",
@@ -715,6 +730,7 @@
         {
             "country": "Taiwan",
             "created": "2015-05-15T09:00:00.000Z",
+	    "created_by_ref": "identity--a957579f-7388-4553-af4e-3aa044c52444",
             "id": "location--b0edcfc2-1cd6-466c-ab89-81254a0e13f5",
             "modified": "2015-05-15T09:00:00.000Z",
             "spec_version": "2.1",
@@ -734,6 +750,7 @@
         {
             "country": "SG",
             "created": "2015-05-15T09:00:00.000Z",
+	    "created_by_ref": "identity--a957579f-7388-4553-af4e-3aa044c52444",
             "id": "location--4b7f353e-da6b-425f-99f7-77d709b51ca3",
             "modified": "2015-05-15T09:00:00.000Z",
             "spec_version": "2.1",

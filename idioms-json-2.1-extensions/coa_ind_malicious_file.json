@@ -5,6 +5,7 @@
             "administrative_area": "US-DC",
             "country": "US",
             "created": "9999-12-31T00:00:00.000Z",
+            "created_by_ref": "identity--56283c95-37da-422c-9229-11f5a9638cea",
             "id": "location--63fc5fbf-46e1-4370-a88c-69f4d5705425",
             "modified": "9999-12-31T00:00:00.000Z",
             "spec_version": "2.1",
@@ -12,6 +13,7 @@
         },
         {
             "created": "9999-12-31T00:00:00.000Z",
+            "created_by_ref": "identity--56283c95-37da-422c-9229-11f5a9638cea",
             "id": "relationship--c4cc6298-d817-488b-bdf7-2445484c1e68",
             "modified": "9999-12-31T00:00:00.000Z",
             "relationship_type": "located-at",
@@ -19,6 +21,20 @@
             "spec_version": "2.1",
             "target_ref": "location--63fc5fbf-46e1-4370-a88c-69f4d5705425",
             "type": "relationship"
+        },
+        {
+            "created": "9999-12-31T00:00:00.000Z",
+            "created_by_ref": "identity--56283c95-37da-422c-9229-11f5a9638cea",
+            "definition": {
+                "consent": "everyone",
+                "is_cisa_proprietary": "false",
+                "is_proprietary": "false",
+                "tlp": "white"
+            },
+            "definition_type": "ais",
+            "id": "marking-definition--fbee295e-69af-4e39-8275-9a5b9cbf8d83",
+            "spec_version": "2.1",
+            "type": "marking-definition"
         },
         {
             "created": "9999-12-31T00:00:00.000Z",
@@ -36,21 +52,8 @@
             "type": "identity"
         },
         {
-            "created": "9999-12-31T00:00:00.000Z",
-            "created_by_ref": "identity--56283c95-37da-422c-9229-11f5a9638cea",
-            "definition": {
-                "consent": "everyone",
-                "is_cisa_proprietary": "false",
-                "is_proprietary": "false",
-                "tlp": "white"
-            },
-            "definition_type": "ais",
-            "id": "marking-definition--fbee295e-69af-4e39-8275-9a5b9cbf8d83",
-            "spec_version": "2.1",
-            "type": "marking-definition"
-        },
-        {
             "created": "2016-03-29T20:52:52.716Z",
+            "created_by_ref": "identity--56283c95-37da-422c-9229-11f5a9638cea",
             "description": "Send Device for forensic analysis",
             "id": "course-of-action--e9f31688-d744-48f4-9320-e6a9bd136f44",
             "modified": "2016-03-29T20:52:52.716Z",
@@ -63,6 +66,7 @@
         },
         {
             "created": "2016-03-29T20:52:52.716Z",
+            "created_by_ref": "identity--56283c95-37da-422c-9229-11f5a9638cea",
             "id": "indicator--0c277b59-f5a9-4530-8861-82588719ec0c",
             "kill_chain_phases": [
                 {
@@ -82,6 +86,7 @@
         },
         {
             "created": "2016-03-29T20:52:52.716Z",
+            "created_by_ref": "identity--5ee611b0-9962-416c-8b28-a89ef9ea5e32",
             "id": "relationship--74ace4cb-6e57-4a6e-8d95-a9d558366ce5",
             "modified": "2016-03-29T20:52:52.716Z",
             "relationship_type": "investigates",
