@@ -6,9 +6,6 @@ import json
 import os
 import sys
 
-# external
-from six.moves import zip
-
 # internal
 from stix2elevator import elevate
 from stix2elevator.options import (
