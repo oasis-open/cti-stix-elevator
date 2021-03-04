@@ -5,6 +5,7 @@
             "administrative_area": "US-DC",
             "country": "US",
             "created": "9999-12-31T00:00:00.000Z",
+            "created_by_ref": "identity--007a335e-26b2-4fec-af20-9e61bb1ffc19",
             "id": "location--271e4cbc-b78f-43da-ab90-6f90cafa605e",
             "modified": "9999-12-31T00:00:00.000Z",
             "spec_version": "2.1",
@@ -12,6 +13,7 @@
         },
         {
             "created": "9999-12-31T00:00:00.000Z",
+            "created_by_ref": "identity--007a335e-26b2-4fec-af20-9e61bb1ffc19",
             "id": "relationship--d4d13323-7ed7-4fe5-86ed-294770d40004",
             "modified": "9999-12-31T00:00:00.000Z",
             "relationship_type": "located-at",
@@ -21,6 +23,20 @@
             "type": "relationship"
         },
         {
+            "created": "9999-12-31T00:00:00.000Z",
+            "created_by_ref": "identity--007a335e-26b2-4fec-af20-9e61bb1ffc19",
+            "definition": {
+                "consent": "everyone",
+                "is_cisa_proprietary": "false",
+                "is_proprietary": "false",
+                "tlp": "white"
+            },
+            "definition_type": "ais",
+            "id": "marking-definition--e13519a9-84c7-44b2-8dff-929238089152",
+            "spec_version": "2.1",
+            "type": "marking-definition"
+        },
+	{
             "created": "9999-12-31T00:00:00.000Z",
             "id": "identity--007a335e-26b2-4fec-af20-9e61bb1ffc19",
             "identity_class": "organization",
@@ -41,6 +57,7 @@
         },
         {
             "created": "2016-03-29T20:52:52.716Z",
+            "created_by_ref": "identity--007a335e-26b2-4fec-af20-9e61bb1ffc19",
             "description": "Send Device for forensic analysis",
             "id": "course-of-action--e9f31688-d744-48f4-9320-e6a9bd136f44",
             "labels": [
@@ -57,6 +74,7 @@
         },
         {
             "created": "2016-03-29T20:52:52.716Z",
+            "created_by_ref": "identity--007a335e-26b2-4fec-af20-9e61bb1ffc19",
             "id": "indicator--0c277b59-f5a9-4530-8861-82588719ec0c",
             "kill_chain_phases": [
                 {
@@ -80,6 +98,7 @@
         },
         {
             "created": "2016-03-29T20:52:52.716Z",
+            "created_by_ref": "identity--007a335e-26b2-4fec-af20-9e61bb1ffc19",
             "id": "relationship--a85593d5-13e1-44af-9a4c-657749566254",
             "modified": "2016-03-29T20:52:52.716Z",
             "relationship_type": "investigates",
