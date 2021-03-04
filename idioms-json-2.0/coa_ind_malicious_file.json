@@ -34,7 +34,7 @@
         },
         {
             "created": "2016-03-29T20:52:52.716Z",
-	    "created_by_ref": "identity--7c57ab9b-53b3-4691-9528-ba9ae1f479f0",
+	        "created_by_ref": "identity--7c57ab9b-53b3-4691-9528-ba9ae1f479f0",
             "description": "Send Device for forensic analysis",
             "id": "course-of-action--e9f31688-d744-48f4-9320-e6a9bd136f44",
             "labels": [
@@ -50,7 +50,7 @@
         },
         {
             "created": "2016-03-29T20:52:52.716Z",
-	    "created_by_ref": "identity--7c57ab9b-53b3-4691-9528-ba9ae1f479f0",
+	        "created_by_ref": "identity--7c57ab9b-53b3-4691-9528-ba9ae1f479f0",
             "id": "indicator--0c277b59-f5a9-4530-8861-82588719ec0c",
             "kill_chain_phases": [
                 {
@@ -73,7 +73,7 @@
         },
         {
             "created": "2016-03-29T20:52:52.716Z",
-	    "created_by_ref": "identity--7c57ab9b-53b3-4691-9528-ba9ae1f479f0",
+	        "created_by_ref": "identity--7c57ab9b-53b3-4691-9528-ba9ae1f479f0",
             "id": "relationship--51824c97-69d5-4e6c-a9a5-9efec1032da4",
             "modified": "2016-03-29T20:52:52.716Z",
             "relationship_type": "investigates",
