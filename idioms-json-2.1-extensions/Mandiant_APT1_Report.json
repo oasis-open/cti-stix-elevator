@@ -56,8 +56,6 @@
             "spec_version": "2.1",
             "type": "identity"
         },
-
-
         {
             "created": "2015-05-15T09:00:00.000Z",
             "created_by_ref": "identity--8358a1c8-6005-4cdc-9436-4fbdc9957f30",

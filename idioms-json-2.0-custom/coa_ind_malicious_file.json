@@ -3,19 +3,6 @@
     "objects": [
 	    {
             "created": "9999-12-31T00:00:00.000Z",
-            "created_by_ref": "identity--7c57ab9b-53b3-4691-9528-ba9ae1f479f0",
-            "definition": {
-                "consent": "everyone",
-                "is_cisa_proprietary": "false",
-                "is_proprietary": "false",
-                "tlp": "white"
-            },
-            "definition_type": "ais",
-            "id": "marking-definition--f49ec0f8-6b76-4fbd-b744-61a1c13584d5",
-            "type": "marking-definition"
-        },
-	    {
-            "created": "9999-12-31T00:00:00.000Z",
             "id": "identity--7c57ab9b-53b3-4691-9528-ba9ae1f479f0",
             "identity_class": "organization",
             "labels": [

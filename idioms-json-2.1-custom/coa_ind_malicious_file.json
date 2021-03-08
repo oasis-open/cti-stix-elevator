@@ -24,20 +24,6 @@
         },
         {
             "created": "9999-12-31T00:00:00.000Z",
-            "created_by_ref": "identity--007a335e-26b2-4fec-af20-9e61bb1ffc19",
-            "definition": {
-                "consent": "everyone",
-                "is_cisa_proprietary": "false",
-                "is_proprietary": "false",
-                "tlp": "white"
-            },
-            "definition_type": "ais",
-            "id": "marking-definition--e13519a9-84c7-44b2-8dff-929238089152",
-            "spec_version": "2.1",
-            "type": "marking-definition"
-        },
-        {
-            "created": "9999-12-31T00:00:00.000Z",
             "id": "identity--007a335e-26b2-4fec-af20-9e61bb1ffc19",
             "identity_class": "organization",
             "labels": [
