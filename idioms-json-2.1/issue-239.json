@@ -5,6 +5,7 @@
             "administrative_area": "US-DC",
             "country": "US",
             "created": "2020-11-23T14:26:05.000Z",
+            "created_by_ref": "identity--4dd4c3d8-be69-4085-ad32-fc92690145a1",
             "id": "location--e30d64df-990e-4c06-abd1-13da9225dea2",
             "modified": "2020-11-23T14:26:05.000Z",
             "spec_version": "2.1",
@@ -12,7 +13,8 @@
         },
         {
             "created": "2020-11-23T14:26:05.000Z",
-            "id": "relationship--4fdb3913-09da-4162-8737-68e71e5c3d88",
+            "created_by_ref": "identity--93fc8f6a-c7c0-4809-bd41-1b9f906963bc",
+            "id": "relationship--1ca9543c-4bf2-419d-b869-d54f00bb4bde",
             "modified": "2020-11-23T14:26:05.000Z",
             "relationship_type": "located-at",
             "source_ref": "identity--93fc8f6a-c7c0-4809-bd41-1b9f906963bc",
@@ -22,61 +24,18 @@
         },
         {
             "created": "2020-11-23T14:26:05.000Z",
-            "created_by_ref": "identity--93fc8f6a-c7c0-4809-bd41-1b9f906963bc",
-            "id": "relationship--1ca9543c-4bf2-419d-b869-d54f00bb4bde",
-            "modified": "2020-11-23T14:26:05.000Z",
-            "relationship_type": "located-at",
-            "source_ref": "identity--b09f377e-c597-4ae6-8050-77f538a457b2",
-            "spec_version": "2.1",
-            "target_ref": "location--2217fa65-83fd-43df-92af-07f4f048698f",
-            "type": "relationship"
-        },
-        {
-            "created": "2020-11-23T14:26:05.000Z",
             "id": "identity--93fc8f6a-c7c0-4809-bd41-1b9f906963bc",
             "identity_class": "organization",
             "labels": [
-                "ais-consent-everyone",
-                "cisa-proprietary-true"
+                "ais-consent-everyone-cisa-proprietary-true"
             ],
             "modified": "2020-11-23T14:26:05.000Z",
-            "name": "CISA",
+            "name": "ACME",
             "object_marking_refs": [
                 "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
             ],
             "sectors": [
-                "government"
-            ],
-            "spec_version": "2.1",
-            "type": "identity"
-        },
-        {
-            "created": "2020-11-23T14:26:05.000Z",
-            "created_by_ref": "identity--93fc8f6a-c7c0-4809-bd41-1b9f906963bc",
-            "id": "relationship--0ab08827-ee00-4735-b4a4-f045591e1e8e",
-            "modified": "2020-11-23T14:26:05.000Z",
-            "relationship_type": "located-at",
-            "source_ref": "identity--e3949557-ccef-4638-abfb-858674bae4d3",
-            "spec_version": "2.1",
-            "target_ref": "location--e30d64df-990e-4c06-abd1-13da9225dea2",
-            "type": "relationship"
-        },
-        {
-            "created": "2020-11-23T14:26:05.000Z",
-            "created_by_ref": "identity--93fc8f6a-c7c0-4809-bd41-1b9f906963bc",
-            "id": "identity--e3949557-ccef-4638-abfb-858674bae4d3",
-            "identity_class": "organization",
-            "labels": [
-                "ais-consent-everyone",
-                "cisa-proprietary-true"
-            ],
-            "modified": "2020-11-23T14:26:05.000Z",
-            "name": "CISA",
-            "object_marking_refs": [
-                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
-            ],
-            "sectors": [
-                "government"
+                "technology"
             ],
             "spec_version": "2.1",
             "type": "identity"
@@ -86,10 +45,6 @@
             "created": "2018-03-13T20:42:24.000Z",
             "created_by_ref": "identity--93fc8f6a-c7c0-4809-bd41-1b9f906963bc",
             "id": "sighting--9688b687-e433-40c6-b354-3bfcab12a113",
-            "labels": [
-                "ais-consent-everyone",
-                "cisa-proprietary-true"
-            ],
             "modified": "2018-03-13T20:42:24.000Z",
             "object_marking_refs": [
                 "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
@@ -112,10 +67,6 @@
                     "kill_chain_name": "stix:KillChain-af3e707f-2fb9-49e5-8c37-14026ca0a5ff",
                     "phase_name": "Delivery"
                 }
-            ],
-            "labels": [
-                "ais-consent-everyone",
-                "cisa-proprietary-true"
             ],
             "modified": "2020-11-23T19:26:05.255Z",
             "object_marking_refs": [

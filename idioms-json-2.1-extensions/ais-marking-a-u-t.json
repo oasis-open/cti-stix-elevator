@@ -1,0 +1,59 @@
+{
+    "id": "bundle--d11a02b6-ed2b-4661-96c1-5bd11d7dc821",
+    "objects": [
+        {
+            "administrative_area": "US-DC",
+            "country": "US",
+            "created": "2020-12-31T00:00:00.000Z",
+            "created_by_ref": "identity--b6792126-4494-430f-984a-7b83c209017c",
+            "id": "location--0dea48eb-b1a4-405f-9bbe-e9daa1822381",
+            "modified": "2020-12-31T00:00:00.000Z",
+            "spec_version": "2.1",
+            "type": "location"
+        },
+        {
+            "created": "2020-12-31T00:00:00.000Z",
+            "created_by_ref": "identity--b6792126-4494-430f-984a-7b83c209017c",
+            "id": "relationship--0a6638b1-ea6d-4dae-acc3-e1d6d2755965",
+            "modified": "2020-12-31T00:00:00.000Z",
+            "relationship_type": "located-at",
+            "source_ref": "identity--b6792126-4494-430f-984a-7b83c209017c",
+            "spec_version": "2.1",
+            "target_ref": "location--0dea48eb-b1a4-405f-9bbe-e9daa1822381",
+            "type": "relationship"
+        },
+        {
+            "created": "2020-12-31T00:00:00.000Z",
+            "id": "identity--b6792126-4494-430f-984a-7b83c209017c",
+            "identity_class": "organization",
+            "labels": [
+                "ais-consent-usg-cisa-proprietary-true"
+            ],
+            "modified": "2020-12-31T00:00:00.000Z",
+            "name": "ACME",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
+            ],
+            "sectors": [
+                "technology"
+            ],
+            "spec_version": "2.1",
+            "type": "identity"
+        },
+        {
+            "created": "2016-03-29T20:52:52.716Z",
+            "created_by_ref": "identity--b6792126-4494-430f-984a-7b83c209017c",
+            "id": "indicator--45eee277-2d76-4079-91d0-0061a443bac6",
+            "modified": "2016-03-29T20:52:52.716Z",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
+            ],
+            "pattern": "[file:hashes.MD5 = 'd41d8cd98f00b204e9800998ecf8427e']",
+            "pattern_type": "stix",
+            "spec_version": "2.1",
+            "type": "indicator",
+            "valid_from": "2016-03-29T20:52:52.716000Z"
+        }
+    ],
+    "type": "bundle"
+}

@@ -6,8 +6,7 @@
             "id": "identity--7c57ab9b-53b3-4691-9528-ba9ae1f479f0",
             "identity_class": "organization",
             "labels": [
-                "ais-consent-everyone",
-                "cisa-proprietary-false"
+                "ais-consent-everyone"
             ],
             "modified": "9999-12-31T00:00:00.000Z",
             "name": "ACME",
@@ -24,10 +23,6 @@
 	        "created_by_ref": "identity--7c57ab9b-53b3-4691-9528-ba9ae1f479f0",
             "description": "Send Device for forensic analysis",
             "id": "course-of-action--e9f31688-d744-48f4-9320-e6a9bd136f44",
-            "labels": [
-                "ais-consent-everyone",
-                "cisa-proprietary-false"
-            ],
             "modified": "2016-03-29T20:52:52.716Z",
             "name": "Bricked Computer",
             "object_marking_refs": [
@@ -46,9 +41,7 @@
                 }
             ],
             "labels": [
-                "unknown",
-                "ais-consent-everyone",
-                "cisa-proprietary-false"
+                "unknown"
             ],
             "modified": "2016-03-29T20:52:52.716Z",
             "object_marking_refs": [

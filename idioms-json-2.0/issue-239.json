@@ -6,35 +6,15 @@
             "id": "identity--23e29b58-0111-4357-b81e-75461892d683",
             "identity_class": "organization",
             "labels": [
-                "ais-consent-everyone",
-                "cisa-proprietary-true"
+                "ais-consent-everyone-cisa-proprietary-true"
             ],
             "modified": "2020-11-23T14:26:05.000Z",
-            "name": "CISA",
+            "name": "ACME",
             "object_marking_refs": [
                 "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
             ],
             "sectors": [
-                "government"
-            ],
-            "type": "identity"
-        },
-        {
-            "created": "2020-11-23T14:26:05.000Z",
-            "created_by_ref": "identity--23e29b58-0111-4357-b81e-75461892d683",
-            "id": "identity--a2dd56d3-546e-4f83-ae3d-5c084e353251",
-            "identity_class": "organization",
-            "labels": [
-                "ais-consent-everyone",
-                "cisa-proprietary-true"
-            ],
-            "modified": "2020-11-23T14:26:05.000Z",
-            "name": "CISA",
-            "object_marking_refs": [
-                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
-            ],
-            "sectors": [
-                "government"
+                "technology"
             ],
             "type": "identity"
         },
@@ -43,10 +23,6 @@
             "created": "2018-03-13T20:42:24.000Z",
             "created_by_ref": "identity--23e29b58-0111-4357-b81e-75461892d683",
             "id": "sighting--cb3af25a-a814-4f8d-b72d-3ba86c744adc",
-            "labels": [
-                "ais-consent-everyone",
-                "cisa-proprietary-true"
-            ],
             "modified": "2018-03-13T20:42:24.000Z",
             "object_marking_refs": [
                 "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
@@ -67,9 +43,7 @@
                 }
             ],
             "labels": [
-                "anonymization",
-                "ais-consent-everyone",
-                "cisa-proprietary-true"
+                "anonymization"
             ],
             "modified": "2020-11-23T19:26:05.255Z",
             "object_marking_refs": [

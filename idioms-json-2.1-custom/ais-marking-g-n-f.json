@@ -1,0 +1,59 @@
+{
+    "id": "bundle--d11a02b6-ed2b-4661-96c1-5bd11d7dc821",
+    "objects": [
+        {
+            "administrative_area": "US-DC",
+            "country": "US",
+            "created": "2020-12-31T00:00:00.000Z",
+            "created_by_ref": "identity--fdb24869-e14d-413b-8dc8-6494c5d72fcd",
+            "id": "location--5f9b688b-dfbf-44ea-ab8c-42ec349eec3e",
+            "modified": "2020-12-31T00:00:00.000Z",
+            "spec_version": "2.1",
+            "type": "location"
+        },
+        {
+            "created": "2020-12-31T00:00:00.000Z",
+            "created_by_ref": "identity--fdb24869-e14d-413b-8dc8-6494c5d72fcd",
+            "id": "relationship--352afd1d-edc7-42a9-83e7-65c340764c1a",
+            "modified": "2020-12-31T00:00:00.000Z",
+            "relationship_type": "located-at",
+            "source_ref": "identity--fdb24869-e14d-413b-8dc8-6494c5d72fcd",
+            "spec_version": "2.1",
+            "target_ref": "location--5f9b688b-dfbf-44ea-ab8c-42ec349eec3e",
+            "type": "relationship"
+        },
+        {
+            "created": "2020-12-31T00:00:00.000Z",
+            "id": "identity--fdb24869-e14d-413b-8dc8-6494c5d72fcd",
+            "identity_class": "organization",
+            "labels": [
+                "ais-consent-none"
+            ],
+            "modified": "2020-12-31T00:00:00.000Z",
+            "name": "ACME",
+            "object_marking_refs": [
+                "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
+            ],
+            "sectors": [
+                "technology"
+            ],
+            "spec_version": "2.1",
+            "type": "identity"
+        },
+        {
+            "created": "2016-03-29T20:52:52.716Z",
+            "created_by_ref": "identity--fdb24869-e14d-413b-8dc8-6494c5d72fcd",
+            "id": "indicator--45eee277-2d76-4079-91d0-0061a443bac6",
+            "modified": "2016-03-29T20:52:52.716Z",
+            "object_marking_refs": [
+                "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
+            ],
+            "pattern": "[file:hashes.MD5 = 'd41d8cd98f00b204e9800998ecf8427e']",
+            "pattern_type": "stix",
+            "spec_version": "2.1",
+            "type": "indicator",
+            "valid_from": "2016-03-29T20:52:52.716000Z"
+        }
+    ],
+    "type": "bundle"
+}

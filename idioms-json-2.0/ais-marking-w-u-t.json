@@ -1,0 +1,39 @@
+{
+    "id": "bundle--d11a02b6-ed2b-4661-96c1-5bd11d7dc821",
+    "objects": [
+        {
+            "created": "2020-12-31T00:00:00.000Z",
+            "id": "identity--cdcb35a5-dbd8-43da-b0a0-fcf8442f31e1",
+            "identity_class": "organization",
+            "labels": [
+                "ais-consent-usg-cisa-proprietary-true"
+            ],
+            "modified": "2020-12-31T00:00:00.000Z",
+            "name": "ACME",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
+            ],
+            "sectors": [
+                "technology"
+            ],
+            "type": "identity"
+        },
+        {
+            "created": "2016-03-29T20:52:52.716Z",
+            "created_by_ref": "identity--cdcb35a5-dbd8-43da-b0a0-fcf8442f31e1",
+            "id": "indicator--45eee277-2d76-4079-91d0-0061a443bac6",
+            "labels": [
+                "unknown"
+            ],
+            "modified": "2016-03-29T20:52:52.716Z",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
+            ],
+            "pattern": "[file:hashes.MD5 = 'd41d8cd98f00b204e9800998ecf8427e']",
+            "type": "indicator",
+            "valid_from": "2016-03-29T20:52:52.716000Z"
+        }
+    ],
+    "spec_version": "2.0",
+    "type": "bundle"
+}

@@ -34,7 +34,6 @@
                         <AIS:TLPMarking color="WHITE"/>
                     </AIS:Not_Proprietary>
                 </marking:Marking_Structure>
-
             </marking:Marking>
         </stix:Handling>
         <stix:Information_Source>

@@ -140,17 +140,20 @@ def add_location_object(key, location_object):
 #         return identity.name
 
 
-def get_identity_ref(identity, env, temp_marking_id=None, from_package=False):
+def get_identity_ref(identity, env, temp_marking_id=None, from_package=False, use_created_by_ref=True):
     if identity.idref is not None:
         # fix reference later
         return identity.idref
     else:
-        ident20 = convert_identity(identity, env, temp_marking_id=temp_marking_id, from_package=from_package)
         call_inspect = Counter(x.function for x in stack())
         if call_inspect.get("get_identity_ref", 1) <= 1:
             # On some occasions excessive recursion may add identity objects that are not needed
+            ident20 = convert_identity(
+                identity, env, temp_marking_id=temp_marking_id,
+                from_package=from_package, use_created_by_ref=use_created_by_ref,
+            )
             env.bundle_instance["objects"].append(ident20)
-        return ident20["id"]
+            return ident20["id"]
 
 
 def handle_missing_properties_of_information_source(so, information_source):
@@ -292,19 +295,19 @@ def convert_marking_specification(marking_specification, env):
                 definition = {}
                 if marking_structure.is_proprietary is not None:
                     definition["is_proprietary"] = "true"
+                    consent_label = ""
                     if (marking_structure.is_proprietary.ais_consent is not None and
                             marking_structure.is_proprietary.ais_consent.consent is not None):
                         definition["consent"] = str(marking_structure.is_proprietary.ais_consent.consent).lower()
                         consent_label = "ais-consent-" + definition["consent"]
-                        add_label(marking_definition_instance, consent_label)
                     if (marking_structure.is_proprietary.tlp_marking is not None and
                             marking_structure.is_proprietary.tlp_marking.color is not None):
                         definition["tlp"] = str(marking_structure.is_proprietary.tlp_marking.color).lower()
                         set_tlp_reference(marking_definition_instance, definition["tlp"], "marking_ref")
                     if marking_structure.is_proprietary.cisa_proprietary is not None:
                         definition["is_cisa_proprietary"] = str(marking_structure.is_proprietary.cisa_proprietary).lower()
-                        proprietary_label = "cisa-proprietary-" + definition["is_cisa_proprietary"]
-                        add_label(marking_definition_instance, proprietary_label)
+                        consent_label = consent_label + "-cisa-proprietary-" + definition["is_cisa_proprietary"]
+                        add_label(marking_definition_instance, consent_label)
                 elif marking_structure.not_proprietary is not None:
                     definition["is_proprietary"] = "false"
                     if (marking_structure.not_proprietary.ais_consent is not None and
@@ -316,10 +319,6 @@ def convert_marking_specification(marking_specification, env):
                             marking_structure.not_proprietary.tlp_marking.color is not None):
                         definition["tlp"] = str(marking_structure.not_proprietary.tlp_marking.color).lower()
                         set_tlp_reference(marking_definition_instance, definition["tlp"], "marking_ref")
-                    if marking_structure.not_proprietary.cisa_proprietary is not None:
-                        definition["is_cisa_proprietary"] = str(marking_structure.not_proprietary.cisa_proprietary).lower()
-                        proprietary_label = "cisa-proprietary-" + definition["is_cisa_proprietary"]
-                        add_label(marking_definition_instance, proprietary_label)
                 marking_definition_instance["definition"] = definition
             else:
                 if marking_structure.__class__.__name__ in get_option_value("markings_allowed"):
@@ -2254,10 +2253,13 @@ def finalize_bundle(env):
         error("EMPTY BUNDLE -- No objects created from 1.x input document!", 208)
 
 
-def get_identity_from_package(information_source, env):
+def get_identity_from_package(information_source, env, use_created_by_ref=True):
     if information_source:
         if information_source.identity is not None:
-            return get_identity_ref(information_source.identity, env, from_package=True)
+            return get_identity_ref(
+                information_source.identity, env,
+                from_package=True, use_created_by_ref=use_created_by_ref
+            )
         if information_source.contributing_sources is not None:
             if information_source.contributing_sources.source is not None:
                 sources = information_source.contributing_sources.source
@@ -2267,7 +2269,10 @@ def get_identity_from_package(information_source, env):
 
                 for source in sources:
                     if source.identity is not None:
-                        return get_identity_ref(source.identity, env, from_package=True)
+                        return get_identity_ref(
+                            source.identity, env, from_package=True,
+                            use_created_by_ref=use_created_by_ref
+                        )
     return None
 
 

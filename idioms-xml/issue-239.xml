@@ -46,64 +46,29 @@
                         <AIS:TLPMarking color="WHITE"/>
                     </AIS:Is_Proprietary>
                 </marking:Marking_Structure>
-                <marking:Information_Source>
-                    <stixCommon:Identity xsi:type="stix-ciqidentity:CIQIdentity3.0InstanceType">
-                        <stix-ciqidentity:Specification xmlns:stix-ciqidentity="http://stix.mitre.org/extensions/Identity#CIQIdentity3.0-1">
-  <xpil:PartyName xmlns:xpil="urn:oasis:names:tc:ciq:xpil:3">
-    <xnl:OrganisationName xmlns:xnl="urn:oasis:names:tc:ciq:xnl:3">
-      <xnl:NameElement>CISA</xnl:NameElement>
-    </xnl:OrganisationName>
-  </xpil:PartyName>
-  <xpil:Addresses xmlns:xpil="urn:oasis:names:tc:ciq:xpil:3">
-    <xpil:Address>
-      <xal:Country xmlns:xal="urn:oasis:names:tc:ciq:xal:3">
-        <xal:NameElement xal:NameCode="US" xal:NameCodeType="ISO 3166-1 alpha-2"/>
-      </xal:Country>
-      <xal:AdministrativeArea xmlns:xal="urn:oasis:names:tc:ciq:xal:3">
-        <xal:NameElement xal:NameCode="US-DC" xal:NameCodeType="ISO 3166-2"/>
-      </xal:AdministrativeArea>
-    </xpil:Address>
-  </xpil:Addresses>
-  <xpil:OrganisationInfo xmlns:xpil="urn:oasis:names:tc:ciq:xpil:3" xpil:IndustryType="Government Facilities Sector"/>
-</stix-ciqidentity:Specification>
-                    </stixCommon:Identity>
-                </marking:Information_Source>
             </marking:Marking>
         </stix:Handling>
         <stix:Information_Source>
-            <stixCommon:Contributing_Sources>
-                <stixCommon:Source><stixCommon:Identity xsi:type="stix-ciqidentity:CIQIdentity3.0InstanceType">
-                        <stix-ciqidentity:Specification xmlns:stix-ciqidentity="http://stix.mitre.org/extensions/Identity#CIQIdentity3.0-1">
-  <xpil:PartyName xmlns:xpil="urn:oasis:names:tc:ciq:xpil:3">
-    <xnl:OrganisationName xmlns:xnl="urn:oasis:names:tc:ciq:xnl:3">
-      <xnl:NameElement>CISA</xnl:NameElement>
-    </xnl:OrganisationName>
-  </xpil:PartyName>
-  <xpil:Addresses xmlns:xpil="urn:oasis:names:tc:ciq:xpil:3">
-    <xpil:Address>
-      <xal:Country xmlns:xal="urn:oasis:names:tc:ciq:xal:3">
-        <xal:NameElement xal:NameCode="US" xal:NameCodeType="ISO 3166-1 alpha-2"/>
-      </xal:Country>
-      <xal:AdministrativeArea xmlns:xal="urn:oasis:names:tc:ciq:xal:3">
-        <xal:NameElement xal:NameCode="US-DC" xal:NameCodeType="ISO 3166-2"/>
-      </xal:AdministrativeArea>
-    </xpil:Address>
-  </xpil:Addresses>
-  <xpil:OrganisationInfo xmlns:xpil="urn:oasis:names:tc:ciq:xpil:3" xpil:IndustryType="Government Facilities Sector"/>
-</stix-ciqidentity:Specification>
-                    </stixCommon:Identity>
-                    <stixCommon:Tools>
-                        <cyboxCommon:Tool>
-                            <cyboxCommon:Metadata>
-<cyboxCommon:Value>CISA</cyboxCommon:Value>
-                            </cyboxCommon:Metadata>
-                        </cyboxCommon:Tool>
-                    </stixCommon:Tools>
-                </stixCommon:Source>
-            </stixCommon:Contributing_Sources>
-            <stixCommon:Time>
-                <cyboxCommon:Produced_Time>2018-04-20T00:00:00</cyboxCommon:Produced_Time>
-            </stixCommon:Time>
+            <stixCommon:Identity xsi:type="stix-ciqidentity:CIQIdentity3.0InstanceType">
+                <stix-ciqidentity:Specification xmlns:stix-ciqidentity="http://stix.mitre.org/extensions/Identity#CIQIdentity3.0-1">
+                  <xpil:PartyName xmlns:xpil="urn:oasis:names:tc:ciq:xpil:3">
+                    <xnl:OrganisationName xmlns:xnl="urn:oasis:names:tc:ciq:xnl:3">
+                      <xnl:NameElement>ACME</xnl:NameElement>
+                    </xnl:OrganisationName>
+                  </xpil:PartyName>
+                  <xpil:Addresses xmlns:xpil="urn:oasis:names:tc:ciq:xpil:3">
+                    <xpil:Address>
+                      <xal:Country xmlns:xal="urn:oasis:names:tc:ciq:xal:3">
+                        <xal:NameElement xal:NameCode="US" xal:NameCodeType="ISO 3166-1 alpha-2"/>
+                      </xal:Country>
+                      <xal:AdministrativeArea xmlns:xal="urn:oasis:names:tc:ciq:xal:3">
+                        <xal:NameElement xal:NameCode="US-DC" xal:NameCodeType="ISO 3166-2"/>
+                      </xal:AdministrativeArea>
+                    </xpil:Address>
+                  </xpil:Addresses>
+                  <xpil:OrganisationInfo xmlns:xpil="urn:oasis:names:tc:ciq:xpil:3" xpil:IndustryType="Information Technology Sector"/>
+                </stix-ciqidentity:Specification>
+            </stixCommon:Identity>
         </stix:Information_Source>
     </stix:STIX_Header>
     <stix:Indicators>

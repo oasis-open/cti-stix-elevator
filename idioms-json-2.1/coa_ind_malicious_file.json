@@ -5,7 +5,7 @@
             "administrative_area": "US-DC",
             "country": "US",
             "created": "9999-12-31T00:00:00.000Z",
-            "created_by_ref": "identity--007a335e-26b2-4fec-af20-9e61bb1ffc19",
+            "created_by_ref": "identity--66e1cc59-8a22-4869-9681-748aebe87abc",
             "id": "location--271e4cbc-b78f-43da-ab90-6f90cafa605e",
             "modified": "9999-12-31T00:00:00.000Z",
             "spec_version": "2.1",
@@ -13,22 +13,21 @@
         },
         {
             "created": "9999-12-31T00:00:00.000Z",
-            "created_by_ref": "identity--007a335e-26b2-4fec-af20-9e61bb1ffc19",
+            "created_by_ref": "identity--66e1cc59-8a22-4869-9681-748aebe87abc",
             "id": "relationship--d4d13323-7ed7-4fe5-86ed-294770d40004",
             "modified": "9999-12-31T00:00:00.000Z",
             "relationship_type": "located-at",
-            "source_ref": "identity--007a335e-26b2-4fec-af20-9e61bb1ffc19",
+            "source_ref": "identity--66e1cc59-8a22-4869-9681-748aebe87abc",
             "spec_version": "2.1",
-            "target_ref": "location--271e4cbc-b78f-43da-ab90-6f90cafa605e",
+            "target_ref": "location--c442152d-8f2d-4de6-98c5-6ae12b4e90f8",
             "type": "relationship"
         },
-	    {
+        {
             "created": "9999-12-31T00:00:00.000Z",
-            "id": "identity--007a335e-26b2-4fec-af20-9e61bb1ffc19",
+            "id": "identity--66e1cc59-8a22-4869-9681-748aebe87abc",
             "identity_class": "organization",
             "labels": [
-                "ais-consent-everyone",
-                "cisa-proprietary-false"
+                "ais-consent-everyone"
             ],
             "modified": "9999-12-31T00:00:00.000Z",
             "name": "ACME",
@@ -43,13 +42,9 @@
         },
         {
             "created": "2016-03-29T20:52:52.716Z",
-            "created_by_ref": "identity--007a335e-26b2-4fec-af20-9e61bb1ffc19",
+            "created_by_ref": "identity--66e1cc59-8a22-4869-9681-748aebe87abc",
             "description": "Send Device for forensic analysis",
             "id": "course-of-action--e9f31688-d744-48f4-9320-e6a9bd136f44",
-            "labels": [
-                "ais-consent-everyone",
-                "cisa-proprietary-false"
-            ],
             "modified": "2016-03-29T20:52:52.716Z",
             "name": "Bricked Computer",
             "object_marking_refs": [
@@ -60,17 +55,13 @@
         },
         {
             "created": "2016-03-29T20:52:52.716Z",
-            "created_by_ref": "identity--007a335e-26b2-4fec-af20-9e61bb1ffc19",
+            "created_by_ref": "identity--66e1cc59-8a22-4869-9681-748aebe87abc",
             "id": "indicator--0c277b59-f5a9-4530-8861-82588719ec0c",
             "kill_chain_phases": [
                 {
                     "kill_chain_name": "LM Cyber Kill Chain",
                     "phase_name": "Actions on Objectives"
                 }
-            ],
-            "labels": [
-                "ais-consent-everyone",
-                "cisa-proprietary-false"
             ],
             "modified": "2016-03-29T20:52:52.716Z",
             "object_marking_refs": [
@@ -84,8 +75,8 @@
         },
         {
             "created": "2016-03-29T20:52:52.716Z",
-            "created_by_ref": "identity--007a335e-26b2-4fec-af20-9e61bb1ffc19",
-            "id": "relationship--a85593d5-13e1-44af-9a4c-657749566254",
+            "created_by_ref": "identity--66e1cc59-8a22-4869-9681-748aebe87abc",
+            "id": "relationship--0ce5e20d-ab21-41c4-8c3b-f82066bdc0d9",
             "modified": "2016-03-29T20:52:52.716Z",
             "relationship_type": "investigates",
             "source_ref": "course-of-action--e9f31688-d744-48f4-9320-e6a9bd136f44",
