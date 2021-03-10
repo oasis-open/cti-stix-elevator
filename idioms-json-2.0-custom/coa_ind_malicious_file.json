@@ -1,14 +1,17 @@
 {
     "id": "bundle--95e2b600-1fe9-4489-a6c5-e63323b219d0",
     "objects": [
-        {
+	    {
             "created": "9999-12-31T00:00:00.000Z",
             "id": "identity--7c57ab9b-53b3-4691-9528-ba9ae1f479f0",
             "identity_class": "organization",
+            "labels": [
+                "ais-consent-everyone"
+            ],
             "modified": "9999-12-31T00:00:00.000Z",
             "name": "ACME",
             "object_marking_refs": [
-                "marking-definition--f49ec0f8-6b76-4fbd-b744-61a1c13584d5"
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
             ],
             "sectors": [
                 "technology"
@@ -16,31 +19,20 @@
             "type": "identity"
         },
         {
-            "created": "9999-12-31T00:00:00.000Z",
-            "created_by_ref": "identity--7c57ab9b-53b3-4691-9528-ba9ae1f479f0",
-            "definition": {
-                "consent": "everyone",
-                "is_cisa_proprietary": "false",
-                "is_proprietary": "false",
-                "tlp": "white"
-            },
-            "definition_type": "ais",
-            "id": "marking-definition--f49ec0f8-6b76-4fbd-b744-61a1c13584d5",
-            "type": "marking-definition"
-        },
-        {
             "created": "2016-03-29T20:52:52.716Z",
+	        "created_by_ref": "identity--7c57ab9b-53b3-4691-9528-ba9ae1f479f0",
             "description": "Send Device for forensic analysis",
             "id": "course-of-action--e9f31688-d744-48f4-9320-e6a9bd136f44",
             "modified": "2016-03-29T20:52:52.716Z",
             "name": "Bricked Computer",
             "object_marking_refs": [
-                "marking-definition--f49ec0f8-6b76-4fbd-b744-61a1c13584d5"
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
             ],
             "type": "course-of-action"
         },
         {
             "created": "2016-03-29T20:52:52.716Z",
+	        "created_by_ref": "identity--7c57ab9b-53b3-4691-9528-ba9ae1f479f0",
             "id": "indicator--0c277b59-f5a9-4530-8861-82588719ec0c",
             "kill_chain_phases": [
                 {
@@ -53,7 +45,7 @@
             ],
             "modified": "2016-03-29T20:52:52.716Z",
             "object_marking_refs": [
-                "marking-definition--f49ec0f8-6b76-4fbd-b744-61a1c13584d5"
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
             ],
             "pattern": "[mutex:name = 'To0o0o0o0o0o0o0o0ooLate'] AND [(windows-registry-key:key MATCHES 'HKEY_CURRENT_CONFIG\\\\J@k3d' AND windows-registry-key:values[*].data = '0')] AND [file:hashes.MD5 = 'd41d8cd98f00b204e9800998ecf8427e']",
             "type": "indicator",
@@ -61,6 +53,7 @@
         },
         {
             "created": "2016-03-29T20:52:52.716Z",
+	        "created_by_ref": "identity--7c57ab9b-53b3-4691-9528-ba9ae1f479f0",
             "id": "relationship--51824c97-69d5-4e6c-a9a5-9efec1032da4",
             "modified": "2016-03-29T20:52:52.716Z",
             "relationship_type": "investigates",

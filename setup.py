@@ -21,14 +21,16 @@ def get_version():
         raise AttributeError("Package does not have a __version__")
 
 
-with open('README.rst') as f:
-    readme = f.read()
+def get_long_description():
+    with open('README.rst') as f:
+        return f.read()
+
 
 setup(
     name='stix2-elevator',
     version=get_version(),
     description='Utility to upgrade STIX 1.X and CybOX content to STIX 2.X',
-    long_description=readme,
+    long_description=get_long_description(),
     long_description_content_type='text/x-rst',
     url='https://oasis-open.github.io/cti-documentation/',
     author='OASIS Cyber Threat Intelligence Technical Committee',
@@ -42,14 +44,14 @@ setup(
         'netaddr',
         'pycountry>=19.8.18',
         'stix>=1.1.1.9,<1.2.1.0',
+        'stix2>=2.1.0',
         'stix2-validator>=2.0.2',
         'stixmarx>=1.0.8',
-        'stix2>=2.1.0'
     ],
     entry_points={
         'console_scripts': [
             'stix2_elevator = stix2elevator.cli:main',
-            'stix_stepper = stix2elevator.stix_stepper:main'
+            'stix_stepper = stix2elevator.stix_stepper:main',
         ],
     },
     classifiers=[

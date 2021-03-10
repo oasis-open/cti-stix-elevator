@@ -3,64 +3,30 @@
     "objects": [
         {
             "created": "2020-11-23T14:26:05.000Z",
-            "id": "identity--e19332cf-2b98-4da7-8e97-39121073f529",
-            "identity_class": "organization",
-            "modified": "2020-11-23T14:26:05.000Z",
-            "name": "CISA",
-            "object_marking_refs": [
-                "marking-definition--b415ab98-233a-4b7d-9c07-2e90aefb4d4a"
-            ],
-            "sectors": [
-                "government"
-            ],
-            "type": "identity"
-        },
-        {
-            "created": "2020-11-23T14:26:05.000Z",
-            "created_by_ref": "identity--e19332cf-2b98-4da7-8e97-39121073f529",
-            "definition": {
-                "consent": "everyone",
-                "is_cisa_proprietary": "true",
-                "is_proprietary": "true",
-                "tlp": "white"
-            },
-            "definition_type": "ais",
-            "id": "marking-definition--b415ab98-233a-4b7d-9c07-2e90aefb4d4a",
-            "type": "marking-definition"
-        },
-        {
-            "created": "2020-11-23T14:26:05.000Z",
             "id": "identity--23e29b58-0111-4357-b81e-75461892d683",
             "identity_class": "organization",
+            "labels": [
+                "ais-consent-everyone-cisa-proprietary-true"
+            ],
             "modified": "2020-11-23T14:26:05.000Z",
-            "name": "CISA",
+            "name": "ACME",
             "object_marking_refs": [
-                "marking-definition--b415ab98-233a-4b7d-9c07-2e90aefb4d4a"
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
             ],
             "sectors": [
-                "government"
-            ],
-            "type": "identity"
-        },
-        {
-            "created": "2020-11-23T14:26:05.000Z",
-            "id": "identity--fe59e550-43b8-4826-855d-bae2a18a6ff0",
-            "identity_class": "organization",
-            "modified": "2020-11-23T14:26:05.000Z",
-            "name": "CISA",
-            "object_marking_refs": [
-                "marking-definition--b415ab98-233a-4b7d-9c07-2e90aefb4d4a"
-            ],
-            "sectors": [
-                "government"
+                "technology"
             ],
             "type": "identity"
         },
         {
             "count": 1,
             "created": "2018-03-13T20:42:24.000Z",
+            "created_by_ref": "identity--23e29b58-0111-4357-b81e-75461892d683",
             "id": "sighting--cb3af25a-a814-4f8d-b72d-3ba86c744adc",
             "modified": "2018-03-13T20:42:24.000Z",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
+            ],
             "sighting_of_ref": "indicator--a35dbed6-9b9c-442e-aaff-4aeeb88a43ef",
             "summary": false,
             "type": "sighting"
@@ -81,7 +47,7 @@
             ],
             "modified": "2020-11-23T19:26:05.255Z",
             "object_marking_refs": [
-                "marking-definition--b415ab98-233a-4b7d-9c07-2e90aefb4d4a"
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
             ],
             "pattern": "[file:hashes.MD5 = 'd41d8cd98f00b204e9800998ecf8427e' AND (file:name = 'TheFileName.exe' AND file:parent_directory_ref.path = '/usr/local/bin') AND file:size = 123456]",
             "type": "indicator",

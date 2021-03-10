@@ -1,0 +1,59 @@
+{
+    "id": "bundle--d11a02b6-ed2b-4661-96c1-5bd11d7dc821",
+    "objects": [
+        {
+            "administrative_area": "US-DC",
+            "country": "US",
+            "created": "2020-12-31T00:00:00.000Z",
+            "created_by_ref": "identity--84648fd5-5a4a-41cd-b210-5b46ee1a1e48",
+            "id": "location--23752f18-bec7-49d6-8d4e-3c8a69fa97de",
+            "modified": "2020-12-31T00:00:00.000Z",
+            "spec_version": "2.1",
+            "type": "location"
+        },
+        {
+            "created": "2020-12-31T00:00:00.000Z",
+            "created_by_ref": "identity--84648fd5-5a4a-41cd-b210-5b46ee1a1e48",
+            "id": "relationship--1904659d-6fb9-4db9-959a-5c69a4976981",
+            "modified": "2020-12-31T00:00:00.000Z",
+            "relationship_type": "located-at",
+            "source_ref": "identity--84648fd5-5a4a-41cd-b210-5b46ee1a1e48",
+            "spec_version": "2.1",
+            "target_ref": "location--23752f18-bec7-49d6-8d4e-3c8a69fa97de",
+            "type": "relationship"
+        },
+        {
+            "created": "2020-12-31T00:00:00.000Z",
+            "id": "identity--84648fd5-5a4a-41cd-b210-5b46ee1a1e48",
+            "identity_class": "organization",
+            "labels": [
+                "ais-consent-everyone-cisa-proprietary-true"
+            ],
+            "modified": "2020-12-31T00:00:00.000Z",
+            "name": "ACME",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
+            ],
+            "sectors": [
+                "technology"
+            ],
+            "spec_version": "2.1",
+            "type": "identity"
+        },
+        {
+            "created": "2016-03-29T20:52:52.716Z",
+            "created_by_ref": "identity--84648fd5-5a4a-41cd-b210-5b46ee1a1e48",
+            "id": "indicator--45eee277-2d76-4079-91d0-0061a443bac6",
+            "modified": "2016-03-29T20:52:52.716Z",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
+            ],
+            "pattern": "[file:hashes.MD5 = 'd41d8cd98f00b204e9800998ecf8427e']",
+            "pattern_type": "stix",
+            "spec_version": "2.1",
+            "type": "indicator",
+            "valid_from": "2016-03-29T20:52:52.716000Z"
+        }
+    ],
+    "type": "bundle"
+}

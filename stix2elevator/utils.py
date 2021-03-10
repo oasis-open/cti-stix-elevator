@@ -38,6 +38,13 @@ def identifying_info(stix1x_obj):
     return "- no identifying information available"
 
 
+def add_label(stix2x_instance, label):
+    if "labels" not in stix2x_instance:
+        stix2x_instance["labels"] = [label]
+    else:
+        stix2x_instance["labels"].append(label)
+
+
 def canonicalize_label(t):
     t = str(t)
     t = t.lower()
@@ -138,11 +145,11 @@ def map_1x_markings_to_2x(stix1x_marking):
     return stix1x_marking
 
 
-def add_marking_map_entry(stix1x_marking, stix2x_marking_id):
+def add_marking_map_entry(stix1x_marking, stix2x_marking):
     if stix1x_marking not in _MARKING_MAP_FROM_1_x_TO_2_x:
-        _MARKING_MAP_FROM_1_x_TO_2_x[stix1x_marking] = stix2x_marking_id
+        _MARKING_MAP_FROM_1_x_TO_2_x[stix1x_marking] = stix2x_marking
         if stix1x_marking.id_:
-            _MARKING_MAP_FROM_1_x_TO_2_x[stix1x_marking.id_] = stix2x_marking_id
+            _MARKING_MAP_FROM_1_x_TO_2_x[stix1x_marking.id_] = stix2x_marking
         return
     return map_1x_markings_to_2x(stix1x_marking)
 
@@ -150,6 +157,23 @@ def add_marking_map_entry(stix1x_marking, stix2x_marking_id):
 def clear_1x_markings_map():
     global _MARKING_MAP_FROM_1_x_TO_2_x
     _MARKING_MAP_FROM_1_x_TO_2_x = {}
+
+
+def apply_ais_markings(stix2x_instance, stix2x_marking):
+    instance_labels = stix2x_instance.get("labels", []) + stix2x_marking.get("labels", [])
+    if instance_labels and stix2x_marking["created_by_ref"] == stix2x_instance["id"]:
+        stix2x_instance["labels"] = instance_labels
+
+
+def set_tlp_reference(stix2x_instance, color, prop):
+    if color == "white":
+        stix2x_instance[prop] = "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
+    elif color == "green":
+        stix2x_instance[prop] = "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
+    elif color == "amber":
+        stix2x_instance[prop] = "marking-definition--f88d31f6-486f-44da-b317-01333bde0b82"
+    elif color == "red":
+        stix2x_instance[prop] = "marking-definition--5e57c739-391a-4eb3-b6be-7d15ca92d5ed"
 
 
 def iterpath(obj, path=None):

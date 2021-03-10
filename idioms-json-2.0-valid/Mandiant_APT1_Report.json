@@ -14,7 +14,7 @@
     {
       "created": "2018-09-26T15:49:56.019Z",
       "id": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
-            "modified": "2018-09-26T15:49:56.019Z",
+      "modified": "2018-09-26T15:49:56.019Z",
       "name": "MITRE",
       "object_marking_refs": [
         "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
@@ -23,8 +23,9 @@
     },
     {
       "created": "2015-05-15T09:00:00.000Z",
+      "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
       "id": "identity--1c62e9eb-bef8-4a38-ba4f-29be7ba910e6",
-            "modified": "2015-05-15T09:00:00.000Z",
+      "modified": "2015-05-15T09:00:00.000Z",
       "name": "Harbin Institute of Technology (哈尔滨工业大学)",
       "object_marking_refs": [
         "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
@@ -33,8 +34,9 @@
     },
     {
       "created": "2015-05-15T09:00:00.000Z",
+      "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
       "id": "identity--9a1a5860-2a36-416a-a649-b43443306c83",
-            "modified": "2015-05-15T09:00:00.000Z",
+      "modified": "2015-05-15T09:00:00.000Z",
       "name": "Zhejiang University School of Computer Science and Technology (浙江大学计算机学院)",
       "object_marking_refs": [
         "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
@@ -43,6 +45,7 @@
     },
     {
       "created": "2015-05-15T09:00:00.000Z",
+      "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
       "id": "identity--e0ea3142-0c99-4b55-aaab-69fee064782c",
       "identity_class": "organization",
       "modified": "2015-05-15T09:00:00.000Z",
@@ -69,6 +72,7 @@
     },
     {
       "created": "2015-05-15T09:00:00.000Z",
+      "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
       "id": "identity--44f11286-ab0c-49d9-95e4-2d32cab99a24",
       "identity_class": "individual",
       "modified": "2015-05-15T09:00:00.000Z",
@@ -109,6 +113,7 @@
     },
     {
       "created": "2015-05-15T09:00:00.000Z",
+      "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
       "id": "identity--6e9bc554-96ea-47a3-8632-063fabc0e388",
       "identity_class": "individual",
       "modified": "2015-05-15T09:00:00.000Z",
@@ -135,6 +140,7 @@
     },
     {
       "created": "2015-05-15T09:00:00.000Z",
+      "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
       "id": "identity--967e9101-f69f-41d6-a9b6-aa829d720778",
       "identity_class": "individual",
       "modified": "2015-05-15T09:00:00.000Z",
@@ -189,8 +195,9 @@
     },
     {
       "created": "2015-05-15T09:00:00.000Z",
+      "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
       "id": "identity--e8e676c6-3c16-4d26-ac3e-d5cf788179e6",
-            "modified": "2015-05-15T09:00:00.000Z",
+      "modified": "2015-05-15T09:00:00.000Z",
       "name": "Comment Crew",
       "object_marking_refs": [
         "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
@@ -214,8 +221,9 @@
     },
     {
       "created": "2015-05-15T09:00:00.000Z",
+      "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
       "id": "identity--7de07f79-fbe5-4d63-9343-3421258b1c1f",
-            "modified": "2015-05-15T09:00:00.000Z",
+      "modified": "2015-05-15T09:00:00.000Z",
       "name": "Comment Group",
       "object_marking_refs": [
         "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
@@ -239,8 +247,9 @@
     },
     {
       "created": "2015-05-15T09:00:00.000Z",
+      "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
       "id": "identity--3372fa09-3a8c-4324-8a72-f88984b27c01",
-            "modified": "2015-05-15T09:00:00.000Z",
+      "modified": "2015-05-15T09:00:00.000Z",
       "name": "Shady Rat",
       "object_marking_refs": [
         "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
@@ -264,8 +273,9 @@
     },
     {
       "created": "2015-05-15T09:00:00.000Z",
+      "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
       "id": "identity--78f57d59-e1b7-4a78-b145-a988e321a555",
-            "modified": "2015-05-15T09:00:00.000Z",
+      "modified": "2015-05-15T09:00:00.000Z",
       "name": "GSD 3rd Department / 2nd Bureau",
       "object_marking_refs": [
         "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
@@ -289,8 +299,9 @@
     },
     {
       "created": "2015-05-15T09:00:00.000Z",
+      "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
       "id": "identity--50616a25-78fb-4be0-b6f2-3a75993fcbfb",
-            "modified": "2015-05-15T09:00:00.000Z",
+      "modified": "2015-05-15T09:00:00.000Z",
       "name": "GSD 3rd Department",
       "object_marking_refs": [
         "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
@@ -314,8 +325,9 @@
     },
     {
       "created": "2015-05-15T09:00:00.000Z",
+      "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
       "id": "identity--490f0285-561d-4978-bd01-967e0e305051",
-            "modified": "2015-05-15T09:00:00.000Z",
+      "modified": "2015-05-15T09:00:00.000Z",
       "name": "PLA General Staff",
       "object_marking_refs": [
         "marking-definition--bdb4dbd7-f15d-4c29-ba5d-f7065e6783e1"
@@ -339,6 +351,7 @@
     },
     {
       "created": "2015-05-15T09:00:00.000Z",
+      "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
       "id": "identity--9522bce3-696c-439e-bc25-973fd9b40e0a",
       "identity_class": "organization",
       "modified": "2015-05-15T09:00:00.000Z",
@@ -365,6 +378,7 @@
     },
     {
       "created": "2015-05-15T09:00:00.000Z",
+      "created_by_ref": "identity--892903b6-67af-48fe-a3f9-f177e740255b",
       "id": "identity--740138f4-2929-4348-9de8-8e1ff6e73ba4",
       "identity_class": "organization",
       "modified": "2015-05-15T09:00:00.000Z",

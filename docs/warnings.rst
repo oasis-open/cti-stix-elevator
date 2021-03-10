@@ -204,7 +204,7 @@ Message                                                                         
 =========================================================================================================================================== ==== =====
 Could not resolve Marking Structure *[id]*                                                                                                  801  warn
 1.x full file paths are not processed, yet                                                                                                  802  warn
-Location *[id]* may not contain all aspects of the STIX 1.x address object                                                                  803  warn
+Location *[id]* may not contain all aspects of the STIX 1.x CIQAddress object (or data markings)                                            803  warn
 Object reference *[id]* may not handled correctly                                                                                           804  warn
 CybOX object *[object]* not handled yet                                                                                                     805  warn
 Email *[property]* not handled yet                                                                                                          806  warn

@@ -34,30 +34,30 @@
                         <AIS:TLPMarking color="WHITE"/>
                     </AIS:Not_Proprietary>
                 </marking:Marking_Structure>
-                <marking:Information_Source>
-                    <stixCommon:Identity xsi:type="stix-ciq:CIQIdentity3.0InstanceType">
-                        <stix-ciq:Specification>
-                            <xpil:PartyName>
-                                <xnl:OrganisationName>
-                                    <xnl:NameElement>ACME</xnl:NameElement>
-                                </xnl:OrganisationName>
-                            </xpil:PartyName>
-                            <xpil:Addresses>
-                                <xpil:Address>
-                                    <xal:Country>
-                                        <xal:NameElement xal:NameCode="US" xal:NameCodeType="ISO 3166-1 alpha-2"/>
-                                    </xal:Country>
-                                    <xal:AdministrativeArea>
-                                        <xal:NameElement xal:NameCode="US-DC" xal:NameCodeType="ISO 3166-2"/>
-                                    </xal:AdministrativeArea>
-                                </xpil:Address>
-                            </xpil:Addresses>
-                            <xpil:OrganisationInfo xpil:IndustryType="Information Technology Sector"/>
-                        </stix-ciq:Specification>
-                    </stixCommon:Identity>
-                </marking:Information_Source>
             </marking:Marking>
         </stix:Handling>
+        <stix:Information_Source>
+            <stixCommon:Identity xsi:type="stix-ciq:CIQIdentity3.0InstanceType">
+                <stix-ciq:Specification>
+                    <xpil:PartyName>
+                        <xnl:OrganisationName>
+                            <xnl:NameElement>ACME</xnl:NameElement>
+                        </xnl:OrganisationName>
+                    </xpil:PartyName>
+                    <xpil:Addresses>
+                        <xpil:Address>
+                            <xal:Country>
+                                <xal:NameElement xal:NameCode="US" xal:NameCodeType="ISO 3166-1 alpha-2"/>
+                            </xal:Country>
+                            <xal:AdministrativeArea>
+                                <xal:NameElement xal:NameCode="US-DC" xal:NameCodeType="ISO 3166-2"/>
+                            </xal:AdministrativeArea>
+                        </xpil:Address>
+                    </xpil:Addresses>
+                    <xpil:OrganisationInfo xpil:IndustryType="Information Technology Sector"/>
+                </stix-ciq:Specification>
+            </stixCommon:Identity>
+        </stix:Information_Source>
     </stix:STIX_Header>
     <stix:Indicators>
         <stix:Indicator id="ACME:Indicator-0c277b59-f5a9-4530-8861-82588719ec0c" timestamp="2016-03-29T20:52:52.716Z"

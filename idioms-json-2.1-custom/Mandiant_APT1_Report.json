@@ -26,6 +26,7 @@
         {
             "administrative_area": "Pudong New Area",
             "country": "CN",
+            "created_by_ref": "identity--c0eb2955-a492-43b9-a9ad-93b37eb10ab5",
             "created": "2015-05-15T09:00:00.000Z",
             "id": "location--d6d44c08-7574-4b6a-8642-a161269d170f",
             "modified": "2015-05-15T09:00:00.000Z",
@@ -45,6 +46,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
+            "created_by_ref": "identity--c0eb2955-a492-43b9-a9ad-93b37eb10ab5",
             "id": "identity--5f4e3d9f-d658-4736-a73f-c4f972188531",
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "Harbin Institute of Technology (哈尔滨工业大学)",
@@ -56,6 +58,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
+            "created_by_ref": "identity--c0eb2955-a492-43b9-a9ad-93b37eb10ab5",
             "id": "identity--0158e20e-9b03-4af9-9749-d6c391c68403",
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "Zhejiang University School of Computer Science and Technology (浙江大学计算机学院)",
@@ -67,6 +70,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
+            "created_by_ref": "identity--c0eb2955-a492-43b9-a9ad-93b37eb10ab5",
             "id": "identity--4a85c234-dea3-41df-889d-b8c8e8a08565",
             "identity_class": "organization",
             "modified": "2015-05-15T09:00:00.000Z",
@@ -99,6 +103,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
+            "created_by_ref": "identity--c0eb2955-a492-43b9-a9ad-93b37eb10ab5",
             "id": "identity--c2230f6e-9d51-484f-b58a-39d488f0c731",
             "identity_class": "individual",
             "modified": "2015-05-15T09:00:00.000Z",
@@ -159,6 +164,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
+            "created_by_ref": "identity--c0eb2955-a492-43b9-a9ad-93b37eb10ab5",
             "id": "identity--79492cd0-d933-4528-bce2-f653d722d67a",
             "identity_class": "individual",
             "modified": "2015-05-15T09:00:00.000Z",
@@ -189,6 +195,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
+            "created_by_ref": "identity--c0eb2955-a492-43b9-a9ad-93b37eb10ab5",
             "id": "identity--2119ce00-34ea-427b-bd14-35fba5df4ab5",
             "identity_class": "individual",
             "modified": "2015-05-15T09:00:00.000Z",
@@ -246,6 +253,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
+            "created_by_ref": "identity--c0eb2955-a492-43b9-a9ad-93b37eb10ab5",
             "id": "identity--46fbcfb5-e077-44a7-aa90-61de01af0cba",
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "Comment Crew",
@@ -270,6 +278,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
+            "created_by_ref": "identity--c0eb2955-a492-43b9-a9ad-93b37eb10ab5",
             "id": "identity--2c8a6b79-b82c-4de1-83db-7029ad759e8d",
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "Comment Group",
@@ -294,6 +303,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
+            "created_by_ref": "identity--c0eb2955-a492-43b9-a9ad-93b37eb10ab5",
             "id": "identity--56891ada-5b19-4e17-871c-b44706194ca0",
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "Shady Rat",
@@ -318,6 +328,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
+            "created_by_ref": "identity--c0eb2955-a492-43b9-a9ad-93b37eb10ab5",
             "id": "identity--7d7b2cae-2d4a-4a31-8bd9-66aec60a877d",
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "GSD 3rd Department / 2nd Bureau",
@@ -342,6 +353,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
+            "created_by_ref": "identity--c0eb2955-a492-43b9-a9ad-93b37eb10ab5",
             "id": "identity--c8f767ff-86f7-4638-897e-5b3483ae041c",
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "GSD 3rd Department",
@@ -366,6 +378,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
+            "created_by_ref": "identity--c0eb2955-a492-43b9-a9ad-93b37eb10ab5",
             "id": "identity--17e98d48-7fd5-48da-be1c-27a616d3a170",
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "PLA General Staff",
@@ -391,6 +404,7 @@
         {
             "country": "CN",
             "created": "2015-05-15T09:00:00.000Z",
+            "created_by_ref": "identity--c0eb2955-a492-43b9-a9ad-93b37eb10ab5",
             "id": "location--ae145240-12ed-4d55-b08a-8fc853a7e173",
             "modified": "2015-05-15T09:00:00.000Z",
             "spec_version": "2.1",
@@ -409,6 +423,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
+            "created_by_ref": "identity--c0eb2955-a492-43b9-a9ad-93b37eb10ab5",
             "id": "identity--d37e54fe-a384-495b-8bbd-74336538de00",
             "identity_class": "organization",
             "modified": "2015-05-15T09:00:00.000Z",
@@ -448,6 +463,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
+            "created_by_ref": "identity--c0eb2955-a492-43b9-a9ad-93b37eb10ab5",
             "id": "identity--27964bfc-4fe4-4543-9752-888d6d381137",
             "identity_class": "organization",
             "modified": "2015-05-15T09:00:00.000Z",
@@ -477,6 +493,7 @@
         {
             "country": "US",
             "created": "2015-05-15T09:00:00.000Z",
+            "created_by_ref": "identity--c0eb2955-a492-43b9-a9ad-93b37eb10ab5",
             "id": "location--d9f5770c-f8e7-4c12-9051-00f0aaa9f3f8",
             "modified": "2015-05-15T09:00:00.000Z",
             "spec_version": "2.1",
@@ -496,6 +513,7 @@
         {
             "country": "CA",
             "created": "2015-05-15T09:00:00.000Z",
+            "created_by_ref": "identity--c0eb2955-a492-43b9-a9ad-93b37eb10ab5",
             "id": "location--38813e79-c888-4d8e-85db-cbaf1bc662c2",
             "modified": "2015-05-15T09:00:00.000Z",
             "spec_version": "2.1",
@@ -515,6 +533,7 @@
         {
             "country": "GB",
             "created": "2015-05-15T09:00:00.000Z",
+            "created_by_ref": "identity--c0eb2955-a492-43b9-a9ad-93b37eb10ab5",
             "id": "location--8ba3226e-1721-4473-b087-1d2c83d60327",
             "modified": "2015-05-15T09:00:00.000Z",
             "spec_version": "2.1",
@@ -534,6 +553,7 @@
         {
             "country": "NO",
             "created": "2015-05-15T09:00:00.000Z",
+            "created_by_ref": "identity--c0eb2955-a492-43b9-a9ad-93b37eb10ab5",
             "id": "location--7a67c97c-1a71-412b-8eaf-a7a8778ac360",
             "modified": "2015-05-15T09:00:00.000Z",
             "spec_version": "2.1",
@@ -553,6 +573,7 @@
         {
             "country": "FR",
             "created": "2015-05-15T09:00:00.000Z",
+            "created_by_ref": "identity--c0eb2955-a492-43b9-a9ad-93b37eb10ab5",
             "id": "location--c78adcdd-a80e-4a94-826c-b2e928780a30",
             "modified": "2015-05-15T09:00:00.000Z",
             "spec_version": "2.1",
@@ -572,6 +593,7 @@
         {
             "country": "BE",
             "created": "2015-05-15T09:00:00.000Z",
+            "created_by_ref": "identity--c0eb2955-a492-43b9-a9ad-93b37eb10ab5",
             "id": "location--002a3e7c-a70d-449f-be33-8a682e77e4a4",
             "modified": "2015-05-15T09:00:00.000Z",
             "spec_version": "2.1",
@@ -591,6 +613,7 @@
         {
             "country": "LU",
             "created": "2015-05-15T09:00:00.000Z",
+            "created_by_ref": "identity--c0eb2955-a492-43b9-a9ad-93b37eb10ab5",
             "id": "location--e028c686-ebf5-4641-a123-6af2ae9d9cdc",
             "modified": "2015-05-15T09:00:00.000Z",
             "spec_version": "2.1",
@@ -610,6 +633,7 @@
         {
             "country": "CH",
             "created": "2015-05-15T09:00:00.000Z",
+            "created_by_ref": "identity--c0eb2955-a492-43b9-a9ad-93b37eb10ab5",
             "id": "location--aebe4b99-f2a4-40f8-892a-8cc440b3db9f",
             "modified": "2015-05-15T09:00:00.000Z",
             "spec_version": "2.1",
@@ -629,6 +653,7 @@
         {
             "country": "IL",
             "created": "2015-05-15T09:00:00.000Z",
+            "created_by_ref": "identity--c0eb2955-a492-43b9-a9ad-93b37eb10ab5",
             "id": "location--556f74ad-7890-47c1-8bb5-396cf4dc778f",
             "modified": "2015-05-15T09:00:00.000Z",
             "spec_version": "2.1",
@@ -648,6 +673,7 @@
         {
             "country": "UAE",
             "created": "2015-05-15T09:00:00.000Z",
+            "created_by_ref": "identity--c0eb2955-a492-43b9-a9ad-93b37eb10ab5",
             "id": "location--195c1034-e92c-4ba6-90fc-670b16098abc",
             "modified": "2015-05-15T09:00:00.000Z",
             "spec_version": "2.1",
@@ -667,6 +693,7 @@
         {
             "country": "ZA",
             "created": "2015-05-15T09:00:00.000Z",
+            "created_by_ref": "identity--c0eb2955-a492-43b9-a9ad-93b37eb10ab5",
             "id": "location--e0604831-e327-4bcf-af85-eca60a70edaf",
             "modified": "2015-05-15T09:00:00.000Z",
             "spec_version": "2.1",
@@ -686,6 +713,7 @@
         {
             "country": "IN",
             "created": "2015-05-15T09:00:00.000Z",
+            "created_by_ref": "identity--c0eb2955-a492-43b9-a9ad-93b37eb10ab5",
             "id": "location--6b89d274-31a3-4aa4-bb2d-9d1bdd815ee9",
             "modified": "2015-05-15T09:00:00.000Z",
             "spec_version": "2.1",
@@ -705,6 +733,7 @@
         {
             "country": "JP",
             "created": "2015-05-15T09:00:00.000Z",
+            "created_by_ref": "identity--c0eb2955-a492-43b9-a9ad-93b37eb10ab5",
             "id": "location--3a71cf73-9b53-432c-a316-06d01fe7338c",
             "modified": "2015-05-15T09:00:00.000Z",
             "spec_version": "2.1",
@@ -724,6 +753,7 @@
         {
             "country": "Taiwan",
             "created": "2015-05-15T09:00:00.000Z",
+            "created_by_ref": "identity--c0eb2955-a492-43b9-a9ad-93b37eb10ab5",
             "id": "location--b2d578f3-2af9-4090-88b5-423329dd2bf9",
             "modified": "2015-05-15T09:00:00.000Z",
             "spec_version": "2.1",
@@ -743,6 +773,7 @@
         {
             "country": "SG",
             "created": "2015-05-15T09:00:00.000Z",
+            "created_by_ref": "identity--c0eb2955-a492-43b9-a9ad-93b37eb10ab5",
             "id": "location--db3fdf78-4a84-4d57-821e-61a8bb5dd388",
             "modified": "2015-05-15T09:00:00.000Z",
             "spec_version": "2.1",
