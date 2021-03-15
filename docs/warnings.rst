@@ -194,6 +194,7 @@ port number is assumed to be a destination port                                 
 Report *[id]* contains only the objects explicitly specified in the STIX 1.x report                                                         726     warn
 Custom property name *[property]* has been converted to all lower case                                                                      727     warn
 The is_family property of malware instance *[id]* is assumed to be true                                                                     728     info
+Included parent markings for Relationship *[id]* and Location *[id]*                                                                        729     info
 =========================================================================================================================================== ====    =====
 
 STIX elevator currently doesn't process this content
@@ -204,7 +205,7 @@ Message                                                                         
 =========================================================================================================================================== ==== =====
 Could not resolve Marking Structure *[id]*                                                                                                  801  warn
 1.x full file paths are not processed, yet                                                                                                  802  warn
-Location *[id]* may not contain all aspects of the STIX 1.x CIQAddress object (or data markings)                                            803  warn
+Location *[id]* may not contain all aspects of the STIX 1.x CIQAddress object                                                               803  warn
 Object reference *[id]* may not handled correctly                                                                                           804  warn
 CybOX object *[object]* not handled yet                                                                                                     805  warn
 Email *[property]* not handled yet                                                                                                          806  warn

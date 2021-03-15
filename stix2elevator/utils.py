@@ -163,6 +163,7 @@ def apply_ais_markings(stix2x_instance, stix2x_marking):
     instance_labels = stix2x_instance.get("labels", []) + stix2x_marking.get("labels", [])
     if instance_labels and stix2x_marking["created_by_ref"] == stix2x_instance["id"]:
         stix2x_instance["labels"] = instance_labels
+        stix2x_instance["created_by_ref"] = stix2x_instance["id"]
 
 
 def set_tlp_reference(stix2x_instance, color, prop):

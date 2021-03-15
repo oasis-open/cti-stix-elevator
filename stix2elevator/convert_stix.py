@@ -106,6 +106,7 @@ def process_kill_chain(kc):
 # collect locations
 
 _LOCATIONS = {}
+_UNFINISHED_OBJS = []
 
 
 def clear_location_objects():
@@ -128,16 +129,24 @@ def add_location_object(key, location_object):
     global _LOCATIONS
     if not exists_location_object(key):
         _LOCATIONS[key] = location_object
+
+
+def clear_unfinished_marked_objects():
+    global _UNFINISHED_OBJS
+    _UNFINISHED_OBJS = []
+
+
+def add_unfinished_marked_object(stix2_object):
+    global _UNFINISHED_OBJS
+    _UNFINISHED_OBJS.append(stix2_object)
+
+
+def get_unfinished_marked_objects():
+    return _UNFINISHED_OBJS
+
 #
 # identities
 #
-
-
-# def get_simple_name_from_identity(identity, bundle_instance, sdo_instance):
-#     if isinstance(identity, CIQIdentity3_0Instance):
-#         handle_relationship_to_refs([identity], sdo_instance["id"], bundle_instance, "attributed-to")
-#     else:
-#         return identity.name
 
 
 def get_identity_ref(identity, env, temp_marking_id=None, from_package=False, use_created_by_ref=True):
@@ -349,6 +358,31 @@ def convert_marking_specification(marking_specification, env):
     return return_obj
 
 
+def get_marking_specifications(stix1_object):
+    container = get_option_value("marking_container")
+    return container.get_markings(stix1_object)
+
+
+def get_object_marking_refs(stix1_marking_specifications):
+    object_marking_refs = []
+    for marking_specification in stix1_marking_specifications or []:
+        for marking_structure in marking_specification.marking_structures:
+            stix2x_marking = map_1x_markings_to_2x(marking_structure)
+            if isinstance(stix2x_marking, dict):
+                object_marking_refs.append(stix2x_marking["id"])
+            else:
+                object_marking_refs.append(stix2x_marking)
+    return object_marking_refs
+
+
+def create_marking_union(*stix1_objects):
+    union_object_marking_refs = []
+    for stix1_object in stix1_objects:
+        stix2_marking_refs = get_object_marking_refs(get_marking_specifications(stix1_object))
+        union_object_marking_refs.extend(stix2_marking_refs)
+    return list(set(union_object_marking_refs))
+
+
 def finish_basic_object(old_id, instance, env, stix1x_obj, temp_marking_id=None):
     if old_id is not None:
         record_ids(old_id, instance["id"])
@@ -357,8 +391,7 @@ def finish_basic_object(old_id, instance, env, stix1x_obj, temp_marking_id=None)
             warn("Related_Packages type in %s not supported in STIX 2.x", 402, stix1x_obj.id_)
 
     # Attach markings to SDO if present.
-    container = get_option_value("marking_container")
-    marking_specifications = container.get_markings(stix1x_obj)
+    marking_specifications = get_marking_specifications(stix1x_obj)
     object_marking_refs = []
     for marking_specification in marking_specifications:
         for marking_structure in marking_specification.marking_structures:
@@ -464,7 +497,7 @@ def handle_sighting(sighting, sighted_object_id, env):
 # Relationships
 
 
-def create_relationship(source_ref, target_ref, env, verb, rel_obj=None):
+def create_relationship(source_ref, target_ref, env, verb, rel_obj=None, marking_refs=None):
     relationship_instance = create_basic_object("relationship", rel_obj, env)
     relationship_instance["source_ref"] = source_ref
     relationship_instance["target_ref"] = target_ref
@@ -473,6 +506,8 @@ def create_relationship(source_ref, target_ref, env, verb, rel_obj=None):
         relationship_instance["created_by_ref"] = env.created_by_ref
     if rel_obj is not None and hasattr(rel_obj, "relationship") and rel_obj.relationship is not None:
         relationship_instance["description"] = rel_obj.relationship.value
+    if marking_refs:
+        relationship_instance["object_marking_refs"] = marking_refs
     return relationship_instance
 
 
@@ -482,110 +517,109 @@ def create_relationship(source_ref, target_ref, env, verb, rel_obj=None):
 # 3.  an idref is given, but it has NO corresponding 2.0 id, add 1.x id, and fix at the end in fix_relationships
 
 
-def handle_relationship_to_objs(items, source_id, env, verb):
+def handle_relationship_to_objs(items, source_id, env, verb, marking_refs):
     for item in items:
-        new20s = handle_embedded_object(item, env)
-        for new20 in new20s:
-            env.bundle_instance["relationships"].append(create_relationship(source_id,
-                                                                            new20["id"] if new20 else None,
-                                                                            env,
-                                                                            verb,
-                                                                            item))
+        new_stix2_instances = handle_embedded_object(item, env)
+        for new_2x in new_stix2_instances:
+            env.bundle_instance["relationships"].append(
+                create_relationship(source_id, new_2x["id"] if new_2x else None, env, verb, item, marking_refs)
+            )
 
 
-def handle_embedded_ref(ref, item, id, env, default_verb, to_direction):
-    new20s = handle_embedded_object(item, env)
-    for new20 in new20s:
+def handle_embedded_ref(stix1_relationship, item, ref1, env, default_verb, to_direction, marking_refs):
+    new_stix2_instances = handle_embedded_object(item, env)
+    for new_2x in new_stix2_instances:
         if to_direction:
-            source_id = id
-            target_id = new20["id"] if new20 else None
+            source_id = ref1
+            target_id = new_2x["id"] if new_2x else None
         else:
-            source_id = new20["id"] if new20 else None
-            target_id = id
-        env.bundle_instance["relationships"].append(create_relationship(source_id,
-                                                                        target_id,
-                                                                        env,
-                                                                        determine_appropriate_verb(default_verb, target_id),
-                                                                        ref))
+            source_id = new_2x["id"] if new_2x else None
+            target_id = ref1
+        env.bundle_instance["relationships"].append(
+            create_relationship(source_id, target_id, env,
+                                determine_appropriate_verb(default_verb, target_id),
+                                stix1_relationship,
+                                marking_refs)
+        )
 
 
-def handle_existing_ref(ref, ref_id, id, env, default_verb, to_direction):
-    source_id = id if to_direction else ref_id
-    target_id = ref_id if to_direction else id
-    env.bundle_instance["relationships"].append(create_relationship(source_id,
-                                                                    target_id,
-                                                                    env,
-                                                                    default_verb,
-                                                                    ref))
+def handle_existing_ref(stix1_relationship, ref1, ref2, env, default_verb, to_direction, marking_refs):
+    source_id = ref2 if to_direction else ref1
+    target_id = ref1 if to_direction else ref2
+    env.bundle_instance["relationships"].append(
+        create_relationship(source_id, target_id, env, default_verb, stix1_relationship, marking_refs=marking_refs)
+    )
 
 
-def handle_existing_refs(ref, id, env, verb, to_direction):
+def handle_existing_refs(ref, id, env, verb, to_direction, marking_refs):
     for ref_id in get_id_value(ref.item.idref):
-        handle_existing_ref(ref, ref_id, id, env, verb, to_direction)
+        handle_existing_ref(ref, ref_id, id, env, verb, to_direction, marking_refs)
 
 
-def handle_relationship_ref(ref, item, id, env, default_verb, to_direction=True):
+def handle_relationship_ref(ref, item, id, env, default_verb, to_direction=True, marking_refs=None):
     if item.idref is None:
-        handle_embedded_ref(ref, item, id, env, default_verb, to_direction)
+        handle_embedded_ref(ref, item, id, env, default_verb, to_direction, marking_refs)
     elif exists_id_key(item.idref):
-        handle_existing_refs(ref, id, env, default_verb, to_direction)
+        handle_existing_refs(ref, id, env, default_verb, to_direction, marking_refs)
     else:
         # a forward reference, fix later
         source_id = id if to_direction else item.idref
         target_id = str(item.idref) if to_direction else id
-        rel_obj = create_relationship(source_id, target_id, env, default_verb, item)
+        rel_obj = create_relationship(source_id, target_id, env, default_verb, item, marking_refs)
         if hasattr(ref, "relationship") and ref.relationship is not None:
             rel_obj["description"] = ref.relationship.value
         env.bundle_instance["relationships"].append(rel_obj)
 
 
-def handle_relationship_to_refs(refs, source_id, env, default_verb):
+def handle_relationship_to_refs(refs, source_id, env, default_verb, marking_refs=None):
     for ref in refs:
         if hasattr(ref, "item"):
             item = ref.item
         elif hasattr(ref, "course_of_action"):
             item = ref.course_of_action
-        handle_relationship_ref(ref, item, source_id, env, default_verb, to_direction=True)
+        refs_markings = list(set(create_marking_union(item) + marking_refs))
+        handle_relationship_ref(ref, item, source_id, env, default_verb, to_direction=True, marking_refs=refs_markings)
 
 
-def handle_relationship_from_refs(refs, target_id, env, default_verb):
+def handle_relationship_from_refs(refs, target_id, env, default_verb, marking_refs=None):
     for ref in refs:
         if hasattr(ref, "item"):
             item = ref.item
         elif hasattr(ref, "course_of_action"):
             item = ref.course_of_action
-        handle_relationship_ref(ref, item, target_id, env, default_verb, to_direction=False)
+        refs_markings = list(set(create_marking_union(item) + marking_refs))
+        handle_relationship_ref(ref, item, target_id, env, default_verb, to_direction=False, marking_refs=refs_markings)
 
 
 def handle_observable_information_list_as_pattern(obs_list):
     return convert_observable_list_to_pattern(obs_list)
 
 
-def handle_observable_information_list(obs_list, source_id, env, verb):
+def handle_observable_information_list(obs_list, source_id, env, verb, marking_refs):
     for o in obs_list:
+        obs_markings = list(set(create_marking_union(o) + marking_refs))
         if o.idref is None and o.object_ and not o.object_.idref:
             # embedded, so generate scos too
             new_od = convert_observed_data(o, env)
             add_id_of_obs_in_characterizations(new_od["id"])
             for obj_ref in new_od["object_refs"]:
-                env.bundle_instance["relationships"].append(create_relationship(source_id,
-                                                                                obj_ref,
-                                                                                env,
-                                                                                verb))
+                env.bundle_instance["relationships"].append(
+                    create_relationship(source_id, obj_ref, env, verb, marking_refs=obs_markings)
+                )
         else:
             if o.idref:
                 idref = o.idref
             elif o.idref is None and o.object_ and o.object_.idref:
                 idref = generate_stix2x_id("observed-data", o.object_.idref)
+                obs_markings = list(set(create_marking_union(o.object_) + marking_refs))
 
             if id_in_observed_data_mappings(idref):
                 obs2x = get_observed_data_from_mapping(idref)
                 add_id_of_obs_in_characterizations(obs2x["id"])
                 for ref in obs2x["object_refs"]:
-                    env.bundle_instance["relationships"].append(create_relationship(source_id,
-                                                                                    ref,
-                                                                                    env,
-                                                                                    verb))
+                    env.bundle_instance["relationships"].append(
+                        create_relationship(source_id, ref, env, verb, marking_refs=obs_markings)
+                    )
             else:
                 if id_in_observable_mappings(idref):
                     # handling a reference, scos generated later
@@ -593,16 +627,14 @@ def handle_observable_information_list(obs_list, source_id, env, verb):
                     add_id_of_obs_in_characterizations(new_od["id"])
                     env.bundle_instance["objects"].append(new_od)
                     for ref in new_od["object_refs"]:
-                        env.bundle_instance["relationships"].append(create_relationship(source_id,
-                                                                                        ref,
-                                                                                        env,
-                                                                                        verb))
+                        env.bundle_instance["relationships"].append(
+                            create_relationship(source_id, ref, env, verb, marking_refs=obs_markings)
+                        )
                 else:
                     # a forward reference, fix later
-                    env.bundle_instance["relationships"].append(create_relationship(source_id,
-                                                                                    idref,
-                                                                                    env,
-                                                                                    verb))
+                    env.bundle_instance["relationships"].append(
+                        create_relationship(source_id, idref, env, verb, marking_refs=obs_markings)
+                    )
 
 
 def reference_needs_fixing(ref):
@@ -638,7 +670,9 @@ def fix_relationships(env):
                     ref["source_ref"] = m_id
                     first_one = False
                 else:
-                    extra_relationships.append(create_relationship(m_id, ref["target_ref"], env, ref["verb"]))
+                    extra_relationships.append(
+                        create_relationship(m_id, ref["target_ref"], env, ref["verb"], marking_refs=ref.get("object_marking_refs", []))
+                    )
         if is_stix1x_id(ref["target_ref"]):
             if not exists_id_key(ref["target_ref"]):
                 # create one, and add it
@@ -657,9 +691,27 @@ def fix_relationships(env):
                     ref["relationship_type"] = verb
                     first_one = False
                 else:
-                    extra_relationships.append(create_relationship(ref["source_ref"], m_id, env, verb))
+                    extra_relationships.append(
+                        create_relationship(ref["source_ref"], m_id, env, verb, marking_refs=ref.get("object_marking_refs", []))
+                    )
     bundle_instance["relationships"].extend(extra_relationships)
 
+
+def fix_markings():
+    for stix2_instance in get_unfinished_marked_objects():
+        object_marking_refs = []
+        for marking_ref in stix2_instance.get("object_marking_refs", []):
+            if isinstance(marking_ref, MarkingStructure):
+                stix2x_marking = map_1x_markings_to_2x(marking_ref)
+                if stix2x_marking["definition_type"] == "ais":
+                    apply_ais_markings(stix2_instance, stix2x_marking)
+                    object_marking_refs.append(stix2x_marking["marking_ref"])
+                else:
+                    object_marking_refs.append(stix2x_marking["id"])
+            else:
+                object_marking_refs.append(marking_ref)
+
+        stix2_instance["object_marking_refs"] = object_marking_refs
 
 # Relationships are not in 1.x, so they must be added explicitly to reports.
 # This is done after the package has been processed, and the relationships are "fixed", so all relationships are known
@@ -754,6 +806,7 @@ def convert_campaign(camp, env):
         new_env = env.newEnv(timestamp=campaign_instance["created"])
     # process information source before any relationships
     new_env.add_to_env(created_by_ref=process_information_source(camp.information_source, campaign_instance, new_env))
+    camp_markings = create_marking_union(camp)
 
     if camp.activity is not None:
         for a in camp.activity:
@@ -764,29 +817,34 @@ def convert_campaign(camp, env):
         handle_relationship_to_refs(camp.related_ttps,
                                     campaign_instance["id"],
                                     new_env,
-                                    "uses")
+                                    "uses",
+                                    marking_refs=camp_markings)
     if camp.related_incidents is not None and get_option_value("incidents"):
         handle_relationship_from_refs(camp.related_incidents,
                                       campaign_instance["id"],
                                       new_env,
-                                      "attributed-to")
+                                      "attributed-to",
+                                      marking_refs=camp_markings)
     if camp.related_indicators is not None:
         handle_relationship_from_refs(camp.related_indicators,
                                       campaign_instance["id"],
                                       new_env,
-                                      "indicates")
+                                      "indicates",
+                                      marking_refs=camp_markings)
     if camp.attribution is not None:
         for att in camp.attribution:
             handle_relationship_to_refs(att,
                                         campaign_instance["id"],
                                         new_env,
-                                        "attributed-to")
+                                        "attributed-to",
+                                        marking_refs=camp_markings)
     if camp.associated_campaigns:
         info("All 'associated campaigns' relationships of %s are assumed to not represent STIX 1.2 versioning", 710, camp.id_)
         handle_relationship_to_refs(camp.related_coas,
                                     campaign_instance["id"],
                                     new_env,
-                                    "related-to")
+                                    "related-to",
+                                    marking_refs=camp_markings)
     finish_basic_object(camp.id_, campaign_instance, env, camp)
     return campaign_instance
 
@@ -856,9 +914,10 @@ def convert_course_of_action(coa, env):
                                                                  new_env))
     # process information source before any relationships
     if coa.related_coas:
+        coa_markings = create_marking_union(coa)
         info("All 'associated coas' relationships of %s are assumed to not represent STIX 1.2 versioning", 710, coa.id_)
         handle_relationship_to_refs(coa.related_coas, coa_instance["id"], new_env,
-                                    "related-to")
+                                    "related-to", marking_refs=coa_markings)
     finish_basic_object(coa.id_, coa_instance, new_env, coa)
     return coa_instance
 
@@ -877,9 +936,11 @@ def process_et_properties(sdo_instance, et, env):
     new_env = env.newEnv(timestamp=sdo_instance["created"])
     new_env.add_to_env(created_by_ref=process_information_source(et.information_source, sdo_instance, new_env))
     if et.potential_coas is not None:
+        et_markings = create_marking_union(et)
         handle_relationship_from_refs(et.potential_coas, sdo_instance["id"],
                                       new_env,
-                                      "mitigates")
+                                      "mitigates",
+                                      marking_refs=et_markings)
 
 
 def handle_missing_properties_of_vulnerability(vulnerability_instance, v):
@@ -1023,7 +1084,7 @@ def determine_administrative_area(geo):
         return None
 
 
-def convert_ciq_addresses2_1(ciq_info_addresses, identity_instance, env, parent_id=None, use_created_by_ref=True):
+def convert_ciq_addresses2_1(ciq_info_addresses, identity_instance, env, parent_markings, use_created_by_ref=True):
     location_keys = []
     for ciq_info_address in ciq_info_addresses:
         if not ciq_info_address.free_text_address:
@@ -1076,16 +1137,20 @@ def convert_ciq_addresses2_1(ciq_info_addresses, identity_instance, env, parent_
                     location["created_by_ref"] = identity_instance["id"]
                 else:
                     location["created_by_ref"] = env.created_by_ref
-                warn("Location %s may not contain all aspects of the STIX 1.x CIQAddress object (or data markings) ", 803, location["id"])
+                location["object_marking_refs"] = parent_markings
+                warn("Location %s may not contain all aspects of the STIX 1.x CIQAddress object", 803, location["id"])
                 env.bundle_instance["objects"].append(location)
-            env.bundle_instance["objects"].append(
-                create_relationship(
-                    identity_instance["id"],
-                    location["id"],
-                    env.newEnv(created_by_ref=identity_instance["id"]) if use_created_by_ref else env,
-                    "located-at"
-                )
+            relationship = create_relationship(
+                identity_instance["id"],
+                location["id"],
+                env.newEnv(created_by_ref=identity_instance["id"]) if use_created_by_ref else env,
+                "located-at",
+                marking_refs=parent_markings,
             )
+            info("Included parent markings for Relationship %s and Location %s", 729, relationship["id"], location["id"])
+            env.bundle_instance["objects"].append(relationship)
+            add_unfinished_marked_object(location)
+            add_unfinished_marked_object(relationship)
 
 
 def handle_missing_properties_of_ciq_instance(identity_instance, ciq):
@@ -1131,13 +1196,16 @@ def convert_identity(identity, env, parent_id=None, temp_marking_id=None, from_p
                 convert_controlled_vocabs_to_open_vocabs(identity_instance, "sectors", industry, SECTORS_MAP, False)
         if ciq_info.addresses:
             if spec_version == "2.1":
-                convert_ciq_addresses2_1(ciq_info.addresses, identity_instance, env, parent_id, use_created_by_ref)
+                parent_markings = create_marking_union(identity)
+                convert_ciq_addresses2_1(ciq_info.addresses, identity_instance, env, parent_markings, use_created_by_ref)
         if ciq_info.free_text_lines:
             handle_free_text_lines(identity_instance, ciq_info.free_text_lines)
     if identity.related_identities:
+        identity_markings = create_marking_union(identity)
         msg = "All 'associated identities' relationships of %s are assumed to not represent STIX 1.2 versioning"
         info(msg, 710, identity_instance["id"])
-        handle_relationship_to_refs(identity.related_identities, identity_instance["id"], env, "related-to")
+        handle_relationship_to_refs(identity.related_identities, identity_instance["id"], env, "related-to",
+                                    marking_refs=identity_markings)
     finish_basic_object(identity.id_,
                         identity_instance,
                         env.newEnv(created_by_ref=identity_instance["id"] if from_package else parent_id),
@@ -1225,24 +1293,30 @@ def convert_incident(incident, env):
                                                  False)
     # process information source before any relationships
     new_env.add_to_env(created_by_ref=process_information_source(incident.information_source, incident_instance, new_env))
+    incident_markings = create_marking_union(incident)
 
     # process related observables first
     if incident.related_observables is not None:
-        handle_relationship_from_refs(incident.related_observables, incident_instance["id"], new_env, "part-of")
+        handle_relationship_from_refs(incident.related_observables, incident_instance["id"], new_env, "part-of",
+                                      marking_refs=incident_markings)
     if incident.related_indicators is not None:
-        handle_relationship_from_refs(incident.related_indicators, incident_instance["id"], new_env, "indicates")
+        handle_relationship_from_refs(incident.related_indicators, incident_instance["id"], new_env, "indicates",
+                                      marking_refs=incident_markings)
     if incident.leveraged_ttps is not None:
         warn("Using %s for the %s of %s", 718, "related-to", "leveraged TTPs", incident.id_)
-        handle_relationship_to_refs(incident.leveraged_ttps, incident_instance["id"], new_env, "related-to")
+        handle_relationship_to_refs(incident.leveraged_ttps, incident_instance["id"], new_env, "related-to",
+                                    marking_refs=incident_markings)
     if incident.coa_taken is not None:
-        handle_relationship_to_refs(incident.coa_taken, incident_instance["id"], new_env, "used")
+        handle_relationship_to_refs(incident.coa_taken, incident_instance["id"], new_env, "used",
+                                    marking_refs=incident_markings)
 
     handle_missing_properties_of_incident(incident_instance, incident, new_env)
 
     if incident.related_incidents:
         info("All 'associated incidents' relationships of %s are assumed to not represent STIX 1.2 versioning",
              710, incident_instance["id"])
-        handle_relationship_to_refs(incident.related_incidents, incident_instance["id"], new_env, "related-to")
+        handle_relationship_to_refs(incident.related_incidents, incident_instance["id"], new_env, "related-to",
+                                    marking_refs=incident_markings)
     finish_basic_object(incident.id_, incident_instance, new_env, incident)
     return incident_instance
 
@@ -1409,6 +1483,7 @@ correctly in STIX 2.x - please check this pattern",
     indicator_created_by_ref = process_information_source(indicator.producer, indicator_instance,
                                                           env)
     env.add_to_env(created_by_ref=indicator_created_by_ref)
+    indicator_markings = create_marking_union(indicator)
     # process information source before any relationships
     if indicator.sightings:
         for s in indicator.sightings:
@@ -1416,17 +1491,17 @@ correctly in STIX 2.x - please check this pattern",
     if indicator.suggested_coas is not None:
         warn("Using %s for the %s of %s", 718, "investigates", "suggested COAs", indicator.id_)
         handle_relationship_from_refs(indicator.suggested_coas, indicator_instance["id"], env,
-                                      "investigates")
+                                      "investigates", marking_refs=indicator_markings)
     if indicator.related_campaigns is not None:
         handle_relationship_to_refs(indicator.related_campaigns, indicator_instance["id"], env,
-                                    "attributed-to")
+                                    "attributed-to", marking_refs=indicator_markings)
     if indicator.indicated_ttps is not None:
         handle_relationship_to_refs(indicator.indicated_ttps, indicator_instance["id"], env,
-                                    "indicates")
+                                    "indicates", marking_refs=indicator_markings)
     if indicator.related_indicators:
         info("All 'associated indicators' relationships of %s are assumed to not represent STIX 1.2 versioning", 710, indicator.id_)
         handle_relationship_to_refs(indicator.related_indicators, indicator_instance["id"], env,
-                                    "related-to")
+                                    "related-to", marking_refs=indicator_markings)
     finish_basic_object(indicator.id_, indicator_instance, env, indicator)
     return indicator_instance
 
@@ -1475,11 +1550,11 @@ def create_scos(obs, observed_data_instance, env, keep_scos):
                         scos.extend(related)
                         property_name = embedded_property_ref_name(obs.object_.properties, o.relationship)
                         if not property_name:
+                            marking_refs = create_marking_union(obs.object_, o)
+                            rel_verb = o.relationship.value.lower() if o.relationship and o.relationship.value else "resolves-to"
                             env.bundle_instance["objects"].append(
-                                create_relationship(scos[0]["id"],
-                                                    related[0]["id"],
-                                                    env,
-                                                    o.relationship.value.lower() if o.relationship and o.relationship.value else "resolves_to"))
+                                create_relationship(scos[0]["id"], related[0]["id"], env, rel_verb, marking_refs=marking_refs)
+                            )
                         else:
                             if o.relationship and o.relationship.value:
                                 set_embedded_ref_property_2_1(scos[0], related[0], property_name)
@@ -1510,7 +1585,7 @@ def create_cyber_observables(obs, observed_data_instance):
                             observed_data_instance["objects"][str(int(index) + int(current_largest_id) + 1)] = obj
                         property_name = embedded_property_ref_name(obs.object_.properties, o.relationship)
                         if property_name and o.relationship and o.relationship.value:
-                            set_embedded_ref_property_2_0(observed_data_instance["objects"]['0'],
+                            set_embedded_ref_property_2_0(observed_data_instance["objects"]["0"],
                                                           str(int(current_largest_id) + 1),
                                                           property_name)
 
@@ -1723,11 +1798,13 @@ def convert_threat_actor(threat_actor, env):
     process_description_and_short_description(threat_actor_instance, threat_actor)
     new_env = env.newEnv(timestamp=threat_actor_instance["created"])
     new_env.add_to_env(created_by_ref=process_information_source(threat_actor.information_source, threat_actor_instance, new_env))
+    ta_markings = create_marking_union(threat_actor)
     # process information source before any relationships
     if threat_actor.identity is not None:
         if threat_actor.identity.id_:
             info("Threat Actor identity %s being used as basis of attributed-to relationship", 701, threat_actor.identity.id_)
-        handle_relationship_to_objs([threat_actor.identity], threat_actor_instance["id"], new_env, "attributed-to")
+        ta_id_markings = create_marking_union(threat_actor, threat_actor.identity)
+        handle_relationship_to_objs([threat_actor.identity], threat_actor_instance["id"], new_env, "attributed-to", ta_id_markings)
     if threat_actor.title is not None:
         info("Threat Actor %s title is used for name property", 717, threat_actor.id_)
         threat_actor_instance["name"] = threat_actor.title
@@ -1757,12 +1834,15 @@ def convert_threat_actor(threat_actor, env):
                                              THREAT_ACTOR_SOPHISTICATION_MAP, True)
     # handle relationships
     if threat_actor.observed_ttps is not None:
-        handle_relationship_to_refs(threat_actor.observed_ttps, threat_actor_instance["id"], new_env, "uses")
+        handle_relationship_to_refs(threat_actor.observed_ttps, threat_actor_instance["id"], new_env,
+                                    "uses", marking_refs=ta_markings)
     if threat_actor.associated_campaigns is not None:
-        handle_relationship_from_refs(threat_actor.associated_campaigns, threat_actor_instance["id"], new_env, "attributed-to")
+        handle_relationship_from_refs(threat_actor.associated_campaigns, threat_actor_instance["id"], new_env,
+                                      "attributed-to", marking_refs=ta_markings)
     if threat_actor.associated_actors:
         info("All 'associated actors' relationships of %s are assumed to not represent STIX 1.2 versioning", 710, threat_actor.id_)
-        handle_relationship_to_refs(threat_actor.associated_actors, threat_actor_instance["id"], new_env, "related-to")
+        handle_relationship_to_refs(threat_actor.associated_actors, threat_actor_instance["id"], new_env,
+                                    "related-to", marking_refs=ta_markings)
 
     finish_basic_object(threat_actor.id_, threat_actor_instance, env, threat_actor)
     return threat_actor_instance
@@ -1791,7 +1871,7 @@ def handle_missing_properties_of_ttp(sdo_instance, ttp):
         handle_multiple_missing_statement_properties(container, ttp.intended_effects, "intended_effect",
                                                      sdo_instance["id"])
         if hasattr(ttp, "title"):
-            if ("name" not in sdo_instance or sdo_instance["name"] is None):
+            if "name" not in sdo_instance or sdo_instance["name"] is None:
                 sdo_instance["name"] = ttp.title
             else:
                 handle_missing_string_property(container, "title", ttp.title, sdo_instance["id"], False)
@@ -1799,7 +1879,7 @@ def handle_missing_properties_of_ttp(sdo_instance, ttp):
         fill_in_extension_properties(sdo_instance, container, extension_definition_id)
 
 
-def process_ttp_properties(sdo_instance, ttp, env, kill_chains_in_sdo=True):
+def process_ttp_properties(sdo_instance, ttp, env, kill_chains_in_sdo=True, marking_refs=None):
     process_description_and_short_description(sdo_instance, ttp, True)
 
     # only populate kill chain phases if that is a property of the sdo_instance type, as indicated by kill_chains_in_sdo
@@ -1810,7 +1890,7 @@ def process_ttp_properties(sdo_instance, ttp, env, kill_chains_in_sdo=True):
     env.add_to_env(created_by_ref=ttp_created_by_ref)
     if ttp.exploit_targets is not None:
         handle_relationship_to_refs(ttp.exploit_targets, sdo_instance["id"], env,
-                                    "targets")
+                                    "targets", marking_refs=marking_refs)
     if ttp.related_ttps:
         info("All 'related ttps' relationships of %s are assumed to not represent STIX 1.2 versioning", 710, ttp.id_)
         for rel in ttp.related_ttps:
@@ -1819,7 +1899,8 @@ def process_ttp_properties(sdo_instance, ttp, env, kill_chains_in_sdo=True):
                 target_type = get_type_from_id(rel.item.id_)
                 verb, to_direction = determine_ttp_relationship_type_and_direction(source_type, target_type,
                                                                                    str(rel.relationship))
-                handle_embedded_ref(rel, rel.item, rel.item.id_, env, verb, to_direction)
+                refs_markings = list(set(create_marking_union(rel) + marking_refs))
+                handle_embedded_ref(rel, rel.item, rel.item.id_, env, verb, to_direction, refs_markings)
             else:
                 target_id = rel.item.idref
                 stix2x_target_ids = get_id_value(target_id)
@@ -1827,9 +1908,11 @@ def process_ttp_properties(sdo_instance, ttp, env, kill_chains_in_sdo=True):
                     for id20 in stix2x_target_ids:
                         target_type = get_type_from_id(id20)
                         verb, to_direction = determine_ttp_relationship_type_and_direction(source_type, target_type, str(rel.relationship))
-                        handle_existing_ref(rel, id20, sdo_instance["id"], env, verb, to_direction)
+                        refs_markings = list(set(create_marking_union(rel) + marking_refs))
+                        handle_existing_ref(rel, id20, sdo_instance["id"], env, verb, to_direction, refs_markings)
                 else:
-                    handle_relationship_ref(rel, rel.item, sdo_instance["id"], env, "related-to", to_direction=True)
+                    refs_markings = list(set(create_marking_union(rel) + marking_refs))
+                    handle_relationship_ref(rel, rel.item, sdo_instance["id"], env, "related-to", to_direction=True, marking_refs=refs_markings)
     if hasattr(ttp, "related_packages") and ttp.related_packages is not None:
         for p in ttp.related_packages:
             warn("Related_Packages type in %s not supported in STIX 2.x", 402, ttp.id_)
@@ -1837,15 +1920,16 @@ def process_ttp_properties(sdo_instance, ttp, env, kill_chains_in_sdo=True):
 
 
 def convert_attack_pattern(ap, ttp, env, ttp_id_used):
-    attack_Pattern_instance = create_basic_object("attack-pattern", ap, env, ttp.id_, not ttp_id_used)
+    attack_pattern_instance = create_basic_object("attack-pattern", ap, env, ttp.id_, not ttp_id_used)
     if ap.title is not None:
-        attack_Pattern_instance["name"] = ap.title
-    process_description_and_short_description(attack_Pattern_instance, ap)
+        attack_pattern_instance["name"] = ap.title
+    process_description_and_short_description(attack_pattern_instance, ap)
     if ap.capec_id is not None:
-        attack_Pattern_instance["external_references"] = [{"source_name": "capec", "external_id": ap.capec_id}]
-    process_ttp_properties(attack_Pattern_instance, ttp, env)
-    finish_basic_object(ttp.id_, attack_Pattern_instance, env, ap)
-    return attack_Pattern_instance
+        attack_pattern_instance["external_references"] = [{"source_name": "capec", "external_id": ap.capec_id}]
+    ap_markings = create_marking_union(ap)
+    process_ttp_properties(attack_pattern_instance, ttp, env, marking_refs=ap_markings)
+    finish_basic_object(ttp.id_, attack_pattern_instance, env, ap)
+    return attack_pattern_instance
 
 
 def handle_missing_properties_of_malware_instance(sdo_instance, malware1x_instance):
@@ -1857,7 +1941,7 @@ def handle_missing_properties_of_malware_instance(sdo_instance, malware1x_instan
             handle_missing_string_property(container, "other_names", malware1x_instance.names[1:], sdo_instance["id"],
                                            is_list=True)
         if hasattr(malware1x_instance, "title"):
-            if ("name" not in container or container["name"] is None):
+            if "name" not in container or container["name"] is None:
                 # this case is handled in convert_malware_instance
                 pass
             else:
@@ -1895,7 +1979,8 @@ def convert_malware_instance(mal, ttp, env, ttp_id_used):
 
     if isinstance(mal, MAECInstance):
         warn("MAEC content in %s cannot be represented in STIX 2.x", 426, ttp.id_)
-    process_ttp_properties(malware_instance_instance, ttp, env)
+    mi_markings = create_marking_union(mal)
+    process_ttp_properties(malware_instance_instance, ttp, env, marking_refs=mi_markings)
     handle_missing_properties_of_malware_instance(malware_instance_instance, mal)
     finish_basic_object(ttp.id_, malware_instance_instance, env, mal)
     return malware_instance_instance
@@ -1960,7 +2045,8 @@ def convert_tool(tool, ttp, env, first_one):
                                              False,
                                              required=spec_version == "2.0")
     tool_instance["tool_version"] = tool.version
-    process_ttp_properties(tool_instance, ttp, env)
+    tool_markings = create_marking_union(tool)
+    process_ttp_properties(tool_instance, ttp, env, marking_refs=tool_markings)
     finish_basic_object(ttp.id_, tool_instance, env, tool)
     return tool_instance
 
@@ -1978,16 +2064,17 @@ def convert_infrastructure(infra, ttp, env, first_one):
                                              required=False)
     info("No 'first_seen' data on %s - using timestamp", 904, infra.id_ if infra.id_ else ttp.id_)
     infrastructure_instance["first_seen"] = convert_timestamp_of_stix_object(infra, infrastructure_instance["created"])
+    infra_markings = create_marking_union(infra)
     if infra.observable_characterization is not None:
-        handle_observable_information_list(infra.observable_characterization, infrastructure_instance["id"], env, "consists-of")
-    process_ttp_properties(infrastructure_instance, ttp, env)
+        handle_observable_information_list(infra.observable_characterization, infrastructure_instance["id"], env, "consists-of", infra_markings)
+    process_ttp_properties(infrastructure_instance, ttp, env, marking_refs=infra_markings)
     finish_basic_object(ttp.id_, infrastructure_instance, env, infra)
     return infrastructure_instance
 
 
 def convert_resources(resources, ttp, env, generated_ttps):
     resources_generated = []
-    first_one = (generated_ttps == [])
+    first_one = bool(generated_ttps)
     if resources.tools is not None:
         for t in resources.tools:
             new_obj = convert_tool(t, ttp, env, first_one)
@@ -1999,7 +2086,6 @@ def convert_resources(resources, ttp, env, generated_ttps):
             new_obj = convert_infrastructure(resources.infrastructure, ttp, env, first_one)
             env.bundle_instance["objects"].append(new_obj)
             resources_generated.append(new_obj)
-            first_one = False
         else:
             warn("Infrastructure in %s not part of STIX 2.0", 409, ttp.id_ or "")
     return resources_generated
@@ -2007,6 +2093,7 @@ def convert_resources(resources, ttp, env, generated_ttps):
 
 def convert_identity_for_victim_target(identity, ttp, env, ttp_generated):
     if identity:
+        identity_markings = create_marking_union(identity)
         identity_instance = convert_identity(identity,
                                              env,
                                              parent_id=ttp.id_ if not ttp_generated else None,
@@ -2014,8 +2101,9 @@ def convert_identity_for_victim_target(identity, ttp, env, ttp_generated):
     else:
         identity_instance = create_basic_object("identity", None, env, ttp.id_)
         identity_instance["identity_class"] = "unknown"
+        identity_markings = create_marking_union(ttp)
     env.bundle_instance["objects"].append(identity_instance)
-    process_ttp_properties(identity_instance, ttp, env, False)
+    process_ttp_properties(identity_instance, ttp, env, False, marking_refs=identity_markings)
     finish_basic_object(ttp.id_, identity_instance, env, identity)
     return identity_instance
 
@@ -2044,13 +2132,14 @@ def convert_victim_targeting(victim_targeting, ttp, env, ttps_generated):
     handle_missing_properties_of_victim_target(identity_instance, victim_targeting)
 
     if ttps_generated:
+        marking_refs = create_marking_union(ttp, victim_targeting.identity)
         for generated_ttp in ttps_generated:
             env.bundle_instance["relationships"].append(
-                create_relationship(generated_ttp["id"], identity_instance["id"], env, "targets"))
+                create_relationship(generated_ttp["id"], identity_instance["id"], env,
+                                    "targets", marking_refs=marking_refs)
+            )
         # the relationships has been created, so its not necessary to propagate it up
     return identity_instance
-    # nothing generated
-    # return None
 
 
 def convert_ttp(ttp, env):
@@ -2162,6 +2251,8 @@ def finalize_bundle(env):
     # ttps
 
     fix_relationships(env)
+
+    fix_markings()
 
     if get_option_value("spec_version") == "2.0":
         fix_cybox_relationships(bundle_instance["observed_data"])

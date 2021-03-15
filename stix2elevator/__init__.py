@@ -21,7 +21,8 @@ from stix2elevator.convert_pattern import (
 )
 from stix2elevator.convert_stix import (
     clear_kill_chains_phases_mapping, clear_location_objects,
-    clear_observed_data_mappings, convert_package
+    clear_observed_data_mappings, clear_unfinished_marked_objects,
+    convert_package
 )
 from stix2elevator.ids import (
     clear_id_mapping, clear_id_of_obs_in_characterizations,
@@ -68,6 +69,7 @@ def clear_globals():
     clear_id_of_obs_in_characterizations()
     clear_directory_mappings()
     clear_location_objects()
+    clear_unfinished_marked_objects()
     cybox.utils.caches.cache_clear()
 
 
