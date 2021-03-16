@@ -3,6 +3,7 @@
     "objects": [
         {
             "created": "2020-12-31T00:00:00.000Z",
+            "created_by_ref": "identity--4a9da541-f5fe-47f2-b46a-f418ce36df42",
             "id": "identity--4a9da541-f5fe-47f2-b46a-f418ce36df42",
             "identity_class": "organization",
             "labels": [
@@ -11,7 +12,7 @@
             "modified": "2020-12-31T00:00:00.000Z",
             "name": "ACME",
             "object_marking_refs": [
-                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
+                "marking-definition--f88d31f6-486f-44da-b317-01333bde0b82"
             ],
             "sectors": [
                 "technology"
@@ -27,7 +28,7 @@
             ],
             "modified": "2016-03-29T20:52:52.716Z",
             "object_marking_refs": [
-                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
+                "marking-definition--f88d31f6-486f-44da-b317-01333bde0b82"
             ],
             "pattern": "[file:hashes.MD5 = 'd41d8cd98f00b204e9800998ecf8427e']",
             "type": "indicator",
