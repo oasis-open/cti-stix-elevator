@@ -8,6 +8,9 @@
             "created_by_ref": "identity--a2bc3ad6-05f6-4652-b5a2-98458471f2a2",
             "id": "location--b9cc1fca-a594-406f-ac56-a9370cbbf834",
             "modified": "2020-12-31T00:00:00.000Z",
+            "object_marking_refs": [
+                "marking-definition--f88d31f6-486f-44da-b317-01333bde0b82"
+            ],
             "spec_version": "2.1",
             "type": "location"
         },
@@ -16,6 +19,9 @@
             "created_by_ref": "identity--a2bc3ad6-05f6-4652-b5a2-98458471f2a2",
             "id": "relationship--d2a95d1d-d633-453f-bf4d-8fc8d518ad4f",
             "modified": "2020-12-31T00:00:00.000Z",
+            "object_marking_refs": [
+                "marking-definition--f88d31f6-486f-44da-b317-01333bde0b82"
+            ],
             "relationship_type": "located-at",
             "source_ref": "identity--a2bc3ad6-05f6-4652-b5a2-98458471f2a2",
             "spec_version": "2.1",
@@ -24,6 +30,7 @@
         },
         {
             "created": "2020-12-31T00:00:00.000Z",
+            "created_by_ref": "identity--a2bc3ad6-05f6-4652-b5a2-98458471f2a2",
             "id": "identity--a2bc3ad6-05f6-4652-b5a2-98458471f2a2",
             "identity_class": "organization",
             "labels": [

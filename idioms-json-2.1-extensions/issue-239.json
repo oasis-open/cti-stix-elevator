@@ -8,6 +8,9 @@
             "created_by_ref": "identity--057e0557-f75c-4efb-bd3e-835094e2d3d3",
             "id": "location--86de9d6c-ed2b-477e-84ac-9f38fad37df6",
             "modified": "2020-11-23T14:26:05.000Z",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
+            ],
             "spec_version": "2.1",
             "type": "location"
         },
@@ -16,6 +19,9 @@
             "created_by_ref": "identity--057e0557-f75c-4efb-bd3e-835094e2d3d3",
             "id": "relationship--ae5452ad-a506-4266-961d-65d1e148c52e",
             "modified": "2020-11-23T14:26:05.000Z",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
+            ],
             "relationship_type": "located-at",
             "source_ref": "identity--057e0557-f75c-4efb-bd3e-835094e2d3d3",
             "spec_version": "2.1",
@@ -24,6 +30,7 @@
         },
         {
             "created": "2020-11-23T14:26:05.000Z",
+            "created_by_ref": "identity--057e0557-f75c-4efb-bd3e-835094e2d3d3",
             "id": "identity--057e0557-f75c-4efb-bd3e-835094e2d3d3",
             "identity_class": "organization",
             "labels": [
@@ -64,8 +71,8 @@
             ],
             "kill_chain_phases": [
                 {
-                    "kill_chain_name": "stix:KillChain-af3e707f-2fb9-49e5-8c37-14026ca0a5ff",
-                    "phase_name": "Delivery"
+                    "kill_chain_name": "lockheed-martin-cyber-kill-chain",
+                    "phase_name": "delivery"
                 }
             ],
             "modified": "2020-11-23T19:26:05.255Z",

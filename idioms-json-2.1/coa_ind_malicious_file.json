@@ -8,6 +8,9 @@
             "created_by_ref": "identity--66e1cc59-8a22-4869-9681-748aebe87abc",
             "id": "location--271e4cbc-b78f-43da-ab90-6f90cafa605e",
             "modified": "9999-12-31T00:00:00.000Z",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
+            ],
             "spec_version": "2.1",
             "type": "location"
         },
@@ -16,6 +19,9 @@
             "created_by_ref": "identity--66e1cc59-8a22-4869-9681-748aebe87abc",
             "id": "relationship--d4d13323-7ed7-4fe5-86ed-294770d40004",
             "modified": "9999-12-31T00:00:00.000Z",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
+            ],
             "relationship_type": "located-at",
             "source_ref": "identity--66e1cc59-8a22-4869-9681-748aebe87abc",
             "spec_version": "2.1",
@@ -24,6 +30,7 @@
         },
         {
             "created": "9999-12-31T00:00:00.000Z",
+            "created_by_ref": "identity--66e1cc59-8a22-4869-9681-748aebe87abc",
             "id": "identity--66e1cc59-8a22-4869-9681-748aebe87abc",
             "identity_class": "organization",
             "labels": [
@@ -59,8 +66,8 @@
             "id": "indicator--0c277b59-f5a9-4530-8861-82588719ec0c",
             "kill_chain_phases": [
                 {
-                    "kill_chain_name": "LM Cyber Kill Chain",
-                    "phase_name": "Actions on Objectives"
+                    "kill_chain_name": "lockheed-martin-cyber-kill-chain",
+                    "phase_name": "actions-on-objectives"
                 }
             ],
             "modified": "2016-03-29T20:52:52.716Z",
@@ -78,6 +85,9 @@
             "created_by_ref": "identity--66e1cc59-8a22-4869-9681-748aebe87abc",
             "id": "relationship--0ce5e20d-ab21-41c4-8c3b-f82066bdc0d9",
             "modified": "2016-03-29T20:52:52.716Z",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
+            ],
             "relationship_type": "investigates",
             "source_ref": "course-of-action--e9f31688-d744-48f4-9320-e6a9bd136f44",
             "spec_version": "2.1",

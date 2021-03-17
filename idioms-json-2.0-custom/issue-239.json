@@ -3,6 +3,7 @@
     "objects": [
         {
             "created": "2020-11-23T14:26:05.000Z",
+            "created_by_ref": "identity--2bac9939-6d1e-487c-a06f-73772bc2065d",
             "id": "identity--2bac9939-6d1e-487c-a06f-73772bc2065d",
             "identity_class": "organization",
             "labels": [
@@ -38,8 +39,8 @@
             "id": "indicator--a35dbed6-9b9c-442e-aaff-4aeeb88a43ef",
             "kill_chain_phases": [
                 {
-                    "kill_chain_name": "stix:KillChain-af3e707f-2fb9-49e5-8c37-14026ca0a5ff",
-                    "phase_name": "Delivery"
+                    "kill_chain_name": "lockheed-martin-cyber-kill-chain",
+                    "phase_name": "delivery"
                 }
             ],
             "labels": [

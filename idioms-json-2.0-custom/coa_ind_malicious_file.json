@@ -3,6 +3,7 @@
     "objects": [
 	    {
             "created": "9999-12-31T00:00:00.000Z",
+	        "created_by_ref": "identity--7c57ab9b-53b3-4691-9528-ba9ae1f479f0",
             "id": "identity--7c57ab9b-53b3-4691-9528-ba9ae1f479f0",
             "identity_class": "organization",
             "labels": [
@@ -36,8 +37,8 @@
             "id": "indicator--0c277b59-f5a9-4530-8861-82588719ec0c",
             "kill_chain_phases": [
                 {
-                    "kill_chain_name": "LM Cyber Kill Chain",
-                    "phase_name": "Actions on Objectives"
+                    "kill_chain_name": "lockheed-martin-cyber-kill-chain",
+                    "phase_name": "actions-on-objectives"
                 }
             ],
             "labels": [
@@ -56,6 +57,9 @@
 	        "created_by_ref": "identity--7c57ab9b-53b3-4691-9528-ba9ae1f479f0",
             "id": "relationship--51824c97-69d5-4e6c-a9a5-9efec1032da4",
             "modified": "2016-03-29T20:52:52.716Z",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
+            ],
             "relationship_type": "investigates",
             "source_ref": "course-of-action--e9f31688-d744-48f4-9320-e6a9bd136f44",
             "target_ref": "indicator--0c277b59-f5a9-4530-8861-82588719ec0c",

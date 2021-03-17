@@ -3,6 +3,7 @@
     "objects": [
         {
             "created": "2020-12-31T00:00:00.000Z",
+            "created_by_ref": "identity--343407e0-10de-4672-925a-3db027d06811",
             "id": "identity--343407e0-10de-4672-925a-3db027d06811",
             "identity_class": "organization",
             "labels": [

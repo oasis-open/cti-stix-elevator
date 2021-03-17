@@ -114,7 +114,7 @@ def step_pattern(pattern):
 
 
 def step_object(stix_object):
-    type_set = set(("indicator", "malware", "report", "threat-actor", "tool"))
+    type_set = {"indicator", "malware", "report", "threat-actor", "tool"}
     stix_object["spec_version"] = "2.1"
     if stix_object["type"] in type_set:
         if "labels" in stix_object:

@@ -31,7 +31,7 @@
                 <marking:Marking_Structure xsi:type="AIS:AISMarkingStructure">
                     <AIS:Is_Proprietary CISA_Proprietary="true">
                         <AIS:AISConsent consent="EVERYONE"/>
-                        <AIS:TLPMarking color="WHITE"/>
+                        <AIS:TLPMarking color="AMBER"/>
                     </AIS:Is_Proprietary>
                 </marking:Marking_Structure>
 

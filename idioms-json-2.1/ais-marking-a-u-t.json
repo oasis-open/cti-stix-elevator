@@ -8,6 +8,9 @@
             "created_by_ref": "identity--9e8cb630-e421-4a63-94c3-e853e1f27f70",
             "id": "location--3a0d3eca-d45d-4546-bf40-07b907506142",
             "modified": "2020-12-31T00:00:00.000Z",
+            "object_marking_refs": [
+                "marking-definition--f88d31f6-486f-44da-b317-01333bde0b82"
+            ],
             "spec_version": "2.1",
             "type": "location"
         },
@@ -16,6 +19,9 @@
             "created_by_ref": "identity--9e8cb630-e421-4a63-94c3-e853e1f27f70",
             "id": "relationship--c48615b6-484d-4a32-8d62-7b0a5673f682",
             "modified": "2020-12-31T00:00:00.000Z",
+            "object_marking_refs": [
+                "marking-definition--f88d31f6-486f-44da-b317-01333bde0b82"
+            ],
             "relationship_type": "located-at",
             "source_ref": "identity--9e8cb630-e421-4a63-94c3-e853e1f27f70",
             "spec_version": "2.1",
@@ -24,6 +30,7 @@
         },
         {
             "created": "2020-12-31T00:00:00.000Z",
+            "created_by_ref": "identity--9e8cb630-e421-4a63-94c3-e853e1f27f70",
             "id": "identity--9e8cb630-e421-4a63-94c3-e853e1f27f70",
             "identity_class": "organization",
             "labels": [
@@ -32,7 +39,7 @@
             "modified": "2020-12-31T00:00:00.000Z",
             "name": "ACME",
             "object_marking_refs": [
-                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
+                "marking-definition--f88d31f6-486f-44da-b317-01333bde0b82"
             ],
             "sectors": [
                 "technology"
@@ -46,7 +53,7 @@
             "id": "indicator--45eee277-2d76-4079-91d0-0061a443bac6",
             "modified": "2016-03-29T20:52:52.716Z",
             "object_marking_refs": [
-                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
+                "marking-definition--f88d31f6-486f-44da-b317-01333bde0b82"
             ],
             "pattern": "[file:hashes.MD5 = 'd41d8cd98f00b204e9800998ecf8427e']",
             "pattern_type": "stix",
