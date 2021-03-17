@@ -66,8 +66,8 @@
             "id": "indicator--0c277b59-f5a9-4530-8861-82588719ec0c",
             "kill_chain_phases": [
                 {
-                    "kill_chain_name": "LM Cyber Kill Chain",
-                    "phase_name": "Actions on Objectives"
+                    "kill_chain_name": "lockheed-martin-cyber-kill-chain",
+                    "phase_name": "actions-on-objectives"
                 }
             ],
             "modified": "2016-03-29T20:52:52.716Z",

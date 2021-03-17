@@ -12,6 +12,7 @@ from stix.campaign import Campaign
 from stix.coa import CourseOfAction
 from stix.common.identity import Identity
 from stix.common.kill_chains import KillChainPhase, KillChainPhaseReference
+from stix.common.kill_chains.lmco import LMCO_KILL_CHAIN_PHASES
 from stix.data_marking import MarkingSpecification, MarkingStructure
 from stix.exploit_target import ExploitTarget
 from stix.extensions.identity.ciq_identity_3_0 import CIQIdentity3_0Instance
@@ -94,13 +95,68 @@ def clear_kill_chains_phases_mapping():
     _KILL_CHAINS_PHASES = {}
 
 
+# Identifies the Lockheed Martin Kill Chain ids
+_LMCO_IDS = {
+    "af3e707f-2fb9-49e5-8c37-14026ca0a5ff",
+    "786ca8f9-2d9a-4213-b38e-399af4a2e5d6",
+    "d6dc32b9-2538-4951-8733-3cb9ef1daae2",
+    "e1e4e3f7-be3b-4b39-b80a-a593cfd99a4f",
+    "f706e4e7-53d8-44ef-967f-81535c9db7d0",
+    "79a0e041-9d5f-49bb-ada4-8322622b162d",
+    "445b4827-3cca-42bd-8421-f2e947133c16",
+    "af1016d6-a744-4ed7-ac91-00fe2272185a",
+}
+
+
+def check_lmco(kcp):
+    lmco_names = {
+        "LMCO",
+        "LM Cyber Kill Chain",
+        "Actions on Objectives",
+        "Command and Control",
+        "Installation",
+        "Exploitation",
+        "Delivery",
+        "Weaponization",
+        "Reconnaissance",
+    }
+
+    is_lmco_kcp = False
+
+    if kcp in LMCO_KILL_CHAIN_PHASES:
+        is_lmco_kcp = True
+    elif kcp.phase_id and any(kcp.phase_id.endswith(x) for x in _LMCO_IDS):
+        is_lmco_kcp = True
+    elif kcp.name and any(kcp.name == x for x in lmco_names):
+        is_lmco_kcp = True
+
+    return is_lmco_kcp
+
+
+def lmco_id_to_name(phase_id):
+    for lmco_id in _LMCO_IDS:
+        if phase_id.endswith(lmco_id):
+            for kcp in LMCO_KILL_CHAIN_PHASES:
+                if kcp.phase_id.endswith(lmco_id):
+                    return kcp.name.replace(" ", "-").lower()
+    return phase_id
+
+
 def process_kill_chain(kc):
+
     for kcp in kc.kill_chain_phases:
         # Use object itself as key.
-        if kcp.phase_id:
-            _KILL_CHAINS_PHASES[kcp.phase_id] = {"kill_chain_name": kc.name, "phase_name": kcp.name}
+        if check_lmco(kcp):
+            kcp_name = kcp.name.replace(" ", "-").lower()
+            if kcp.phase_id:
+                _KILL_CHAINS_PHASES[kcp.phase_id] = {"kill_chain_name": "lockheed-martin-cyber-kill-chain", "phase_name": kcp_name}
+            else:
+                _KILL_CHAINS_PHASES[kcp] = {"kill_chain_name": "lockheed-martin-cyber-kill-chain", "phase_name": kcp_name}
         else:
-            _KILL_CHAINS_PHASES[kcp] = {"kill_chain_name": kc.name, "phase_name": kcp.name}
+            if kcp.phase_id:
+                _KILL_CHAINS_PHASES[kcp.phase_id] = {"kill_chain_name": kc.name, "phase_name": kcp.name}
+            else:
+                _KILL_CHAINS_PHASES[kcp] = {"kill_chain_name": kc.name, "phase_name": kcp.name}
 
 
 # collect locations
@@ -1323,19 +1379,25 @@ def convert_incident(incident, env):
 
 # indicator
 
-def convert_kill_chain_missing_names(phase, kill_chain_phases_20):
+def convert_kill_chain_missing_names(phase, kill_chain_phases_2x):
     kill_chain_name = phase.kill_chain_name
     phase_name = phase.name
     if not phase.kill_chain_name and phase.kill_chain_id:
         kill_chain_name = phase.kill_chain_id
     if not phase.name and phase.phase_id:
         phase_name = phase.phase_id
-    kill_chain_phases_20.append({"kill_chain_name": kill_chain_name, "phase_name": phase_name})
+    if check_lmco(phase):
+        kill_chain_name = "lockheed-martin-cyber-kill-chain"
+        phase_name = phase_name.replace(" ", "-").lower()
+        phase_name = lmco_id_to_name(phase_name)
+        kill_chain_phases_2x.append({"kill_chain_name": kill_chain_name, "phase_name": phase_name})
+    else:
+        kill_chain_phases_2x.append({"kill_chain_name": kill_chain_name, "phase_name": phase_name})
 
 
 def convert_kill_chains(kill_chain_phases, sdo_instance):
     if kill_chain_phases is not None:
-        kill_chain_phases_20 = []
+        kill_chain_phases_2x = []
         for phase in kill_chain_phases:
             if isinstance(phase, KillChainPhaseReference):
                 try:
@@ -1343,15 +1405,15 @@ def convert_kill_chains(kill_chain_phases, sdo_instance):
                         kill_chain_info = _KILL_CHAINS_PHASES[phase.phase_id]
                     else:
                         kill_chain_info = _KILL_CHAINS_PHASES[phase]
-                    kill_chain_phases_20.append({"kill_chain_name": kill_chain_info["kill_chain_name"],
+                    kill_chain_phases_2x.append({"kill_chain_name": kill_chain_info["kill_chain_name"],
                                                  "phase_name": kill_chain_info["phase_name"]})
                 except KeyError:
                     warn("Unknown phase_id %s in %s", 632, phase.phase_id, sdo_instance["id"])
-                    convert_kill_chain_missing_names(phase, kill_chain_phases_20)
+                    convert_kill_chain_missing_names(phase, kill_chain_phases_2x)
             elif isinstance(phase, KillChainPhase):
-                convert_kill_chain_missing_names(phase, kill_chain_phases_20)
-        if kill_chain_phases_20:
-            sdo_instance["kill_chain_phases"] = kill_chain_phases_20
+                convert_kill_chain_missing_names(phase, kill_chain_phases_2x)
+        if kill_chain_phases_2x:
+            sdo_instance["kill_chain_phases"] = kill_chain_phases_2x
 
 
 _ALLOW_YARA_AND_SNORT_PATTENS = False
