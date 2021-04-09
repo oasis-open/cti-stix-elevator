@@ -1,5 +1,6 @@
 # Standard Library
 import re
+import uuid
 
 # internal
 from stix2elevator.extension_definitions import get_extension_definition_id
@@ -183,7 +184,7 @@ def handle_missing_statement_properties(container, statement, property_name, id)
             warn("Used custom properties for Statement type content of %s", 308, id)
         elif check_for_missing_policy("use-extensions"):
             statement_type_as_extension_properties(container, statement, property_name, id)
-            warn("Used custom properties for Statement type content of %s", 308, id)
+            warn("Used extensions properties for Statement type content of %s", 308, id)
         else:
             warn("Missing property %s of %s is ignored", 307, property_name, id)
 
@@ -224,7 +225,7 @@ def handle_missing_tool_property(sdo_instance, tool):
         warn("Missing property 'name' %s is ignored", 307, ("of" + sdo_instance["id"] if "id" in sdo_instance else ""))
 
 
-def determine_container_for_missing_properties(object_type, object_instance):
+def determine_container_for_missing_properties(object_type, object_instance, custom_object=False):
     if check_for_missing_policy("use-extensions"):
         extension_definition_id = get_extension_definition_id(object_type)
         if "extensions" in object_instance and extension_definition_id in object_instance["extensions"]:
@@ -234,7 +235,16 @@ def determine_container_for_missing_properties(object_type, object_instance):
                  312,
                  object_type,
                  (("of " + object_instance["id"]) if "id" in object_instance else ""))
-            return None, None
+            if custom_object:
+                new_id = "extension-definition" + "--" + str(uuid.uuid4())
+                warn("New extension-definition id %s was generated for %s. %s",
+                     315,
+                     new_id,
+                     object_type,
+                     (("See " + object_instance["id"]) if "id" in object_instance else ""))
+                return dict(), new_id
+            else:
+                return None, None
         else:
             container = dict()
             return container, extension_definition_id
@@ -242,10 +252,12 @@ def determine_container_for_missing_properties(object_type, object_instance):
         return object_instance, None
 
 
-def fill_in_extension_properties(instance, container, extension_definition_id):
+def fill_in_extension_properties(instance, container, extension_definition_id, extension_type="property-extension"):
     if check_for_missing_policy("use-extensions") and container != dict():
         if extension_definition_id:
             if "extensions" not in instance:
                 instance["extensions"] = dict()
             if extension_definition_id not in instance["extensions"]:
                 instance["extensions"][extension_definition_id] = container
+            if extension_type:
+                instance["extensions"][extension_definition_id]["extension_type"] = extension_type

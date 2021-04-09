@@ -5,6 +5,7 @@
             "created": "2014-08-08T15:50:10.983Z",
             "extensions": {
                 "extension-definition--8f0b8ed7-c7ad-4650-babe-c4c45cac4a0b": {
+                    "extension_type": "property-extension",
                     "targeted_information": [
                         "Information Assets - Financial Data"
                     ]
@@ -39,6 +40,7 @@
             "description": "Fred",
             "extensions": {
                 "extension-definition--58c914a2-0b19-4f62-8221-0af0b542e130": {
+                    "extension_type": "property-extension",
                     "information_source_roles": [
                         "Aggregator",
                         "Initial Author"

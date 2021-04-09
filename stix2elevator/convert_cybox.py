@@ -1618,10 +1618,22 @@ def convert_x509_certificate(x509):
 
 def convert_custom_object(custom_obj1x):
     if custom_obj1x.custom_name:
-        custom_object_type = convert_to_custom_name(custom_obj1x.custom_name, separator="-")
-        custom_obj2x = create_base_sco(custom_object_type, custom_obj1x)
-        generate_sco_id_for_2_1(custom_obj2x, custom_obj1x.parent.id_)
-        return custom_obj2x
+        if check_for_missing_policy("use-extensions"):
+            extension_obj21 = create_base_sco(custom_obj1x.custom_name, custom_obj1x)
+            generate_sco_id_for_2_1(extension_obj21, custom_obj1x.parent.id_)
+            container, extension_definition_id = determine_container_for_missing_properties(custom_obj1x.custom_name,
+                                                                                            extension_obj21,
+                                                                                            custom_object=True)
+            if container is not None:
+                container["extension_type"] = "new-sco"
+                fill_in_extension_properties(extension_obj21, container, extension_definition_id, None)
+            return extension_obj21
+        else:
+            custom_object_type = convert_to_custom_name(custom_obj1x.custom_name, separator="-")
+            custom_obj2x = create_base_sco(custom_object_type, custom_obj1x)
+            generate_sco_id_for_2_1(custom_obj2x, custom_obj1x.parent.id_)
+            return custom_obj2x
+
     else:
         warn("Custom object with no name cannot be handled yet", 811)
         return None
