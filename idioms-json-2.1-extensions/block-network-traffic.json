@@ -7,6 +7,7 @@
                 "extension-definition--a46b18de-0b41-4a95-9d2d-67a360f2d859": {
                     "cost": "Low",
                     "efficacy": "High",
+                    "extension_type": "property-extension",
                     "impact": "Low",
                     "impact_description": "This IP address is not used for legitimate hosting so there should be no operational impact.",
                     "objective": "Block communication between the PIVY agents and the C2 Server",

@@ -1,15 +1,21 @@
 {
     "id": "bundle--cad0c65f-3415-4ec6-84df-c01e427ec3b6",
     "objects": [
-        {
+         {
+            "extensions": {
+                "extension-definition--5035ea6f-03dc-4027-8ac0-614ee41b44ab": {
+                    "extension_type": "new-sco"
+                }
+            },
             "ftp_command": "fpuwe8bmsD56ns.bin",
-            "id": "x-elevator-fooz--12fde06a-1344-4feb-b8b7-11c5096928ac",
-            "type": "x-elevator-fooz"
+            "id": "fooz--361beb5e-7e94-4613-ad7f-f51214b8d9d8",
+            "type": "fooz"
         },
         {
             "created": "2015-07-31T11:24:39.090Z",
             "extensions": {
                 "extension-definition--a46b18de-0b41-4a95-9d2d-67a360f2d859": {
+                    "extension_type": "property-extension",
                     "impact": "Medium",
                     "impact_description": "Some description about the indicator.",
                     "objective": "Block outbound traffic",
@@ -30,6 +36,7 @@
             "created": "2015-07-31T11:24:39.090Z",
             "extensions": {
                 "extension-definition--7c8ca481-f0e9-4389-94f5-90df472eb01d": {
+                    "extension_type": "property-extension",
                     "likely_impact": "Medium"
                 }
             },
@@ -62,7 +69,7 @@
             "modified": "2015-07-31T11:24:39.090Z",
             "number_observed": 1,
             "object_refs": [
-                "x-elevator-fooz--12fde06a-1344-4feb-b8b7-11c5096928ac"
+                "fooz--12fde06a-1344-4feb-b8b7-11c5096928ac"
             ],
             "spec_version": "2.1",
             "type": "observed-data"

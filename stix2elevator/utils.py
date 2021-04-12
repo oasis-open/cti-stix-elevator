@@ -20,6 +20,14 @@ def id_property(path):
     return name == "id" or name.endswith("ref") or name.endswith("refs")
 
 
+def extension_definition_id_property(path):
+    if len(path[0]) > 3:
+        name = path[0][3]
+        return name.startswith("extension-definition")
+    else:
+        return False
+
+
 def identifying_info(stix1x_obj):
     if stix1x_obj:
         if hasattr(stix1x_obj, "id_") and stix1x_obj.id_:

@@ -11,7 +11,7 @@ from stix2elevator import elevate
 from stix2elevator.options import (
     get_option_value, initialize_options, set_option_value
 )
-from stix2elevator.utils import find_dir, id_property, iterpath
+from stix2elevator.utils import extension_definition_id_property, find_dir, id_property, iterpath
 
 BEFORE_FILES = []
 BEFORE_FILENAMES = []
@@ -42,7 +42,7 @@ def idiom_elevator_mappings(before_file_path, stored_json, version, missing_poli
     set_option_value("spec_version", version)
     set_option_value("validator_args", "--version " + version)
     if not get_option_value("policy") == "no_policy":
-        print("'no_policy' is not allowed for testing")
+        print("'no_policy' is the default for testing")
     set_option_value("policy", "no_policy")
     sys.setrecursionlimit(3000)
     converted_json = elevate(before_file_path)
@@ -136,6 +136,8 @@ def id_2x(id):
 def test_elevator_idiom_mapping(test_file, stored_master, version, missing_policy, ignore):
     errors = []
     for good_path, check_path in idiom_elevator_mappings(test_file, stored_master, version, missing_policy, ignore):
+        if extension_definition_id_property(check_path) and extension_definition_id_property(good_path):
+            continue
         if id_property(check_path) and id_property(good_path):
             if id_2x(good_path[1]) and id_2x(check_path[1]):
                 uuid_of_good_id = good_path[1].split("--")[1]
