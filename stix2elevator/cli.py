@@ -97,7 +97,7 @@ def _get_arg_parser(is_script=True):
     parser.add_argument(
         "--validator-args",
         help="Arguments to pass to stix2-validator. Default: --strict-types\n\n"
-             "Example: stix2_elevator.py <file> --validator-args=\"-v 2.0 --strict-types -d 212\"",
+             "Example: stix2_elevator.py <file> --validator-args=\"-v --strict-types -d 212\"",
         dest="validator_args",
         action="store",
         default=""

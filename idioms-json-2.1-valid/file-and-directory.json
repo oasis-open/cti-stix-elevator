@@ -16,8 +16,13 @@
             "type": "directory"
         },
         {
-            "id": "x-windows-hook--156fa3a8-01e9-44a2-a1f3-59738767179c",
-            "type": "x-windows-hook",
+            "extensions": {
+                "extension-definition--b8bf4445-a56c-468d-8b57-1d15f74776c6": {
+                    "extension_type": "new-sco"
+                }
+            },
+            "id": "windows-hook--1e114dc8-aec0-4507-9e56-8078464a6274",
+            "type": "windows-hook",
             "win-hook-type": "WH_KEYBOARD_LL"
         },
         {

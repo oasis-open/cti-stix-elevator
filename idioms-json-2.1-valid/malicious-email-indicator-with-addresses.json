@@ -1,29 +1,71 @@
 {
-  "id": "bundle--8b8ed1c1-f01d-4393-ac65-97017ed15876",
-  "objects": [
-    {
-      "created": "2014-10-31T15:52:13.126Z",
-      "id": "indicator--b06b0eb7-61dd-4338-a094-0290c380fbd8",
-      "indicator_types": [
-        "malicious-email"
-      ],
-      "modified": "2014-10-31T15:52:13.126Z",
-      "name": "Malicious E-mail Addresses",
-      "pattern": "[(email-message:from_ref.value = 'fred@abc.com' AND (email-message:to_refs[*].value = 'barney@abc.com' OR email-message:to_refs[*].value = 'wilma@abc.com'))]",
-      "pattern_type": "stix",
-      "type": "indicator",
-      "spec_version": "2.1",
-      "valid_from": "2014-10-31T15:52:13.126999Z"
-    },
-    {
-      "created": "2014-10-31T15:52:13.126Z",
-      "id": "relationship--67b8cf7b-f8b1-4df5-8903-ab9028b098f7",
-      "modified": "2014-10-31T15:52:13.126Z",
-      "relationship_type": "indicates",
-      "source_ref": "indicator--b06b0eb7-61dd-4338-a094-0290c380fbd8",
-      "spec_version": "2.1",
-      "type": "relationship"
-    }
-  ],
-  "type": "bundle"
+    "id": "bundle--8b8ed1c1-f01d-4393-ac65-97017ed15876",
+    "objects": [
+        {
+            "confidence": 15,
+            "created": "2014-10-31T15:52:13.126Z",
+            "id": "indicator--b06b0eb7-61dd-4338-a094-0290c380fbd8",
+            "indicator_types": [
+                "malicious-email"
+            ],
+            "modified": "2014-10-31T15:52:13.126Z",
+            "name": "Malicious E-mail Addresses",
+            "pattern": "[email-message:from_ref.value IN ('fred@abc.com', 'betty@abc.com') AND (email-message:to_refs[*].value = 'barney@abc.com' OR email-message:to_refs[*].value = 'wilma@abc.com') AND email-message:message_id = '20131031123417.u1BKfrXh004925@mail-gw-01.abc.com']",
+            "pattern_type": "stix",
+            "spec_version": "2.1",
+            "type": "indicator",
+            "valid_from": "2014-10-31T15:52:13.126999Z"
+        },
+        {
+            "created": "2014-10-31T15:52:13.126Z",
+            "id": "relationship--acbdcc6e-1ba3-47de-97d9-3a160ca9fdaa",
+            "modified": "2014-10-31T15:52:13.126Z",
+            "relationship_type": "indicates",
+            "source_ref": "indicator--b06b0eb7-61dd-4338-a094-0290c380fbd8",
+            "spec_version": "2.1",
+            "type": "relationship"
+        },
+        {
+            "from_ref": "email-addr--bc2a920c-1b53-5abf-b42c-86ff94037f7f",
+            "id": "email-message--ff57c042-04de-5872-9c27-e7e2b750f75c",
+            "is_multipart": false,
+            "to_refs": [
+                "email-addr--a8a46314-8fe6-59f5-9a42-85ba5c9bd6fb",
+                "email-addr--03dd34f1-adba-578b-8109-d91eb868044c"
+            ],
+            "type": "email-message"
+        },
+        {
+            "id": "email-addr--bc2a920c-1b53-5abf-b42c-86ff94037f7f",
+            "type": "email-addr",
+            "value": "fred@abc.com"
+        },
+        {
+            "id": "email-addr--a8a46314-8fe6-59f5-9a42-85ba5c9bd6fb",
+            "type": "email-addr",
+            "value": "barney@abc.com"
+        },
+        {
+            "id": "email-addr--03dd34f1-adba-578b-8109-d91eb868044c",
+            "type": "email-addr",
+            "value": "wilma@abc.com"
+        },
+        {
+            "created": "2020-06-03T13:04:06.068Z",
+            "first_observed": "2020-06-03T13:04:06.068Z",
+            "id": "observed-data--da84c823-199b-4e76-a4b9-f8565b952979",
+            "last_observed": "2020-06-03T13:04:06.068Z",
+            "modified": "2020-06-03T13:04:06.068Z",
+            "number_observed": 1,
+            "object_refs": [
+                "email-message--ff57c042-04de-5872-9c27-e7e2b750f75c",
+                "email-addr--bc2a920c-1b53-5abf-b42c-86ff94037f7f",
+                "email-addr--a8a46314-8fe6-59f5-9a42-85ba5c9bd6fb",
+                "email-addr--03dd34f1-adba-578b-8109-d91eb868044c"
+            ],
+            "spec_version": "2.1",
+            "type": "observed-data"
+        }
+    ],
+    "type": "bundle"
 }

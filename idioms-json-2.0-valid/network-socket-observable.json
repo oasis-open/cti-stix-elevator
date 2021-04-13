@@ -15,12 +15,13 @@
               "address_family": "AF_INET",
               "is_listening": true,
               "options": {
-                "IP_MULTICAST_LOOP": true
-              }
+                "IP_MULTICAST_LOOP": 1
+              },
+              "x_elevator_local_address": "198.51.100.2"
             }
           },
           "protocols": [
-            "TCP"
+            "tcp"
           ],
           "type": "network-traffic"
         }

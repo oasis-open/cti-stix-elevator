@@ -22,7 +22,7 @@
           "type": "directory"
         },
         "2": {
-            "type": "x-windows-hook",
+            "type": "x-elevator-windows-hook",
             "win-hook-type": "WH_KEYBOARD_LL"
         }
       },
