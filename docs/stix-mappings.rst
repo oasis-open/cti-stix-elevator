@@ -37,7 +37,7 @@ objects - but their mapping can be found in the :ref:`cyber_observables` section
 +-----------------------------+----------------------------+
 | ``et:Configuration``        | *not converted*            |
 +-----------------------------+----------------------------+
-| ``Incident``                | *not converted by default* |
+| ``Incident``                | ``Incident`` * in 2.1*     |
 +-----------------------------+----------------------------+
 | ``Indicator``               | ``indicator``              |
 +-----------------------------+----------------------------+
@@ -609,6 +609,61 @@ STIX 2.x in JSON
 Notice that the ``spec_version`` property only appears on the bundle in STIX 2.0, but in STIX 2.1, it is *not* a property of the
 bundle. It may (optionally) appear on each object.  The elevator will always provides the ``spec_version`` property for
 all 2.1 SDOs and SROs, but not on SCOs.
+
+Incident
+----------------------
+
+In STIX 2.1 the ``Incident`` object is defined as a stub. This means that in STIX
+2.x this object type is pretty "bare-bones", not containing most of the
+properties that were found in STIX 1.x.
+
+**STIX 1.x Properties Mapped Directly to STIX 2.x Properties**
+
+*none*
+
+**STIX 1.x Properties Translated to STIX 2.x Properties**
+
+..  table::
+    :align: left
+
+    +-------------------------+---------------------------+
+    | **STIX 1.x property**   | **STIX 2.x property**     |
+    +=========================+===========================+
+    | ``Categories``          |   ``labels``              |
+    +-------------------------+---------------------------+
+    | ``External_ID``         |   ``external_references`` |
+    +-------------------------+---------------------------+
+
+**STIX 1.x Properties Mapped Using STIX 2.x Relationships**
+
+- ``Related_Indicators``
+- ``Related_Observables``
+- ``Leveraged_TTPs``
+- ``Attributed_Threat_Actors``
+- ``COA_Requested``
+- ``COA_Taken``
+
+**STIX 1.x Properties Handled Based on the "missing policy"**
+
+ - ``Contacts``
+ - ``Reporter``
+ - ``Responder``
+ - ``Coordinator``
+ - ``Victims``
+ - ``Status``
+ - ``Contact``
+
+**STIX 1.x Properties Not Mapped**
+
+ - ``Affected_Assets``
+ - ``Impact_Assessment``
+ - ``History``
+
+**An Example**
+
+STIX 1.x in XML
+
+.. code-block:: xml
 
 Indicator
 ------------------

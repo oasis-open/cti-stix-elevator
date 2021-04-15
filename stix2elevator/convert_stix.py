@@ -1316,6 +1316,9 @@ def handle_missing_properties_of_incident(incident_instance, incident, env):
         if incident.victims is not None:
             handle_missing_identity_ref_properties(container, incident_instance, incident.victims, env, "victims")
 
+        if incident.contacts is not None:
+            handle_missing_identity_ref_properties(container, incident_instance, incident.contents, env, "contacts")
+
         if incident.affected_assets is not None:
             # FIXME: add affected_assets to description
             info("Incident Affected Assets in %s is not handled, yet.", 815, incident_instance["id"])
@@ -1364,6 +1367,10 @@ def convert_incident(incident, env):
                                     marking_refs=incident_markings)
     if incident.coa_taken is not None:
         handle_relationship_to_refs(incident.coa_taken, incident_instance["id"], new_env, "used",
+                                    marking_refs=incident_markings)
+
+    if incident.coa_requested is not None:
+        handle_relationship_to_refs(incident.coa_requested, incident_instance["id"], new_env, "mitigates",
                                     marking_refs=incident_markings)
 
     handle_missing_properties_of_incident(incident_instance, incident, new_env)
