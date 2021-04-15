@@ -218,10 +218,15 @@ You can also use this library to integrate STIX elevation into your own tools.
 .. code-block:: python
 
     # Elevate a STIX 1.x via filename
+    # Use set_option_value to override default elevator options
+    # Read the documentation for options
     from stix2elevator import elevate
-    from stix2elevator.options import initialize_options
+    from stix2elevator.options import initialize_options, set_option_value
 
     initialize_options()
+    set_option_value("missing_policy", "no_policy")
+    set_option_value("spec_version", "2.1")
+
     results = elevate("stix_file.xml")
     print(results)
 
@@ -230,10 +235,15 @@ The same method can also accept a string as an argument.
 .. code-block:: python
 
     # Elevate a STIX 1.x via string
+    # Use set_option_value to override default elevator options
+    # Read the documentation for options
     from stix2elevator import elevate
-    from stix2elevator.options import initialize_options
+    from stix2elevator.options import initialize_options, set_option_value
 
     initialize_options()
+    set_option_value("missing_policy", "no_policy")
+    set_option_value("spec_version", "2.1")
+
     results = elevate("<stix:Package...")
     print(results)
 
