@@ -1,4 +1,4 @@
-​Introduction
+Introduction
 =================
 
 The stix2-elevator is a python script written to automatically convert STIX 1.x content to STIX 2.x.  It is available at
