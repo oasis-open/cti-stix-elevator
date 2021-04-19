@@ -1,14 +1,14 @@
 {
     "id": "bundle--cad0c65f-3415-4ec6-84df-c01e427ec3b6",
     "objects": [
-         {
+        {
             "extensions": {
-                "extension-definition--5035ea6f-03dc-4027-8ac0-614ee41b44ab": {
+                "extension-definition--c614c969-acb7-4917-93b4-f6bde05ae556": {
                     "extension_type": "new-sco"
                 }
             },
             "ftp_command": "fpuwe8bmsD56ns.bin",
-            "id": "fooz--361beb5e-7e94-4613-ad7f-f51214b8d9d8",
+            "id": "fooz--6fcd8459-e491-4281-a427-1706c2e8e3f3",
             "type": "fooz"
         },
         {
@@ -16,8 +16,10 @@
             "extensions": {
                 "extension-definition--a46b18de-0b41-4a95-9d2d-67a360f2d859": {
                     "extension_type": "property-extension",
-                    "impact": "Medium",
-                    "impact_description": "Some description about the indicator.",
+                    "impact": {
+                        "description": "Some description about the indicator.",
+                        "value": "Medium"
+                    },
                     "objective": "Block outbound traffic",
                     "objective_confidence": "High",
                     "stage": "Response"
@@ -53,7 +55,7 @@
         },
         {
             "created": "2015-07-31T11:24:39.090Z",
-            "id": "relationship--3ba6b346-e1ff-40d7-a22a-7aee89cc2a91",
+            "id": "relationship--c9228a00-ca02-451a-ae7e-f83556a26561",
             "modified": "2015-07-31T11:24:39.090Z",
             "relationship_type": "investigates",
             "source_ref": "course-of-action--3dbfccad-1fbb-4e9f-8307-f2d1a5c651cc",
@@ -64,12 +66,12 @@
         {
             "created": "2015-07-31T11:24:39.090Z",
             "first_observed": "2015-07-31T11:24:39.090Z",
-            "id": "observed-data--10af324b-4071-4010-bcd5-ec51d00860be",
+            "id": "observed-data--bd1f4059-d186-46e9-9eb4-d55c51f485d7",
             "last_observed": "2015-07-31T11:24:39.090Z",
             "modified": "2015-07-31T11:24:39.090Z",
             "number_observed": 1,
             "object_refs": [
-                "fooz--12fde06a-1344-4feb-b8b7-11c5096928ac"
+                "fooz--6fcd8459-e491-4281-a427-1706c2e8e3f3"
             ],
             "spec_version": "2.1",
             "type": "observed-data"

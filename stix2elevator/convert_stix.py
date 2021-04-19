@@ -1282,7 +1282,7 @@ def handle_missing_identity_ref_properties(container, instance2x, sources, env, 
                 id_info = id2x["id"]
             identities.append(id_info)
     if not identities == list():
-        handle_missing_string_property(container, property_name, identities, instance2x["id"], True, use_custom_name=False)
+        handle_missing_string_property(container, property_name, identities, instance2x["id"], is_list=True, use_custom_name=False)
 # incident
 
 
@@ -1316,9 +1316,6 @@ def handle_missing_properties_of_incident(incident_instance, incident, env):
         if incident.victims is not None:
             handle_missing_identity_ref_properties(container, incident_instance, incident.victims, env, "victims")
 
-        if incident.contacts is not None:
-            handle_missing_identity_ref_properties(container, incident_instance, incident.contents, env, "contacts")
-
         if incident.affected_assets is not None:
             # FIXME: add affected_assets to description
             info("Incident Affected Assets in %s is not handled, yet.", 815, incident_instance["id"])
@@ -1328,6 +1325,16 @@ def handle_missing_properties_of_incident(incident_instance, incident, env):
             info("Incident Impact Assessment in %s is not handled, yet", 815, incident_instance["id"])
 
         handle_missing_string_property(container, "status", incident.status, incident_instance["id"], use_custom_name=False)
+
+        handle_missing_string_property(container, "security_compromise", incident.security_compromise, incident_instance["id"],
+                                       use_custom_name=False)
+
+        handle_missing_string_property(container, "discovery_methods", incident.discovery_methods, incident_instance["id"],
+                                       use_custom_name=False, is_list=True)
+
+        handle_multiple_missing_statement_properties(container, incident.intended_effects, "intended_effects",
+                                                     incident_instance["id"],
+                                                     use_custom_name=False)
 
         fill_in_extension_properties(incident_instance, container, extension_definition_id)
 
@@ -1345,7 +1352,7 @@ def convert_incident(incident, env):
     if incident.external_ids is not None:
         for ex_id in incident.external_ids:
             incident_instance["external_references"].append(
-                {"source_name": ex_id.external_id.source, "external_id": ex_id.external_id.value})
+                {"source_name": ex_id.source, "external_id": ex_id.value})
     # time
     if incident.categories is not None:
         convert_controlled_vocabs_to_open_vocabs(incident_instance, "labels", incident.categories, INCIDENT_LABEL_MAP,
@@ -1937,7 +1944,7 @@ def handle_missing_properties_of_ttp(sdo_instance, ttp):
     container, extension_definition_id = determine_container_for_missing_properties(sdo_instance["type"],
                                                                                     sdo_instance)
     if container is not None:
-        handle_multiple_missing_statement_properties(container, ttp.intended_effects, "intended_effect",
+        handle_multiple_missing_statement_properties(container, ttp.intended_effects, "intended_effects",
                                                      sdo_instance["id"])
         if hasattr(ttp, "title"):
             if "name" not in sdo_instance or sdo_instance["name"] is None:

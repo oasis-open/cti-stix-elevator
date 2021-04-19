@@ -2,59 +2,59 @@
     "id": "bundle--e33ffe07-2f4c-48d8-b0af-ee2619d765cf",
     "objects": [
         {
-            "created": "2019-09-16T11:04:59.121Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
+            "created": "2021-04-16T16:54:56.945Z",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
             "definition": {
                 "statement": "APT1: Exposing One of China's Cyber Espionage Units (the \"APT1 Report\") is copyright 2013 by Mandiant Corporation and can be downloaded at intelreport.mandiant.com.  This XML file using the STIX standard was created by The MITRE Corporation using the content of the APT1 Report with Mandiant's permission.  Mandiant is not responsible for the content of this file."
             },
             "definition_type": "statement",
-            "id": "marking-definition--018ca221-deca-4b46-8250-c8d322e20796",
+            "id": "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0",
             "type": "marking-definition"
         },
         {
-            "created": "2019-09-16T11:04:59.121Z",
-            "id": "identity--457f7913-c000-48ec-9394-67d777e7d586",
+            "created": "2021-04-16T16:54:56.945Z",
+            "id": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
             "identity_class": "unknown",
-            "modified": "2019-09-16T11:04:59.121Z",
+            "modified": "2021-04-16T16:54:56.945Z",
             "name": "MITRE",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "type": "identity"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
-            "id": "identity--f3bcbd2e-7ae1-4a02-9f85-8243a53b3085",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
+            "id": "identity--68493b76-7f7d-4cdb-8397-be2d2c166f74",
             "identity_class": "unknown",
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "Harbin Institute of Technology (哈尔滨工业大学)",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "type": "identity"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
-            "id": "identity--0652ac78-8b89-46d6-b4fe-8526baa6bb10",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
+            "id": "identity--9b6e1200-d68f-4bcc-b092-b33367890a6d",
             "identity_class": "unknown",
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "Zhejiang University School of Computer Science and Technology (浙江大学计算机学院)",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "type": "identity"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
-            "id": "identity--87c2c075-28d9-4a46-97cb-fc05e6f35c84",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
+            "id": "identity--a30c16f8-8b52-4f7c-b165-cd8d196c3728",
             "identity_class": "organization",
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "People's Liberation Army",
             "object_marking_refs": [
-                "marking-definition--7dbf637e-40c3-4c7a-8ec9-ce575a5d061d"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "type": "identity",
             "x_elevator_information_source_roles": [
@@ -64,7 +64,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
             "id": "threat-actor--8dff0344-0c82-4079-8d04-6f3e4d9bd1df",
             "labels": [
                 "unknown"
@@ -72,40 +72,40 @@
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "People's Liberation Army",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "sophistication": "unknown",
             "type": "threat-actor"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
-            "id": "identity--e393ace2-a58f-47c8-b5f9-98f7399d6b01",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
+            "id": "identity--36605445-2abe-445c-bfaf-57d303a85c48",
             "identity_class": "individual",
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "Ugly Gorilla",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "type": "identity"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
-            "id": "malware--23f09517-d0c8-4bad-bd58-abaa7d155a02",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
+            "id": "malware--602703de-be18-4ff9-b216-5d29c39dd852",
             "labels": [
                 "unknown"
             ],
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "MANITSME",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "type": "malware"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
             "id": "threat-actor--6d179234-61fc-40c4-ae86-3d53308d8e65",
             "labels": [
                 "unknown"
@@ -113,26 +113,26 @@
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "Ugly Gorilla",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "sophistication": "unknown",
             "type": "threat-actor"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
-            "id": "identity--d5693107-a4bd-45cd-9945-13d1c9de6e01",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
+            "id": "identity--9fafedd6-4c7b-44f0-a381-ebc937475c2e",
             "identity_class": "individual",
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "dota",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "type": "identity"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
             "id": "threat-actor--d84cf283-93be-4ca7-890d-76c63eff3636",
             "labels": [
                 "unknown"
@@ -140,20 +140,20 @@
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "dota",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "sophistication": "unknown",
             "type": "threat-actor"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
-            "id": "identity--4e6ded31-4c06-4131-b8f3-016b231753db",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
+            "id": "identity--d11f88fe-254a-47a0-ba75-84f9e70b6357",
             "identity_class": "individual",
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "SuperHard",
             "object_marking_refs": [
-                "marking-definition--40983c4a-6b5b-4d8b-8aff-13f0c894ab0f"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "type": "identity",
             "x_elevator_information_source_roles": [
@@ -162,35 +162,35 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
-            "id": "malware--c4e2784d-9ba7-4255-ae45-8b0de7331381",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
+            "id": "malware--83255613-21b8-4a58-9096-8e03497e05be",
             "labels": [
                 "unknown"
             ],
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "AURIGA",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "type": "malware"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
-            "id": "malware--edae7a7c-7f98-4181-a701-0b705774a14c",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
+            "id": "malware--ddb1e020-2a41-46f5-b7f5-a5b5823c0d25",
             "labels": [
                 "unknown"
             ],
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "BANGAT",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "type": "malware"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
             "id": "threat-actor--02e7c48f-0301-4c23-b3e4-02e5a0114c21",
             "labels": [
                 "unknown"
@@ -198,26 +198,26 @@
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "SuperHard",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "sophistication": "unknown",
             "type": "threat-actor"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
-            "id": "identity--950f1c88-4641-4dfb-abd2-0bb14279b5b5",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
+            "id": "identity--1e18a49e-9a66-4f51-a6d0-c84bd2860779",
             "identity_class": "unknown",
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "Comment Crew",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "type": "identity"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
             "id": "threat-actor--f1ce5a9e-0fb7-465b-acb9-e7f75098eee9",
             "labels": [
                 "unknown"
@@ -225,26 +225,26 @@
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "Comment Crew",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "sophistication": "unknown",
             "type": "threat-actor"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
-            "id": "identity--7c2ad953-0bd3-43bc-9b0f-631d1d77a703",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
+            "id": "identity--4590d52a-00eb-45ce-ab67-dd59dfe8ed6e",
             "identity_class": "unknown",
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "Comment Group",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "type": "identity"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
             "id": "threat-actor--5abb4d96-e3f2-4a1a-b025-c5b63ec6eb0b",
             "labels": [
                 "unknown"
@@ -252,26 +252,26 @@
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "Comment Group",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "sophistication": "unknown",
             "type": "threat-actor"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
-            "id": "identity--8ca3fc2d-0ccc-4db1-9a5c-3d9ed876ac5b",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
+            "id": "identity--bc925de5-10a2-4fd7-b510-9c31a39684e1",
             "identity_class": "unknown",
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "Shady Rat",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "type": "identity"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
             "id": "threat-actor--d9619c21-9d4f-414e-9471-36bb8fc42bbe",
             "labels": [
                 "unknown"
@@ -279,26 +279,26 @@
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "Shady Rat",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "sophistication": "unknown",
             "type": "threat-actor"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
-            "id": "identity--1e2841a1-4bf8-4483-bde5-10c73d0d83f8",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
+            "id": "identity--64ce4207-54a5-4ff8-96b4-c8c2ef3a9dd8",
             "identity_class": "unknown",
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "GSD 3rd Department / 2nd Bureau",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "type": "identity"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
             "id": "threat-actor--94624865-2709-443f-9b4c-2891985fd69b",
             "labels": [
                 "unknown"
@@ -306,26 +306,26 @@
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "GSD 3rd Department / 2nd Bureau",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "sophistication": "unknown",
             "type": "threat-actor"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
-            "id": "identity--a0a49a2a-866c-438a-aa03-32c9328753d1",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
+            "id": "identity--4f9105e2-873a-4761-bf83-ae3d2966b1bf",
             "identity_class": "unknown",
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "GSD 3rd Department",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "type": "identity"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
             "id": "threat-actor--b5d1d28c-d824-49c0-80b6-9179202e297b",
             "labels": [
                 "unknown"
@@ -333,26 +333,26 @@
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "GSD 3rd Department",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "sophistication": "unknown",
             "type": "threat-actor"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
-            "id": "identity--da92c2e4-88c9-40da-9813-b0caeacc04f2",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
+            "id": "identity--4015bc71-de6a-404d-8039-22761c2ed104",
             "identity_class": "unknown",
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "PLA General Staff",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "type": "identity"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
             "id": "threat-actor--5ac0fd8e-5804-4849-a170-4ec0d15a5e8b",
             "labels": [
                 "unknown"
@@ -360,20 +360,20 @@
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "PLA General Staff",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "sophistication": "unknown",
             "type": "threat-actor"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
-            "id": "identity--cf29e42e-dacf-4715-9470-cf195e99bcc7",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
+            "id": "identity--125204ee-98f7-4aad-a530-6a63ba6c717a",
             "identity_class": "organization",
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "Communist Part of China",
             "object_marking_refs": [
-                "marking-definition--40983c4a-6b5b-4d8b-8aff-13f0c894ab0f"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "type": "identity",
             "x_elevator_information_source_roles": [
@@ -382,7 +382,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
             "id": "threat-actor--d5b62b58-df7c-46b1-a435-4d01945fe21d",
             "labels": [
                 "unknown"
@@ -390,20 +390,20 @@
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "Communist Part of China",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "sophistication": "unknown",
             "type": "threat-actor"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
-            "id": "identity--00cc62d3-24f4-411b-be5a-61aed98aa35d",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
+            "id": "identity--fb2857f0-7adb-4898-b14f-dbceddae3dc9",
             "identity_class": "organization",
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "China Telecom",
             "object_marking_refs": [
-                "marking-definition--40983c4a-6b5b-4d8b-8aff-13f0c894ab0f"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "type": "identity",
             "x_elevator_information_source_roles": [
@@ -412,7 +412,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
             "id": "threat-actor--76dd3859-31a6-43c5-9f3e-9c6ac745b61b",
             "labels": [
                 "unknown"
@@ -420,20 +420,20 @@
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "China Telecom",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "sophistication": "unknown",
             "type": "threat-actor"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
             "id": "identity--c63f31ac-871b-4846-aa25-de1926f4f3c8",
             "identity_class": "unknown",
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "APT1 Tactics, Techniques and Procedures",
             "object_marking_refs": [
-                "marking-definition--a1146e01-1b34-4d19-9ec6-bd553b55367e"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "type": "identity",
             "x_elevator_free_text_lines": " The group does not target industries systematically but\n\t\t\t\t\t\t\tmore likely steals from an enormous range of industries on a continuous\n\t\t\t\t\t\t\tbasis.  Organizations in all industries related to China’s\n\t\t\t\t\t\t\tstrategic priorities are potential targets of APT1’s comprehensive cyber\n\t\t\t\t\t\t\tespionage campaign. ",
@@ -460,7 +460,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
             "description": "<!DOCTYPE html>\n\t\t\t\t\t\t\t<html><body>\n\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\tWEBC2 backdoor variants download and interpret data stored\n                            \tbetween tags in HTML pages as commands. They usually download HTML pages from a system within APT1’s hop\n                            \tinfrastructure. We have observed APT1 intruders logging in to WEBC2 servers and manually editing the HTML pages\n                            \tthat backdoors will download. Because the commands are usually encoded and difficult to spell from memory, APT1\n                            \tintruders typically do not type these strings, but instead copy and paste them into the HTML files. They likely generate\n                            \tthe encoded commands on their own systems before pasting them in to an HTML file hosted by the hop point. For\n                            \texample, we observed an APT attacker pasting the string \"czo1NA==\" into an HTML page. That string is the base64-\n                            \tencoded version of \"s:54\", meaning \"sleep for 54 minutes\" (or hours, depending on the particular backdoor). In lieu\n                            \tof manually editing an HTML file on a hop point, we have also observed APT1 intruders uploading new (already-edited)\n                            \tHTML files.\n\t\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t\t</body></html>",
             "id": "malware--0f01c5a3-f516-4450-9381-4dd9f2279411",
             "kill_chain_phases": [
@@ -475,14 +475,14 @@
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "WEBC2",
             "object_marking_refs": [
-                "marking-definition--df2c161e-574d-4ef4-a50f-d401704b5575"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "type": "malware",
             "x_elevator_title": "WEBC2 Backdoor"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
             "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html>\n\t\t\t\t\t\t\t<body>\n\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\tWhen APT1 attackers are not using WEBC2, they require a \"command and control\" (C2) user interface so they can\n                    \t\t\tissue commands to the backdoor. This interface sometimes runs on their personal attack system, which is typically\n                    \t\t\tin Shanghai. In these instances, when a victim backdoor makes contact with a hop, the communications need to be\n                    \t\t\tforwarded from the hop to the intruder’s Shanghai system so the backdoor can talk to the C2 server software. We have\n                    \t\t\tobserved 767 separate instances in which APT1 intruders used the publicly available \"HUC Packet Transmit Tool\"\n                    \t\t\tor HTRAN on a hop. As always, keep in mind that these uses are confirmed uses, and likely represent only a small\n                    \t\t\tfraction of APT1’s total activity.\n\t\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\tThe HTRAN utility is merely a middle-man, facilitating connections between the victim and the attacker who is using\n                    \t\t\tthe hop point.\n\t\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\tTypical use of HTRAN is fairly simple: the attacker must specify the originating IP address (of his or her workstation in\n                    \t\t\tShanghai), and a port on which to accept connections.\n\t\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\tIn the 767 observed uses of HTRAN, APT1 intruders supplied 614 distinct routable IP addresses. In other words, they\n                    \t\t\tused their hops to function as middlemen between victim systems and 614 different addresses. Of these addresses,\n                    \t\t\t613 of 614 are part of APT1’s home networks.\n\t\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t\t</body>\n\t\t\t\t\t\t</html>",
             "id": "malware--33159b98-3264-4e10-a968-d67975b6272f",
             "kill_chain_phases": [
@@ -497,14 +497,14 @@
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "HUC Packet Transmit Tool (HTRAN)",
             "object_marking_refs": [
-                "marking-definition--df2c161e-574d-4ef4-a50f-d401704b5575"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "type": "malware",
             "x_elevator_title": "HTRAN Malware C2"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
             "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html>\n\t\t\t\t\t\t\t<body>\n\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\tAs with most other APT groups, spear phishing is APT1’s most commonly used technique. The spear phishing emails contain\n                            \teither a malicious attachment or a hyperlink to a malicious file. The subject line and the text in the email body are\n                            \tusually relevant to the recipient. APT1 also creates webmail accounts using real peoples' names — names that are\n                            \tfamiliar to the recipient, such as a colleague, a company executive, an IT department employee, or company counsel\n                            \t— and uses these accounts to send the emails. As a real-world example, this is an email that APT1 sent to Mandiant\n                            \temployees:\n\t\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t\t\t<code>\n\t\t\t\t\t\t\t\tDate: Wed, 18 Apr 2012 06:31:41 -0700\n                            \tFrom: Kevin Mandia <kevin.mandia@rocketmail.com>\n                                Subject: Internal Discussion on the Press\n                                Release\n                                \n                                Hello,\n                                Shall we schedule a time to meet next week?\n                                We need to finalize the press release.\n                                Details click here.\n                                \n                                Kevin Mandia\n\t\t\t\t\t\t\t\t</code>\n\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\tAt first glance, the email appeared to be from Mandiant’s CEO, Kevin Mandia. However, further scrutiny shows that\n                            \tthe email was not sent from a Mandiant email account, but from \"kevin.mandia@rocketmail.com\". Rocketmail is a\n                            \tfree webmail service. The account \"kevin.mandia@rocketmail.com\" does not belong to Mr. Mandia. Rather, an APT1\n                            \tactor likely signed up for the account specifically for this spear phishing event. If anyone had clicked on the link that\n                            \tday (which no one did, thankfully), their computer would have downloaded a malicious ZIP file named \"Internal_\n                            \tDiscussion_Press_Release_In_Next_Week8.zip\". This file contained a malicious executable that installs a custom APT1\n                            \tbackdoor that we call WEBC2-TABLE.\n\t\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\tAlthough the files that APT1 actors attach or link to spear phishing emails are not always in ZIP format, this is the\n                            \tpredominant trend we have observed in the last several years.\n\t\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t\t</body>\n\t\t\t\t\t\t</html>",
             "id": "attack-pattern--3098c57b-d623-4c11-92f4-5905da66658b",
             "kill_chain_phases": [
@@ -516,21 +516,25 @@
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "The Initial Compromise",
             "object_marking_refs": [
-                "marking-definition--df2c161e-574d-4ef4-a50f-d401704b5575"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "type": "attack-pattern",
-            "x_elevator_intended_effect_description": "The Initial Compromise represents the methods intruders\n\t\t\t\tuse to first penetrate a target organization’s network."
+            "x_elevator_intended_effects": [
+                {
+                    "description": "The Initial Compromise represents the methods intruders\n\t\t\t\tuse to first penetrate a target organization’s network."
+                }
+            ]
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
             "external_references": [
                 {
                     "external_id": "CAPEC-163",
                     "source_name": "capec"
                 }
             ],
-            "id": "attack-pattern--fc61b826-03f6-4963-af42-86b3bd7d28bb",
+            "id": "attack-pattern--d65231f8-f5ae-4267-851e-51784c752d01",
             "kill_chain_phases": [
                 {
                     "kill_chain_name": "APT1 Attack Lifecycle Model",
@@ -540,14 +544,18 @@
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "The Initial Compromise",
             "object_marking_refs": [
-                "marking-definition--df2c161e-574d-4ef4-a50f-d401704b5575"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "type": "attack-pattern",
-            "x_elevator_intended_effect_description": "The Initial Compromise represents the methods intruders\n\t\t\t\tuse to first penetrate a target organization’s network."
+            "x_elevator_intended_effects": [
+                {
+                    "description": "The Initial Compromise represents the methods intruders\n\t\t\t\tuse to first penetrate a target organization’s network."
+                }
+            ]
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
             "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html>\n\t\t\t\t\t\t\t<body>\\\n\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\tAPT1 establishes a foothold once email recipients open a malicious file and a backdoor is subsequently installed. A\n                            \tbackdoor is software that allows an intruder to send commands to the system remotely. In almost every case, APT\n                            \tbackdoors initiate outbound connections to the intruder’s \"command and control\" (C2) server. APT intruders employ\n                            \tthis tactic because while network firewalls are generally adept at keeping malware outside the network from initiating\n                            \tcommunication with systems inside the network, they are less reliable at keeping malware that is already inside the\n                            \tnetwork from communicating to systems outside.\n\t\t\t\t\t\t\t\t</p>\n\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\tWhile APT1 intruders occasionally use publicly available backdoors such as Poison Ivy and Gh0st RAT, the vast\n                            \tmajority of the time they use what appear to be their own custom backdoors. We have documented 42 families of\n                            \tbackdoors in <a href=\"http://intelreport.mandiant.com\">Appendix C: The Malware Arsenal\"</a> that APT1 uses that\n                            \twe believe are not publicly available. In addition we have provided 1,007 MD5 hashes associated with APT1 malware\n                            \tin <a href=\"http://intelreport.mandiant.com\">Appendix E</a>. We will describe APT1’s backdoors in two categories:\n                            \t\"Beachhead Backdoors\" and \"Standard Backdoors.\"\n\t\t\t\t\t\t\t\t</p>\n\t\t\t\t\t\t\t\t<h2>Beachhead Backdoors</h2>\n\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\tBeachhead backdoors are typically minimally featured. They offer the attacker a toe-hold to perform simple tasks like retrieve files, gather\n\t\t\t\t\t\t\t\tbasic system information and trigger the execution of other more significant capabilities such as a standard backdoor.\n\t\t\t\t\t\t\t\t</p>\n\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\tAPT1’s beachhead backdoors are usually what we call WEBC2 backdoors. WEBC2 backdoors are probably the most well-known\n\t\t\t\t\t\t\t\tkind of APT1 backdoor, and are the reason why some security companies refer to APT1 as the “Comment Crew.” A WEBC2 backdoor\n\t\t\t\t\t\t\t\tis designed to retrieve a webpage from a C2 server. It expects the webpage to contain special HTML tags; the backdoor will attempt\n\t\t\t\t\t\t\t\tto interpret the data between the tags as commands. Older versions of WEBC2 read data between HTML comments, though over\n\t\t\t\t\t\t\t\ttime WEBC2 variants have evolved to read data contained within other types of tags. From direct observation, we can confirm\n\t\t\t\t\t\t\t\tthat APT1 was using WEBC2 backdoors as early as July 2006. However, the first compile time35 we have for WEBC2-KT3 is 2004-01-23, suggesting that APT1\n\t\t\t\t\t\t\t\thas been crafting WEBC2 backdoors since early 2004. Based on the 400+ samples of WEBC2 variants that we have\n\t\t\t\t\t\t\t\taccumulated, it appears that APT1 has direct access to developers who have continually released new WEBC2 variants for over six years.\n\t\t\t\t\t\t\t\t</p>\n\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\tFor example, these two build paths, which were discovered inside WEBC2-TABLE samples, help to illustrate how APT1\n\t\t\t\t\t\t\t\thas been steadily building new WEBC2 variants as part of a continuous development process:\n\t\t\t\t\t\t\t\t</p>\n\t\t\t\t\t\t\t\t<code>\n\t\t\t\t\t\t\t\t<h3>Sample A</h3>\n\t\t\t\t\t\t\t\t\tMD5: d7aa32b7465f55c368230bb52d52d885\n\t\t\t\t\t\t\t\t\tCompile date: 2012-02-23\n\t\t\t\t\t\t\t\t\t\\work\\code\\2008-7-8muma\\mywork\\winInet_winApplication2009-8-7\\mywork\\aaaaaaa2012-2-23\\Release\\aaaaaaa.pdb\n\t\t\t\t\t\t\t\t</code>\n\t\t\t\t\t\t\t\t<code>\n\t\t\t\t\t\t\t\t<h3>Sample B</h3>\n\t\t\t\t\t\t\t\t\tMD5: c1393e77773a48b1eea117a302138554\n \t\t\t\t\t\t\t\t\tCompile date: 2009-08-07\n\t\t\t\t\t\t\t\t\tD:\\work\\code\\2008-7-8muma\\mywork\\winInet_winApplication2009-8-7\\mywork\\aaaaaaa\\Release\\aaaaaaa.pdb\n\t\t\t\t\t\t\t\t</code>\n\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\tA “build path” discloses the directory from which the programmer built and compiled his source code. These samples, compiled 2.5\n\t\t\t\t\t\t\t\tyears apart, were compiled within a folder named “work\\code\\...\\mywork”. The instances of “work” suggest that working on WEBC2 is\n\t\t\t\t\t\t\t\tsomeone’s day job and not a side project or hobby. Furthermore, the Sample A build string includes “2012-2-23” — which matches Sample\n\t\t\t\t\t\t\t\tA’s compile date. The Sample B build string lacks “2012-2-23” but includes “2009-8-7” — which also matches Sample B’s compile date.\n\t\t\t\t\t\t\t\tThis suggests that the code used to compile Sample A was modified from code that was used to compile Sample B 2.5 years previously. The\n\t\t\t\t\t\t\t\texistence of “2008-7-8” suggests that the code for both samples was modified from a version that existed in July 2008, a year before Sample\n\t\t\t\t\t\t\t\tB was created. This series of dates indicates that developing and modifying the WEBC2 backdoor is an iterative and long-term process.\n\t\t\t\t\t\t\t\t</p>\n\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\tWEBC2 backdoors typically give APT1 attackers a short and rudimentary set of commands to issue to victim systems, including:\n\t\t\t\t\t\t\t\t\t\t»» Open an interactive command shell (usually Windows’ cmd.exe)\n\t\t\t\t\t\t\t\t\t\t»» Download and execute a file\n\t\t\t\t\t\t\t\t\t\t»» Sleep (i.e. remain inactive) for a specified amount of time\n\t\t\t\t\t\t\t\t</p>\n\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\tWEBC2 backdoors are often packaged with spear phishing emails. Once installed, APT1 intruders have the option to tell victim systems\n\t\t\t\t\t\t\t\tto download and execute additional malicious software of their choice. WEBC2 backdoors work for their intended purpose, but they generally\n\t\t\t\t\t\t\t\thave fewer features than the “Standard Backdoors” described below.\n\t\t\t\t\t\t\t\t</p>\n\t\t\t\t\t\t\t\t<h2>Standard Backdoors</h2>\n\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\tThe standard, non-WEBC2 APT1 backdoor typically communicates using the HTTP protocol (to blend in with legitimate web traffic) or a\n\t\t\t\t\t\t\t\tcustom protocol that the malware authors designed themselves. These backdoors give APT intruders a laundry list of ways to control victim\n\t\t\t\t\t\t\t\tsystems, including:\n\t\t\t\t\t\t\t\t\t\t»» Create/modify/delete/execute programs\n\t\t\t\t\t\t\t\t\t\t»» Upload/download files\n\t\t\t\t\t\t\t\t\t\t»» Create/delete directories\n\t\t\t\t\t\t\t\t\t\t»» List/start/stop processes\n\t\t\t\t\t\t\t\t\t\t»» Modify the system registry\n\t\t\t\t\t\t\t\t\t\t»» Take screenshots of the user’s desktop\n\t\t\t\t\t\t\t\t\t\t»» Capture keystrokes\n\t\t\t\t\t\t\t\t\t\t»» Capture mouse movement\n\t\t\t\t\t\t\t\t\t\t»» Start an interactive command shell\n\t\t\t\t\t\t\t\t\t\t»» Create a Remote desktop (i.e. graphical) interface\n\t\t\t\t\t\t\t\t\t\t»» Harvest passwords\n\t\t\t\t\t\t\t\t\t\t»» Enumerate users\n\t\t\t\t\t\t\t\t\t\t»» Enumerate other systems on the network\n\t\t\t\t\t\t\t\t\t\t»» Sleep (i.e. go inactive) for a specified amount of time\n\t\t\t\t\t\t\t\t\t\t»» Log off the current user\n\t\t\t\t\t\t\t\t\t\t»» Shut down the system\n\t\t\t\t\t\t\t\t</p>\n\t\t\t\t\t\t\t</body>\n\t\t\t\t\t\t</html>",
             "id": "attack-pattern--1e2c4237-d469-4144-9c0b-9e5c0c513c49",
             "kill_chain_phases": [
@@ -559,14 +567,18 @@
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "Establishing a Foothold",
             "object_marking_refs": [
-                "marking-definition--df2c161e-574d-4ef4-a50f-d401704b5575"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "type": "attack-pattern",
-            "x_elevator_intended_effect_description": "Establishing a foothold involves actions that ensure\n\t\t\t\tcontrol of the target network’s systems from outside the network."
+            "x_elevator_intended_effects": [
+                {
+                    "description": "Establishing a foothold involves actions that ensure\n\t\t\t\tcontrol of the target network’s systems from outside the network."
+                }
+            ]
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
             "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html>\n\t\t\t\t\t\t\t<body>\n\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\tIn this and the next two stages, APT1 does not differ significantly from other APT intruders (or intruders,\n                            \tgenerally). APT1 predominantly uses publicly available tools to dump password hashes from victim systems in\n                            \torder to obtain legitimate user credentials.\n\t\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t\t</body>\n\t\t\t\t\t\t</html>",
             "id": "attack-pattern--e13f3e6d-4f9c-4265-b1cf-f997a1bf7827",
             "kill_chain_phases": [
@@ -578,17 +590,21 @@
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "Privilege Escalation",
             "object_marking_refs": [
-                "marking-definition--df2c161e-574d-4ef4-a50f-d401704b5575"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "type": "attack-pattern",
-            "x_elevator_intended_effect": "Unauthorized Access",
-            "x_elevator_intended_effect_description": "Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. "
+            "x_elevator_intended_effects": [
+                {
+                    "description": "Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. ",
+                    "value": "Unauthorized Access"
+                }
+            ]
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
             "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html><body>\n\t\t\t\t\t\t\t\t<p>This program extracts cached password hashes from a system's registry.</P>\n\t\t\t\t\t\t\t\t<p>Currently packaged with fgdump</P>\n\t\t\t\t\t\t</body></html>",
-            "id": "tool--70772c73-abff-4a83-88fe-f10412f4f0c8",
+            "id": "tool--e13f3e6d-4f9c-4265-b1cf-f997a1bf7827",
             "kill_chain_phases": [
                 {
                     "kill_chain_name": "APT1 Attack Lifecycle Model",
@@ -601,18 +617,22 @@
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "cachedump",
             "object_marking_refs": [
-                "marking-definition--df2c161e-574d-4ef4-a50f-d401704b5575"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "type": "tool",
-            "x_elevator_intended_effect": "Unauthorized Access",
-            "x_elevator_intended_effect_description": "Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. ",
+            "x_elevator_intended_effects": [
+                {
+                    "description": "Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. ",
+                    "value": "Unauthorized Access"
+                }
+            ],
             "x_elevator_title": "Privilege Escalation"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
             "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html><body>\n\t\t\t\t\t\t\t\t<p>Windows password hash dumper.</P>\n\t\t\t\t\t\t\t\t<p>http://www.foofus.net/fizzgig/fgdump/</P>\n\t\t\t\t\t\t</body></html>",
-            "id": "tool--8eb1733d-92c2-4931-92f7-6872b4694fb5",
+            "id": "tool--b76a4da0-2ba4-4fdf-8802-cd1f932097b2",
             "kill_chain_phases": [
                 {
                     "kill_chain_name": "APT1 Attack Lifecycle Model",
@@ -625,18 +645,22 @@
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "fgdump",
             "object_marking_refs": [
-                "marking-definition--df2c161e-574d-4ef4-a50f-d401704b5575"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "type": "tool",
-            "x_elevator_intended_effect": "Unauthorized Access",
-            "x_elevator_intended_effect_description": "Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. ",
+            "x_elevator_intended_effects": [
+                {
+                    "description": "Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. ",
+                    "value": "Unauthorized Access"
+                }
+            ],
             "x_elevator_title": "Privilege Escalation"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
             "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html><body>\n\t\t\t\t\t\t\t\t<p>Obtains password hashes from the Windows registry, inlcuding the SAM file, cached domain credentials, and LSA secrets.</P>\n\t\t\t\t\t\t\t\t<p>http://truesec.se</P>\n\t\t\t\t\t\t</body></html>",
-            "id": "tool--a2d11fdf-6cf7-4d7a-ad55-590f68396215",
+            "id": "tool--b99d6f2e-56a7-47d0-a440-9de4f7d5a8fe",
             "kill_chain_phases": [
                 {
                     "kill_chain_name": "APT1 Attack Lifecycle Model",
@@ -649,18 +673,22 @@
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "gsecdump",
             "object_marking_refs": [
-                "marking-definition--df2c161e-574d-4ef4-a50f-d401704b5575"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "type": "tool",
-            "x_elevator_intended_effect": "Unauthorized Access",
-            "x_elevator_intended_effect_description": "Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. ",
+            "x_elevator_intended_effects": [
+                {
+                    "description": "Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. ",
+                    "value": "Unauthorized Access"
+                }
+            ],
             "x_elevator_title": "Privilege Escalation"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
             "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html><body>\n\t\t\t\t\t\t\t\t<p>Dump active logon session password hashes from the lsass process.</P>\n\t\t\t\t\t\t\t\t<p>http://truesec.se</P>\n\t\t\t\t\t\t</body></html>",
-            "id": "tool--8dd63966-e46e-4396-87f4-7567718ad370",
+            "id": "tool--f737b239-4e56-4277-9d57-3cc0911c8c00",
             "kill_chain_phases": [
                 {
                     "kill_chain_name": "APT1 Attack Lifecycle Model",
@@ -673,18 +701,22 @@
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "lslsass",
             "object_marking_refs": [
-                "marking-definition--df2c161e-574d-4ef4-a50f-d401704b5575"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "type": "tool",
-            "x_elevator_intended_effect": "Unauthorized Access",
-            "x_elevator_intended_effect_description": "Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. ",
+            "x_elevator_intended_effects": [
+                {
+                    "description": "Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. ",
+                    "value": "Unauthorized Access"
+                }
+            ],
             "x_elevator_title": "Privilege Escalation"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
             "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html><body>\n\t\t\t\t\t\t\t\t<p>A utility primarily used for dumping password hashes.</P>\n\t\t\t\t\t\t\t\t<p>http://blog.gentilkiwi.com/mimikatz</P>\n\t\t\t\t\t\t</body></html>",
-            "id": "tool--23af4e1e-a30f-458c-b3f9-4429fec69138",
+            "id": "tool--186216b1-a142-4880-bc76-5e803defd29a",
             "kill_chain_phases": [
                 {
                     "kill_chain_name": "APT1 Attack Lifecycle Model",
@@ -697,18 +729,22 @@
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "mimikatz",
             "object_marking_refs": [
-                "marking-definition--df2c161e-574d-4ef4-a50f-d401704b5575"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "type": "tool",
-            "x_elevator_intended_effect": "Unauthorized Access",
-            "x_elevator_intended_effect_description": "Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. ",
+            "x_elevator_intended_effects": [
+                {
+                    "description": "Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. ",
+                    "value": "Unauthorized Access"
+                }
+            ],
             "x_elevator_title": "Privilege Escalation"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
             "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html><body>\n\t\t\t\t\t\t\t\t<p>Allows an intruder to \"pass\" a password hash (without knowing the original password) to log in to systems.</P>\n\t\t\t\t\t\t\t\t<p>http://oss.coresecurity.com/projects/pshtoolkit.htm</P>\n\t\t\t\t\t\t</body></html>",
-            "id": "tool--7a054e51-ad02-4397-a1bf-f4317215f1e5",
+            "id": "tool--6e0caa9a-e2e1-4213-b54e-f7b25c8e9e3a",
             "kill_chain_phases": [
                 {
                     "kill_chain_name": "APT1 Attack Lifecycle Model",
@@ -721,18 +757,22 @@
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "pass-the-hash toolkit",
             "object_marking_refs": [
-                "marking-definition--df2c161e-574d-4ef4-a50f-d401704b5575"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "type": "tool",
-            "x_elevator_intended_effect": "Unauthorized Access",
-            "x_elevator_intended_effect_description": "Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. ",
+            "x_elevator_intended_effects": [
+                {
+                    "description": "Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. ",
+                    "value": "Unauthorized Access"
+                }
+            ],
             "x_elevator_title": "Privilege Escalation"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
             "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html><body>\n\t\t\t\t\t\t\t\t<p>Dumps password hashes from the Windows registry.</P>\n\t\t\t\t\t\t\t\t<p>http://www.tarasco.org/security/pwdump_7/</P>\n\t\t\t\t\t\t</body></html>",
-            "id": "tool--c93e09a1-c5bc-494f-9d3a-9dc60dcf7bf8",
+            "id": "tool--d241924e-b9f3-4905-ae87-2966d1d55f63",
             "kill_chain_phases": [
                 {
                     "kill_chain_name": "APT1 Attack Lifecycle Model",
@@ -745,18 +785,22 @@
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "pwdump7",
             "object_marking_refs": [
-                "marking-definition--df2c161e-574d-4ef4-a50f-d401704b5575"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "type": "tool",
-            "x_elevator_intended_effect": "Unauthorized Access",
-            "x_elevator_intended_effect_description": "Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. ",
+            "x_elevator_intended_effects": [
+                {
+                    "description": "Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. ",
+                    "value": "Unauthorized Access"
+                }
+            ],
             "x_elevator_title": "Privilege Escalation"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
             "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html><body>\n\t\t\t\t\t\t\t\t<p>Dumps password hashes from the Windows Registry.</P>\n\t\t\t\t\t\t\t\t<p>The tool claims its origin as http://reedarvin.thearvins.com but the site is not offering this software as of the date of this report.</P>\n\t\t\t\t\t\t</body></html>",
-            "id": "tool--905c0eb0-d20d-4665-bab0-a652b03fb966",
+            "id": "tool--2c998d44-8269-4d0d-93d9-bb13c07e2abf",
             "kill_chain_phases": [
                 {
                     "kill_chain_name": "APT1 Attack Lifecycle Model",
@@ -769,16 +813,20 @@
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "pwdumpX",
             "object_marking_refs": [
-                "marking-definition--df2c161e-574d-4ef4-a50f-d401704b5575"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "type": "tool",
-            "x_elevator_intended_effect": "Unauthorized Access",
-            "x_elevator_intended_effect_description": "Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. ",
+            "x_elevator_intended_effects": [
+                {
+                    "description": "Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. ",
+                    "value": "Unauthorized Access"
+                }
+            ],
             "x_elevator_title": "Privilege Escalation"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
             "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html>\n\t\t\t\t\t\t\t<body>\n\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\tLike most APT (and non-APT) intruders, APT1 primarily uses built-in operating system commands to explore a compromised system\n                            \tand its networked environment. Although they usually simply type these commands into a command shell, sometimes\n                            \tintruders may use batch scripts to speed up the process. Figure 18 below shows the contents of a batch script that\n\t\t\t\t\t\t\t\tAPT1 used on at least four victim networks.\n\t\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t\t\t<code>\n\t\t\t\t\t\t\t\t\t@echo off\n\t\t\t\t\t\t\t\t\tipconfig /all&gt;&gt;”C:\\WINNT\\Debug\\1.txt”\n\t\t\t\t\t\t\t\t\tnet start&gt;&gt;”C:\\WINNT\\Debug\\1.txt”\n\t\t\t\t\t\t\t\t\ttasklist /v&gt;&gt;”C:\\WINNT\\Debug\\1.txt”\n\t\t\t\t\t\t\t\t\tnet user &gt;&gt;”C:\\WINNT\\Debug\\1.txt”\n\t\t\t\t\t\t\t\t\tnet localgroup administrators&gt;&gt;”C:\\WINNT\\Debug\\1.txt”\n\t\t\t\t\t\t\t\t\tnetstat -ano&gt;&gt;”C:\\WINNT\\Debug\\1.txt”\n\t\t\t\t\t\t\t\t\tnet use&gt;&gt;”C:\\WINNT\\Debug\\1.txt”\n\t\t\t\t\t\t\t\t\tnet view&gt;&gt;”C:\\WINNT\\Debug\\1.txt”\n\t\t\t\t\t\t\t\t\tnet view /domain&gt;&gt;”C:\\WINNT\\Debug\\1.txt”\n\t\t\t\t\t\t\t\t\tnet group /domain&gt;&gt;”C:\\WINNT\\Debug\\1.txt”\n\t\t\t\t\t\t\t\t\tnet group “domain users” /domain&gt;&gt;”C:\\WINNT\\Debug\\1.txt”\n\t\t\t\t\t\t\t\t\tnet group “domain admins” /domain&gt;&gt;”C:\\WINNT\\Debug\\1.txt”\n\t\t\t\t\t\t\t\t\tnet group “domain controllers” /domain&gt;&gt;”C:\\WINNT\\Debug\\1.txt”\n\t\t\t\t\t\t\t\t\tnet group “exchange domain servers” /domain&gt;&gt;”C:\\WINNT\\Debug\\1.txt”\n\t\t\t\t\t\t\t\t\tnet group “exchange servers” /domain&gt;&gt;”C:\\WINNT\\Debug\\1.txt”\n\t\t\t\t\t\t\t\t\tnet group “domain computers” /domain&gt;&gt;”C:\\WINNT\\Debug\\1.txt”\n\t\t\t\t\t\t\t\t</code>\n\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\tThis script performs the following functions and saves the results to a text file:\n\t\t\t\t\t\t\t\t\t»» Display the victim’s network configuration information\n\t\t\t\t\t\t\t\t\t»» List the services that have started on the victim system\n\t\t\t\t\t\t\t\t\t»» List currently running processes\n\t\t\t\t\t\t\t\t\t»» List accounts on the system\n\t\t\t\t\t\t\t\t\t»» List accounts with administrator privileges\n\t\t\t\t\t\t\t\t\t»» List current network connections\n\t\t\t\t\t\t\t\t\t»» List currently connected network shares\n\t\t\t\t\t\t\t\t\t»» List other systems on the network\n\t\t\t\t\t\t\t\t\t»» List network computers and accounts according to group (“domain controllers,” “domain users,” “domain admins,” etc.)\n\t\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t\t</body>\n\t\t\t\t\t\t</html>",
             "id": "attack-pattern--5728f45b-2eca-4942-a7f6-bc4267c1ab8d",
             "kill_chain_phases": [
@@ -790,7 +838,7 @@
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "Internal Reconnaisance",
             "object_marking_refs": [
-                "marking-definition--df2c161e-574d-4ef4-a50f-d401704b5575"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "type": "attack-pattern",
             "x_elevator_intended_effects": [
@@ -807,7 +855,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
             "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html><body>\n\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tOnce an APT intruder has a foothold inside the network and a set of legitimate credentials, it is simple for the intruder\n                            to move around the network undetected.\n\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tThey can connect to shared resources on other systems.\n\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tThey can execute commands on other systems using the publicly available \"psexec\" tool from Microsoft\n                            Sysinternals or the built-in Windows Task Scheduler (\"at.exe\").\n\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tThese actions are hard to detect because legitimate system administrators also use these techniques to perform\n                            actions around the network.\n\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t</body></html>",
             "id": "attack-pattern--0bea2358-c244-4905-a664-a5cdce7bb767",
             "kill_chain_phases": [
@@ -819,7 +867,7 @@
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "Lateral Movement",
             "object_marking_refs": [
-                "marking-definition--df2c161e-574d-4ef4-a50f-d401704b5575"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "type": "attack-pattern",
             "x_elevator_intended_effects": [
@@ -833,7 +881,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
             "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html><body>\n\t\t\t\t\t\t<p>\n\t\t\t\t\t\tThe APT does this (maintains presence) in three ways:\n\t\t\t\t\t\t</p>\n\t\t\t\t\t\t\t<ol>\n\t\t\t\t\t\t\t\t<li>Install new backdoors on multiple systems\n\t\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\t\tThroughout their stay in the network (which could be years), APT1 usually installs new backdoors as they claim more\n                            \t\tsystems in the environment. Then, if one backdoor is discovered and deleted, they still have other backdoors they can\n                            \t\tuse. We usually detect multiple families of APT1 backdoors scattered around a victim network when APT1 has been\n                            \t\tpresent for more than a few weeks.\n\t\t\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t\t\t</li>Use legitimate VPN credentials\n\t\t\t\t\t\t\t\t<li>\n\t\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\t\tAPT actors and hackers in general are always looking for valid credentials in order to impersonate a legitimate user.\n                            \t\tWe have observed APT1 using stolen usernames and passwords to log into victim networks’ VPNs when the VPNs are\n                            \t\tonly protected by single-factor authentication. From there they are able to access whatever the impersonated users are\n                            \t\tallowed to access within the network.\n\t\t\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t\t<li>Log in to web portals\n\t\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\t\tOnce armed with stolen credentials, APT1 intruders also attempt to log into web portals that the network offers. This\n                            \t\tincludes not only restricted websites, but also web-based email systems such as Outlook Web Access.\n\t\t\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t</ol>\n\t\t\t\t\t\t</body></html>",
             "id": "attack-pattern--7151c6d0-7e97-47ce-9290-087315ea3db7",
             "kill_chain_phases": [
@@ -845,14 +893,18 @@
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "Maintain Presence",
             "object_marking_refs": [
-                "marking-definition--df2c161e-574d-4ef4-a50f-d401704b5575"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "type": "attack-pattern",
-            "x_elevator_intended_effect_description": "In this stage, the intruder takes actions to ensure\n\t\t\t\tcontinued, long-term control over key systems in the network environment from\n\t\t\t\toutside of the network. "
+            "x_elevator_intended_effects": [
+                {
+                    "description": "In this stage, the intruder takes actions to ensure\n\t\t\t\tcontinued, long-term control over key systems in the network environment from\n\t\t\t\toutside of the network. "
+                }
+            ]
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
             "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html>\n\t\t\t\t\t\t\t<body>\n\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\tSimilar to other APT groups we track, once APT1 finds files of interest they pack them into archive files before stealing\n                            \tthem. APT intruders most commonly use the RAR archiving utility for this task and ensure that the archives are\n                            \tpassword protected. Sometimes APT1 intruders use batch scripts to assist them in the process, as depicted in Figure\n                            \t19. (The instances of \"XXXXXXXX\" obfuscate the text that was in the actual batch script.)\n\t\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t\t\t<code>\n\t\t\t\t\t\t\t\t\t@echo off\n                            \t\tcd /d c:\\windows\\tasks\n                            \t\trar.log a XXXXXXXX.rar -v200m \"C:\\Documents and Settings\\Place\\My\n                            \t\tDocuments\\XXXXXXXX\" -hpsmy123!@#\n                            \t\tdel *.vbs\n                            \t\tdel %0\n\t\t\t\t\t\t\t\t</code>\n\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\t After creating files compressed via RAR, the APT1 attackers will transfer files out of the network in ways that are\n                            \tconsistent with other APT groups, including using the File Transfer Protocol (FTP) or their existing backdoors. Many\n                            \ttimes their RAR files are so large that the attacker splits them into chunks before transferring them. Figure 19 above\n                            \tshows a RAR command with the option \"-v200m\", which means that the RAR file should be split up into 200MB\n                            \tportions.\n\t\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\tUnlike most other APT groups we track, APT1 uses two email-stealing utilities that we believe are unique to APT1. The\n                            \tfirst, GETMAIL, was designed specifically to extract email messages, attachments, and folders from within Microsoft\n                            \tOutlook archive (\"PST\") files.\n\t\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\tMicrosoft Outlook archives can be large, often storing years’ worth of emails. They may be too large to transfer out\n                            \tof a network quickly, and the intruder may not be concerned about stealing every email. The GETMAIL utility allows\n                            \tAPT1 intruders the flexibility to take only the emails between dates of their choice. In one case, we observed an APT1\n                            \tintruder return to a compromised system once a week for four weeks in a row to steal only the past week’s emails.\n\t\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\t\tWhereas GETMAIL steals email in Outlook archive files, the second utility, MAPIGET, was designed specifically to steal\n                            \temail that has not yet been archived and still resides on a Microsoft Exchange Server. In order to operate successfully,\n                            \tMAPIGET requires username/password combinations that the Exchange server will accept. MAPIGET extracts email\n                            \tfrom specified accounts into text files (for the email body) and separate attachments, if there are any.\n\t\t\t\t\t\t\t\t</P>\n\t\t\t\t\t\t\t</body>\n\t\t\t\t\t\t</html>",
             "id": "attack-pattern--0781fe70-4c94-4300-8865-4b08b98611b4",
             "kill_chain_phases": [
@@ -864,7 +916,7 @@
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "Completing the Mission",
             "object_marking_refs": [
-                "marking-definition--df2c161e-574d-4ef4-a50f-d401704b5575"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "type": "attack-pattern",
             "x_elevator_intended_effects": [
@@ -881,9 +933,9 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
             "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html><body>\n\t\t\t\t\t\t\t<p>GETMAIL was designed specifically to extract email messages, attachments, and folders from within Microsoft Outlook archive (\"PST\") files.</P>\n\t\t\t\t\t\t</body></html>",
-            "id": "tool--072710dc-6c52-4585-8c3b-3afd0d02dc16",
+            "id": "tool--0781fe70-4c94-4300-8865-4b08b98611b4",
             "kill_chain_phases": [
                 {
                     "kill_chain_name": "APT1 Attack Lifecycle Model",
@@ -896,7 +948,7 @@
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "GETMAIL",
             "object_marking_refs": [
-                "marking-definition--df2c161e-574d-4ef4-a50f-d401704b5575"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "type": "tool",
             "x_elevator_intended_effects": [
@@ -914,9 +966,9 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
             "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html><body>\n\t\t\t\t\t\t\t<p>MAPIGET was designed specifically to steal email that has not yet been archived and still resides on a Microsoft Exchange Server.</P>\n\t\t\t\t\t\t</body></html>>\n\t\t\t\t\t",
-            "id": "tool--d3677edd-6d98-4bd9-9d1b-dc39b8608b6a",
+            "id": "tool--73e80a02-d66f-47fc-ab49-a547e37e961c",
             "kill_chain_phases": [
                 {
                     "kill_chain_name": "APT1 Attack Lifecycle Model",
@@ -929,7 +981,7 @@
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "MAPIGET",
             "object_marking_refs": [
-                "marking-definition--df2c161e-574d-4ef4-a50f-d401704b5575"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "type": "tool",
             "x_elevator_intended_effects": [
@@ -947,52 +999,52 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
             "description": "Recruits From",
-            "id": "relationship--4d076b86-89c4-4d8b-8f3b-75ce220cbc4c",
+            "id": "relationship--f886354d-d366-45f4-85c3-385d0656d65b",
             "modified": "2015-05-15T09:00:00.000Z",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "relationship_type": "related-to",
-            "source_ref": "identity--5fe58321-4639-4c21-8b69-f46554abfeb1",
-            "target_ref": "identity--f3bcbd2e-7ae1-4a02-9f85-8243a53b3085",
+            "source_ref": "identity--a30c16f8-8b52-4f7c-b165-cd8d196c3728",
+            "target_ref": "identity--68493b76-7f7d-4cdb-8397-be2d2c166f74",
             "type": "relationship"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
             "description": "Recruits From",
-            "id": "relationship--e713ac72-927a-40f0-aae2-89a366b9fa71",
+            "id": "relationship--04138efb-765e-41c5-aa67-f05ad960e9d7",
             "modified": "2015-05-15T09:00:00.000Z",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "relationship_type": "related-to",
-            "source_ref": "identity--5fe58321-4639-4c21-8b69-f46554abfeb1",
-            "target_ref": "identity--0652ac78-8b89-46d6-b4fe-8526baa6bb10",
+            "source_ref": "identity--a30c16f8-8b52-4f7c-b165-cd8d196c3728",
+            "target_ref": "identity--9b6e1200-d68f-4bcc-b092-b33367890a6d",
             "type": "relationship"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
-            "id": "relationship--4675183a-e02f-4cca-b4c3-ed5000ec8d89",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
+            "id": "relationship--9c46e2eb-cf42-4f56-a452-3d0ac9494e29",
             "modified": "2015-05-15T09:00:00.000Z",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "relationship_type": "attributed-to",
             "source_ref": "threat-actor--8dff0344-0c82-4079-8d04-6f3e4d9bd1df",
-            "target_ref": "identity--5fe58321-4639-4c21-8b69-f46554abfeb1",
+            "target_ref": "identity--a30c16f8-8b52-4f7c-b165-cd8d196c3728",
             "type": "relationship"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
-            "id": "relationship--e3c2eab6-0c97-43b0-94b4-1cd41da649f7",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
+            "id": "relationship--6af5a521-0b5b-497d-b88c-72858b0ba139",
             "modified": "2015-05-15T09:00:00.000Z",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "relationship_type": "targets",
             "source_ref": "threat-actor--8dff0344-0c82-4079-8d04-6f3e4d9bd1df",
@@ -1001,12 +1053,12 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
             "description": "Asserted Alias",
-            "id": "relationship--cc2bda64-9b30-4442-98b7-e142623ec5bd",
+            "id": "relationship--8aa73b80-cbce-4c17-8082-55aa7f68ae66",
             "modified": "2015-05-15T09:00:00.000Z",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "relationship_type": "related-to",
             "source_ref": "threat-actor--8dff0344-0c82-4079-8d04-6f3e4d9bd1df",
@@ -1015,12 +1067,12 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
             "description": "Asserted Alias",
-            "id": "relationship--ad698ccc-546e-4ea3-89a7-82c6ce0218ba",
+            "id": "relationship--a46b6982-4b97-4bc6-b1cc-8787e49e4345",
             "modified": "2015-05-15T09:00:00.000Z",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "relationship_type": "related-to",
             "source_ref": "threat-actor--8dff0344-0c82-4079-8d04-6f3e4d9bd1df",
@@ -1029,12 +1081,12 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
             "description": "Asserted Alias",
-            "id": "relationship--4af55910-b2cb-493f-b977-913a7e2df33d",
+            "id": "relationship--7fda0c8f-5a72-430b-ae0c-7820b2b713f0",
             "modified": "2015-05-15T09:00:00.000Z",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "relationship_type": "related-to",
             "source_ref": "threat-actor--8dff0344-0c82-4079-8d04-6f3e4d9bd1df",
@@ -1043,12 +1095,12 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
             "description": "Asserted Alias",
-            "id": "relationship--462979bc-f570-4dd1-9efc-78fc4c9fa085",
+            "id": "relationship--fcb5627f-ace1-42a1-a88c-dbc11b91d2fe",
             "modified": "2015-05-15T09:00:00.000Z",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "relationship_type": "related-to",
             "source_ref": "threat-actor--8dff0344-0c82-4079-8d04-6f3e4d9bd1df",
@@ -1057,12 +1109,12 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
             "description": "Member",
-            "id": "relationship--a301b6db-d16b-4394-a2c4-b1e16031d34e",
+            "id": "relationship--2c38232a-d5cb-4369-9dfe-6b56793f7903",
             "modified": "2015-05-15T09:00:00.000Z",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "relationship_type": "related-to",
             "source_ref": "threat-actor--8dff0344-0c82-4079-8d04-6f3e4d9bd1df",
@@ -1071,12 +1123,12 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
             "description": "Member",
-            "id": "relationship--447838b5-64d8-486b-8a56-1327b55b0bae",
+            "id": "relationship--17d8a134-4b2a-4dee-b5f3-a2bdc23f459d",
             "modified": "2015-05-15T09:00:00.000Z",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "relationship_type": "related-to",
             "source_ref": "threat-actor--8dff0344-0c82-4079-8d04-6f3e4d9bd1df",
@@ -1085,12 +1137,12 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
             "description": "Member",
-            "id": "relationship--a1d6f715-3449-4c0d-a7ed-43f51f9d0d62",
+            "id": "relationship--dbc7f164-bb15-456d-9f3f-8574b6ae6118",
             "modified": "2015-05-15T09:00:00.000Z",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "relationship_type": "related-to",
             "source_ref": "threat-actor--8dff0344-0c82-4079-8d04-6f3e4d9bd1df",
@@ -1099,12 +1151,12 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
             "description": "Infrastructure Provided By",
-            "id": "relationship--2cc65428-f166-464a-9477-7a847bc23617",
+            "id": "relationship--7d7d0353-edb9-4568-b07e-b0a5c331d1ee",
             "modified": "2015-05-15T09:00:00.000Z",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "relationship_type": "related-to",
             "source_ref": "threat-actor--8dff0344-0c82-4079-8d04-6f3e4d9bd1df",
@@ -1113,145 +1165,145 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
-            "id": "relationship--f1c321e4-93d3-49b6-9869-cc9c0d6a594d",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
+            "id": "relationship--859e48c0-9f4d-4366-aa51-2d7eed8d65cd",
             "modified": "2015-05-15T09:00:00.000Z",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "relationship_type": "attributed-to",
             "source_ref": "threat-actor--6d179234-61fc-40c4-ae86-3d53308d8e65",
-            "target_ref": "identity--e393ace2-a58f-47c8-b5f9-98f7399d6b01",
+            "target_ref": "identity--36605445-2abe-445c-bfaf-57d303a85c48",
             "type": "relationship"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
             "description": "Authored",
-            "id": "relationship--d5cccd1d-e61f-4010-a476-3f3ed9551646",
+            "id": "relationship--f1408dad-4168-4923-866f-f0812c4c8b9d",
             "modified": "2015-05-15T09:00:00.000Z",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "relationship_type": "uses",
             "source_ref": "threat-actor--6d179234-61fc-40c4-ae86-3d53308d8e65",
-            "target_ref": "malware--23f09517-d0c8-4bad-bd58-abaa7d155a02",
+            "target_ref": "malware--602703de-be18-4ff9-b216-5d29c39dd852",
             "type": "relationship"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
-            "id": "relationship--dc6d87b0-4217-4f4d-953f-63ae53f5eba0",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
+            "id": "relationship--06827c73-62b3-44f4-b2b6-e596fd752cdd",
             "modified": "2015-05-15T09:00:00.000Z",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "relationship_type": "attributed-to",
             "source_ref": "threat-actor--d84cf283-93be-4ca7-890d-76c63eff3636",
-            "target_ref": "identity--d5693107-a4bd-45cd-9945-13d1c9de6e01",
+            "target_ref": "identity--9fafedd6-4c7b-44f0-a381-ebc937475c2e",
             "type": "relationship"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
-            "id": "relationship--dcb0993a-9661-4add-a750-e087fd84d2f4",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
+            "id": "relationship--899bbfe5-a22c-492c-a3e2-22708b36a9f0",
             "modified": "2015-05-15T09:00:00.000Z",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "relationship_type": "attributed-to",
             "source_ref": "threat-actor--02e7c48f-0301-4c23-b3e4-02e5a0114c21",
-            "target_ref": "identity--ea1b414c-ee23-4232-8d03-3fe5f62b6585",
+            "target_ref": "identity--d11f88fe-254a-47a0-ba75-84f9e70b6357",
             "type": "relationship"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
             "description": "Authored/Contributed_To",
-            "id": "relationship--8d9756de-6fb5-4314-8c1c-18876a5858bb",
+            "id": "relationship--cefeb702-c6dc-4985-a04d-7182b7f42a68",
             "modified": "2015-05-15T09:00:00.000Z",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "relationship_type": "uses",
             "source_ref": "threat-actor--02e7c48f-0301-4c23-b3e4-02e5a0114c21",
-            "target_ref": "malware--c4e2784d-9ba7-4255-ae45-8b0de7331381",
+            "target_ref": "malware--83255613-21b8-4a58-9096-8e03497e05be",
             "type": "relationship"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
             "description": "Authored/Contributed_To",
-            "id": "relationship--b6d91c2f-9638-43c1-bfb4-e0e0d3c0beca",
+            "id": "relationship--f8916ac9-bf4d-4fec-ac7b-af73fb13905c",
             "modified": "2015-05-15T09:00:00.000Z",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "relationship_type": "uses",
             "source_ref": "threat-actor--02e7c48f-0301-4c23-b3e4-02e5a0114c21",
-            "target_ref": "malware--edae7a7c-7f98-4181-a701-0b705774a14c",
+            "target_ref": "malware--ddb1e020-2a41-46f5-b7f5-a5b5823c0d25",
             "type": "relationship"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
-            "id": "relationship--4fc12e48-b41c-4b75-bd79-da7642f7a63f",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
+            "id": "relationship--80a8a114-fb53-4a90-9196-739ae404d1d1",
             "modified": "2015-05-15T09:00:00.000Z",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "relationship_type": "attributed-to",
             "source_ref": "threat-actor--f1ce5a9e-0fb7-465b-acb9-e7f75098eee9",
-            "target_ref": "identity--950f1c88-4641-4dfb-abd2-0bb14279b5b5",
+            "target_ref": "identity--1e18a49e-9a66-4f51-a6d0-c84bd2860779",
             "type": "relationship"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
-            "id": "relationship--8a9d9bac-194f-4606-af19-f608be9a8ccb",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
+            "id": "relationship--3508ceb7-0d57-4afe-b6e7-faaeddc42386",
             "modified": "2015-05-15T09:00:00.000Z",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "relationship_type": "attributed-to",
             "source_ref": "threat-actor--5abb4d96-e3f2-4a1a-b025-c5b63ec6eb0b",
-            "target_ref": "identity--7c2ad953-0bd3-43bc-9b0f-631d1d77a703",
+            "target_ref": "identity--4590d52a-00eb-45ce-ab67-dd59dfe8ed6e",
             "type": "relationship"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
-            "id": "relationship--52083221-d133-4e5a-8e69-918e72b64236",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
+            "id": "relationship--81777848-152e-44bb-b202-28f4501a3ec3",
             "modified": "2015-05-15T09:00:00.000Z",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "relationship_type": "attributed-to",
             "source_ref": "threat-actor--d9619c21-9d4f-414e-9471-36bb8fc42bbe",
-            "target_ref": "identity--8ca3fc2d-0ccc-4db1-9a5c-3d9ed876ac5b",
+            "target_ref": "identity--bc925de5-10a2-4fd7-b510-9c31a39684e1",
             "type": "relationship"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
-            "id": "relationship--3cf0f077-85b7-4316-9e45-47644ed2c3e5",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
+            "id": "relationship--9f3a073f-a9fa-4dce-8550-11a9694d8b82",
             "modified": "2015-05-15T09:00:00.000Z",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "relationship_type": "attributed-to",
             "source_ref": "threat-actor--94624865-2709-443f-9b4c-2891985fd69b",
-            "target_ref": "identity--1e2841a1-4bf8-4483-bde5-10c73d0d83f8",
+            "target_ref": "identity--64ce4207-54a5-4ff8-96b4-c8c2ef3a9dd8",
             "type": "relationship"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
             "description": "Component_Of",
-            "id": "relationship--9e38a2b5-9022-49d7-bac5-efa00becb03a",
+            "id": "relationship--a652fb85-37fe-4b38-8a56-982655d4dcbc",
             "modified": "2015-05-15T09:00:00.000Z",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "relationship_type": "related-to",
             "source_ref": "threat-actor--94624865-2709-443f-9b4c-2891985fd69b",
@@ -1260,25 +1312,25 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
-            "id": "relationship--737393f8-54bb-4c57-a014-dc71ab2dce29",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
+            "id": "relationship--e60876ed-edb0-4417-9ada-141cd81a45e3",
             "modified": "2015-05-15T09:00:00.000Z",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "relationship_type": "attributed-to",
             "source_ref": "threat-actor--b5d1d28c-d824-49c0-80b6-9179202e297b",
-            "target_ref": "identity--a0a49a2a-866c-438a-aa03-32c9328753d1",
+            "target_ref": "identity--4f9105e2-873a-4761-bf83-ae3d2966b1bf",
             "type": "relationship"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
             "description": "Component_Of",
-            "id": "relationship--79dd2954-fa2b-4c2a-b7f6-47c4bd28b0ee",
+            "id": "relationship--fcc0da24-6de5-4cc5-9104-276341d80fe2",
             "modified": "2015-05-15T09:00:00.000Z",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "relationship_type": "related-to",
             "source_ref": "threat-actor--b5d1d28c-d824-49c0-80b6-9179202e297b",
@@ -1287,25 +1339,25 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
-            "id": "relationship--d7054fa0-a96e-4135-827e-8d2d49f22239",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
+            "id": "relationship--9765c971-67ba-42c9-8b3d-7a990175ea13",
             "modified": "2015-05-15T09:00:00.000Z",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "relationship_type": "attributed-to",
             "source_ref": "threat-actor--5ac0fd8e-5804-4849-a170-4ec0d15a5e8b",
-            "target_ref": "identity--da92c2e4-88c9-40da-9813-b0caeacc04f2",
+            "target_ref": "identity--4015bc71-de6a-404d-8039-22761c2ed104",
             "type": "relationship"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
             "description": "Component_Of",
-            "id": "relationship--0e23e7d5-dfa5-4938-adbe-8bb18f6da579",
+            "id": "relationship--4c277bd3-4982-4563-882c-5cfc4aba86d4",
             "modified": "2015-05-15T09:00:00.000Z",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "relationship_type": "related-to",
             "source_ref": "threat-actor--5ac0fd8e-5804-4849-a170-4ec0d15a5e8b",
@@ -1314,37 +1366,37 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
-            "id": "relationship--9cb4f8d5-2c9d-4be6-a3cb-659b5f1a570b",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
+            "id": "relationship--eb75635f-0f4a-40a4-b0a1-e7ea19b47202",
             "modified": "2015-05-15T09:00:00.000Z",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "relationship_type": "attributed-to",
             "source_ref": "threat-actor--d5b62b58-df7c-46b1-a435-4d01945fe21d",
-            "target_ref": "identity--0ae42e63-8c18-4c16-b505-d8e195547b25",
+            "target_ref": "identity--125204ee-98f7-4aad-a530-6a63ba6c717a",
             "type": "relationship"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
-            "id": "relationship--bce29c0c-521f-4bbe-8051-4e6658eb2170",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
+            "id": "relationship--7baf5f96-e8cb-462d-8e66-10dd86d7de24",
             "modified": "2015-05-15T09:00:00.000Z",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "relationship_type": "attributed-to",
             "source_ref": "threat-actor--76dd3859-31a6-43c5-9f3e-9c6ac745b61b",
-            "target_ref": "identity--cb9891d0-0ad3-45a4-bc04-9df6621400fd",
+            "target_ref": "identity--fb2857f0-7adb-4898-b14f-dbceddae3dc9",
             "type": "relationship"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
-            "id": "relationship--4b5d8ca3-b1f4-43a2-b99b-0840970161d0",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
+            "id": "relationship--6a941936-7d73-4034-af60-030634afe2b2",
             "modified": "2015-05-15T09:00:00.000Z",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "relationship_type": "related-to",
             "source_ref": "identity--c63f31ac-871b-4846-aa25-de1926f4f3c8",
@@ -1353,11 +1405,11 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
-            "id": "relationship--1fd0dbc6-fdf2-41bc-8e59-a7a5a85b0347",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
+            "id": "relationship--d185a2bb-8ee4-481c-8716-b163790caf25",
             "modified": "2015-05-15T09:00:00.000Z",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "relationship_type": "related-to",
             "source_ref": "identity--c63f31ac-871b-4846-aa25-de1926f4f3c8",
@@ -1366,11 +1418,11 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
-            "id": "relationship--69475e21-a330-426e-a998-017f73a16e74",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
+            "id": "relationship--f55ba1ea-4781-490f-a6b3-c4300c88bf77",
             "modified": "2015-05-15T09:00:00.000Z",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "relationship_type": "related-to",
             "source_ref": "identity--c63f31ac-871b-4846-aa25-de1926f4f3c8",
@@ -1378,11 +1430,11 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
-            "id": "relationship--79915fc4-d041-480b-8383-7ccb5d923e6b",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
+            "id": "relationship--3e0aa3f6-c6f2-4683-947b-27a115e7b87e",
             "modified": "2015-05-15T09:00:00.000Z",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "relationship_type": "related-to",
             "source_ref": "identity--c63f31ac-871b-4846-aa25-de1926f4f3c8",
@@ -1390,11 +1442,11 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
-            "id": "relationship--d2f13554-26ed-4499-b204-f8ece8b2ab90",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
+            "id": "relationship--1b87a813-209e-479c-9618-4627d37afb3a",
             "modified": "2015-05-15T09:00:00.000Z",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "relationship_type": "related-to",
             "source_ref": "identity--c63f31ac-871b-4846-aa25-de1926f4f3c8",
@@ -1402,11 +1454,11 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
-            "id": "relationship--80cf163d-8032-437b-97ca-302afc1da2f3",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
+            "id": "relationship--104e7661-41cc-49e6-ae48-32899cf7187f",
             "modified": "2015-05-15T09:00:00.000Z",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "relationship_type": "related-to",
             "source_ref": "identity--c63f31ac-871b-4846-aa25-de1926f4f3c8",
@@ -1414,11 +1466,11 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
-            "id": "relationship--824b64ec-04e2-446d-aed3-0d22578f7395",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
+            "id": "relationship--5e663131-e96d-495b-b6c4-f470511e0ead",
             "modified": "2015-05-15T09:00:00.000Z",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "relationship_type": "related-to",
             "source_ref": "identity--c63f31ac-871b-4846-aa25-de1926f4f3c8",
@@ -1426,11 +1478,11 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
-            "id": "relationship--8b95fe0c-b609-4de0-bb79-6b5f8566c91c",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
+            "id": "relationship--3b7198c0-12c2-4a13-b20f-9b57f18c3124",
             "modified": "2015-05-15T09:00:00.000Z",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "relationship_type": "related-to",
             "source_ref": "identity--c63f31ac-871b-4846-aa25-de1926f4f3c8",
@@ -1439,11 +1491,11 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
-            "id": "relationship--927ffa5f-0b8c-4245-894e-c30714fda490",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
+            "id": "relationship--57645185-04f2-4b19-a621-efb30b25fa10",
             "modified": "2015-05-15T09:00:00.000Z",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "relationship_type": "related-to",
             "source_ref": "identity--c63f31ac-871b-4846-aa25-de1926f4f3c8",
@@ -1452,11 +1504,11 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
-            "id": "relationship--74a93085-454f-45fb-aef0-0de91714517d",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
+            "id": "relationship--c0caa56a-22ec-42c0-ab73-c944549e1c76",
             "modified": "2015-05-15T09:00:00.000Z",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "relationship_type": "related-to",
             "source_ref": "identity--c63f31ac-871b-4846-aa25-de1926f4f3c8",
@@ -1465,11 +1517,11 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
-            "id": "relationship--80a51025-2f7b-45dc-9c1c-c59e4188d79c",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
+            "id": "relationship--0519a9d7-21f2-4169-9ff7-cfaf9c4b8ce0",
             "modified": "2015-05-15T09:00:00.000Z",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "relationship_type": "related-to",
             "source_ref": "identity--c63f31ac-871b-4846-aa25-de1926f4f3c8",
@@ -1478,11 +1530,11 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
-            "id": "relationship--6f599a06-e007-41e3-9daa-31986257da3a",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
+            "id": "relationship--81e75b89-ceaf-424e-a565-b5a9d51dfdd1",
             "modified": "2015-05-15T09:00:00.000Z",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "relationship_type": "related-to",
             "source_ref": "identity--c63f31ac-871b-4846-aa25-de1926f4f3c8",
@@ -1491,11 +1543,11 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
-            "id": "relationship--d6233868-9d94-4bbe-9838-bc36dc6293ec",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
+            "id": "relationship--2b251de0-cffa-476e-939d-44e7d5903f18",
             "modified": "2015-05-15T09:00:00.000Z",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "relationship_type": "related-to",
             "source_ref": "identity--c63f31ac-871b-4846-aa25-de1926f4f3c8",
@@ -1504,11 +1556,11 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
-            "id": "relationship--e292d8a1-6ab4-40cd-acec-f7913372504c",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
+            "id": "relationship--50e4a9b7-59b5-487c-8ebf-c5db31ac0dee",
             "modified": "2015-05-15T09:00:00.000Z",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "relationship_type": "related-to",
             "source_ref": "identity--c63f31ac-871b-4846-aa25-de1926f4f3c8",
@@ -1517,12 +1569,12 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
             "description": "Leverages",
-            "id": "relationship--04e5fd9c-238c-48da-993a-679bfff2d6c2",
+            "id": "relationship--c24a32fb-d7bc-4c7f-a193-a2d9e03103b8",
             "modified": "2015-05-15T09:00:00.000Z",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "relationship_type": "related-to",
             "source_ref": "attack-pattern--1e2c4237-d469-4144-9c0b-9e5c0c513c49",
@@ -1531,12 +1583,12 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
             "description": "Leverages",
-            "id": "relationship--7b4e9758-d33d-4858-bb93-883c9ce23342",
+            "id": "relationship--eec767ed-e230-4c91-9231-5949bc114f19",
             "modified": "2015-05-15T09:00:00.000Z",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "relationship_type": "related-to",
             "source_ref": "attack-pattern--1e2c4237-d469-4144-9c0b-9e5c0c513c49",
@@ -1544,151 +1596,151 @@
             "type": "relationship"
         },
         {
-            "created": "2019-09-16T11:04:59.121Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
-            "id": "relationship--ec384728-ebfd-4c54-aa02-c0d65a6b7a74",
-            "modified": "2019-09-16T11:04:59.121Z",
+            "created": "2021-04-16T16:54:56.945Z",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
+            "id": "relationship--05017c74-6315-4ac6-8ebc-eab09816b39b",
+            "modified": "2021-04-16T16:54:56.945Z",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "relationship_type": "related-to",
             "source_ref": "identity--c63f31ac-871b-4846-aa25-de1926f4f3c8",
-            "target_ref": "attack-pattern--ec2b2c28-87cd-4ddd-8417-38a1fb50821b",
+            "target_ref": "attack-pattern--d65231f8-f5ae-4267-851e-51784c752d01",
             "type": "relationship"
         },
         {
-            "created": "2019-09-16T11:04:59.121Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
-            "id": "relationship--32c4dc83-f068-479f-a453-9014b185da8e",
-            "modified": "2019-09-16T11:04:59.121Z",
+            "created": "2021-04-16T16:54:56.945Z",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
+            "id": "relationship--73db6fce-a247-46fd-8951-a65a62e1b608",
+            "modified": "2021-04-16T16:54:56.945Z",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "relationship_type": "related-to",
             "source_ref": "identity--c63f31ac-871b-4846-aa25-de1926f4f3c8",
-            "target_ref": "tool--ade04dbe-49ca-4917-9830-ad3c99c2b9c0",
+            "target_ref": "tool--e13f3e6d-4f9c-4265-b1cf-f997a1bf7827",
             "type": "relationship"
         },
         {
-            "created": "2019-09-16T11:04:59.121Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
-            "id": "relationship--eb21f6dd-b8d6-4f69-aeb2-b74a2987ad52",
-            "modified": "2019-09-16T11:04:59.121Z",
+            "created": "2021-04-16T16:54:56.945Z",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
+            "id": "relationship--b90bb9d8-7043-4f16-a93f-07c03e690434",
+            "modified": "2021-04-16T16:54:56.945Z",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "relationship_type": "related-to",
             "source_ref": "identity--c63f31ac-871b-4846-aa25-de1926f4f3c8",
-            "target_ref": "tool--a9d6a1de-423f-4944-af89-4e11e6f5f10e",
+            "target_ref": "tool--b76a4da0-2ba4-4fdf-8802-cd1f932097b2",
             "type": "relationship"
         },
         {
-            "created": "2019-09-16T11:04:59.121Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
-            "id": "relationship--1c44c3e8-7826-4125-92d1-b9ad825baf63",
-            "modified": "2019-09-16T11:04:59.121Z",
+            "created": "2021-04-16T16:54:56.945Z",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
+            "id": "relationship--7f8d34f0-542a-4608-96f7-b120d5f782b5",
+            "modified": "2021-04-16T16:54:56.945Z",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "relationship_type": "related-to",
             "source_ref": "identity--c63f31ac-871b-4846-aa25-de1926f4f3c8",
-            "target_ref": "tool--aee14dae-55d6-4783-ab16-dd41698b6a76",
+            "target_ref": "tool--b99d6f2e-56a7-47d0-a440-9de4f7d5a8fe",
             "type": "relationship"
         },
         {
-            "created": "2019-09-16T11:04:59.121Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
-            "id": "relationship--f4071655-d945-473c-a26c-ca3a3a23e16a",
-            "modified": "2019-09-16T11:04:59.121Z",
+            "created": "2021-04-16T16:54:56.945Z",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
+            "id": "relationship--5f25b479-eae1-48c6-8476-536032ba50cb",
+            "modified": "2021-04-16T16:54:56.945Z",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "relationship_type": "related-to",
             "source_ref": "identity--c63f31ac-871b-4846-aa25-de1926f4f3c8",
-            "target_ref": "tool--e29e3155-6cfd-4af5-9b51-c11b4234fabe",
+            "target_ref": "tool--f737b239-4e56-4277-9d57-3cc0911c8c00",
             "type": "relationship"
         },
         {
-            "created": "2019-09-16T11:04:59.121Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
-            "id": "relationship--1b14a2c0-e169-4c7a-aa21-a9b1d60b8a47",
-            "modified": "2019-09-16T11:04:59.121Z",
+            "created": "2021-04-16T16:54:56.945Z",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
+            "id": "relationship--ec58a49b-7153-409d-b849-582311a38b14",
+            "modified": "2021-04-16T16:54:56.945Z",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "relationship_type": "related-to",
             "source_ref": "identity--c63f31ac-871b-4846-aa25-de1926f4f3c8",
-            "target_ref": "tool--6de7f906-1bee-4bdd-bfb0-8dad24468418",
+            "target_ref": "tool--186216b1-a142-4880-bc76-5e803defd29a",
             "type": "relationship"
         },
         {
-            "created": "2019-09-16T11:04:59.121Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
-            "id": "relationship--52957f1a-372f-4192-bae2-d96211b8ebdd",
-            "modified": "2019-09-16T11:04:59.121Z",
+            "created": "2021-04-16T16:54:56.945Z",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
+            "id": "relationship--40bf8a45-ad74-4152-98e2-1b27d1b653b3",
+            "modified": "2021-04-16T16:54:56.945Z",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "relationship_type": "related-to",
             "source_ref": "identity--c63f31ac-871b-4846-aa25-de1926f4f3c8",
-            "target_ref": "tool--f117f99e-53ad-4742-8d68-82d5b3015219",
+            "target_ref": "tool--6e0caa9a-e2e1-4213-b54e-f7b25c8e9e3a",
             "type": "relationship"
         },
         {
-            "created": "2019-09-16T11:04:59.121Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
-            "id": "relationship--d3a25d0c-87c5-4289-a59a-74566260e0fd",
-            "modified": "2019-09-16T11:04:59.121Z",
+            "created": "2021-04-16T16:54:56.945Z",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
+            "id": "relationship--c840230a-96bc-4fea-b7d5-27de8db3e6a3",
+            "modified": "2021-04-16T16:54:56.945Z",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "relationship_type": "related-to",
             "source_ref": "identity--c63f31ac-871b-4846-aa25-de1926f4f3c8",
-            "target_ref": "tool--c0703ed4-e19c-4552-809f-6a7dfee98a2b",
+            "target_ref": "tool--d241924e-b9f3-4905-ae87-2966d1d55f63",
             "type": "relationship"
         },
         {
-            "created": "2019-09-16T11:04:59.121Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
-            "id": "relationship--6aecdb96-c24d-4e06-a6da-b7442a0a749e",
-            "modified": "2019-09-16T11:04:59.121Z",
+            "created": "2021-04-16T16:54:56.945Z",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
+            "id": "relationship--9bff5e15-ae40-4411-ab09-dfe8865d2712",
+            "modified": "2021-04-16T16:54:56.945Z",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "relationship_type": "related-to",
             "source_ref": "identity--c63f31ac-871b-4846-aa25-de1926f4f3c8",
-            "target_ref": "tool--a580771b-1320-46c4-b65c-5dc4f3c285a9",
+            "target_ref": "tool--2c998d44-8269-4d0d-93d9-bb13c07e2abf",
             "type": "relationship"
         },
         {
-            "created": "2019-09-16T11:04:59.121Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
-            "id": "relationship--b933feff-e8ca-4875-aef1-e5c6471f1807",
-            "modified": "2019-09-16T11:04:59.121Z",
+            "created": "2021-04-16T16:54:56.945Z",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
+            "id": "relationship--b6744867-37b9-4ba9-a262-821b8a911395",
+            "modified": "2021-04-16T16:54:56.945Z",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "relationship_type": "related-to",
             "source_ref": "identity--c63f31ac-871b-4846-aa25-de1926f4f3c8",
-            "target_ref": "tool--16e9089b-add6-4778-a8b7-bcad8c5da6ac",
+            "target_ref": "tool--0781fe70-4c94-4300-8865-4b08b98611b4",
             "type": "relationship"
         },
         {
-            "created": "2019-09-16T11:04:59.121Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
-            "id": "relationship--89e72146-e879-4ca4-b836-d112bafdb5f3",
-            "modified": "2019-09-16T11:04:59.121Z",
+            "created": "2021-04-16T16:54:56.945Z",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
+            "id": "relationship--1e848eb7-ea83-43d3-affd-6df22a35caa4",
+            "modified": "2021-04-16T16:54:56.945Z",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "relationship_type": "related-to",
             "source_ref": "identity--c63f31ac-871b-4846-aa25-de1926f4f3c8",
-            "target_ref": "tool--4437f5e2-6341-498c-9c99-85e3179ea5b0",
+            "target_ref": "tool--73e80a02-d66f-47fc-ab49-a547e37e961c",
             "type": "relationship"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--457f7913-c000-48ec-9394-67d777e7d586",
+            "created_by_ref": "identity--d9f8c5d8-bdda-4a96-99c4-29c3380f4fc2",
             "description": "&lt;!DOCTYPE html&gt;\n\t\t\t\t\t&lt;html&gt;\n\t\t\t\t\t&lt;body&gt;\n\t\t\t\t\t&lt;p&gt;\n\t\t\t\t\tSince 2004, Mandiant has investigated computer security breaches at hundreds of organizations around the world.\n\t\t\t\t\tThe majority of these security breaches are attributed to advanced threat actors referred to as the \"Advanced Persistent\n\t\t\t\t\tThreat\" (APT). We first published details about the APT in our January 2010 M-Trends report. As we stated in the\n\t\t\t\t\treport, our position was that \"The Chinese government may authorize this activity, but there&#8217;s no way to determine the\n\t\t\t\t\textent of its involvement.\" Now, three years later, we have the evidence required to change our assessment. The details\n\t\t\t\t\twe have analyzed during hundreds of investigations convince us that the groups conducting these activities are based\n\t\t\t\t\tprimarily in China and that the Chinese Government is aware of them.\n\t\t\t\t\t&lt;/P&gt;\n\t\t\t\t\t&lt;p&gt;\n\t\t\t\t\tMandiant continues to track dozens of APT groups around the world; however, this report is focused on the most\n\t\t\t\t\tprolific of these groups. We refer to this group as \"APT1\" and it is one of more than 20 APT groups with origins in\n\t\t\t\t\tChina. APT1 is a single organization of operators that has conducted a cyber espionage campaign against a broad\n\t\t\t\t\trange of victims since at least 2006. From our observations, it is one of the most prolific cyber espionage groups in\n\t\t\t\t\tterms of the sheer quantity of information stolen. The scale and impact of APT1&#8217;s operations compelled us to write this\n\t\t\t\t\treport.\n\t\t\t\t\t&lt;/P&gt;\n\t\t\t\t\t&lt;p&gt;\n\t\t\t\t\tThe activity we have directly observed likely represents only a small fraction of the cyber espionage that APT1 has\n\t\t\t\t\tconducted. Though our visibility of APT1&#8217;s activities is incomplete, we have analyzed the group&#8217;s intrusions against\n\t\t\t\t\tnearly 150 victims over seven years. From our unique vantage point responding to victims, we tracked APT1 back\n\t\t\t\t\tto four large networks in Shanghai, two of which are allocated directly to the Pudong New Area. We uncovered a\n\t\t\t\t\tsubstantial amount of APT1&#8217;s attack infrastructure, command and control, and modus operandi (tools, tactics, and\n\t\t\t\t\tprocedures). In an effort to underscore there are actual individuals behind the keyboard, Mandiant is revealing three\n\t\t\t\t\tpersonas we have attributed to APT1. These operators, like soldiers, may merely be following orders given to them by\n\t\t\t\t\tothers.\n\t\t\t\t\t&lt;/P&gt;\n\t\t\t\t\t&lt;p&gt;\n\t\t\t\t\tOur analysis has led us to conclude that APT1 is likely government-sponsored and one of the most persistent of China&#8217;s\n\t\t\t\t\tcyber threat actors. We believe that APT1 is able to wage such a long-running and extensive cyber espionage campaign\n\t\t\t\t\tin large part because it receives direct government support. In seeking to identify the organization behind this activity,\n\t\t\t\t\tour research found that People&#8217;s Liberation Army (PLA&#8217;s) Unit 61398 is similar to APT1 in its mission, capabilities, and\n\t\t\t\t\tresources. PLA Unit 61398 is also located in precisely the same area from which APT1 activity appears to originate.\n\t\t\t\t\t&lt;/P&gt;\n\t\t\t\t\t&lt;/body&gt;\n\t\t\t\t\t&lt;/html&gt;",
             "id": "report--e33ffe07-2f4c-48d8-b0af-ee2619d765cf",
             "labels": [
@@ -1697,7 +1749,7 @@
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "APT1: Exposing One of China's Cyber Espionage Units",
             "object_marking_refs": [
-                "marking-definition--018ca221-deca-4b46-8250-c8d322e20796"
+                "marking-definition--5d79a92d-61c3-449d-84e9-fbefa96fb7f0"
             ],
             "object_refs": [
                 "threat-actor--8dff0344-0c82-4079-8d04-6f3e4d9bd1df",

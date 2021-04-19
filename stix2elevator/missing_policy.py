@@ -155,45 +155,55 @@ def add_statement_type_as_custom_or_extension_property(statement):
     return statement_json
 
 
-def statement_type_as_custom_properties(sdo_instance, statement, property_name):
-    if statement.value:
-        sdo_instance[convert_to_custom_name(property_name)] = str(statement.value)
+def statement_type_as_custom_properties(sdo_instance, statement, property_name, use_custom_name, is_list):
+    final_property_name = property_name if not use_custom_name else convert_to_custom_name(property_name)
+    map = dict()
     if statement.descriptions:
         descriptions = []
         for d in statement.descriptions:
             descriptions.append(str(d.value))
-        sdo_instance[convert_to_custom_name(property_name) + "_description"] = " ".join(descriptions)
+        map["description"] = " ".join(descriptions)
     if statement.source is not None:
         # FIXME: Handle source
         info("Source property in STIX 1.x statement is not handled, yet.", 815)
     if statement.confidence:
-        add_confidence_property_as_custom_property(sdo_instance, statement.confidence, property_name)
+        add_confidence_property_as_custom_property(map, statement.confidence, property_name)
+    if map:
+        if statement.value:
+            map["value"] = str(statement.value)
+        sdo_instance[final_property_name] = [map] if is_list else map
+    else:
+        sdo_instance[final_property_name] = [str(statement.value)] if is_list else str(statement.value)
 
-
-def statement_type_as_extension_properties(container, statement, property_name, id):
-    if statement.value:
-        container[property_name] = str(statement.value)
+def statement_type_as_extension_properties(container, statement, property_name, id, is_list):
+    map = dict()
     if statement.descriptions:
         descriptions = []
         for d in statement.descriptions:
             descriptions.append(str(d.value))
-        container[property_name + "_description"] = " ".join(descriptions)
+        map["description"] = " ".join(descriptions)
     if statement.source is not None:
         # FIXME: Handle source
         info("Source property in STIX 1.x statement is not handled, yet.", 815)
     if statement.confidence:
-        add_confidence_property_as_extension_property(container, statement.confidence, property_name, id)
+        add_confidence_property_as_extension_property(map, statement.confidence, property_name, id)
+    if map:
+        if statement.value:
+            map["value"] = str(statement.value)
+        container[property_name] = [map] if is_list else map
+    else:
+        container[property_name] = [str(statement.value)] if is_list else str(statement.value)
 
 
-def handle_missing_statement_properties(container, statement, property_name, id):
+def handle_missing_statement_properties(container, statement, property_name, id, use_custom_name=True, is_list=False):
     if statement:
         if check_for_missing_policy("add-to-description"):
             add_statement_type_to_description(container, statement, property_name)
         elif check_for_missing_policy("use-custom-properties"):
-            statement_type_as_custom_properties(container, statement, property_name)
+            statement_type_as_custom_properties(container, statement, property_name, use_custom_name, is_list)
             warn("Used custom properties for Statement type content of %s", 308, id)
         elif check_for_missing_policy("use-extensions"):
-            statement_type_as_extension_properties(container, statement, property_name, id)
+            statement_type_as_extension_properties(container, statement, property_name, id, is_list)
             warn("Used extensions properties for Statement type content of %s", 308, id)
         else:
             warn("Missing property %s of %s is ignored", 307, property_name, id)
@@ -206,19 +216,19 @@ def collect_statement_type_as_custom_or_extension_property(statements):
     return statements_json
 
 
-def handle_multiple_missing_statement_properties(container, statements, property_name, id):
+def handle_multiple_missing_statement_properties(container, statements, property_name, id, use_custom_name=True):
     if statements:
         if len(statements) == 1:
-            handle_missing_statement_properties(container, statements[0], property_name, id)
+            handle_missing_statement_properties(container, statements[0], property_name, id, use_custom_name, is_list=True)
         else:
             if check_for_missing_policy("add-to-description"):
                 for s in statements:
                     add_statement_type_to_description(container, s, property_name)
             elif check_for_missing_policy("use-custom-properties"):
-                container[convert_to_custom_name(property_name + "s")] = \
+                container[convert_to_custom_name(property_name)] = \
                     collect_statement_type_as_custom_or_extension_property(statements)
             elif check_for_missing_policy("use-extensions"):
-                container[property_name + "s"] = collect_statement_type_as_custom_or_extension_property(statements)
+                container[property_name] = collect_statement_type_as_custom_or_extension_property(statements)
             else:
                 warn("Missing property %s of %s is ignored", 307, property_name, id)
 
