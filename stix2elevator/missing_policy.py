@@ -18,6 +18,11 @@ def convert_to_custom_name(name, separator="_"):
     return "x" + separator + get_option_value("custom_property_prefix") + separator + name.lower()
 
 
+def remove_custom_name(name, separator="_"):
+    prefix = "x" + separator + get_option_value("custom_property_prefix") + separator
+    return name[len(prefix):]
+
+
 def add_string_property_to_description(sdo_instance, property_name, property_value, is_list=False):
     if is_list:
         sdo_instance["description"] += "\n\n" + property_name.upper() + ":\n"
@@ -30,14 +35,15 @@ def add_string_property_to_description(sdo_instance, property_name, property_val
     warn("Appended %s to description of %s", 302, property_name, sdo_instance["id"])
 
 
-def add_string_property_as_custom_property(sdo_instance, property_name, property_value, is_list=False):
+def add_string_property_as_custom_property(sdo_instance, property_name, property_value, use_custom_name, is_list=False):
+    final_property_name = property_name if not use_custom_name else convert_to_custom_name(property_name)
     if is_list:
         property_values = list()
         for v in property_value:
             property_values.append(str(v))
-        sdo_instance[convert_to_custom_name(property_name)] = property_values
+        sdo_instance[final_property_name] = property_values
     else:
-        sdo_instance[convert_to_custom_name(property_name)] = str(property_value)
+        sdo_instance[final_property_name] = str(property_value)
     warn("Used custom property for %s", 308, property_name + (" of " + sdo_instance["id"] if "id" in sdo_instance else ""))
 
 
@@ -52,7 +58,8 @@ def add_string_property_as_extension_property(container, property_name, property
     warn("Used extension property for %s", 313, property_name + (" of " + sdo_id if sdo_id else ""))
 
 
-def handle_missing_string_property(container, property_name, property_value, sdo_id, is_list=False, is_sco=False):
+def handle_missing_string_property(container, property_name, property_value, sdo_id, is_list=False, is_sco=False,
+                                   use_custom_name=True):
     if property_value:
         if check_for_missing_policy("add-to-description"):
             if is_sco or "description" not in container:
@@ -61,7 +68,7 @@ def handle_missing_string_property(container, property_name, property_value, sdo
             else:
                 add_string_property_to_description(container, property_name, property_value, is_list)
         elif check_for_missing_policy("use-custom-properties"):
-            add_string_property_as_custom_property(container, property_name, property_value, is_list)
+            add_string_property_as_custom_property(container, property_name, property_value, use_custom_name, is_list)
         elif check_for_missing_policy("use-extensions"):
             add_string_property_as_extension_property(container, property_name, property_value, sdo_id, is_list)
         else:
@@ -82,7 +89,10 @@ def add_confidence_property_to_description(sdo_instance, confidence, parent_prop
 def add_confidence_property_as_custom_property(sdo_instance, confidence, parent_property_name=None):
     prefix = parent_property_name + "_" if parent_property_name else ""
     if confidence.value is not None:
-        sdo_instance[convert_to_custom_name(prefix + "confidence")] = str(confidence.value)
+        value = str(confidence.value)
+        if value.isdigit():
+            value = int(value)
+        sdo_instance[convert_to_custom_name(prefix + "confidence")] = value
     if confidence.description is not None:
         sdo_instance[convert_to_custom_name(prefix + "confidence_description")] = str(confidence.description)
     warn("Used custom properties for Confidence type content %s", 308, ("of" + sdo_instance["id"] if "id" in sdo_instance else ""))

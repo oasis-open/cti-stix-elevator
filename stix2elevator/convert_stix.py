@@ -1282,7 +1282,7 @@ def handle_missing_identity_ref_properties(container, instance2x, sources, env, 
                 id_info = id2x["id"]
             identities.append(id_info)
     if not identities == list():
-        handle_missing_string_property(container, property_name, identities, instance2x["id"], True)
+        handle_missing_string_property(container, property_name, identities, instance2x["id"], True, use_custom_name=False)
 # incident
 
 
@@ -1305,7 +1305,7 @@ def handle_missing_properties_of_incident(incident_instance, incident, env):
             if reporter.identity:
                 id2x = convert_identity(reporter.identity, env)
                 env.bundle_instance["objects"].append(id2x)
-                handle_missing_string_property(container, "reporter", id2x["id"], incident_instance["id"])
+                handle_missing_string_property(container, "reporter", id2x["id"], incident_instance["id"], use_custom_name=False)
 
         if incident.responders is not None:
             handle_missing_identity_ref_properties(container, incident_instance, incident.responders, env, "responders")
@@ -1324,7 +1324,7 @@ def handle_missing_properties_of_incident(incident_instance, incident, env):
             # FIXME: add impact_assessment to description
             info("Incident Impact Assessment in %s is not handled, yet", 815, incident_instance["id"])
 
-        handle_missing_string_property(container, "status", incident.status, incident_instance["id"])
+        handle_missing_string_property(container, "status", incident.status, incident_instance["id"], use_custom_name=False)
 
         fill_in_extension_properties(incident_instance, container, extension_definition_id)
 

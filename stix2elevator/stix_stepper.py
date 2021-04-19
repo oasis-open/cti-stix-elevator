@@ -12,6 +12,9 @@ import stix2validator
 
 # internal
 from stix2elevator.ids import generate_sco_id
+from stix2elevator.missing_policy import (determine_container_for_missing_properties, fill_in_extension_properties,
+                                          remove_custom_name)
+from stix2elevator.options import initialize_options, set_option_value
 from stix2elevator.utils import NewlinesHelpFormatter, validate_stix2_string
 from stix2elevator.version import __version__
 
@@ -19,6 +22,13 @@ from stix2elevator.version import __version__
 def lookup_stix_id(obs_id, all_objects):
     if obs_id in all_objects:
         return all_objects[obs_id]["id"]
+
+
+def contains_custom_properties(stix_object):
+    for key in stix_object.keys():
+        if key.startswith("x_"):
+            return True
+    return False
 
 
 def handle_references(obj, all_objects):
@@ -81,10 +91,15 @@ def step_cyber_observable(obj, observed_data):
         if "binary_ref" in obj:
             obj["image_ref"] = obj["binary_ref"]
             obj.pop("binary_ref", None)
+        if "created" in obj:
+            obj["created_time"] = obj["created"]
+            obj.pop("created", None)
     elif type_name20 == "user-account":
         if "password_last_changed" in obj:
             obj["credential_last_changed"] = obj["password_last_changed"]
             obj.pop("password_last_changed", None)
+    elif type_name20.startswith("x-"):
+        step_custom_object(obj)
     handle_references(obj, all_objects)
     objs.append(obj)
     return objs
@@ -107,6 +122,75 @@ def step_observable_data(observed_data):
     return scos
 
 
+def step_to_extensions(stix_object):
+    custom_properties = []
+    for key in stix_object.keys():
+        if key.startswith("x_"):
+            custom_properties.append(key)
+    container, extension_definition_id = determine_container_for_missing_properties(stix_object["type"],
+                                                                                    stix_object)
+    if container is not None:
+        for key in custom_properties:
+            key_value = stix_object[key]
+            stix_object.pop(key)
+            container[remove_custom_name(key)] = key_value
+        fill_in_extension_properties(stix_object, container, extension_definition_id)
+
+
+def step_custom_object(stix_object):
+    if "created" in stix_object:
+        # warn("Assume custom object %s is a SDO")
+        pass
+    else:
+        new_type = remove_custom_name(stix_object["type"], separator="-")
+        container, extension_definition_id = determine_container_for_missing_properties(new_type,
+                                                                                        stix_object,
+                                                                                        True)
+        if container is not None:
+            stix_object["id"] = remove_custom_name(stix_object["id"], separator="-")
+            stix_object["type"] = new_type
+
+            container["extension_type"] = "new-sco"
+            fill_in_extension_properties(stix_object, container, extension_definition_id, None)
+
+_CONFIDENCE_SCALE = {
+    "None": 0,
+    "Low": 15,
+    "Med": 50,
+    "Medium": 50,
+    "High": 85
+}
+
+def step_confidence_property(stix21_obj):
+    confidence_properties = filter(lambda x: "confidence" in x, stix21_obj.keys())
+    confidence_prop = None
+    for prop in confidence_properties:
+        if remove_custom_name(prop) == "confidence":
+            confidence_prop = prop
+            break
+    if confidence_prop:
+        stix21_obj["confidence"] = _CONFIDENCE_SCALE[stix21_obj[confidence_prop]] \
+                                    if stix21_obj[confidence_prop] in _CONFIDENCE_SCALE else stix21_obj[confidence_prop]
+        stix21_obj.pop(confidence_prop)
+
+
+def step_incident_data(stix_object):
+    container, extension_definition_id = determine_container_for_missing_properties("incident",
+                                                                                    stix_object)
+    ext_properties = []
+    for k in stix_object.keys():
+        if k not in ["name", "description", "type", "id", "created", "modified", "created_by_ref", "revoked",
+                     "labels", "confidence", "lang", "external_references", "object_marking_refs", "granular_markings"]:
+            ext_properties.append(k)
+    for k in ext_properties:
+            container[k] = stix_object[k]
+            stix_object.pop(k)
+    fill_in_extension_properties(stix_object, container, extension_definition_id)
+    stix_object["type"] = "incident"
+    stix_object["id"] = remove_custom_name(stix_object["id"], separator="-")
+    return stix_object
+
+
 def step_pattern(pattern):
     pattern_obj = create_pattern_object(pattern, module_suffix="Elevator", module_name="stix2elevator.convert_pattern")
     # replacing property names performed in toSTIX21
@@ -125,16 +209,22 @@ def step_object(stix_object):
     if stix_object["type"] == "indicator":
         stix_object["pattern"] = step_pattern(stix_object["pattern"])
         stix_object["pattern_type"] = "stix"
-        return [stix_object]
+        stix21_objs = [stix_object]
     elif stix_object["type"] == "malware":
         # couldn't explicitly represent malware families in 2.0, so assume False
         stix_object["is_family"] = False
-        return [stix_object]
+        stix21_objs =  [stix_object]
     elif stix_object["type"] == "observed-data":
-        x = step_observable_data(stix_object)
-        return x
+        stix21_objs = step_observable_data(stix_object)
+    elif "incident" in stix_object["type"]:
+        stix21_objs = [ step_incident_data(stix_object) ]
     else:
-        return [stix_object]
+        stix21_objs = [stix_object]
+    for stix21_obj in stix21_objs:
+        step_confidence_property(stix21_obj)
+        if contains_custom_properties(stix21_obj):
+            step_to_extensions(stix21_obj)
+    return stix21_objs
 
 
 # update "in place"
@@ -145,6 +235,12 @@ def step_bundle(bundle):
     bundle["objects"] = []
     for o in current_objects:
         additional_objects.extend(step_object(o))
+    for o in additional_objects:
+        if o["type"] == "relationship":
+            if "source_ref" in o and o["source_ref"].startswith("x-"):
+                o["source_ref"] = remove_custom_name(o["source_ref"], separator="-")
+            if "target_ref" in o and o["target_ref"].startswith("x-"):
+                o["target_ref"] = remove_custom_name(o["target_ref"], separator="-")
     bundle.pop("spec_version", None)
     bundle["objects"].extend(additional_objects)
     return bundle
@@ -171,11 +267,20 @@ def _get_arg_parser(is_script=True):
     parser.add_argument(
         "--validator-args",
         help="Arguments to pass to stix2-validator. Default: --strict-types\n\n"
-             "Example: stix2_elevator.py <file> --validator-args=\"-v --strict-types -d 212\"",
+             "Example: stix_stepper.py <file> --validator-args=\"-v --strict-types -d 212\"",
         dest="validator_args",
         action="store",
-        default=""
+        default="--version \"2.1\""
     )
+
+    parser.add_argument(
+        "--custom-property-prefix",
+        help="Prefix to use for custom property names when missing policy is 'use-custom-properties'. The default is 'elevator'.",
+        dest="custom_property_prefix",
+        action="store",
+        default="elevator"
+    )
+
     return parser
 
 
@@ -208,6 +313,9 @@ def step_file(fn, validator_options, encoding="utf-8"):
 def main():
     stepper_arg_parser = _get_arg_parser()
     stepper_args = stepper_arg_parser.parse_args()
+    initialize_options()
+    set_option_value("missing_policy", "use-extensions")
+    set_option_value("custom_property_prefix", "elevator")
     validator_options = stix2validator.parse_args(shlex.split(stepper_args.validator_args))
 
     stix2validator.output.set_level(validator_options.verbose)

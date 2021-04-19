@@ -7,13 +7,14 @@
                     "address_family": "AF_INET",
                     "is_listening": true,
                     "options": {
-                        "IP_MULTICAST_LOOP": true
-                    }
+                        "IP_MULTICAST_LOOP": 1
+                    },
+                    "x_elevator_local_address": "198.51.100.2"
                 }
             },
-            "id": "network-traffic--7bc29d43-c36d-5d67-9dc3-c151b34a1bcc",
+            "id": "network-traffic--bc151ba0-c40b-5777-8457-dc595b2fa727",
             "protocols": [
-                "TCP"
+                "tcp"
             ],
             "type": "network-traffic"
         },
@@ -25,7 +26,7 @@
             "modified": "2018-07-24T16:07:55.291Z",
             "number_observed": 1,
             "object_refs": [
-                "network-traffic--7bc29d43-c36d-5d67-9dc3-c151b34a1bcc"
+                "network-traffic--bc151ba0-c40b-5777-8457-dc595b2fa727"
             ],
             "spec_version": "2.1",
             "type": "observed-data"
@@ -33,4 +34,3 @@
     ],
     "type": "bundle"
 }
-

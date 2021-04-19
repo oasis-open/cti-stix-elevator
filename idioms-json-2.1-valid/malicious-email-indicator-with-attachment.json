@@ -2,6 +2,7 @@
     "id": "bundle--8b8ed1c1-f01d-4393-ac65-97017ed15876",
     "objects": [
         {
+            "confidence": 85,
             "created": "2014-10-31T15:52:13.127Z",
             "id": "indicator--8cf9236f-1b96-493d-98be-0c1c1e8b62d7",
             "indicator_types": [
@@ -9,13 +10,14 @@
             ],
             "modified": "2014-10-31T15:52:13.127Z",
             "name": "Malicious E-mail",
-            "pattern": "[(email-message:subject MATCHES '^[IMPORTANT] Please Review Before' AND email-message:body_multipart[*].body_raw_ref.name MATCHES '^Final Report*.doc.exe$')]",
+            "pattern": "[email-message:subject MATCHES '^[IMPORTANT] Please Review Before' AND email-message:body_multipart[*].body_raw_ref.name MATCHES '^Final Report*.doc.exe$']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
             "valid_from": "2014-10-31T15:52:13.127931Z"
         },
         {
+            "confidence": 15,
             "created": "2014-10-31T15:52:13.126Z",
             "id": "indicator--b06b0eb7-61dd-4338-a094-0290c380fbd8",
             "indicator_types": [
@@ -30,6 +32,7 @@
             "valid_from": "2014-10-31T15:52:13.126999Z"
         },
         {
+            "confidence": 15,
             "created": "2014-10-31T15:52:13.127Z",
             "id": "indicator--2e17f6fe-3a4d-438a-911a-e509ba1b9933",
             "indicator_types": [
@@ -45,7 +48,7 @@
         },
         {
             "created": "2014-10-31T15:52:13.127Z",
-            "id": "relationship--f50e63f5-fc39-481a-95e0-40eced3ae8f4",
+            "id": "relationship--e341a4f1-f210-4360-b923-a502a63348ce",
             "modified": "2014-10-31T15:52:13.127Z",
             "relationship_type": "indicates",
             "source_ref": "indicator--8cf9236f-1b96-493d-98be-0c1c1e8b62d7",
@@ -54,7 +57,7 @@
         },
         {
             "created": "2014-10-31T15:52:13.126Z",
-            "id": "relationship--769b61c6-859d-4461-ac37-9079c3cce0ab",
+            "id": "relationship--cc2bab61-68f0-43ed-82e4-d2f6db1273c9",
             "modified": "2014-10-31T15:52:13.126Z",
             "relationship_type": "indicates",
             "source_ref": "indicator--b06b0eb7-61dd-4338-a094-0290c380fbd8",
@@ -63,7 +66,7 @@
         },
         {
             "created": "2014-10-31T15:52:13.127Z",
-            "id": "relationship--738a6f2f-ed06-4bfd-a1f6-0741caa41f8d",
+            "id": "relationship--487e1967-cded-4a91-a46f-9974eabf6bad",
             "modified": "2014-10-31T15:52:13.127Z",
             "relationship_type": "indicates",
             "source_ref": "indicator--2e17f6fe-3a4d-438a-911a-e509ba1b9933",
@@ -73,7 +76,7 @@
         {
             "body_multipart": [
                 {
-                    "body_raw_ref": "file--4777a80e-b334-56ed-b8a1-7b19fe5c57ec",
+                    "body_raw_ref": "file--307d531c-7d74-5be6-b968-71ffb812b220",
                     "content_type": "text/plain"
                 }
             ],
@@ -83,20 +86,20 @@
             "type": "email-message"
         },
         {
-            "id": "file--4777a80e-b334-56ed-b8a1-7b19fe5c57ec",
-            "name": "Final Report",
+            "id": "file--307d531c-7d74-5be6-b968-71ffb812b220",
+            "name": "Final Report.doc.exe",
             "type": "file"
         },
         {
-            "created": "2018-08-18T14:14:42.346Z",
-            "first_observed": "2018-08-18T14:14:42.346Z",
+            "created": "2019-10-04T13:10:53.843Z",
+            "first_observed": "2019-10-04T13:10:53.843Z",
             "id": "observed-data--2305f359-ab46-4932-acaf-953c31cd8b22",
-            "last_observed": "2018-08-18T14:14:42.346Z",
-            "modified": "2018-08-18T14:14:42.346Z",
+            "last_observed": "2019-10-04T13:10:53.843Z",
+            "modified": "2019-10-04T13:10:53.843Z",
             "number_observed": 1,
             "object_refs": [
                 "email-message--69999a2b-a948-55af-b7ae-9bc614c72542",
-                "file--4777a80e-b334-56ed-b8a1-7b19fe5c57ec"
+                "file--307d531c-7d74-5be6-b968-71ffb812b220"
             ],
             "spec_version": "2.1",
             "type": "observed-data"
