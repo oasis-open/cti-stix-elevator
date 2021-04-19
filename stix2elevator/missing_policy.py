@@ -198,6 +198,9 @@ def statement_type_as_extension_properties(container, statement, property_name, 
 def handle_missing_statement_properties(container, statement, property_name, id, use_custom_name=True, is_list=False):
     if statement:
         if check_for_missing_policy("add-to-description"):
+            if is_list:
+                # drop the "s"
+                property_name = property_name[:-1]
             add_statement_type_to_description(container, statement, property_name)
         elif check_for_missing_policy("use-custom-properties"):
             statement_type_as_custom_properties(container, statement, property_name, use_custom_name, is_list)
@@ -223,7 +226,8 @@ def handle_multiple_missing_statement_properties(container, statements, property
         else:
             if check_for_missing_policy("add-to-description"):
                 for s in statements:
-                    add_statement_type_to_description(container, s, property_name)
+                    # drop the "s"
+                    add_statement_type_to_description(container, s, property_name[:-1])
             elif check_for_missing_policy("use-custom-properties"):
                 container[convert_to_custom_name(property_name)] = \
                     collect_statement_type_as_custom_or_extension_property(statements)
