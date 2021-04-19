@@ -1,6 +1,6 @@
 .. _conversion_issues:
 
-​Conversion Issues
+Conversion Issues
 =====================
 
 This section discusses some techniques to facilitate the conversion of

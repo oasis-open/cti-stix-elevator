@@ -9,9 +9,7 @@ from stix.core import STIXPackage
 import stixmarx
 
 # internal
-from stix2elevator import (
-    elevate, elevate_file, elevate_package, elevate_string, options
-)
+from stix2elevator import elevate, options
 from stix2elevator.options import (
     ElevatorOptions, get_option_value, initialize_options, set_option_value
 )
@@ -120,51 +118,5 @@ def test_elevate_with_file():
     archive_file = os.path.join(xml_idioms_dir, "141-TLP-marking-structures.xml")
 
     json_result = elevate(archive_file)
-    assert json_result
-    print(json_result)
-
-
-def test_deprecated_elevate_file():
-    setup_options()
-
-    directory = os.path.dirname(__file__)
-    xml_idioms_dir = find_dir(directory, "idioms-xml")
-    archive_file = os.path.join(xml_idioms_dir, "141-TLP-marking-structures.xml")
-
-    with pytest.warns(DeprecationWarning):
-        json_result = elevate_file(archive_file)
-
-    assert json_result
-    print(json_result)
-
-
-def test_deprecated_elevate_string():
-    setup_options()
-
-    directory = os.path.dirname(__file__)
-    xml_idioms_dir = find_dir(directory, "idioms-xml")
-    archive_file = os.path.join(xml_idioms_dir, "141-TLP-marking-structures.xml")
-
-    with pytest.warns(DeprecationWarning):
-        with io.open(archive_file, mode="r", encoding="utf-8") as f:
-            input_stix = f.read()
-        json_result = elevate_string(input_stix)
-
-    assert json_result
-    print(json_result)
-
-
-def test_deprecated_elevate_package():
-    setup_options()
-
-    directory = os.path.dirname(__file__)
-    xml_idioms_dir = find_dir(directory, "idioms-xml")
-    archive_file = os.path.join(xml_idioms_dir, "141-TLP-marking-structures.xml")
-
-    with pytest.warns(DeprecationWarning):
-        with io.open(archive_file, mode="r", encoding="utf-8") as f:
-            input_stix = f.read()
-        json_result = elevate_package(STIXPackage.from_xml(io.StringIO(input_stix)))
-
     assert json_result
     print(json_result)

@@ -1,4 +1,4 @@
-​Command Line Interface
+Command Line Interface
 ===========================
 
 The elevator comes with a bundled script which you can use to elevate

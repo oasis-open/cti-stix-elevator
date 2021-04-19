@@ -4,7 +4,6 @@ import json
 import logging
 import os
 import re
-import warnings
 
 # external
 import cybox.utils.caches
@@ -120,7 +119,6 @@ def elevate(stix_package):
             raise TypeError("Must be an instance of stix.core.STIXPackage")
     except (OSError, IOError, lxml.etree.Error) as ex:
         log.error("Error occurred: %s", ex)
-        # log.exception(ex)
         return None
 
     try:
@@ -151,152 +149,3 @@ def elevate(stix_package):
     except ValidationError as ex:
         output.error("Validation error occurred: '{}'".format(ex))
         output.error("Error Code: {}".format(codes.EXIT_VALIDATION_ERROR))
-
-
-def elevate_file(fn):
-    # TODO:  combine elevate_file, elevate_string and elevate_package
-    warnings.warn("This method is deprecated and will be removed in the next major release. Please use elevate() instead.", DeprecationWarning)
-    global MESSAGES_GENERATED
-    MESSAGES_GENERATED = False
-    print("Results produced by the stix2-elevator are not for production purposes.")
-    clear_globals()
-
-    validator_options = get_validator_options()
-
-    try:
-        output.set_level(validator_options.verbose)
-        output.set_silent(validator_options.silent)
-
-        if os.path.isfile(fn) is False:
-            raise IOError("The file '{}' was not found.".format(fn))
-
-        container = stixmarx.parse(fn)
-        stix_package = container.package
-        set_option_value("marking_container", container)
-
-        if not isinstance(stix_package, STIXPackage):
-            raise TypeError("Must be an instance of stix.core.STIXPackage")
-
-        setup_logger(stix_package.id_)
-        warn("Results produced by the stix2-elevator may generate warning messages which should be investigated.", 201)
-        env = Environment(get_option_value("package_created_by_id"))
-        json_string = json.dumps(convert_package(stix_package, env),
-                                 ensure_ascii=False,
-                                 indent=4,
-                                 separators=(',', ': '),
-                                 sort_keys=True)
-
-        validation_results = validate_stix2_string(json_string, validator_options, fn)
-        output.print_results([validation_results])
-
-        if get_option_value("policy") == "no_policy":
-            return json_string
-        else:
-            if not MESSAGES_GENERATED and validation_results._is_valid:
-                return json_string
-            else:
-                return None
-
-    except ValidationError as ex:
-        output.error("Validation error occurred: '{}'".format(ex))
-        output.error("Error Code: {}".format(codes.EXIT_VALIDATION_ERROR))
-    except (OSError, IOError, lxml.etree.Error) as ex:
-        log.error("Error occurred: %s", ex)
-        # log.exception(ex)
-
-
-def elevate_string(string):
-    warnings.warn("This method is deprecated and will be removed in the next major release. Please use elevate() instead.", DeprecationWarning)
-    global MESSAGES_GENERATED
-    MESSAGES_GENERATED = False
-    clear_globals()
-
-    validator_options = get_validator_options()
-
-    try:
-        output.set_level(validator_options.verbose)
-        output.set_silent(validator_options.silent)
-
-        bytes_obj = io.StringIO(string)
-        container = stixmarx.parse(bytes_obj)
-        stix_package = container.package
-        set_option_value("marking_container", container)
-
-        if not isinstance(stix_package, STIXPackage):
-            raise TypeError("Must be an instance of stix.core.STIXPackage")
-
-        setup_logger(stix_package.id_)
-        warn("Results produced by the stix2-elevator are not for production purposes.", 201)
-        env = Environment(get_option_value("package_created_by_id"))
-        json_string = json.dumps(convert_package(stix_package, env),
-                                 ensure_ascii=False,
-                                 indent=4,
-                                 separators=(',', ': '),
-                                 sort_keys=True)
-
-        validation_results = validate_stix2_string(json_string, validator_options)
-        output.print_results([validation_results])
-
-        if get_option_value("policy") == "no_policy":
-            return json_string
-        else:
-
-            if not MESSAGES_GENERATED and validation_results._is_valid:
-                return json_string
-            else:
-                return None
-
-    except ValidationError as ex:
-        output.error("Validation error occurred: '{}'".format(ex))
-        output.error("Error Code: {}".format(codes.EXIT_VALIDATION_ERROR))
-    except (OSError, IOError, lxml.etree.Error) as ex:
-        log.error("Error occurred: %s", ex)
-        # log.exception(ex)
-
-
-def elevate_package(package):
-    warnings.warn("This method is deprecated and will be removed in the next major release. Please use elevate() instead.", DeprecationWarning)
-    global MESSAGES_GENERATED
-    MESSAGES_GENERATED = False
-    clear_globals()
-
-    validator_options = get_validator_options()
-
-    try:
-        output.set_level(validator_options.verbose)
-        output.set_silent(validator_options.silent)
-
-        # It needs to be re-parsed.
-        container = stixmarx.parse(io.BytesIO(package.to_xml()))
-        stix_package = container.package
-        set_option_value("marking_container", container)
-
-        if not isinstance(stix_package, STIXPackage):
-            raise TypeError("Must be an instance of stix.core.STIXPackage")
-
-        setup_logger(stix_package.id_)
-        warn("Results produced by the stix2-elevator are not for production purposes.", 201)
-        env = Environment(get_option_value("package_created_by_id"))
-        json_string = json.dumps(convert_package(stix_package, env),
-                                 ensure_ascii=False,
-                                 indent=4,
-                                 separators=(',', ': '),
-                                 sort_keys=True)
-
-        validation_results = validate_stix2_string(json_string, validator_options)
-        output.print_results([validation_results])
-
-        if get_option_value("policy") == "no_policy":
-            return json_string
-        else:
-            if not MESSAGES_GENERATED and validation_results._is_valid:
-                return json_string
-            else:
-                return None
-
-    except ValidationError as ex:
-        output.error("Validation error occurred: '{}'".format(ex))
-        output.error("Error Code: {}".format(codes.EXIT_VALIDATION_ERROR))
-    except (OSError, IOError, lxml.etree.Error) as ex:
-        log.error("Error occurred: %s", ex)
-        # log.exception(ex)
