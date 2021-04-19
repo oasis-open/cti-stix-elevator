@@ -315,7 +315,7 @@ def main():
     stepper_args = stepper_arg_parser.parse_args()
     initialize_options()
     set_option_value("missing_policy", "use-extensions")
-    set_option_value("custom_property_prefix", "elevator")
+    set_option_value("custom_property_prefix", stepper_args.custom_property_prefix)
     validator_options = stix2validator.parse_args(shlex.split(stepper_args.validator_args))
 
     stix2validator.output.set_level(validator_options.verbose)
