@@ -1287,7 +1287,15 @@ def convert_socket_address_1(sock_add_1x, cybox_traffic, objs, spec_version, ind
     return index
 
 
+def add_http_protocol(cybox_traffic, conn):
+    if "http" not in cybox_traffic["protocols"] and "https" not in cybox_traffic["protocols"] and not conn.tls_used:
+        cybox_traffic["protocols"].append("http")
+    if "https" not in cybox_traffic["protocols"] and conn.tls_used:
+        cybox_traffic["protocols"].append("https")
+
+
 def convert_network_connection(conn, env=None):
+    # start at 1 - the main object will be put into "0" later
     index = 1
     spec_version = get_option_value("spec_version")
     cybox_traffic = create_base_sco("network-traffic", conn)
@@ -1326,13 +1334,14 @@ def convert_network_connection(conn, env=None):
         if conn.layer7_connections.http_session is not None:
             if conn.layer7_connections.http_session.object_reference:
                 nt = handle_object_reference(conn.layer7_connections.http_session, "network-traffic", env, "extensions")
+                add_http_protocol(cybox_traffic, conn)
                 cybox_traffic["extensions"] = nt["extensions"]
             else:
                 # HTTP extension
-                cybox_traffic["extensions"] = {}
                 request_responses = conn.layer7_connections.http_session.http_request_response
                 if request_responses:
                     cybox_traffic["extensions"] = dict()
+                    add_http_protocol(cybox_traffic, conn)
                     request_ext, body_obj = convert_http_network_connection_extension(request_responses[0])
                     cybox_traffic["extensions"]["http-request-ext"] = request_ext
                     if body_obj:
@@ -1351,7 +1360,6 @@ def convert_network_connection(conn, env=None):
         cybox_traffic["type"] = "network-traffic"
         if spec_version == "2.0":
             objs["0"] = cybox_traffic
-            index += 1
         else:
             generate_sco_id_for_2_1(cybox_traffic, conn.parent.id_)
             # network traffic object must be first
@@ -1390,6 +1398,10 @@ def convert_http_session(session):
             cybox_traffic = create_base_sco("network-traffic", session)
             request_ext, body_obj = convert_http_client_request(requests[0])
             cybox_traffic["extensions"] = {"http-request-ext": request_ext}
+            if "protocols" not in cybox_traffic:
+                cybox_traffic["protocols"] = list()
+            if "http" not in cybox_traffic["protocols"] and "https" not in cybox_traffic["protocols"]:
+                cybox_traffic["protocols"].append("http")
             if len(requests) > 1:
                 warn("Only HTTP_Request_Response used for http-request-ext, using first value", 512)
             if get_option_value("spec_version") == "2.0":
@@ -1441,6 +1453,10 @@ def convert_network_packet(packet):
             imcp_extension = {}
             cybox_traffic["extensions"] = {"icmp-ext": imcp_extension}
             create_icmp_extension(icmp_header, imcp_extension, cybox_traffic)
+            if "protocols" not in cybox_traffic:
+                cybox_traffic["protocols"] = list()
+            if "icmp" not in cybox_traffic["protocols"]:
+                cybox_traffic["protocols"].append("icmp")
             generate_sco_id_for_2_1(cybox_traffic, packet.parent.id_)
             return cybox_traffic
 

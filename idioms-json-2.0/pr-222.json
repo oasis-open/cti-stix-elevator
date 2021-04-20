@@ -17,6 +17,9 @@
                             }
                         }
                     },
+                    "protocols": [
+                        "http"
+                    ],
                     "type": "network-traffic"
                 }
             },

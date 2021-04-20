@@ -12,6 +12,9 @@
                 }
             },
             "id": "network-traffic--06d657c0-d7fb-4c47-b75b-ff1080b72820",
+            "protocols": [
+                "http"
+            ],
             "type": "network-traffic"
         },
         {

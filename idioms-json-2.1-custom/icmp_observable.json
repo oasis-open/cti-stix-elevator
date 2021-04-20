@@ -10,6 +10,9 @@
                 }
             },
             "id": "network-traffic--30a75718-e782-40f1-ae2f-ca1df860d5c6",
+            "protocols": [
+                "icmp"
+            ],
             "type": "network-traffic"
         },
         {
