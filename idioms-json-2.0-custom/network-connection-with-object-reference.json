@@ -88,6 +88,9 @@
                             "request_version": "http/1.1"
                         }
                     },
+                    "protocols": [
+                        "http"
+                    ],
                     "type": "network-traffic"
                 },
                 "1": {
