@@ -52,6 +52,7 @@ No extension-definition was found for STIX 1 type *[type]* in *[id]*            
 Used extension property for *[property_name]* of *[id]*                                                                        313     warn
 Missing property *[property_name]* of *[id]* is ignored, because it can't be represented in an extension                       314     warn
 New extension-definition id *[id]* was generated for *[type]*. *[id]*                                                          315     warn
+Custom Content *[property_name]* of *[id]* is ignored                                                                          316     warn
 ============================================================================================================================== ====    =====
 
 

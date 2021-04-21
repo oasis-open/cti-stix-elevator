@@ -1644,15 +1644,19 @@ def convert_custom_object(custom_obj1x):
                 container["extension_type"] = "new-sco"
                 fill_in_extension_properties(extension_obj21, container, extension_definition_id, None)
             return extension_obj21
-        else:
+        elif check_for_missing_policy("use-custom-properties"):
             custom_object_type = convert_to_custom_name(custom_obj1x.custom_name, separator="-")
             custom_obj2x = create_base_sco(custom_object_type, custom_obj1x)
             generate_sco_id_for_2_1(custom_obj2x, custom_obj1x.parent.id_)
             return custom_obj2x
-
+        else:
+            warn("Custom Content %s %s is ignored",
+                 316,
+                 custom_obj1x.custom_name,
+                 ("of " + custom_obj1x.parent.id_ if custom_obj1x.parent.id_ else ""))
     else:
         warn("Custom object with no name cannot be handled yet", 811)
-        return None
+    return None
 
 
 # def convert_netflow_object(obj1x):
@@ -1711,7 +1715,16 @@ def convert_cybox_object20(obj1x):
         # returns a dict
         objs = convert_socket_address(prop)
     elif isinstance(prop, Custom):
-        objs["0"] = convert_custom_object(prop)
+        cust_obj = convert_custom_object(prop)
+        if cust_obj:
+            if prop.custom_properties:
+                for cp in prop.custom_properties.property_:
+                    if isinstance(prop, Custom):
+                        prop_name = cp.name
+                    else:
+                        prop_name = convert_to_custom_name(cp.name)
+                    cust_obj[prop_name] = cp.value
+            objs["0"] = cust_obj
     else:
         warn("CybOX object %s not handled yet", 805, str(type(prop)))
         return None
@@ -1719,14 +1732,6 @@ def convert_cybox_object20(obj1x):
         warn("%s did not yield any STIX 2.x object", 417, str(type(prop)))
         return None
     else:
-        if prop.custom_properties:
-            primary_obj = objs["0"]
-            for cp in prop.custom_properties.property_:
-                if isinstance(prop, Custom):
-                    prop_name = cp.name
-                else:
-                    prop_name = convert_to_custom_name(cp.name)
-                primary_obj[prop_name] = cp.value
         if obj1x.id_:
             add_object_id_value(obj1x.id_, objs)
         return objs
