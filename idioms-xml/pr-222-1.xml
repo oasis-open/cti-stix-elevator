@@ -18,7 +18,6 @@
                             <HTTPSessionObj:HTTP_Request_Header>
                                 <HTTPSessionObj:Parsed_Header>
                                     <HTTPSessionObj:User_Agent>Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:25.0) Gecko/20100101 Firefox/25.0</HTTPSessionObj:User_Agent>
-
                                 </HTTPSessionObj:Parsed_Header>
                             </HTTPSessionObj:HTTP_Request_Header>
                              <HTTPSessionObj:HTTP_Message_Body>

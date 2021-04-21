@@ -11,7 +11,7 @@
                     }
                 }
             },
-            "id": "network-traffic--3b087202-88b4-4684-838b-074f601d4f10",
+            "id": "network-traffic--731cec4e-8e60-5c3b-b2f5-2401aad9d0e9",
             "protocols": [
                 "http"
             ],
@@ -30,7 +30,7 @@
             "modified": "2020-05-31T15:12:07.752Z",
             "number_observed": 1,
             "object_refs": [
-                "network-traffic--3b087202-88b4-4684-838b-074f601d4f10",
+                "network-traffic--731cec4e-8e60-5c3b-b2f5-2401aad9d0e9",
                 "artifact--1172c096-674f-567f-991a-761ecb419e0c"
             ],
             "spec_version": "2.1",

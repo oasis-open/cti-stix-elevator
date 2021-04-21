@@ -9,7 +9,7 @@
                     }
                 }
             },
-            "id": "network-traffic--43eb2b04-b199-4e34-824c-c33c897c72ed",
+            "id": "network-traffic--731cec4e-8e60-5c3b-b2f5-2401aad9d0e9",
             "protocols": [
                 "http"
             ],
@@ -23,7 +23,7 @@
             "modified": "2020-04-16T16:36:15.528Z",
             "number_observed": 1,
             "object_refs": [
-                "network-traffic--43eb2b04-b199-4e34-824c-c33c897c72ed"
+                "network-traffic--731cec4e-8e60-5c3b-b2f5-2401aad9d0e9"
             ],
             "spec_version": "2.1",
             "type": "observed-data"
