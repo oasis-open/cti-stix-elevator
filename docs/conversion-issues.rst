@@ -124,9 +124,11 @@ Missing Policy
 Certain STIX 1.x properties cannot be converted to a STIX 2.x property defined in the STIX 2.x specification.  The elevator
 provides a command line option to determine how to handle these STIX 1.x properties.
 
-- ``add-to-description``:  Add the value of the property to the ``description`` property.
+- ``add-to-description``:  Add the property name, property value pair to the description property to the ``description`` property.
 - ``use-custom-properties``: STIX 2.x provides the ability to add *custom* properties to any STIX object.
-  Missing properties can be included using this facility.  Note, that custom property names will have a prefix of ``x_<CUSTOM_PROPERTY_PREFIX>``, where ``CUSTOM_PROPERTY_PREFIX`` is provided as a command line option.  It defaults to ``elevator``.
+  Missing properties can be included using this facility.  Note, that custom property names will have a prefix of ``x_<CUSTOM_PROPERTY_PREFIX>``,
+  where ``CUSTOM_PROPERTY_PREFIX`` is provided as a command line option.  It defaults to ``elevator``.  This option has been deprecated, use ``use-extensions`` instead.
+- ``use-extensions``: STIX 2.x provides the ability to "extend" any STIX object, using the extension-definition object.
 - ``ignore``: The content is dropped, and does not appear in the STIX 2.x object
 
 Note that the handling of missing properties is not complete - not every STIX 1.x property is handled.
@@ -158,49 +160,80 @@ STIX 2.x using ``add-to-description``
 .. code-block:: json
 
     {
-        "created": "2015-05-15T09:00:00.000Z",
-        "description": "\n\nINFORMATION_SOURCE_ROLE:\nResearch and Development",
-        "id": "identity--7622b69a-f5f5-4e36-90ac-26f8c0cd2a45",
-        "identity_class": "individual",
-        "modified": "2015-05-15T09:00:00.000Z",
-        "name": "SuperHard",
-        "object_marking_refs": [
-            "marking-definition--0cda5493-87c3-4247-8438-cd6ade69206a"
-        ],
-        "spec_version": "2.1",
-        "type": "identity"
-    }
+            "created": "2015-07-31T11:24:39.090Z",
+            "description": "\n\nSTAGE:\n\tResponse\n\nOBJECTIVE: Block outbound traffic\n\nOBJECTIVE CONFIDENCE: High\n\nIMPACT:Medium: Some description about the indicator.",
+            "id": "course-of-action--3dbfccad-1fbb-4e9f-8307-f2d1a5c651cc",
+            "labels": [
+                "perimeter-blocking"
+            ],
+            "modified": "2015-07-31T11:24:39.090Z",
+            "name": "Block outbound traffic",
+            "spec_version": "2.1",
+            "type": "course-of-action"
+        },
+
+STIX 2.x using ``use-extensions``
+
+    {
+            "created": "2015-07-31T11:24:39.090Z",
+            "extensions": {
+                "extension-definition--a46b18de-0b41-4a95-9d2d-67a360f2d859": {
+                    "extension_type": "property-extension",
+                    "impact": {
+                        "description": "Some description about the indicator.",
+                        "value": "Medium"
+                    },
+                    "objective": "Block outbound traffic",
+                    "objective_confidence": "High",
+                    "stage": "Response"
+                }
+            },
+            "id": "course-of-action--3dbfccad-1fbb-4e9f-8307-f2d1a5c651cc",
+            "labels": [
+                "perimeter-blocking"
+            ],
+            "modified": "2015-07-31T11:24:39.090Z",
+            "name": "Block outbound traffic",
+            "spec_version": "2.1",
+            "type": "course-of-action"
+        }
+
+.. code-block:: json
 
 STIX 2.x using ``use-custom-properties``
 
 .. code-block:: json
 
-    {
-        "created": "2015-05-15T09:00:00.000Z",
-        "id": "identity--e3084f93-1f3f-4586-8921-01dde86d4300",
-        "identity_class": "individual",
-        "modified": "2015-05-15T09:00:00.000Z",
-        "name": "SuperHard",
-        "object_marking_refs": [
-            "marking-definition--ea012079-56ae-4c32-b8e8-5ce81e8cf842"
-        ],
-        "spec_version": "2.1",
-        "type": "identity",
-        "x_elevator_information_source_role": "Research and Development"
-    }
+        {
+            "created": "2015-07-31T11:24:39.090Z",
+            "id": "course-of-action--3dbfccad-1fbb-4e9f-8307-f2d1a5c651cc",
+            "labels": [
+                "perimeter-blocking"
+            ],
+            "modified": "2015-07-31T11:24:39.090Z",
+            "name": "Block outbound traffic",
+            "spec_version": "2.1",
+            "type": "course-of-action",
+            "x_elevator_impact": {
+                "description": "Some description about the indicator.",
+                "value": "Medium"
+            },
+            "x_elevator_objective": "Block outbound traffic",
+            "x_elevator_objective_confidence": "High",
+            "x_elevator_stage": "Response"
+        },
 
 STIX 2.x using ``ignore``
 
 .. code-block:: json
 
-    {
-        "created": "2015-05-15T09:00:00.000Z",
-        "id": "identity--df6c4a19-40ac-423e-89e5-fc822066a691",
-        "identity_class": "individual",
-        "modified": "2015-05-15T09:00:00.000Z",
-        "name": "SuperHard",
-        "object_marking_refs": [
-            "marking-definition--493e77b0-46df-4595-86d1-c5f26a62f1ae"
-        ],
-        "type": "identity"
-    }
+        {
+            "created": "2015-07-31T11:24:39.090Z",
+            "id": "course-of-action--3dbfccad-1fbb-4e9f-8307-f2d1a5c651cc",
+            "labels": [
+                "perimeter-blocking"
+            ],
+            "modified": "2015-07-31T11:24:39.090Z",
+            "name": "Block outbound traffic",
+            "type": "course-of-action"
+        },

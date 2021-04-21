@@ -7,7 +7,7 @@ STIX 1.x content to STIX 2.x content:
 .. code-block:: text
 
     usage: stix2_elevator [-h]
-              [--missing-policy {use-custom-properties,add-to-description,ignore}]
+              [--missing-policy {use-extensions,use-custom-properties,add-to-description,ignore}]
               [--custom-property-prefix CUSTOM_PROPERTY_PREFIX]
               [--infrastructure]
               [--incidents]
@@ -40,7 +40,7 @@ optional arguments:
   -h, --help
                 Show this help message and exit
 
-  --missing-policy {use-custom-properties,add-to-description,ignore}
+  --missing-policy {use-extensions,use-custom-properties,add-to-description,ignore}
                 Policy for including STIX 1.x content that cannot be
                 represented directly in STIX 2.x. The default is 'add-
                 to-description'.
