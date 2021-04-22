@@ -10,8 +10,10 @@
             "modified": "2015-07-31T11:24:39.090Z",
             "name": "Block outbound traffic",
             "type": "course-of-action",
-            "x_elevator_impact": "Medium",
-            "x_elevator_impact_description": "Some description about the indicator.",
+            "x_elevator_impact": {
+                "description": "Some description about the indicator.",
+                "value": "Medium"
+            },
             "x_elevator_objective": "Block outbound traffic",
             "x_elevator_objective_confidence": "High",
             "x_elevator_stage": "Response"

@@ -247,6 +247,18 @@ The same method can also accept a string as an argument.
     results = elevate("<stix:Package...")
     print(results)
 
+The same method can also accept a STIX 1.x package object as an argument.
+
+.. code-block:: python
+
+    # Elevate a STIX 1.x via string
+    from stix2elevator import elevate
+    from stix2elevator.options import initialize_options
+
+    initialize_options()
+    results = elevate(<STIX Package Object>)
+    print(results)
+
 To set options, use set_option_value, found in options.py
 
 Using the stepper

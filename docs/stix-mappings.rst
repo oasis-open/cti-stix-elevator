@@ -37,7 +37,7 @@ objects - but their mapping can be found in the :ref:`cyber_observables` section
 +-----------------------------+----------------------------+
 | ``et:Configuration``        | *not converted*            |
 +-----------------------------+----------------------------+
-| ``Incident``                | *not converted by default* |
+| ``Incident``                | ``Incident`` *in 2.1*     |
 +-----------------------------+----------------------------+
 | ``Indicator``               | ``indicator``              |
 +-----------------------------+----------------------------+
@@ -609,6 +609,142 @@ STIX 2.x in JSON
 Notice that the ``spec_version`` property only appears on the bundle in STIX 2.0, but in STIX 2.1, it is *not* a property of the
 bundle. It may (optionally) appear on each object.  The elevator will always provides the ``spec_version`` property for
 all 2.1 SDOs and SROs, but not on SCOs.
+
+Incident
+----------------------
+
+In STIX 2.1 the ``Incident`` object is defined as a stub. This means that in STIX
+2.x this object type is pretty "bare-bones", not containing most of the
+properties that were found in STIX 1.x.
+
+**STIX 1.x Properties Mapped Directly to STIX 2.x Properties**
+
+*none*
+
+**STIX 1.x Properties Translated to STIX 2.x Properties**
+
+..  table::
+    :align: left
+
+    +-------------------------+---------------------------+
+    | **STIX 1.x property**   | **STIX 2.x property**     |
+    +=========================+===========================+
+    | ``Categories``          |   ``labels``              |
+    +-------------------------+---------------------------+
+    | ``External_ID``         |   ``external_references`` |
+    +-------------------------+---------------------------+
+
+**STIX 1.x Properties Mapped Using STIX 2.x Relationships**
+
+- ``Related_Indicators``
+- ``Related_Observables``
+- ``Leveraged_TTPs``
+- ``Attributed_Threat_Actors``
+- ``COA_Requested``
+- ``COA_Taken``
+
+**STIX 1.x Properties Handled Based on the "missing policy"**
+
+ - ``Reporter``
+ - ``Responder``
+ - ``Coordinator``
+ - ``Victims``
+ - ``Status``
+ - ``Contact``
+ - ``Intended_Effect``
+
+**STIX 1.x Properties Not Mapped**
+
+ - ``Affected_Assets``
+ - ``Impact_Assessment``
+ - ``History``
+ - ``URL``
+ - ``Time``
+
+**An Example**
+
+STIX 1.x in XML
+
+.. code-block:: xml
+
+    <stix:Incidents>
+        <stix:Incident id="example:incident-1b75ee8f-44d6-819a-d729-09ab52c91fdb" xsi:type='incident:IncidentType' timestamp="2014-05-08T09:00:00.000000Z">
+            <incident:Title>Detected Poison Ivy beaconing through perimeter firewalls</incident:Title>
+            <incident:Status>New</incident:Status>
+            <incident:Contact>
+                <stixCommon:Identity>
+                    <stixCommon:Name>Fred</stixCommon:Name>
+                </stixCommon:Identity>
+            </incident:Contact>
+            <incident:Contact>
+                <stixCommon:Identity>
+                    <stixCommon:Name>Barney</stixCommon:Name>
+                </stixCommon:Identity>
+            </incident:Contact>
+            <incident:Leveraged_TTPs>
+                <incident:Leveraged_TTP>
+                    <stixCommon:Relationship>Uses Malware</stixCommon:Relationship>
+                    <stixCommon:TTP idref="example:ttp-e610a4f1-9676-4ab3-bcc6-b2768d58281b"/>
+                </incident:Leveraged_TTP>
+            </incident:Leveraged_TTPs>
+        </stix:Incident>
+    </stix:Incidents>
+
+STIX 2.1 in JSON
+
+.. code-block:: json
+
+    {
+        "id": "bundle--65184e82-b693-41e3-bfd7-0800271e87d2",
+        "objects": [
+            {
+                "created": "2014-05-08T09:00:00.000Z",
+                "id": "identity--8e5febda-ffd0-4ade-8afe-9a7e64894510",
+                "modified": "2014-05-08T09:00:00.000Z",
+                "name": "Fred",
+                "spec_version": "2.1",
+                "type": "identity"
+            },
+            {
+                "created": "2014-05-08T09:00:00.000Z",
+                "id": "identity--b2557302-99e3-496a-825f-8e8c5501bec8",
+                "modified": "2014-05-08T09:00:00.000Z",
+                "name": "Barney",
+                "spec_version": "2.1",
+                "type": "identity"
+            },
+            {
+                "created": "2014-05-08T09:00:00.000Z",
+                "extensions": {
+                    "extension-definition--7a8eaf47-9b0f-487d-b280-1e6cc4cccee9": {
+                        "contacts": [
+                            "identity--8e5febda-ffd0-4ade-8afe-9a7e64894510",
+                            "identity--b2557302-99e3-496a-825f-8e8c5501bec8"
+                        ],
+                        "extension_type": "property-extension",
+                        "status": "New"
+                    }
+                },
+                "id": "incident--1b75ee8f-44d6-819a-d729-09ab52c91fdb",
+                "modified": "2014-05-08T09:00:00.000Z",
+                "name": "Detected Poison Ivy beaconing through perimeter firewalls",
+                "spec_version": "2.1",
+                "type": "incident"
+            },
+            {
+                "created": "2014-05-08T09:00:00.000Z",
+                "description": "Uses Malware",
+                "id": "relationship--d695b661-62ff-4685-bf88-a449770969ed",
+                "modified": "2014-05-08T09:00:00.000Z",
+                "relationship_type": "related-to",
+                "source_ref": "incident--1b75ee8f-44d6-819a-d729-09ab52c91fdb",
+                "spec_version": "2.1",
+                "target_ref": "malware--6516102d-b693-41e3-bfd7-0800271e87d2",
+                "type": "relationship"
+            }
+        ],
+        "type": "bundle"
+    }
 
 Indicator
 ------------------
