@@ -2468,7 +2468,7 @@ def convert_observable_to_pattern_without_negate(obs):
             if obs.object_.related_objects:
                 related_patterns = []
                 for o in obs.object_.related_objects:
-                    if not id_in_pattern_cache(o.id_):
+                    if o.id_ and not id_in_pattern_cache(o.id_):
                         new_pattern = convert_object_to_pattern(o, o.id_)
                         # A related_object may have neither an id or idref.
                         # If doesn't have idref, it belongs in the new_pattern
@@ -2477,6 +2477,10 @@ def convert_observable_to_pattern_without_negate(obs):
                             if o.id_:
                                 # save pattern for later use
                                 add_to_pattern_cache(o.id_, new_pattern)
+                    elif o.idref and id_in_pattern_cache(o.idref):
+                        related_patterns.append(get_pattern_from_cache(o.idref))
+                    else:
+                        related_patterns.append(IdrefPlaceHolder(o.idref))
                 if pattern:
                     related_patterns.append(pattern)
                 return create_boolean_expression("AND", related_patterns)

@@ -1,0 +1,83 @@
+{
+    "id": "bundle--cc0ca596-70e6-4dac-9bef-603166d17db8",
+    "objects": [
+        {
+            "id": "ipv4-addr--9cf4a8ec-7640-5f40-a006-79942896168b",
+            "type": "ipv4-addr",
+            "value": "198.51.100.2"
+        },
+        {
+            "id": "ipv4-addr--b8ced3a0-d0c3-5301-8292-0ac39f24274e",
+            "type": "ipv4-addr",
+            "value": "198.51.100.17"
+        },
+        {
+            "id": "ipv4-addr--eb780e48-1e2d-5f9b-bc12-aeb03136d2d9",
+            "type": "ipv4-addr",
+            "value": "203.0.113.19"
+        },
+        {
+            "id": "autonomous-system--3aa27478-50b5-5ab8-9da9-cdc12b657fff",
+            "name": "Slime Industries",
+            "number": 15139,
+            "rir": "ARIN",
+            "type": "autonomous-system"
+        },
+        {
+            "created": "2014-05-08T09:00:00.000Z",
+            "first_seen": "2014-05-08T09:00:00.000Z",
+            "id": "infrastructure--ad2397ff-0462-4c8f-8542-8d1e87ccbd59",
+            "infrastructure_types": [
+                "malware-c2"
+            ],
+            "modified": "2014-05-08T09:00:00.000Z",
+            "name": "Malware C2 Channel",
+            "spec_version": "2.1",
+            "type": "infrastructure"
+        },
+        {
+            "created": "2014-05-08T09:00:00.000Z",
+            "id": "relationship--da3fc119-5cf8-49ab-910d-46555349b9e5",
+            "modified": "2014-05-08T09:00:00.000Z",
+            "relationship_type": "consists-of",
+            "source_ref": "infrastructure--ad2397ff-0462-4c8f-8542-8d1e87ccbd59",
+            "spec_version": "2.1",
+            "target_ref": "ipv4-addr--9cf4a8ec-7640-5f40-a006-79942896168b",
+            "type": "relationship"
+        },
+        {
+            "created": "2014-05-08T09:00:00.000Z",
+            "id": "relationship--5cdaef99-2008-4a5b-8617-a33c1b39ba82",
+            "modified": "2014-05-08T09:00:00.000Z",
+            "relationship_type": "consists-of",
+            "source_ref": "infrastructure--ad2397ff-0462-4c8f-8542-8d1e87ccbd59",
+            "spec_version": "2.1",
+            "target_ref": "ipv4-addr--b8ced3a0-d0c3-5301-8292-0ac39f24274e",
+            "type": "relationship"
+        },
+        {
+            "created": "2014-05-08T09:00:00.000Z",
+            "id": "relationship--edf66b83-c99f-4d9e-bcba-cd52c27052ec",
+            "modified": "2014-05-08T09:00:00.000Z",
+            "relationship_type": "consists-of",
+            "source_ref": "infrastructure--ad2397ff-0462-4c8f-8542-8d1e87ccbd59",
+            "spec_version": "2.1",
+            "target_ref": "ipv4-addr--eb780e48-1e2d-5f9b-bc12-aeb03136d2d9",
+            "type": "relationship"
+        },
+        {
+            "created": "2021-04-22T10:25:02.108Z",
+            "first_observed": "2021-04-22T10:25:02.108Z",
+            "id": "observed-data--5371c060-17d5-4067-b12a-1953e0b44bc3",
+            "last_observed": "2021-04-22T10:25:02.108Z",
+            "modified": "2021-04-22T10:25:02.108Z",
+            "number_observed": 1,
+            "object_refs": [
+                "autonomous-system--3aa27478-50b5-5ab8-9da9-cdc12b657fff"
+            ],
+            "spec_version": "2.1",
+            "type": "observed-data"
+        }
+    ],
+    "type": "bundle"
+}

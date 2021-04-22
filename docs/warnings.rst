@@ -78,7 +78,7 @@ Kill Chains type in *[id]* not supported in STIX 2.x                            
 Victim Target in *[id]* did not yield any STIX 2.x object                                                                                      414     warn
 TTP *[id]* did not generate any STIX 2.x object                                                                                                415     error
 No STIX 2.x object generated from embedded object *[id]*                                                                                       416     warn
-*[object type]* did not yield any STIX 2.x object                                                                                              417     warn
+*[object]* did not yield any STIX 2.x object                                                                                                   417     warn
 The *[property]* property of *[STIX 1.x object type]* is not part of STIX 2.x                                                                  418     warn
 *[id]* is used as a characteristic in an infrastructure object, therefore it is not included as an observed_data instance                      419     warn
 Windows Handles are not a part of STIX 2.x                                                                                                     420     warn

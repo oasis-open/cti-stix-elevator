@@ -1729,7 +1729,7 @@ def convert_cybox_object20(obj1x):
         warn("CybOX object %s not handled yet", 805, str(type(prop)))
         return None
     if not objs:
-        warn("%s did not yield any STIX 2.x object", 417, str(type(prop)))
+        warn("%s did not yield any STIX 2.x object", 417, str(prop))
         return None
     else:
         if obj1x.id_:
@@ -1785,23 +1785,24 @@ def convert_cybox_object21(obj1x, env):
     elif isinstance(prop, SocketAddress):
         objs = convert_socket_address(prop, env)
     elif isinstance(prop, Custom):
-        objs = [convert_custom_object(prop)]
+        cust_obj = convert_custom_object(prop)
+        if cust_obj:
+            if prop.custom_properties:
+                for cp in prop.custom_properties.property_:
+                    if isinstance(prop, Custom):
+                        prop_name = cp.name
+                    else:
+                        prop_name = convert_to_custom_name(cp.name)
+                    cust_obj[prop_name] = cp.value
+                objs = [cust_obj]
+        objs = None
     else:
         warn("CybOX object %s not handled yet", 805, str(type(prop)))
         return None
     if not objs:
-        warn("%s did not yield any STIX 2.x object", 417, str(type(prop)))
+        warn("%s did not yield any STIX 2.x object", 417, str(prop))
         return None
     else:
-        if prop.custom_properties:
-            # make sure the original object is always first in the objs array
-            primary_obj = objs[0]
-            for cp in prop.custom_properties.property_:
-                if isinstance(prop, Custom):
-                    prop_name = cp.name
-                else:
-                    prop_name = convert_to_custom_name(cp.name)
-                primary_obj[prop_name] = cp.value
         if obj1x.id_:
             add_object_id_value(obj1x.id_, objs)
         return objs

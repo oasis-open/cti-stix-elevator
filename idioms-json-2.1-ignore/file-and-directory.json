@@ -1,0 +1,57 @@
+{
+    "id": "bundle--cc0ca596-70e6-4dac-9bef-603166d17db8",
+    "objects": [
+        {
+            "hashes": {
+                "MD5": "5d8129be965fab8115eca34fc84bd7f0",
+                "SHA-256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "id": "file--514e5469-3bfe-5910-9a70-db045a7dd1a3",
+            "name": "iprip32.dll",
+            "parent_directory_ref": "directory--5254394b-9d52-51d5-8a7b-613a7b0f89c0",
+            "type": "file"
+        },
+        {
+            "id": "directory--5254394b-9d52-51d5-8a7b-613a7b0f89c0",
+            "path": "/usr/local",
+            "type": "directory"
+        },
+        {
+            "created": "2014-05-08T09:00:00.000Z",
+            "first_seen": "2014-05-08T09:00:00.000Z",
+            "id": "infrastructure--49d5e342-a2f0-4fda-bc60-160f36a095ec",
+            "infrastructure_types": [
+                "malware-c2"
+            ],
+            "modified": "2014-05-08T09:00:00.000Z",
+            "name": "Malware C2 Channel",
+            "spec_version": "2.1",
+            "type": "infrastructure"
+        },
+        {
+            "created": "2014-05-08T09:00:00.000Z",
+            "id": "relationship--d1ed9950-26d9-4947-9769-dc2e7f8dde9f",
+            "modified": "2014-05-08T09:00:00.000Z",
+            "relationship_type": "consists-of",
+            "source_ref": "infrastructure--49d5e342-a2f0-4fda-bc60-160f36a095ec",
+            "spec_version": "2.1",
+            "target_ref": "observed-data--c8c32b6e-2ea8-51c4-6446-7f5218072f27",
+            "type": "relationship"
+        },
+        {
+            "created": "2021-04-22T10:25:02.275Z",
+            "first_observed": "2021-04-22T10:25:02.275Z",
+            "id": "observed-data--c8c32b6e-2ea8-41c4-6446-7f5218072f27",
+            "last_observed": "2021-04-22T10:25:02.275Z",
+            "modified": "2021-04-22T10:25:02.275Z",
+            "number_observed": 1,
+            "object_refs": [
+                "file--514e5469-3bfe-5910-9a70-db045a7dd1a3",
+                "directory--5254394b-9d52-51d5-8a7b-613a7b0f89c0"
+            ],
+            "spec_version": "2.1",
+            "type": "observed-data"
+        }
+    ],
+    "type": "bundle"
+}
