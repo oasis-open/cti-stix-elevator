@@ -68,7 +68,10 @@
                     "request_version": "http/1.1"
                 }
             },
-            "id": "network-traffic--89088e1e-68d0-4972-b1a9-ede5ef05e086",
+            "id": "network-traffic--731cec4e-8e60-5c3b-b2f5-2401aad9d0e9",
+            "protocols": [
+                "http"
+            ],
             "type": "network-traffic"
         },
         {
@@ -99,7 +102,7 @@
             "modified": "2020-12-30T16:03:22.314Z",
             "number_observed": 1,
             "object_refs": [
-                "network-traffic--89088e1e-68d0-4972-b1a9-ede5ef05e086",
+                "network-traffic--731cec4e-8e60-5c3b-b2f5-2401aad9d0e9",
                 "artifact--b59d53f1-00da-508c-be83-638974fd12eb"
             ],
             "spec_version": "2.1",

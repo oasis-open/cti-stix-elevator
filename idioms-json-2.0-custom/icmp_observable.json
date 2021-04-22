@@ -17,6 +17,9 @@
               "x_elevator_checksum": "97c02164528d"
             }
           },
+          "protocols": [
+            "icmp"
+          ],
           "type": "network-traffic"
         }
       },

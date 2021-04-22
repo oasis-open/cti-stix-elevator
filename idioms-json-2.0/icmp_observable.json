@@ -16,6 +16,9 @@
               "icmp_type_hex": "08"
             }
           },
+          "protocols": [
+            "icmp"
+          ],
           "type": "network-traffic"
         }
       },

@@ -8,7 +8,10 @@
                     "icmp_type_hex": "08"
                 }
             },
-            "id": "network-traffic--1e96b7d5-1747-4489-a3e3-d83830849f6b",
+            "id": "network-traffic--b9b9bab6-cf46-53c0-b5ea-2231ef21754c",
+            "protocols": [
+                "icmp"
+            ],
             "type": "network-traffic"
         },
         {
@@ -19,7 +22,7 @@
             "modified": "2020-12-30T16:03:21.869Z",
             "number_observed": 1,
             "object_refs": [
-                "network-traffic--1e96b7d5-1747-4489-a3e3-d83830849f6b"
+                "network-traffic--b9b9bab6-cf46-53c0-b5ea-2231ef21754c"
             ],
             "spec_version": "2.1",
             "type": "observed-data"
