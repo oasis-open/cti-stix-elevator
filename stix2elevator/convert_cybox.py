@@ -1795,7 +1795,8 @@ def convert_cybox_object21(obj1x, env):
                         prop_name = convert_to_custom_name(cp.name)
                     cust_obj[prop_name] = cp.value
                 objs = [cust_obj]
-        objs = None
+        else:
+            objs = None
     else:
         warn("CybOX object %s not handled yet", 805, str(type(prop)))
         return None

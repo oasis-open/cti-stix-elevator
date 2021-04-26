@@ -91,7 +91,7 @@
                     </FileObj:Hashes>
                 </cybox:Properties>
                 <cybox:Related_Objects>
-                    <cybox:Related_Object idref="fireeye:object-07e2d2f3-092d-436d-bbd6-60d2bdc36d43">
+                    <!-- <cybox:Related_Object idref="fireeye:object-07e2d2f3-092d-436d-bbd6-60d2bdc36d43">
                         <cybox:Relationship xsi:type="cyboxVocabs:ObjectRelationshipVocab-1.0">Connected_To</cybox:Relationship>
                     </cybox:Related_Object>
                     <cybox:Related_Object idref="fireeye:object-1727f41d-e734-4c1d-b3f4-1268e3decd0e">
@@ -103,17 +103,17 @@
                     <cybox:Related_Object idref="fireeye:object-1861ef67-6a90-47a6-900a-4337a404f628">
                         <cybox:Relationship xsi:type="cyboxVocabs:ObjectRelationshipVocab-1.0">Connected_To</cybox:Relationship>
                     </cybox:Related_Object>
-                    <cybox:Related_Object idref="fireeye:object-01d1d57e-0805-4923-b36c-e5aca342e926">
+                    <cybox:Related_Object idref="fireeye:object-77f41707-2038-4f28-9cec-32792d07d4a1">
                         <cybox:Relationship xsi:type="cyboxVocabs:ObjectRelationshipVocab-1.0">Connected_To</cybox:Relationship>
-                    </cybox:Related_Object>
+                     </cybox:Related_Object>
+                     <cybox:Related_Object idref="fireeye:object-01d1d57e-0805-4923-b36c-e5aca342e926">
+                        <cybox:Relationship xsi:type="cyboxVocabs:ObjectRelationshipVocab-1.0">Connected_To</cybox:Relationship>
+                    </cybox:Related_Object>  -->
                     <cybox:Related_Object idref="fireeye:object-363367bd-7460-49bd-9163-55378a0fa666">
                         <cybox:Relationship xsi:type="cyboxVocabs:ObjectRelationshipVocab-1.0">Created</cybox:Relationship>
                     </cybox:Related_Object>
                     <cybox:Related_Object idref="fireeye:object-f00572b1-7aea-4e32-ae05-1fe8fc194c23">
                         <cybox:Relationship xsi:type="cyboxVocabs:ObjectRelationshipVocab-1.0">Characterized_By</cybox:Relationship>
-                    </cybox:Related_Object>
-                    <cybox:Related_Object idref="fireeye:object-77f41707-2038-4f28-9cec-32792d07d4a1">
-                        <cybox:Relationship xsi:type="cyboxVocabs:ObjectRelationshipVocab-1.0">Connected_To</cybox:Relationship>
                     </cybox:Related_Object>
                     <cybox:Related_Object idref="fireeye:object-398dda54-7b22-4ef1-86d5-5fbef150a55b">
                         <cybox:Relationship xsi:type="cyboxVocabs:ObjectRelationshipVocab-1.0">Characterized_By</cybox:Relationship>
