@@ -289,5 +289,6 @@ def fill_in_extension_properties(instance, container, extension_definition_id, e
                 instance["extensions"] = dict()
             if extension_definition_id not in instance["extensions"]:
                 instance["extensions"][extension_definition_id] = container
-            if extension_type:
+            # the object itself might be an extension, so it already should have an extension_type
+            if extension_type and "extension_type" not in instance["extensions"][extension_definition_id]:
                 instance["extensions"][extension_definition_id]["extension_type"] = extension_type

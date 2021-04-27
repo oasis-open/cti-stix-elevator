@@ -4507,7 +4507,7 @@
             "object_marking_refs": [
                 "marking-definition--c8e5ef7d-00e8-44d5-9ed4-550492a62c42"
             ],
-            "pattern": "[file:hashes.MD5 = '0678645e45fcd3da84ab27122d6775a9']",
+            "pattern": "[mutex:name = 'pl,[;.]\\'/'] AND [file:x_elevator_pivy_password = 'admin@338' AND file:x_elevator_id = 'C001' AND file:hashes.MD5 = '0678645e45fcd3da84ab27122d6775a9']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -4543,7 +4543,7 @@
             "object_marking_refs": [
                 "marking-definition--c8e5ef7d-00e8-44d5-9ed4-550492a62c42"
             ],
-            "pattern": "[file:hashes.MD5 = '0a43013eef1c2ffba36e3c29512c89a2']",
+            "pattern": "[file:x_elevator_id = 'winproxy' AND file:x_elevator_pivy_password = 'admin@338' AND file:hashes.MD5 = '0a43013eef1c2ffba36e3c29512c89a2'] AND [mutex:name = 'irythdfse']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -4705,7 +4705,7 @@
             "object_marking_refs": [
                 "marking-definition--c8e5ef7d-00e8-44d5-9ed4-550492a62c42"
             ],
-            "pattern": "[file:hashes.MD5 = '1f43738b1f67266fdafd73235acbf338']",
+            "pattern": "[mutex:name = 'allport00'] AND [file:x_elevator_id = 'allport' AND file:x_elevator_pivy_password = 'admin@338' AND file:hashes.MD5 = '1f43738b1f67266fdafd73235acbf338']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -4795,7 +4795,7 @@
             "object_marking_refs": [
                 "marking-definition--c8e5ef7d-00e8-44d5-9ed4-550492a62c42"
             ],
-            "pattern": "[file:hashes.MD5 = '3c9a177a39e09e9a4ec4f09c029f5cb2']",
+            "pattern": "[mutex:name = '[-0;pyo;i'] AND [file:x_elevator_id = '2.011101E7' AND file:x_elevator_pivy_password = 'admin@338' AND file:hashes.MD5 = '3c9a177a39e09e9a4ec4f09c029f5cb2']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -4831,7 +4831,7 @@
             "object_marking_refs": [
                 "marking-definition--c8e5ef7d-00e8-44d5-9ed4-550492a62c42"
             ],
-            "pattern": "[file:hashes.MD5 = '4713557e3ed2ced62ceccbe4d07314b4']",
+            "pattern": "[file:x_elevator_id = '2.0110611E7' AND file:x_elevator_pivy_password = 'admin@338' AND file:hashes.MD5 = '4713557e3ed2ced62ceccbe4d07314b4'] AND [mutex:name = '65uhtdfdg']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -4903,7 +4903,7 @@
             "object_marking_refs": [
                 "marking-definition--c8e5ef7d-00e8-44d5-9ed4-550492a62c42"
             ],
-            "pattern": "[file:hashes.MD5 = '5032ff32a41748bdb40df0fd581cd669']",
+            "pattern": "[file:x_elevator_id = '2.0080327E7' AND file:x_elevator_pivy_password = 'admin' AND file:hashes.MD5 = '5032ff32a41748bdb40df0fd581cd669'] AND [mutex:name = ')!VoqA.I5']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -5047,7 +5047,8 @@
             "object_marking_refs": [
                 "marking-definition--c8e5ef7d-00e8-44d5-9ed4-550492a62c42"
             ],
-            "pattern": "[file:hashes.MD5 = '51d9e2993d203bd43a502a2b1e1193da']",
+            "pattern": "[file:x_elevator_id = 'Identification' AND file:x_elevator_pivy_password = 'admin@338' AND file:hashes.MD5 = '51d9e2993d203bd43a502a2b1e1193da'] AND [mutex:name = 'xgwx5ygdf45u7y65hdrttghdPath']",
+
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -5101,7 +5102,7 @@
             "object_marking_refs": [
                 "marking-definition--c8e5ef7d-00e8-44d5-9ed4-550492a62c42"
             ],
-            "pattern": "[file:hashes.MD5 = '6cf2f645395fbb64bbc14fb8993e2eea']",
+            "pattern": "[mutex:name = '8okmcnhcg'] AND [file:x_elevator_id = 'ALL' AND file:x_elevator_pivy_password = 'admin@338' AND file:hashes.MD5 = '6cf2f645395fbb64bbc14fb8993e2eea']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -5173,7 +5174,7 @@
             "object_marking_refs": [
                 "marking-definition--c8e5ef7d-00e8-44d5-9ed4-550492a62c42"
             ],
-            "pattern": "[file:hashes.MD5 = '8087d49e7bb391e0ba6e482f931b0ad5']",
+            "pattern": "[mutex:name = '784645y35'] AND [file:x_elevator_id = 'S20101008' AND file:x_elevator_pivy_password = 'admin@338' AND file:hashes.MD5 = '8087d49e7bb391e0ba6e482f931b0ad5']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -5281,7 +5282,7 @@
             "object_marking_refs": [
                 "marking-definition--c8e5ef7d-00e8-44d5-9ed4-550492a62c42"
             ],
-            "pattern": "[file:hashes.MD5 = 'bc90b4593b7b631a78a8305a873d6d5c']",
+            "pattern": "[mutex:name = '235tq3rad' AND file:x_elevator_id = '2011w' AND file:x_elevator_pivy_password = 'admin@338' AND file:hashes.MD5 = 'bc90b4593b7b631a78a8305a873d6d5c']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -5389,7 +5390,7 @@
             "object_marking_refs": [
                 "marking-definition--c8e5ef7d-00e8-44d5-9ed4-550492a62c42"
             ],
-            "pattern": "[file:hashes.MD5 = 'be6e72ad1b1ed2685a23dfe1b36f03cc']",
+            "pattern": "[mutex:name = '4htgsegvf' AND file:x_elevator_pivy_password = 'admin@338'] AND [file:x_elevator_id = 'unog20120925' AND file:hashes.MD5 = 'be6e72ad1b1ed2685a23dfe1b36f03cc']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -5443,7 +5444,7 @@
             "object_marking_refs": [
                 "marking-definition--c8e5ef7d-00e8-44d5-9ed4-550492a62c42"
             ],
-            "pattern": "[file:hashes.MD5 = 'c977d6e9c7844a1c8d6db1b6a9aba497']",
+            "pattern": "[mutex:name = 'irythdfse' AND file:x_elevator_id = 'winproxy' AND file:x_elevator_pivy_password = 'admin@338' AND file:hashes.MD5 = 'c977d6e9c7844a1c8d6db1b6a9aba497']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -5479,7 +5480,7 @@
             "object_marking_refs": [
                 "marking-definition--c8e5ef7d-00e8-44d5-9ed4-550492a62c42"
             ],
-            "pattern": "[file:hashes.MD5 = 'ce8112de474c22c1407ce94245c2d1de']",
+            "pattern": "[file:x_elevator_id = '2011C' AND file:x_elevator_pivy_password = 'admin@338' AND file:hashes.MD5 = 'ce8112de474c22c1407ce94245c2d1de'] AND [mutex:name = '7.25475234E8']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -5551,7 +5552,7 @@
             "object_marking_refs": [
                 "marking-definition--c8e5ef7d-00e8-44d5-9ed4-550492a62c42"
             ],
-            "pattern": "[file:hashes.MD5 = 'db815161022fcecf282b40745f72d9fc']",
+            "pattern": "[file:x_elevator_id = 'mbr2012in' AND file:x_elevator_pivy_password = 'admin@338' AND file:hashes.MD5 = 'db815161022fcecf282b40745f72d9fc'] AND [mutex:name = 'ewrfwsifj']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -5695,7 +5696,7 @@
             "object_marking_refs": [
                 "marking-definition--c8e5ef7d-00e8-44d5-9ed4-550492a62c42"
             ],
-            "pattern": "[file:hashes.MD5 = 'e74d62dfdc308df3038e61dfc4e4256a']",
+            "pattern": "[file:x_elevator_id = 'javas' AND file:x_elevator_pivy_password = '0xfb453847cb12db0d60ce04795e3059633788f131bfc4da1b8f1a3e48d01c76a1' AND file:hashes.MD5 = 'e74d62dfdc308df3038e61dfc4e4256a'] AND [mutex:name = 'adfvawae4']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -5767,7 +5768,7 @@
             "object_marking_refs": [
                 "marking-definition--c8e5ef7d-00e8-44d5-9ed4-550492a62c42"
             ],
-            "pattern": "[file:hashes.MD5 = 'e765c69b11860c4f1b84276278991253']",
+            "pattern": "[file:x_elevator_id = 'ALL' AND mutex:name = '8okmcnhcg' AND file:x_elevator_pivy_password = 'admin@338' AND file:hashes.MD5 = 'e765c69b11860c4f1b84276278991253']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -5803,7 +5804,7 @@
             "object_marking_refs": [
                 "marking-definition--c8e5ef7d-00e8-44d5-9ed4-550492a62c42"
             ],
-            "pattern": "[file:hashes.MD5 = '070d1e5c9299afa47df25e63572a3ae8']",
+            "pattern": "[file:x_elevator_id = '39998.0' AND file:x_elevator_pivy_password = 'admin' AND file:hashes.MD5 = '070d1e5c9299afa47df25e63572a3ae8'] AND [mutex:name = '7-05\\'rat'] AND [domain-name:value = 'antivirus-groups.com']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -5893,7 +5894,7 @@
             "object_marking_refs": [
                 "marking-definition--c8e5ef7d-00e8-44d5-9ed4-550492a62c42"
             ],
-            "pattern": "[file:hashes.MD5 = '330ddac1f605ff8abf60880c584ed797']",
+            "pattern": "[domain-name:value = 'antivirus-groups.com' AND file:x_elevator_id = '39985.0' AND file:x_elevator_pivy_password = 'admin' AND file:hashes.MD5 = '330ddac1f605ff8abf60880c584ed797'] AND [mutex:name = 'Lock.ee']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -6019,7 +6020,7 @@
             "object_marking_refs": [
                 "marking-definition--c8e5ef7d-00e8-44d5-9ed4-550492a62c42"
             ],
-            "pattern": "[file:hashes.MD5 = '37f70717f549f1938e5785527e56978d']",
+            "pattern": "[(domain-name:value = 'anti-virus.sytes.net' AND domain-name:resolves_to_refs[*].value = '85.95.226.37' AND domain-name:resolves_to_refs[*].value = '199.166.4.11')] AND [mutex:name = '9-15\\'rat'] AND [file:x_elevator_id = '40070.0' AND file:x_elevator_pivy_password = 'admin' AND file:hashes.MD5 = '37f70717f549f1938e5785527e56978d']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -6145,7 +6146,7 @@
             "object_marking_refs": [
                 "marking-definition--c8e5ef7d-00e8-44d5-9ed4-550492a62c42"
             ],
-            "pattern": "[file:hashes.MD5 = '8d36fd85d9c7d1f4bb170a28cc23498a']",
+            "pattern": "[mutex:name = '6-22\\'rat' AND file:x_elevator_pivy_password = 'admin'] AND [file:x_elevator_id = '39985.0' AND domain-name:value = 'antivirus-groups.com' AND file:hashes.MD5 = '8d36fd85d9c7d1f4bb170a28cc23498a']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -6199,7 +6200,7 @@
             "object_marking_refs": [
                 "marking-definition--c8e5ef7d-00e8-44d5-9ed4-550492a62c42"
             ],
-            "pattern": "[file:hashes.MD5 = 'ef90df225101836952ad7e91b55b30cd']",
+            "pattern": "[domain-name:value = 'antivirus-groups.com' AND file:x_elevator_id = '39985.0' AND mutex:name = '6-22\\'rat' AND file:x_elevator_pivy_password = 'admin' AND file:hashes.MD5 = 'ef90df225101836952ad7e91b55b30cd']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -6307,7 +6308,7 @@
             "object_marking_refs": [
                 "marking-definition--c8e5ef7d-00e8-44d5-9ed4-550492a62c42"
             ],
-            "pattern": "[file:hashes.MD5 = '03e0271d12a24050da632675b14091c1']",
+            "pattern": "[file:x_elevator_pivy_password = 'key@321' AND file:x_elevator_id = 'F1123' AND file:hashes.MD5 = '03e0271d12a24050da632675b14091c1'] AND [mutex:name = '0*6w4!7a'] AND [domain-name:value = 'autonews.redirect.hm'] AND [ipv4-addr:value = '142.163.215.42'] AND [ipv4-addr:value = '140.110.11.220']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -6343,7 +6344,7 @@
             "object_marking_refs": [
                 "marking-definition--c8e5ef7d-00e8-44d5-9ed4-550492a62c42"
             ],
-            "pattern": "[file:hashes.MD5 = '140e728871eff241e0148363b2931b1d']",
+            "pattern": "[file:x_elevator_id = 'F100630' AND file:x_elevator_pivy_password = 'key@321' AND file:hashes.MD5 = '140e728871eff241e0148363b2931b1d'] AND [mutex:name = 'o*y45o6p'] AND [(domain-name:value = 'sportsnews.findhere.org' AND domain-name:resolves_to_refs[*].value = '202.66.35.163')] AND [ipv4-addr:value = '202.149.213.17']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -6433,7 +6434,7 @@
             "object_marking_refs": [
                 "marking-definition--c8e5ef7d-00e8-44d5-9ed4-550492a62c42"
             ],
-            "pattern": "[file:hashes.MD5 = '707a4493775fd9c959861dcf04f18283']",
+            "pattern": "[file:x_elevator_pivy_password = 'key@321' AND file:x_elevator_id = 'F1204' AND domain-name:value = 'autonews.redirect.hm' AND ipv4-addr:value = '142.163.215.42' AND file:hashes.MD5 = '707a4493775fd9c959861dcf04f18283'] AND [mutex:name = '2*a42!b8' AND ipv4-addr:value = '140.110.11.220']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -6487,7 +6488,7 @@
             "object_marking_refs": [
                 "marking-definition--c8e5ef7d-00e8-44d5-9ed4-550492a62c42"
             ],
-            "pattern": "[file:hashes.MD5 = '767d04f72f5941326f11f8927cf3697b']",
+            "pattern": "[file:x_elevator_pivy_password = 'key@321' AND file:x_elevator_id = 'F100112' AND (domain-name:value = 'sportsnews.findhere.org' AND domain-name:resolves_to_refs[*].value = '202.66.35.163') AND ipv4-addr:value = '142.163.215.42' AND file:hashes.MD5 = '767d04f72f5941326f11f8927cf3697b'] AND [mutex:name = 'p*6j2gip']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -6559,7 +6560,7 @@
             "object_marking_refs": [
                 "marking-definition--c8e5ef7d-00e8-44d5-9ed4-550492a62c42"
             ],
-            "pattern": "[file:hashes.MD5 = '87133a339492ecb5142a93c7bbfd3805']",
+            "pattern": "[mutex:name = 'a*jr7oa'] AND [file:x_elevator_id = 'F100826' AND file:x_elevator_pivy_password = 'key@321' AND (domain-name:value = 'sportsnews.findhere.org' AND domain-name:resolves_to_refs[*].value = '202.66.35.163') AND ipv4-addr:value = '202.149.213.17' AND file:hashes.MD5 = '87133a339492ecb5142a93c7bbfd3805']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -8071,7 +8072,7 @@
             "object_marking_refs": [
                 "marking-definition--c8e5ef7d-00e8-44d5-9ed4-550492a62c42"
             ],
-            "pattern": "[file:hashes.MD5 = '55c0b07de69a0cee01101d0d6f66ca3e']",
+            "pattern": "[file:x_elevator_id = 'dawosi' AND file:x_elevator_pivy_password = 'admin' AND file:hashes.MD5 = '55c0b07de69a0cee01101d0d6f66ca3e'] AND [(domain-name:value = 'dawosi.3322.org' AND domain-name:resolves_to_refs[*].value = '222.35.136.119')] AND [mutex:name = ')!VETFWE4']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",

@@ -37,7 +37,7 @@ def idiom_elevator_mappings(before_file_path, stored_json, version, missing_poli
 
     initialize_options()
     set_option_value("missing_policy", missing_policy)
-    set_option_value("log_level", "INFO")
+    set_option_value("log_level", "WARN")
     set_option_value("incidents", True)
     set_option_value("spec_version", version)
     set_option_value("validator_args", "--version " + version)
@@ -149,6 +149,7 @@ def test_elevator_idiom_mapping(test_file, stored_master, version, missing_polic
             errors.append({"Expect": json.dumps(good_path), "Actual": json.dumps(check_path)})
 
     if errors:
+        print("Number of errors: " + str(len(errors)))
         print(json.dumps(errors, indent=4), file=sys.stderr)
         raise AssertionError(errors)
 

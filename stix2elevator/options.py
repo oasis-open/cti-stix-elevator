@@ -268,7 +268,7 @@ def initialize_options(options=None):
                 warn("%s option was not given, but it defaults to true for version 2.1", 214, "infrastructure")
                 ALL_OPTIONS.infrastructure = True
             if ALL_OPTIONS.missing_policy == "use-custom-properties":
-                warn("Custom properties/objects/extensions are deprecated in version 2.1.  Suggest using 'use-extensions' instead", 215, "infrastructure")
+                warn("Custom properties/objects/extensions are deprecated in version 2.1.  Suggest using 'use-extensions' instead", 215)
 
         if not ALL_OPTIONS.custom_property_prefix == "elevator" and not ALL_OPTIONS.missing_policy == "use-custom-properties":
             warn("custom_property_prefix option is provided, but the missing policy option is not 'use-custom-properies'.  It will be ignored.", 213)
@@ -330,6 +330,6 @@ CHECK_CODES = [201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213,
                727, 728, 729,
 
                801, 802, 803, 804, 805, 806, 807, 808, 809, 810, 811, 812, 813,
-               814, 815, 816,
+               814, 815, 816, 817, 818,
 
                901, 902, 903, 904, 905]

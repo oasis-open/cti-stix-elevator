@@ -2377,33 +2377,39 @@ def convert_object_to_pattern(obj, obs_id):
             if expression:
                 expression = create_boolean_expression("AND", expression)
         elif isinstance(prop, Custom):
-            if prop.custom_name:
-                object_path_root = convert_to_custom_name(prop.custom_name, separator="-")
-                term = convert_custom_properties(prop.custom_properties, object_path_root, use_custom_prefix=False)
-                if expression:
-                    expression = create_boolean_expression("AND", [expression, term])
+            if check_for_missing_policy("use-custom-properties") or check_for_missing_policy("use-extensions"):
+                if prop.custom_name:
+                    object_path_root = convert_to_custom_name(prop.custom_name, separator="-")
+                    term = convert_custom_properties(prop.custom_properties, object_path_root, use_custom_prefix=False)
+                    if expression:
+                        expression = create_boolean_expression("AND", [expression, term])
+                    else:
+                        expression = term
                 else:
-                    expression = term
+                    warn("Custom object with no name cannot be handled yet", 811)
+                    if not check_for_missing_policy("ignore"):
+                        expression = UnconvertedTerm(obs_id)
             else:
-                warn("Custom object with no name cannot be handled yet", 811)
-                if not check_for_missing_policy("ignore"):
-                    expression = UnconvertedTerm(obs_id)
+                warn("Pattern expression with STIX 1.x custom objects in %s is ignored", 817, obs_id)
         else:
             warn("%s found in %s cannot be converted to a pattern, yet.", 808, str(obj.properties), obs_id)
             if not check_for_missing_policy("ignore"):
                 expression = UnconvertedTerm(obs_id)
         # custom properties of custom objects handled above
         if prop.custom_properties is not None:
-            object_path_root = convert_cybox_class_name_to_object_path_root_name(prop)
-            if object_path_root:
-                term = convert_custom_properties(prop.custom_properties, object_path_root)
-                if expression:
-                    expression = create_boolean_expression("AND", [expression, term])
-                else:
-                    expression = term
+            if check_for_missing_policy("use-custom-properties") or check_for_missing_policy("use-extensions"):
+                object_path_root = convert_cybox_class_name_to_object_path_root_name(prop)
+                if object_path_root:
+                    term = convert_custom_properties(prop.custom_properties, object_path_root)
+                    if expression:
+                        expression = create_boolean_expression("AND", [expression, term])
+                    else:
+                        expression = term
+            else:
+                warn("Pattern expression with STIX 1.x custom properties in %s is ignored", 818, obs_id)
     if not expression:
         warn("No pattern term was created from %s", 422, obs_id)
-        if not check_for_missing_policy("ignore"):
+        if check_for_missing_policy("use-custom-properties") or check_for_missing_policy("use-extensions"):
             expression = UnconvertedTerm(obs_id, determine_term_type(prop))
     elif obj.id_:
         add_id_value(obj.id_, obs_id)
@@ -2473,6 +2479,9 @@ def convert_observable_to_pattern_without_negate(obs):
                         if o.id_:
                             if not id_in_pattern_cache(o.id_):
                                 new_pattern = convert_object_to_pattern(o, o.id_)
+                                warn("Relationship %s in %s for %s is not supported in STIX 2.x. Expression %s is ANDed",
+                                     411,
+                                     o.relationship, obs.id_, o.id_, new_pattern)
                                 # A related_object may have neither an id or idref.
                                 # If doesn't have idref, it belongs in the new_pattern
                                 if new_pattern and not o.idref:
@@ -2480,13 +2489,27 @@ def convert_observable_to_pattern_without_negate(obs):
                                     if o.id_:
                                         # save pattern for later use
                                         add_to_pattern_cache(o.id_, new_pattern)
+
                         elif o.idref:
                             if id_in_pattern_cache(o.idref):
-                                related_patterns.append(get_pattern_from_cache(o.idref))
+                                new_pattern = get_pattern_from_cache(o.idref)
+                                related_patterns.append(new_pattern)
+                                warn(
+                                    "Relationship %s in %s for %s is not supported in STIX 2.x. Expression %s is ANDed",
+                                    411,
+                                    o.relationship, obs.id_, o.idref, new_pattern)
                             else:
-                                related_patterns.append(IdrefPlaceHolder(o.idref))
+                                placeholder = IdrefPlaceHolder(o.idref)
+                                related_patterns.append(placeholder)
+                                warn(
+                                    "Relationship %s in %s for %s is not supported in STIX 2.x. %s will be ANDed if/when resolved",
+                                    412,
+                                    o.relationship, obs.id_, o.idref, placeholder)
                         else:
                             new_pattern = convert_object_to_pattern(o, None)
+                            warn("Relationship %s in %s for %s is not supported in STIX 2.x. Expression %s is ANDed",
+                                 411,
+                                 o.relationship, obs.id_, "unknown", new_pattern)
                             related_patterns.append(new_pattern)
                 if pattern:
                     if related_patterns:
