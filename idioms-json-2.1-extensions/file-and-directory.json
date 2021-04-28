@@ -2,6 +2,12 @@
     "id": "bundle--cc0ca596-70e6-4dac-9bef-603166d17db8",
     "objects": [
         {
+            "extensions": {
+                "extension-definition--488f4c0e-2d69-4627-8946-6cc3b774d668": {
+                    "extension_type": "property-extension",
+                    "something_new": "3"
+                }
+            },
             "hashes": {
                 "MD5": "5d8129be965fab8115eca34fc84bd7f0",
                 "SHA-256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"

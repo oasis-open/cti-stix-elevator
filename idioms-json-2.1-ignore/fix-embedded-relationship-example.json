@@ -1,0 +1,96 @@
+{
+    "id": "bundle--161f8ade-b67d-11e3-b8af-f01faf20d111",
+    "objects": [
+        {
+            "created": "2021-04-27T21:09:06.095Z",
+            "id": "identity--4ec4d0a2-80e3-41e6-ae22-56b6b6499611",
+            "modified": "2021-04-27T21:09:06.095Z",
+            "name": "Emmanuelle",
+            "spec_version": "2.1",
+            "type": "identity"
+        },
+        {
+            "created": "2021-04-27T21:09:06.095Z",
+            "created_by_ref": "identity--4ec4d0a2-80e3-41e6-ae22-56b6b6499611",
+            "id": "identity--1621d4d4-b67d-41e3-9670-f01faf20d111",
+            "modified": "2021-04-27T21:09:06.095Z",
+            "name": "Adversary Bravo",
+            "spec_version": "2.1",
+            "type": "identity"
+        },
+        {
+            "created": "2021-04-27T21:09:06.095Z",
+            "created_by_ref": "identity--4ec4d0a2-80e3-41e6-ae22-56b6b6499611",
+            "id": "threat-actor--9a8a0d25-7636-429b-a99e-b2a73cd0f11f",
+            "modified": "2021-04-27T21:09:06.095Z",
+            "name": "Adversary Bravo",
+            "sophistication": "unknown",
+            "spec_version": "2.1",
+            "type": "threat-actor"
+        },
+        {
+            "created": "2021-04-27T21:09:06.095Z",
+            "created_by_ref": "identity--4ec4d0a2-80e3-41e6-ae22-56b6b6499611",
+            "description": "Phishing",
+            "external_references": [
+                {
+                    "external_id": "CAPEC-98",
+                    "source_name": "capec"
+                }
+            ],
+            "id": "attack-pattern--8ac90ff3-ecf8-4835-95b8-6aea6a623df5",
+            "modified": "2021-04-27T21:09:06.095Z",
+            "name": "Phishing",
+            "spec_version": "2.1",
+            "type": "attack-pattern"
+        },
+        {
+            "created": "2021-04-27T21:09:06.095Z",
+            "id": "malware--1621d4d2-b67d-41e3-ba9e-f01faf20d111",
+            "is_family": false,
+            "malware_types": [
+                "remote-access-trojan"
+            ],
+            "modified": "2021-04-27T21:09:06.095Z",
+            "name": "Poison Ivy Variant d1c6",
+            "spec_version": "2.1",
+            "type": "malware"
+        },
+        {
+            "created": "2021-04-27T21:09:06.095Z",
+            "created_by_ref": "identity--4ec4d0a2-80e3-41e6-ae22-56b6b6499611",
+            "id": "relationship--1621d4d4-b67d-41e3-9670-f01faf20d111",
+            "modified": "2021-04-27T21:09:06.095Z",
+            "relationship_type": "attributed-to",
+            "source_ref": "threat-actor--9a8a0d25-7636-429b-a99e-b2a73cd0f11f",
+            "spec_version": "2.1",
+            "target_ref": "identity--1621d4d4-b67d-41e3-9670-f01faf20d111",
+            "type": "relationship"
+        },
+        {
+            "created": "2021-04-27T21:09:06.095Z",
+            "created_by_ref": "identity--4ec4d0a2-80e3-41e6-ae22-56b6b6499611",
+            "description": "Leverages Attack Pattern",
+            "id": "relationship--57b8cb27-eabe-4324-8241-ec41194ccdec",
+            "modified": "2021-04-27T21:09:06.095Z",
+            "relationship_type": "uses",
+            "source_ref": "threat-actor--9a8a0d25-7636-429b-a99e-b2a73cd0f11f",
+            "spec_version": "2.1",
+            "target_ref": "attack-pattern--8ac90ff3-ecf8-4835-95b8-6aea6a623df5",
+            "type": "relationship"
+        },
+        {
+            "created": "2021-04-27T21:09:06.095Z",
+            "created_by_ref": "identity--4ec4d0a2-80e3-41e6-ae22-56b6b6499611",
+            "description": "Leverages Malware",
+            "id": "relationship--c71debe6-2adc-4888-8453-b8c61e188122",
+            "modified": "2021-04-27T21:09:06.095Z",
+            "relationship_type": "uses",
+            "source_ref": "threat-actor--9a8a0d25-7636-429b-a99e-b2a73cd0f11f",
+            "spec_version": "2.1",
+            "target_ref": "malware--1621d4d2-b67d-41e3-ba9e-f01faf20d111",
+            "type": "relationship"
+        }
+    ],
+    "type": "bundle"
+}

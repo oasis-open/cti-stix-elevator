@@ -19,7 +19,7 @@
                 "ftp"
             ],
             "modified": "2015-07-31T11:24:39.090Z",
-            "pattern": "[x-elevator-fooz:ftp_command MATCHES 'fp[a-zA-Z0-9]{44}\\\\.bin']",
+            "pattern": "[unconverted_term:example:Observable-f082e299-c98e-4928-a7a8-2a84b2eb4719]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -27,7 +27,7 @@
         },
         {
             "created": "2015-07-31T11:24:39.090Z",
-            "id": "relationship--81721913-b7fd-42bd-a44f-ccf44e80c9df",
+            "id": "relationship--f7871811-ec77-4f70-8a51-315c3f15f67e",
             "modified": "2015-07-31T11:24:39.090Z",
             "relationship_type": "investigates",
             "source_ref": "course-of-action--3dbfccad-1fbb-4e9f-8307-f2d1a5c651cc",
@@ -38,7 +38,7 @@
         {
             "created": "2015-07-31T11:24:39.090Z",
             "first_observed": "2015-07-31T11:24:39.090Z",
-            "id": "observed-data--cb3021bb-8bcf-4ce9-b4ce-eecbb919d2fb",
+            "id": "observed-data--74ea00a1-0b06-40a7-b939-0c6039e1078e",
             "last_observed": "2015-07-31T11:24:39.090Z",
             "modified": "2015-07-31T11:24:39.090Z",
             "number_observed": 1,

@@ -19,7 +19,7 @@
         {
             "created": "2014-05-08T09:00:00.000Z",
             "first_seen": "2014-05-08T09:00:00.000Z",
-            "id": "infrastructure--49d5e342-a2f0-4fda-bc60-160f36a095ec",
+            "id": "infrastructure--1cd1e871-9afd-4a94-b455-f4562dc871ea",
             "infrastructure_types": [
                 "malware-c2"
             ],
@@ -30,20 +30,20 @@
         },
         {
             "created": "2014-05-08T09:00:00.000Z",
-            "id": "relationship--d1ed9950-26d9-4947-9769-dc2e7f8dde9f",
+            "id": "relationship--a60dc994-582c-4c84-a0a0-64cf23d58dd1",
             "modified": "2014-05-08T09:00:00.000Z",
             "relationship_type": "consists-of",
-            "source_ref": "infrastructure--49d5e342-a2f0-4fda-bc60-160f36a095ec",
+            "source_ref": "infrastructure--1cd1e871-9afd-4a94-b455-f4562dc871ea",
             "spec_version": "2.1",
             "target_ref": "observed-data--c8c32b6e-2ea8-51c4-6446-7f5218072f27",
             "type": "relationship"
         },
         {
-            "created": "2021-04-22T10:25:02.275Z",
-            "first_observed": "2021-04-22T10:25:02.275Z",
+            "created": "2021-04-27T21:09:06.018Z",
+            "first_observed": "2021-04-27T21:09:06.018Z",
             "id": "observed-data--c8c32b6e-2ea8-41c4-6446-7f5218072f27",
-            "last_observed": "2021-04-22T10:25:02.275Z",
-            "modified": "2021-04-22T10:25:02.275Z",
+            "last_observed": "2021-04-27T21:09:06.018Z",
+            "modified": "2021-04-27T21:09:06.018Z",
             "number_observed": 1,
             "object_refs": [
                 "file--514e5469-3bfe-5910-9a70-db045a7dd1a3",

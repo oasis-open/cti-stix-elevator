@@ -5,8 +5,8 @@
             "administrative_area": "US-DC",
             "country": "US",
             "created": "2020-12-31T00:00:00.000Z",
-            "created_by_ref": "identity--62482570-7406-49ce-b47f-5788b0bd0dda",
-            "id": "location--4e4254be-def3-4b3d-b140-1c8446b46b3a",
+            "created_by_ref": "identity--8c805d47-b32d-4eac-9787-66323068113f",
+            "id": "location--9de3675b-9744-40cf-8b65-220836c7fc77",
             "modified": "2020-12-31T00:00:00.000Z",
             "object_marking_refs": [
                 "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
@@ -16,22 +16,22 @@
         },
         {
             "created": "2020-12-31T00:00:00.000Z",
-            "created_by_ref": "identity--62482570-7406-49ce-b47f-5788b0bd0dda",
-            "id": "relationship--66e5a2bb-61e6-492d-8d1f-498ebf802996",
+            "created_by_ref": "identity--8c805d47-b32d-4eac-9787-66323068113f",
+            "id": "relationship--9353b52f-82ea-48ed-a00c-41964a4315ab",
             "modified": "2020-12-31T00:00:00.000Z",
             "object_marking_refs": [
                 "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
             ],
             "relationship_type": "located-at",
-            "source_ref": "identity--62482570-7406-49ce-b47f-5788b0bd0dda",
+            "source_ref": "identity--8c805d47-b32d-4eac-9787-66323068113f",
             "spec_version": "2.1",
-            "target_ref": "location--4e4254be-def3-4b3d-b140-1c8446b46b3a",
+            "target_ref": "location--9de3675b-9744-40cf-8b65-220836c7fc77",
             "type": "relationship"
         },
         {
             "created": "2020-12-31T00:00:00.000Z",
-            "created_by_ref": "identity--62482570-7406-49ce-b47f-5788b0bd0dda",
-            "id": "identity--62482570-7406-49ce-b47f-5788b0bd0dda",
+            "created_by_ref": "identity--8c805d47-b32d-4eac-9787-66323068113f",
+            "id": "identity--8c805d47-b32d-4eac-9787-66323068113f",
             "identity_class": "organization",
             "labels": [
                 "ais-consent-usg"
@@ -49,7 +49,7 @@
         },
         {
             "created": "2016-03-29T20:52:52.716Z",
-            "created_by_ref": "identity--62482570-7406-49ce-b47f-5788b0bd0dda",
+            "created_by_ref": "identity--8c805d47-b32d-4eac-9787-66323068113f",
             "id": "indicator--45eee277-2d76-4079-91d0-0061a443bac6",
             "modified": "2016-03-29T20:52:52.716Z",
             "object_marking_refs": [

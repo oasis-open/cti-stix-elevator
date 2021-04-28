@@ -1627,23 +1627,23 @@ _REGISTRY_KEY_VALUES_PROPERTIES = [["data", "windows-registry-key:values[*].data
 
 def convert_registry_key_to_pattern(reg_key):
     expressions = []
-    if reg_key.key:
+    if reg_key.key or reg_key.hive:
         key_value_term = ""
         if reg_key.hive:
             if reg_key.hive.condition is None or is_equal_condition(reg_key.hive.condition):
                 key_value_term += reg_key.hive.value + "\\"
             else:
                 warn("Condition %s on a hive property not handled", 812, reg_key.hive.condition)
-            if reg_key.key.value.startswith(reg_key.hive.value):
+            if reg_key.key and reg_key.key.value.startswith(reg_key.hive.value):
                 warn("Hive property, %s, is already a prefix of the key property, %s", 623, reg_key.hive.value,
                      reg_key.key.value)
                 key_value_term = reg_key.key.value
-            else:
+            elif reg_key.key:
                 key_value_term += reg_key.key.value
         else:
             key_value_term = reg_key.key.value
         expressions.append(create_term("windows-registry-key:key",
-                                       reg_key.key.condition,
+                                       reg_key.key.condition if reg_key.key else 'Equals',
                                        make_constant(key_value_term)))
     if reg_key.values:
         values_expressions = []
@@ -2409,8 +2409,7 @@ def convert_object_to_pattern(obj, obs_id):
                 warn("Pattern expression with STIX 1.x custom properties in %s is ignored", 818, obs_id)
     if not expression:
         warn("No pattern term was created from %s", 422, obs_id)
-        if check_for_missing_policy("use-custom-properties") or check_for_missing_policy("use-extensions"):
-            expression = UnconvertedTerm(obs_id, determine_term_type(prop))
+        expression = UnconvertedTerm(obs_id, determine_term_type(prop))
     elif obj.id_:
         add_id_value(obj.id_, obs_id)
         add_to_pattern_cache(obj.id_, expression)

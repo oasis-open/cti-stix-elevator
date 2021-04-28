@@ -56,7 +56,7 @@ from stix2elevator.convert_pattern import (
     interatively_resolve_placeholder_refs, remove_pattern_objects
 )
 from stix2elevator.ids import (
-    add_id_of_obs_in_characterizations, add_id_value, exists_id_key,
+    add_id_of_obs_in_characterizations, add_id_value, add_object_id_value, exists_id_key,
     exists_ids_with_no_1x_object, generate_stix2x_id, get_id_value,
     get_id_values, get_type_from_id, is_stix1x_id, record_ids
 )
@@ -1615,6 +1615,7 @@ def create_scos(obs, observed_data_instance, env, keep_scos):
     else:
         observed_data_instance["object_refs"] = []
         scos = convert_cybox_object(obs.object_, env)
+        add_object_id_value(obs.id_, scos)
         if obs.object_.related_objects:
             for o in obs.object_.related_objects:
                 if not o.idref:
