@@ -36,27 +36,23 @@
         },
         {
             "created": "2014-05-08T09:00:00.000Z",
-            "id": "relationship--75322170-86cb-48b8-a58b-d06e6bc8c496",
+            "id": "relationship--7c40c518-497f-476c-b99d-aac8547c0110",
             "modified": "2014-05-08T09:00:00.000Z",
             "relationship_type": "consists-of",
-            "source_ref": "infrastructure--dd955e08-16d0-4f08-5064-50d9e7a3104d",
+            "source_ref": "infrastructure--a2ad907f-a5e2-4aea-ad05-be178650b782",
             "spec_version": "2.1",
-            "target_ref": "observed-data--c8c32b6e-2ea8-51c4-6446-7f5218072f27",
+            "target_ref": "file--514e5469-3bfe-5910-9a70-db045a7dd1a3",
             "type": "relationship"
         },
         {
-            "created": "2020-12-30T16:02:49.685Z",
-            "first_observed": "2020-12-30T16:02:49.685Z",
-            "id": "observed-data--c8c32b6e-2ea8-41c4-6446-7f5218072f27",
-            "last_observed": "2020-12-30T16:02:49.685Z",
-            "modified": "2020-12-30T16:02:49.685Z",
-            "number_observed": 1,
-            "object_refs": [
-                "file--514e5469-3bfe-5910-9a70-db045a7dd1a3",
-                "directory--5254394b-9d52-51d5-8a7b-613a7b0f89c0"
-            ],
+            "created": "2014-05-08T09:00:00.000Z",
+            "id": "relationship--793e8545-79fd-4f50-ac17-718742dfc928",
+            "modified": "2014-05-08T09:00:00.000Z",
+            "relationship_type": "consists-of",
+            "source_ref": "infrastructure--a2ad907f-a5e2-4aea-ad05-be178650b782",
             "spec_version": "2.1",
-            "type": "observed-data"
+            "target_ref": "directory--5254394b-9d52-51d5-8a7b-613a7b0f89c0",
+            "type": "relationship"
         }
     ],
     "type": "bundle"
