@@ -9,7 +9,8 @@
             "id": "file--514e5469-3bfe-5910-9a70-db045a7dd1a3",
             "name": "iprip32.dll",
             "parent_directory_ref": "directory--5254394b-9d52-51d5-8a7b-613a7b0f89c0",
-            "type": "file"
+            "type": "file",
+            "x_elevator_something_new": "3"
         },
         {
             "id": "directory--5254394b-9d52-51d5-8a7b-613a7b0f89c0",
@@ -30,27 +31,23 @@
         },
         {
             "created": "2014-05-08T09:00:00.000Z",
-            "id": "relationship--63a1ae6c-ae13-45e2-85f5-5570714a2135",
+            "id": "relationship--c5f273d6-50aa-4e9b-8fbc-370e6dff2dec",
             "modified": "2014-05-08T09:00:00.000Z",
             "relationship_type": "consists-of",
-            "source_ref": "infrastructure--dd955e08-16d0-4f08-5064-50d9e7a3104d",
+            "source_ref": "infrastructure--5aaf40a6-293d-49e2-bb21-6df1747039ba",
             "spec_version": "2.1",
-            "target_ref": "observed-data--c8c32b6e-2ea8-51c4-6446-7f5218072f27",
+            "target_ref": "file--514e5469-3bfe-5910-9a70-db045a7dd1a3",
             "type": "relationship"
         },
         {
-            "created": "2020-05-31T15:10:25.498Z",
-            "first_observed": "2020-05-31T15:10:25.498Z",
-            "id": "observed-data--c8c32b6e-2ea8-41c4-6446-7f5218072f27",
-            "last_observed": "2020-05-31T15:10:25.498Z",
-            "modified": "2020-05-31T15:10:25.498Z",
-            "number_observed": 1,
-            "object_refs": [
-                "file--514e5469-3bfe-5910-9a70-db045a7dd1a3",
-                "directory--5254394b-9d52-51d5-8a7b-613a7b0f89c0"
-            ],
+            "created": "2014-05-08T09:00:00.000Z",
+            "id": "relationship--c9bd6cf7-1b8a-4d68-bae8-a8a9af6fd991",
+            "modified": "2014-05-08T09:00:00.000Z",
+            "relationship_type": "consists-of",
+            "source_ref": "infrastructure--5aaf40a6-293d-49e2-bb21-6df1747039ba",
             "spec_version": "2.1",
-            "type": "observed-data"
+            "target_ref": "directory--5254394b-9d52-51d5-8a7b-613a7b0f89c0",
+            "type": "relationship"
         }
     ],
     "type": "bundle"

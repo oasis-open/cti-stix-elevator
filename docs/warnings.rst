@@ -52,6 +52,7 @@ No extension-definition was found for STIX 1 type *[type]* in *[id]*            
 Used extension property for *[property_name]* of *[id]*                                                                        313     warn
 Missing property *[property_name]* of *[id]* is ignored, because it can't be represented in an extension                       314     warn
 New extension-definition id *[id]* was generated for *[type]*. *[id]*                                                          315     warn
+Custom Content *[property_name]* of *[id]* is ignored                                                                          316     warn
 ============================================================================================================================== ====    =====
 
 
@@ -71,13 +72,13 @@ Indicator *[id]* has an observable or indicator composite expression which may n
 ``TTP/Behavior/Exploits/Exploit`` in *[id]* not supported in STIX 2.x                                                                          408     warn
 ``Infrastructure`` in *[id]* not part of STIX 2.0                                                                                              409     warn
 IOC indicator in *[id]* cannot be converted to a STIX pattern                                                                                  410     warn
-``NO MESSAGE ASSIGNED``                                                                                                                        411
-``NO MESSAGE ASSIGNED``                                                                                                                        412
+Relationship *[rel_name]* in *[id]* for *[id]* is not supported in STIX 2.x. Expression *[pattern]* is ANDed                                   411     warn
+Relationship *[rel_name]* in *[id]* for *[id]* is not supported in STIX 2.x. %s will be ANDed if/when resolved                                 412     warn
 Kill Chains type in *[id]* not supported in STIX 2.x                                                                                           413     warn
 Victim Target in *[id]* did not yield any STIX 2.x object                                                                                      414     warn
 TTP *[id]* did not generate any STIX 2.x object                                                                                                415     error
 No STIX 2.x object generated from embedded object *[id]*                                                                                       416     warn
-*[object type]* did not yield any STIX 2.x object                                                                                              417     warn
+*[object]* did not yield any STIX 2.x object                                                                                                   417     warn
 The *[property]* property of *[STIX 1.x object type]* is not part of STIX 2.x                                                                  418     warn
 *[id]* is used as a characteristic in an infrastructure object, therefore it is not included as an observed_data instance                      419     warn
 Windows Handles are not a part of STIX 2.x                                                                                                     420     warn
@@ -220,6 +221,8 @@ Cannot convert CybOX 2.x class name *[name]* to an object_path_root_name        
 Parameter Observables in *[id]* are not handled, yet.                                                                                       814  warn
 *[property]* in *[id]* are not handled, yet.                                                                                                815  info
 Ambiguous file path *[path]* was not processed                                                                                              816  warn
+Pattern expression with STIX 1.x custom objects in *[id]* is ignored                                                                        817  warn
+Pattern expression with STIX 1.x custom properties in *[id]* is ignored                                                                     818  warn
 =========================================================================================================================================== ==== =====
 
 

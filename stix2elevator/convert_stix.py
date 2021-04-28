@@ -56,9 +56,9 @@ from stix2elevator.convert_pattern import (
     interatively_resolve_placeholder_refs, remove_pattern_objects
 )
 from stix2elevator.ids import (
-    add_id_of_obs_in_characterizations, add_id_value, exists_id_key,
-    exists_ids_with_no_1x_object, generate_stix2x_id, get_id_value,
-    get_id_values, get_type_from_id, is_stix1x_id, record_ids
+    add_id_of_obs_in_characterizations, add_id_value, add_object_id_value,
+    exists_id_key, exists_ids_with_no_1x_object, generate_stix2x_id,
+    get_id_value, get_id_values, get_type_from_id, is_stix1x_id, record_ids
 )
 from stix2elevator.missing_policy import (
     check_for_missing_policy, convert_to_custom_name,
@@ -1282,7 +1282,7 @@ def handle_missing_identity_ref_properties(container, instance2x, sources, env, 
                 id_info = id2x["id"]
             identities.append(id_info)
     if not identities == list():
-        handle_missing_string_property(container, property_name, identities, instance2x["id"], is_list=True, use_custom_name=False)
+        handle_missing_string_property(container, property_name, identities, instance2x["id"], is_list=True)
 # incident
 
 
@@ -1305,7 +1305,7 @@ def handle_missing_properties_of_incident(incident_instance, incident, env):
             if reporter.identity:
                 id2x = convert_identity(reporter.identity, env)
                 env.bundle_instance["objects"].append(id2x)
-                handle_missing_string_property(container, "reporter", id2x["id"], incident_instance["id"], use_custom_name=False)
+                handle_missing_string_property(container, "reporter", id2x["id"], incident_instance["id"])
 
         if incident.responders is not None:
             handle_missing_identity_ref_properties(container, incident_instance, incident.responders, env, "responders")
@@ -1324,17 +1324,15 @@ def handle_missing_properties_of_incident(incident_instance, incident, env):
             # FIXME: add impact_assessment to description
             info("Incident Impact Assessment in %s is not handled, yet", 815, incident_instance["id"])
 
-        handle_missing_string_property(container, "status", incident.status, incident_instance["id"], use_custom_name=False)
+        handle_missing_string_property(container, "status", incident.status, incident_instance["id"])
 
-        handle_missing_string_property(container, "security_compromise", incident.security_compromise, incident_instance["id"],
-                                       use_custom_name=False)
+        handle_missing_string_property(container, "security_compromise", incident.security_compromise, incident_instance["id"])
 
         handle_missing_string_property(container, "discovery_methods", incident.discovery_methods, incident_instance["id"],
-                                       use_custom_name=False, is_list=True)
+                                       is_list=True)
 
         handle_multiple_missing_statement_properties(container, incident.intended_effects, "intended_effects",
-                                                     incident_instance["id"],
-                                                     use_custom_name=False)
+                                                     incident_instance["id"])
 
         fill_in_extension_properties(incident_instance, container, extension_definition_id)
 
@@ -1617,6 +1615,7 @@ def create_scos(obs, observed_data_instance, env, keep_scos):
     else:
         observed_data_instance["object_refs"] = []
         scos = convert_cybox_object(obs.object_, env)
+        add_object_id_value(obs.id_, scos)
         if obs.object_.related_objects:
             for o in obs.object_.related_objects:
                 if not o.idref:

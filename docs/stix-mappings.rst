@@ -37,7 +37,7 @@ objects - but their mapping can be found in the :ref:`cyber_observables` section
 +-----------------------------+----------------------------+
 | ``et:Configuration``        | *not converted*            |
 +-----------------------------+----------------------------+
-| ``Incident``                | ``Incident`` * in 2.1*     |
+| ``Incident``                | ``incident`` *in 2.1*      |
 +-----------------------------+----------------------------+
 | ``Indicator``               | ``indicator``              |
 +-----------------------------+----------------------------+

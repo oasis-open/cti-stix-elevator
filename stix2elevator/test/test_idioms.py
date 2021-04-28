@@ -11,7 +11,9 @@ from stix2elevator import elevate
 from stix2elevator.options import (
     get_option_value, initialize_options, set_option_value
 )
-from stix2elevator.utils import extension_definition_id_property, find_dir, id_property, iterpath
+from stix2elevator.utils import (
+    extension_definition_id_property, find_dir, id_property, iterpath
+)
 
 BEFORE_FILES = []
 BEFORE_FILENAMES = []
@@ -37,7 +39,7 @@ def idiom_elevator_mappings(before_file_path, stored_json, version, missing_poli
 
     initialize_options()
     set_option_value("missing_policy", missing_policy)
-    set_option_value("log_level", "INFO")
+    set_option_value("log_level", "WARN")
     set_option_value("incidents", True)
     set_option_value("spec_version", version)
     set_option_value("validator_args", "--version " + version)
@@ -108,6 +110,8 @@ def setup_elevator_tests(version, missing_policy):
         json_directory_suffix = "-custom"
     elif missing_policy == "use-extensions":
         json_directory_suffix = "-extensions"
+    elif missing_policy == "ignore":
+        json_directory_suffix = "-ignore"
     xml_idioms_dir = find_dir(directory, "idioms-xml")
     json_idioms_dir = find_dir(directory, "idioms-json" + "-" + version + json_directory_suffix)
     setup_tests(xml_idioms_dir, json_idioms_dir, ".xml", ".json")
@@ -149,6 +153,7 @@ def test_elevator_idiom_mapping(test_file, stored_master, version, missing_polic
             errors.append({"Expect": json.dumps(good_path), "Actual": json.dumps(check_path)})
 
     if errors:
+        print("Number of errors: " + str(len(errors)))
         print(json.dumps(errors, indent=4), file=sys.stderr)
         raise AssertionError(errors)
 
@@ -160,6 +165,8 @@ def pytest_generate_tests(metafunc):
     else:
         ignore = _IGNORE_2_x + _ID_IGNORE_2_0
     missing_policy = os.environ["MISSING_POLICY"]
+    if missing_policy not in ["use-custom-properties", "add-to-description", "ignore", "use-extensions"]:
+        print("Missing policy " + missing_policy + " isn't one of the policy choices")
     setup_elevator_tests(version, missing_policy)
     argnames = ["test_file", "stored_master", "version", "missing_policy", "ignore"]
     argvalues = [(x, y, version, missing_policy, ignore) for x, y in zip(BEFORE_FILES, MASTER_JSON_FILES)]

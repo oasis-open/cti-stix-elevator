@@ -1,0 +1,53 @@
+{
+    "id": "bundle--72491bed-8922-43d5-b864-ae5acae79f8f",
+    "objects": [
+        {
+            "account_last_login": "2010-12-09T20:17:34.934295Z",
+            "account_login": "fred",
+            "account_type": "unix",
+            "id": "user-account--230fa84f-1fef-58a6-bd79-1332f28d2b23",
+            "is_disabled": true,
+            "type": "user-account",
+            "user_id": "1001"
+        },
+        {
+            "created": "2013-02-09T10:17:34.934Z",
+            "id": "indicator--504d3239-36e0-487f-aefb-db478db866d0",
+            "indicator_types": [
+                "url-watchlist"
+            ],
+            "modified": "2013-02-09T10:17:34.934Z",
+            "name": "Malicious site hosting downloader",
+            "pattern": "[user-account:is_disabled = true AND user-account:account_last_login = t'2010-12-09T20:17:34.934295Z' AND user-account:account_login = 'fred' AND (user-account:account_type = 'unix' AND user-account:user_id = '1001')]",
+            "pattern_type": "stix",
+            "spec_version": "2.1",
+            "type": "indicator",
+            "valid_from": "2013-02-09T10:17:34.934295Z"
+        },
+        {
+            "created": "2013-02-09T10:17:34.934Z",
+            "first_observed": "2013-02-09T10:17:34.934Z",
+            "id": "observed-data--feeede8d-38c9-43b9-a6b8-db213c303223",
+            "last_observed": "2013-02-09T10:17:34.934Z",
+            "modified": "2013-02-09T10:17:34.934Z",
+            "number_observed": 1,
+            "object_refs": [
+                "user-account--230fa84f-1fef-58a6-bd79-1332f28d2b23"
+            ],
+            "spec_version": "2.1",
+            "type": "observed-data"
+        },
+        {
+            "created": "2018-09-12T00:00:16.906Z",
+            "id": "report--dfd42a92-06f6-4a82-9539-4a064557eda6",
+            "modified": "2018-09-12T00:00:16.906Z",
+            "published": "2018-09-12T00:00:16.906Z",
+            "report_types": [
+                "unknown"
+            ],
+            "spec_version": "2.1",
+            "type": "report"
+        }
+    ],
+    "type": "bundle"
+}

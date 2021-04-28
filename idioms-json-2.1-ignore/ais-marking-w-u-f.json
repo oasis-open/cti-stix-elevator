@@ -1,0 +1,66 @@
+{
+    "id": "bundle--d11a02b6-ed2b-4661-96c1-5bd11d7dc821",
+    "objects": [
+        {
+            "administrative_area": "US-DC",
+            "country": "US",
+            "created": "2020-12-31T00:00:00.000Z",
+            "created_by_ref": "identity--7c35f716-fe0c-4bed-8a9a-5fd4111abf15",
+            "id": "location--059017c3-f040-474c-a4ab-70fa7eac1586",
+            "modified": "2020-12-31T00:00:00.000Z",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
+            ],
+            "spec_version": "2.1",
+            "type": "location"
+        },
+        {
+            "created": "2020-12-31T00:00:00.000Z",
+            "created_by_ref": "identity--7c35f716-fe0c-4bed-8a9a-5fd4111abf15",
+            "id": "relationship--9ea14925-43b1-4d8f-9a06-6d1371fb2d31",
+            "modified": "2020-12-31T00:00:00.000Z",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
+            ],
+            "relationship_type": "located-at",
+            "source_ref": "identity--7c35f716-fe0c-4bed-8a9a-5fd4111abf15",
+            "spec_version": "2.1",
+            "target_ref": "location--059017c3-f040-474c-a4ab-70fa7eac1586",
+            "type": "relationship"
+        },
+        {
+            "created": "2020-12-31T00:00:00.000Z",
+            "created_by_ref": "identity--7c35f716-fe0c-4bed-8a9a-5fd4111abf15",
+            "id": "identity--7c35f716-fe0c-4bed-8a9a-5fd4111abf15",
+            "identity_class": "organization",
+            "labels": [
+                "ais-consent-usg"
+            ],
+            "modified": "2020-12-31T00:00:00.000Z",
+            "name": "ACME",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
+            ],
+            "sectors": [
+                "technology"
+            ],
+            "spec_version": "2.1",
+            "type": "identity"
+        },
+        {
+            "created": "2016-03-29T20:52:52.716Z",
+            "created_by_ref": "identity--7c35f716-fe0c-4bed-8a9a-5fd4111abf15",
+            "id": "indicator--45eee277-2d76-4079-91d0-0061a443bac6",
+            "modified": "2016-03-29T20:52:52.716Z",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
+            ],
+            "pattern": "[file:hashes.MD5 = 'd41d8cd98f00b204e9800998ecf8427e']",
+            "pattern_type": "stix",
+            "spec_version": "2.1",
+            "type": "indicator",
+            "valid_from": "2016-03-29T20:52:52.716000Z"
+        }
+    ],
+    "type": "bundle"
+}

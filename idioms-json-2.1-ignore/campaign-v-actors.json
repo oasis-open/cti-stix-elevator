@@ -1,0 +1,97 @@
+{
+    "id": "bundle--81810123-b298-40f6-a4e7-186efcd07670",
+    "objects": [
+        {
+            "created": "2014-08-08T15:50:10.983Z",
+            "id": "identity--2d1c6ab3-5e4e-48ac-a32b-f0c01c2836a8",
+            "identity_class": "unknown",
+            "modified": "2014-08-08T15:50:10.983Z",
+            "name": "Victim Targeting: Customer PII and Financial Data",
+            "spec_version": "2.1",
+            "type": "identity"
+        },
+        {
+            "created": "2014-08-08T15:50:10.983Z",
+            "goals": [
+                "Theft",
+                "Theft - Theft of Proprietary Information"
+            ],
+            "id": "threat-actor--56f3f0db-b5d5-431c-ae56-c18f02caf500",
+            "modified": "2014-08-08T15:50:10.983Z",
+            "name": "People behind the intrusion",
+            "sophistication": "unknown",
+            "spec_version": "2.1",
+            "type": "threat-actor"
+        },
+        {
+            "aliases": [
+                "Charming Kittens",
+                "NewsBeef"
+            ],
+            "created": "2014-08-08T15:50:10.983Z",
+            "description": "Fred",
+            "external_references": [
+                {
+                    "source_name": "unknown",
+                    "url": "http://foo.com/bar"
+                }
+            ],
+            "id": "campaign--e5268b6e-4931-42f1-b379-87f48eb41b1e",
+            "modified": "2014-08-08T15:50:10.983Z",
+            "name": "Compromise of ATM Machines",
+            "spec_version": "2.1",
+            "type": "campaign"
+        },
+        {
+            "created": "2014-08-08T15:50:10.983Z",
+            "id": "relationship--94407623-cc96-4d46-8497-c46c38b19e8b",
+            "modified": "2014-08-08T15:50:10.983Z",
+            "relationship_type": "targets",
+            "source_ref": "campaign--e5268b6e-4931-42f1-b379-87f48eb41b1e",
+            "spec_version": "2.1",
+            "target_ref": "identity--2d1c6ab3-5e4e-48ac-a32b-f0c01c2836a8",
+            "type": "relationship"
+        },
+        {
+            "created": "2014-08-08T15:50:10.983Z",
+            "id": "relationship--580bc6a0-6574-4b8e-96f8-7c4a4d50a69e",
+            "modified": "2014-08-08T15:50:10.983Z",
+            "relationship_type": "attributed-to",
+            "source_ref": "incident--229ab6ba-0eb2-415b-bdf2-079e6b42f51e",
+            "spec_version": "2.1",
+            "target_ref": "campaign--e5268b6e-4931-42f1-b379-87f48eb41b1e",
+            "type": "relationship"
+        },
+        {
+            "created": "2014-08-08T15:50:10.983Z",
+            "id": "relationship--9d0e40af-1fa9-416f-841a-42a05704d49a",
+            "modified": "2014-08-08T15:50:10.983Z",
+            "relationship_type": "attributed-to",
+            "source_ref": "incident--517cf274-038d-4ed4-a3ec-3ac18ad9db8a",
+            "spec_version": "2.1",
+            "target_ref": "campaign--e5268b6e-4931-42f1-b379-87f48eb41b1e",
+            "type": "relationship"
+        },
+        {
+            "created": "2014-08-08T15:50:10.983Z",
+            "id": "relationship--7068b913-f643-4a1b-92ae-ffcc5694c732",
+            "modified": "2014-08-08T15:50:10.983Z",
+            "relationship_type": "attributed-to",
+            "source_ref": "incident--7d8cf96f-91cb-42d0-a1e0-bfa38ea08621",
+            "spec_version": "2.1",
+            "target_ref": "campaign--e5268b6e-4931-42f1-b379-87f48eb41b1e",
+            "type": "relationship"
+        },
+        {
+            "created": "2014-08-08T15:50:10.983Z",
+            "id": "relationship--451b9462-9d98-410b-9e89-eb1283a2db44",
+            "modified": "2014-08-08T15:50:10.983Z",
+            "relationship_type": "attributed-to",
+            "source_ref": "campaign--e5268b6e-4931-42f1-b379-87f48eb41b1e",
+            "spec_version": "2.1",
+            "target_ref": "threat-actor--56f3f0db-b5d5-431c-ae56-c18f02caf500",
+            "type": "relationship"
+        }
+    ],
+    "type": "bundle"
+}

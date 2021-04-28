@@ -1,0 +1,17 @@
+{
+    "id": "bundle--495c4c04-b5d8-41e3-b7bb-000c29789db9",
+    "objects": [
+        {
+            "created": "2021-04-27T21:09:05.783Z",
+            "id": "course-of-action--495c9b28-b5d8-41e3-b7bb-000c29789db9",
+            "labels": [
+                "perimeter-blocking"
+            ],
+            "modified": "2021-04-27T21:09:05.783Z",
+            "name": "Block traffic to PIVY C2 Server (10.10.10.10)",
+            "spec_version": "2.1",
+            "type": "course-of-action"
+        }
+    ],
+    "type": "bundle"
+}
