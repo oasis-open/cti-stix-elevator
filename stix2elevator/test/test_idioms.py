@@ -11,7 +11,9 @@ from stix2elevator import elevate
 from stix2elevator.options import (
     get_option_value, initialize_options, set_option_value
 )
-from stix2elevator.utils import extension_definition_id_property, find_dir, id_property, iterpath
+from stix2elevator.utils import (
+    extension_definition_id_property, find_dir, id_property, iterpath
+)
 
 BEFORE_FILES = []
 BEFORE_FILENAMES = []

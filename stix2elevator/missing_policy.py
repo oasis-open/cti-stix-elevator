@@ -1,7 +1,9 @@
 # Standard Library
-import pluralizer
 import re
 import uuid
+
+# external
+import pluralizer
 
 # internal
 from stix2elevator.extension_definitions import get_extension_definition_id
@@ -182,6 +184,7 @@ def statement_type_as_custom_properties(sdo_instance, statement, property_name, 
         sdo_instance[convert_to_custom_name(property_name)] = [map] if is_list else map
     else:
         sdo_instance[convert_to_custom_name(property_name)] = [str(statement.value)] if is_list else str(statement.value)
+
 
 def statement_type_as_extension_properties(container, statement, property_name, id, is_list):
     map = dict()

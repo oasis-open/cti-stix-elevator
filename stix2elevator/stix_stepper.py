@@ -12,8 +12,10 @@ import stix2validator
 
 # internal
 from stix2elevator.ids import generate_sco_id
-from stix2elevator.missing_policy import (determine_container_for_missing_properties, fill_in_extension_properties,
-                                          remove_custom_name)
+from stix2elevator.missing_policy import (
+    determine_container_for_missing_properties, fill_in_extension_properties,
+    remove_custom_name
+)
 from stix2elevator.options import initialize_options, set_option_value
 from stix2elevator.utils import NewlinesHelpFormatter, validate_stix2_string
 from stix2elevator.version import __version__
@@ -153,6 +155,7 @@ def step_custom_object(stix_object):
             container["extension_type"] = "new-sco"
             fill_in_extension_properties(stix_object, container, extension_definition_id, None)
 
+
 _CONFIDENCE_SCALE = {
     "None": 0,
     "Low": 15,
@@ -160,6 +163,7 @@ _CONFIDENCE_SCALE = {
     "Medium": 50,
     "High": 85
 }
+
 
 def step_confidence_property(stix21_obj):
     confidence_properties = filter(lambda x: "confidence" in x, stix21_obj.keys())
@@ -170,7 +174,7 @@ def step_confidence_property(stix21_obj):
             break
     if confidence_prop:
         stix21_obj["confidence"] = _CONFIDENCE_SCALE[stix21_obj[confidence_prop]] \
-                                    if stix21_obj[confidence_prop] in _CONFIDENCE_SCALE else stix21_obj[confidence_prop]
+            if stix21_obj[confidence_prop] in _CONFIDENCE_SCALE else stix21_obj[confidence_prop]
         stix21_obj.pop(confidence_prop)
 
 
@@ -183,8 +187,8 @@ def step_incident_data(stix_object):
                      "labels", "confidence", "lang", "external_references", "object_marking_refs", "granular_markings"]:
             ext_properties.append(k)
     for k in ext_properties:
-            container[k] = stix_object[k]
-            stix_object.pop(k)
+        container[k] = stix_object[k]
+        stix_object.pop(k)
     fill_in_extension_properties(stix_object, container, extension_definition_id)
     stix_object["type"] = "incident"
     stix_object["id"] = remove_custom_name(stix_object["id"], separator="-")
@@ -213,11 +217,11 @@ def step_object(stix_object):
     elif stix_object["type"] == "malware":
         # couldn't explicitly represent malware families in 2.0, so assume False
         stix_object["is_family"] = False
-        stix21_objs =  [stix_object]
+        stix21_objs = [stix_object]
     elif stix_object["type"] == "observed-data":
         stix21_objs = step_observable_data(stix_object)
     elif "incident" in stix_object["type"]:
-        stix21_objs = [ step_incident_data(stix_object) ]
+        stix21_objs = [step_incident_data(stix_object)]
     else:
         stix21_objs = [stix_object]
     for stix21_obj in stix21_objs:

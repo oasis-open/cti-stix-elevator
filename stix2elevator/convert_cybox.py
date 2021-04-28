@@ -1642,9 +1642,6 @@ def convert_custom_object(custom_obj1x):
                                                                                             custom_object=True)
             if container is not None:
                 container["extension_type"] = "new-sco"
-                # if custom_obj1x.custom_properties:
-                #     for cp in custom_obj1x.custom_properties.property_:
-                #         container[cp.name] = cp.value
                 fill_in_extension_properties(extension_obj21, container, extension_definition_id, None)
             return extension_obj21
         elif check_for_missing_policy("use-custom-properties"):
@@ -1746,7 +1743,6 @@ def convert_cybox_object20(obj1x):
 def convert_cybox_object21(obj1x, env):
     # TODO:  should related objects be handled on a case-by-case basis or just ignored
     related_objects = obj1x.related_objects
-    extension_definition_id = None
     prop = obj1x.properties
     if prop is None:
         return None
@@ -1807,6 +1803,7 @@ def convert_cybox_object21(obj1x, env):
         if prop.custom_properties is not None:
             if check_for_missing_policy("use-custom-properties") or check_for_missing_policy("use-extensions"):
                 if isinstance(prop, Custom):
+                    # new object type - extensions just has extension_type, properties are at top-level
                     for cp in prop.custom_properties.property_:
                         handle_missing_string_property(objs[0], cp.name, cp.value, obj1x.id_, is_sco=True)
                 else:
@@ -1820,6 +1817,7 @@ def convert_cybox_object21(obj1x, env):
                         fill_in_extension_properties(objs[0], container, extension_definition_id)
             else:
                 warn("STIX 1.x object %s contains ignored custom properties", 818, str(prop))
+        # remove useless SCOs
         valid_objects = list()
         for o in objs:
             if len(o.keys()) > 2:
