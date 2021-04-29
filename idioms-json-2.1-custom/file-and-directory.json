@@ -34,7 +34,7 @@
             "id": "relationship--c5f273d6-50aa-4e9b-8fbc-370e6dff2dec",
             "modified": "2014-05-08T09:00:00.000Z",
             "relationship_type": "consists-of",
-            "source_ref": "infrastructure--5aaf40a6-293d-49e2-bb21-6df1747039ba",
+            "source_ref": "infrastructure--dd955e08-16d0-4f08-5064-50d9e7a3104d",
             "spec_version": "2.1",
             "target_ref": "file--514e5469-3bfe-5910-9a70-db045a7dd1a3",
             "type": "relationship"
@@ -44,7 +44,7 @@
             "id": "relationship--c9bd6cf7-1b8a-4d68-bae8-a8a9af6fd991",
             "modified": "2014-05-08T09:00:00.000Z",
             "relationship_type": "consists-of",
-            "source_ref": "infrastructure--5aaf40a6-293d-49e2-bb21-6df1747039ba",
+            "source_ref": "infrastructure--dd955e08-16d0-4f08-5064-50d9e7a3104d",
             "spec_version": "2.1",
             "target_ref": "directory--5254394b-9d52-51d5-8a7b-613a7b0f89c0",
             "type": "relationship"
