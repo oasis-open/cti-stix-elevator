@@ -8,7 +8,9 @@ import stix2validator
 # internal
 from stix2elevator.options import initialize_options, set_option_value
 from stix2elevator.stix_stepper import step_file
-from stix2elevator.utils import extension_definition_id_property, find_dir, id_property
+from stix2elevator.utils import (
+    extension_definition_id_property, find_dir, id_property
+)
 
 from .test_idioms import (
     BEFORE_FILENAMES, BEFORE_FILES, MASTER_JSON_FILES,

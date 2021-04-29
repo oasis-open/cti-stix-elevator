@@ -1,0 +1,99 @@
+{
+    "id": "bundle--e393d940-e619-4669-9e16-d592775d29bb",
+    "objects": [
+        {
+            "administrative_area": "US-DC",
+            "country": "US",
+            "created": "9999-12-31T00:00:00.000Z",
+            "created_by_ref": "identity--ba69c484-ba17-427b-95ad-57fa5237506d",
+            "id": "location--80bac0c1-0833-4817-a2a8-acec41ef7fda",
+            "modified": "9999-12-31T00:00:00.000Z",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
+            ],
+            "spec_version": "2.1",
+            "type": "location"
+        },
+        {
+            "created": "9999-12-31T00:00:00.000Z",
+            "created_by_ref": "identity--ba69c484-ba17-427b-95ad-57fa5237506d",
+            "id": "relationship--f1192899-de32-4020-b922-e10e5a1a9941",
+            "modified": "9999-12-31T00:00:00.000Z",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
+            ],
+            "relationship_type": "located-at",
+            "source_ref": "identity--ba69c484-ba17-427b-95ad-57fa5237506d",
+            "spec_version": "2.1",
+            "target_ref": "location--80bac0c1-0833-4817-a2a8-acec41ef7fda",
+            "type": "relationship"
+        },
+        {
+            "created": "9999-12-31T00:00:00.000Z",
+            "created_by_ref": "identity--ba69c484-ba17-427b-95ad-57fa5237506d",
+            "id": "identity--ba69c484-ba17-427b-95ad-57fa5237506d",
+            "identity_class": "organization",
+            "labels": [
+                "ais-consent-everyone"
+            ],
+            "modified": "9999-12-31T00:00:00.000Z",
+            "name": "ACME",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
+            ],
+            "sectors": [
+                "technology"
+            ],
+            "spec_version": "2.1",
+            "type": "identity"
+        },
+        {
+            "created": "2016-03-29T20:52:52.716Z",
+            "created_by_ref": "identity--ba69c484-ba17-427b-95ad-57fa5237506d",
+            "description": "Send Device for forensic analysis",
+            "id": "course-of-action--e9f31688-d744-48f4-9320-e6a9bd136f44",
+            "modified": "2016-03-29T20:52:52.716Z",
+            "name": "Bricked Computer",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
+            ],
+            "spec_version": "2.1",
+            "type": "course-of-action"
+        },
+        {
+            "created": "2016-03-29T20:52:52.716Z",
+            "created_by_ref": "identity--ba69c484-ba17-427b-95ad-57fa5237506d",
+            "id": "indicator--0c277b59-f5a9-4530-8861-82588719ec0c",
+            "kill_chain_phases": [
+                {
+                    "kill_chain_name": "lockheed-martin-cyber-kill-chain",
+                    "phase_name": "actions-on-objectives"
+                }
+            ],
+            "modified": "2016-03-29T20:52:52.716Z",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
+            ],
+            "pattern": "[mutex:name = 'To0o0o0o0o0o0o0o0ooLate'] AND [(windows-registry-key:key MATCHES 'HKEY_CURRENT_CONFIG\\\\J@k3d' AND windows-registry-key:values[*].data = '0')] AND [file:hashes.MD5 = 'd41d8cd98f00b204e9800998ecf8427e']",
+            "pattern_type": "stix",
+            "spec_version": "2.1",
+            "type": "indicator",
+            "valid_from": "2016-03-29T20:52:52.716000Z"
+        },
+        {
+            "created": "2016-03-29T20:52:52.716Z",
+            "created_by_ref": "identity--ba69c484-ba17-427b-95ad-57fa5237506d",
+            "id": "relationship--43bb5dfc-c68e-4cf9-9c42-e5eb5a8eeb16",
+            "modified": "2016-03-29T20:52:52.716Z",
+            "object_marking_refs": [
+                "marking-definition--97126bf6-a01f-4267-ab2a-3420d8c9c37a"
+            ],
+            "relationship_type": "investigates",
+            "source_ref": "course-of-action--e9f31688-d744-48f4-9320-e6a9bd136f44",
+            "spec_version": "2.1",
+            "target_ref": "indicator--0c277b59-f5a9-4530-8861-82588719ec0c",
+            "type": "relationship"
+        }
+    ],
+    "type": "bundle"
+}

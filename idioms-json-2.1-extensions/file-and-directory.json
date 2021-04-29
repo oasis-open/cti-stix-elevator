@@ -2,6 +2,12 @@
     "id": "bundle--cc0ca596-70e6-4dac-9bef-603166d17db8",
     "objects": [
         {
+            "extensions": {
+                "extension-definition--488f4c0e-2d69-4627-8946-6cc3b774d668": {
+                    "extension_type": "property-extension",
+                    "something_new": "3"
+                }
+            },
             "hashes": {
                 "MD5": "5d8129be965fab8115eca34fc84bd7f0",
                 "SHA-256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
@@ -30,27 +36,23 @@
         },
         {
             "created": "2014-05-08T09:00:00.000Z",
-            "id": "relationship--75322170-86cb-48b8-a58b-d06e6bc8c496",
+            "id": "relationship--7c40c518-497f-476c-b99d-aac8547c0110",
             "modified": "2014-05-08T09:00:00.000Z",
             "relationship_type": "consists-of",
             "source_ref": "infrastructure--dd955e08-16d0-4f08-5064-50d9e7a3104d",
             "spec_version": "2.1",
-            "target_ref": "observed-data--c8c32b6e-2ea8-51c4-6446-7f5218072f27",
+            "target_ref": "file--514e5469-3bfe-5910-9a70-db045a7dd1a3",
             "type": "relationship"
         },
         {
-            "created": "2020-12-30T16:02:49.685Z",
-            "first_observed": "2020-12-30T16:02:49.685Z",
-            "id": "observed-data--c8c32b6e-2ea8-41c4-6446-7f5218072f27",
-            "last_observed": "2020-12-30T16:02:49.685Z",
-            "modified": "2020-12-30T16:02:49.685Z",
-            "number_observed": 1,
-            "object_refs": [
-                "file--514e5469-3bfe-5910-9a70-db045a7dd1a3",
-                "directory--5254394b-9d52-51d5-8a7b-613a7b0f89c0"
-            ],
+            "created": "2014-05-08T09:00:00.000Z",
+            "id": "relationship--793e8545-79fd-4f50-ac17-718742dfc928",
+            "modified": "2014-05-08T09:00:00.000Z",
+            "relationship_type": "consists-of",
+            "source_ref": "infrastructure--dd955e08-16d0-4f08-5064-50d9e7a3104d",
             "spec_version": "2.1",
-            "type": "observed-data"
+            "target_ref": "directory--5254394b-9d52-51d5-8a7b-613a7b0f89c0",
+            "type": "relationship"
         }
     ],
     "type": "bundle"

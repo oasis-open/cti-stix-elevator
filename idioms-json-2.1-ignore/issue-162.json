@@ -1,0 +1,106 @@
+{
+    "id": "bundle--195373a4-d596-41f4-8192-f3e5530c4a57",
+    "objects": [
+        {
+            "created": "2019-08-23T13:10:55.465Z",
+            "external_references": [
+                {
+                    "external_id": "CVE-2015-2808",
+                    "source_name": "cve"
+                }
+            ],
+            "id": "vulnerability--0d9a952d-aca5-4134-b399-5760a3ab2392",
+            "modified": "2019-08-23T13:10:55.465Z",
+            "spec_version": "2.1",
+            "type": "vulnerability"
+        },
+        {
+            "created": "2021-04-27T21:09:06.349Z",
+            "external_references": [
+                {
+                    "external_id": "T1068",
+                    "source_name": "capec"
+                }
+            ],
+            "id": "attack-pattern--1a9c3244-cc05-4d6c-8355-5fd9c681ffa9",
+            "modified": "2021-04-27T21:09:06.349Z",
+            "name": "Exploitaiton of Vulnerability",
+            "spec_version": "2.1",
+            "type": "attack-pattern"
+        },
+        {
+            "created": "2021-04-27T21:09:06.349Z",
+            "id": "identity--d8ab2158-6c62-4698-bdae-eb1e8b285fec",
+            "identity_class": "organization",
+            "modified": "2021-04-27T21:09:06.349Z",
+            "name": "Finance",
+            "sectors": [
+                "finance"
+            ],
+            "spec_version": "2.1",
+            "type": "identity"
+        },
+        {
+            "created": "2021-04-27T21:09:06.349Z",
+            "id": "indicator--dea1bdab-bff8-4b5e-9160-94b06732b7b5",
+            "indicator_types": [
+                "ip-watchlist"
+            ],
+            "kill_chain_phases": [
+                {
+                    "kill_chain_name": "lockheed-martin-cyber-kill-chain",
+                    "phase_name": "exploitation"
+                }
+            ],
+            "modified": "2021-04-27T21:09:06.349Z",
+            "pattern": "[ipv4-addr:value = '199.81.216.51']",
+            "pattern_type": "stix",
+            "spec_version": "2.1",
+            "type": "indicator",
+            "valid_from": "2021-04-27T21:09:06.349Z"
+        },
+        {
+            "created": "2021-04-27T21:09:06.349Z",
+            "id": "relationship--367d5c36-2f40-4b48-92ac-7d2fcd0e6d85",
+            "modified": "2021-04-27T21:09:06.349Z",
+            "relationship_type": "targets",
+            "source_ref": "attack-pattern--1a9c3244-cc05-4d6c-8355-5fd9c681ffa9",
+            "spec_version": "2.1",
+            "target_ref": "vulnerability--0d9a952d-aca5-4134-b399-5760a3ab2392",
+            "type": "relationship"
+        },
+        {
+            "created": "2021-04-27T21:09:06.349Z",
+            "id": "relationship--9daa94d4-e51d-4a6d-801b-b977d62e01b2",
+            "modified": "2021-04-27T21:09:06.349Z",
+            "relationship_type": "targets",
+            "source_ref": "attack-pattern--1a9c3244-cc05-4d6c-8355-5fd9c681ffa9",
+            "spec_version": "2.1",
+            "target_ref": "identity--d8ab2158-6c62-4698-bdae-eb1e8b285fec",
+            "type": "relationship"
+        },
+        {
+            "created": "2021-04-27T21:09:06.349Z",
+            "description": "Related_To",
+            "id": "relationship--710d7fdf-7883-4037-ad85-092aaf86bb40",
+            "modified": "2021-04-27T21:09:06.349Z",
+            "relationship_type": "indicates",
+            "source_ref": "indicator--dea1bdab-bff8-4b5e-9160-94b06732b7b5",
+            "spec_version": "2.1",
+            "target_ref": "attack-pattern--1a9c3244-cc05-4d6c-8355-5fd9c681ffa9",
+            "type": "relationship"
+        },
+        {
+            "created": "2021-04-27T21:09:06.349Z",
+            "description": "Related_To",
+            "id": "relationship--52f92d02-fd30-4289-b24e-2e70de986a8f",
+            "modified": "2021-04-27T21:09:06.349Z",
+            "relationship_type": "indicates",
+            "source_ref": "indicator--dea1bdab-bff8-4b5e-9160-94b06732b7b5",
+            "spec_version": "2.1",
+            "target_ref": "identity--d8ab2158-6c62-4698-bdae-eb1e8b285fec",
+            "type": "relationship"
+        }
+    ],
+    "type": "bundle"
+}

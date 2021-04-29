@@ -20,7 +20,7 @@
                 "ftp"
             ],
             "modified": "2015-07-31T11:24:39.090Z",
-            "pattern": "[x-elevator-fooz:ftp_command MATCHES 'fp[a-zA-Z0-9]{44}\\\\.bin']",
+            "pattern": "[unconverted_term:example:Observable-f082e299-c98e-4928-a7a8-2a84b2eb4719]",
             "type": "indicator",
             "valid_from": "2015-07-31T11:24:39.090000Z"
         },
@@ -40,12 +40,6 @@
             "last_observed": "2015-07-31T11:24:39.090Z",
             "modified": "2015-07-31T11:24:39.090Z",
             "number_observed": 1,
-            "objects": {
-                "0": {
-                    "ftp_command": "fpuwe8bmsD56ns.bin",
-                    "type": "x-elevator-fooz"
-                }
-            },
             "type": "observed-data"
         }
     ],

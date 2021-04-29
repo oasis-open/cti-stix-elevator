@@ -48,8 +48,8 @@
             "number_observed": 1,
             "objects": {
                 "0": {
-                    "ftp_command": "fpuwe8bmsD56ns.bin",
-                    "type": "x-elevator-fooz"
+                        "type": "x-elevator-fooz",
+                        "x_elevator_ftp_command": "fpuwe8bmsD56ns.bin"
                 }
             },
             "type": "observed-data"

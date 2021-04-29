@@ -1,0 +1,70 @@
+{
+    "id": "bundle--43fe3b22-0201-47cf-85d0-97c02164528d",
+    "objects": [
+        {
+            "hashes": {
+                "SHA-256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "id": "file--b72f0bbc-da0c-5d04-9c11-b78809283af8",
+            "name": "iprip32.dll",
+            "parent_directory_ref": "directory--5254394b-9d52-51d5-8a7b-613a7b0f89c0",
+            "type": "file"
+        },
+        {
+            "id": "directory--5254394b-9d52-51d5-8a7b-613a7b0f89c0",
+            "path": "/usr/local",
+            "type": "directory"
+        },
+        {
+            "id": "software--c616478f-891e-5ddb-bb5c-f6d497d2a513",
+            "languages": [
+                "eng"
+            ],
+            "name": "Word",
+            "type": "software",
+            "vendor": "Microsoft",
+            "version": "2002"
+        },
+        {
+            "created": "2021-04-27T21:09:06.260Z",
+            "id": "indicator--6116b44e-a7e9-41e3-a82f-000c29b241af",
+            "indicator_types": [
+                "ip-watchlist"
+            ],
+            "modified": "2021-04-27T21:09:06.260Z",
+            "pattern": "[domain-name:value = 'microsoftb.byinter.net' AND domain-name:resolves_to_refs[*].value = '202.65.222.45']",
+            "pattern_type": "stix",
+            "spec_version": "2.1",
+            "type": "indicator",
+            "valid_from": "2021-04-27T21:09:06.260Z"
+        },
+        {
+            "created": "2021-04-27T21:09:06.260Z",
+            "first_observed": "2021-04-27T21:09:06.260Z",
+            "id": "observed-data--c8c32b6e-2ea8-41c4-9446-7f5218072f27",
+            "last_observed": "2021-04-27T21:09:06.260Z",
+            "modified": "2021-04-27T21:09:06.260Z",
+            "number_observed": 1,
+            "object_refs": [
+                "file--b72f0bbc-da0c-5d04-9c11-b78809283af8",
+                "directory--5254394b-9d52-51d5-8a7b-613a7b0f89c0"
+            ],
+            "spec_version": "2.1",
+            "type": "observed-data"
+        },
+        {
+            "created": "2021-04-27T21:09:06.260Z",
+            "first_observed": "2021-04-27T21:09:06.260Z",
+            "id": "observed-data--1a9e6bc3-7665-4413-8f07-75cceef20856",
+            "last_observed": "2021-04-27T21:09:06.260Z",
+            "modified": "2021-04-27T21:09:06.260Z",
+            "number_observed": 1,
+            "object_refs": [
+                "software--c616478f-891e-5ddb-bb5c-f6d497d2a513"
+            ],
+            "spec_version": "2.1",
+            "type": "observed-data"
+        }
+    ],
+    "type": "bundle"
+}

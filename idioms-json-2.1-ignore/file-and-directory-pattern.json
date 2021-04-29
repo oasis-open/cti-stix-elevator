@@ -1,0 +1,51 @@
+{
+    "id": "bundle--cc0ca596-70e6-4dac-9bef-603166d17db8",
+    "objects": [
+        {
+            "created": "2014-05-08T09:00:00.000Z",
+            "first_seen": "2014-05-08T09:00:00.000Z",
+            "id": "infrastructure--10be9915-b40e-41b0-a0bf-c01e9d70381a",
+            "infrastructure_types": [
+                "malware-c2"
+            ],
+            "modified": "2014-05-08T09:00:00.000Z",
+            "name": "Malware C2 Channel",
+            "spec_version": "2.1",
+            "type": "infrastructure"
+        },
+        {
+            "created": "2014-05-08T09:00:00.000Z",
+            "id": "indicator--53fe3b22-0201-47cf-85d0-97c02164528d",
+            "indicator_types": [
+                "ip-watchlist"
+            ],
+            "modified": "2014-05-08T09:00:00.000Z",
+            "pattern": "[(file:hashes.'SHA-256' = 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855' AND (file:name = 'iprip32.dll' AND file:parent_directory_ref.path = '/usr/local'))] AND [(autonomous-system:number = 15139 AND autonomous-system:name = 'Slime Industries' AND autonomous-system:rir = 'ARIN')]",
+            "pattern_type": "stix",
+            "spec_version": "2.1",
+            "type": "indicator",
+            "valid_from": "2014-05-08T09:00:00.000000Z"
+        },
+        {
+            "created": "2014-05-08T09:00:00.000Z",
+            "id": "relationship--b4c79d44-7bdc-4219-a5d4-d10c215f94f6",
+            "modified": "2014-05-08T09:00:00.000Z",
+            "relationship_type": "indicates",
+            "source_ref": "indicator--53fe3b22-0201-47cf-85d0-97c02164528d",
+            "spec_version": "2.1",
+            "target_ref": "infrastructure--10be9915-b40e-41b0-a0bf-c01e9d70381a",
+            "type": "relationship"
+        },
+        {
+            "created": "2014-05-08T09:00:00.000Z",
+            "id": "relationship--3824c75c-62b5-40c6-a963-61074c708148",
+            "modified": "2014-05-08T09:00:00.000Z",
+            "relationship_type": "consists-of",
+            "source_ref": "infrastructure--10be9915-b40e-41b0-a0bf-c01e9d70381a",
+            "spec_version": "2.1",
+            "target_ref": "observed-data--c8c32b6e-2ea8-41c4-a446-7f5218072f27",
+            "type": "relationship"
+        }
+    ],
+    "type": "bundle"
+}

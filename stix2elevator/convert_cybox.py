@@ -1644,15 +1644,19 @@ def convert_custom_object(custom_obj1x):
                 container["extension_type"] = "new-sco"
                 fill_in_extension_properties(extension_obj21, container, extension_definition_id, None)
             return extension_obj21
-        else:
+        elif check_for_missing_policy("use-custom-properties"):
             custom_object_type = convert_to_custom_name(custom_obj1x.custom_name, separator="-")
             custom_obj2x = create_base_sco(custom_object_type, custom_obj1x)
             generate_sco_id_for_2_1(custom_obj2x, custom_obj1x.parent.id_)
             return custom_obj2x
-
+        else:
+            warn("Custom Content %s %s is ignored",
+                 316,
+                 custom_obj1x.custom_name,
+                 ("of " + custom_obj1x.parent.id_ if custom_obj1x.parent.id_ else ""))
     else:
         warn("Custom object with no name cannot be handled yet", 811)
-        return None
+    return None
 
 
 # def convert_netflow_object(obj1x):
@@ -1711,22 +1715,26 @@ def convert_cybox_object20(obj1x):
         # returns a dict
         objs = convert_socket_address(prop)
     elif isinstance(prop, Custom):
-        objs["0"] = convert_custom_object(prop)
+        cust_obj = convert_custom_object(prop)
+        if cust_obj:
+            if prop.custom_properties:
+                for cp in prop.custom_properties.property_:
+                    prop_name = convert_to_custom_name(cp.name)
+                    cust_obj[prop_name] = cp.value
+            objs["0"] = cust_obj
     else:
         warn("CybOX object %s not handled yet", 805, str(type(prop)))
         return None
     if not objs:
-        warn("%s did not yield any STIX 2.x object", 417, str(type(prop)))
+        warn("%s did not yield any STIX 2.x object", 417, str(prop))
         return None
     else:
-        if prop.custom_properties:
-            primary_obj = objs["0"]
-            for cp in prop.custom_properties.property_:
-                if isinstance(prop, Custom):
-                    prop_name = cp.name
-                else:
-                    prop_name = convert_to_custom_name(cp.name)
-                primary_obj[prop_name] = cp.value
+        if prop.custom_properties is not None:
+            if check_for_missing_policy("use-custom-properties") or check_for_missing_policy("use-extensions"):
+                for cp in prop.custom_properties.property_:
+                    handle_missing_string_property(objs["0"], cp.name, cp.value, obj1x.id_, is_sco=True)
+            else:
+                warn("STIX 1.x object %s contains ignored custom properties", 818, str(prop))
         if obj1x.id_:
             add_object_id_value(obj1x.id_, objs)
         return objs
@@ -1780,26 +1788,45 @@ def convert_cybox_object21(obj1x, env):
     elif isinstance(prop, SocketAddress):
         objs = convert_socket_address(prop, env)
     elif isinstance(prop, Custom):
-        objs = [convert_custom_object(prop)]
+        cust_obj = convert_custom_object(prop)
+        if cust_obj:
+            objs = [cust_obj]
+        else:
+            objs = None
     else:
         warn("CybOX object %s not handled yet", 805, str(type(prop)))
         return None
     if not objs:
-        warn("%s did not yield any STIX 2.x object", 417, str(type(prop)))
+        warn("%s did not yield any STIX 2.x object", 417, str(prop))
         return None
     else:
-        if prop.custom_properties:
-            # make sure the original object is always first in the objs array
-            primary_obj = objs[0]
-            for cp in prop.custom_properties.property_:
+        if prop.custom_properties is not None:
+            if check_for_missing_policy("use-custom-properties") or check_for_missing_policy("use-extensions"):
                 if isinstance(prop, Custom):
-                    prop_name = cp.name
+                    # new object type - extensions just has extension_type, properties are at top-level
+                    for cp in prop.custom_properties.property_:
+                        handle_missing_string_property(objs[0], cp.name, cp.value, obj1x.id_, is_sco=True)
                 else:
-                    prop_name = convert_to_custom_name(cp.name)
-                primary_obj[prop_name] = cp.value
+                    # we assume that because this is a custom property - the elevator can't know about it, so custom_object=True
+                    container, extension_definition_id = determine_container_for_missing_properties(objs[0]["type"],
+                                                                                                    objs[0],
+                                                                                                    custom_object=True)
+                    if container is not None:
+                        for cp in prop.custom_properties.property_:
+                            handle_missing_string_property(container, cp.name, cp.value, obj1x.id_, is_sco=True)
+                        fill_in_extension_properties(objs[0], container, extension_definition_id)
+            else:
+                warn("STIX 1.x object %s contains ignored custom properties", 818, str(prop))
+        # remove useless SCOs
+        valid_objects = list()
+        for o in objs:
+            if len(o.keys()) > 2:
+                valid_objects.append(o)
+            else:
+                warn("STIX 1.x object %s contains no useful properties", 810, o["id"])
         if obj1x.id_:
-            add_object_id_value(obj1x.id_, objs)
-        return objs
+            add_object_id_value(obj1x.id_, valid_objects)
+        return valid_objects
 
 
 def find_index_of_type(objs, stix_type):
