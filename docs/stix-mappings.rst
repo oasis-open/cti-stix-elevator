@@ -11,7 +11,7 @@ For each STIX 1.x object that was converted the following options are possible:
  - **STIX 1.x property mapped using STIX 2.x relationships.** This property is used to construct a 2.x relationship object.  The "reverse"
    notation indicates the the STIX 1.x property is found on target object.
  - **STIX 1.x property handled based on the "missing policy" option.**  This property has no corresponding property in STIX 2.x, but its value
-   can be (optionally) included using custom properties or in the description property of the 2.x object as text,
+   can be (optionally) included using the extension mechanism, custom properties or in the description property of the 2.x object as text,
    depending upon the **--missing-policy** option.
  - **STIX 1.x property not mapped.**  This property will not be included in the converted 2.x object.
 

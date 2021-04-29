@@ -56,7 +56,7 @@ optional arguments:
 
   --incidents
                 Incidents will be included in the conversion.
-                This argument is deprecated.
+                Default for version 2.1 is true.
 
   --package-created-by-id PACKAGE_CREATED_BY_ID
                 Use provided identifier for "created_by_ref"
