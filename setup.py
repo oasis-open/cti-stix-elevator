@@ -46,7 +46,7 @@ setup(
         'pluralizer',
         'stix>=1.1.1.9,<1.2.1.0',
         'stix2>=2.1.0',
-        'stix2-validator>=2.0.2',
+        'stix2-validator>=3.0.0',
         'stixmarx>=1.0.8',
     ],
     entry_points={
