@@ -441,6 +441,7 @@ def convert_windows_executable_file(f):
             if s.entropy:
                 if s.entropy.value:
                     section_dict["entropy"] = s.entropy.value.value
+                # there could be multiple sections - need to determine how to handle that for extensions
                 if s.entropy.min and not check_for_missing_policy("use-extensions"):
                     handle_missing_string_property(section_dict, "entropy_min", s.entropy.min, None, is_sco=True)
                 else:
@@ -504,6 +505,7 @@ def convert_archive_file21(f):
                 if extension_definition_id not in extensions_dict:
                     extensions_dict[extension_definition_id] = dict()
                 extensions_dict[extension_definition_id]["version"] = str(f.version)
+                extensions_dict[extension_definition_id]["extension_type"] = "property-extension"
     if f.archived_file:
         if "archive-ext" not in extensions_dict:
             extensions_dict["archive-ext"] = dict()
@@ -731,7 +733,7 @@ def convert_email_additional_headers(head):
     return additional_header_fields_dict
 
 
-def handle_extensions_of_email_message(sco_instance, email_message):
+def handle_missing_properties_of_email_message(sco_instance, email_message):
     container, extension_definition_id = determine_container_for_missing_properties("email-message", sco_instance)
 
     if container is not None:
@@ -754,7 +756,9 @@ def handle_extensions_of_email_message(sco_instance, email_message):
                          434, "links", "email-message")
             else:
                 warn("Missing property '%s' is ignored", 307, "links")
-
+        if get_option_value("spec_version") == "2.0":
+            if email_message.header.message_id:
+                handle_missing_string_property(container, "message_id", email_message.header.message_id, None, is_sco=True)
         fill_in_extension_properties(sco_instance, container, extension_definition_id)
 
 
@@ -830,7 +834,8 @@ def convert_email_message(email_message):
                     email_dict["bcc_refs"] = []
                 email_dict["bcc_refs"].append(str(index) if spec_version == "2.0" else bcc_ref["id"])
         if header.message_id:
-            email_dict["message_id"] = str(header.message_id)
+            if spec_version == "2.1":
+                email_dict["message_id"] = str(header.message_id)
         add_headers2x = convert_email_additional_headers(header)
         if add_headers2x != {}:
             email_dict["additional_header_fields"] = add_headers2x
@@ -854,7 +859,7 @@ def convert_email_message(email_message):
                 email_dict["raw_email_ref"] = raw_body_obj["id"]
                 objs.append(raw_body_obj)
     generate_sco_id_for_2_1(email_dict, email_message.parent.id_)
-    handle_extensions_of_email_message(email_dict, email_message)
+    handle_missing_properties_of_email_message(email_dict, email_message)
     return objs
 
 

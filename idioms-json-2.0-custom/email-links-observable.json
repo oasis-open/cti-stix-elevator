@@ -30,10 +30,10 @@
                     },
                     "from_ref": "1",
                     "is_multipart": false,
-                    "message_id": "201602112058.u1BKfrXh004925@mail-gw-01.oit.duke.edu",
                     "raw_email_ref": "2",
                     "subject": "Fix The Error On Your Account.",
-                    "type": "email-message"
+                    "type": "email-message",
+                    "x_elevator_message_id": "201602112058.u1BKfrXh004925@mail-gw-01.oit.duke.edu"
                 },
                 "1": {
                     "type": "email-addr",

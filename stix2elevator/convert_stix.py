@@ -481,26 +481,6 @@ def finish_basic_object(old_id, instance, env, stix1x_obj, temp_marking_id=None)
         instance["object_marking_refs"] = object_marking_refs
 
 
-#
-# handle gaps
-#
-
-
-def handle_free_text_lines(sdo_instance, free_text_lines):
-    if check_for_missing_policy("ignore"):
-        warn("Missing property 'free_text_lines' of %s is ignored", 307, sdo_instance["id"])
-    else:
-        lines = ""
-        for line in free_text_lines:
-            lines += line.value
-        if check_for_missing_policy("add-to-description"):
-            sdo_instance["description"] = lines
-            warn("Appended free text lines to description of %s", 302, sdo_instance["id"])
-        else:
-            warn("Used custom property for free_text_lines of %s", 308, sdo_instance["id"])
-            sdo_instance[convert_to_custom_name("free_text_lines")] = lines
-
-
 # Sightings
 
 
@@ -1222,6 +1202,11 @@ def handle_missing_properties_of_ciq_instance(identity_instance, ciq):
             warn("Roles is not a property of an identity (%s).  Perhaps the roles are associated with a related Threat Actor",
                  428,
                  identity_instance["id"])
+        if ciq._specification.free_text_lines:
+            lines = ""
+            for line in ciq._specification.free_text_lines:
+                lines += line.value
+            handle_missing_string_property(container, "free_text_lines", lines, identity_instance["id"])
 
         fill_in_extension_properties(identity_instance, container, extension_definition_id)
 
@@ -1254,8 +1239,7 @@ def convert_identity(identity, env, parent_id=None, temp_marking_id=None, from_p
             if spec_version == "2.1":
                 parent_markings = create_marking_union(identity)
                 convert_ciq_addresses2_1(ciq_info.addresses, identity_instance, env, parent_markings, use_created_by_ref)
-        if ciq_info.free_text_lines:
-            handle_free_text_lines(identity_instance, ciq_info.free_text_lines)
+
     if identity.related_identities:
         identity_markings = create_marking_union(identity)
         msg = "All 'associated identities' relationships of %s are assumed to not represent STIX 1.2 versioning"

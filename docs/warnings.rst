@@ -181,7 +181,7 @@ All associated *[xxx]* relationships of *[id]* are assumed to not represent STIX
 ciq name found in *[id]*, possibly overriding other name                                                                                    711     warn
 Only one type pattern can be specified in *[id]* - using 'stix'                                                                             712     warn
 *[id]* generated an identity associated with a victim                                                                                       713     info
-No condition given for *[current_observable]* - assume '='                                                                                  714     warn
+No condition given for term in *[current_observable]* - assume '='                                                                          714     warn
 Used MATCHES operator for *[condition]*                                                                                                     715     info
 Based on CIQ information, *[id]* is assumed to be an organization                                                                           716     warn
 Threat actor *[id]* title is used for name property                                                                                         717     info

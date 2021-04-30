@@ -8,7 +8,7 @@
                 "ip-watchlist"
             ],
             "modified": "2014-05-08T09:00:00.000Z",
-            "pattern": "[(email-message:subject = 'Fix The Error On Your Account.' AND email-message:from_ref.value = 'chase@ee.duke.edu' AND email-message:message_id = '201602112058.u1BKfrXh004925@mail-gw-01.oit.duke.edu') AND email-message:additional_header_fields.'X-Mailer' = 'Microsoft Outlook Express 6.00.2800.1437' AND email-message:extensions.'extension-definition--0d4dda28-1b6c-446a-be85-38b9d9cd297c'.link_refs[*].value = 'http://thereelin.com/mac/htm']",
+            "pattern": "[(email-message:subject = 'Fix The Error On Your Account.' AND email-message:from_ref.value = 'chase@ee.duke.edu') AND email-message:message_id = '201602112058.u1BKfrXh004925@mail-gw-01.oit.duke.edu' AND email-message:additional_header_fields.'X-Mailer' = 'Microsoft Outlook Express 6.00.2800.1437' AND email-message:extensions.'extension-definition--0d4dda28-1b6c-446a-be85-38b9d9cd297c'.link_refs[*].value = 'http://thereelin.com/mac/htm']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
