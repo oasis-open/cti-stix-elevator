@@ -917,7 +917,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
-            "created_by_ref": "identity--8358a1c8-6005-4cdc-9436-4fbdc9957f30",
+            "created_by_ref": "identity--aeb57d1a-d038-4aab-9207-5004a6631c33",
             "extensions": {
                 "extension-definition--8f0b8ed7-c7ad-4650-babe-c4c45cac4a0b": {
                     "extension_type": "property-extension",
@@ -941,17 +941,20 @@
                             "value": "Unauthorized Access"
                         }
                     ]
+                },
+                "extension-definition--ec1760d6-6e8a-4a13-8237-574e5bbcc785": {
+                    "extension_type": "property-extension",
+                    "free_text_lines": " The group does not target industries systematically but\n\t\t\t\t\t\t\tmore likely steals from an enormous range of industries on a continuous\n\t\t\t\t\t\t\tbasis.  Organizations in all industries related to China’s\n\t\t\t\t\t\t\tstrategic priorities are potential targets of APT1’s comprehensive cyber\n\t\t\t\t\t\t\tespionage campaign. "
                 }
             },
             "id": "identity--c63f31ac-871b-4846-aa25-de1926f4f3c8",
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "APT1 Tactics, Techniques and Procedures",
             "object_marking_refs": [
-                "marking-definition--44307ea0-3215-4da6-8ada-431a45c0ba60"
+                "marking-definition--01d8ae23-a694-47c6-96a0-ef76d39a122f"
             ],
             "spec_version": "2.1",
-            "type": "identity",
-            "x_elevator_free_text_lines": " The group does not target industries systematically but\n\t\t\t\t\t\t\tmore likely steals from an enormous range of industries on a continuous\n\t\t\t\t\t\t\tbasis.  Organizations in all industries related to China’s\n\t\t\t\t\t\t\tstrategic priorities are potential targets of APT1’s comprehensive cyber\n\t\t\t\t\t\t\tespionage campaign. "
+            "type": "identity"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",

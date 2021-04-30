@@ -33,6 +33,7 @@
         <cybox:Observable id="example:observable-a8770cfa-7921-43a5-b145-cf168aa3b019" timestamp="2015-07-20T19:52:13.853585+00:00" xsi:type='indicator:IndicatorType'>
                 <cybox:Object id="example:File-ebb16ce4-51b3-44f7-9dab-a510885d85a8">
                     <cybox:Properties xsi:type="PDFFileObj:PDFFileObjectType">
+                        <FileObj:File_Name>x.pdf</FileObj:File_Name>
                         <PDFFileObj:Version>4.5</PDFFileObj:Version>
                         <PDFFileObj:Metadata optimized="false">
                             <PDFFileObj:Document_Information_Dictionary>

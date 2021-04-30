@@ -13,7 +13,7 @@
                 "ip-watchlist"
             ],
             "modified": "2014-05-08T09:00:00.000Z",
-            "pattern": "[(email-message:subject = 'Fix The Error On Your Account.' AND email-message:from_ref.value = 'chase@ee.duke.edu' AND email-message:message_id = '201602112058.u1BKfrXh004925@mail-gw-01.oit.duke.edu') AND email-message:additional_header_fields.'X-Mailer' = 'Microsoft Outlook Express 6.00.2800.1437']",
+            "pattern": "[(email-message:subject = 'Fix The Error On Your Account.' AND email-message:from_ref.value = 'chase@ee.duke.edu') AND email-message:message_id = '201602112058.u1BKfrXh004925@mail-gw-01.oit.duke.edu' AND email-message:additional_header_fields.'X-Mailer' = 'Microsoft Outlook Express 6.00.2800.1437']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",

@@ -166,7 +166,7 @@ def pytest_generate_tests(metafunc):
         ignore = _IGNORE_2_x + _ID_IGNORE_2_0
     missing_policy = os.environ["MISSING_POLICY"]
     if missing_policy not in ["use-custom-properties", "add-to-description", "ignore", "use-extensions"]:
-        print("Missing policy " + missing_policy + " isn't one of the policy choices")
+        raise Exception("Missing policy " + missing_policy + " isn't one of the policy choices")
     setup_elevator_tests(version, missing_policy)
     argnames = ["test_file", "stored_master", "version", "missing_policy", "ignore"]
     argvalues = [(x, y, version, missing_policy, ignore) for x, y in zip(BEFORE_FILES, MASTER_JSON_FILES)]

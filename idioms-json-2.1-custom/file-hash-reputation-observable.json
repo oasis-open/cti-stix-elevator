@@ -24,7 +24,8 @@
                     "version": "4.5"
                 }
             },
-            "id": "file--3616a71f-084e-5c08-b252-37f55a55daf9",
+            "id": "file--4d6ae3bb-46a6-524f-8b33-ace41d113a7c",
+            "name": "x.pdf",
             "type": "file"
         },
         {
@@ -48,7 +49,7 @@
             "modified": "2020-05-31T15:10:25.602Z",
             "number_observed": 1,
             "object_refs": [
-                "file--3616a71f-084e-5c08-b252-37f55a55daf9"
+                "file--4d6ae3bb-46a6-524f-8b33-ace41d113a7c"
             ],
             "spec_version": "2.1",
             "type": "observed-data"

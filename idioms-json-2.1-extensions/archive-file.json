@@ -11,10 +11,11 @@
                     ]
                 },
                 "extension-definition--db4b5429-6927-4d0c-a194-4695f05c629a": {
+                    "extension_type": "property-extension",
                     "version": "1.2"
                 }
             },
-            "id": "file--bbb02d45-46c7-50a6-97d3-e6082d428d0a",
+            "id": "file--c51d9f83-664c-5867-9424-a348f6980159",
             "name": "iprip32.zip",
             "parent_directory_ref": "directory--5254394b-9d52-51d5-8a7b-613a7b0f89c0",
             "type": "file"
@@ -48,7 +49,7 @@
             "modified": "2020-12-30T16:02:49.452Z",
             "number_observed": 1,
             "object_refs": [
-                "file--bbb02d45-46c7-50a6-97d3-e6082d428d0a",
+                "file--c51d9f83-664c-5867-9424-a348f6980159",
                 "directory--5254394b-9d52-51d5-8a7b-613a7b0f89c0",
                 "file--122337b0-b9df-55ec-aced-97009486851e",
                 "file--34348c5a-2a26-5c0f-82f5-bbbe61fd61bc"

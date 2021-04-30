@@ -9,7 +9,7 @@
             ],
             "modified": "2014-10-31T15:52:13.126Z",
             "name": "Malicious E-mail Addresses",
-            "pattern": "[email-message:from_ref.value IN ('fred@abc.com', 'betty@abc.com') AND (email-message:to_refs[*].value = 'barney@abc.com' OR email-message:to_refs[*].value = 'wilma@abc.com') AND email-message:message_id = '20131031123417.u1BKfrXh004925@mail-gw-01.abc.com']",
+            "pattern": "[(email-message:from_ref.value IN ('fred@abc.com', 'betty@abc.com') AND (email-message:to_refs[*].value = 'barney@abc.com' OR email-message:to_refs[*].value = 'wilma@abc.com')) AND email-message:x_elevator_message_id = '20131031123417.u1BKfrXh004925@mail-gw-01.abc.com']",
             "type": "indicator",
             "valid_from": "2014-10-31T15:52:13.126999Z",
             "x_elevator_confidence": "Low"

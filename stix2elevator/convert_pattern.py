@@ -825,7 +825,7 @@ _CONDITION_OPERATOR_MAP = {
 
 def convert_condition(condition):
     if condition is None:
-        warn("No condition given for %s - assume '='", 714,
+        warn("No condition given for term in %s - assume '='", 714,
              identifying_info(get_dynamic_variable("current_observable")))
         return "="
     for cond, op in _CONDITION_OPERATOR_MAP.items():
@@ -1105,7 +1105,7 @@ _EMAIL_HEADER_PROPERTIES = [["email-message:subject", ["subject"]],
                             ["email-message:to_refs[*].value", ["to*", "address_value"]],
                             ["email-message:cc_refs[*].value", ["cc*", "address_value"]],
                             ["email-message:bcc_refs[*].value", ["bcc*", "address_value"]],
-                            ["email-message:message_id", ["message_id"]]]
+                            ]
 
 
 _EMAIL_ADDITIONAL_HEADERS_PROPERTIES = \
@@ -1176,6 +1176,7 @@ def convert_email_header_to_pattern(head, properties):
                 header_expressions.append(term)
     if head.received_lines:
         warn("Email received lines not handled yet", 806)
+
     if header_expressions:
         return create_boolean_expression("AND", header_expressions)
 
@@ -1184,11 +1185,25 @@ def convert_attachment_to_ref(attachment):
     return handle_object_reference_for_pattern(attachment.object_reference)
 
 
+def handle_message_id_property(head):
+    if head.message_id:
+        if get_option_value("spec_version") == "2.1":
+            lhs = "email-message:message_id"
+        else:
+            lhs = generate_lhs_for_missing_property("email-message:", None, "message_id", "email-message")
+        if lhs:
+            return create_term(lhs, head.message_id.condition, stix2.StringConstant(str(head.message_id)))
+
+
 def convert_email_message_to_pattern(mess):
     expressions = []
     if mess.header is not None:
         expressions.append(convert_email_header_to_pattern(mess.header, _EMAIL_HEADER_PROPERTIES))
+        message_id_term = handle_message_id_property(mess.header)
+        if message_id_term:
+            expressions.append(message_id_term)
         add_headers = convert_email_header_to_pattern(mess.header, _EMAIL_ADDITIONAL_HEADERS_PROPERTIES)
+
         if add_headers:
             expressions.append(add_headers)
     if mess.attachments is not None:
