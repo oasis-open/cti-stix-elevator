@@ -32,10 +32,10 @@ def setup_options():
 
 
 @pytest.mark.parametrize("opts", [
-    ElevatorOptions(policy="no_policy", spec_version="2.1", log_level="DEBUG", disabled=[212, 901]),
-    {"policy": "no_policy", "spec_version": "2.1", "log_level": "DEBUG", "disabled": [212, 901]},
-    Namespace(policy="no_policy", spec_version="2.1", log_level="DEBUG", disabled="212,901",
-              file_=None, incidents=False, missing_policy="add-to-description",
+    ElevatorOptions(policy="no_policy", spec_version=os.environ["VERSION"], log_level="DEBUG", disabled=[212, 901]),
+    {"policy": "no_policy", "spec_version": os.environ["VERSION"], "log_level": "DEBUG", "disabled": [212, 901]},
+    Namespace(policy="no_policy", spec_version=os.environ["VERSION"], log_level="DEBUG", disabled="212,901",
+              file_=None, incidents=False, missing_policy=os.environ["MISSING_POLICY"],
               custom_property_prefix="elevator", infrastructure=False, package_created_by_id=None,
               default_timestamp=None, validator_args="--strict-types", enabled=None, silent=False,
               message_log_directory=None, output_directory=None, markings_allowed=""),

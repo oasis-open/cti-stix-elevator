@@ -1,6 +1,32 @@
 CHANGELOG
 =========
 
+4.0.0 - 2021-05-02
+
+The elevator and stepper are compliant with STIX 2.1 CS01
+
+Python 3.5 is no longer supported.
+All compatibility code to support Python 2.7 has been removed (e.g., the six package)
+
+* Major Changes
+    - Support Extension feature described in section 7.3 of the specification
+    - Support Incident as a specification SDO
+    - Use handle_missing_properties method to encapsulate most extension/custom functionality
+    - Handle related objects with no know STIX 2.1 relationship
+
+* Other Changes
+    - Handle ArchiveFile different for 2.0 vs 2.1
+    - email_message:message_id is only in 2.1
+    - Infer network-traffic protocol from extension type
+    - Handle registry key in example where there is no hive property
+    - Better handling of Sightings
+    - Add object data marking to Relationships when appropriate based on the source and target references
+    - Handle name and title properties of malware better
+
+* Testing changes
+    - Added testing for python 3.9
+    - Test for the ignore missing policy for STIX 2.1
+
 3.0.1 - 2020-12-09
 
    * Update dependencies
