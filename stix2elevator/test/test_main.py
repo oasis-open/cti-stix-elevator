@@ -44,7 +44,7 @@ def test_setup_options(opts):
     options.ALL_OPTIONS = None  # To make sure we can set it again
     initialize_options(opts)
     assert get_option_value("policy") == "no_policy"
-    assert get_option_value("spec_version") == "2.1"
+    assert get_option_value("spec_version") == os.environ["VERSION"]
     assert get_option_value("log_level") == "DEBUG"
     assert get_option_value("disabled") == [212, 901]
 
