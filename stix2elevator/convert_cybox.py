@@ -1812,7 +1812,8 @@ def convert_cybox_object21(obj1x, env):
                     for cp in prop.custom_properties.property_:
                         handle_missing_string_property(objs[0], cp.name, cp.value, obj1x.id_, is_sco=True)
                 else:
-                    # we assume that because this is a custom property - the elevator can't know about it, so custom_object=True
+                    # we assume that because this is a STIX 1.x custom property - the elevator propbably doesn't know about it,
+                    # so custom_object=True
                     container, extension_definition_id = determine_container_for_missing_properties(objs[0]["type"],
                                                                                                     objs[0],
                                                                                                     custom_object=True)

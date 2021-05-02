@@ -97,6 +97,8 @@ New vocabularies added in STIX 2.x are:
 
 -  ``encryption-algo-ov``
 
+-  ``extension-type-ov``
+
 -  ``grouping-context-ov``
 
 -  ``hash-algorithm-ov``

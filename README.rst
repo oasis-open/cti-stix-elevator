@@ -101,7 +101,7 @@ STIX 1.1.1 - 1.2.1 content to STIX 2.0 or 2.1 content:
 .. code-block:: text
 
   usage: stix2_elevator [-h]
-              [--missing-policy {use-custom-properties,add-to-description,ignore}]
+              [--missing-policy {use-extensions,use-custom-properties,add-to-description,ignore}]
               [--custom-property-prefix CUSTOM_PROPERTY_PREFIX]
               [--infrastructure]
               [--incidents]

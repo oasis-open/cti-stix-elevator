@@ -15,7 +15,7 @@ Timestamps, Identifiers and Object Creators
 
 In STIX 1.x most properties were optional. This includes properties that
 correspond to required properties in STIX 2.x. In particular, all STIX
-SDOs and SROs in 2.x are required to have ``id``, ``created`` and ``modified``
+SDOs, SMOs and SROs in 2.x are required to have ``id`` and ``created``
 properties. In STIX 2.1, all SCOs must have the ``id`` property.
 These are often not specified in a STIX 1.x object, but can sometimes
 be inferred from another STIX 1.x object in the same package.
@@ -44,10 +44,10 @@ these cases, a new ``id`` must be used.
 In STIX 1.x, all top-level objects had a ``Information_Source`` property to
 hold information about, among other things, the object creator. However,
 this property was optional. ``created_by_ref``, which is a common
-property on all STIX 2.x SDOs and SROs, is also optional. It should be noted
+property on all STIX 2.x SDOs, SMOs and SROs, is often optional. It should be noted
 however, that the object creator can also be "inherited" from its parent
 object, as with the timestamp. This fact can be useful to derive a more
-robust STIX 2.x object.
+robust STIX 2.x object.  Note that SCOs do not have a ``created_by_ref`` property.
 
 Special Considerations for TTPs and Exploit Target Conversions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -77,7 +77,7 @@ Minor Issues
 Optional vs. Required
 ---------------------------
 
-Certain fields are required in STIX 2.x object that were optional in
+Certain properties are required in STIX 2.x object that were optional in
 STIX 1.x. This goes beyond the properties such as ids, created/modified timestamps. The most
 frequently occurring example is the ``labels`` property in 2.0.
 The elevator will use a default value - ``unknown``. Other SDOs have similarly named properties.
@@ -117,6 +117,7 @@ Data Markings
 The stix-elevator currently supports global markings and object-level markings. Through the use of hashing,
 the elevator make the best effort to detect duplicate markings to prevent excessive object creation.
 Also, the marking types supported by the elevator is limited to: Simple, Terms of Use, TLP and AIS.
+AIS is a data marking used when submitting STIX content to DHS/CISA.
 
 Missing Policy
 --------------
@@ -124,17 +125,25 @@ Missing Policy
 Certain STIX 1.x properties cannot be converted to a STIX 2.x property defined in the STIX 2.x specification.  The elevator
 provides a command line option to determine how to handle these STIX 1.x properties.
 
-- ``add-to-description``:  Add the value of the property to the ``description`` property.
+- ``add-to-description``:  Add the property name, property value pair to the description property to the ``description`` property.
 - ``use-custom-properties``: STIX 2.x provides the ability to add *custom* properties to any STIX object.
-  Missing properties can be included using this facility.  Note, that custom property names will have a prefix of ``x_<CUSTOM_PROPERTY_PREFIX>``, where ``CUSTOM_PROPERTY_PREFIX`` is provided as a command line option.  It defaults to ``elevator``.
+  Missing properties can be included using this facility.  Note, that custom property names will have a prefix of ``x_<CUSTOM_PROPERTY_PREFIX>``,
+  where ``CUSTOM_PROPERTY_PREFIX`` is provided as a command line option.  It defaults to ``elevator``.  This option has been deprecated, use ``use-extensions`` instead.
+- ``use-extensions``: STIX 2.x provides the ability to "extend" any STIX object, using the extension-definition object.
 - ``ignore``: The content is dropped, and does not appear in the STIX 2.x object
 
-Note that the handling of missing properties is not complete - not every STIX 1.x property is handled.
-The disposition of all missing properties is usually presented in warning messages.
+Note that the handling of missing properties is not complete - not every STIX 1.x property is handled.  The Mapping section
+of this documentation lists what properties are handled for each SDO.
 
-Additionally, the coverage is generally limited to missing *properties*.  Missing *object types* are not handled.
-For instance, ``Incident`` is a object type in STIX 1.x, but it is not representable in STIX 2.x.  The missing policy does
-not alter this.
+The disposition of all missing properties is presented in warning messages.
+
+It is possible to create custom cyber observables in STIX 1.x through use of the CustomObjectType.  This can only be done within an
+Observable Object, therefore the resulting STIX 2.1 object will be a SCO. For STIX 2.0, it will be similar to any other
+cyber observable object.
+
+``Incident`` and ``Infrastructure`` are object types in STIX 1.x, but it is not representable in STIX 2.0.
+However, through the use of the options --incidents and --infrastructure, a custom object (or extensions) will be created.
+Both of these object types exist in STIX 2.1.
 
 **An Example**
 
@@ -142,65 +151,114 @@ STIX 1.x
 
 .. code-block:: xml
 
-    <threat-actor:Identity xsi:type="stix-ciq:CIQIdentity3.0InstanceType">
-        <stix-ciq:Specification>
-            <xpil:PartyName>
-                <xnl:PersonName xnl:Type="KnownAs">
-                    <xnl:NameElement>SuperHard</xnl:NameElement>
-                </xnl:PersonName>
-            </xpil:PartyName>
-        </stix-ciq:Specification>
-        <stix-ciq:Role>Research and Development</stix-ciq:Role>
-    </threat-actor:Identity>
+    <stix:Course_Of_Action id="example:coa-495c9b28-b5d8-41e3-b7bb-000c29789db9" xsi:type='coa:CourseOfActionType' version="1.2">
+            <coa:Title>Block outbound traffic</coa:Title>
+            <coa:Stage xsi:type="stixVocabs:COAStageVocab-1.0">Response</coa:Stage>
+            <coa:Type xsi:type="stixVocabs:CourseOfActionTypeVocab-1.0">Perimeter Blocking</coa:Type>
+            <coa:Objective>
+                <coa:Description>Block communication between the PIVY agents and the C2 Server</coa:Description>
+                <coa:Applicability_Confidence>
+                    <stixCommon:Value xsi:type="stixVocabs:HighMediumLowVocab-1.0">High</stixCommon:Value>
+                </coa:Applicability_Confidence>
+            </coa:Objective>
+            <coa:Impact>
+                <stixCommon:Value xsi:type="stixVocabs:HighMediumLowVocab-1.0">Low</stixCommon:Value>
+                <stixCommon:Description>This IP address is not used for legitimate hosting so there should be no operational impact.</stixCommon:Description>
+            </coa:Impact>
+        </stix:Course_Of_Action>
 
 STIX 2.x using ``add-to-description``
 
 .. code-block:: json
 
     {
-        "created": "2015-05-15T09:00:00.000Z",
-        "description": "\n\nINFORMATION_SOURCE_ROLE:\nResearch and Development",
-        "id": "identity--7622b69a-f5f5-4e36-90ac-26f8c0cd2a45",
-        "identity_class": "individual",
-        "modified": "2015-05-15T09:00:00.000Z",
-        "name": "SuperHard",
-        "object_marking_refs": [
-            "marking-definition--0cda5493-87c3-4247-8438-cd6ade69206a"
-        ],
-        "spec_version": "2.1",
-        "type": "identity"
+            "created": "2015-07-31T11:24:39.090Z",
+            "description": "\n\nSTAGE:\n\tResponse\n\nOBJECTIVE: Block outbound traffic\n\nOBJECTIVE CONFIDENCE: High\n\nIMPACT:Medium: Some description about the indicator.",
+            "id": "course-of-action--3dbfccad-1fbb-4e9f-8307-f2d1a5c651cc",
+            "labels": [
+                "perimeter-blocking"
+            ],
+            "modified": "2015-07-31T11:24:39.090Z",
+            "name": "Block outbound traffic",
+            "spec_version": "2.1",
+            "type": "course-of-action"
+    }
+
+STIX 2.x using ``use-extensions``
+
+.. code-block:: json
+
+    {
+            "created": "2015-07-31T11:24:39.090Z",
+            "extensions": {
+                "extension-definition--a46b18de-0b41-4a95-9d2d-67a360f2d859": {
+                    "extension_type": "property-extension",
+                    "impact": {
+                        "description": "Some description about the indicator.",
+                        "value": "Medium"
+                    },
+                    "objective": "Block outbound traffic",
+                    "objective_confidence": "High",
+                    "stage": "Response"
+                }
+            },
+            "id": "course-of-action--3dbfccad-1fbb-4e9f-8307-f2d1a5c651cc",
+            "labels": [
+                "perimeter-blocking"
+            ],
+            "modified": "2015-07-31T11:24:39.090Z",
+            "name": "Block outbound traffic",
+            "spec_version": "2.1",
+            "type": "course-of-action"
     }
 
 STIX 2.x using ``use-custom-properties``
 
 .. code-block:: json
 
-    {
-        "created": "2015-05-15T09:00:00.000Z",
-        "id": "identity--e3084f93-1f3f-4586-8921-01dde86d4300",
-        "identity_class": "individual",
-        "modified": "2015-05-15T09:00:00.000Z",
-        "name": "SuperHard",
-        "object_marking_refs": [
-            "marking-definition--ea012079-56ae-4c32-b8e8-5ce81e8cf842"
-        ],
-        "spec_version": "2.1",
-        "type": "identity",
-        "x_elevator_information_source_role": "Research and Development"
-    }
+        {
+            "created": "2015-07-31T11:24:39.090Z",
+            "id": "course-of-action--3dbfccad-1fbb-4e9f-8307-f2d1a5c651cc",
+            "labels": [
+                "perimeter-blocking"
+            ],
+            "modified": "2015-07-31T11:24:39.090Z",
+            "name": "Block outbound traffic",
+            "spec_version": "2.1",
+            "type": "course-of-action",
+            "x_elevator_impact": {
+                "description": "Some description about the indicator.",
+                "value": "Medium"
+            },
+            "x_elevator_objective": "Block outbound traffic",
+            "x_elevator_objective_confidence": "High",
+            "x_elevator_stage": "Response"
+        }
 
 STIX 2.x using ``ignore``
 
 .. code-block:: json
 
-    {
-        "created": "2015-05-15T09:00:00.000Z",
-        "id": "identity--df6c4a19-40ac-423e-89e5-fc822066a691",
-        "identity_class": "individual",
-        "modified": "2015-05-15T09:00:00.000Z",
-        "name": "SuperHard",
-        "object_marking_refs": [
-            "marking-definition--493e77b0-46df-4595-86d1-c5f26a62f1ae"
-        ],
-        "type": "identity"
-    }
+        {
+            "created": "2015-07-31T11:24:39.090Z",
+            "id": "course-of-action--3dbfccad-1fbb-4e9f-8307-f2d1a5c651cc",
+            "labels": [
+                "perimeter-blocking"
+            ],
+            "modified": "2015-07-31T11:24:39.090Z",
+            "name": "Block outbound traffic",
+            "type": "course-of-action"
+        }
+
+Extensions
+----------
+
+Extensions are based on the Extension Definition object.  The key in the ``extension`` property dictionary contains the id of the
+Extension Definition object used to define the extension.  Extensions are explained in detail in section 7.3 of the STIX 2.1
+specification document.
+
+Currently, the schemas associated with the Extension Definition object do not exist.  However, the Extension Definition objects themselves
+can be found in extension_definitions.py.  They will be more fully defined in a future release of the elevator.
+
+Note that these extensions are not used by the predefined extension (e.g., Archive File), because those are fully defined within the
+specification.

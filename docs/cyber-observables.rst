@@ -9,9 +9,9 @@ For each CybOX object the table also indicates if the elevator is able to conver
 CybOX object types not listed have no corresponding STIX 2.x cyber observable type, and therefore are not
 converted by the elevator.
 
-=============================== ============================================= ============================================
-**Cybox 2.x Object Type**       **STIX 2.x Cyber Observable Type**            **Converted in version 2.1 of the Elevator**
-=============================== ============================================= ============================================
+=============================== ============================================= ====================================================
+**Cybox 2.x Object Type**       **STIX 2.x Cyber Observable Type**            **Converted in the current version of the Elevator**
+=============================== ============================================= ====================================================
 ``Address``                     ``email-addr``                                yes
 ``Address``                     ``ipv4-addr``                                 yes
 ``Address``                     ``ipv6-addr``                                 yes
@@ -49,7 +49,7 @@ converted by the elevator.
 ``WinService``                  ``process:windows-service-ext``               yes
 ``X509Certificate``             ``x509-certificate``                          yes
 ``X509V3Extensions``            ``x509-certificate:x509-v3-extensions-type``  yes
-=============================== ============================================= ============================================
+=============================== ============================================= ====================================================
 
 Converting Network Cyber Observables
 ------------------------------------------
@@ -69,6 +69,8 @@ This information is organized very differently than
 in CybOX 2.x. In addition, many CybOX 2.x properties are not available
 in the ``network-traffic`` object.
 
+When converting network cyber observables, the elevator will often infer entries of the ``protocols`` property.
+
 Notice that although both STIX 1.x and 2.x have object types to represent TCP packets,
 they are not compatible, so no conversion is made.
 
@@ -82,4 +84,6 @@ they are not compatible, so no conversion is made.
 | ``NetworkFlowObject/UnidirectionalRecord/IPFIXMessage``   | ``network-traffic/ipfix``            |
 +-----------------------------------------------------------+--------------------------------------+
 | ``NetworkPacket/InternetLayer/ICMPv(4/6)``                | ``network-traffic/icmp-ext``         |
++-----------------------------------------------------------+--------------------------------------+
+|``NetworkSocket``                                          | ``network-traffic/socket-ext``       |
 +-----------------------------------------------------------+--------------------------------------+
