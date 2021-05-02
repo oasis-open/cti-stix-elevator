@@ -143,7 +143,7 @@ cyber observable object.
 
 ``Incident`` and ``Infrastructure`` are object types in STIX 1.x, but it is not representable in STIX 2.0.
 However, through the use of the options --incidents and --infrastructure, a custom object (or extensions) will be created.
-Both of these object types exsit in STIX 2.1.
+Both of these object types exist in STIX 2.1.
 
 **An Example**
 

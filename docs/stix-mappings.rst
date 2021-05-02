@@ -185,6 +185,8 @@ In STIX 1.x, an ``id`` contained a "namespace".  This was deemed unnecessary in 
 
     The confidence concept is available only STIX 2.1.
 
+    In the examples, the missing policy, if used, is ``add-to-description``, or ``use-extensions`` for some 2.1 examples.
+
 **STIX 1.x Properties Not Mapped**
 
 -  ``idref``
@@ -209,6 +211,9 @@ In STIX 1.x, an ``id`` contained a "namespace".  This was deemed unnecessary in 
     the property ``spec_version``.  In all cases, the version information
     is not transfered from the STIX 1.x object, but depends upon the --version
     option when invoking the elevator.
+
+    In the examples below, the ``spec_version`` property is omitted, but for STIX 2.1 it
+    is often required.
 
 Versioning
 ~~~~~~~~~~~~~~~~~~~
@@ -535,10 +540,10 @@ reserved, but not defined in STIX 2.x.
  - ``Impact``
  - ``Cost``
  - ``Efficacy``
+ - ``Parameter_Observables``
 
 **STIX 1.x Properties Not Mapped**
 
- - ``Parameter_Observables``
  - ``Structured_COA``
 
 **An Example**
@@ -834,7 +839,7 @@ STIX 1.x in XML
         </indicator:Observable>
     </stix:Indicator>
 
-STIX 2.x in JSON
+STIX 2.1 in JSON
 
 .. code-block:: json
 
@@ -848,11 +853,12 @@ STIX 2.x in JSON
        "name": "Malicious site hosting downloader",
        "pattern": "[url:value = 'http://x4z9arb.cn/4712']",
        "pattern_type": "stix",
+       "spec_version": "2.1",
        "type": "indicator",
        "valid_from": "2017-01-27T13:49:53.935382Z"
     }
 
-``indicator_types`` would be ``labels`` in 2.0
+``indicator_types`` would be ``labels`` and ``pattern_type`` is not used in 2.0
 
 **Sightings**
 
@@ -1088,6 +1094,7 @@ STIX 2.x in JSON
        ],
        "modified": "2017-01-27T13:49:53.997Z",
        "name": "Poison Ivy",
+       "spec_version": "2.1",
        "type": "malware"
     }
 
@@ -1234,6 +1241,7 @@ STIX 2.1 in JSON
                 "directory--4aa982e3-4aac-5d5b-a699-d08c8c11f5f3",
                 "file--49959589-27c4-5873-8e23-82f6c909d4ca"
            ],
+           "spec_version": "2.1",
            "type": "observed-data"
     }
 
@@ -1346,6 +1354,7 @@ STIX 2.x in JSON
             "object_refs": [
                 "campaign--1855cb8a-d96c-4859-a450-abb1e7c061f2"
             ],
+            "spec_version": "2.1",
             "type": "report"
         }
 
@@ -1454,7 +1463,8 @@ STIX 2.x in JSON
           "primary_motivation": "political",
           "secondary_motivations": ["ideology", "organizational-gain"],
           "name": "Fake BPP (Branistan Peoples Party)",
-          "sophistication": "strategic"
+          "sophistication": "strategic",
+          "spec_version": "2.1"
     }
 
     {
@@ -1464,7 +1474,8 @@ STIX 2.x in JSON
           "created": "2016-08-08T15:50:10.983Z",
           "modified": "2016-08-08T15:50:10.983Z",
           "name": "Franistan Intelligence",
-          "identity_class": "organization"
+          "identity_class": "organization",
+          "spec_version": "2.1"
     }
 
     {
@@ -1573,6 +1584,7 @@ STIX 2.x in JSON
       "id": "tool--8e2e2d2b-17d4-4cbf-938f-98ee46b3cd3f",
       "created": "2016-04-06T20:03:48.000Z",
       "modified": "2016-04-06T20:03:48.000Z",
+      "spec_version": "2.1",
       "tool_types": [ "remote-access"],
       "version": "6.03",
       "name": "VNCConnect"

@@ -64,25 +64,14 @@ demonstrate a bug or proposed new feature before writing code that fixes the bug
 or implements the features. Any code contributions should come with new or
 updated tests.
 
-To run the tests in your current Python environment, use the ``pytest`` command
-from the root project directory:
+Tests are created by creating a STIX 1.x file containing the content which will cause the elevator to execute the code you
+are testing.  This file should be placed in the idioms-xml directory.  Use the elevator command line to create json "golden" files - which
+contain the correct result you expect from the elevator.  You should provide golden files for each version and missing property option.
+These files should be placed in the idioms-json-2.x-<missing-property option> directory.
 
-.. code-block:: bash
+Note: the number of test files must be the same across the idioms directories, using the same file names.
 
-    $ pytest
-
-This should show all of the tests that ran, along with their status.
-
-You can run a specific test file by passing it on the command line:
-
-.. code-block:: bash
-
-    $ pytest stix2elevator/test/test_<xxx>.py
-
-To ensure that the test you wrote is running, you can deliberately add an
-``assert False`` statement at the beginning of the test. This is another benefit
-of TDD, since you should be able to see the test failing (and ensure it's being
-run) before making it pass.
+Running tests can be done using tox, discussed below.
 
 `tox <https://tox.readthedocs.io/en/latest/>`_ allows you to test a package
 across multiple versions of Python. Setting up multiple Python environments is
