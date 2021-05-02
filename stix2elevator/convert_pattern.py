@@ -2088,7 +2088,9 @@ def generate_lhs_for_missing_property(prefix, predefined_extension_name, propert
     elif check_for_missing_policy("use-extensions"):
         extension_definition_id = get_extension_definition_id(object_type)
         if extension_definition_id:
-            return prefix + "extensions." + extension_definition_id + "." + property_name
+            lhs = prefix + "extensions." + extension_definition_id + "." + property_name
+            warn("Used %s for extension property for %s", 317, lhs, property_name)
+            return lhs
         else:
             warn("No extension-definition was found for STIX 1 type %s", 312, object_type)
             return None
