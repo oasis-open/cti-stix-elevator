@@ -53,7 +53,7 @@ Requirements
       1.2.0.x, depending on whether you want to support STIX 1.1.1 or STIX 1.2.
 
 -  `python-stix2 <https://pypi.org/project/stix2/>`_ >= 2.1.0
--  `stix2-validator <https://pypi.org/project/stix2-validator/>`_ >= 2.0.2
+-  `stix2-validator <https://pypi.org/project/stix2-validator/>`_ >= 3.0.0
    and its dependencies
 -  `pycountry <https://pypi.org/project/pycountry/>`_ >= 19.8.18
 -  `stixmarx <https://pypi.org/project/stixmarx/>`_ >= 1.0.8
