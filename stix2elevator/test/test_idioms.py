@@ -37,12 +37,11 @@ def idiom_elevator_mappings(before_file_path, stored_json, version, missing_poli
     print("Checking - " + before_file_path)
     print("With Master - " + stored_json["id"])
 
-    initialize_options()
-    set_option_value("missing_policy", missing_policy)
-    set_option_value("log_level", "WARN")
-    set_option_value("incidents", True)
-    set_option_value("spec_version", version)
-    set_option_value("validator_args", "--version " + version)
+    initialize_options(options={"spec_version": version,
+                                "missing_policy": missing_policy,
+                                "log_level": "WARN",
+                                "incidents": True,
+                                "validator_args": "--version " + version})
     if not get_option_value("policy") == "no_policy":
         print("'no_policy' is the default for testing")
     set_option_value("policy", "no_policy")
