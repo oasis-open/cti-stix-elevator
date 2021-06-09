@@ -147,7 +147,7 @@ class ElevatorOptions(object):
                  validator_args="--strict-types", enabled=None, disabled=None,
                  silent=False, message_log_directory=None,
                  policy="no_policy", output_directory=None, log_level="INFO",
-                 markings_allowed="", spec_version="2.0"):
+                 markings_allowed="", spec_version="2.1"):
 
         if cmd_args is not None:
             if hasattr(cmd_args, "file_"):
