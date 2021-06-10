@@ -96,11 +96,11 @@ As A Script
 ~~~~~~~~~~~
 
 The elevator comes with a bundled script which you can use to elevate
-STIX 1.1.1 - 1.2.1 content to STIX 2.0 or 2.1 content:
+STIX 1.x content to STIX 2.x content:
 
 .. code-block:: text
 
-  usage: stix2_elevator [-h]
+    usage: stix2_elevator [-h]
               [--missing-policy {use-extensions,use-custom-properties,add-to-description,ignore}]
               [--custom-property-prefix CUSTOM_PROPERTY_PREFIX]
               [--infrastructure]
@@ -118,97 +118,110 @@ STIX 1.1.1 - 1.2.1 content to STIX 2.0 or 2.1 content:
               [-v {2.0,2.1}]
               file
 
-stix2-elevator v3.0.1
 
-
+stix2-elevator v4.0.1
 
 positional arguments:
 
 .. code-block:: text
 
-  file                  The input STIX 1.x document to be elevated.
+  file          The input STIX 1.x document to be elevated.
 
 optional arguments:
 
 .. code-block:: text
 
-  -h, --help            show this help message and exit
+  -h, --help
+                Show this help message and exit
 
-  --missing-policy {use-custom-properties,add-to-description,ignore}
-                        Policy for including STIX 1.x content that cannot be
-                        represented directly in STIX 2.x. The default is 'add-
-                        to-description'.
+  --missing-policy {use-extensions,use-custom-properties,add-to-description,ignore}
+                Policy for including STIX 1.x content that cannot be
+                represented directly in STIX 2.x. The default is 'add-
+                to-description'.
 
   --custom-property-prefix CUSTOM_PROPERTY_PREFIX
-                        Prefix to use for custom property names when missing
-                        policy is 'use-custom-properties'. The default is
-                        'elevator'.
+                Prefix to use for custom property names when missing
+                policy is 'use-custom-properties'. The default is
+                'elevator'.
 
-  --infrastructure      Infrastructure will be included in the conversion.
-                        Default for version 2.1 is true.
+  --infrastructure
+                Infrastructure will be included in the conversion.
+                Default for version 2.1 is true.
 
-  --incidents           Incidents will be included in the conversion. **This argument is deprecated.**
+  --incidents
+                Incidents will be included in the conversion.
+                Default for version 2.1 is true.
 
   --package-created-by-id PACKAGE_CREATED_BY_ID
-                        Use provided identifier for "created_by_ref"
-                        properties. Example: --package-created-by-id "identity
-                        --1234abcd-1a12-42a3-0ab4-1234abcd5678"
+                Use provided identifier for "created_by_ref"
+                properties.
+
+                Example: --package-created-by-id "identity--1234abcd-1a12-42a3-0ab4-1234abcd5678"
 
   --default-timestamp DEFAULT_TIMESTAMP
-                        Use provided timestamp for properties that require a
-                        timestamp. Example: --default-timestamp
-                        "2016-11-15T13:10:35.053000Z"
+                Use provided timestamp for properties that require a
+                timestamp.
+
+                Example: --default-timestamp "2016-11-15T13:10:35.053000Z"
 
   --validator-args VALIDATOR_ARGS
-                        Arguments to pass to stix2-validator. Default:
-                        --strict-types Example: stix2_elevator.py <file>
-                        --validator-args="-v --strict-types -d 212"
+                Arguments to pass to stix2-validator.
+                See https://stix2-validator.readthedocs.io/en/latest/options.html.
+
+                Example: --validator-args="-v --strict-types -d 212"
 
   -e ENABLED, --enable ENABLED
-                        A comma-separated list of the stix2-elevator messages
-                        to enable. If the --disable option is not used, no
-                        other messages will be shown. Example:
-                        stix2_elevator.py <file> --enable 250
+                A comma-separated list of the stix2-elevator messages
+                to enable. If the --disable option is not used, no
+                other messages will be shown.
+
+                Example: --enable 250
 
   -d DISABLED, --disable DISABLED
-                        A comma-separated list of the stix2-elevator messages
-                        to disable. Example: stix2_elevator.py <file>
-                        --disable 212,220
+                A comma-separated list of the stix2-elevator messages
+                to disable.
 
-  -s, --silent          If this flag is set, all stix2-elevator messages will
-                        be disabled.
+                Example: --disable 212,220
+
+  -s, --silent
+                If this flag is set, all stix2-elevator messages will
+                be disabled.
 
   --message-log-directory MESSAGE_LOG_DIRECTORY
-                        If this flag is set, all stix2-elevator messages will
-                        be saved to file. The name of the file will be the
-                        input file with extension .log in the specified
-                        directory. Note, make sure the directory already
-                        exists. Example: stix2_elevator.py <file> --message-
-                        log-directory "../logs"
+                If this flag is set, all stix2-elevator messages will
+                be saved to a file. The name of the file will be the
+                input file with extension .log in the specified
+                directory.
+
+                Note, make sure the directory already exists.
+
+                Example: --message-log-directory "../logs".
 
   --log-level {DEBUG,INFO,WARN,ERROR,CRITICAL}
-                        The logging output level.
+                The logging output level.
 
   -m MARKINGS_ALLOWED, --markings-allowed MARKINGS_ALLOWED
-                        Avoid an error exit, if these markings are in the
-                        content, but not supported by the elevator. Specify as
-                        a comma-separated listExample: stix2_elevator.py <
-                        file > --markings-allowed
-                        "ISAMarkingsAssertion,ISAMarkings"
+                Avoid error exit, if these markings types
+                (as specified via their python class names) are in the
+                content, but not supported by the elevator. Specify as
+                a comma-separated list.
+
+                Example: --markings-allowed "ISAMarkingsAssertion,ISAMarkings"
 
   -p {no_policy,strict_policy},
   --error-policy {no_policy,strict_policy},
   --policy {no_policy,strict_policy}   #deprecated
-                        The policy to deal with errors. The default is 'no_policy'.
+               The policy to deal with errors. The default is 'no_policy'.
 
   -v {2.0,2.1}, --version {2.0,2.1}
-                        The version of stix 2 to be produced. The default is
-                        2.1
+               The version of stix 2 to be produced. The default is 2.1
+
 
 Refer to elevator_log_messages.rst for all stix2-elevator messages. Use the
 associated code number to --enable or --disable a message. By default, the
-stix2-elevator displays all messages. Note: disabling the message does not
-disable the functionality.
+stix2-elevator displays all messages.
+
+Note: disabling the message does not disable the functionality.
 
 As A Library
 ~~~~~~~~~~~~
@@ -223,9 +236,7 @@ You can also use this library to integrate STIX elevation into your own tools.
     from stix2elevator import elevate
     from stix2elevator.options import initialize_options, set_option_value
 
-    initialize_options()
-    set_option_value("missing_policy", "no_policy")
-    set_option_value("spec_version", "2.1")
+    initialize_options(options={"spec_version": "2.1"})
 
     results = elevate("stix_file.xml")
     print(results)
@@ -240,9 +251,7 @@ The same method can also accept a string as an argument.
     from stix2elevator import elevate
     from stix2elevator.options import initialize_options, set_option_value
 
-    initialize_options()
-    set_option_value("missing_policy", "no_policy")
-    set_option_value("spec_version", "2.1")
+    initialize_options(options={"spec_version": "2.1"})
 
     results = elevate("<stix:Package...")
     print(results)
@@ -255,11 +264,12 @@ The same method can also accept a STIX 1.x package object as an argument.
     from stix2elevator import elevate
     from stix2elevator.options import initialize_options
 
-    initialize_options()
+    initialize_options(options={"spec_version": "2.1"})
+
     results = elevate(<STIX Package Object>)
     print(results)
 
-To set options, use set_option_value, found in options.py
+To set others options, use set_option_value() found in options.py, or add them as keywords to initialize_options().
 
 Using the stepper
 ~~~~~~~~~~~~~~~~~

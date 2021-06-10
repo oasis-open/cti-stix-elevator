@@ -25,7 +25,7 @@ STIX 1.x content to STIX 2.x content:
               file
 
 
-stix2-elevator v4.0.0
+stix2-elevator v4.0.1
 
 positional arguments:
 
