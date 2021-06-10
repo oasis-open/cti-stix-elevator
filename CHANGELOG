@@ -1,9 +1,14 @@
 CHANGELOG
 =========
 
+4.0.1 - 2021-06-10
+
+Default spec_version when invoking the elevator programmatically (i.e., not from the command line)
+has been corrected to be 2.1
+
 4.0.0 - 2021-05-02
 
-The elevator and stepper are compliant with STIX 2.1 CS01
+The elevator and stepper are compliant with STIX 2.1 CS03
 
 Python 3.5 is no longer supported.
 All compatibility code to support Python 2.7 has been removed (e.g., the six package)
