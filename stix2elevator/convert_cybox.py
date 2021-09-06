@@ -1527,6 +1527,7 @@ def handle_missing_properties_of_network_socket(socket, socket_extension, cybox_
                 "Property remote_address %s is ignored, because it can't be represented using the extensions policy",
                 314, socket.remote_address)
 
+
 def convert_network_socket(socket):
     cybox_traffic = create_base_sco("network-traffic", socket)
     if socket.protocol:

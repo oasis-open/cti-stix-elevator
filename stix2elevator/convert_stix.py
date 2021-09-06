@@ -205,7 +205,7 @@ def get_unfinished_marked_objects():
 #
 
 
-def get_identity(identity,  env, created_by_ref_source, temp_marking_id=None):
+def get_identity(identity, env, created_by_ref_source, temp_marking_id=None):
     call_inspect = Counter(x.function for x in stack())
     if call_inspect.get("get_identity", 1) <= 1:
         # On some occasions excessive recursion may add identity objects that are not needed
@@ -414,11 +414,6 @@ def convert_marking_specification(marking_specification, env, stix1x_id):
                 else:
                     error("Could not resolve Marking Structure %s", 425, identifying_info(marking_structure))
                     raise NameError("Could not resolve Marking Structure %s" % identifying_info(marking_structure))
-
-            if marking_definition_instance["definition_type"] == "ais":
-                temp_marking_id = marking_definition_instance["marking_ref"]
-            else:
-                temp_marking_id = marking_definition_instance["id"]
 
             if "definition_type" in marking_definition_instance:
                 val = add_marking_map_entry(marking_structure, marking_definition_instance)
@@ -1272,7 +1267,7 @@ def convert_identity(identity, env, created_by_ref_source, parent_id=None, temp_
     elif created_by_ref_source == "from_env":
         new_env = env
     elif created_by_ref_source == "parent":
-        new_env =  env.newEnv(created_by_ref=parent_id)
+        new_env = env.newEnv(created_by_ref=parent_id)
     finish_basic_object(identity.id_,
                         identity_instance,
                         new_env,
