@@ -205,7 +205,16 @@ def get_unfinished_marked_objects():
 #
 
 
-def get_identity_ref(identity, env, temp_marking_id=None, from_package=False, use_created_by_ref=True):
+def get_identity(identity,  env, created_by_ref_source, temp_marking_id=None):
+    call_inspect = Counter(x.function for x in stack())
+    if call_inspect.get("get_identity", 1) <= 1:
+        # On some occasions excessive recursion may add identity objects that are not needed
+        ident20 = convert_identity(identity, env, created_by_ref_source, temp_marking_id=temp_marking_id)
+        env.bundle_instance["objects"].append(ident20)
+        return ident20["id"]
+
+
+def get_identity_ref(identity, env, created_by_ref_source, temp_marking_id=None):
     if identity.idref is not None:
         # fix reference later
         return identity.idref
@@ -214,9 +223,8 @@ def get_identity_ref(identity, env, temp_marking_id=None, from_package=False, us
         if call_inspect.get("get_identity_ref", 1) <= 1:
             # On some occasions excessive recursion may add identity objects that are not needed
             ident20 = convert_identity(
-                identity, env, temp_marking_id=temp_marking_id,
-                from_package=from_package, use_created_by_ref=use_created_by_ref,
-            )
+                identity, env, created_by_ref_source,
+                temp_marking_id=temp_marking_id)
             env.bundle_instance["objects"].append(ident20)
             return ident20["id"]
 
@@ -237,7 +245,13 @@ def handle_missing_properties_of_information_source(so, information_source):
 def process_information_source(information_source, so, env, temp_marking_id=None):
     if information_source:
         if information_source.identity is not None:
-            so["created_by_ref"] = get_identity_ref(information_source.identity, env, temp_marking_id)
+            if information_source.identity.idref:
+                so["created_by_ref"] = information_source.identity.idref
+            else:
+                so["created_by_ref"] = get_identity(information_source.identity,
+                                                    env,
+                                                    "this_identity",
+                                                    temp_marking_id)
         else:
             so["created_by_ref"] = env.created_by_ref
 
@@ -313,12 +327,13 @@ def create_basic_object(stix2x_type, stix1x_obj, env, parent_id=None, id_used=Fa
     return instance
 
 
-def convert_marking_specification(marking_specification, env):
+def convert_marking_specification(marking_specification, env, stix1x_id):
     return_obj = []
 
     if marking_specification.marking_structures is not None:
         marking_structures = marking_specification.marking_structures
         for marking_structure in marking_structures:
+
             if marking_structure.idref or marking_structure.__class__.__name__ == "MarkingStructure":
                 if not check_map_1x_markings_to_2x(marking_structure):
                     # Don't print message multiple times if idref has been resolved.
@@ -327,6 +342,9 @@ def convert_marking_specification(marking_specification, env):
                 continue
 
             marking_definition_instance = create_basic_object("marking-definition", marking_structure, env)
+            process_information_source(marking_specification.information_source,
+                                       marking_definition_instance,
+                                       env)
 
             if isinstance(marking_structure, TLPMarkingStructure):
                 if marking_structure.color is not None:
@@ -358,26 +376,31 @@ def convert_marking_specification(marking_specification, env):
             elif isinstance(marking_structure, AISMarkingStructure):
                 marking_definition_instance["definition_type"] = "ais"
                 definition = {}
+
                 if marking_structure.is_proprietary is not None:
-                    definition["is_proprietary"] = "true"
-                    consent_label = ""
+                    consent_marking = str(marking_structure.is_proprietary.ais_consent.consent).lower()
+                    if consent_marking != "everyone":
+                        warn("cisa-proprietary is only permitted when ais-consent is everyone, so it has been dropped. See %s", 637, stix1x_id)
+                        definition["is_proprietary"] = "false"
+                    else:
+                        definition["is_proprietary"] = "true"
                     if (marking_structure.is_proprietary.ais_consent is not None and
                             marking_structure.is_proprietary.ais_consent.consent is not None):
-                        definition["consent"] = str(marking_structure.is_proprietary.ais_consent.consent).lower()
+                        definition["consent"] = consent_marking
                         consent_label = "ais-consent-" + definition["consent"]
                     if (marking_structure.is_proprietary.tlp_marking is not None and
                             marking_structure.is_proprietary.tlp_marking.color is not None):
                         definition["tlp"] = str(marking_structure.is_proprietary.tlp_marking.color).lower()
                         set_tlp_reference(marking_definition_instance, definition["tlp"], "marking_ref")
-                    if marking_structure.is_proprietary.cisa_proprietary is not None:
-                        definition["is_cisa_proprietary"] = str(marking_structure.is_proprietary.cisa_proprietary).lower()
-                        consent_label = consent_label + "-cisa-proprietary-" + definition["is_cisa_proprietary"]
-                        add_label(marking_definition_instance, consent_label)
+                    if definition["is_proprietary"] == "true":
+                        consent_label = consent_label + "-cisa-proprietary"
+                    add_label(marking_definition_instance, consent_label)
                 elif marking_structure.not_proprietary is not None:
+                    consent_marking = str(marking_structure.not_proprietary.ais_consent.consent).lower()
                     definition["is_proprietary"] = "false"
                     if (marking_structure.not_proprietary.ais_consent is not None and
                             marking_structure.not_proprietary.ais_consent.consent is not None):
-                        definition["consent"] = str(marking_structure.not_proprietary.ais_consent.consent).lower()
+                        definition["consent"] = consent_marking
                         consent_label = "ais-consent-" + definition["consent"]
                         add_label(marking_definition_instance, consent_label)
                     if (marking_structure.not_proprietary.tlp_marking is not None and
@@ -405,11 +428,6 @@ def convert_marking_specification(marking_specification, env):
                 else:
                     finish_basic_object(marking_specification.id_, marking_definition_instance, env, marking_structure)
                     return_obj.append(marking_definition_instance)
-
-            process_information_source(marking_specification.information_source,
-                                       marking_definition_instance,
-                                       env,
-                                       temp_marking_id=temp_marking_id)
 
     return return_obj
 
@@ -463,7 +481,7 @@ def finish_basic_object(old_id, instance, env, stix1x_obj, temp_marking_id=None)
             elif temp_marking_id:
                 object_marking_refs.append(temp_marking_id)
             elif not check_map_1x_markings_to_2x(marking_structure):
-                stix2x_markings = convert_marking_specification(marking_specification, env)
+                stix2x_markings = convert_marking_specification(marking_specification, env, instance["id"])
                 for m in stix2x_markings:
                     if m["definition_type"] == "ais":
                         apply_ais_markings(instance, m)
@@ -501,7 +519,7 @@ def process_information_source_for_sighting(sighting, sighting_instance, env):
     if sighting.source:
         information_source = sighting.source
         if information_source.identity is not None:
-            sighting_instance["where_sighted_refs"] = [get_identity_ref(information_source.identity, env)]
+            sighting_instance["where_sighted_refs"] = [get_identity_ref(information_source.identity, env, created_by_ref_source="this_identity")]
             if information_source.description:
                 process_description_and_short_description(sighting_instance, sighting)
             if information_source.references:
@@ -1120,7 +1138,7 @@ def determine_administrative_area(geo):
         return None
 
 
-def convert_ciq_addresses2_1(ciq_info_addresses, identity_instance, env, parent_markings, use_created_by_ref=True):
+def convert_ciq_addresses2_1(ciq_info_addresses, identity_instance, env, created_by_ref_source, parent_markings):
     location_keys = []
     for ciq_info_address in ciq_info_addresses:
         if not ciq_info_address.free_text_address:
@@ -1169,7 +1187,7 @@ def convert_ciq_addresses2_1(ciq_info_addresses, identity_instance, env, parent_
                 if country_code:
                     location["country"] = country_code
                 add_location_object(key, location)
-                if use_created_by_ref:
+                if created_by_ref_source == "this_identity":
                     location["created_by_ref"] = identity_instance["id"]
                 else:
                     location["created_by_ref"] = env.created_by_ref
@@ -1179,7 +1197,7 @@ def convert_ciq_addresses2_1(ciq_info_addresses, identity_instance, env, parent_
             relationship = create_relationship(
                 identity_instance["id"],
                 location["id"],
-                env.newEnv(created_by_ref=identity_instance["id"]) if use_created_by_ref else env,
+                env.newEnv(created_by_ref=identity_instance["id"]) if created_by_ref_source == "this_identity" else env,
                 "located-at",
                 marking_refs=parent_markings,
             )
@@ -1211,7 +1229,7 @@ def handle_missing_properties_of_ciq_instance(identity_instance, ciq):
         fill_in_extension_properties(identity_instance, container, extension_definition_id)
 
 
-def convert_identity(identity, env, parent_id=None, temp_marking_id=None, from_package=False, use_created_by_ref=True):
+def convert_identity(identity, env, created_by_ref_source, parent_id=None, temp_marking_id=None):
     identity_instance = create_basic_object("identity", identity, env, parent_id)
     identity_instance["sectors"] = []
     spec_version = get_option_value("spec_version")
@@ -1238,7 +1256,9 @@ def convert_identity(identity, env, parent_id=None, temp_marking_id=None, from_p
         if ciq_info.addresses:
             if spec_version == "2.1":
                 parent_markings = create_marking_union(identity)
-                convert_ciq_addresses2_1(ciq_info.addresses, identity_instance, env, parent_markings, use_created_by_ref)
+                convert_ciq_addresses2_1(ciq_info.addresses, identity_instance, env, created_by_ref_source, parent_markings)
+            else:
+                warn("CIQ Address information in %s is not representable in 2.0", 435, identity.id_ if hasattr(identity, "id_") else parent_id)
 
     if identity.related_identities:
         identity_markings = create_marking_union(identity)
@@ -1246,9 +1266,16 @@ def convert_identity(identity, env, parent_id=None, temp_marking_id=None, from_p
         info(msg, 710, identity_instance["id"])
         handle_relationship_to_refs(identity.related_identities, identity_instance["id"], env, "related-to",
                                     marking_refs=identity_markings)
+
+    if created_by_ref_source == "this_identity":
+        new_env = env.newEnv(created_by_ref=identity_instance["id"])
+    elif created_by_ref_source == "from_env":
+        new_env = env
+    elif created_by_ref_source == "parent":
+        new_env =  env.newEnv(created_by_ref=parent_id)
     finish_basic_object(identity.id_,
                         identity_instance,
-                        env.newEnv(created_by_ref=identity_instance["id"] if from_package else parent_id),
+                        new_env,
                         identity,
                         temp_marking_id=temp_marking_id)
     return identity_instance
@@ -1261,7 +1288,7 @@ def handle_missing_identity_ref_properties(container, instance2x, sources, env, 
             if check_for_missing_policy("add-to-description"):
                 id_info = s.identity.name
             else:
-                id2x = convert_identity(s.identity, env)
+                id2x = convert_identity(s.identity, env, "from_env")
                 env.bundle_instance["objects"].append(id2x)
                 id_info = id2x["id"]
             identities.append(id_info)
@@ -1287,7 +1314,7 @@ def handle_missing_properties_of_incident(incident_instance, incident, env):
         if incident.reporter is not None:
             reporter = incident.reporter
             if reporter.identity:
-                id2x = convert_identity(reporter.identity, env)
+                id2x = convert_identity(reporter.identity, env, "from_env")
                 env.bundle_instance["objects"].append(id2x)
                 handle_missing_string_property(container, "reporter", id2x["id"], incident_instance["id"])
 
@@ -1537,6 +1564,8 @@ correctly in STIX 2.x - please check this pattern",
     if "pattern" not in indicator_instance:
         # STIX doesn't handle multiple patterns for indicators
         convert_test_mechanism(indicator, indicator_instance)
+    if "pattern" not in indicator_instance:
+        warn("Indicator %s does not contain the information necessary to generate a pattern", 638, indicator_instance["id"])
     env = env.newEnv(timestamp=indicator_instance["created"])
     indicator_created_by_ref = process_information_source(indicator.producer, indicator_instance,
                                                           env)
@@ -2155,8 +2184,8 @@ def convert_identity_for_victim_target(identity, ttp, env, ttp_generated):
         identity_markings = create_marking_union(identity)
         identity_instance = convert_identity(identity,
                                              env,
-                                             parent_id=ttp.id_ if not ttp_generated else None,
-                                             use_created_by_ref=False)
+                                             created_by_ref_source="from_env",
+                                             parent_id=ttp.id_ if not ttp_generated else None)
     else:
         identity_instance = create_basic_object("identity", None, env, ttp.id_)
         identity_instance["identity_class"] = "unknown"
@@ -2248,7 +2277,7 @@ def handle_embedded_object(obj, env):
         new20s = convert_exploit_target(obj, env)
     # identities
     elif isinstance(obj, Identity) or isinstance(obj, CIQIdentity3_0Instance):
-        new20 = convert_identity(obj, env, use_created_by_ref=False)
+        new20 = convert_identity(obj, env, "from_env")
         env.bundle_instance["objects"].append(new20)
     # incidents
     elif get_option_value("incidents") and isinstance(obj, Incident):
@@ -2403,13 +2432,10 @@ def finalize_bundle(env):
         error("EMPTY BUNDLE -- No objects created from 1.x input document!", 208)
 
 
-def get_identity_from_package(information_source, env, use_created_by_ref=True):
+def get_identity_from_information_source(information_source, env, created_by_ref_source):
     if information_source:
         if information_source.identity is not None:
-            return get_identity_ref(
-                information_source.identity, env,
-                from_package=True, use_created_by_ref=use_created_by_ref
-            )
+            return get_identity_ref(information_source.identity, env, created_by_ref_source)
         if information_source.contributing_sources is not None:
             if information_source.contributing_sources.source is not None:
                 sources = information_source.contributing_sources.source
@@ -2419,10 +2445,7 @@ def get_identity_from_package(information_source, env, use_created_by_ref=True):
 
                 for source in sources:
                     if source.identity is not None:
-                        return get_identity_ref(
-                            source.identity, env, from_package=True,
-                            use_created_by_ref=use_created_by_ref
-                        )
+                        return get_identity_ref(source.identity, env, created_by_ref_source)
     return None
 
 
@@ -2446,12 +2469,14 @@ def convert_package(stix_package, env):
 
     # created_by_idref from the command line is used instead of the one from the package, if given
     if not env.created_by_ref and hasattr(stix_package.stix_header, "information_source"):
-        env.created_by_ref = get_identity_from_package(stix_package.stix_header.information_source, env)
+        env.created_by_ref = get_identity_from_information_source(stix_package.stix_header.information_source, env, "this_identity")
 
     # Markings are processed in the beginning for handling later for each SDO.
     for marking_specification in navigator.iterwalk(stix_package):
         if isinstance(marking_specification, MarkingSpecification):
-            stix2x_markings = convert_marking_specification(marking_specification, env)
+            stix2x_markings = convert_marking_specification(marking_specification,
+                                                            env,
+                                                            stix_package.id_)
             for marking in stix2x_markings:
                 if marking["definition_type"] != "ais":
                     bundle_instance["objects"].append(marking)

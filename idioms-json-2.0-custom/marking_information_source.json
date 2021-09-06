@@ -2,33 +2,6 @@
     "id": "bundle--f61cd874-494d-4194-a3e6-6b487dbb6d1d",
     "objects": [
         {
-            "administrative_area": "US-NY",
-            "country": "US",
-            "created": "2014-05-08T09:00:00.000Z",
-            "created_by_ref": "identity--94463bad-2ff1-45f0-a575-c296e4aaf572",
-            "id": "location--78bfcf3a-7907-4187-8a15-074c260bdbee",
-            "modified": "2014-05-08T09:00:00.000Z",
-            "object_marking_refs": [
-                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
-            ],
-            "spec_version": "2.1",
-            "type": "location"
-        },
-        {
-            "created": "2014-05-08T09:00:00.000Z",
-            "created_by_ref": "identity--94463bad-2ff1-45f0-a575-c296e4aaf572",
-            "id": "relationship--d8874595-fea4-4136-b64d-feb56d4cad17",
-            "modified": "2014-05-08T09:00:00.000Z",
-            "object_marking_refs": [
-                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
-            ],
-            "relationship_type": "located-at",
-            "source_ref": "identity--94463bad-2ff1-45f0-a575-c296e4aaf572",
-            "spec_version": "2.1",
-            "target_ref": "location--78bfcf3a-7907-4187-8a15-074c260bdbee",
-            "type": "relationship"
-        },
-        {
             "created": "2014-05-08T09:00:00.000Z",
             "created_by_ref": "identity--94463bad-2ff1-45f0-a575-c296e4aaf572",
             "id": "identity--94463bad-2ff1-45f0-a575-c296e4aaf572",
@@ -44,15 +17,13 @@
             "sectors": [
                 "transportation"
             ],
-            "spec_version": "2.1",
             "type": "identity"
         },
         {
-            "confidence": 85,
             "created": "2015-05-15T09:00:00.000Z",
             "description": "This is a cyber threat indicator for instances of US-China_Q14 phishing attempts.",
-            "id": "indicator--262f78ba-287d-4f74-933c-769a266fdd20",
-            "indicator_types": [
+            "id": "indicator--1025f24f-fe4f-4c11-8512-1fd4d7620022",
+            "labels": [
                 "malicious-email"
             ],
             "modified": "2015-05-15T09:00:00.000Z",
@@ -61,12 +32,12 @@
                 "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
             ],
             "pattern": "[ipv4-addr:value = '1.1.1.4']",
-            "pattern_type": "stix",
-            "spec_version": "2.1",
             "type": "indicator",
             "valid_from": "2012-12-01T09:30:47.000000Z",
-            "valid_until": "2013-02-01T09:30:47.000000Z"
+            "valid_until": "2013-02-01T09:30:47.000000Z",
+            "x_elevator_confidence": "High"
         }
     ],
+    "spec_version": "2.0",
     "type": "bundle"
 }
