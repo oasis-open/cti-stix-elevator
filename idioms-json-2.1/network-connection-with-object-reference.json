@@ -24,7 +24,7 @@
                     "request_version": "http/1.1"
                 }
             },
-            "id": "network-traffic--c24a5769-0072-591d-8712-83661431fc12",
+            "id": "network-traffic--bd3a0f50-f1ef-5261-921e-de91a3b89eae",
             "protocols": [
                 "ipv4",
                 "udp",
@@ -68,7 +68,7 @@
                     "request_version": "http/1.1"
                 }
             },
-            "id": "network-traffic--731cec4e-8e60-5c3b-b2f5-2401aad9d0e9",
+            "id": "network-traffic--29d12884-b683-579b-a663-0e5a193009c1",
             "protocols": [
                 "http"
             ],
@@ -87,7 +87,7 @@
             "modified": "2020-05-17T17:16:56.194Z",
             "number_observed": 1,
             "object_refs": [
-                "network-traffic--c24a5769-0072-591d-8712-83661431fc12",
+                "network-traffic--bd3a0f50-f1ef-5261-921e-de91a3b89eae",
                 "domain-name--bedb4899-d24b-5401-bc86-8f6b4cc18ec7",
                 "ipv4-addr--96d215a5-eb23-527a-ae22-9507313d32ca"
             ],
@@ -102,7 +102,7 @@
             "modified": "2020-05-17T17:16:56.194Z",
             "number_observed": 1,
             "object_refs": [
-                "network-traffic--731cec4e-8e60-5c3b-b2f5-2401aad9d0e9",
+                "network-traffic--29d12884-b683-579b-a663-0e5a193009c1",
                 "artifact--b59d53f1-00da-508c-be83-638974fd12eb"
             ],
             "spec_version": "2.1",

@@ -12,7 +12,7 @@
                     "x_elevator_local_address": "198.51.100.2"
                 }
             },
-            "id": "network-traffic--bc151ba0-c40b-5777-8457-dc595b2fa727",
+            "id": "network-traffic--d8301f41-2ed7-599a-9851-02c19eeaca42",
             "protocols": [
                 "tcp"
             ],
@@ -26,7 +26,7 @@
             "modified": "2020-05-31T15:12:07.150Z",
             "number_observed": 1,
             "object_refs": [
-                "network-traffic--bc151ba0-c40b-5777-8457-dc595b2fa727"
+                "network-traffic--d8301f41-2ed7-599a-9851-02c19eeaca42"
             ],
             "spec_version": "2.1",
             "type": "observed-data"

@@ -169,6 +169,7 @@ In STIX 1.x, an ``id`` contained a "namespace".  This was deemed unnecessary in 
     In STIX 1.x, kill chains, with their phases, were defined using the ``KillChainType``, which is found in the ``Kill_Chains`` property of
     a ``TTP``.  These kill chains phases were refered to in the ``TTP`` and ``Indicator`` ``Kill_Chain_Phases`` properties.  In
     STIX 2.x, kill chains and their phases are not explicitly defined, but are referenced using their common names.
+
     If the Lockheed Martin Cyber Kill Chain™ is used the ``kill_chain_name`` property must be ``lockheed-martin-cyber-kill-chain``,
     according to the specification.
 
@@ -780,19 +781,20 @@ to ensure the STIX 2.x Indicator has the intended meaning.
 ..  table::
     :align: left
 
-    +-------------------------+---------------------------------------------+
-    | **STIX 1.x property**   | **STIX 2.x property**                       |
-    +=========================+=============================================+
-    | ``Alternative_ID``      |   ``external_references``                   |
-    +-------------------------+---------------------------------------------+
-    | ``Kill_Chain_Phases``   |   ``kill_chain_phases``                     |
-    +-------------------------+---------------------------------------------+
-    | ``Indicator_Expression``|   ``pattern``                               |
-    +-------------------------+---------------------------------------------+
-    | ``Test_Mechanisms``     |   ``pattern``                               |
-    +-------------------------+---------------------------------------------+
-    | ``Producer``            |   ``created_by_ref``                        |
-    +-------------------------+---------------------------------------------+
+    +-----------------------------------+------------------------------+
+    | **STIX 1.x property**             | **STIX 2.x property**        |
+    +===================================+==============================+
+    | ``Alternative_ID``                |   ``external_references``    |
+    +-----------------------------------+------------------------------+
+    | ``Kill_Chain_Phases``             |   ``kill_chain_phases``      |
+    +-----------------------------------+------------------------------+
+    | ``Observable``                    |   ``pattern``                |
+    | ``Composite_Indicator_Expression``|                              |
+    +-----------------------------------+------------------------------+
+    | ``Test_Mechanisms``               |   ``pattern``                |
+    +-----------------------------------+------------------------------+
+    | ``Producer``                      |   ``created_by_ref``         |
+    +-----------------------------------+------------------------------+
 
 **STIX 1.x Properties Mapped Using STIX 2.x Relationships**
 
@@ -889,6 +891,64 @@ The STIX 2.x sighting would be:
         "observed_data_refs": ["observed-data--b67d30ff-02ac-498a-92f9-32f845f448cf"],
         "where_sighted_refs": ["identity--b67d30ff-02ac-498a-92f9-32f845f448ff"]
     }
+
+Infrastructure
+------------------
+
+first_seen
+
+**STIX 1.x Properties Mapped Directly to STIX 2.x Properties**
+
+..  table::
+    :align: left
+
+    +-------------------------+------------------------------------------------------+
+    | **STIX 1.x property**   | **STIX 2.x property**                                |
+    +=========================+======================================================+
+    | ``Type``                |   ``labels`` in 2.0, ``infrastructure_types`` in 2.1 |
+    +-------------------------+------------------------------------------------------+
+
+
+**STIX 1.x Properties Translated to STIX 2.x Properties**
+
+..  table::
+    :align: left
+
+    +----------------------------------+---------------------------------------------+
+    | **STIX 1.x property**            | **STIX 2.x property**                       |
+    +==================================+=============================================+
+    | ``Kill_Chain_Phases``            |   ``kill_chain_phases``                     |
+    +----------------------------------+---------------------------------------------+
+
+**STIX 1.x Properties Mapped Using STIX 2.x Relationships**
+
+..  table::
+    :align: left
+
+    +----------------------------------+-----------------------------------------------------------------+
+    | **STIX 1.x property**            | **STIX 2.x relationship type**                                  |
+    +==================================+=================================================================+
+    | ``Observable_Characterizations`` |   ``consists_of``                                               |
+    +----------------------------------+-----------------------------------------------------------------+
+    | ``ttp:Exploit_Targets``          | ``has`` (vulnerability, only)                                   |
+    +----------------------------------+-----------------------------------------------------------------+
+    | ``ttp:Related_TTPs``             | ``delivers`` (malware), ``related-to`` (when not used for versioning)|
+    +----------------------------------+------------------------------------------------------------------------+
+
+**STIX 1.x Properties Handled Based on the "missing policy"**
+
+*none*
+
+**STIX 1.x Properties Not Mapped**
+
+*none*
+
+
+**An Example**
+
+STIX 1.x in XML
+
+.. code-block:: xml
 
 
 Location

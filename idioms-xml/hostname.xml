@@ -1,0 +1,81 @@
+<stix:STIX_Package xmlns:stix="http://stix.mitre.org/stix-1" xmlns:indicator="http://stix.mitre.org/Indicator-2" xmlns:AddressObj="http://cybox.mitre.org/objects#AddressObject-2" xmlns:NetworkConnectionObj="http://cybox.mitre.org/objects#NetworkConnectionObject-2" xmlns:DNSRecordObj="http://cybox.mitre.org/objects#DNSRecordObject-2" xmlns:edh2="urn:edm:edh:cyber:v3" xmlns:CISCP="http://us-cert.gov/ciscp" xmlns:stixVocabs="http://stix.mitre.org/default_vocabularies-1" xmlns:PortObj="http://cybox.mitre.org/objects#PortObject-2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:EmailMessageObj="http://cybox.mitre.org/objects#EmailMessageObject-2" xmlns:DNSQueryObj="http://cybox.mitre.org/objects#DNSQueryObject-2" xmlns:stix-ciq="http://stix.mitre.org/extensions/Identity#CIQIdentity3.0-1" xmlns:DomainNameObj="http://cybox.mitre.org/objects#DomainNameObject-1" xmlns:NCCIC="http://www.us-cert.gov" xmlns:xal="urn:oasis:names:tc:ciq:xal:3" xmlns:xpil="urn:oasis:names:tc:ciq:xpil:3" xmlns:WinRegistryKeyObj="http://cybox.mitre.org/objects#WinRegistryKeyObject-2" xmlns:edh2cyberMarking="http://www.us-cert.gov/sites/default/files/STIX_Namespace/ISAMarkingsType.v2.xsd" xmlns:CustomObj="http://cybox.mitre.org/objects#CustomObject-1" xmlns:HTTPSessionObj="http://cybox.mitre.org/objects#HTTPSessionObject-2" xmlns:AIS="http://www.us-cert.gov/STIXMarkingStructure#AISConsentMarking-2" xmlns:cyboxCommon="http://cybox.mitre.org/common-2" xmlns:cyboxVocabs="http://cybox.mitre.org/default_vocabularies-2" xmlns:et="http://stix.mitre.org/ExploitTarget-1" xmlns:stixCommon="http://stix.mitre.org/common-1" xmlns:ttp="http://stix.mitre.org/TTP-1" xmlns:marking="http://data-marking.mitre.org/Marking-1" xmlns:MutexObj="http://cybox.mitre.org/objects#MutexObject-2" xmlns:coa="http://stix.mitre.org/CourseOfAction-1" xmlns:tlpMarking="http://data-marking.mitre.org/extensions/MarkingStructure#TLP-1" xmlns:isa="http://www.us-cert.gov/sites/default/files/STIX_Namespace/ISAMarkingsType.v2.xsd" xmlns:HostnameObj="http://cybox.mitre.org/objects#HostnameObject-1" xmlns:xnl="urn:oasis:names:tc:ciq:xnl:3" xmlns:SocketAddressObj="http://cybox.mitre.org/objects#SocketAddressObject-1" xmlns:FileObj="http://cybox.mitre.org/objects#FileObject-2" xmlns:URIObj="http://cybox.mitre.org/objects#URIObject-2" xmlns:LinkObj="http://cybox.mitre.org/objects#LinkObject-1" xmlns:cybox="http://cybox.mitre.org/cybox-2" xmlns:edh2cyberMarkingAssert="http://www.us-cert.gov/sites/default/files/STIX_Namespace/ISAMarkingsAssertionsType.v2.xsd" id="NCCIC:STIX_Package-75d3aca8-3a82-46fc-8965-c0d1958c9790" timestamp="2021-08-06T14:04:41Z" version="1.1.1" xsi:schemaLocation="http://cybox.mitre.org/objects#WinRegistryKeyObject-2 http://cybox.mitre.org/XMLSchema/objects/Win_Registry_Key/2.1/Win_Registry_Key_Object.xsd http://cybox.mitre.org/objects#PortObject-2 http://cybox.mitre.org/XMLSchema/objects/Port/2.1/Port_Object.xsd http://stix.mitre.org/TTP-1 http://stix.mitre.org/XMLSchema/ttp/1.1.1/ttp.xsd http://www.us-cert.gov/sites/default/files/STIX_Namespace/ISAMarkingsAssertionsType.v2.xsd http://www.us-cert.gov/sites/default/files/STIX_Namespace/local_ISAMarkingsAssertionsType.v2.xsd http://www.us-cert.gov/STIXMarkingStructure#AISConsentMarking-2 http://www.us-cert.gov/sites/default/files/STIX_Namespace/AIS_Bundle_Marking_1.1.1_v1.0.xsd http://cybox.mitre.org/objects#LinkObject-1 http://cybox.mitre.org/XMLSchema/objects/Link/1.1/Link_Object.xsd http://cybox.mitre.org/objects#CustomObject-1 http://cybox.mitre.org/XMLSchema/objects/Custom/1.1/Custom_Object.xsd http://cybox.mitre.org/objects#DNSQueryObject-2 http://cybox.mitre.org/XMLSchema/objects/DNS_Query/2.1/DNS_Query_Object.xsd http://cybox.mitre.org/objects#FileObject-2 http://cybox.mitre.org/XMLSchema/objects/File/2.1/File_Object.xsd http://stix.mitre.org/ExploitTarget-1 http://stix.mitre.org/XMLSchema/exploit_target/1.1.1/exploit_target.xsd http://cybox.mitre.org/objects#AddressObject-2 http://cybox.mitre.org/XMLSchema/objects/Address/2.1/Address_Object.xsd http://data-marking.mitre.org/Marking-1 http://stix.mitre.org/XMLSchema/data_marking/1.1.1/data_marking.xsd http://stix.mitre.org/extensions/Identity#CIQIdentity3.0-1 http://stix.mitre.org/XMLSchema/extensions/identity/ciq_3.0/1.1.1/ciq_3.0_identity.xsd http://stix.mitre.org/common-1 http://stix.mitre.org/XMLSchema/common/1.1.1/stix_common.xsd http://cybox.mitre.org/objects#DomainNameObject-1 http://cybox.mitre.org/XMLSchema/objects/Domain_Name/1.0/Domain_Name_Object.xsd http://data-marking.mitre.org/extensions/MarkingStructure#TLP-1 http://stix.mitre.org/XMLSchema/extensions/marking/tlp/1.1.1/tlp_marking.xsd http://cybox.mitre.org/objects#HostnameObject-1 http://cybox.mitre.org/XMLSchema/objects/Hostname/1.0/Hostname_Object.xsd http://stix.mitre.org/stix-1 http://stix.mitre.org/XMLSchema/core/1.1.1/stix_core.xsd http://cybox.mitre.org/default_vocabularies-2 http://cybox.mitre.org/XMLSchema/default_vocabularies/2.1/cybox_default_vocabularies.xsd http://cybox.mitre.org/common-2 http://cybox.mitre.org/XMLSchema/common/2.1/cybox_common.xsd http://www.us-cert.gov/sites/default/files/STIX_Namespace/ISAMarkingsType.v2.xsd http://www.us-cert.gov/sites/default/files/STIX_Namespace/local_ISAMarkingsType.v2.xsd http://stix.mitre.org/default_vocabularies-1 http://stix.mitre.org/XMLSchema/default_vocabularies/1.1.1/stix_default_vocabularies.xsd http://cybox.mitre.org/objects#URIObject-2 http://cybox.mitre.org/XMLSchema/objects/URI/2.1/URI_Object.xsd http://stix.mitre.org/Indicator-2 http://stix.mitre.org/XMLSchema/indicator/2.1.1/indicator.xsd http://cybox.mitre.org/objects#EmailMessageObject-2 http://cybox.mitre.org/XMLSchema/objects/Email_Message/2.1/Email_Message_Object.xsd http://cybox.mitre.org/objects#SocketAddressObject-1 http://cybox.mitre.org/XMLSchema/objects/Socket_Address/1.1/Socket_Address_Object.xsd http://cybox.mitre.org/objects#MutexObject-2 http://cybox.mitre.org/XMLSchema/objects/Mutex/2.1/Mutex_Object.xsd http://cybox.mitre.org/objects#NetworkConnectionObject-2 http://cybox.mitre.org/XMLSchema/objects/Network_Connection/2.1/Network_Connection_Object.xsd urn:edm:edh:cyber:v3 http://www.us-cert.gov/sites/default/files/STIX_Namespace/local_SD-EDH_Profile_Cyber.v3.xsd http://stix.mitre.org/CourseOfAction-1 http://stix.mitre.org/XMLSchema/course_of_action/1.1.1/course_of_action.xsd http://cybox.mitre.org/objects#HTTPSessionObject-2 http://cybox.mitre.org/XMLSchema/objects/HTTP_Session/2.1/HTTP_Session_Object.xsd http://cybox.mitre.org/cybox-2 http://cybox.mitre.org/XMLSchema/core/2.1/cybox_core.xsd http://cybox.mitre.org/objects#DNSRecordObject-2 http://cybox.mitre.org/XMLSchema/objects/DNS_Record/2.1/DNS_Record_Object.xsd">
+  <stix:STIX_Header>
+    <stix:Title>NCCIC:STIX_Package-75d3aca8-3a82-46fc-8965-c0d1958c9790</stix:Title>
+    <stix:Package_Intent xsi:type="stixVocabs:PackageIntentVocab-1.0">Indicators</stix:Package_Intent>
+    <stix:Handling>
+      <marking:Marking>
+        <marking:Controlled_Structure>//node() | //@*</marking:Controlled_Structure>
+        <marking:Marking_Structure xsi:type="AIS:AISMarkingStructure">
+          <AIS:Not_Proprietary CISA_Proprietary="false">
+            <AIS:AISConsent consent="EVERYONE"/>
+
+            <AIS:TLPMarking color="WHITE"/>
+
+          </AIS:Not_Proprietary>
+        </marking:Marking_Structure>
+      </marking:Marking>
+    </stix:Handling>
+    <stix:Information_Source>
+      <stixCommon:Contributing_Sources>
+        <stixCommon:Source>
+          <stixCommon:Identity xsi:type="stix-ciq:CIQIdentity3.0InstanceType">
+            <stix-ciq:Specification>
+              <xpil:PartyName>
+                <xnl:OrganisationName>
+                  <xnl:NameElement>ACME</xnl:NameElement>
+                </xnl:OrganisationName>
+              </xpil:PartyName>
+              <xpil:Addresses>
+                <xpil:Address>
+                  <xal:Country>
+                    <xal:NameElement xal:NameCode="US" xal:NameCodeType="ISO_3166-1_alpha-2"/>
+
+                  </xal:Country>
+                  <xal:AdministrativeArea>
+                    <xal:NameElement xal:NameCode="US-OR" xal:NameCodeType="ISO_3166-2"/>
+
+                  </xal:AdministrativeArea>
+                </xpil:Address>
+              </xpil:Addresses>
+              <xpil:OrganisationInfo xpil:IndustryType="Transportation Systems Sector"/>
+
+            </stix-ciq:Specification>
+          </stixCommon:Identity>
+          <stixCommon:Tools>
+            <cyboxCommon:Tool>
+              <cyboxCommon:Metadata>
+                <cyboxCommon:Value>AIS</cyboxCommon:Value>
+              </cyboxCommon:Metadata>
+            </cyboxCommon:Tool>
+          </stixCommon:Tools>
+        </stixCommon:Source>
+      </stixCommon:Contributing_Sources>
+      <stixCommon:Time>
+        <cyboxCommon:Produced_Time>2021-08-06T14:04:40Z</cyboxCommon:Produced_Time>
+      </stixCommon:Time>
+    </stix:Information_Source>
+  </stix:STIX_Header>
+  <stix:Indicators>
+    <stix:Indicator id="NCCIC:Indicator-5ea04c59-d106-4e2a-a15c-293066fc3187" timestamp="2021-08-06T14:04:41Z" version="2.0" xsi:type="indicator:IndicatorType">
+      <indicator:Type xsi:type="stixVocabs:IndicatorTypeVocab-1.0">IP Watchlist</indicator:Type>
+      <indicator:Description>Socket Address123</indicator:Description>
+    </stix:Indicator>
+    <stix:Indicator id="NCCIC:Indicator-f04fe75a-4717-4b2a-85ad-9adf248b1c3e" timestamp="2021-08-06T14:04:41Z" version="2.0" xsi:type="indicator:IndicatorType">
+      <indicator:Type xsi:type="stixVocabs:IndicatorTypeVocab-1.0">IP Watchlist</indicator:Type>
+      <indicator:Description>Socket Address</indicator:Description>
+      <indicator:Observable id="NCCIC:Observable-4e5eb285-2a0c-465a-ba92-537eec1e5576">
+        <cybox:Object id="NCCIC:Object-bc8fad74-a98d-4784-bdb1-b8d715f738d4">
+          <cybox:Properties is_domain_name="false" xsi:type="HostnameObj:HostnameObjectType">
+            <HostnameObj:Hostname_Value condition="Equals">mini99.wikipedia.org</HostnameObj:Hostname_Value>
+            <HostnameObj:Naming_System>DNS</HostnameObj:Naming_System>
+          </cybox:Properties>
+        </cybox:Object>
+      </indicator:Observable>
+    </stix:Indicator>
+  </stix:Indicators>
+</stix:STIX_Package>
+
+
+
+
+

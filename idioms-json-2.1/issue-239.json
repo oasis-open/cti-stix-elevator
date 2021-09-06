@@ -34,7 +34,7 @@
             "id": "identity--93fc8f6a-c7c0-4809-bd41-1b9f906963bc",
             "identity_class": "organization",
             "labels": [
-                "ais-consent-everyone-cisa-proprietary-true"
+                "ais-consent-everyone-cisa-proprietary"
             ],
             "modified": "2020-11-23T14:26:05.000Z",
             "name": "ACME",

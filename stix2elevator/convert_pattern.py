@@ -14,6 +14,7 @@ from cybox.objects.custom_object import Custom
 from cybox.objects.domain_name_object import DomainName
 from cybox.objects.email_message_object import EmailMessage
 from cybox.objects.file_object import File
+from cybox.objects.hostname_object import Hostname
 from cybox.objects.http_session_object import HostField, HTTPSession
 from cybox.objects.image_file_object import ImageFile
 from cybox.objects.mutex_object import Mutex
@@ -1890,6 +1891,27 @@ def convert_domain_name_to_pattern(domain_name, related_objects):
     return create_boolean_expression("AND", pattern)
 
 
+def convert_host_name_to_pattern(host_name, related_objects):
+    pattern = [
+        create_term("domain-name:value", host_name.hostname_value.condition, make_constant(host_name.hostname_value.value))]
+    if related_objects:
+        for ro in related_objects:
+            if ro.relationship == "Resolved_To":
+                new_pattern = convert_related_object_to_pattern(ro)
+                if new_pattern:
+                    if isinstance(new_pattern, IdrefPlaceHolder):
+                        pattern.append(ComparisonExpressionForElevator("=",
+                                                                       "domain-name:resolves_to_refs[*]",
+                                                                       new_pattern))
+                    else:
+                        pattern.append(new_pattern.collapse_reference(
+                            ObjectPathForElevator.make_object_path("domain-name:resolves_to_refs[*]")))
+            else:
+                warn("The %s relationship involving %s is not supported in STIX 2.x", 427, ro.relationship,
+                     identifying_info(ro))
+    return create_boolean_expression("AND", pattern)
+
+
 def convert_mutex_to_pattern(mutex):
     if mutex.name:
         return create_term("mutex:name", mutex.name.condition, make_constant(mutex.name.value))
@@ -2373,6 +2395,8 @@ def convert_object_to_pattern(obj, obs_id):
             expression = convert_product_to_pattern(prop)
         elif isinstance(prop, DomainName):
             expression = convert_domain_name_to_pattern(prop, related_objects)
+        elif isinstance(prop, Hostname):
+            expression = convert_host_name_to_pattern(prop, related_objects)
         elif isinstance(prop, Mutex):
             expression = convert_mutex_to_pattern(prop)
         elif isinstance(prop, NetworkConnection):

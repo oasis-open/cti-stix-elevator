@@ -3,10 +3,6 @@
     "objects": [
         {
             "extensions": {
-                "extension-definition--005e229c-fffc-42b0-a912-84671ab2829d": {
-                    "extension_type": "property-extension",
-                    "local_address": "198.51.100.2"
-                },
                 "socket-ext": {
                     "address_family": "AF_INET",
                     "is_listening": true,
@@ -15,7 +11,7 @@
                     }
                 }
             },
-            "id": "network-traffic--bc151ba0-c40b-5777-8457-dc595b2fa727",
+            "id": "network-traffic--d8301f41-2ed7-599a-9851-02c19eeaca42",
             "protocols": [
                 "tcp"
             ],
@@ -29,7 +25,7 @@
             "modified": "2020-12-30T16:03:22.369Z",
             "number_observed": 1,
             "object_refs": [
-                "network-traffic--bc151ba0-c40b-5777-8457-dc595b2fa727"
+                "network-traffic--d8301f41-2ed7-599a-9851-02c19eeaca42"
             ],
             "spec_version": "2.1",
             "type": "observed-data"

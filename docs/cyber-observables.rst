@@ -21,9 +21,10 @@ converted by the elevator.
 ``AutonomousSystem``            ``autonomous-system``                         yes
 ``File``                        ``directory``                                 yes
 ``DomainName``                  ``domain-name``                               yes
-``DNSQuery``                    *none*                                        no
+``DSN Query``                   *none*                                        no
 ``EmailMessage``                ``email-message``                             yes
-``File``                        ``file``                                      yes
+``File``\*                      ``file``                                      yes
+``Hostname``                    ``domain-name``                               yes
 ``HTTPClientRequest``           ``network-traffic:http-request-ext``          yes
 ``HTTPSession``                 ``network-traffic``                           yes
 ``ICMP`` (``v4``/``v6``)        ``network-traffic:icmp-ext``                  yes
@@ -33,7 +34,7 @@ converted by the elevator.
 ``NetworkConnection``           ``network-traffic``                           yes
 ``NetworkSocket``               ``network-traffic:socket-ext``                yes
 ``PDFFile``                     ``file:pdf-ext``                              yes
-``Process``                     ``process``                                   yes
+``Process``\*                   ``process``                                   yes
 ``Product``                     ``software``                                  yes
 ``SocketAddress``               ``network-traffic``                           yes
 ``Hostname``                    ``domain-name``                               yes
@@ -50,6 +51,61 @@ converted by the elevator.
 ``X509Certificate``             ``x509-certificate``                          yes
 ``X509V3Extensions``            ``x509-certificate:x509-v3-extensions-type``  yes
 =============================== ============================================= ====================================================
+
+* Window or Unix Cybox object types handled by the basic STIX object type
+
+CybOX 2.1 Object Types Not Representable in STIX 2.x
+----------------------------------------------------
+
+STIX 2.x can support these CybOX object types using Custom object (deprecated) or Extensions, but this is beyond the
+current scope of the Elevator.
+
+- ``API``
+- ``ARP``
+- ``Code``
+- ``DNS Cache``
+- ``DNS Query``
+- ``DNS Record``
+- ``Device``
+- ``Disk Partition``
+- ``GUI Dialogbox``
+- ``GUI``
+- ``GUI Window``
+- ``Library``
+- ``Link``
+- ``Linux Package``
+- ``Memory``
+- ``Network Flow``
+- ``Network Packet``
+- ``Network Route Entry/Unix Network Route Entry/Win Network Route Entry``
+- ``Network Route``
+- ``Network Subnet``
+- ``Pipe/Unix Pipe/Win Pipe``
+- ``SMS Message``
+- ``Semaphore/Win Semaphore``
+- ``System/Win System``
+- ``URL History``
+- ``User Session``
+- ``Volume/Unix Volume/Win Volume``
+- ``Whois``
+- ``Win Critical Section``
+- ``Win Driver``
+- ``Win Event Log``
+- ``Win Event``
+- ``Win Filemapping``
+- ``Win Handle``
+- ``Win Hook/Win Kernel Hook``
+- ``Win Kernel``
+- ``Win Mailslot``
+- ``Win Memory Page Region``
+- ``Win Network Share``
+- ``Win Prefetch``
+- ``Win System Restore``
+- ``Win Task``
+- ``Win Thread``
+- ``Win Waitable Timer``
+
+
 
 Converting Network Cyber Observables
 ------------------------------------------
