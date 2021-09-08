@@ -47,7 +47,7 @@ from stix2elevator.convert_cybox import (
     resolve_object_references20, resolve_object_references21
 )
 from stix2elevator.convert_pattern import (
-    ComparisonExpressionForElevator, CompoundObservationExpressionForElevator,
+    BooleanExpressionForElevator, ComparisonExpressionForElevator, CompoundObservationExpressionForElevator,
     ParentheticalExpressionForElevator, UnconvertedTerm,
     add_to_observable_mappings, add_to_pattern_cache,
     convert_indicator_to_pattern, convert_observable_list_to_pattern,
@@ -72,7 +72,7 @@ from stix2elevator.utils import (
     add_label, add_marking_map_entry, apply_ais_markings,
     check_map_1x_markings_to_2x, convert_controlled_vocabs_to_open_vocabs,
     convert_timestamp_of_stix_object, convert_timestamp_to_string,
-    identifying_info, iterpath, map_1x_markings_to_2x, map_vocabs_to_label,
+    identifying_info, iterpath, lookup_marking_reference, map_1x_markings_to_2x, map_vocabs_to_label,
     operation_on_path, set_tlp_reference,
     strftime_with_appropriate_fractional_seconds
 )
@@ -417,10 +417,10 @@ def convert_marking_specification(marking_specification, env, stix1x_id):
 
             if "definition_type" in marking_definition_instance:
                 val = add_marking_map_entry(marking_structure, marking_definition_instance)
-                info("Created Marking Structure for %s", 212, identifying_info(marking_structure))
                 if val is not None and not isinstance(val, MarkingStructure):
                     info("Found same marking structure %s, using %s", 625, identifying_info(marking_specification), val)
                 else:
+                    info("Created Marking Structure for %s", 212, identifying_info(marking_structure))
                     finish_basic_object(marking_specification.id_, marking_definition_instance, env, marking_structure)
                     return_obj.append(marking_definition_instance)
 
@@ -452,30 +452,11 @@ def create_marking_union(*stix1_objects):
     return list(set(union_object_marking_refs))
 
 
-def finish_basic_object(old_id, instance, env, stix1x_obj, temp_marking_id=None):
-    if old_id is not None:
-        record_ids(old_id, instance["id"])
-    if hasattr(stix1x_obj, "related_packages") and stix1x_obj.related_packages is not None:
-        for p in stix1x_obj.related_packages:
-            warn("Related_Packages type in %s not supported in STIX 2.x", 402, stix1x_obj.id_)
-
-    # Attach markings to SDO if present.
-    marking_specifications = get_marking_specifications(stix1x_obj)
+def finish_markings(instance, env, marking_specifications, temp_marking_id=None):
     object_marking_refs = []
     for marking_specification in marking_specifications:
         for marking_structure in marking_specification.marking_structures:
-            stix2x_marking = map_1x_markings_to_2x(marking_structure)
-            if (not isinstance(stix2x_marking, MarkingStructure) and
-                    instance["id"] != stix2x_marking["id"] and
-                    stix2x_marking["id"] not in object_marking_refs):
-                if stix2x_marking["definition_type"] == "ais":
-                    apply_ais_markings(instance, stix2x_marking)
-                    object_marking_refs.append(stix2x_marking["marking_ref"])
-                else:
-                    object_marking_refs.append(stix2x_marking["id"])
-            elif temp_marking_id:
-                object_marking_refs.append(temp_marking_id)
-            elif not check_map_1x_markings_to_2x(marking_structure):
+            if not check_map_1x_markings_to_2x(marking_structure):
                 stix2x_markings = convert_marking_specification(marking_specification, env, instance["id"])
                 for m in stix2x_markings:
                     if m["definition_type"] == "ais":
@@ -486,12 +467,35 @@ def finish_basic_object(old_id, instance, env, stix1x_obj, temp_marking_id=None)
                         env.bundle_instance["objects"].append(m)
                     else:
                         env.bundle_instance["objects"].append(m)
+            else:
+                stix2x_marking = map_1x_markings_to_2x(marking_structure)
+                if (instance["id"] != stix2x_marking["id"] and
+                        stix2x_marking["id"] not in object_marking_refs):
+                    if stix2x_marking["definition_type"] == "ais":
+                        apply_ais_markings(instance, stix2x_marking)
+                        object_marking_refs.append(stix2x_marking["marking_ref"])
+                    else:
+                        object_marking_refs.append(stix2x_marking["id"])
+                elif temp_marking_id:
+                    object_marking_refs.append(temp_marking_id)
 
     if env.created_by_ref and instance["id"] != env.created_by_ref:
         instance["created_by_ref"] = env.created_by_ref
 
     if object_marking_refs:
         instance["object_marking_refs"] = object_marking_refs
+
+
+def finish_basic_object(old_id, instance, env, stix1x_obj, temp_marking_id=None):
+    if old_id is not None:
+        record_ids(old_id, instance["id"])
+    if hasattr(stix1x_obj, "related_packages") and stix1x_obj.related_packages is not None:
+        for p in stix1x_obj.related_packages:
+            warn("Related_Packages type in %s not supported in STIX 2.x", 402, stix1x_obj.id_)
+
+    # Attach markings to SDO if present.
+    marking_specifications = get_marking_specifications(stix1x_obj)
+    finish_markings(instance, env, marking_specifications, temp_marking_id=None)
 
 
 # Sightings
@@ -546,6 +550,27 @@ def handle_sighting(sighting, sighted_object_id, env):
 # Relationships
 
 
+def finish_markings_for_relationship(instance, marking_refs, temp_marking_id=None):
+    object_marking_refs = []
+    for marking_ref in marking_refs:
+        stix2x_marking = lookup_marking_reference(marking_ref)
+        if stix2x_marking:
+            if (instance["id"] != stix2x_marking["id"] and
+                    stix2x_marking["id"] not in object_marking_refs):
+                if stix2x_marking["definition_type"] == "ais":
+                    apply_ais_markings(instance, stix2x_marking)
+                    object_marking_refs.append(stix2x_marking["marking_ref"])
+                else:
+                    object_marking_refs.append(stix2x_marking["id"])
+            elif temp_marking_id:
+                object_marking_refs.append(temp_marking_id)
+        else:
+            object_marking_refs.append(marking_ref)
+    if object_marking_refs:
+        instance["object_marking_refs"] = object_marking_refs
+
+
+
 def create_relationship(source_ref, target_ref, env, verb, rel_obj=None, marking_refs=None):
     relationship_instance = create_basic_object("relationship", rel_obj, env)
     relationship_instance["source_ref"] = source_ref
@@ -556,7 +581,9 @@ def create_relationship(source_ref, target_ref, env, verb, rel_obj=None, marking
     if rel_obj is not None and hasattr(rel_obj, "relationship") and rel_obj.relationship is not None:
         relationship_instance["description"] = rel_obj.relationship.value
     if marking_refs:
-        relationship_instance["object_marking_refs"] = marking_refs
+        finish_markings_for_relationship(relationship_instance, marking_refs)
+        # double check in finalize_bundle
+        add_unfinished_marked_object(relationship_instance)
     return relationship_instance
 
 
@@ -1199,7 +1226,7 @@ def convert_ciq_addresses2_1(ciq_info_addresses, identity_instance, env, created
             info("Included parent markings for Relationship %s and Location %s", 729, relationship["id"], location["id"])
             env.bundle_instance["objects"].append(relationship)
             add_unfinished_marked_object(location)
-            add_unfinished_marked_object(relationship)
+
 
 
 def handle_missing_properties_of_ciq_instance(identity_instance, ciq):
@@ -2314,6 +2341,16 @@ def initialize_bundle_lists(bundle_instance):
     bundle_instance["objects"] = []
 
 
+def maybe_split_parenthetical_ors_into_compound_observation_expressions(result):
+    new_expression_operands = []
+    for operand in result.operands:
+        if operand.any_operand_contains_observed_expressions():
+            new_expression_operands.append(operand)
+        else:
+            new_expression_operands.append(operand.wrap_as_observed_expression())
+    return CompoundObservationExpressionForElevator("OR", new_expression_operands)
+
+
 def finalize_bundle(env):
     bundle_instance = env.bundle_instance
     if _KILL_CHAINS_PHASES != {}:
@@ -2375,6 +2412,10 @@ def finalize_bundle(env):
                         ind["pattern"] = "[%s]" % final_pattern
                     elif isinstance(final_pattern, ParentheticalExpressionForElevator):
                         result = final_pattern.expression.partition_according_to_object_path()
+                        if (isinstance(result, BooleanExpressionForElevator) and
+                                  result.operator == "OR" and
+                                     result.any_operand_contains_observed_expressions()):
+                              result = maybe_split_parenthetical_ors_into_compound_observation_expressions(result)
                         if isinstance(result, CompoundObservationExpressionForElevator):
                             ind["pattern"] = "%s" % result
                         else:
