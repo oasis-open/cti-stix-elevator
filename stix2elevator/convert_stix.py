@@ -2036,7 +2036,7 @@ def convert_attack_pattern(ap, ttp, env, ttp_id_used):
         attack_pattern_instance["external_references"] = [{"source_name": "capec", "external_id": ap.capec_id}]
     ap_markings = create_marking_union(ap)
     process_ttp_properties(attack_pattern_instance, ttp, env, marking_refs=ap_markings)
-    finish_basic_object(ttp.id_, attack_pattern_instance, env, ap)
+    finish_basic_object(ttp.id_, attack_pattern_instance, env, ttp)
     return attack_pattern_instance
 
 
@@ -2090,7 +2090,7 @@ def convert_malware_instance(mal, ttp, env, ttp_id_used):
     mi_markings = create_marking_union(mal)
     process_ttp_properties(malware_instance_instance, ttp, env, marking_refs=mi_markings)
     handle_missing_properties_of_malware_instance(malware_instance_instance, mal)
-    finish_basic_object(ttp.id_, malware_instance_instance, env, mal)
+    finish_basic_object(ttp.id_, malware_instance_instance, env, ttp)
     return malware_instance_instance
 
 
@@ -2155,7 +2155,7 @@ def convert_tool(tool, ttp, env, first_one):
     tool_instance["tool_version"] = tool.version
     tool_markings = create_marking_union(tool)
     process_ttp_properties(tool_instance, ttp, env, marking_refs=tool_markings)
-    finish_basic_object(ttp.id_, tool_instance, env, tool)
+    finish_basic_object(ttp.id_, tool_instance, env, ttp)
     return tool_instance
 
 
@@ -2176,7 +2176,7 @@ def convert_infrastructure(infra, ttp, env, first_one):
     if infra.observable_characterization is not None:
         handle_observable_information_list(infra.observable_characterization, infrastructure_instance["id"], env, "consists-of", infra_markings)
     process_ttp_properties(infrastructure_instance, ttp, env, marking_refs=infra_markings)
-    finish_basic_object(ttp.id_, infrastructure_instance, env, infra)
+    finish_basic_object(ttp.id_, infrastructure_instance, env, ttp)
     return infrastructure_instance
 
 
@@ -2212,7 +2212,7 @@ def convert_identity_for_victim_target(identity, ttp, env, ttp_generated):
         identity_markings = create_marking_union(ttp)
     env.bundle_instance["objects"].append(identity_instance)
     process_ttp_properties(identity_instance, ttp, env, False, marking_refs=identity_markings)
-    finish_basic_object(ttp.id_, identity_instance, env, identity)
+    finish_basic_object(ttp.id_, identity_instance, env, ttp)
     return identity_instance
 
 

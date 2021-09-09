@@ -2,12 +2,33 @@
     "id": "bundle--81810123-b298-40f6-a4e7-186efcd07670",
     "objects": [
         {
+            "created": "2021-09-09T14:56:30.500Z",
+            "created_by_ref": "identity--c071610a-e8c2-4d6d-b78e-4ed1f3785e30",
+            "id": "identity--c071610a-e8c2-4d6d-b78e-4ed1f3785e30",
+            "identity_class": "organization",
+            "labels": [
+                "ais-consent-usg"
+            ],
+            "modified": "2021-09-09T14:56:30.500Z",
+            "name": "ACME CORP",
+            "object_marking_refs": [
+                "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
+            ],
+            "sectors": [
+                "sector_1-|-sector_2-|-chemical-sector-|-dams-sector"
+            ],
+            "type": "identity"
+        },
+        {
             "created": "2014-08-08T15:50:10.983Z",
             "description": "\n\nTARGETED_INFORMATION:\nInformation Assets - Financial Data",
             "id": "identity--2d1c6ab3-5e4e-48ac-a32b-f0c01c2836a8",
             "identity_class": "unknown",
             "modified": "2014-08-08T15:50:10.983Z",
             "name": "Victim Targeting: Customer PII and Financial Data",
+            "object_marking_refs": [
+                "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
+            ],
             "type": "identity"
         },
         {
@@ -22,6 +43,9 @@
             ],
             "modified": "2014-08-08T15:50:10.983Z",
             "name": "People behind the intrusion",
+            "object_marking_refs": [
+                "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
+            ],
             "sophistication": "unknown",
             "type": "threat-actor"
         },
@@ -41,12 +65,18 @@
             "id": "campaign--e5268b6e-4931-42f1-b379-87f48eb41b1e",
             "modified": "2014-08-08T15:50:10.983Z",
             "name": "Compromise of ATM Machines",
+            "object_marking_refs": [
+                "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
+            ],
             "type": "campaign"
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
-            "id": "relationship--788158bd-6fd0-4ad2-a17f-01cc0bbc8c46",
+            "id": "relationship--9d055459-75f1-4eee-9e39-f382b3200073",
             "modified": "2014-08-08T15:50:10.983Z",
+            "object_marking_refs": [
+                "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
+            ],
             "relationship_type": "targets",
             "source_ref": "campaign--e5268b6e-4931-42f1-b379-87f48eb41b1e",
             "target_ref": "identity--2d1c6ab3-5e4e-48ac-a32b-f0c01c2836a8",
@@ -54,8 +84,11 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
-            "id": "relationship--d145dbd0-42bf-4684-8b5b-74be315d8e27",
+            "id": "relationship--31e5e881-6016-44f0-8bb6-cd857d12b30b",
             "modified": "2014-08-08T15:50:10.983Z",
+            "object_marking_refs": [
+                "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
+            ],
             "relationship_type": "attributed-to",
             "source_ref": "incident--229ab6ba-0eb2-415b-bdf2-079e6b42f51e",
             "target_ref": "campaign--e5268b6e-4931-42f1-b379-87f48eb41b1e",
@@ -63,8 +96,11 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
-            "id": "relationship--5c2e1246-3472-4c39-99e4-8eb7578ae104",
+            "id": "relationship--4787941b-1f2b-4219-a8b1-c766d501ed91",
             "modified": "2014-08-08T15:50:10.983Z",
+            "object_marking_refs": [
+                "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
+            ],
             "relationship_type": "attributed-to",
             "source_ref": "incident--517cf274-038d-4ed4-a3ec-3ac18ad9db8a",
             "target_ref": "campaign--e5268b6e-4931-42f1-b379-87f48eb41b1e",
@@ -72,8 +108,11 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
-            "id": "relationship--8d8c085c-7229-495d-8f44-d5e4fd862f68",
+            "id": "relationship--3eea4c1f-b72b-4d0d-9631-fdcd7e6dce1c",
             "modified": "2014-08-08T15:50:10.983Z",
+            "object_marking_refs": [
+                "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
+            ],
             "relationship_type": "attributed-to",
             "source_ref": "incident--7d8cf96f-91cb-42d0-a1e0-bfa38ea08621",
             "target_ref": "campaign--e5268b6e-4931-42f1-b379-87f48eb41b1e",
@@ -81,8 +120,11 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
-            "id": "relationship--d430e17f-1203-416b-a351-d27928f8a738",
+            "id": "relationship--d151bff4-fbe4-422e-b186-516e0503d959",
             "modified": "2014-08-08T15:50:10.983Z",
+            "object_marking_refs": [
+                "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
+            ],
             "relationship_type": "attributed-to",
             "source_ref": "campaign--e5268b6e-4931-42f1-b379-87f48eb41b1e",
             "target_ref": "threat-actor--56f3f0db-b5d5-431c-ae56-c18f02caf500",

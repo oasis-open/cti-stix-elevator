@@ -2,12 +2,61 @@
     "id": "bundle--81810123-b298-40f6-a4e7-186efcd07670",
     "objects": [
         {
+            "administrative_area": "US-DC",
+            "country": "US",
+            "created": "2021-09-09T14:54:32.130Z",
+            "created_by_ref": "identity--48f09726-ea62-466d-a8cb-87ef64d28e41",
+            "id": "location--b621758f-7f70-46a0-8795-0b0e16b25b87",
+            "modified": "2021-09-09T14:54:32.130Z",
+            "object_marking_refs": [
+                "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
+            ],
+            "spec_version": "2.1",
+            "type": "location"
+        },
+        {
+            "created": "2021-09-09T14:54:32.130Z",
+            "created_by_ref": "identity--48f09726-ea62-466d-a8cb-87ef64d28e41",
+            "id": "relationship--a5bef8e8-c608-487f-89c8-b3adba6178a6",
+            "modified": "2021-09-09T14:54:32.130Z",
+            "object_marking_refs": [
+                "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
+            ],
+            "relationship_type": "located-at",
+            "source_ref": "identity--48f09726-ea62-466d-a8cb-87ef64d28e41",
+            "spec_version": "2.1",
+            "target_ref": "location--b621758f-7f70-46a0-8795-0b0e16b25b87",
+            "type": "relationship"
+        },
+        {
+            "created": "2021-09-09T14:54:32.130Z",
+            "created_by_ref": "identity--48f09726-ea62-466d-a8cb-87ef64d28e41",
+            "id": "identity--48f09726-ea62-466d-a8cb-87ef64d28e41",
+            "identity_class": "organization",
+            "labels": [
+                "ais-consent-usg"
+            ],
+            "modified": "2021-09-09T14:54:32.130Z",
+            "name": "ACME CORP",
+            "object_marking_refs": [
+                "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
+            ],
+            "sectors": [
+                "sector_1-|-sector_2-|-chemical-sector-|-dams-sector"
+            ],
+            "spec_version": "2.1",
+            "type": "identity"
+        },
+        {
             "created": "2014-08-08T15:50:10.983Z",
             "description": "\n\nTARGETED_INFORMATION:\nInformation Assets - Financial Data",
             "id": "identity--2d1c6ab3-5e4e-48ac-a32b-f0c01c2836a8",
             "identity_class": "unknown",
             "modified": "2014-08-08T15:50:10.983Z",
             "name": "Victim Targeting: Customer PII and Financial Data",
+            "object_marking_refs": [
+                "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
+            ],
             "spec_version": "2.1",
             "type": "identity"
         },
@@ -20,6 +69,9 @@
             "id": "threat-actor--56f3f0db-b5d5-431c-ae56-c18f02caf500",
             "modified": "2014-08-08T15:50:10.983Z",
             "name": "People behind the intrusion",
+            "object_marking_refs": [
+                "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
+            ],
             "sophistication": "unknown",
             "spec_version": "2.1",
             "type": "threat-actor"
@@ -40,13 +92,19 @@
             "id": "campaign--e5268b6e-4931-42f1-b379-87f48eb41b1e",
             "modified": "2014-08-08T15:50:10.983Z",
             "name": "Compromise of ATM Machines",
+            "object_marking_refs": [
+                "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
+            ],
             "spec_version": "2.1",
             "type": "campaign"
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
-            "id": "relationship--18ddeacb-fb7e-498c-89ad-22713695e028",
+            "id": "relationship--c9aa2e64-0604-4af4-935c-98c5f308a5fb",
             "modified": "2014-08-08T15:50:10.983Z",
+            "object_marking_refs": [
+                "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
+            ],
             "relationship_type": "targets",
             "source_ref": "campaign--e5268b6e-4931-42f1-b379-87f48eb41b1e",
             "spec_version": "2.1",
@@ -55,8 +113,11 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
-            "id": "relationship--a290cd87-2367-4926-a9bc-2e573188efc9",
+            "id": "relationship--c5eb86bd-d9d8-43e2-87ea-e37e1cf6d30e",
             "modified": "2014-08-08T15:50:10.983Z",
+            "object_marking_refs": [
+                "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
+            ],
             "relationship_type": "attributed-to",
             "source_ref": "incident--229ab6ba-0eb2-415b-bdf2-079e6b42f51e",
             "spec_version": "2.1",
@@ -65,8 +126,11 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
-            "id": "relationship--e8c5e230-e13d-4ac7-beaa-fa5f7d5e8633",
+            "id": "relationship--d6eb79ac-6b33-422c-bbde-4cbaa88e6d2a",
             "modified": "2014-08-08T15:50:10.983Z",
+            "object_marking_refs": [
+                "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
+            ],
             "relationship_type": "attributed-to",
             "source_ref": "incident--517cf274-038d-4ed4-a3ec-3ac18ad9db8a",
             "spec_version": "2.1",
@@ -75,8 +139,11 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
-            "id": "relationship--f98626fe-a6fa-4edf-b9af-2941e7e1ba2e",
+            "id": "relationship--7ccca7bd-35ff-443d-bd4a-9810f4de1101",
             "modified": "2014-08-08T15:50:10.983Z",
+            "object_marking_refs": [
+                "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
+            ],
             "relationship_type": "attributed-to",
             "source_ref": "incident--7d8cf96f-91cb-42d0-a1e0-bfa38ea08621",
             "spec_version": "2.1",
@@ -85,8 +152,11 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
-            "id": "relationship--6361dc86-4db0-4362-b70c-deaabbc0fb6b",
+            "id": "relationship--a6a488f9-2b35-4128-9cdb-a3e7eb8e2da2",
             "modified": "2014-08-08T15:50:10.983Z",
+            "object_marking_refs": [
+                "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
+            ],
             "relationship_type": "attributed-to",
             "source_ref": "campaign--e5268b6e-4931-42f1-b379-87f48eb41b1e",
             "spec_version": "2.1",
