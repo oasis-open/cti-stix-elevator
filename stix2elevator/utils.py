@@ -320,15 +320,17 @@ def encode_in_base64(s):
 
 
 class Environment():
-    def __init__(self, created_by_ref=None, timestamp=None, bundle_instance=None):
+    def __init__(self, created_by_ref=None, timestamp=None, bundle_instance=None, get_identity_called=False):
         self.created_by_ref = created_by_ref
         self.timestamp = timestamp
         self.bundle_instance = bundle_instance
+        self.get_identity_called = get_identity_called
 
-    def newEnv(self, created_by_ref=None, timestamp=None):
+    def newEnv(self, created_by_ref=None, timestamp=None, get_identity_called=False):
         return Environment(created_by_ref if created_by_ref else self.created_by_ref,
                            timestamp if timestamp else self.timestamp,
-                           self.bundle_instance)
+                           self.bundle_instance,
+                           get_identity_called if get_identity_called else self.get_identity_called)
 
     def add_to_env(self, created_by_ref=None, timestamp=None):
         if created_by_ref:

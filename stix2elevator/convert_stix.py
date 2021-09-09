@@ -206,12 +206,13 @@ def get_unfinished_marked_objects():
 
 
 def get_identity(identity, env, created_by_ref_source, temp_marking_id=None):
-    call_inspect = Counter(x.function for x in stack())
-    if call_inspect.get("get_identity", 1) <= 1:
+    if not env.get_identity_called:
         # On some occasions excessive recursion may add identity objects that are not needed
-        ident20 = convert_identity(identity, env, created_by_ref_source, temp_marking_id=temp_marking_id)
+        new_env = env.newEnv(get_identity_called=True)
+        ident20 = convert_identity(identity, new_env, created_by_ref_source, temp_marking_id=temp_marking_id)
         env.bundle_instance["objects"].append(ident20)
         return ident20["id"]
+
 
 
 def get_identity_ref(identity, env, created_by_ref_source, temp_marking_id=None):
@@ -219,14 +220,11 @@ def get_identity_ref(identity, env, created_by_ref_source, temp_marking_id=None)
         # fix reference later
         return identity.idref
     else:
-        call_inspect = Counter(x.function for x in stack())
-        if call_inspect.get("get_identity_ref", 1) <= 1:
-            # On some occasions excessive recursion may add identity objects that are not needed
-            ident20 = convert_identity(
-                identity, env, created_by_ref_source,
-                temp_marking_id=temp_marking_id)
-            env.bundle_instance["objects"].append(ident20)
-            return ident20["id"]
+        ident20 = convert_identity(
+            identity, env, created_by_ref_source,
+            temp_marking_id=temp_marking_id)
+        env.bundle_instance["objects"].append(ident20)
+        return ident20["id"]
 
 
 def handle_missing_properties_of_information_source(so, information_source):
