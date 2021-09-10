@@ -34,7 +34,7 @@
             "id": "identity--1f776c00-113a-4e31-9361-4a88a500b2c8",
             "identity_class": "organization",
             "labels": [
-                "ais-consent-everyone-cisa-proprietary-true"
+                "ais-consent-everyone-cisa-proprietary"
             ],
             "modified": "2020-11-23T14:26:05.000Z",
             "name": "ACME",
@@ -79,7 +79,7 @@
             "object_marking_refs": [
                 "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
             ],
-            "pattern": "[file:hashes.MD5 = 'd41d8cd98f00b204e9800998ecf8427e' AND (file:name = 'TheFileName.exe' AND file:parent_directory_ref.path = '/usr/local/bin') AND file:size = 123456]",
+            "pattern": "[file:hashes.MD5 = 'd41d8cd98f00b204e9800998ecf8427e' AND (file:name = 'TheFileName.exe' AND file:parent_directory_ref.path = '/usr/local/bin/') AND file:size = 123456]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",

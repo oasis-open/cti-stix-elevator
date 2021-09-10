@@ -50,7 +50,7 @@ The Short_Description property in *[id]* is not supported in STIX 2.x.          
 Used an extension for objective of *[id]*                                                                                      311     warn
 No extension-definition was found for STIX 1 type *[type]* in *[id]*                                                           312     warn
 Used extension property for *[property_name]* of *[id]*                                                                        313     warn
-Missing property *[property_name]* of *[id]* is ignored, because it can't be represented in an extension                       314     warn
+Property *[property_name]* of *[id]* is ignored, because it can't be represented in an extension                               314     warn
 New extension-definition id *[id]* was generated for *[type]*. *[id]*                                                          315     warn
 Custom Content *[property_name]* of *[id]* is ignored                                                                          316     warn
 Used *[object_path]* for extension property for *[property_name]*                                                              317     warn
@@ -97,6 +97,7 @@ The confidence value *[value]* is not between 0 and 100, which is required for S
 The confidence value *[value]* cannot be converted                                                                                             432     warn
 Location with free text address in *[id]* not handled yet                                                                                      433     warn
 Observed Data objects cannot refer to other external objects: *[property name]* in *[type]*"                                                   434     warn
+CIQ Address information in *[id]* is not representable in 2.0                                                                                  435     warn
 ============================================================================================================================================== ====    =====
 
 Multiple values are not supported in STIX 2.x
@@ -161,6 +162,8 @@ File path directory is empty *[file_path]*                                      
 Any artifact additional artifact info on *[id]* is not recoverable                                                                          634     warn
 *[id]* contains a observable composition, which implies it not an observation, but a pattern and needs to be contained within an indicator. 635     warn
 Address direction in *[id]* is not provided, using 'src'                                                                                    636     warn
+cisa-proprietary is only permitted when ais-consent is everyone, so it has been dropped. See*[id]*                                          637     warn
+Indicator *[id]* does not contain the information necessary to generate a pattern                                                           638     warn
 =========================================================================================================================================== ====    =====
 
 STIX Elevator conversion based on assumptions

@@ -14,6 +14,7 @@ from cybox.objects.custom_object import Custom
 from cybox.objects.domain_name_object import DomainName
 from cybox.objects.email_message_object import EmailMessage
 from cybox.objects.file_object import File
+from cybox.objects.hostname_object import Hostname
 from cybox.objects.http_session_object import HostField, HTTPSession
 from cybox.objects.image_file_object import ImageFile
 from cybox.objects.mutex_object import Mutex
@@ -248,6 +249,12 @@ class ComparisonExpressionForElevator(_ComparisonExpression):
     def get_property(self):
         return self.lhs.get_property()
 
+    def any_operand_contains_observed_expressions(self):
+        return False
+
+    def wrap_as_observed_expression(self):
+        return ObservationExpressionForElevator(self)
+
     def toSTIX21(self):
         self.lhs = self.lhs.toSTIX21()
         return self
@@ -331,7 +338,7 @@ class BooleanExpressionForElevator(_BooleanExpression):
         for args in self.operands:
             change_made_this_time, new_operand = args.replace_placeholder_with_idref_pattern(idref)
             if change_made_this_time:
-                if self.root_types and hasattr(new_operand, "root_types"):
+                if hasattr(new_operand, "root_types"):
                     if self.operator == "AND":
                         self.root_types &= new_operand.root_types
                     else:
@@ -396,6 +403,15 @@ class BooleanExpressionForElevator(_BooleanExpression):
     def get_property(self):
         return None
 
+    def any_operand_contains_observed_expressions(self):
+        for operand in self.operands:
+            if operand.any_operand_contains_observed_expressions():
+                return True
+        return False
+
+    def wrap_as_observed_expression(self):
+        return CompoundObservationExpressionForElevator(self.operator, self.operands)
+
     def toSTIX21(self):
         for args in self.operands:
             args.toSTIX21()
@@ -450,6 +466,9 @@ class IdrefPlaceHolder(object):
         error("Placeholder %s should be resolved", 203, self.idref)
         return self
 
+    def any_operand_contains_observed_expressions(self):
+        return False
+
     def contains_unconverted_term(self):
         return False
 
@@ -474,6 +493,9 @@ class UnconvertedTerm(object):
     def partition_according_to_object_path(self):
         return self
 
+    def any_operand_contains_observed_expressions(self):
+        return False
+
     def contains_unconverted_term(self):
         return True
 
@@ -490,6 +512,9 @@ class ObservationExpressionForElevator(ObservationExpression):
         return self
 
     def contains_observation_expressions(self):
+        return True
+
+    def any_operand_contains_observed_expressions(self):
         return True
 
 
@@ -541,6 +566,9 @@ class CompoundObservationExpressionForElevator(_CompoundObservationExpression):
         self.operands = new_operands
         return change_made, self
 
+    def any_operand_contains_observed_expressions(self):
+        return True
+
     def toSTIX21(self):
         for arg in self.operands:
             arg.toSTIX21()
@@ -591,6 +619,9 @@ class QualifiedObservationExpressionForElevator(QualifiedObservationExpression):
     def __init__(self, observation_expression, qualifier):
         super(QualifiedObservationExpressionForElevator, self).__init__(observation_expression, qualifier)
 
+    def any_operand_contains_observed_expressions(self):
+        return True
+
     def toSTIX21(self):
         self.observation_expression.toSTIX21()
         return self
@@ -627,6 +658,12 @@ class ParentheticalExpressionForElevator(stix2.ParentheticalExpression):
     def get_property(self):
         # TODO: there could be a similar property within the parenthetical expression
         return None
+
+    def any_operand_contains_observed_expressions(self):
+        return self.expression.any_operand_contains_observed_expressions()
+
+    def wrap_as_observed_expression(self):
+        return ObservationExpressionForElevator(self)
 
     def toSTIX21(self):
         self.expression.toSTIX21()
@@ -1534,7 +1571,7 @@ def convert_file_name_and_path_to_pattern(f):
         if index == -1:
             warn("Ambiguous file path '%s' was not processed", 816, f.file_path.value)
         else:
-            if not (f.file_path.value.endswith("/") or f.file_path.value.endswith("\\")):
+            if not f.file_path.value.endswith("/") and not f.file_path.value.endswith("\\") and not f.file_name:
                 file_name_path_expressions.append(create_term("file:name",
                                                               f.file_path.condition,
                                                               make_constant(f.file_path.value[index + 1:])))
@@ -1547,7 +1584,7 @@ def convert_file_name_and_path_to_pattern(f):
                                                               path_string_constant))
             elif f.file_name:
                 path_string_constant = make_constant(((f.device_path.value if f.device_path else "") +
-                                                      f.file_path.value[0: index]))
+                                                      f.file_path.value))
                 if path_string_constant == '':
                     warn("File path directory is empty %s", 633, f.file_path.value)
                 file_name_path_expressions.append(create_term("file:parent_directory_ref.path",
@@ -1872,6 +1909,27 @@ def convert_related_object_to_pattern(ro):
 def convert_domain_name_to_pattern(domain_name, related_objects):
     pattern = [
         create_term("domain-name:value", domain_name.value.condition, make_constant(domain_name.value.value))]
+    if related_objects:
+        for ro in related_objects:
+            if ro.relationship == "Resolved_To":
+                new_pattern = convert_related_object_to_pattern(ro)
+                if new_pattern:
+                    if isinstance(new_pattern, IdrefPlaceHolder):
+                        pattern.append(ComparisonExpressionForElevator("=",
+                                                                       "domain-name:resolves_to_refs[*]",
+                                                                       new_pattern))
+                    else:
+                        pattern.append(new_pattern.collapse_reference(
+                            ObjectPathForElevator.make_object_path("domain-name:resolves_to_refs[*]")))
+            else:
+                warn("The %s relationship involving %s is not supported in STIX 2.x", 427, ro.relationship,
+                     identifying_info(ro))
+    return create_boolean_expression("AND", pattern)
+
+
+def convert_host_name_to_pattern(host_name, related_objects):
+    pattern = [
+        create_term("domain-name:value", host_name.hostname_value.condition, make_constant(host_name.hostname_value.value))]
     if related_objects:
         for ro in related_objects:
             if ro.relationship == "Resolved_To":
@@ -2373,6 +2431,8 @@ def convert_object_to_pattern(obj, obs_id):
             expression = convert_product_to_pattern(prop)
         elif isinstance(prop, DomainName):
             expression = convert_domain_name_to_pattern(prop, related_objects)
+        elif isinstance(prop, Hostname):
+            expression = convert_host_name_to_pattern(prop, related_objects)
         elif isinstance(prop, Mutex):
             expression = convert_mutex_to_pattern(prop)
         elif isinstance(prop, NetworkConnection):
@@ -2473,6 +2533,53 @@ def handle_pattern_idref(idref):
         return IdrefPlaceHolder(idref)
 
 
+def convert_related_objects_to_pattern(obj, obs_id):
+    related_patterns = []
+    for o in obj.related_objects:
+        # relationship 'Resolved_To' handled elsewhere
+        if not o.relationship == "Resolved_To":
+            if o.id_:
+                if not id_in_pattern_cache(o.id_):
+                    new_pattern = convert_object_to_pattern(o, o.id_)
+                    warn("Relationship '%s' in %s for %s is not supported in STIX 2.x. Expression %s is ANDed",
+                         411,
+                         o.relationship, obs_id, o.id_, new_pattern)
+                    # A related_object may have neither an id or idref.
+                    # If doesn't have idref, it belongs in the new_pattern
+                    if new_pattern and not o.idref:
+                        related_patterns.append(new_pattern)
+                        if o.id_:
+                            # save pattern for later use
+                            add_to_pattern_cache(o.id_, new_pattern)
+
+            elif o.idref:
+                if id_in_pattern_cache(o.idref):
+                    new_pattern = get_pattern_from_cache(o.idref)
+                    related_patterns.append(new_pattern)
+                    warn(
+                        "Relationship '%s' in %s for %s is not supported in STIX 2.x. Expression %s is ANDed",
+                        411,
+                        o.relationship, obs_id, o.idref, new_pattern)
+                else:
+                    placeholder = IdrefPlaceHolder(o.idref)
+                    related_patterns.append(placeholder)
+                    warn(
+                        "Relationship '%s' in %s for %s is not supported in STIX 2.x. %s will be ANDed if/when resolved",
+                        412,
+                        o.relationship, obs_id, o.idref, placeholder)
+            else:
+                new_pattern = convert_object_to_pattern(o, None)
+                warn("Relationship '%s in %s for %s is not supported in STIX 2.x. Expression %s is ANDed",
+                     411,
+                     o.relationship, obs_id, "unknown", new_pattern)
+                related_patterns.append(new_pattern)
+            if o.related_objects:
+                next_level_of_relationships =  convert_related_objects_to_pattern(o, obs_id)
+                if next_level_of_relationships:
+                    related_patterns.extend(next_level_of_relationships)
+    return related_patterns
+
+
 def convert_observable_to_pattern_without_negate(obs):
     if obs.observable_composition is not None:
         pattern = convert_observable_composition_to_pattern(obs.observable_composition)
@@ -2488,45 +2595,7 @@ def convert_observable_to_pattern_without_negate(obs):
             if pattern:
                 add_to_pattern_cache(obs.id_, pattern)
             if obs.object_.related_objects:
-                related_patterns = []
-                for o in obs.object_.related_objects:
-                    # handled elsewhere
-                    if not o.relationship == "Resolved_To":
-                        if o.id_:
-                            if not id_in_pattern_cache(o.id_):
-                                new_pattern = convert_object_to_pattern(o, o.id_)
-                                warn("Relationship %s in %s for %s is not supported in STIX 2.x. Expression %s is ANDed",
-                                     411,
-                                     o.relationship, obs.id_, o.id_, new_pattern)
-                                # A related_object may have neither an id or idref.
-                                # If doesn't have idref, it belongs in the new_pattern
-                                if new_pattern and not o.idref:
-                                    related_patterns.append(new_pattern)
-                                    if o.id_:
-                                        # save pattern for later use
-                                        add_to_pattern_cache(o.id_, new_pattern)
-
-                        elif o.idref:
-                            if id_in_pattern_cache(o.idref):
-                                new_pattern = get_pattern_from_cache(o.idref)
-                                related_patterns.append(new_pattern)
-                                warn(
-                                    "Relationship %s in %s for %s is not supported in STIX 2.x. Expression %s is ANDed",
-                                    411,
-                                    o.relationship, obs.id_, o.idref, new_pattern)
-                            else:
-                                placeholder = IdrefPlaceHolder(o.idref)
-                                related_patterns.append(placeholder)
-                                warn(
-                                    "Relationship %s in %s for %s is not supported in STIX 2.x. %s will be ANDed if/when resolved",
-                                    412,
-                                    o.relationship, obs.id_, o.idref, placeholder)
-                        else:
-                            new_pattern = convert_object_to_pattern(o, None)
-                            warn("Relationship %s in %s for %s is not supported in STIX 2.x. Expression %s is ANDed",
-                                 411,
-                                 o.relationship, obs.id_, "unknown", new_pattern)
-                            related_patterns.append(new_pattern)
+                related_patterns = convert_related_objects_to_pattern(obs.object_, obs.id_)
                 if pattern:
                     if related_patterns:
                         related_patterns.append(pattern)

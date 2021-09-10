@@ -14,6 +14,7 @@ from cybox.objects.custom_object import Custom
 from cybox.objects.domain_name_object import DomainName
 from cybox.objects.email_message_object import EmailMessage
 from cybox.objects.file_object import File
+from cybox.objects.hostname_object import Hostname
 from cybox.objects.http_session_object import HTTPSession
 from cybox.objects.image_file_object import ImageFile
 from cybox.objects.mutex_object import Mutex
@@ -270,11 +271,22 @@ def convert_artifact_packaging(packaging, instance, obj1x_id):
                             property_name = "encryption_algorithm"
                         instance[property_name] = e.encryption_mechanism
                     if e.encryption_key_ref:
-                        handle_missing_string_property(instance, "encryption_key_ref",
-                                                       e.encryption_key_ref, None, is_sco=True)
+                        if not check_for_missing_policy("use-extensions"):
+                            handle_missing_string_property(instance, "encryption_key_ref",
+                                                           e.encryption_key_ref, None, is_sco=True)
+                        else:
+                            warn(
+                                "Property encryption_key_ref %s is ignored, because it can't be represented using the extensions policy",
+                                314, e.encryption_key_ref)
                     if e.encryption_mechanism_ref:
-                        handle_missing_string_property(instance, "encryption_mechanism_ref",
-                                                       e.encryption_mechanism_ref, None, is_sco=True)
+                        if not check_for_missing_policy("use-extensions"):
+                            handle_missing_string_property(instance, "encryption_mechanism_ref",
+                                                           e.encryption_mechanism_ref, None, is_sco=True)
+                        else:
+                            warn(
+                                "Property encryption_mechanism_ref %s is ignored, because it can't be represented using the extensions policy",
+                                314, e.encryption_mechanism_ref)
+
                     first = False
                 else:
                     warn("Only one encryption algorithm or key allowed in STIX 2.1 - used %s in %s",
@@ -442,16 +454,18 @@ def convert_windows_executable_file(f):
                 if s.entropy.value:
                     section_dict["entropy"] = s.entropy.value.value
                 # there could be multiple sections - need to determine how to handle that for extensions
-                if s.entropy.min and not check_for_missing_policy("use-extensions"):
-                    handle_missing_string_property(section_dict, "entropy_min", s.entropy.min, None, is_sco=True)
-                else:
-                    warn("Missing entropy min %s is ignored, because it can't be represented using the extensions policy",
-                         314)
-                if s.entropy.max and not check_for_missing_policy("use-extensions"):
-                    handle_missing_string_property(section_dict, "entropy_max", s.entropy.max, None, is_sco=True)
-                else:
-                    warn("Missing entropy max %s is ignored, because it can't be represented using the extensions policy",
-                         314)
+                if s.entropy.min:
+                    if not check_for_missing_policy("use-extensions"):
+                        handle_missing_string_property(section_dict, "entropy_min", s.entropy.min, None, is_sco=True)
+                    else:
+                        warn("Property entropy_min %s is ignored, because it can't be represented using the extensions policy",
+                             314, s.entropy.min)
+                if s.entropy.max:
+                    if not check_for_missing_policy("use-extensions"):
+                        handle_missing_string_property(section_dict, "entropy_max", s.entropy.max, None, is_sco=True)
+                    else:
+                        warn("Property entropy_max %s is ignored, because it can't be represented using the extensions policy",
+                             314, s.entropy.max)
             # need to merge hash lists - worry about duplicate keys
             if s.data_hashes:
                 section_dict["hashes"] = convert_hashes(s.data_hashes)
@@ -1108,6 +1122,19 @@ def convert_domain_name(domain_name, related_objects):
     return cybox_dm
 
 
+def convert_hostname_name(host_name, related_objects):
+    cybox_dm = create_base_sco("domain-name", host_name)
+    if host_name.hostname_value:
+        cybox_dm["value"] = str(host_name.hostname_value.value)
+    if host_name.naming_system:
+        container, extension_definition_id = determine_container_for_missing_properties("domain-name", cybox_dm)
+        handle_missing_string_property(container, "naming_system", host_name.naming_system, is_list=True, is_sco=True)
+        fill_in_extension_properties(cybox_dm, container, extension_definition_id)
+    handle_related_objects_as_embedded_relationships(cybox_dm, related_objects, "Resolved_To", "resolves_to_refs")
+    generate_sco_id_for_2_1(cybox_dm, host_name.parent.id_)
+    return cybox_dm
+
+
 def convert_mutex(mutex):
     cybox_mutex = create_base_sco("mutex", mutex)
     if mutex.name:
@@ -1423,14 +1450,14 @@ def convert_http_session(session):
                     return [cybox_traffic]
 
 
-def handle_extensions_of_icmp_extension(icmp_header, imcp_extension, cybox_traffic):
-    container, extension_definition_id = determine_container_for_missing_properties("icmp_header", imcp_extension)
-
-    if container is not None:
+def handle_missing_properties_of_icmp_extension(icmp_header, imcp_extension):
+    if icmp_header is not None:
         if icmp_header.checksum:
-            handle_missing_string_property(container, "checksum", icmp_header.checksum, None, is_sco=True)
-
-        fill_in_extension_properties(cybox_traffic, container, extension_definition_id)
+            if not check_for_missing_policy("use-extensions"):
+                handle_missing_string_property(imcp_extension, "checksum", icmp_header.checksum, None, is_sco=True)
+            else:
+                warn("Property checksum %s is ignored, because it can't be represented using the extensions policy",
+                     314, icmp_header.checksum)
 
 
 def create_icmp_extension(icmp_header, imcp_extension, cybox_traffic):
@@ -1438,7 +1465,7 @@ def create_icmp_extension(icmp_header, imcp_extension, cybox_traffic):
         imcp_extension["icmp_type_hex"] = icmp_header.type_.value
     if icmp_header.code:
         imcp_extension["icmp_code_hex"] = icmp_header.code.value
-    handle_extensions_of_icmp_extension(icmp_header, imcp_extension, cybox_traffic)
+    handle_missing_properties_of_icmp_extension(icmp_header, imcp_extension)
     return imcp_extension
 
 
@@ -1477,23 +1504,28 @@ def convert_socket_options(options):
     return socket_options
 
 
-def handle_extensions_of_network_socket(socket, socket_extension, cybox_traffic):
-    container, extension_definition_id = determine_container_for_missing_properties("network-socket", socket_extension)
+def handle_missing_properties_of_network_socket(socket, socket_extension, cybox_traffic):
+    sco_id = cybox_traffic["id"] if "id" in cybox_traffic else None
+    if socket.domain:
+        if get_option_value("spec_version") == "2.0":
+            cybox_traffic["extensions"]["socket-ext"]["protocol_family"] = socket.domain
+        else:
+            handle_missing_string_property(socket_extension, "protocol_family", socket.domain, sco_id, is_sco=True)
 
-    if container is not None:
-        sco_id = cybox_traffic["id"] if "id" in cybox_traffic else None
-        if socket.domain:
-            if get_option_value("spec_version") == "2.0":
-                cybox_traffic["extensions"]["socket-ext"]["protocol_family"] = socket.domain
-            else:
-                handle_missing_string_property(container, "protocol_family", socket.domain, sco_id, is_sco=True)
-
-        if socket.local_address:
-            handle_missing_string_property(container, "local_address", socket.local_address.ip_address, sco_id, is_sco=True)
-        if socket.remote_address:
-            handle_missing_string_property(container, "remote_address", socket.remote_address.ip_address, sco_id, is_sco=True)
-
-        fill_in_extension_properties(cybox_traffic, container, extension_definition_id)
+    if socket.local_address:
+        if not check_for_missing_policy("use-extensions"):
+            handle_missing_string_property(socket_extension, "local_address", socket.local_address.ip_address, sco_id, is_sco=True)
+        else:
+            warn(
+                "Property local_address %s is ignored, because it can't be represented using the extensions policy",
+                314, socket.local_address)
+    if socket.remote_address:
+        if not check_for_missing_policy("use-extensions"):
+            handle_missing_string_property(socket_extension, "remote_address", socket.remote_address.ip_address, sco_id, is_sco=True)
+        else:
+            warn(
+                "Property remote_address %s is ignored, because it can't be represented using the extensions policy",
+                314, socket.remote_address)
 
 
 def convert_network_socket(socket):
@@ -1519,7 +1551,7 @@ def convert_network_socket(socket):
 
     cybox_traffic["extensions"] = {"socket-ext": socket_extension}
     generate_sco_id_for_2_1(cybox_traffic, socket.parent.id_)
-    handle_extensions_of_network_socket(socket, socket_extension, cybox_traffic)
+    handle_missing_properties_of_network_socket(socket, socket_extension, cybox_traffic)
     return cybox_traffic
 
 
@@ -1699,6 +1731,8 @@ def convert_cybox_object20(obj1x):
         objs["0"] = convert_product(prop)
     elif isinstance(prop, DomainName):
         objs["0"] = convert_domain_name(prop, related_objects)
+    elif isinstance(prop, Hostname):
+        objs["0"] = convert_hostname_name(prop, related_objects)
     elif isinstance(prop, Mutex):
         objs["0"] = convert_mutex(prop)
     elif isinstance(prop, NetworkConnection):
@@ -1735,7 +1769,7 @@ def convert_cybox_object20(obj1x):
         return None
     else:
         if prop.custom_properties is not None:
-            if check_for_missing_policy("use-custom-properties") or check_for_missing_policy("use-extensions"):
+            if check_for_missing_policy("use-custom-properties"):
                 for cp in prop.custom_properties.property_:
                     handle_missing_string_property(objs["0"], cp.name, cp.value, obj1x.id_, is_sco=True)
             else:

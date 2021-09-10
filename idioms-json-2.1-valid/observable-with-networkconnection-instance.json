@@ -31,7 +31,7 @@
                     "request_version": "http/1.1"
                 }
             },
-            "id": "network-traffic--881a58c7-9698-5aec-bd5d-a710fcf0875d",
+            "id": "network-traffic--f0486945-17e8-5ec0-b96e-5814ab40b6c8",
             "protocols": [
                 "ipv4",
                 "udp",
@@ -54,7 +54,7 @@
             "object_refs": [
                 "domain-name--bedb4899-d24b-5401-bc86-8f6b4cc18ec7",
                 "ipv4-addr--96d215a5-eb23-527a-ae22-9507313d32ca",
-                "network-traffic--881a58c7-9698-5aec-bd5d-a710fcf0875d"
+                "network-traffic--f0486945-17e8-5ec0-b96e-5814ab40b6c8"
             ],
             "spec_version": "2.1",
             "type": "observed-data"

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 """The stix2-elevator is a work-in-progress. It should be used to explore how
-existing STIX 1.x would potentially be represented in STIX 2.0. Using the
+existing STIX 1.x would potentially be represented in STIX 2.x. Using the
 current version of the stix2-elevator will provide insight to issues that might
 need to be mitigated to convert your STIX 1.x content.
 """

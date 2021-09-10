@@ -1,0 +1,42 @@
+{
+    "id": "bundle--f61cd874-494d-4194-a3e6-6b487dbb6d1d",
+    "objects": [
+        {
+            "created": "2014-05-08T09:00:00.000Z",
+            "created_by_ref": "identity--94463bad-2ff1-45f0-a575-c296e4aaf572",
+            "id": "identity--94463bad-2ff1-45f0-a575-c296e4aaf572",
+            "identity_class": "organization",
+            "labels": [
+                "ais-consent-everyone"
+            ],
+            "modified": "2014-05-08T09:00:00.000Z",
+            "name": "ACME",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
+            ],
+            "sectors": [
+                "transportation"
+            ],
+            "type": "identity"
+        },
+        {
+            "created": "2015-05-15T09:00:00.000Z",
+            "description": "This is a cyber threat indicator for instances of US-China_Q14 phishing attempts.\n\nCONFIDENCE: High",
+            "id": "indicator--262f78ba-287d-4f74-933c-769a266fdd20",
+            "labels": [
+                "malicious-email"
+            ],
+            "modified": "2015-05-15T09:00:00.000Z",
+            "name": "US-China_Q14 Phishing Indicator",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
+            ],
+            "pattern": "[ipv4-addr:value = '1.1.1.4']",
+            "type": "indicator",
+            "valid_from": "2012-12-01T09:30:47.000000Z",
+            "valid_until": "2013-02-01T09:30:47.000000Z"
+        }
+    ],
+    "spec_version": "2.0",
+    "type": "bundle"
+}

@@ -1,0 +1,78 @@
+<stix:STIX_Package xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stix="http://stix.mitre.org/stix-1" xmlns:stixCommon="http://stix.mitre.org/common-1" xmlns:marking="http://data-marking.mitre.org/Marking-1" xmlns:indicator="http://stix.mitre.org/Indicator-2" xmlns:cyboxCommon="http://cybox.mitre.org/common-2" xmlns:cybox="http://cybox.mitre.org/cybox-2" xmlns:DomainNameObj="http://cybox.mitre.org/objects#DomainNameObject-1" xmlns:cyboxVocabs="http://cybox.mitre.org/default_vocabularies-2" xmlns:stixVocabs="http://stix.mitre.org/default_vocabularies-1" xmlns:example="http://example.com/" xmlns:AIS="http://www.us-cert.gov/STIXMarkingStructure#AISConsentMarking-2" xmlns:AddressObj="http://cybox.mitre.org/objects#AddressObject-2" xmlns:stix-ciq="http://stix.mitre.org/extensions/Identity#CIQIdentity3.0-1" xmlns:xpil="urn:oasis:names:tc:ciq:xpil:3" xmlns:xnl="urn:oasis:names:tc:ciq:xnl:3" xmlns:xal="urn:oasis:names:tc:ciq:xal:3" xsi:schemaLocation="http://stix.mitre.org/stix-1 ../stix_core.xsd     http://stix.mitre.org/Indicator-2 ../indicator.xsd     http://cybox.mitre.org/default_vocabularies-2 ../cybox/cybox_default_vocabularies.xsd     http://stix.mitre.org/default_vocabularies-1 ../stix_default_vocabularies.xsd     http://cybox.mitre.org/objects#DomainNameObject-1 ../cybox/objects/Domain_Name_Object.xsd" id="STIXPackage-f61cd874-494d-4194-a3e6-6b487dbb6d1d" timestamp="2014-05-08T09:00:00.000000Z" version="1.1.1">
+	<stix:STIX_Header>
+		<stix:Package_Intent xsi:type="stixVocabs:PackageIntentVocab-1.0">Indicators - Watchlist</stix:Package_Intent>
+		<stix:Title>Silver Gray Owl</stix:Title>
+		<stix:Handling>
+			<marking:Marking>
+				<marking:Controlled_Structure>//node()</marking:Controlled_Structure>
+				<marking:Marking_Structure xsi:type="AIS:AISMarkingStructure">
+					<AIS:Not_Proprietary CISA_Proprietary="false">
+						<AIS:AISConsent consent="EVERYONE"/>
+						<AIS:TLPMarking color="WHITE"/>
+					</AIS:Not_Proprietary>
+				</marking:Marking_Structure>
+				<marking:Information_Source>
+					<stixCommon:Identity xsi:type="stix-ciq:CIQIdentity3.0InstanceType">
+						<stix-ciq:Specification>
+							<xpil:PartyName>
+								<xnl:OrganisationName>
+									<xnl:NameElement>ACME</xnl:NameElement>
+								</xnl:OrganisationName>
+							</xpil:PartyName>
+							<xpil:Addresses>
+								<xpil:Address>
+									<xal:Country>
+										<xal:NameElement xal:NameCode="US" xal:NameCodeType="ISO 3166-1 alpha-2"/>
+									</xal:Country>
+									<xal:AdministrativeArea>
+										<xal:NameElement xal:NameCode="US-NY" xal:NameCodeType="ISO 3166-2"/>
+									</xal:AdministrativeArea>
+								</xpil:Address>
+							</xpil:Addresses>
+							<xpil:OrganisationInfo xpil:IndustryType="Transportation Systems Sector"/>
+						</stix-ciq:Specification>
+					</stixCommon:Identity>
+					<stixCommon:Tools>
+						<cyboxCommon:Tool>
+							<cyboxCommon:Metadata>
+								<cyboxCommon:Value>EMAIL</cyboxCommon:Value>
+							</cyboxCommon:Metadata>
+						</cyboxCommon:Tool>
+					</stixCommon:Tools>
+				</marking:Information_Source>
+			</marking:Marking>
+		</stix:Handling>
+		<stix:Information_Source>
+			<stixCommon:Time/>
+		</stix:Information_Source>
+	</stix:STIX_Header>
+	<stix:Indicators>
+		<stix:Indicator xsi:type="indicator:IndicatorType" id="Indicator-19e5d914-cc0e-478f-a523-b099a34384ds" timestamp="2015-05-15T09:00:00.000000Z">
+			<indicator:Title>US-China_Q14 Phishing Indicator</indicator:Title>
+			<indicator:Type xsi:type="stixVocabs:IndicatorTypeVocab-1.1">Malicious E-mail</indicator:Type>
+			<indicator:Description>This is a cyber threat indicator for instances of US-China_Q14 phishing attempts.</indicator:Description>
+			<indicator:Valid_Time_Position>
+				<indicator:Start_Time>2012-12-01T09:30:47Z</indicator:Start_Time>
+				<indicator:End_Time>2013-02-01T09:30:47Z</indicator:End_Time>
+			</indicator:Valid_Time_Position>
+			<indicator:Observable idref="observable-pattern-5f1dedd3-ece3-4007-94cd-7d52784c1479" id="NCCIC:obj-K">
+				<cybox:Object id="Indicator-19e5d914-cc0e-478f-a523-b099a34384it">
+					<cybox:Properties xsi:type="AddressObj:AddressObjectType" category="ipv4-addr">
+						<AddressObj:Address_Value condition="Equals" is_case_sensitive="false" apply_condition="ANY" delimiter="##STIX_EDITOR##">1.1.1.4</AddressObj:Address_Value>
+					</cybox:Properties>
+				</cybox:Object>
+			</indicator:Observable>
+			<indicator:Confidence timestamp="2012-12-01T09:30:47Z">
+				<stixCommon:Value vocab_reference="someURLtoConfidenceModelDescription.foo.com">High</stixCommon:Value>
+				<stixCommon:Source>
+					<stixCommon:Identity>
+						<stixCommon:Name>MITRE-X</stixCommon:Name>
+					</stixCommon:Identity>
+					<stixCommon:Identity>
+						<stixCommon:Name>MITRE-Y</stixCommon:Name>
+					</stixCommon:Identity>
+				</stixCommon:Source>
+			</indicator:Confidence>
+		</stix:Indicator>
+	</stix:Indicators>
+</stix:STIX_Package>

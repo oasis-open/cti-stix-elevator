@@ -169,6 +169,7 @@ In STIX 1.x, an ``id`` contained a "namespace".  This was deemed unnecessary in 
     In STIX 1.x, kill chains, with their phases, were defined using the ``KillChainType``, which is found in the ``Kill_Chains`` property of
     a ``TTP``.  These kill chains phases were refered to in the ``TTP`` and ``Indicator`` ``Kill_Chain_Phases`` properties.  In
     STIX 2.x, kill chains and their phases are not explicitly defined, but are referenced using their common names.
+
     If the Lockheed Martin Cyber Kill Chain™ is used the ``kill_chain_name`` property must be ``lockheed-martin-cyber-kill-chain``,
     according to the specification.
 
@@ -780,19 +781,20 @@ to ensure the STIX 2.x Indicator has the intended meaning.
 ..  table::
     :align: left
 
-    +-------------------------+---------------------------------------------+
-    | **STIX 1.x property**   | **STIX 2.x property**                       |
-    +=========================+=============================================+
-    | ``Alternative_ID``      |   ``external_references``                   |
-    +-------------------------+---------------------------------------------+
-    | ``Kill_Chain_Phases``   |   ``kill_chain_phases``                     |
-    +-------------------------+---------------------------------------------+
-    | ``Indicator_Expression``|   ``pattern``                               |
-    +-------------------------+---------------------------------------------+
-    | ``Test_Mechanisms``     |   ``pattern``                               |
-    +-------------------------+---------------------------------------------+
-    | ``Producer``            |   ``created_by_ref``                        |
-    +-------------------------+---------------------------------------------+
+    +-----------------------------------+------------------------------+
+    | **STIX 1.x property**             | **STIX 2.x property**        |
+    +===================================+==============================+
+    | ``Alternative_ID``                |   ``external_references``    |
+    +-----------------------------------+------------------------------+
+    | ``Kill_Chain_Phases``             |   ``kill_chain_phases``      |
+    +-----------------------------------+------------------------------+
+    | ``Observable``                    |   ``pattern``                |
+    | ``Composite_Indicator_Expression``|                              |
+    +-----------------------------------+------------------------------+
+    | ``Test_Mechanisms``               |   ``pattern``                |
+    +-----------------------------------+------------------------------+
+    | ``Producer``                      |   ``created_by_ref``         |
+    +-----------------------------------+------------------------------+
 
 **STIX 1.x Properties Mapped Using STIX 2.x Relationships**
 
@@ -890,6 +892,117 @@ The STIX 2.x sighting would be:
         "where_sighted_refs": ["identity--b67d30ff-02ac-498a-92f9-32f845f448ff"]
     }
 
+Infrastructure
+------------------
+
+**STIX 1.x Properties Mapped Directly to STIX 2.x Properties**
+
+..  table::
+    :align: left
+
+    +-------------------------+------------------------------------------------------+
+    | **STIX 1.x property**   | **STIX 2.x property**                                |
+    +=========================+======================================================+
+    | ``Type``                |   ``labels`` in 2.0, ``infrastructure_types`` in 2.1 |
+    +-------------------------+------------------------------------------------------+
+
+
+**STIX 1.x Properties Translated to STIX 2.x Properties**
+
+..  table::
+    :align: left
+
+    +----------------------------------+---------------------------------------------+
+    | **STIX 1.x property**            | **STIX 2.x property**                       |
+    +==================================+=============================================+
+    | ``ttp:Kill_Chain_Phases``        |   ``kill_chain_phases``                     |
+    +----------------------------------+---------------------------------------------+
+
+**STIX 1.x Properties Mapped Using STIX 2.x Relationships**
+
+..  table::
+    :align: left
+
+    +----------------------------------+----------------------------------------------------------------------+
+    | **STIX 1.x property**            | **STIX 2.x relationship type**                                       |
+    +==================================+======================================================================+
+    | ``Observable_Characterizations`` | ``consists_of``                                                      |
+    +----------------------------------+----------------------------------------------------------------------+
+    | ``ttp:Exploit_Targets``          | ``has`` (vulnerability, only)                                        |
+    +----------------------------------+----------------------------------------------------------------------+
+    | ``ttp:Related_TTPs``             | ``delivers`` (malware), ``related-to`` (when not used for versioning)|
+    +----------------------------------+----------------------------------------------------------------------+
+
+**STIX 1.x Properties Handled Based on the "missing policy"**
+
+*none*
+
+**STIX 1.x Properties Not Mapped**
+
+*none*
+
+**An Example**
+
+STIX 1.x in XML
+
+.. code-block:: xml
+
+    <stix:TTP xsi:type="ttp:TTPType" id="example:ttp-dd955e08-16d0-4f08-5064-50d9e7a3104d" timestamp="2014-05-08T09:00:00.000000Z">
+            <ttp:Title>Malware C2 Channel</ttp:Title>
+            <ttp:Resources>
+                <ttp:Infrastructure>
+                    <ttp:Type>Malware C2</ttp:Type>
+                    <ttp:Observable_Characterization cybox_major_version="2" cybox_minor_version="1">
+                        <cybox:Observable id="example:observable-c8c32b6e-2ea8-41c4-6446-7f5218072f27">
+                            <cybox:Object id="example:object-d7fcce87-0e98-4537-81bf-1e7ca9ad3734">
+                                <cybox:Properties xsi:type="FileObj:FileObjectType">
+                                    <FileObj:File_Name>iprip32.dll</FileObj:File_Name>
+                                </cybox:Properties>
+                            </cybox:Object>
+                        </cybox:Observable>
+                    </ttp:Observable_Characterization>
+                </ttp:Infrastructure>
+            </ttp:Resources>
+        </stix:TTP>
+    </stix:TTPs>
+
+STIX 2.1 in JSON
+
+.. code-block:: json
+
+    {
+        "id": "bundle--cc0ca596-70e6-4dac-9bef-603166d17db8",
+        "objects": [
+            {
+                "id": "file--bccadc39-2701-5c0b-8abd-fb2efd61c6be",
+                "name": "iprip32.dll",
+                "type": "file"
+            },
+            {
+                "created": "2014-05-08T09:00:00.000Z",
+                "first_seen": "2014-05-08T09:00:00.000Z",
+                "id": "infrastructure--63d4313e-437e-4ed1-a8b4-aa04d95f1c18",
+                "infrastructure_types": [
+                    "malware-c2"
+                ],
+                "modified": "2014-05-08T09:00:00.000Z",
+                "name": "Malware C2 Channel",
+                "spec_version": "2.1",
+                "type": "infrastructure"
+            },
+            {
+                "created": "2014-05-08T09:00:00.000Z",
+                "id": "relationship--3b86f807-ebdf-47db-88ac-5d13b2b8028b",
+                "modified": "2014-05-08T09:00:00.000Z",
+                "relationship_type": "consists-of",
+                "source_ref": "infrastructure--63d4313e-437e-4ed1-a8b4-aa04d95f1c18",
+                "spec_version": "2.1",
+                "target_ref": "file--bccadc39-2701-5c0b-8abd-fb2efd61c6be",
+                "type": "relationship"
+            }
+        ],
+        "type": "bundle"
+    }
 
 Location
 ----------------------

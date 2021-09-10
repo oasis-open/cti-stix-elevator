@@ -1,0 +1,56 @@
+{
+    "id": "bundle--75d3aca8-3a82-46fc-8965-c0d1958c9790",
+    "objects": [
+        {
+            "created": "2021-08-06T14:04:41.000Z",
+            "created_by_ref": "identity--46216bb5-5865-43c7-8260-7265a8e4c04f",
+            "id": "identity--46216bb5-5865-43c7-8260-7265a8e4c04f",
+            "identity_class": "organization",
+            "labels": [
+                "ais-consent-everyone"
+            ],
+            "modified": "2021-08-06T14:04:41.000Z",
+            "name": "ACME",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
+            ],
+            "sectors": [
+                "transportation"
+            ],
+            "type": "identity"
+        },
+        {
+            "created": "2021-08-06T14:04:41.000Z",
+            "created_by_ref": "identity--46216bb5-5865-43c7-8260-7265a8e4c04f",
+            "description": "Socket Address123",
+            "id": "indicator--5ea04c59-d106-4e2a-a15c-293066fc3187",
+            "labels": [
+                "ip-watchlist"
+            ],
+            "modified": "2021-08-06T14:04:41.000Z",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
+            ],
+            "type": "indicator",
+            "valid_from": "2021-08-06T14:04:41.000000Z"
+        },
+        {
+            "created": "2021-08-06T14:04:41.000Z",
+            "created_by_ref": "identity--46216bb5-5865-43c7-8260-7265a8e4c04f",
+            "description": "Socket Address",
+            "id": "indicator--f04fe75a-4717-4b2a-85ad-9adf248b1c3e",
+            "labels": [
+                "ip-watchlist"
+            ],
+            "modified": "2021-08-06T14:04:41.000Z",
+            "object_marking_refs": [
+                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
+            ],
+            "pattern": "[domain-name:value = 'mini99.wikipedia.org']",
+            "type": "indicator",
+            "valid_from": "2021-08-06T14:04:41.000000Z"
+        }
+    ],
+    "spec_version": "2.0",
+    "type": "bundle"
+}

@@ -40,7 +40,7 @@ def main():
         path = os.path.join(elevator_args.dir_, filename)
 
         if path.endswith(".xml"):
-            sys.stdout.write(path + "\n")
+            sys.stdout.write("\n" + path + "\n")
             file_and_ext = filename.split(".")
             set_option_value("file_", file_and_ext[0])
             result = elevate(path)

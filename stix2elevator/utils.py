@@ -135,6 +135,8 @@ def map_1x_type_to_20(stix1x_type):
 
 _MARKING_MAP_FROM_1_x_TO_2_x = {}
 
+_MARKING_MAP_FROM_2_x_ID_TO_2_x = {}
+
 
 def check_map_1x_markings_to_2x(stix1x_marking):
     return (stix1x_marking in _MARKING_MAP_FROM_1_x_TO_2_x or
@@ -153,11 +155,18 @@ def map_1x_markings_to_2x(stix1x_marking):
     return stix1x_marking
 
 
+def lookup_marking_reference(marking_ref):
+    if marking_ref in _MARKING_MAP_FROM_2_x_ID_TO_2_x:
+        return _MARKING_MAP_FROM_2_x_ID_TO_2_x[marking_ref]
+    return None
+
+
 def add_marking_map_entry(stix1x_marking, stix2x_marking):
     if stix1x_marking not in _MARKING_MAP_FROM_1_x_TO_2_x:
         _MARKING_MAP_FROM_1_x_TO_2_x[stix1x_marking] = stix2x_marking
         if stix1x_marking.id_:
             _MARKING_MAP_FROM_1_x_TO_2_x[stix1x_marking.id_] = stix2x_marking
+        _MARKING_MAP_FROM_2_x_ID_TO_2_x[stix2x_marking["id"]] = stix2x_marking
         return
     return map_1x_markings_to_2x(stix1x_marking)
 
@@ -165,6 +174,7 @@ def add_marking_map_entry(stix1x_marking, stix2x_marking):
 def clear_1x_markings_map():
     global _MARKING_MAP_FROM_1_x_TO_2_x
     _MARKING_MAP_FROM_1_x_TO_2_x = {}
+    _MARKING_MAP_FROM_2_x_ID_TO_2_x = {}
 
 
 def apply_ais_markings(stix2x_instance, stix2x_marking):
@@ -310,15 +320,17 @@ def encode_in_base64(s):
 
 
 class Environment():
-    def __init__(self, created_by_ref=None, timestamp=None, bundle_instance=None):
+    def __init__(self, created_by_ref=None, timestamp=None, bundle_instance=None, get_identity_called=False):
         self.created_by_ref = created_by_ref
         self.timestamp = timestamp
         self.bundle_instance = bundle_instance
+        self.get_identity_called = get_identity_called
 
-    def newEnv(self, created_by_ref=None, timestamp=None):
+    def newEnv(self, created_by_ref=None, timestamp=None, get_identity_called=False):
         return Environment(created_by_ref if created_by_ref else self.created_by_ref,
                            timestamp if timestamp else self.timestamp,
-                           self.bundle_instance)
+                           self.bundle_instance,
+                           get_identity_called if get_identity_called else self.get_identity_called)
 
     def add_to_env(self, created_by_ref=None, timestamp=None):
         if created_by_ref:

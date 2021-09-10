@@ -1,13 +1,13 @@
 {
-    "id": "bundle--81f5410e-0ada-4ff9-98ad-8996da4b55d0",
+    "id": "bundle--42ad7e43-2769-4247-8044-b2bd6f4f09d6",
     "objects": [
         {
             "created": "2020-11-23T14:26:05.000Z",
-            "created_by_ref": "identity--2bac9939-6d1e-487c-a06f-73772bc2065d",
-            "id": "identity--2bac9939-6d1e-487c-a06f-73772bc2065d",
+            "created_by_ref": "identity--23e29b58-0111-4357-b81e-75461892d683",
+            "id": "identity--23e29b58-0111-4357-b81e-75461892d683",
             "identity_class": "organization",
             "labels": [
-                "ais-consent-everyone-cisa-proprietary-true"
+                "ais-consent-everyone-cisa-proprietary"
             ],
             "modified": "2020-11-23T14:26:05.000Z",
             "name": "ACME",
@@ -22,8 +22,8 @@
         {
             "count": 1,
             "created": "2018-03-13T20:42:24.000Z",
-            "created_by_ref": "identity--2bac9939-6d1e-487c-a06f-73772bc2065d",
-            "id": "sighting--6586ce12-e552-47a6-b929-d1b599751a4e",
+            "created_by_ref": "identity--23e29b58-0111-4357-b81e-75461892d683",
+            "id": "sighting--cb3af25a-a814-4f8d-b72d-3ba86c744adc",
             "modified": "2018-03-13T20:42:24.000Z",
             "object_marking_refs": [
                 "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
@@ -34,7 +34,7 @@
         },
         {
             "created": "2020-11-23T19:26:05.255Z",
-            "created_by_ref": "identity--2bac9939-6d1e-487c-a06f-73772bc2065d",
+            "created_by_ref": "identity--23e29b58-0111-4357-b81e-75461892d683",
             "description": "This is the E-Mail indicator",
             "id": "indicator--a35dbed6-9b9c-442e-aaff-4aeeb88a43ef",
             "kill_chain_phases": [
@@ -50,7 +50,7 @@
             "object_marking_refs": [
                 "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
             ],
-            "pattern": "[file:hashes.MD5 = 'd41d8cd98f00b204e9800998ecf8427e' AND (file:name = 'TheFileName.exe' AND file:parent_directory_ref.path = '/usr/local/bin') AND file:size = 123456]",
+            "pattern": "[file:hashes.MD5 = 'd41d8cd98f00b204e9800998ecf8427e' AND (file:name = 'TheFileName.exe' AND file:parent_directory_ref.path = '/usr/local/bin/') AND file:size = 123456]",
             "type": "indicator",
             "valid_from": "2020-11-23T19:26:05.255205Z"
         }

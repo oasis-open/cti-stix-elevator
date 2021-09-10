@@ -1,0 +1,557 @@
+{
+    "id": "bundle--396ffa8f-6366-4e0d-9a3a-4566267455c2",
+    "objects": [
+        {
+            "created": "2021-05-27T22:33:19.000Z",
+            "definition": {
+                "statement": "DISCLAIMER: This report is provided \"as is\" for informational purposes only. The Department of Homeland Security (DHS) does not provide any warranties of any kind regarding any information contained within. The DHS does not endorse any commercial product or service, referenced in this bulletin or otherwise. This document is distributed as TLP:GREEN: Limited disclosure, restricted to the community. Recipients may share TLP:GREEN information with peers and partner organizations within their sector or community, but not via publicly accessible channels. Information in this category can be circulated widely within a particular community. TLP:GREEN information may not be released outside of the community. For more information on the Traffic Light Protocol, see http://www.us-cert.gov/tlp."
+            },
+            "definition_type": "statement",
+            "id": "marking-definition--d4faa8e0-f6b6-4131-a550-15d7c0a89528",
+            "object_marking_refs": [
+                "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
+            ],
+
+            "type": "marking-definition"
+        },
+        {
+            "count": 1,
+            "created": "2021-05-25T00:00:00.000Z",
+            "id": "sighting--a2920b18-d23d-431d-8c2f-0df48ba7ad3b",
+            "modified": "2021-05-25T00:00:00.000Z",
+            "object_marking_refs": [
+                "marking-definition--d4faa8e0-f6b6-4131-a550-15d7c0a89528",
+                "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
+            ],
+            "sighting_of_ref": "indicator--14f2a766-5548-4695-80f0-cbfbc8713ab8",
+            "summary": false,
+            "type": "sighting"
+        },
+        {
+            "count": 1,
+            "created": "2021-05-25T00:00:00.000Z",
+            "id": "sighting--339e0f46-536f-4f63-af88-8cfba4e2bd9c",
+            "modified": "2021-05-25T00:00:00.000Z",
+            "object_marking_refs": [
+                "marking-definition--d4faa8e0-f6b6-4131-a550-15d7c0a89528",
+                "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
+            ],
+            "sighting_of_ref": "indicator--5aa68ee7-23f3-4878-ac80-df0d282aced4",
+            "summary": false,
+            "type": "sighting"
+        },
+        {
+            "count": 1,
+            "created": "2021-05-25T00:00:00.000Z",
+            "id": "sighting--cecae819-0091-447a-96aa-80e09ad6179a",
+            "modified": "2021-05-25T00:00:00.000Z",
+            "object_marking_refs": [
+                "marking-definition--d4faa8e0-f6b6-4131-a550-15d7c0a89528",
+                "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
+            ],
+            "sighting_of_ref": "indicator--fd892230-1414-4826-be9d-90cbdc8c1263",
+            "summary": false,
+            "type": "sighting"
+        },
+        {
+            "count": 1,
+            "created": "2021-05-25T00:00:00.000Z",
+            "id": "sighting--c6e14247-aed4-46ca-ac03-f8039dbce6e3",
+            "modified": "2021-05-25T00:00:00.000Z",
+            "object_marking_refs": [
+                "marking-definition--d4faa8e0-f6b6-4131-a550-15d7c0a89528",
+                "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
+            ],
+            "sighting_of_ref": "indicator--06265258-b912-408f-988d-bec8b265456a",
+            "summary": false,
+            "type": "sighting"
+        },
+        {
+            "count": 1,
+            "created": "2021-05-25T00:00:00.000Z",
+            "id": "sighting--b885095c-25ae-459d-ad91-ea35ef4b1445",
+            "modified": "2021-05-25T00:00:00.000Z",
+            "object_marking_refs": [
+                "marking-definition--d4faa8e0-f6b6-4131-a550-15d7c0a89528",
+                "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
+            ],
+            "sighting_of_ref": "indicator--68eb0c6a-6731-4b7e-815a-cef6d13d3177",
+            "summary": false,
+            "type": "sighting"
+        },
+        {
+            "count": 1,
+            "created": "2021-05-25T00:00:00.000Z",
+            "id": "sighting--f15c5a42-4c54-44d6-804c-2e53d8dc8652",
+            "modified": "2021-05-25T00:00:00.000Z",
+            "object_marking_refs": [
+                "marking-definition--d4faa8e0-f6b6-4131-a550-15d7c0a89528",
+                "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
+            ],
+            "sighting_of_ref": "indicator--d729d79c-b10b-4b5f-b4fd-bc42033a2956",
+            "summary": false,
+            "type": "sighting"
+        },
+        {
+            "count": 1,
+            "created": "2021-05-25T00:00:00.000Z",
+            "id": "sighting--bd99b106-f7f9-4edc-acf5-d92e35bc1a30",
+            "modified": "2021-05-25T00:00:00.000Z",
+            "object_marking_refs": [
+                "marking-definition--d4faa8e0-f6b6-4131-a550-15d7c0a89528",
+                "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
+            ],
+            "sighting_of_ref": "indicator--e7ff94c9-0c61-4486-96e9-8a503bfd34ca",
+            "summary": false,
+            "type": "sighting"
+        },
+        {
+            "count": 1,
+            "created": "2021-05-25T00:00:00.000Z",
+            "id": "sighting--a02c9e41-edd1-4c88-a7af-8e60a3903567",
+            "modified": "2021-05-25T00:00:00.000Z",
+            "object_marking_refs": [
+                "marking-definition--d4faa8e0-f6b6-4131-a550-15d7c0a89528",
+                "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
+            ],
+            "sighting_of_ref": "indicator--c15f7991-ab84-4e9b-8725-7fc91feb58c1",
+            "summary": false,
+            "type": "sighting"
+        },
+        {
+            "count": 1,
+            "created": "2021-05-25T00:00:00.000Z",
+            "id": "sighting--0a519b82-9aec-42d1-8e95-4cd6f35daa5b",
+            "modified": "2021-05-25T00:00:00.000Z",
+            "object_marking_refs": [
+                "marking-definition--d4faa8e0-f6b6-4131-a550-15d7c0a89528",
+                "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
+            ],
+            "sighting_of_ref": "indicator--eabf6ac9-b9a0-4c4e-962c-4f14c3218b56",
+            "summary": false,
+            "type": "sighting"
+        },
+        {
+            "count": 1,
+            "created": "2021-05-25T00:00:00.000Z",
+            "id": "sighting--3e9e5135-a7b8-4d98-990f-275a2da374c6",
+            "modified": "2021-05-25T00:00:00.000Z",
+            "object_marking_refs": [
+                "marking-definition--d4faa8e0-f6b6-4131-a550-15d7c0a89528",
+                "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
+            ],
+            "sighting_of_ref": "indicator--fc96fcd9-fdc5-4085-b4fc-3c52cb12d772",
+            "summary": false,
+            "type": "sighting"
+        },
+        {
+            "count": 1,
+            "created": "2021-05-25T00:00:00.000Z",
+            "id": "sighting--02ea5cae-3967-4368-8b17-4ca2e01b8968",
+            "modified": "2021-05-25T00:00:00.000Z",
+            "object_marking_refs": [
+                "marking-definition--d4faa8e0-f6b6-4131-a550-15d7c0a89528",
+                "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
+            ],
+            "sighting_of_ref": "indicator--8b99cc2f-b3cc-4e99-b698-dcf18b076fe0",
+            "summary": false,
+            "type": "sighting"
+        },
+        {
+            "count": 1,
+            "created": "2021-05-25T00:00:00.000Z",
+            "id": "sighting--1ae3aa85-b153-4725-89ca-17a726497b9b",
+            "modified": "2021-05-25T00:00:00.000Z",
+            "object_marking_refs": [
+                "marking-definition--d4faa8e0-f6b6-4131-a550-15d7c0a89528",
+                "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
+            ],
+            "sighting_of_ref": "indicator--857371ca-f3da-4f7b-b300-6f850a3456ab",
+            "summary": false,
+            "type": "sighting"
+        },
+        {
+            "count": 1,
+            "created": "2021-05-25T00:00:00.000Z",
+            "id": "sighting--aa304d82-42d3-4b67-badc-3e94f14d684d",
+            "modified": "2021-05-25T00:00:00.000Z",
+            "object_marking_refs": [
+                "marking-definition--d4faa8e0-f6b6-4131-a550-15d7c0a89528",
+                "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
+            ],
+            "sighting_of_ref": "indicator--ec423a5b-86f6-4c23-bc39-0b4bce44b82c",
+            "summary": false,
+            "type": "sighting"
+        },
+        {
+            "count": 1,
+            "created": "2021-05-25T00:00:00.000Z",
+            "id": "sighting--b203233c-4f0b-4f0d-9348-5344dc8a3de4",
+            "modified": "2021-05-25T00:00:00.000Z",
+            "object_marking_refs": [
+                "marking-definition--d4faa8e0-f6b6-4131-a550-15d7c0a89528",
+                "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
+            ],
+            "sighting_of_ref": "indicator--d603f077-5302-4636-99e1-28a82edef51d",
+            "summary": false,
+            "type": "sighting"
+        },
+        {
+            "count": 1,
+            "created": "2021-05-25T00:00:00.000Z",
+            "id": "sighting--eae8243f-70f7-456b-8855-8d5e1f0bf29c",
+            "modified": "2021-05-25T00:00:00.000Z",
+            "object_marking_refs": [
+                "marking-definition--d4faa8e0-f6b6-4131-a550-15d7c0a89528",
+                "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
+            ],
+            "sighting_of_ref": "indicator--74880055-c1d1-4a44-bcd0-659e82f94a57",
+            "summary": false,
+            "type": "sighting"
+        },
+        {
+            "count": 1,
+            "created": "2018-02-01T00:00:00.000Z",
+            "id": "sighting--6c958cf3-4cb7-4241-a695-0f701e44b889",
+            "modified": "2018-02-01T00:00:00.000Z",
+            "object_marking_refs": [
+                "marking-definition--d4faa8e0-f6b6-4131-a550-15d7c0a89528",
+                "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
+            ],
+            "sighting_of_ref": "indicator--f90eb6f1-dd9d-4d39-a7bc-d4c6bf8cda93",
+            "summary": false,
+            "type": "sighting"
+        },
+        {
+            "count": 1,
+            "created": "2018-10-01T00:00:00.000Z",
+            "id": "sighting--80dad3d9-2faf-4d59-b66f-4297a51d8dce",
+            "modified": "2018-10-01T00:00:00.000Z",
+            "object_marking_refs": [
+                "marking-definition--d4faa8e0-f6b6-4131-a550-15d7c0a89528",
+                "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
+            ],
+            "sighting_of_ref": "indicator--fe9abb4c-4202-42a0-b9d3-afee67798641",
+            "summary": false,
+            "type": "sighting"
+        },
+        {
+            "created": "2021-05-27T22:33:19.988Z",
+            "id": "attack-pattern--774c31dc-4729-4f66-aea8-064ad11982ba",
+            "modified": "2021-05-27T22:33:19.988Z",
+            "name": "T1566.002 - Phishing: Spearphishing Link - Initial Access",
+            "object_marking_refs": [
+                "marking-definition--d4faa8e0-f6b6-4131-a550-15d7c0a89528",
+                "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
+            ],
+            "type": "attack-pattern"
+        },
+        {
+            "created": "2021-05-27T22:33:19.989Z",
+            "id": "attack-pattern--e9089628-c01b-4189-8f2e-d610ec921210",
+            "modified": "2021-05-27T22:33:19.989Z",
+            "name": "T1204.001 - User Execution: Malicious Link - Execution",
+            "object_marking_refs": [
+                "marking-definition--d4faa8e0-f6b6-4131-a550-15d7c0a89528",
+                "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
+            ],
+            "type": "attack-pattern"
+        },
+        {
+            "created": "2021-05-27T22:33:19.989Z",
+            "id": "attack-pattern--ee03ed09-cfbf-4529-81f2-819ed1564ef6",
+            "modified": "2021-05-27T22:33:19.989Z",
+            "name": "T1027.002 - Obfuscated Files or Information: Software Packing - Defense Evasion",
+            "object_marking_refs": [
+                "marking-definition--d4faa8e0-f6b6-4131-a550-15d7c0a89528",
+                "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
+            ],
+            "type": "attack-pattern"
+        },
+        {
+            "created": "2021-05-27T22:33:19.989Z",
+            "id": "attack-pattern--82499dd0-5dfb-4fbd-b480-8df8542c9a39",
+            "modified": "2021-05-27T22:33:19.989Z",
+            "name": "T1071.001 - Application Layer Protocol: Web Protocols - Command and Control",
+            "object_marking_refs": [
+                "marking-definition--d4faa8e0-f6b6-4131-a550-15d7c0a89528",
+                "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
+            ],
+            "type": "attack-pattern"
+        },
+        {
+            "created": "2021-05-27T22:33:19.990Z",
+            "id": "indicator--14f2a766-5548-4695-80f0-cbfbc8713ab8",
+            "labels": [
+                "file-hash-watchlist"
+            ],
+            "modified": "2021-05-27T22:33:19.990Z",
+            "name": "Malicious File Indicator",
+            "object_marking_refs": [
+                "marking-definition--d4faa8e0-f6b6-4131-a550-15d7c0a89528",
+                "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
+            ],
+            "pattern": "[(file:hashes.MD5 = 'EBE2F8DF39B4A94FB408580A728D351F' OR file:hashes.'SHA-1' = '251FA6CAFD4F4D26FE97630834AA7D3F5543F886' OR file:hashes.'SHA-256' = 'D035D394A82AE1E44B25E273F99EAE8E2369DA828D6B6FDB95076FD3EB5DE142') AND file:name = 'd']",
+            "type": "indicator",
+            "valid_from": "2021-05-27T22:33:19.990906Z"
+        },
+        {
+            "created": "2021-05-27T22:33:19.992Z",
+            "id": "indicator--5aa68ee7-23f3-4878-ac80-df0d282aced4",
+            "labels": [
+                "benign"
+            ],
+            "modified": "2021-05-27T22:33:19.992Z",
+            "name": "Malicious URL Indicator",
+            "object_marking_refs": [
+                "marking-definition--d4faa8e0-f6b6-4131-a550-15d7c0a89528",
+                "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
+            ],
+            "pattern": "[url:value = 'https://r20.rs6.net/tn.jsp?f=']",
+            "type": "indicator",
+            "valid_from": "2021-05-27T22:33:19.992959Z"
+        },
+        {
+            "created": "2021-05-27T22:33:19.993Z",
+            "id": "indicator--fd892230-1414-4826-be9d-90cbdc8c1263",
+            "labels": [
+                "url-watchlist"
+            ],
+            "modified": "2021-05-27T22:33:19.993Z",
+            "name": "Malicious URL Indicator",
+            "object_marking_refs": [
+                "marking-definition--d4faa8e0-f6b6-4131-a550-15d7c0a89528",
+                "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
+            ],
+            "pattern": "[url:value = 'https://usaid.theyardservice.com/d/']",
+            "type": "indicator",
+            "valid_from": "2021-05-27T22:33:19.993350Z"
+        },
+        {
+            "created": "2021-05-27T22:33:19.993Z",
+            "id": "indicator--06265258-b912-408f-988d-bec8b265456a",
+             "labels": [
+                "unknown"
+            ],
+            "modified": "2021-05-27T22:33:19.993Z",
+            "name": "Malicious FQDN Indicator",
+            "object_marking_refs": [
+                "marking-definition--d4faa8e0-f6b6-4131-a550-15d7c0a89528",
+                "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
+            ],
+            "pattern": "[domain-name:value = 'usaid.theyardservice.com']",
+            "type": "indicator",
+            "valid_from": "2021-05-27T22:33:19.993729Z"
+        },
+        {
+            "created": "2021-05-27T22:33:19.994Z",
+            "id": "indicator--68eb0c6a-6731-4b7e-815a-cef6d13d3177",
+             "labels": [
+                "unknown"
+            ],
+            "modified": "2021-05-27T22:33:19.994Z",
+            "name": "Malicious FQDN Indicator",
+            "object_marking_refs": [
+                "marking-definition--d4faa8e0-f6b6-4131-a550-15d7c0a89528",
+                "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
+            ],
+            "pattern": "[domain-name:value = 'worldhomeoutlet.com']",
+            "type": "indicator",
+            "valid_from": "2021-05-27T22:33:19.994073Z"
+        },
+        {
+            "created": "2021-05-27T22:33:19.994Z",
+            "id": "indicator--d729d79c-b10b-4b5f-b4fd-bc42033a2956",
+             "labels": [
+                "unknown"
+            ],
+            "modified": "2021-05-27T22:33:19.994Z",
+            "name": "Malicious FQDN Indicator",
+            "object_marking_refs": [
+                "marking-definition--d4faa8e0-f6b6-4131-a550-15d7c0a89528",
+                "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
+            ],
+            "pattern": "[domain-name:value = 'static.theyardservice.com']",
+            "type": "indicator",
+            "valid_from": "2021-05-27T22:33:19.994390Z"
+        },
+        {
+            "created": "2021-05-27T22:33:19.994Z",
+            "id": "indicator--e7ff94c9-0c61-4486-96e9-8a503bfd34ca",
+             "labels": [
+                "unknown"
+            ],
+            "modified": "2021-05-27T22:33:19.994Z",
+            "name": "Malicious FQDN Indicator",
+            "object_marking_refs": [
+                "marking-definition--d4faa8e0-f6b6-4131-a550-15d7c0a89528",
+                "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
+            ],
+            "pattern": "[domain-name:value = 'cdn.theyardservice.com']",
+            "type": "indicator",
+            "valid_from": "2021-05-27T22:33:19.994752Z"
+        },
+        {
+            "created": "2021-05-27T22:33:19.995Z",
+            "id": "indicator--c15f7991-ab84-4e9b-8725-7fc91feb58c1",
+             "labels": [
+                "unknown"
+            ],
+            "modified": "2021-05-27T22:33:19.995Z",
+            "name": "Malicious FQDN Indicator",
+            "object_marking_refs": [
+                "marking-definition--d4faa8e0-f6b6-4131-a550-15d7c0a89528",
+                "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
+            ],
+            "pattern": "[domain-name:value = 'theyardservice.com']",
+            "type": "indicator",
+            "valid_from": "2021-05-27T22:33:19.995069Z"
+        },
+        {
+            "created": "2021-05-27T22:33:19.995Z",
+            "id": "indicator--eabf6ac9-b9a0-4c4e-962c-4f14c3218b56",
+             "labels": [
+                "unknown"
+            ],
+            "modified": "2021-05-27T22:33:19.995Z",
+            "name": "Malicious FQDN Indicator",
+            "object_marking_refs": [
+                "marking-definition--d4faa8e0-f6b6-4131-a550-15d7c0a89528",
+                "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
+            ],
+            "pattern": "[domain-name:value = 'dataplane.theyardservice.com']",
+            "type": "indicator",
+            "valid_from": "2021-05-27T22:33:19.995385Z"
+        },
+        {
+            "created": "2021-05-27T22:33:19.995Z",
+            "id": "indicator--fc96fcd9-fdc5-4085-b4fc-3c52cb12d772",
+            "labels": [
+                "file-hash-watchlist"
+            ],
+            "modified": "2021-05-27T22:33:19.995Z",
+            "name": "Malicious File Indicator",
+            "object_marking_refs": [
+                "marking-definition--d4faa8e0-f6b6-4131-a550-15d7c0a89528",
+                "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
+            ],
+            "pattern": "[(file:hashes.MD5 = '29E2EF8EF5C6FF95E98BFF095E63DC05' OR file:hashes.'SHA-1' = 'BF7B36C521E52093360A4DF0DD131703B7B3D648' OR file:hashes.'SHA-256' = '94786066A64C0EB260A28A2959FCD31D63D175ADE8B05AE682D3F6F9B2A5A916') AND file:name = 'ICA-declass.iso']",
+            "type": "indicator",
+            "valid_from": "2021-05-27T22:33:19.995769Z"
+        },
+        {
+            "created": "2021-05-27T22:33:19.996Z",
+            "id": "indicator--8b99cc2f-b3cc-4e99-b698-dcf18b076fe0",
+            "labels": [
+                "file-hash-watchlist"
+            ],
+            "modified": "2021-05-27T22:33:19.996Z",
+            "name": "Malicious File Indicator",
+            "object_marking_refs": [
+                "marking-definition--d4faa8e0-f6b6-4131-a550-15d7c0a89528",
+                "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
+            ],
+            "pattern": "[file:hashes.MD5 = '7EDF943ED251FA480C5CA5ABB2446C75' OR file:hashes.'SHA-1' = '1380D7C44EFDE64F471AE70563372EFE18F43026' OR file:hashes.'SHA-256' = 'EE44C0692FD2AB2F01D17CA4B58CA6C7F79388CBC681F885BB17EC946514088C']",
+            "type": "indicator",
+            "valid_from": "2021-05-27T22:33:19.996340Z"
+        },
+        {
+            "created": "2021-05-27T22:33:19.996Z",
+            "id": "indicator--857371ca-f3da-4f7b-b300-6f850a3456ab",
+            "labels": [
+                "file-hash-watchlist"
+            ],
+            "modified": "2021-05-27T22:33:19.996Z",
+            "name": "Malicious File Indicator",
+            "object_marking_refs": [
+                "marking-definition--d4faa8e0-f6b6-4131-a550-15d7c0a89528",
+                "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
+            ],
+            "pattern": "[(file:hashes.MD5 = '1C3B8AE594CB4CE24C2680B47CEBF808' OR file:hashes.'SHA-1' = '1FB12E923BDB71A1F34E98576B780AB2840BA22E' OR file:hashes.'SHA-256' = 'EE42DDACBD202008BCC1312E548E1D9AC670DD3D86C999606A3A01D464A2A330') AND file:name = 'DOCUMENT.DLL']",
+            "type": "indicator",
+            "valid_from": "2021-05-27T22:33:19.996873Z"
+        },
+        {
+            "created": "2021-05-27T22:33:19.997Z",
+            "id": "indicator--ec423a5b-86f6-4c23-bc39-0b4bce44b82c",
+            "labels": [
+                "file-hash-watchlist"
+            ],
+            "modified": "2021-05-27T22:33:19.997Z",
+            "name": "Malicious File Indicator",
+            "object_marking_refs": [
+                "marking-definition--d4faa8e0-f6b6-4131-a550-15d7c0a89528",
+                "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
+            ],
+            "pattern": "[(file:hashes.MD5 = 'CBC1DC536CD6F4FB9648E229E5D23361' OR file:hashes.'SHA-1' = 'C1D5443F6F57F89BEF76EB9E7C070F911954553B' OR file:hashes.'SHA-256' = '2523F94BD4FBA4AF76F4411FE61084A7E7D80DEC163C9CCBA9226C80B8B31252') AND file:name = 'ICA-declass.iso']",
+            "type": "indicator",
+            "valid_from": "2021-05-27T22:33:19.997392Z"
+        },
+        {
+            "created": "2021-05-27T22:33:19.997Z",
+            "id": "indicator--d603f077-5302-4636-99e1-28a82edef51d",
+            "labels": [
+                "file-hash-watchlist"
+            ],
+            "modified": "2021-05-27T22:33:19.997Z",
+            "name": "Malicious File Indicator",
+            "object_marking_refs": [
+                "marking-definition--d4faa8e0-f6b6-4131-a550-15d7c0a89528",
+                "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
+            ],
+            "pattern": "[(file:hashes.MD5 = 'DCFD60883C73C3D92FCEB6AC910D5B80' OR file:hashes.'SHA-1' = '1CB1C2CD9F59D4E83EB3C950473A772406EC6F1A' OR file:hashes.'SHA-256' = '48B5FB3FA3EA67C2BC0086C41EC755C39D748A7100D71B81F618E82BF1C479F0') AND file:name = 'Reports.lnk']",
+            "type": "indicator",
+            "valid_from": "2021-05-27T22:33:19.997940Z"
+        },
+        {
+            "created": "2021-05-27T22:33:19.998Z",
+            "id": "indicator--74880055-c1d1-4a44-bcd0-659e82f94a57",
+            "labels": [
+                "file-hash-watchlist"
+            ],
+            "modified": "2021-05-27T22:33:19.998Z",
+            "name": "Malicious File Indicator",
+            "object_marking_refs": [
+                "marking-definition--d4faa8e0-f6b6-4131-a550-15d7c0a89528",
+                "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
+            ],
+            "pattern": "[(file:hashes.MD5 = 'B40B30329489D342B2AA5EF8309AD388' OR file:hashes.'SHA-1' = '738C20A2CC825AE51B2A2F786248F850C8BAB6F5' OR file:hashes.'SHA-256' = '7D34F25AD8099BD069C5A04799299F17D127A3866B77EE34FFB59CFD36E29673') AND file:name = 'ICA-declass.pdf']",
+            "type": "indicator",
+            "valid_from": "2021-05-27T22:33:19.998460Z"
+        },
+        {
+            "created": "2021-05-27T22:33:19.998Z",
+            "id": "indicator--f90eb6f1-dd9d-4d39-a7bc-d4c6bf8cda93",
+             "labels": [
+                "unknown"
+            ],
+            "modified": "2021-05-27T22:33:19.998Z",
+            "name": "Malicious IPv4 Indicator",
+            "object_marking_refs": [
+                "marking-definition--d4faa8e0-f6b6-4131-a550-15d7c0a89528",
+                "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
+            ],
+            "pattern": "[ipv4-addr:value = '192.99.221.77']",
+            "type": "indicator",
+            "valid_from": "2021-05-27T22:33:19.998998Z"
+        },
+        {
+            "created": "2021-05-27T22:33:19.999Z",
+            "id": "indicator--fe9abb4c-4202-42a0-b9d3-afee67798641",
+             "labels": [
+                "unknown"
+            ],
+            "modified": "2021-05-27T22:33:19.999Z",
+            "name": "Malicious IPv4 Indicator",
+            "object_marking_refs": [
+                "marking-definition--d4faa8e0-f6b6-4131-a550-15d7c0a89528",
+                "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
+            ],
+            "pattern": "[ipv4-addr:value = '83.171.237.173']",
+            "type": "indicator",
+            "valid_from": "2021-05-27T22:33:19.999348Z"
+        }
+    ],
+    "spec_version": "2.0",
+    "type": "bundle"
+}

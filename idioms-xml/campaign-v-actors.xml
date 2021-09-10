@@ -4,8 +4,16 @@
     xmlns:ttp="http://stix.mitre.org/TTP-1"
     xmlns:ta="http://stix.mitre.org/ThreatActor-1"
     xmlns:stixCommon="http://stix.mitre.org/common-1"
+    xmlns:marking="http://data-marking.mitre.org/Marking-1"
     xmlns:stixVocabs="http://stix.mitre.org/default_vocabularies-1"
     xmlns:stix="http://stix.mitre.org/stix-1"
+    xmlns:AIS="http://www.us-cert.gov/STIXMarkingStructure#AISConsentMarking-2"
+    xmlns:stix-ciq="http://stix.mitre.org/extensions/Identity#CIQIdentity3.0-1"
+    xmlns:xpil="urn:oasis:names:tc:ciq:xpil:3"
+    xmlns:ct="urn:oasis:names:tc:ciq:ct:3"
+	xmlns:xal="urn:oasis:names:tc:ciq:xal:3"
+	xmlns:xnal="urn:oasis:names:tc:ciq:xnal:3"
+	xmlns:xnl="urn:oasis:names:tc:ciq:xnl:3"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="
 
@@ -16,6 +24,44 @@
     http://stix.mitre.org/default_vocabularies-1 http://stix.mitre.org/XMLSchema/default_vocabularies/1.2.0/stix_default_vocabularies.xsd
     http://stix.mitre.org/stix-1 http://stix.mitre.org/XMLSchema/core/1.2/stix_core.xsd" id="example:Package-81810123-b298-40f6-a4e7-186efcd07670" version="1.2">
 
+    	<stix:STIX_Header>
+		<stix:Title>regression-test-08-Elevator02</stix:Title>
+		<stix:Package_Intent xsi:type="stixVocabs:PackageIntentVocab-1.0">Indicators</stix:Package_Intent>
+		<stix:Package_Intent xsi:type="stixVocabs:PackageIntentVocab-1.0">Threat Report</stix:Package_Intent>
+		<stix:Handling>
+			<marking:Marking>
+				<marking:Controlled_Structure>//node() | //@*</marking:Controlled_Structure>
+				<marking:Marking_Structure xsi:type="AIS:AISMarkingStructure">
+					<AIS:Not_Proprietary CISA_Proprietary="false">
+						<AIS:AISConsent consent="USG"></AIS:AISConsent>
+						<AIS:TLPMarking color="GREEN"></AIS:TLPMarking>
+					</AIS:Not_Proprietary>
+				</marking:Marking_Structure>
+				<marking:Information_Source>
+					<stixCommon:Identity xsi:type="stix-ciq:CIQIdentity3.0InstanceType">
+						<stix-ciq:Specification>
+							<xpil:PartyName>
+								<xnl:OrganisationName>
+									<xnl:NameElement>ACME CORP</xnl:NameElement>
+								</xnl:OrganisationName>
+							</xpil:PartyName>
+							<xpil:Addresses>
+								<xpil:Address>
+									<xal:Country>
+										<xal:NameElement xal:NameCode="US" xal:NameCodeType="ISO 3166-1 alpha-2"></xal:NameElement>
+									</xal:Country>
+									<xal:AdministrativeArea>
+										<xal:NameElement xal:NameCode="US-DC" xal:NameCodeType="ISO 3166-2"></xal:NameElement>
+									</xal:AdministrativeArea>
+								</xpil:Address>
+							</xpil:Addresses>
+							<xpil:OrganisationInfo xpil:IndustryType="SECTOR_1 | SECTOR_2 | Chemical Sector | Dams Sector" ></xpil:OrganisationInfo>
+						</stix-ciq:Specification>
+					</stixCommon:Identity>
+				</marking:Information_Source>
+			</marking:Marking>
+		</stix:Handling>
+	</stix:STIX_Header>
     <stix:Campaigns>
         <stix:Campaign id="example:Campaign-e5268b6e-4931-42f1-b379-87f48eb41b1e" timestamp="2014-08-08T15:50:10.983728+00:00" xsi:type='campaign:CampaignType' version="1.2">
             <campaign:Title>Compromise of ATM Machines</campaign:Title>

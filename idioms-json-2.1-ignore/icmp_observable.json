@@ -8,7 +8,7 @@
                     "icmp_type_hex": "08"
                 }
             },
-            "id": "network-traffic--b9b9bab6-cf46-53c0-b5ea-2231ef21754c",
+            "id": "network-traffic--ba91908d-c347-5d7d-8446-5e1c6f0a4d8d",
             "protocols": [
                 "icmp"
             ],
@@ -22,7 +22,7 @@
             "modified": "2021-04-27T21:09:06.118Z",
             "number_observed": 1,
             "object_refs": [
-                "network-traffic--b9b9bab6-cf46-53c0-b5ea-2231ef21754c"
+                "network-traffic--ba91908d-c347-5d7d-8446-5e1c6f0a4d8d"
             ],
             "spec_version": "2.1",
             "type": "observed-data"
