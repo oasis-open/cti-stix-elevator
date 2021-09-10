@@ -38,12 +38,16 @@ def remove_custom_name(name, separator="_"):
 
 def add_string_property_to_description(sdo_instance, property_name, property_value, is_list=False):
     if is_list:
+        if property_name.endswith("_refs"):
+            property_name = property_name.replace("_refs", "s")
         sdo_instance["description"] += "\n\n" + property_name.upper() + ":\n"
         property_values = []
         for v in property_value:
             property_values.append(str(v))
         sdo_instance["description"] += ",\n".join(property_values)
     else:
+        if property_name.endswith("_ref"):
+            property_name = property_name.replace("_ref", "")
         sdo_instance["description"] += "\n\n" + property_name.upper() + ":\n\t" + str(property_value)
     warn("Appended %s to description of %s", 302, property_name, sdo_instance["id"])
 

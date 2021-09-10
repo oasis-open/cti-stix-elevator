@@ -1302,6 +1302,7 @@ def convert_identity(identity, env, created_by_ref_source, parent_id=None, temp_
 
 
 def handle_missing_identity_ref_properties(container, instance2x, sources, env, property_name):
+    # TODO: Make this work for both ref and refs
     identities = list()
     for s in sources:
         if s.identity:
@@ -1329,23 +1330,23 @@ def handle_missing_properties_of_incident(incident_instance, incident, env):
             add_confidence_to_object(incident_instance, incident.confidence)
 
         if incident.contacts is not None:
-            handle_missing_identity_ref_properties(container, incident_instance, incident.contacts, env, "contacts")
+            handle_missing_identity_ref_properties(container, incident_instance, incident.contacts, env, "contact_refs")
 
         if incident.reporter is not None:
             reporter = incident.reporter
             if reporter.identity:
                 id2x = convert_identity(reporter.identity, env, "from_env")
                 env.bundle_instance["objects"].append(id2x)
-                handle_missing_string_property(container, "reporter", id2x["id"], incident_instance["id"])
+                handle_missing_string_property(container, "reporter_ref", id2x["id"], incident_instance["id"])
 
         if incident.responders is not None:
-            handle_missing_identity_ref_properties(container, incident_instance, incident.responders, env, "responders")
+            handle_missing_identity_ref_properties(container, incident_instance, incident.responders, env, "responder_refs")
 
         if incident.coordinators is not None:
-            handle_missing_identity_ref_properties(container, incident_instance, incident.coordinators, env, "coordinators")
+            handle_missing_identity_ref_properties(container, incident_instance, incident.coordinators, env, "coordinator_refs")
 
         if incident.victims is not None:
-            handle_missing_identity_ref_properties(container, incident_instance, incident.victims, env, "victims")
+            handle_missing_identity_ref_properties(container, incident_instance, incident.victims, env, "victim_refs")
 
         if incident.affected_assets is not None:
             # FIXME: add affected_assets to description

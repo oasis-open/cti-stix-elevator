@@ -1,6 +1,22 @@
 CHANGELOG
 =========
 
+4.0.2 - 2021-09-10
+
+* Changes
+
+    - Avoid generating nested observation expressions, which are invalid
+    - Handle cybox Homename object as domain-name object in STIX 2.x
+    - Make sure identity created_by_ref property is set correctly
+    - Correcly convert file object properties in patterns
+    - Handle nested related objects in STIX 1.x Observables
+    - Handle Information Source in a STIX 1.x package data marking
+    - Better way to avoid infinite recursion when called get_identity
+    - Add suffix 'ref(s)'' to property names for custom/extension of Incident
+    - AIS data markings:
+        - Insure TTP generated STIX 2.x objects and relationship objects have the correct AIS data markings
+        - Change labels to handle CISA-PROPRIETARY correctly
+
 4.0.1 - 2021-06-10
 
 Default spec_version when invoking the elevator programmatically (i.e., not from the command line)
