@@ -1,7 +1,5 @@
 # Standard Library
-from collections import Counter
 from datetime import datetime
-from inspect import stack
 
 # external
 from cybox.core import Observable
@@ -47,7 +45,8 @@ from stix2elevator.convert_cybox import (
     resolve_object_references20, resolve_object_references21
 )
 from stix2elevator.convert_pattern import (
-    BooleanExpressionForElevator, ComparisonExpressionForElevator, CompoundObservationExpressionForElevator,
+    BooleanExpressionForElevator, ComparisonExpressionForElevator,
+    CompoundObservationExpressionForElevator,
     ParentheticalExpressionForElevator, UnconvertedTerm,
     add_to_observable_mappings, add_to_pattern_cache,
     convert_indicator_to_pattern, convert_observable_list_to_pattern,
@@ -72,9 +71,9 @@ from stix2elevator.utils import (
     add_label, add_marking_map_entry, apply_ais_markings,
     check_map_1x_markings_to_2x, convert_controlled_vocabs_to_open_vocabs,
     convert_timestamp_of_stix_object, convert_timestamp_to_string,
-    identifying_info, iterpath, lookup_marking_reference, map_1x_markings_to_2x, map_vocabs_to_label,
-    operation_on_path, set_tlp_reference,
-    strftime_with_appropriate_fractional_seconds
+    identifying_info, iterpath, lookup_marking_reference,
+    map_1x_markings_to_2x, map_vocabs_to_label, operation_on_path,
+    set_tlp_reference, strftime_with_appropriate_fractional_seconds
 )
 from stix2elevator.vocab_mappings import (
     ATTACK_MOTIVATION_MAP, COA_LABEL_MAP, INCIDENT_LABEL_MAP,
@@ -212,7 +211,6 @@ def get_identity(identity, env, created_by_ref_source, temp_marking_id=None):
         ident20 = convert_identity(identity, new_env, created_by_ref_source, temp_marking_id=temp_marking_id)
         env.bundle_instance["objects"].append(ident20)
         return ident20["id"]
-
 
 
 def get_identity_ref(identity, env, created_by_ref_source, temp_marking_id=None):
@@ -566,7 +564,6 @@ def finish_markings_for_relationship(instance, marking_refs, temp_marking_id=Non
             object_marking_refs.append(marking_ref)
     if object_marking_refs:
         instance["object_marking_refs"] = object_marking_refs
-
 
 
 def create_relationship(source_ref, target_ref, env, verb, rel_obj=None, marking_refs=None):
@@ -1224,7 +1221,6 @@ def convert_ciq_addresses2_1(ciq_info_addresses, identity_instance, env, created
             info("Included parent markings for Relationship %s and Location %s", 729, relationship["id"], location["id"])
             env.bundle_instance["objects"].append(relationship)
             add_unfinished_marked_object(location)
-
 
 
 def handle_missing_properties_of_ciq_instance(identity_instance, ciq):
@@ -2412,9 +2408,9 @@ def finalize_bundle(env):
                     elif isinstance(final_pattern, ParentheticalExpressionForElevator):
                         result = final_pattern.expression.partition_according_to_object_path()
                         if (isinstance(result, BooleanExpressionForElevator) and
-                                  result.operator == "OR" and
-                                     result.any_operand_contains_observed_expressions()):
-                              result = maybe_split_parenthetical_ors_into_compound_observation_expressions(result)
+                            result.operator == "OR" and
+                                result.any_operand_contains_observed_expressions()):
+                            result = maybe_split_parenthetical_ors_into_compound_observation_expressions(result)
                         if isinstance(result, CompoundObservationExpressionForElevator):
                             ind["pattern"] = "%s" % result
                         else:

@@ -173,6 +173,7 @@ def add_marking_map_entry(stix1x_marking, stix2x_marking):
 
 def clear_1x_markings_map():
     global _MARKING_MAP_FROM_1_x_TO_2_x
+    global _MARKING_MAP_FROM_2_x_ID_TO_2_x
     _MARKING_MAP_FROM_1_x_TO_2_x = {}
     _MARKING_MAP_FROM_2_x_ID_TO_2_x = {}
 

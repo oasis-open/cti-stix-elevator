@@ -2574,7 +2574,7 @@ def convert_related_objects_to_pattern(obj, obs_id):
                      o.relationship, obs_id, "unknown", new_pattern)
                 related_patterns.append(new_pattern)
             if o.related_objects:
-                next_level_of_relationships =  convert_related_objects_to_pattern(o, obs_id)
+                next_level_of_relationships = convert_related_objects_to_pattern(o, obs_id)
                 if next_level_of_relationships:
                     related_patterns.extend(next_level_of_relationships)
     return related_patterns
