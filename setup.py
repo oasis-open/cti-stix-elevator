@@ -42,10 +42,10 @@ setup(
     install_requires=[
         'maec',
         'netaddr',
-        'pycountry>=19.8.18',
+        'pycountry>=20.7.0',
         'pluralizer',
         'stix>=1.1.1.9,<1.2.1.0',
-        'stix2>=2.1.0',
+        'stix2>=3.0.0',
         'stix2-validator>=3.0.0',
         'stixmarx>=1.0.8',
     ],
