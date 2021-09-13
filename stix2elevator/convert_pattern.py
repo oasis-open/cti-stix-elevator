@@ -1922,7 +1922,7 @@ def convert_domain_name_to_pattern(domain_name, related_objects):
                         pattern.append(new_pattern.collapse_reference(
                             ObjectPathForElevator.make_object_path("domain-name:resolves_to_refs[*]")))
             else:
-                warn("The %s relationship involving %s is not supported in STIX 2.x", 427, ro.relationship,
+                warn("The %s relationship involving %s is not explicitly supported in STIX 2.x", 427, ro.relationship,
                      identifying_info(ro))
     return create_boolean_expression("AND", pattern)
 
@@ -1943,7 +1943,7 @@ def convert_host_name_to_pattern(host_name, related_objects):
                         pattern.append(new_pattern.collapse_reference(
                             ObjectPathForElevator.make_object_path("domain-name:resolves_to_refs[*]")))
             else:
-                warn("The %s relationship involving %s is not supported in STIX 2.x", 427, ro.relationship,
+                warn("The %s relationship involving %s is not explicitly supported in STIX 2.x", 427, ro.relationship,
                      identifying_info(ro))
     return create_boolean_expression("AND", pattern)
 
@@ -2541,7 +2541,7 @@ def convert_related_objects_to_pattern(obj, obs_id):
             if o.id_:
                 if not id_in_pattern_cache(o.id_):
                     new_pattern = convert_object_to_pattern(o, o.id_)
-                    warn("Relationship '%s' in %s for %s is not supported in STIX 2.x. Expression %s is ANDed",
+                    warn("Relationship '%s' in %s for %s is not explicitly supported in STIX 2.x. Expression %s is ANDed",
                          411,
                          o.relationship, obs_id, o.id_, new_pattern)
                     # A related_object may have neither an id or idref.
@@ -2557,19 +2557,19 @@ def convert_related_objects_to_pattern(obj, obs_id):
                     new_pattern = get_pattern_from_cache(o.idref)
                     related_patterns.append(new_pattern)
                     warn(
-                        "Relationship '%s' in %s for %s is not supported in STIX 2.x. Expression %s is ANDed",
+                        "Relationship '%s' in %s for %s is not explicitly supported in STIX 2.x. Expression %s is ANDed",
                         411,
                         o.relationship, obs_id, o.idref, new_pattern)
                 else:
                     placeholder = IdrefPlaceHolder(o.idref)
                     related_patterns.append(placeholder)
                     warn(
-                        "Relationship '%s' in %s for %s is not supported in STIX 2.x. %s will be ANDed if/when resolved",
+                        "Relationship '%s' in %s for %s is not explicitly supported in STIX 2.x. %s will be ANDed if/when resolved",
                         412,
                         o.relationship, obs_id, o.idref, placeholder)
             else:
                 new_pattern = convert_object_to_pattern(o, None)
-                warn("Relationship '%s in %s for %s is not supported in STIX 2.x. Expression %s is ANDed",
+                warn("Relationship '%s in %s for %s is not explicitly supported in STIX 2.x. Expression %s is ANDed",
                      411,
                      o.relationship, obs_id, "unknown", new_pattern)
                 related_patterns.append(new_pattern)

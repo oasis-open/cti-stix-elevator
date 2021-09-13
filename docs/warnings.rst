@@ -73,8 +73,8 @@ Indicator *[id]* has an observable or indicator composite expression which may n
 ``TTP/Behavior/Exploits/Exploit`` in *[id]* not supported in STIX 2.x                                                                          408     warn
 ``Infrastructure`` in *[id]* not part of STIX 2.0                                                                                              409     warn
 IOC indicator in *[id]* cannot be converted to a STIX pattern                                                                                  410     warn
-Relationship *[rel_name]* in *[id]* for *[id]* is not supported in STIX 2.x. Expression *[pattern]* is ANDed                                   411     warn
-Relationship *[rel_name]* in *[id]* for *[id]* is not supported in STIX 2.x. %s will be ANDed if/when resolved                                 412     warn
+Relationship *[rel_name]* in *[id]* for *[id]* is not explicitly supported in STIX 2.x. Expression *[pattern]* is ANDed                        411     warn
+Relationship *[rel_name]* in *[id]* for *[id]* is not explicitly supported in STIX 2.x. %s will be ANDed if/when resolved                      412     warn
 Kill Chains type in *[id]* not supported in STIX 2.x                                                                                           413     warn
 Victim Target in *[id]* did not yield any STIX 2.x object                                                                                      414     warn
 TTP *[id]* did not generate any STIX 2.x object                                                                                                415     error
@@ -89,7 +89,7 @@ No pattern term was created from *[id]*                                         
 *[xxx]* content is not supported in STIX 2.x                                                                                                   424     warn
 Could not resolve Marking Structure *[id]*                                                                                                     425     warn
 MAEC content in *[id]* cannot be represented in STIX 2.x                                                                                       426     warn
-The *[relationship name]* relationship involving *[id]* is not supported in STIX 2.x                                                           427     warn
+The *[relationship name]* relationship involving *[id]* is not explicitly supported in STIX 2.x                                                427     warn
 ``roles`` is not a property of a 2.x identity (*[id]*).  Perhaps the roles are associated with a related Threat Actor                          428     warn
 ``HTTPServerResponse`` type is not supported in STIX 2.x                                                                                       429     warn
 The confidence value *[value]* is not found on one of the confidence scales from the specification. No confidence can be inferred              430     warn
@@ -212,7 +212,7 @@ Message                                                                         
 Could not resolve Marking Structure *[id]*                                                                                                  801  warn
 1.x full file paths are not processed, yet                                                                                                  802  warn
 Location *[id]* may not contain all aspects of the STIX 1.x CIQAddress object                                                               803  warn
-Object reference *[id]* may not handled correctly                                                                                           804  warn
+Object reference *[id]* may not be handled correctly                                                                                        804  warn
 CybOX object *[object]* not handled yet                                                                                                     805  warn
 Email *[property]* not handled yet                                                                                                          806  warn
 ``file:extended_properties:windows_pebinary_ext:optional_header`` is not implemented yet                                                    807  warn

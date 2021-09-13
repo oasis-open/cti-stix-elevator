@@ -65,7 +65,7 @@ def create_base_sco(sco_type, prop1x=None, other_properties=None, env=None, gene
         obj1x = prop1x.parent
         id_1x = obj1x.id_
         if prop1x.object_reference and not generate_shell:
-            warn("Object reference %s may not handled correctly", 804, prop1x.object_reference)
+            warn("Object reference %s may not be handled correctly", 804, prop1x.object_reference)
         elif id_1x and id_1x in _OBJECT_REFERENCES_SHELLS:
             shell = _OBJECT_REFERENCES_SHELLS[id_1x]
             if other_properties:

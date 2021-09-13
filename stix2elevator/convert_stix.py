@@ -1406,10 +1406,14 @@ def convert_incident(incident, env):
         handle_relationship_to_refs(incident.coa_requested, incident_instance["id"], new_env, "mitigates",
                                     marking_refs=incident_markings)
 
+    if incident.attributed_threat_actors is not None:
+        handle_relationship_to_refs(incident.attributed_threat_actors, incident_instance["id"], new_env, "attributed-to",
+                                    marking_refs=incident_markings)
+
     handle_missing_properties_of_incident(incident_instance, incident, new_env)
 
     if incident.related_incidents:
-        info("All 'associated incidents' relationships of %s are assumed to not represent STIX 1.2 versioning",
+        info("All 'related incidents' relationships of %s are assumed to not represent STIX 1.2 versioning",
              710, incident_instance["id"])
         handle_relationship_to_refs(incident.related_incidents, incident_instance["id"], new_env, "related-to",
                                     marking_refs=incident_markings)
@@ -1603,7 +1607,7 @@ correctly in STIX 2.x - please check this pattern",
         handle_relationship_to_refs(indicator.indicated_ttps, indicator_instance["id"], env,
                                     "indicates", marking_refs=indicator_markings)
     if indicator.related_indicators:
-        info("All 'associated indicators' relationships of %s are assumed to not represent STIX 1.2 versioning", 710, indicator.id_)
+        info("All 'related indicators' relationships of %s are assumed to not represent STIX 1.2 versioning", 710, indicator.id_)
         handle_relationship_to_refs(indicator.related_indicators, indicator_instance["id"], env,
                                     "related-to", marking_refs=indicator_markings)
     finish_basic_object(indicator.id_, indicator_instance, env, indicator)
