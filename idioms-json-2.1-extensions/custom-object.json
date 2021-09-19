@@ -18,11 +18,11 @@
                     "extension_type": "property-extension",
                     "impact": {
                         "description": "Some description about the indicator.",
-                        "value": "Medium"
+                        "value": "medium"
                     },
                     "objective": "Block outbound traffic",
                     "objective_confidence": "High",
-                    "stage": "Response"
+                    "stage": "response"
                 }
             },
             "id": "course-of-action--3dbfccad-1fbb-4e9f-8307-f2d1a5c651cc",
@@ -39,7 +39,7 @@
             "extensions": {
                 "extension-definition--7c8ca481-f0e9-4389-94f5-90df472eb01d": {
                     "extension_type": "property-extension",
-                    "likely_impact": "Medium"
+                    "likely_impact": "medium"
                 }
             },
             "id": "indicator--2cb76e88-2734-4a6c-a28c-52ae05f627be",

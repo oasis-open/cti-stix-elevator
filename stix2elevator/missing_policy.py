@@ -8,6 +8,7 @@ import pluralizer
 # internal
 from stix2elevator.extension_definitions import get_extension_definition_id
 from stix2elevator.options import get_option_value, info, warn
+from stix2elevator.utils import convert_to_stix_literal, strftime_with_appropriate_fractional_seconds
 
 _PLURALIZER = None
 
@@ -63,18 +64,32 @@ def add_string_property_as_custom_property(sdo_instance, property_name, property
     warn("Used custom property for %s", 308, property_name + (" of " + sdo_instance["id"] if "id" in sdo_instance else ""))
 
 
-def add_string_property_as_extension_property(container, property_name, property_value, sdo_id, is_list=False):
+def add_string_property_as_extension_property(container, property_name, property_value, sdo_id, is_list=False, is_literal=False, mapping={}):
     if is_list:
-        property_values = list()
-        for v in property_value:
-            property_values.append(str(v))
-        container[property_name] = property_values
+        if is_literal:
+            container[property_name] = []
+            for v in property_value:
+                v_as_string = str(v)
+                if v_as_string in mapping:
+                    # conversion in mapping
+                    container[property_name].append(mapping[v_as_string])
+                else:
+                    container[property_name].append(convert_to_stix_literal(v_as_string))
+        else:
+            container[property_name] = [str(v) for v in property_value]
     else:
-        container[property_name] = str(property_value)
+        prop_values_as_string = str(property_value)
+        if is_literal:
+            if prop_values_as_string in mapping:
+                container[property_name] = mapping[prop_values_as_string]
+            else:
+                container[property_name] = convert_to_stix_literal(prop_values_as_string)
+        else:
+            container[property_name] = prop_values_as_string
     warn("Used extension property for %s", 313, property_name + (" of " + sdo_id if sdo_id else ""))
 
 
-def handle_missing_string_property(container, property_name, property_value, sdo_id, is_list=False, is_sco=False):
+def handle_missing_string_property(container, property_name, property_value, sdo_id, is_list=False, is_sco=False, is_literal=False, mapping={}):
     if property_value:
         if check_for_missing_policy("add-to-description"):
             if is_sco or "description" not in container:
@@ -85,9 +100,15 @@ def handle_missing_string_property(container, property_name, property_value, sdo
         elif check_for_missing_policy("use-custom-properties"):
             add_string_property_as_custom_property(container, property_name, property_value, is_list)
         elif check_for_missing_policy("use-extensions"):
-            add_string_property_as_extension_property(container, property_name, property_value, sdo_id, is_list)
+            add_string_property_as_extension_property(container, property_name, property_value, sdo_id, is_list, is_literal, mapping)
         else:
             warn("Missing property %s is ignored", 307, ("'" + property_name + "'" + (" of " + sdo_id if sdo_id else "")))
+
+
+def handle_missing_timestamp_property(container, property_name, property_value, sdo_id, is_sco=False):
+    if property_value:
+        timestamp = strftime_with_appropriate_fractional_seconds(property_value, False)
+        handle_missing_string_property(container, property_name, timestamp, sdo_id, is_sco)
 
 
 def add_confidence_property_to_description(sdo_instance, confidence, parent_property_name):
@@ -153,10 +174,17 @@ def add_statement_type_to_description(sdo_instance, statement, property_name):
     warn("Appended Statement type content to description %s", 305, ("of" + sdo_instance["id"] if "id" in sdo_instance else ""))
 
 
-def add_statement_type_as_custom_or_extension_property(statement):
+def add_statement_type_as_custom_or_extension_property(statement, is_literal, mapping={}):
     statement_json = {}
     if statement.value:
-        statement_json["value"] = str(statement.value)
+        value_as_string = str(statement.value)
+        if is_literal:
+            if value_as_string in mapping:
+                statement_json["value"] = mapping[value_as_string]
+            else:
+                statement_json["value"] = convert_to_stix_literal(value_as_string)
+        else:
+            statement_json["value"] = value_as_string
     if statement.descriptions:
         descriptions = []
         for d in statement.descriptions:
@@ -190,7 +218,7 @@ def statement_type_as_custom_properties(sdo_instance, statement, property_name, 
         sdo_instance[convert_to_custom_name(property_name)] = [str(statement.value)] if is_list else str(statement.value)
 
 
-def statement_type_as_extension_properties(container, statement, property_name, id, is_list):
+def statement_type_as_extension_properties(container, statement, property_name, id, is_list, is_literal, mapping):
     map = dict()
     if statement.descriptions:
         descriptions = []
@@ -204,13 +232,29 @@ def statement_type_as_extension_properties(container, statement, property_name, 
         add_confidence_property_as_extension_property(map, statement.confidence, property_name, id)
     if map:
         if statement.value:
-            map["value"] = str(statement.value)
+            value_as_string = str(statement.value)
+            if is_literal:
+                if value_as_string in mapping:
+                    map["value"] = mapping[value_as_string]
+                else:
+                    map["value"] = convert_to_stix_literal(value_as_string)
+            else:
+                map["value"] = value_as_string
         container[property_name] = [map] if is_list else map
     else:
-        container[property_name] = [str(statement.value)] if is_list else str(statement.value)
+        if statement.value:
+            value_as_string = str(statement.value)
+            if is_literal:
+                if value_as_string in mapping:
+                    converted_value = mapping[value_as_string]
+                else:
+                    converted_value = convert_to_stix_literal(value_as_string)
+                container[property_name] = [converted_value] if is_list else converted_value
+            else:
+                container[property_name] = [value_as_string] if is_list else value_as_string
 
 
-def handle_missing_statement_properties(container, statement, property_name, id, is_list=False):
+def handle_missing_statement_properties(container, statement, property_name, id, is_list=False, is_literal=True, mapping={}):
     if statement:
         if check_for_missing_policy("add-to-description"):
             if is_list:
@@ -220,32 +264,32 @@ def handle_missing_statement_properties(container, statement, property_name, id,
             statement_type_as_custom_properties(container, statement, property_name, is_list)
             warn("Used custom properties for Statement type content of %s", 308, id)
         elif check_for_missing_policy("use-extensions"):
-            statement_type_as_extension_properties(container, statement, property_name, id, is_list)
+            statement_type_as_extension_properties(container, statement, property_name, id, is_list, is_literal, mapping)
             warn("Used extensions properties for Statement type content of %s", 308, id)
         else:
             warn("Missing property %s of %s is ignored", 307, property_name, id)
 
 
-def collect_statement_type_as_custom_or_extension_property(statements):
+def collect_statement_type_as_custom_or_extension_property(statements, is_literal, mapping={}):
     statements_json = []
     for s in statements:
-        statements_json.append(add_statement_type_as_custom_or_extension_property(s))
+        statements_json.append(add_statement_type_as_custom_or_extension_property(s, is_literal, mapping))
     return statements_json
 
 
-def handle_multiple_missing_statement_properties(container, statements, property_name, id):
+def handle_multiple_missing_statement_properties(container, statements, property_name, id, is_literal=True, mapping={}):
     if statements:
         if len(statements) == 1:
-            handle_missing_statement_properties(container, statements[0], property_name, id, is_list=True)
+            handle_missing_statement_properties(container, statements[0], property_name, id, is_list=True, is_literal=is_literal)
         else:
             if check_for_missing_policy("add-to-description"):
                 for s in statements:
                     add_statement_type_to_description(container, s, singular(property_name))
             elif check_for_missing_policy("use-custom-properties"):
                 container[convert_to_custom_name(property_name)] = \
-                    collect_statement_type_as_custom_or_extension_property(statements)
+                    collect_statement_type_as_custom_or_extension_property(statements, is_literal=False)
             elif check_for_missing_policy("use-extensions"):
-                container[property_name] = collect_statement_type_as_custom_or_extension_property(statements)
+                container[property_name] = collect_statement_type_as_custom_or_extension_property(statements, is_literal=is_literal, mapping=mapping)
             else:
                 warn("Missing property %s of %s is ignored", 307, property_name, id)
 

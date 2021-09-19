@@ -3,6 +3,7 @@ import argparse
 import base64
 from datetime import datetime
 import os
+import re
 import textwrap
 
 # external
@@ -318,6 +319,10 @@ def validate_stix2_string(json_string, validator_options, file_path=None):
 
 def encode_in_base64(s):
     return base64.b64encode(str(s).encode('utf-8')).decode('utf-8')
+
+
+def convert_to_stix_literal(s):
+    return re.sub("\-+", "-", s.replace(" ", "-").lower())
 
 
 class Environment():

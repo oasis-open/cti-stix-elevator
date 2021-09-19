@@ -94,8 +94,8 @@
                 "extension-definition--58c914a2-0b19-4f62-8221-0af0b542e130": {
                     "extension_type": "property-extension",
                     "information_source_roles": [
-                        "Aggregator",
-                        "Initial Author"
+                        "aggregator",
+                        "initial-author"
                     ]
                 }
             },

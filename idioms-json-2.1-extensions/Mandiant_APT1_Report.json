@@ -926,19 +926,19 @@
                             "description": "<!DOCTYPE html>\n\t\t\t\t\t<html><body>\n\t\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tOur evidence indicates that APT1 has been stealing\n\t\t\t\t\t\t\thundreds of terabytes of data from at least 141 organizations across a diverse\n\t\t\t\t\t\t\tset of industries beginning as early as 2006. Remarkably, we have witnessed APT1\n\t\t\t\t\t\t\ttarget dozens of organizations simultaneously. Once the group establishes access\n\t\t\t\t\t\t\tto a victim’s network, they continue to access it periodically over several\n\t\t\t\t\t\t\tmonths or years to steal large volumes of valuable intellectual property,\n\t\t\t\t\t\t\tincluding technology blueprints, proprietary manufacturing processes, test\n\t\t\t\t\t\t\tresults, business plans, pricing documents, partnership agreements, emails and\n\t\t\t\t\t\t\tcontact lists from victim organizations’ leadership. We believe that the\n\t\t\t\t\t\t\textensive activity we have directly observed represents only a small fraction of\n\t\t\t\t\t\t\tthe cyber espionage that APT1 has committed. \n\t\t\t\t\t\t\t</P>\n\t\t\t\t\t</body></html>"
                         },
                         {
-                            "value": "Advantage - Economic"
+                            "value": "advantage-economic"
                         },
                         {
-                            "value": "Theft - Intellectual Property"
+                            "value": "intellectual-property-theft"
                         },
                         {
-                            "value": "Competitive Advantage"
+                            "value": "competitive-advantage"
                         },
                         {
-                            "value": "Theft - Credential Theft"
+                            "value": "credential-theft"
                         },
                         {
-                            "value": "Unauthorized Access"
+                            "value": "unauthorized-access"
                         }
                     ]
                 },
@@ -1258,7 +1258,7 @@
                     "intended_effects": [
                         {
                             "description": "Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. ",
-                            "value": "Unauthorized Access"
+                            "value": "unauthorized-access"
                         }
                     ]
                 }
@@ -1288,7 +1288,7 @@
                     "intended_effects": [
                         {
                             "description": "Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. ",
-                            "value": "Unauthorized Access"
+                            "value": "unauthorized-access"
                         }
                     ],
                     "title": "Privilege Escalation"
@@ -1319,7 +1319,7 @@
                     "intended_effects": [
                         {
                             "description": "Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. ",
-                            "value": "Unauthorized Access"
+                            "value": "unauthorized-access"
                         }
                     ],
                     "title": "Privilege Escalation"
@@ -1347,10 +1347,10 @@
             "extensions": {
                 "extension-definition--683e2ed4-80fb-4910-a179-64e88ac6c259": {
                     "extension_type": "property-extension",
-                    "intended_effect": [
+                    "intended_effects": [
                         {
                             "description": "Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. ",
-                            "value": "Unauthorized Access"
+                            "value": "unauthorized-access"
                         }
                     ],
                     "title": "Privilege Escalation"
@@ -1381,7 +1381,7 @@
                     "intended_effects": [
                         {
                             "description": "Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. ",
-                            "value": "Unauthorized Access"
+                            "value": "unauthorized-access"
                         }
                     ],
                     "title": "Privilege Escalation"
@@ -1412,7 +1412,7 @@
                     "intended_effects": [
                         {
                             "description": "Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. ",
-                            "value": "Unauthorized Access"
+                            "value": "unauthorized-access"
                         }
                     ],
                     "title": "Privilege Escalation"
@@ -1440,10 +1440,10 @@
             "extensions": {
                 "extension-definition--683e2ed4-80fb-4910-a179-64e88ac6c259": {
                     "extension_type": "property-extension",
-                    "intended_effect": [
+                    "intended_effects": [
                         {
                             "description": "Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. ",
-                            "value": "Unauthorized Access"
+                            "value": "unauthorized-access"
                         }
                     ],
                     "title": "Privilege Escalation"
@@ -1471,10 +1471,10 @@
             "extensions": {
                 "extension-definition--683e2ed4-80fb-4910-a179-64e88ac6c259": {
                     "extension_type": "property-extension",
-                    "intended_effect": [
+                    "intended_effects": [
                         {
                             "description": "Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. ",
-                            "value": "Unauthorized Access"
+                            "value": "unauthorized-access"
                         }
                     ],
                     "title": "Privilege Escalation"
@@ -1502,10 +1502,10 @@
             "extensions": {
                 "extension-definition--683e2ed4-80fb-4910-a179-64e88ac6c259": {
                     "extension_type": "property-extension",
-                    "intended_effect": [
+                    "intended_effects": [
                         {
                             "description": "Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. ",
-                            "value": "Unauthorized Access"
+                            "value": "unauthorized-access"
                         }
                     ],
                     "title": "Privilege Escalation"
@@ -1538,10 +1538,10 @@
                             "description": "In the Internal Reconnaissance stage, the intruder\n\t\t\t\tcollects information about the victim environment."
                         },
                         {
-                            "value": "Unauthorized Access"
+                            "value": "unauthorized-access"
                         },
                         {
-                            "value": "Theft - Credential Theft"
+                            "value": "credential-theft"
                         }
                     ]
                 }
@@ -1573,7 +1573,7 @@
                             "description": "Expand foothold and access through lateral movement\n\t\t\t\twithin the target environment."
                         },
                         {
-                            "value": "Unauthorized Access"
+                            "value": "unauthorized-access"
                         }
                     ]
                 }
@@ -1600,7 +1600,7 @@
             "extensions": {
                 "extension-definition--abfeb963-42a9-45a7-841a-e1d97838e2c9": {
                     "extension_type": "property-extension",
-                    "intended_effect": [
+                    "intended_effects": [
                         {
                             "description": "In this stage, the intruder takes actions to ensure\n\t\t\t\tcontinued, long-term control over key systems in the network environment from\n\t\t\t\toutside of the network. "
                         }
@@ -1634,10 +1634,10 @@
                             "description": "Exfiltration information relevant to the mission."
                         },
                         {
-                            "value": "Theft - Theft of Proprietary Information"
+                            "value": "proprietary-information-theft"
                         },
                         {
-                            "value": "Theft - Intellectual Property"
+                            "value": "intellectual-property-theft"
                         }
                     ]
                 }
@@ -1669,10 +1669,10 @@
                             "description": "Exfiltration information relevant to the mission."
                         },
                         {
-                            "value": "Theft - Theft of Proprietary Information"
+                            "value": "proprietary-information-theft"
                         },
                         {
-                            "value": "Theft - Intellectual Property"
+                            "value": "intellectual-property-theft"
                         }
                     ],
                     "title": "Completing the Mission"
@@ -1705,10 +1705,10 @@
                             "description": "Exfiltration information relevant to the mission."
                         },
                         {
-                            "value": "Theft - Theft of Proprietary Information"
+                            "value": "proprietary-information-theft"
                         },
                         {
-                            "value": "Theft - Intellectual Property"
+                            "value": "intellectual-property-theft"
                         }
                     ],
                     "title": "Completing the Mission"
