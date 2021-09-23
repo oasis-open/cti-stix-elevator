@@ -301,9 +301,9 @@ def process_description_and_short_description(so, entity, parent_info=False):
     if hasattr(entity, "short_description") and entity.short_description is not None:
         short_description_as_text = str(entity.short_description)
         if short_description_as_text:
-            warn("The Short_Description property in %s is not supported in STIX 2.x.", 310, so["id"])
+            info("The Short_Description property in %s is not supported in STIX 2.x.", 310, so["id"])
             if not check_for_missing_policy("ignore"):
-                warn("The text was appended to the description property of %s", 301, so["id"])
+                info("The text was appended to the description property of %s", 301, so["id"])
                 if parent_info and so["description"]:
                     so["description"] += "\nPARENT_SHORT_DESCRIPTION: \n" + short_description_as_text
                 else:
@@ -820,7 +820,7 @@ def add_relationships_to_reports(bundle_instance):
                         rel["target_ref"] in new_ids or exists_ids_with_no_1x_object(rel["target_ref"])):
                     rels_to_include.append(rel["id"])
                     rels_to_include.append(rel["target_ref"])
-                    warn("Including %s in %s and added the target_ref %s to the report", 704, rel["id"], rep["id"], rel["target_ref"])
+                    info("Including %s in %s and added the target_ref %s to the report", 704, rel["id"], rep["id"], rel["target_ref"])
                 elif not ("target_ref" in rel and rel["target_ref"]):
                     rels_to_include.append(rel["id"])
                     warn("Including %s in %s although the target_ref is unknown", 706, rel["id"], rep["id"])
@@ -831,7 +831,7 @@ def add_relationships_to_reports(bundle_instance):
                         rel["source_ref"] in new_ids or exists_ids_with_no_1x_object(rel["source_ref"])):
                     rels_to_include.append(rel["id"])
                     rels_to_include.append(rel["source_ref"])
-                    warn("Including %s in %s and added the source_ref %s to the report", 705, rel["id"], rep["id"], rel["source_ref"])
+                    info("Including %s in %s and added the source_ref %s to the report", 705, rel["id"], rep["id"], rel["source_ref"])
                 elif not ("source_ref" in rel and rel["source_ref"]):
                     rels_to_include.append(rel["id"])
                     warn("Including %s in %s although the source_ref is unknown", 707, rel["id"], rep["id"])
@@ -1008,7 +1008,7 @@ def convert_course_of_action(coa, env):
 def process_et_properties(sdo_instance, et, env):
     process_description_and_short_description(sdo_instance, et, True)
     if "name" in sdo_instance:
-        info("Title %s used for name, appending exploit_target %s title in description property",
+        info("Title in %s used for name, appending exploit_target %s title in description property",
              303, sdo_instance["type"], sdo_instance["id"])
         handle_missing_string_property(sdo_instance, "title", et.title, False)
     elif et.title is not None:
@@ -1888,7 +1888,7 @@ def process_report_contents(report, env, report_instance):
 
 def convert_report(report, env):
     report_instance = create_basic_object("report", report, env)
-    info("Report %s contains only the objects explicitly specified in the STIX 1.x report", 726, report_instance["id"])
+    # info("Report %s contains only the objects explicitly specified in the STIX 1.x report", 726, report_instance["id"])
     process_description_and_short_description(report_instance, report.header)
     new_env = env.newEnv(timestamp=report_instance["created"])
     if report.header:
@@ -2094,10 +2094,11 @@ def handle_missing_properties_of_malware_instance(sdo_instance, malware1x_instan
     container, extension_definition_id = determine_container_for_missing_properties("malware",
                                                                                     sdo_instance)
     if container is not None and not check_for_missing_policy("ignore"):
-        # first name populated in convert_malware_instance
-        if malware1x_instance.names is not None and len(malware1x_instance.names) > 1:
-            handle_missing_string_property(container, "other_names", malware1x_instance.names[1:], sdo_instance["id"],
-                                           is_list=True)
+        # first name populated in convert_malware_instance, no alias property in 2.0
+        if get_option_value("spec_version") == "2.0":
+            if malware1x_instance.names is not None and len(malware1x_instance.names) > 1:
+                handle_missing_string_property(container, "other_names", malware1x_instance.names[1:], sdo_instance["id"],
+                                               is_list=True)
         if hasattr(malware1x_instance, "title"):
             if "name" not in container or container["name"] is None:
                 # this case is handled in convert_malware_instance
@@ -2113,6 +2114,7 @@ def convert_malware_instance(mal, ttp, env, ttp_id_used):
     if get_option_value("spec_version") == "2.1":
         malware_instance_instance["is_family"] = False
         info("The is_family property of malware instance %s is assumed to be false", 728, malware_instance_instance["id"])
+    aliases = []
     if mal.names is not None:
         for n in mal.names:
             if "name" not in malware_instance_instance:
@@ -2123,9 +2125,19 @@ def convert_malware_instance(mal, ttp, env, ttp_id_used):
                      malware_instance_instance["id"],
                      malware_instance_instance["name"],
                      str(n))
+            elif get_option_value("spec_version") == "2.1":
+                alias_name = str(n)
+                aliases.append(alias_name)
+                warn("Only one name for malware is allowed for %s in STIX 2.1, used %s, %s becomes an alias",
+                     502,
+                     malware_instance_instance["id"],
+                     malware_instance_instance["name"],
+                     alias_name)
     if mal.title is not None:
         if "name" not in malware_instance_instance:
             malware_instance_instance["name"] = mal.title
+    if aliases:
+        malware_instance_instance["aliases"] = aliases
     process_description_and_short_description(malware_instance_instance, mal)
     spec_version = get_option_value("spec_version")
     convert_controlled_vocabs_to_open_vocabs(malware_instance_instance,
@@ -2506,7 +2518,7 @@ def finalize_bundle(env):
                 operation_on_path(bundle_instance, path, stix2x_id[0])
                 info("Found STIX 1.X ID: %s replaced by %s", 702, value, stix2x_id[0])
             elif is_stix1x_id(value) and not exists_id_key(value):
-                warn("1.X ID: %s was not mapped to STIX 2.x ID", 603, value)
+                warn("STIX 1.X ID: %s was not mapped to STIX 2.x ID", 603, value)
 
     for item in reversed(to_remove):
         operation_on_path(bundle_instance, item, "", op=2)

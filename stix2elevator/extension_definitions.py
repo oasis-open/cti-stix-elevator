@@ -155,14 +155,14 @@ EXTENSION_DEFINITION_FOR_STIX_1_X = {
         "type": "extension-definition",
         "spec_version": "2.1",
         "name": "Extension to support STIX 1.x Incident",
-        "description": "This schema adds two properties to a STIX object",
+        "description": "This schema adds STIX 1.x Incident properties not present in the STIX 2.1 Incident stub object",
         "created": "2020-12-22T00:00:00.000000Z",
         "modified": "2020-12-22T00:00:00.000000Z",
         "created_by_ref": MITRE_IDENTITY_OBJECT["id"],
         "object_marking_refs": [
             MITRE_COPYRIGHT_STATEMENT_DATA_MARKING["id"]
         ],
-        "schema": "https://github.com/mitre/cti/extension-definitions/stix-1-incident/",
+        "schema": "https://github.com/oasis-open/cti-stix-common-objects/tree/main/extension-definition-specifications/stix1-incident/",
         "version": "1.0.0",
         "extension_types": ["property-extension"]
     },

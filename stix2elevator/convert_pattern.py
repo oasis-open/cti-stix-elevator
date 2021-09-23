@@ -1002,7 +1002,7 @@ def convert_custom_properties(cps, object_type_name, use_custom_prefix=True):
         if not re.match("[a-z0-9_]+", cp.name):
             warn("The custom property name %s does not adhere to the specification rules", 617, cp.name)
             if " " in cp.name:
-                warn("The custom property name %s contains whitespace, replacing it with underscores", 624, cp.name)
+                info("The custom property name %s contains whitespace, replacing it with underscores", 624, cp.name)
         custom_name = cp.name.replace(" ", "_")
         if use_custom_prefix:
             custom_name = convert_to_custom_name(cp.name.replace(" ", "_"))
@@ -1597,7 +1597,7 @@ def convert_file_name_and_path_to_pattern(f):
                                                               f.file_path.condition,
                                                               path_string_constant))
     if f.full_path:
-        warn("1.x full file paths are not processed, yet", 802)
+        warn("STIX 1.x full file paths are not processed, yet", 802)
     if file_name_path_expressions:
         return create_boolean_expression("AND", file_name_path_expressions)
 
