@@ -13,6 +13,8 @@ from stix.core import STIXPackage
 import stixmarx
 from stixmarx.container import MarkingContainer
 
+import stix_edh
+
 # internal
 from stix2elevator.convert_cybox import clear_directory_mappings
 from stix2elevator.convert_pattern import (

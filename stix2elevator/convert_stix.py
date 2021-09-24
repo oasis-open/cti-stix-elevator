@@ -31,6 +31,8 @@ from stix.extensions.test_mechanism.snort_test_mechanism import (
 from stix.extensions.test_mechanism.yara_test_mechanism import (
     YaraTestMechanism
 )
+
+import stix_edh
 from stix.incident import Incident
 from stix.indicator import Indicator
 from stix.threat_actor import ThreatActor
@@ -404,6 +406,7 @@ def convert_marking_specification(marking_specification, env, stix1x_id):
                         definition["tlp"] = str(marking_structure.not_proprietary.tlp_marking.color).lower()
                         set_tlp_reference(marking_definition_instance, definition["tlp"], "marking_ref")
                 marking_definition_instance["definition"] = definition
+            elif isinstance(marking_structure, ISAMarkingAssertion)
             else:
                 if marking_structure.__class__.__name__ in get_option_value("markings_allowed"):
                     warn("Could not resolve Marking Structure %s", 425, identifying_info(marking_structure))
