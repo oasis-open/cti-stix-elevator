@@ -626,7 +626,7 @@ def convert_file_properties(f):
             dir_dict = create_base_sco("directory", other_properties={"path": full_path + dir_path})
             generate_sco_id_for_2_1(dir_dict, None)
     if f.full_path:
-        warn("1.x full file paths are not processed, yet", 802)
+        warn("STIX 1.x full file paths are not processed, yet", 802)
     if isinstance(f, WinExecutableFile):
         windows_executable_file_dict = convert_windows_executable_file(f)
         if windows_executable_file_dict:

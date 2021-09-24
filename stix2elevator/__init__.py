@@ -30,7 +30,7 @@ from stix2elevator.ids import (
     clear_object_id_mapping
 )
 from stix2elevator.options import (
-    get_option_value, get_validator_options, set_option_value, setup_logger,
+    get_option_value, get_validator_options, info, set_option_value, setup_logger,
     warn
 )
 from stix2elevator.utils import (
@@ -125,7 +125,7 @@ def elevate(stix_package):
 
     try:
         setup_logger(container_package.id_)
-        warn("Results produced by the stix2-elevator may generate warning messages which should be investigated.", 201)
+        info("Results produced by the stix2-elevator may generate warning messages which should be investigated.", 201)
         env = Environment(get_option_value("package_created_by_id"))
         json_string = json.dumps(
             convert_package(container_package, env),

@@ -5,17 +5,17 @@
             "created": "2021-04-16T12:26:18.622Z",
             "extensions": {
                 "extension-definition--a46b18de-0b41-4a95-9d2d-67a360f2d859": {
-                    "cost": "Low",
-                    "efficacy": "High",
+                    "cost": "low",
+                    "efficacy": "high",
                     "extension_type": "property-extension",
                     "impact": {
                         "description": "This IP address is not used for legitimate hosting so there should be no operational impact.",
-                        "value": "Low"
+                        "value": "low"
                     },
                     "objective": "Block communication between the PIVY agents and the C2 Server",
                     "objective_confidence": "High",
                     "parameter_expression": "ipv4-addr:value = '10.10.10.10'",
-                    "stage": "Response"
+                    "stage": "response"
                 }
             },
             "id": "course-of-action--495c9b28-b5d8-41e3-b7bb-000c29789db9",

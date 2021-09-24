@@ -255,20 +255,20 @@ def initialize_options(options=None):
             ALL_OPTIONS = ElevatorOptions(options)
 
         if ALL_OPTIONS.silent and ALL_OPTIONS.message_log_directory:
-            warn("Both console and output log have disabled messages.", 209)
+            info("Both console and output log have disabled messages.", 209)
 
         if ALL_OPTIONS.silent and ALL_OPTIONS.policy != "no_policy":
             warn("silent option is not compatible with a policy", 211)
 
         if ALL_OPTIONS.spec_version == "2.1":
             if not ALL_OPTIONS.incidents:
-                warn("%s option was not given, but it defaults to true for version 2.1", 214, "incidents")
+                info("%s option was not given, but it defaults to true for version 2.1", 214, "incidents")
                 ALL_OPTIONS.incidents = True
             if not ALL_OPTIONS.infrastructure:
-                warn("%s option was not given, but it defaults to true for version 2.1", 214, "infrastructure")
+                info("%s option was not given, but it defaults to true for version 2.1", 214, "infrastructure")
                 ALL_OPTIONS.infrastructure = True
             if ALL_OPTIONS.missing_policy == "use-custom-properties":
-                warn("Custom properties/objects/extensions are deprecated in version 2.1.  Suggest using 'use-extensions' instead", 215)
+                info("Custom properties/objects/extensions are deprecated in version 2.1.  Suggest using 'use-extensions' instead", 215)
 
         if not ALL_OPTIONS.custom_property_prefix == "elevator" and not ALL_OPTIONS.missing_policy == "use-custom-properties":
             warn("custom_property_prefix option is provided, but the missing policy option is not 'use-custom-properies'.  It will be ignored.", 213)
@@ -309,6 +309,9 @@ def msg_id_enabled(msg_id):
 
 
 # These codes are aligned with elevator_log_messages spreadsheet.
+
+# current number of messages: 218
+
 CHECK_CODES = [201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213,
                214, 215, 216,
 
@@ -323,7 +326,7 @@ CHECK_CODES = [201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213,
 
                601, 602, 603, 604, 605, 606, 607, 608, 609, 610, 611, 612, 613,
                614, 615, 616, 617, 618, 619, 620, 621, 622, 623, 624, 625, 626,
-               627, 628, 629, 630, 631, 632, 633, 634, 635, 636, 637, 638,
+               627, 628, 629, 630, 631, 632, 633, 634, 635, 636, 637, 638, 639,
 
                701, 702, 703, 704, 705, 706, 707, 708, 709, 710, 711, 712, 713,
                714, 715, 716, 717, 718, 719, 720, 721, 722, 723, 724, 725, 726,

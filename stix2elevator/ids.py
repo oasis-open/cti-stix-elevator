@@ -17,7 +17,7 @@ def record_ids(stix_id, new_id):
     if stix_id in _IDS_TO_NEW_IDS:
         info("%s is already associated other ids: %s", 703, str(stix_id), tuple(_IDS_TO_NEW_IDS[stix_id]))
     if new_id is None:
-        error("Could not associate %s with None", 611, stix_id)
+        error("Can not associate %s with None", 611, stix_id)
         return
     add_id_value(stix_id, new_id)
 
@@ -203,11 +203,11 @@ def get_object_id_values():
 
 def add_object_id_value(key, value):
     if exists_object_id_key(key):
-        warn("This observable %s already is associated with cyber observables", 610, key)
+        warn("This observable %s already is associated with cyber observables", 639, key)
     else:
         _IDS_TO_CYBER_OBSERVABLES[key] = value
     if not value:
-        warn("Trying to associate %s with None", 610, key)
+        warn("Can not associate %s with None", 611, key)
 
 
 _ID_OF_OBSERVABLES_IN_CHARACTERIZATIONS = []
