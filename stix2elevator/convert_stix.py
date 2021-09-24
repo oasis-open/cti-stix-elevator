@@ -32,7 +32,8 @@ from stix.extensions.test_mechanism.yara_test_mechanism import (
     YaraTestMechanism
 )
 
-import stix_edh
+from stix_edh.isa_markings_assertions import from stix_edh.isa_markings_assertions import ISAMarkingsAssertion
+
 from stix.incident import Incident
 from stix.indicator import Indicator
 from stix.threat_actor import ThreatActor
@@ -56,6 +57,8 @@ from stix2elevator.convert_pattern import (
     get_obs_from_mapping, id_in_observable_mappings,
     interatively_resolve_placeholder_refs, remove_pattern_objects
 )
+
+from stix2elevator.convert_to_acs import convert_edh_marking_to_acs_marking
 from stix2elevator.ids import (
     add_id_of_obs_in_characterizations, add_id_value, add_object_id_value,
     exists_id_key, exists_ids_with_no_1x_object, generate_stix2x_id,
@@ -414,7 +417,8 @@ def convert_marking_specification(marking_specification, env, stix1x_id):
                         definition["tlp"] = str(marking_structure.not_proprietary.tlp_marking.color).lower()
                         set_tlp_reference(marking_definition_instance, definition["tlp"], "marking_ref")
                 marking_definition_instance["definition"] = definition
-            elif isinstance(marking_structure, ISAMarkingAssertion)
+            elif isinstance(marking_structure, ISAMarkingsAssertion):
+                convert_edh_marking_to_acs_marking(marking_definition_instance, marking_specification, marking_structure)
             else:
                 if marking_structure.__class__.__name__ in get_option_value("markings_allowed"):
                     warn("Could not resolve Marking Structure %s", 425, identifying_info(marking_structure))
