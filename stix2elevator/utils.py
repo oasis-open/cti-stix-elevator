@@ -257,13 +257,15 @@ def operation_on_path(obj, path, value, op=1):
         current = int(current.strip("[]"))
         current_obj = obj[current]
     else:
-        current_obj = obj[current]
+        if current in obj:
+            current_obj = obj[current]
 
     if not path:
         if op == 1:
             obj[current] = value
         elif op == 2:
-            del obj[current]
+            if current in obj:
+                del obj[current]
 
         return
 

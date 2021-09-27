@@ -1523,9 +1523,9 @@ def convert_hashes_to_pattern(hashes):
         elif str(h.type_) == "SSDEEP":
             hash_type = str(h.type_).lower()
         else:
-            hash_type = str(h.type_)
+            hash_type = str(h.type_) if h.type_ else 'MD5'
         try:
-            hc = stix2.HashConstant(hash_value.value, str(h.type_))
+            hc = stix2.HashConstant(hash_value.value, h.type_)
         except ValueError as err:
             # don't cause exception if hash value isn't correct
             warn(err, 626)

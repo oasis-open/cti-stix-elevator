@@ -54,6 +54,7 @@ Property *property_name* of *id* is ignored, because it can't be represented in 
 New extension-definition id *id* was generated for *type*. *id*                                                                315     warn
 Custom Content *property_name* of *id* is ignored                                                                              316     warn
 Used *object_path* for extension property for *property_name*                                                                  317     warn
+Token in control set not recognized: *token*                                                                                   318     warn
 ============================================================================================================================== ====    =====
 
 
