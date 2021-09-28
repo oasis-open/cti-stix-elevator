@@ -446,7 +446,7 @@ def convert_marking_specification(marking_specification, env, stix1x_id, isa_mar
                     convert_edh_marking_to_acs_marking(marking_definition_instance, isa_marking, m)
                     val = add_marking_map_entry(m, marking_definition_instance)
                     if val is not None and not isinstance(val, MarkingStructure):
-                        info("Found same marking structure %s, using %s", 625, identifying_info(marking_specification), val)
+                        info("Found same marking structure %s, using %s", 625, identifying_info(m), val)
                     else:
                         info("Created Marking Structure for %s", 212, identifying_info(m))
                         finish_basic_object(marking_specification.id_, marking_definition_instance, env, marking_structure)
