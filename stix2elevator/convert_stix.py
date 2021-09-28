@@ -1923,7 +1923,6 @@ def process_report_contents(report, env, report_instance):
 
 def convert_report(report, env):
     report_instance = create_basic_object("report", report, env)
-    # info("Report %s contains only the objects explicitly specified in the STIX 1.x report", 726, report_instance["id"])
     process_description_and_short_description(report_instance, report.header)
     new_env = env.newEnv(timestamp=report_instance["created"])
     if report.header:

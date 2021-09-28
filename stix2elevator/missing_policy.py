@@ -230,31 +230,28 @@ def statement_type_as_extension_properties(container, statement, property_name, 
         info("Source property in STIX 1.x statement is not handled, yet.", 815)
     if statement.confidence:
         add_confidence_property_as_extension_property(map, statement.confidence, property_name, id)
-    if map:
-        if statement.value:
-            value_as_string = str(statement.value)
-            if is_literal:
-                if value_as_string in mapping:
-                    map["value"] = mapping[value_as_string]
-                else:
-                    map["value"] = convert_to_stix_literal(value_as_string)
+    converted_value = None
+    if statement.value:
+        value_as_string = str(statement.value)
+        if is_literal:
+            if value_as_string in mapping:
+                converted_value = mapping[value_as_string]
             else:
-                map["value"] = value_as_string
+                converted_value = convert_to_stix_literal(value_as_string)
+        else:
+            converted_value = value_as_string
+    if map:
+        if converted_value:
+            map["value"] = converted_value
         container[property_name] = [map] if is_list else map
     else:
-        if statement.value:
-            value_as_string = str(statement.value)
-            if is_literal:
-                if value_as_string in mapping:
-                    converted_value = mapping[value_as_string]
-                else:
-                    converted_value = convert_to_stix_literal(value_as_string)
-                container[property_name] = [converted_value] if is_list else converted_value
-            else:
-                container[property_name] = [value_as_string] if is_list else value_as_string
+        if converted_value:
+            container[property_name] = [converted_value] if is_list else converted_value
 
 
-def handle_missing_statement_properties(container, statement, property_name, id, is_list=False, is_literal=True, mapping={}):
+def handle_missing_statement_properties(container, statement, property_name, id, is_list=False, is_literal=True, mapping=None):
+    if mapping is None:
+        mapping = {}
     if statement:
         if check_for_missing_policy("add-to-description"):
             if is_list:
@@ -277,7 +274,9 @@ def collect_statement_type_as_custom_or_extension_property(statements, is_litera
     return statements_json
 
 
-def handle_multiple_missing_statement_properties(container, statements, property_name, id, is_literal=True, mapping={}):
+def handle_multiple_missing_statement_properties(container, statements, property_name, id, is_literal=True, mapping=None):
+    if mapping is None:
+        mapping = {}
     if statements:
         if len(statements) == 1:
             handle_missing_statement_properties(container, statements[0], property_name, id, is_list=True, is_literal=is_literal)
