@@ -162,7 +162,7 @@ EXTENSION_DEFINITION_FOR_STIX_1_X = {
         "object_marking_refs": [
             MITRE_COPYRIGHT_STATEMENT_DATA_MARKING["id"]
         ],
-        "schema": "https://github.com/oasis-open/cti-stix-common-objects/tree/main/extension-definition-specifications/stix1-incident/",
+        "schema": "https://github.com/oasis-open/cti-stix-common-objects/blob/elevator-extensions/extension-definition-specifications/stix1x-incident/stix1x-incident.json",  # noqa
         "version": "1.0.0",
         "extension_types": ["property-extension"]
     },

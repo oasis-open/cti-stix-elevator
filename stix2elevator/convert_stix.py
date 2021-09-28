@@ -2289,9 +2289,8 @@ def handle_missing_properties_of_victim_target(identity_instance, victim_targeti
             handle_missing_string_property(container, "targeted_information",
                                            victim_targeting.targeted_information, identity_instance["id"], True)
         # TODO: technical_details are Observables
-        # if hasattr(victim_targeting, "technical_details") and victim_targeting.targeted_technical_details is not None:
-        #     handle_missing_string_property(container, "technical_details",
-        #                                    victim_targeting.targeted_technical_details, identity_instance["id"], True)
+        if hasattr(victim_targeting, "technical_details") and victim_targeting.targeted_technical_details is not None:
+            warn("The technical_details property of %s is not part of STIX 2.x", 418, identity_instance["id"])
 
         fill_in_extension_properties(identity_instance, container, extension_definition_id)
 
