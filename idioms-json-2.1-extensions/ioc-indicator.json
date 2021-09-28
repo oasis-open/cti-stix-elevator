@@ -2,15 +2,15 @@
     "id": "bundle--34a5abf9-0483-45b9-ae88-76e90191febe",
     "objects": [
         {
+            "aliases": [
+                "twexts",
+                "sdra64",
+                "ntos"
+            ],
             "created": "2020-02-24T16:07:27.201Z",
             "extensions": {
                 "extension-definition--5efa53f9-cf17-4867-bb4f-4cd2ac055e7c": {
                     "extension_type": "property-extension",
-                    "other_names": [
-                        "twexts",
-                        "sdra64",
-                        "ntos"
-                    ],
                     "title": "Zeus"
                 }
             },
