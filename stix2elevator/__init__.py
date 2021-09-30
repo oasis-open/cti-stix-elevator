@@ -13,8 +13,6 @@ from stix.core import STIXPackage
 import stixmarx
 from stixmarx.container import MarkingContainer
 
-import stix_edh
-
 # internal
 from stix2elevator.convert_cybox import clear_directory_mappings
 from stix2elevator.convert_pattern import (
@@ -30,8 +28,8 @@ from stix2elevator.ids import (
     clear_object_id_mapping
 )
 from stix2elevator.options import (
-    get_option_value, get_validator_options, info, set_option_value, setup_logger,
-    warn
+    get_option_value, get_validator_options, info, set_option_value,
+    setup_logger
 )
 from stix2elevator.utils import (
     Environment, clear_1x_markings_map, validate_stix2_string

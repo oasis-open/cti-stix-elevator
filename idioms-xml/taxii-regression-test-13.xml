@@ -1,0 +1,117 @@
+<!--
+	
+	This online template may be used as a starting point for creating STIX documents. Fill in the appropriate elements and add data as necessary. When finished, extra namespace declarations and schema locations may (but do not have to be) removed.
+	
+	All content (including the markings) are for sample purposes only and do not reflect actual threat intelligence or handling instructions.
+	
+	The copyright statement and license reference below (in addition to this entire comment) may be removed once this file is altered. When distributed in its current form as the STIX online template, however, it should be retained to indicate it is part of the STIX open source project.
+	
+	******************************************************************************************************************************
+	Copyright (c) 2014, The MITRE Corporation. All rights reserved. 
+    The contents of this file are subject to the terms of the STIX License located at http://stix.mitre.org/about/termsofuse.html.
+    ******************************************************************************************************************************
+	
+-->
+<stix:STIX_Package 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:marking="http://data-marking.mitre.org/Marking-1"
+	xmlns:indicator="http://stix.mitre.org/Indicator-2"
+	xmlns:stixCommon="http://stix.mitre.org/common-1"
+	xmlns:stix="http://stix.mitre.org/stix-1" 
+	xmlns:stixVocabs="http://stix.mitre.org/default_vocabularies-1"
+	xmlns:xpil="urn:oasis:names:tc:ciq:xpil:3"
+	xmlns:ct="urn:oasis:names:tc:ciq:ct:3"
+	xmlns:xal="urn:oasis:names:tc:ciq:xal:3"
+	xmlns:xnal="urn:oasis:names:tc:ciq:xnal:3"
+	xmlns:xnl="urn:oasis:names:tc:ciq:xnl:3"
+	xmlns:cybox="http://cybox.mitre.org/cybox-2"
+	xmlns:cyboxVocabs="http://cybox.mitre.org/default_vocabularies-2"
+	xmlns:AddressObj="http://cybox.mitre.org/objects#AddressObject-2"
+	xmlns:edh2cyberMarking="http://www.us-cert.gov/sites/default/files/STIX_Namespace/ISAMarkingsType.v2.xsd"
+	xmlns:edh2cyberMarkingAssert="http://www.us-cert.gov/sites/default/files/STIX_Namespace/ISAMarkingsAssertionsType.v2.xsd"
+	xmlns:edh2="urn:edm:edh:cyber:v3"
+	xsi:schemaLocation="
+	http://data-marking.mitre.org/Marking-1 http://stix.mitre.org/XMLSchema/data_marking/1.1.1/data_marking.xsd
+	http://stix.mitre.org/Indicator-2 http://stix.mitre.org/XMLSchema/indicator/2.1.1/indicator.xsd
+	http://stix.mitre.org/common-1 http://stix.mitre.org/XMLSchema/common/1.1.1/stix_common.xsd
+	http://stix.mitre.org/stix-1 http://stix.mitre.org/XMLSchema/core/1.1.1/stix_core.xsd
+	http://stix.mitre.org/default_vocabularies-1 http://stix.mitre.org/XMLSchema/default_vocabularies/1.1.1/stix_default_vocabularies.xsd
+	urn:oasis:names:tc:ciq:xpil:3 http://stix.mitre.org/XMLSchema/external/oasis_ciq_3.0/xPIL.xsd
+	http://cybox.mitre.org/cybox-2 http://cybox.mitre.org/XMLSchema/core/2.1/cybox_core.xsd
+	http://cybox.mitre.org/default_vocabularies-2 http://cybox.mitre.org/XMLSchema/default_vocabularies/2.1/cybox_default_vocabularies.xsd
+	http://cybox.mitre.org/objects#AddressObject-2 http://cybox.mitre.org/XMLSchema/objects/Address/2.1/Address_Object.xsd
+	http://www.us-cert.gov/sites/default/files/STIX_Namespace/ISAMarkingsType.v2.xsd http://www.us-cert.gov/sites/default/files/STIX_Namespace/local_ISAMarkingsType.v2.xsd
+	http://www.us-cert.gov/sites/default/files/STIX_Namespace/ISAMarkingsAssertionsType.v2.xsd http://www.us-cert.gov/sites/default/files/STIX_Namespace/local_ISAMarkingsAssertionsType.v2.xsd
+	urn:edm:edh:cyber:v3 local_SD-EDH_Profile_Cyber.v3.xsd
+	"
+	id="regression-test-13-01"
+	version="1.1.1"
+	timestamp="9999-12-31T00:00:00Z">
+	<stix:STIX_Header>
+		<stix:Title>regression-test-13</stix:Title>
+		<stix:Package_Intent xsi:type="stixVocabs:PackageIntentVocab-1.0">Indicators</stix:Package_Intent>
+		<stix:Package_Intent xsi:type="stixVocabs:PackageIntentVocab-1.0">Threat Report</stix:Package_Intent>
+		<stix:Description>Test of FD Pubrel. </stix:Description>
+		<stix:Handling>
+			<marking:Marking>
+				<marking:Marking_Structure xsi:type="edh2cyberMarking:ISAMarkingsType" isam_version="2.0">
+					<edh2:Identifier>isa:guide.19001.40af97be-00bf-4648-9e70-296a6a8eda12</edh2:Identifier>
+					<edh2:CreateDateTime>2014-09-30T19:00:00.00Z</edh2:CreateDateTime>
+					<edh2:ResponsibleEntity>CUST:USA.NSA ORIG:USA.USG</edh2:ResponsibleEntity>
+				</marking:Marking_Structure>
+			</marking:Marking>
+			<marking:Marking>
+				<marking:Controlled_Structure>//node()</marking:Controlled_Structure>
+				<marking:Marking_Structure xsi:type="edh2cyberMarkingAssert:ISAMarkingsAssertionType" isam_version="2.0" default_marking="true">
+				  <edh2:PolicyRef>urn:isa:policy:acs:ns:v3.0?privdefault=deny&amp;sharedefault=permit</edh2:PolicyRef>
+				  <edh2:AuthRef>urn:isa:authority:misa</edh2:AuthRef>
+				  <edh2:AccessPrivilege>
+					<edh2:privilegeAction>CISAUSES</edh2:privilegeAction>
+					<edh2:privilegeScope>ALL</edh2:privilegeScope>
+					<edh2:ruleEffect>permit</edh2:ruleEffect>
+				  </edh2:AccessPrivilege>
+				  <edh2:ControlSet>CLS:U FD:PUBREL</edh2:ControlSet>
+				  <edh2:PublicRelease>
+					<edh2:releasedBy>USA.USG</edh2:releasedBy>
+					<edh2:releasedOn>2016-07-19</edh2:releasedOn>
+				  </edh2:PublicRelease>
+				</marking:Marking_Structure>
+			</marking:Marking>
+		</stix:Handling>
+	</stix:STIX_Header>
+	
+
+		<stix:Indicators>
+		<stix:Indicator id="isa:guide.19001.regression-test-13-01" timestamp="9999-12-31T00:00:00Z" xsi:type="indicator:IndicatorType">
+			<indicator:Type xsi:type="stixVocabs:IndicatorTypeVocab-1.1">IP Watchlist</indicator:Type>
+			<indicator:Description>This is a sample indicator description</indicator:Description>
+			<indicator:Valid_Time_Position>
+				<indicator:Start_Time precision="month">9999-12-31T00:00:00Z</indicator:Start_Time>
+				<indicator:End_Time precision="minute">9999-12-31T00:01:00Z</indicator:End_Time>
+			</indicator:Valid_Time_Position>
+			<indicator:Observable id="obs-regression-test-13">
+				<cybox:Object id="obj-regression-test-13">
+					<cybox:Properties xsi:type="AddressObj:AddressObjectType" category="ipv4-addr" is_source="false" is_destination="true" is_spoofed="false">
+						<AddressObj:Address_Value>1.1.1.12</AddressObj:Address_Value>
+					</cybox:Properties>
+					<cybox:Related_Objects>
+						<cybox:Related_Object id="rel-obj-regression-test-13">
+							<cybox:Properties xsi:type="AddressObj:AddressObjectType" category="ipv4-addr" is_source="false" is_destination="true" is_spoofed="false">
+								<AddressObj:Address_Value>1.1.10.12</AddressObj:Address_Value>
+							</cybox:Properties>
+							<cybox:Relationship xsi:type="cyboxVocabs:ObjectRelationshipVocab-1.1">Redirects_To</cybox:Relationship>
+						</cybox:Related_Object>
+					</cybox:Related_Objects>
+				</cybox:Object>
+			</indicator:Observable>
+			<indicator:Confidence>
+				<stixCommon:Value xsi:type="stixVocabs:HighMediumLowVocab-1.0">Medium</stixCommon:Value>
+			</indicator:Confidence>
+			<indicator:Sightings sightings_count="9000">
+				<indicator:Sighting timestamp="9999-12-31T00:00:00Z" timestamp_precision="year"></indicator:Sighting>
+			</indicator:Sightings>
+		</stix:Indicator>
+	</stix:Indicators>
+
+	
+</stix:STIX_Package>

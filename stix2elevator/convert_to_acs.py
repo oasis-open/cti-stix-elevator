@@ -1,13 +1,6 @@
-import stix_edh
-
-from stix_edh.isa_markings import ISAMarkings
-from stix_edh.isa_markings_assertions import ISAMarkingsAssertion
-
-from stix2elevator.utils import convert_timestamp_to_string
+# internal
 from stix2elevator.options import warn
-
-def convert_policy_reference(policy_ref):
-    pass
+from stix2elevator.utils import convert_timestamp_to_string
 
 
 def convert_original_classification(original_classification):
@@ -15,8 +8,7 @@ def convert_original_classification(original_classification):
     if original_classification.classified_by:
         co["classified_by"] = str(original_classification.classified_by)
     else:
-        # warn
-        pass
+        warn("Required property %s is not provided for ACS data marking", 641, "classified_by")
     if original_classification.classified_on:
         co["classified_on"] = convert_timestamp_to_string(original_classification.classified_on)
     if original_classification.classification_reason:
@@ -31,15 +23,13 @@ def convert_derivative_classification(derivative_classification):
     if derivative_classification.classified_by:
         cd["classified_by"] = str(derivative_classification.classified_by)
     else:
-        # warn
-        pass
+        warn("Required property %s is not provided for ACS data marking", 641, "classified_by")
     if derivative_classification.classified_on:
         cd["classified_on"] = convert_timestamp_to_string(derivative_classification.classified_on)
     if derivative_classification.derived_from:
         cd["dervived_from"] = str(derivative_classification.derived_from)
     else:
-        # warn
-        pass
+        warn("Required property %s is not provided for ACS data marking", 641, "classified_by")
     return cd
 
 
@@ -70,14 +60,13 @@ def convert_public_release(public_release):
     if public_release.released_by:
         pr["released_by"] = str(public_release.released_by)
     else:
-        # warn
-        pass
+        warn("Required property %s is not provided for ACS data marking", 641, "released_by")
     if public_release.released_on:
         pr["released_on"] = convert_timestamp_to_string(public_release.released_on)
 
 
 def convert_one_scope(ps, property, item):
-    if not property in ps:
+    if property not in ps:
         ps[property] = []
     ps[property].append(item)
 
@@ -109,18 +98,25 @@ def convert_access_privilege(access_privilege):
     if access_privilege.privilege_action:
         ap["privilege_action"] = str(access_privilege.privilege_action)
     else:
-        # warn
-        pass
+        warn("Required property %s is not provided for ACS data marking", 641, "privilege_action")
     if access_privilege.privilege_scope:
         ap["privilege_scope"] = convert_privilege_scope(access_privilege.privilege_scope)
     else:
-        # warn
-        pass
+        warn("Required property %s is not provided for ACS data marking", 641, "privilege_scope")
     return ap
 
 
 def convert_further_sharing(further_sharing):
-    pass
+    fs = {}
+    if further_sharing.sharing_scope:
+        fs["sharing_scope"] = further_sharing.sharing_scope
+    else:
+        warn("Required property %s is not provided for ACS data marking", 641, "sharing_scope")
+    if further_sharing.rule_effect:
+        fs["rule_effect"] = further_sharing.rule_effect
+    else:
+        warn("Required property %s is not provided for ACS data marking", 641, "rule_effect")
+    return fs
 
 
 def convert_control_set(control_set):
@@ -157,7 +153,7 @@ def convert_control_set(control_set):
     return cs
 
 
-def convert_edh_marking_to_acs_marking(marking_definition_instance, isa_marking:ISAMarkings, marking_assertion:ISAMarkingsAssertion):
+def convert_edh_marking_to_acs_marking(marking_definition_instance, isa_marking, marking_assertion):
     acs_marking = {"extension_type": "property-extension"}
     # name is optional
     if isa_marking.create_date_time:
@@ -169,12 +165,14 @@ def convert_edh_marking_to_acs_marking(marking_definition_instance, isa_marking:
                 acs_marking["responsible_entity_custodian"] = responsible_entity_parts[1]
             if responsible_entity_parts[0] == "ORIG":
                 acs_marking["responsible_entity_originator"] = responsible_entity_parts[1]
-    if isa_marking.auth_ref:
-        pass
+
     if isa_marking.identifier:
         acs_marking["identifier"] = isa_marking.identifier
+    # prefer marking_assertion.auth_ref over isa_marking.auth_ref
     if marking_assertion.auth_ref:
-        acs_marking["auntority_reference"] = marking_assertion.auth_ref
+        acs_marking["authority_reference"] = marking_assertion.auth_ref
+    elif isa_marking.auth_ref:
+        acs_marking["authority_reference"] = isa_marking.auth_ref
     if marking_assertion.policy_ref:
         acs_marking["policy_reference"] = marking_assertion.policy_ref
     if marking_assertion.original_classification:
@@ -197,4 +195,4 @@ def convert_edh_marking_to_acs_marking(marking_definition_instance, isa_marking:
             acs_marking["further_sharing"].append(convert_further_sharing(fs))
     if marking_assertion.control_set:
         acs_marking["control_set"] = convert_control_set(marking_assertion.control_set)
-    marking_definition_instance["extensions"] = { "extension-definition--3a65884d-005a-4290-8335-cb2d778a83ce": acs_marking}
+    marking_definition_instance["extensions"] = {"extension-definition--3a65884d-005a-4290-8335-cb2d778a83ce": acs_marking}

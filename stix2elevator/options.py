@@ -147,7 +147,7 @@ class ElevatorOptions(object):
                  validator_args="--strict-types", enabled=None, disabled=None,
                  silent=False, message_log_directory=None,
                  policy="no_policy", output_directory=None, log_level="INFO",
-                 markings_allowed="", spec_version="2.1"):
+                 markings_allowed="", spec_version="2.1", acs=False):
 
         if cmd_args is not None:
             if hasattr(cmd_args, "file_"):
@@ -156,6 +156,7 @@ class ElevatorOptions(object):
             self.missing_policy = cmd_args.missing_policy
             self.custom_property_prefix = cmd_args.custom_property_prefix
             self.infrastructure = cmd_args.infrastructure
+            self.acs = cmd_args.acs
             self.package_created_by_id = cmd_args.package_created_by_id
             self.default_timestamp = cmd_args.default_timestamp
             self.validator_args = cmd_args.validator_args
@@ -177,6 +178,7 @@ class ElevatorOptions(object):
             self.missing_policy = missing_policy
             self.custom_property_prefix = custom_property_prefix
             self.infrastructure = infrastructure
+            self.acs = acs
             self.package_created_by_id = package_created_by_id
             self.default_timestamp = default_timestamp
             self.validator_args = validator_args
@@ -276,6 +278,10 @@ def initialize_options(options=None):
         if ALL_OPTIONS.missing_policy == "use-extensions" and ALL_OPTIONS.spec_version == "2.0":
             error("The missing policy option of 'use-extensions' cannot be used with version 2.0. 'use-custom-properies' is suggested", 216)
 
+        if ALL_OPTIONS.acs and ALL_OPTIONS.spec_version == "2.0":
+            warn("ACS data markings cannot be supported in version 2.0. --acs option is ignored.", 217)
+            ALL_OPTIONS.acs = False
+
 
 def get_validator_options():
     if ALL_OPTIONS:
@@ -310,23 +316,24 @@ def msg_id_enabled(msg_id):
 
 # These codes are aligned with elevator_log_messages spreadsheet.
 
-# current number of messages: 221
+# current number of messages: 173
 
 CHECK_CODES = [201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213,
-               214, 215, 216,
+               214, 215, 216, 217,
 
                301, 302, 303, 304, 305, 306, 307, 308, 309, 310, 311, 312, 313,
-               314, 315, 316, 317, 318,
+               314, 315, 316, 317, 318, 319,
 
                401, 402, 403, 404, 405, 406, 407, 408, 409, 410, 411, 412, 413,
                414, 415, 416, 417, 418, 419, 420, 421, 422, 423, 424, 425, 426,
-               427, 428, 429, 430, 431, 432, 433, 434, 435,
+               427, 428, 429, 430, 431, 432, 433, 434, 435, 436,
 
                501, 502, 503, 504, 505, 506, 507, 508, 509, 510, 511, 512,
 
                601, 602, 603, 604, 605, 606, 607, 608, 609, 610, 611, 612, 613,
                614, 615, 616, 617, 618, 619, 620, 621, 622, 623, 624, 625, 626,
                627, 628, 629, 630, 631, 632, 633, 634, 635, 636, 637, 638, 639,
+               640, 641,
 
                701, 702, 703, 704, 705, 706, 707, 708, 709, 710, 711, 712, 713,
                714, 715, 716, 717, 718, 719, 720, 721, 722, 723, 724, 725, 726,

@@ -1,0 +1,41 @@
+{
+    "id": "bundle--4c73e8e1-6761-429d-91c1-a5b374bfa9ed",
+    "objects": [
+        {
+            "count": 1,
+            "created": "9999-12-31T00:00:00.000Z",
+            "id": "sighting--226e3014-b0fa-4f99-ae14-26a9fcc825c9",
+            "modified": "9999-12-31T00:00:00.000Z",
+            "sighting_of_ref": "indicator--948c07f1-4630-4bf2-a780-686ce553f882",
+            "summary": false,
+            "type": "sighting"
+        },
+        {
+            "created": "9999-12-31T00:00:00.000Z",
+            "description": "This is a sample indicator description",
+            "id": "indicator--0f235cb3-d2f5-4020-bf1c-d0072b6e0230",
+            "labels": [
+                "ip-watchlist"
+            ],
+            "modified": "9999-12-31T00:00:00.000Z",
+            "pattern": "[(email-message:subject = 'New modifications to the specification' AND email-message:from_ref.value = 'attacker@example.com' AND (email-message:to_refs[*].value = 'victim1@target.com' OR email-message:to_refs[*].value = 'victim2@target.com')) AND ((email-message:body_multipart[*].body_raw_ref.hashes.MD5 = 'd41d8cd98f00b204e9800998ecf8427e' OR email-message:body_multipart[*].body_raw_ref.hashes.ssdeep = 'cf83e1357eefb8bdf1542850d66d8007d620e4050b5715dc83f4a921d36ce9ce47d0d13c5d85f2b0ff8318d2877eec2f63b931bd47417a81a538327af927da3e' OR email-message:body_multipart[*].body_raw_ref.hashes.MD5 = 'd41d8cd98f00b204e9800998ecf8427e' OR email-message:body_multipart[*].body_raw_ref.hashes.'SHA-1' = 'da39a3ee5e6b4b0d3255bfef95601890afd80709' OR email-message:body_multipart[*].body_raw_ref.hashes.'SHA-256' = 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855') AND (email-message:body_multipart[*].body_raw_ref.name = 'File Name' AND email-message:body_multipart[*].body_raw_ref.parent_directory_ref.path = 'Path/to/File') AND email-message:body_multipart[*].body_raw_ref.size = 134123)]",
+            "type": "indicator",
+            "valid_from": "9999-12-31T00:00:00.000000Z",
+            "valid_until": "9999-12-31T00:01:00.000000Z",
+            "x_elevator_confidence": "Medium"
+        },
+        {
+            "created": "2222-12-31T00:00:00.000Z",
+            "id": "indicator--c9f431d6-124a-44d2-8d16-25ea9fcc0fa0",
+            "labels": [
+                "unknown"
+            ],
+            "modified": "2222-12-31T00:00:00.000Z",
+            "pattern": "[(file:hashes.MD5 = 'd41d8cd98f00b204e9800998ecf8427e' OR file:hashes.ssdeep = 'cf83e1357eefb8bdf1542850d66d8007d620e4050b5715dc83f4a921d36ce9ce47d0d13c5d85f2b0ff8318d2877eec2f63b931bd47417a81a538327af927da3e' OR file:hashes.MD5 = 'd41d8cd98f00b204e9800998ecf8427e' OR file:hashes.'SHA-1' = 'da39a3ee5e6b4b0d3255bfef95601890afd80709' OR file:hashes.'SHA-256' = 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855') AND (file:name = 'File Name' AND file:parent_directory_ref.path = 'Path/to/File') AND file:size = 134123]",
+            "type": "indicator",
+            "valid_from": "2222-12-31T00:00:00.000000Z"
+        }
+    ],
+    "spec_version": "2.0",
+    "type": "bundle"
+}

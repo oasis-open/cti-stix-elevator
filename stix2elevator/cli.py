@@ -77,6 +77,14 @@ def _get_arg_parser(is_script=True):
     )
 
     parser.add_argument(
+        "--acs",
+        help="Process ACS data markings",
+        dest="acs",
+        action="store_true",
+        default=False
+    )
+
+    parser.add_argument(
         "--package-created-by-id",
         help="Use provided identifier for \"created_by_ref\" properties. "
              "Example: --package-created-by-id \"identity--1234abcd-1a12-42a3-0ab4-1234abcd5678\"",

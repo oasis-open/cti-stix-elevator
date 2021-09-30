@@ -8,7 +8,9 @@ import pluralizer
 # internal
 from stix2elevator.extension_definitions import get_extension_definition_id
 from stix2elevator.options import get_option_value, info, warn
-from stix2elevator.utils import convert_to_stix_literal, strftime_with_appropriate_fractional_seconds
+from stix2elevator.utils import (
+    convert_to_stix_literal, strftime_with_appropriate_fractional_seconds
+)
 
 _PLURALIZER = None
 

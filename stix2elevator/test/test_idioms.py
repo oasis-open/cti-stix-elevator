@@ -12,7 +12,8 @@ from stix2elevator.options import (
     get_option_value, initialize_options, set_option_value
 )
 from stix2elevator.utils import (
-    extension_definition_id_property, find_dir, id_property, iterpath
+    extension_definition_id_property, find_dir, get_environment_variable_value,
+    id_property, iterpath
 )
 
 BEFORE_FILES = []
@@ -45,6 +46,8 @@ def idiom_elevator_mappings(before_file_path, stored_json, version, missing_poli
     if not get_option_value("policy") == "no_policy":
         print("'no_policy' is the default for testing")
     set_option_value("policy", "no_policy")
+    if version == "2.1":
+        set_option_value("acs", True)
     sys.setrecursionlimit(3000)
     converted_json = elevate(before_file_path)
     print(converted_json)
@@ -160,12 +163,12 @@ def test_elevator_idiom_mapping(test_file, stored_master, version, missing_polic
 
 
 def pytest_generate_tests(metafunc):
-    version = os.environ['VERSION']
+    version = get_environment_variable_value('VERSION', "2.1")
     if version == "2.1":
         ignore = _IGNORE_2_x
     else:
         ignore = _IGNORE_2_x + _ID_IGNORE_2_0
-    missing_policy = os.environ["MISSING_POLICY"]
+    missing_policy = get_environment_variable_value("MISSING_POLICY", "ignore")
     if missing_policy not in ["use-custom-properties", "add-to-description", "ignore", "use-extensions"]:
         raise RuntimeError("Missing policy " + missing_policy + " isn't one of the policy choices")
     setup_elevator_tests(version, missing_policy)

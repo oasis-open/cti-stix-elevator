@@ -257,15 +257,13 @@ def operation_on_path(obj, path, value, op=1):
         current = int(current.strip("[]"))
         current_obj = obj[current]
     else:
-        if current in obj:
-            current_obj = obj[current]
+        current_obj = obj[current]
 
     if not path:
         if op == 1:
             obj[current] = value
         elif op == 2:
-            if current in obj:
-                del obj[current]
+            del obj[current]
 
         return
 
@@ -324,7 +322,15 @@ def encode_in_base64(s):
 
 
 def convert_to_stix_literal(s):
-    return re.sub("\-+", "-", s.replace(" ", "-").lower())
+    return re.sub("\\-+", "-", s.replace(" ", "-").lower())
+
+
+def get_environment_variable_value(name, no_value_default="ignore"):
+    value = os.getenv(name)
+    if value:
+        return value
+    else:
+        return no_value_default
 
 
 class Environment():
