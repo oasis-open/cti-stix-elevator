@@ -5,7 +5,9 @@
             "created": "9999-12-31T00:00:00.000Z",
             "extensions": {
                 "extension-definition--3a65884d-005a-4290-8335-cb2d778a83ce": {
-                    "authority_reference": "urn:isa:authority:misa",
+                    "authority_reference": [
+                        "urn:isa:authority:misa"
+                    ],
                     "control_set": {
                         "classification": "U",
                         "formal_determination": [

@@ -168,11 +168,16 @@ def convert_edh_marking_to_acs_marking(marking_definition_instance, isa_marking,
 
     if isa_marking.identifier:
         acs_marking["identifier"] = isa_marking.identifier
-    # prefer marking_assertion.auth_ref over isa_marking.auth_ref
+
+    # both auth_ref properties in the XML schema are minOccurs="0" maxOccurs="1"
     if marking_assertion.auth_ref:
-        acs_marking["authority_reference"] = marking_assertion.auth_ref
+        acs_marking["authority_reference"] = [marking_assertion.auth_ref]
     elif isa_marking.auth_ref:
-        acs_marking["authority_reference"] = isa_marking.auth_ref
+        if acs_marking["authority_reference"]:
+            acs_marking["authority_reference"].append(isa_marking.auth_ref)
+        else:
+            acs_marking["authority_reference"] = isa_marking.auth_ref
+
     if marking_assertion.policy_ref:
         acs_marking["policy_reference"] = marking_assertion.policy_ref
     if marking_assertion.original_classification:
