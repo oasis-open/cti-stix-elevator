@@ -24,7 +24,7 @@
                             }
                         }
                     ],
-                    "auntority_reference": "urn:isa:authority:misa",
+                    "authority_reference": "urn:isa:authority:misa",
                     "control_set": {
                         "classification": "U",
                         "formal_determination": [
