@@ -1,0 +1,100 @@
+{
+    "id": "bundle--8ba8d091-2a49-48bc-86e4-bced167fc9df",
+    "objects": [
+        {
+            "created": "9999-12-31T00:00:00.000Z",
+            "description": "This is the description of a CISA defensive measure",
+            "id": "course-of-action--709db951-3ba8-4691-9357-d4cd7b088b82",
+            "modified": "9999-12-31T00:00:00.000Z",
+            "name": "This is the title of the CISA defensive measure",
+            "type": "course-of-action"
+        },
+        {
+            "created": "9999-12-31T00:00:00.000Z",
+            "description": "This is the description of a new Vulnerability.",
+            "external_references": [
+                {
+                    "external_id": "CVE-1234-9999",
+                    "source_name": "cve"
+                },
+                {
+                    "external_id": "1",
+                    "source_name": "osvdb"
+                }
+            ],
+            "id": "vulnerability--1176c2f1-ed68-4dc5-8a01-4bf48a350f64",
+            "modified": "9999-12-31T00:00:00.000Z",
+            "name": "Title of a vulnerability containing an ID that needs to be sanitized.  Regression_Test-et-11.  And now another one that doesn't exist elsewhere isa:guide.19001.123.456 and one with a different namespace Another-01",
+            "type": "vulnerability"
+        },
+        {
+            "created": "9999-12-31T00:00:00.000Z",
+            "external_references": [
+                {
+                    "external_id": "CVE-1234-9999",
+                    "source_name": "cve"
+                },
+                {
+                    "external_id": "1",
+                    "source_name": "osvdb"
+                }
+            ],
+            "id": "vulnerability--2da4bfd6-94ca-41e1-8245-7fd0d74adfd9",
+            "modified": "9999-12-31T00:00:00.000Z",
+            "name": "Doesn't have one",
+            "type": "vulnerability"
+        },
+        {
+            "count": 1,
+            "created": "9999-12-31T00:00:00.000Z",
+            "id": "sighting--5f8e6b75-de1e-4f23-aa37-507ed33bb91b",
+            "modified": "9999-12-31T00:00:00.000Z",
+            "sighting_of_ref": "indicator--5c7f3088-9ec9-49d5-8df1-04fe828ccfc1",
+            "summary": false,
+            "type": "sighting"
+        },
+                {
+            "created": "9999-12-31T00:00:00.000Z",
+            "description": "This is a sample indicator description",
+            "id": "indicator--4a91a2ed-fc24-4113-9a28-fecd37d3c81c",
+            "labels": [
+                "ip-watchlist"
+            ],
+            "modified": "9999-12-31T00:00:00.000Z",
+            "pattern": "[ipv4-addr:value = '1.1.10.1'] AND [ipv4-addr:value = '1.1.1.1']",
+            "type": "indicator",
+            "valid_from": "9999-12-31T00:00:00.000000Z",
+            "valid_until": "9999-12-31T00:01:00.000000Z",
+            "x_elevator_confidence": "Medium"
+        },
+        {
+            "created": "9999-12-31T00:00:00.000Z",
+            "id": "relationship--c6c3ac54-c343-4f6e-b9e1-31793b417ab9",
+            "modified": "9999-12-31T00:00:00.000Z",
+            "relationship_type": "mitigates",
+            "source_ref": "course-of-action--709db951-3ba8-4691-9357-d4cd7b088b82",
+            "target_ref": "vulnerability--1176c2f1-ed68-4dc5-8a01-4bf48a350f64",
+            "type": "relationship"
+        },
+        {
+            "created": "9999-12-31T00:00:00.000Z",
+            "id": "relationship--2e62b247-bbc0-43c8-9be7-750dffa42391",
+            "modified": "9999-12-31T00:00:00.000Z",
+            "relationship_type": "mitigates",
+            "source_ref": "course-of-action--709db951-3ba8-4691-9357-d4cd7b088b82",
+            "target_ref": "vulnerability--2da4bfd6-94ca-41e1-8245-7fd0d74adfd9",
+            "type": "relationship"
+        },
+        {
+            "created": "9999-12-31T00:00:00.000Z",
+            "id": "relationship--bf13f0c4-2666-4a56-96d1-e6e44cdd11e4",
+            "modified": "9999-12-31T00:00:00.000Z",
+            "relationship_type": "investigates",
+            "source_ref": "course-of-action--709db951-3ba8-4691-9357-d4cd7b088b82",
+            "target_ref": "indicator--5c7f3088-9ec9-49d5-8df1-04fe828ccfc1",
+            "type": "relationship"
+        }
+    ],
+    "spec_version": "2.0",
+    "type": "bundle"
+}

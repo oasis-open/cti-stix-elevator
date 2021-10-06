@@ -21,7 +21,8 @@
                                 "shareability": [
                                     "ALL"
                                 ]
-                            }
+                            },
+                            "rule_effect": "permit"
                         }
                     ],
                     "authority_reference": [

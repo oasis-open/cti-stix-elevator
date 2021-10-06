@@ -9,17 +9,15 @@
                         {
                             "privilege_action": "CISAUSES",
                             "privilege_scope": {
-                                "entity": [
-                                    "ALL"
-                                ],
                                 "permitted_nationalities": [
-                                    "ALL"
-                                ],
-                                "permitted_organizations": [
-                                    "ALL"
+                                    "USA",
+                                    "AUS",
+                                    "CAN",
+                                    "GBR",
+                                    "NZL"
                                 ],
                                 "shareability": [
-                                    "ALL"
+                                    "LE"
                                 ]
                             },
                             "rule_effect": "permit"

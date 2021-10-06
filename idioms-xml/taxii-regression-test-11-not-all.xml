@@ -1,7 +1,9 @@
 
 <stix:STIX_Package 
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:coa="http://stix.mitre.org/CourseOfAction-1"
 	xmlns:marking="http://data-marking.mitre.org/Marking-1"
+	xmlns:et="http://stix.mitre.org/ExploitTarget-1"
 	xmlns:indicator="http://stix.mitre.org/Indicator-2"
 	xmlns:stixCommon="http://stix.mitre.org/common-1"
 	xmlns:stix="http://stix.mitre.org/stix-1" 
@@ -14,12 +16,15 @@
 	xmlns:cybox="http://cybox.mitre.org/cybox-2"
 	xmlns:cyboxVocabs="http://cybox.mitre.org/default_vocabularies-2"
 	xmlns:AddressObj="http://cybox.mitre.org/objects#AddressObject-2"
+	xmlns:isa="http://www.us-cert.gov/sites/default/files/STIX_Namespace/ISAMarkingsType.v2.xsd"
 	xmlns:edh2cyberMarking="http://www.us-cert.gov/sites/default/files/STIX_Namespace/ISAMarkingsType.v2.xsd"
 	xmlns:edh2cyberMarkingAssert="http://www.us-cert.gov/sites/default/files/STIX_Namespace/ISAMarkingsAssertionsType.v2.xsd"
 	xmlns:edh2="urn:edm:edh:cyber:v3"
 	xsi:schemaLocation="
+	http://stix.mitre.org/CourseOfAction-1 http://stix.mitre.org/XMLSchema/course_of_action/1.1.1/course_of_action.xsd
 	http://data-marking.mitre.org/Marking-1 http://stix.mitre.org/XMLSchema/data_marking/1.1.1/data_marking.xsd
-	http://stix.mitre.org/Indicator-2 http://stix.mitre.org/XMLSchema/indicator/2.1.1/indicator.xsd
+	http://stix.mitre.org/ExploitTarget-1 http://stix.mitre.org/XMLSchema/exploit_target/1.1.1/exploit_target.xsd
+	http://stix.mitre.org/Indicator-2 http://stix.mitre.org/XMLSchema/indicator/2.1.1/indicator.xsd	
 	http://stix.mitre.org/common-1 http://stix.mitre.org/XMLSchema/common/1.1.1/stix_common.xsd
 	http://stix.mitre.org/stix-1 http://stix.mitre.org/XMLSchema/core/1.1.1/stix_core.xsd
 	http://stix.mitre.org/default_vocabularies-1 http://stix.mitre.org/XMLSchema/default_vocabularies/1.1.1/stix_default_vocabularies.xsd
@@ -31,18 +36,18 @@
 	http://www.us-cert.gov/sites/default/files/STIX_Namespace/ISAMarkingsAssertionsType.v2.xsd http://www.us-cert.gov/sites/default/files/STIX_Namespace/local_ISAMarkingsAssertionsType.v2.xsd
 	urn:edm:edh:cyber:v3 http://www.us-cert.gov/sites/default/files/STIX_Namespace/local_SD-EDH_Profile_Cyber.v3.xsd
 	"
-	id="regression-test-13-01"
+	id="regression-test-11-01"
 	version="1.1.1"
 	timestamp="9999-12-31T00:00:00Z">
 	<stix:STIX_Header>
-		<stix:Title>regression-test-13</stix:Title>
+		<stix:Title>regression-test-11</stix:Title>
 		<stix:Package_Intent xsi:type="stixVocabs:PackageIntentVocab-1.0">Indicators</stix:Package_Intent>
 		<stix:Package_Intent xsi:type="stixVocabs:PackageIntentVocab-1.0">Threat Report</stix:Package_Intent>
-		<stix:Description>Test of FD Pubrel. </stix:Description>
+		<stix:Description>Test of FDAIS and FOUO.  Confirm that the following string is auto-sanitized, in this text field - Regression_Test_11. Confirm the string with which it is replaced matches the sanitized ID for the package.</stix:Description>
 		<stix:Handling>
 			<marking:Marking>
 				<marking:Marking_Structure xsi:type="edh2cyberMarking:ISAMarkingsType" isam_version="2.0">
-					<edh2:Identifier>isa:guide.19001.40af97be-00bf-4648-9e70-296a6a8eda12</edh2:Identifier>
+					<edh2:Identifier>isa:guide.19001.40af97be-00bf-4648-9e70-296a6a8eda01</edh2:Identifier>
 					<edh2:CreateDateTime>2014-09-30T19:00:00.00Z</edh2:CreateDateTime>
 					<edh2:ResponsibleEntity>CUST:USA.NSA ORIG:USA.USG</edh2:ResponsibleEntity>
 				</marking:Marking_Structure>
@@ -50,18 +55,18 @@
 			<marking:Marking>
 				<marking:Controlled_Structure>//node()</marking:Controlled_Structure>
 				<marking:Marking_Structure xsi:type="edh2cyberMarkingAssert:ISAMarkingsAssertionType" isam_version="2.0" default_marking="true">
-				  <edh2:PolicyRef>urn:isa:policy:acs:ns:v3.0?privdefault=deny&amp;sharedefault=permit</edh2:PolicyRef>
+				  <edh2:PolicyRef>urn:isa:policy:acs:ns:v3.0?privdefault=deny&amp;sharedefault=deny</edh2:PolicyRef>
 				  <edh2:AuthRef>urn:isa:authority:misa</edh2:AuthRef>
 				  <edh2:AccessPrivilege>
 					<edh2:privilegeAction>CISAUSES</edh2:privilegeAction>
-					<edh2:privilegeScope>ALL</edh2:privilegeScope>
+					<edh2:privilegeScope>CTRY:USA CTRY:AUS CTRY:CAN CTRY:GBR CTRY:NZL SHAR:LE</edh2:privilegeScope>
 					<edh2:ruleEffect>permit</edh2:ruleEffect>
 				  </edh2:AccessPrivilege>
-				  <edh2:ControlSet>CLS:U FD:PUBREL</edh2:ControlSet>
-				  <edh2:PublicRelease>
-					<edh2:releasedBy>USA.USG</edh2:releasedBy>
-					<edh2:releasedOn>2016-07-19</edh2:releasedOn>
-				  </edh2:PublicRelease>
+				  <edh2:FurtherSharing>
+					<edh2:sharingScope>USA.USG</edh2:sharingScope>
+					<edh2:ruleEffect>permit</edh2:ruleEffect>
+				  </edh2:FurtherSharing>
+				  <edh2:ControlSet>CLS:U FD:AIS FD:FOUO</edh2:ControlSet>
 				</marking:Marking_Structure>
 			</marking:Marking>
 		</stix:Handling>
@@ -69,28 +74,33 @@
 	
 
 		<stix:Indicators>
-		<stix:Indicator id="isa:guide.19001.regression-test-13-01" timestamp="9999-12-31T00:00:00Z" xsi:type="indicator:IndicatorType">
+		<stix:Indicator id="isa:guide.19001.regression-test-11-01" timestamp="9999-12-31T00:00:00Z" xsi:type="indicator:IndicatorType">
 			<indicator:Type xsi:type="stixVocabs:IndicatorTypeVocab-1.1">IP Watchlist</indicator:Type>
 			<indicator:Description>This is a sample indicator description</indicator:Description>
 			<indicator:Valid_Time_Position>
 				<indicator:Start_Time precision="month">9999-12-31T00:00:00Z</indicator:Start_Time>
 				<indicator:End_Time precision="minute">9999-12-31T00:01:00Z</indicator:End_Time>
 			</indicator:Valid_Time_Position>
-			<indicator:Observable id="obs-regression-test-13">
-				<cybox:Object id="obj-regression-test-13">
+			<indicator:Observable id="obs-regression-test-11-01">
+				<cybox:Object id="obj-regression-test-11-01">
 					<cybox:Properties xsi:type="AddressObj:AddressObjectType" category="ipv4-addr" is_source="false" is_destination="true" is_spoofed="false">
-						<AddressObj:Address_Value>1.1.1.12</AddressObj:Address_Value>
+						<AddressObj:Address_Value>1.1.1.1</AddressObj:Address_Value>
 					</cybox:Properties>
 					<cybox:Related_Objects>
-						<cybox:Related_Object id="rel-obj-regression-test-13">
+						<cybox:Related_Object id="rel-obj-regression-test-11-01">
 							<cybox:Properties xsi:type="AddressObj:AddressObjectType" category="ipv4-addr" is_source="false" is_destination="true" is_spoofed="false">
-								<AddressObj:Address_Value>1.1.10.12</AddressObj:Address_Value>
+								<AddressObj:Address_Value>1.1.10.1</AddressObj:Address_Value>
 							</cybox:Properties>
 							<cybox:Relationship xsi:type="cyboxVocabs:ObjectRelationshipVocab-1.1">Redirects_To</cybox:Relationship>
 						</cybox:Related_Object>
 					</cybox:Related_Objects>
 				</cybox:Object>
 			</indicator:Observable>
+			<indicator:Suggested_COAs>
+				<indicator:Suggested_COA>
+					<stixCommon:Course_Of_Action idref="coa-regression-test-11-01" timestamp="9999-12-31T00:00:00Z"></stixCommon:Course_Of_Action>
+				</indicator:Suggested_COA>
+			</indicator:Suggested_COAs>
 			<indicator:Confidence>
 				<stixCommon:Value xsi:type="stixVocabs:HighMediumLowVocab-1.0">Medium</stixCommon:Value>
 			</indicator:Confidence>
@@ -99,6 +109,35 @@
 			</indicator:Sightings>
 		</stix:Indicator>
 	</stix:Indicators>
-
+	
+	<stix:Exploit_Targets>
+		<stixCommon:Exploit_Target id="et-regression-test-11-01" timestamp="9999-12-31T00:00:00Z" xsi:type="et:ExploitTargetType">
+			<et:Vulnerability>
+				<et:Title>Title of a vulnerability containing an ID that needs to be sanitized.  Regression_Test-et-11.  And now another one that doesn't exist elsewhere isa:guide.19001.123.456 and one with a different namespace Another-01</et:Title>
+				<et:Description>This is the description of a new Vulnerability.</et:Description>
+				<et:CVE_ID>CVE-1234-9999</et:CVE_ID>
+				<et:OSVDB_ID>1</et:OSVDB_ID>
+			</et:Vulnerability>
+			<et:Vulnerability>
+				<et:Title>Doesn't have one</et:Title>
+				<et:CVE_ID>CVE-1234-9999</et:CVE_ID>
+				<et:OSVDB_ID>1</et:OSVDB_ID>
+			</et:Vulnerability>
+			<et:Potential_COAs>
+				<et:Potential_COA>
+					<stixCommon:Course_Of_Action idref="coa-regression-test-11-01" timestamp="9999-12-31T00:00:00Z"></stixCommon:Course_Of_Action>
+				</et:Potential_COA>
+			</et:Potential_COAs>
+		</stixCommon:Exploit_Target>
+	</stix:Exploit_Targets>
+	
+	<stix:Courses_Of_Action>
+		<stix:Course_Of_Action id="coa-regression-test-11-01" timestamp="9999-12-31T00:00:00Z" xsi:type="coa:CourseOfActionType">
+			<coa:Title>This is the title of the CISA defensive measure</coa:Title>
+			<coa:Description>This is the description of a CISA defensive measure</coa:Description>
+		</stix:Course_Of_Action>
+	</stix:Courses_Of_Action>
+	
+	
 	
 </stix:STIX_Package>

@@ -35,8 +35,14 @@ from stix.incident import Incident
 from stix.indicator import Indicator
 from stix.threat_actor import ThreatActor
 from stix.ttp import TTP
-from stix_edh.isa_markings import ISAMarkings
-from stix_edh.isa_markings_assertions import ISAMarkingsAssertion
+
+try:
+    from stix_edh.isa_markings import ISAMarkings
+    from stix_edh.isa_markings_assertions import ISAMarkingsAssertion
+    _acs_import = True
+except ImportError:
+    _acs_import = False
+
 from stixmarx import navigator
 
 # internal
@@ -416,9 +422,9 @@ def convert_marking_specification(marking_specification, env, stix1x_id, isa_mar
                         definition["tlp"] = str(marking_structure.not_proprietary.tlp_marking.color).lower()
                         set_tlp_reference(marking_definition_instance, definition["tlp"], "marking_ref")
                 marking_definition_instance["definition"] = definition
-            elif isinstance(marking_structure, ISAMarkings):
+            elif _acs_import and isinstance(marking_structure, ISAMarkings):
                 isa_marking = marking_structure
-            elif isinstance(marking_structure, ISAMarkingsAssertion):
+            elif _acs_import and isinstance(marking_structure, ISAMarkingsAssertion):
                 isa_marking_assertions.append(marking_structure)
 
             else:
@@ -437,22 +443,28 @@ def convert_marking_specification(marking_specification, env, stix1x_id, isa_mar
                     finish_basic_object(marking_specification.id_, marking_definition_instance, env, marking_structure)
                     return_obj.append(marking_definition_instance)
 
-        if isa_marking_assertions:
-            if isa_marking:
-                if get_option_value("acs"):
-                    for m in isa_marking_assertions:
-                        marking_definition_instance = create_basic_object("marking-definition", m, env)
-                        convert_edh_marking_to_acs_marking(marking_definition_instance, isa_marking, m)
-                        val = add_marking_map_entry(m, marking_definition_instance)
-                        if val is not None and not isinstance(val, MarkingStructure):
-                            info("Found same marking structure %s, using %s", 625, identifying_info(m), val)
+        if not _acs_import and get_option_value("acs"):
+            raise ImportError("stix_edh library is required for ACS data markings")
+        else:
+            if isa_marking_assertions:
+                if isa_marking:
+                    if get_option_value("acs"):
+                        for m in isa_marking_assertions:
+                            marking_definition_instance = create_basic_object("marking-definition", m, env)
+                            convert_edh_marking_to_acs_marking(marking_definition_instance, isa_marking, m)
+                            val = add_marking_map_entry(m, marking_definition_instance)
+                            if val is not None and not isinstance(val, MarkingStructure):
+                                info("Found same marking structure %s, using %s", 625, identifying_info(m), val)
+                            else:
+                                info("Created Marking Structure for %s", 212, identifying_info(m))
+                                finish_basic_object(marking_specification.id_, marking_definition_instance, env, marking_structure)
+                                warn("Used extensions for ACS data markings. See %s", 319, marking_definition_instance["id"])
+                                return_obj.append(marking_definition_instance)
+                    else:
+                        if get_option_value("spec_version") == "2.1":
+                            warn("ACS data markings only supported when --acs option is used. See %s", 436, isa_marking.identifier)
                         else:
-                            info("Created Marking Structure for %s", 212, identifying_info(m))
-                            finish_basic_object(marking_specification.id_, marking_definition_instance, env, marking_structure)
-                            warn("Used extensions for ACS data markings. See %s", 319, marking_definition_instance["id"])
-                            return_obj.append(marking_definition_instance)
-                else:
-                    warn("ACS data markings only supported when --acs option is used. See %s", 436, isa_marking.identifier)
+                            warn("ACS data markings cannot be supported in version 2.0.", 217)
     return return_obj, isa_marking
 
 
@@ -1624,7 +1636,7 @@ def convert_indicator(indicator, env):
                 else:
                     indicator_instance["valid_from"] = convert_timestamp_to_string(window.start_time.value)
                 if not window.end_time:
-                    warn("No start time for the first valid time interval is available in %s, other time intervals might be more appropriate",
+                    warn("No end time for the first valid time interval is available in %s, other time intervals might be more appropriate",
                          619, indicator_instance["id"])
                 else:
                     indicator_instance["valid_until"] = convert_timestamp_to_string(window.end_time.value)
@@ -2611,9 +2623,8 @@ def convert_package(stix_package, env):
                                                                          isa_marking,
                                                                          isa_marking_assertions)
             for marking in stix2x_markings:
-                if "definition_type" in marking and marking["definition_type"] != "ais":
-                    bundle_instance["objects"].append(marking)
-                elif "extensions" in marking:
+                if (("definition_type" in marking and marking["definition_type"] != "ais") or
+                        "extensions" in marking):
                     bundle_instance["objects"].append(marking)
 
     # do observables first, especially before indicators!

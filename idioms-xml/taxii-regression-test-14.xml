@@ -1,18 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!--
-	
-	This online template may be used as a starting point for creating STIX documents. Fill in the appropriate elements and add data as necessary. When finished, extra namespace declarations and schema locations may (but do not have to be) removed.
-	
-	All content (including the markings) are for sample purposes only and do not reflect actual threat intelligence or handling instructions.
-	
-	The copyright statement and license reference below (in addition to this entire comment) may be removed once this file is altered. When distributed in its current form as the STIX online template, however, it should be retained to indicate it is part of the STIX open source project.
-	
-	******************************************************************************************************************************
-	Copyright (c) 2014, The MITRE Corporation. All rights reserved. 
-    The contents of this file are subject to the terms of the STIX License located at http://stix.mitre.org/about/termsofuse.html.
-    ******************************************************************************************************************************
-	
--->
 <stix:STIX_Package 
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:marking="http://data-marking.mitre.org/Marking-1"
@@ -50,7 +36,7 @@
 	http://cybox.mitre.org/objects#FileObject-2 http://cybox.mitre.org/XMLSchema/objects/File/2.1/File_Object.xsd
 	http://www.us-cert.gov/sites/default/files/STIX_Namespace/ISAMarkingsType.v2.xsd http://www.us-cert.gov/sites/default/files/STIX_Namespace/local_ISAMarkingsType.v2.xsd
 	http://www.us-cert.gov/sites/default/files/STIX_Namespace/ISAMarkingsAssertionsType.v2.xsd http://www.us-cert.gov/sites/default/files/STIX_Namespace/local_ISAMarkingsAssertionsType.v2.xsd
-	"
+	urn:edm:edh:cyber:v3 http://www.us-cert.gov/sites/default/files/STIX_Namespace/local_SD-EDH_Profile_Cyber.v3.xsd"
 	id="regression-test-14-01"
 	version="1.1.1"
 	timestamp="9999-12-31T00:00:00Z">

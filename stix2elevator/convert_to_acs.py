@@ -3,6 +3,9 @@ from stix2elevator.options import warn
 from stix2elevator.utils import convert_timestamp_to_string
 
 
+_ACS_EXTENSION_DEFINITION_ID = "extension-definition--3a65884d-005a-4290-8335-cb2d778a83ce"
+
+
 def convert_original_classification(original_classification):
     co = {}
     if original_classification.classified_by:
@@ -63,6 +66,7 @@ def convert_public_release(public_release):
         warn("Required property %s is not provided for ACS data marking", 641, "released_by")
     if public_release.released_on:
         pr["released_on"] = convert_timestamp_to_string(public_release.released_on)
+    return pr
 
 
 def convert_one_scope(ps, property, item):
@@ -73,23 +77,24 @@ def convert_one_scope(ps, property, item):
 
 def convert_privilege_scope(privilege_scope):
     ps = {}
-    for item in privilege_scope:
-        if str(item) == "ALL":
+    for s in privilege_scope:
+        if str(s) == "ALL":
             convert_one_scope(ps, "permitted_nationalities", "ALL")
             convert_one_scope(ps, "permitted_organizations", "ALL")
             convert_one_scope(ps, "shareability", "ALL")
             convert_one_scope(ps, "entity", "ALL")
             return ps
-        item_parts = item.split(":")
-        token = item_parts[0]
-        if token == "CTRY":
-            convert_one_scope(ps, "permitted_nationalities", item_parts[1])
-        elif token == "ORG":
-            convert_one_scope(ps, "permitted_organizations", item_parts[1])
-        elif token == "SHAR":
-            convert_one_scope(ps, "shareability", item_parts[1])
-        elif token == "ENTITY":
-            convert_one_scope(ps, "entity", item_parts[1])
+        for item in s:
+            item_parts = item.split(":")
+            token = item_parts[0]
+            if token == "CTRY":
+                convert_one_scope(ps, "permitted_nationalities", item_parts[1])
+            elif token == "ORG":
+                convert_one_scope(ps, "permitted_organizations", item_parts[1])
+            elif token == "SHAR":
+                convert_one_scope(ps, "shareability", item_parts[1])
+            elif token == "ENTITY":
+                convert_one_scope(ps, "entity", item_parts[1])
     return ps
 
 
@@ -103,6 +108,10 @@ def convert_access_privilege(access_privilege):
         ap["privilege_scope"] = convert_privilege_scope(access_privilege.privilege_scope)
     else:
         warn("Required property %s is not provided for ACS data marking", 641, "privilege_scope")
+    if access_privilege.rule_effect:
+        ap["rule_effect"] = str(access_privilege.rule_effect)
+    else:
+        warn("Required property %s is not provided for ACS data marking", 641, "rule_effect")
     return ap
 
 
@@ -172,7 +181,7 @@ def convert_edh_marking_to_acs_marking(marking_definition_instance, isa_marking,
     # both auth_ref properties in the XML schema are minOccurs="0" maxOccurs="1"
     if marking_assertion.auth_ref:
         acs_marking["authority_reference"] = [marking_assertion.auth_ref]
-    elif isa_marking.auth_ref:
+    if isa_marking.auth_ref:
         if acs_marking["authority_reference"]:
             acs_marking["authority_reference"].append(isa_marking.auth_ref)
         else:
@@ -200,4 +209,4 @@ def convert_edh_marking_to_acs_marking(marking_definition_instance, isa_marking,
             acs_marking["further_sharing"].append(convert_further_sharing(fs))
     if marking_assertion.control_set:
         acs_marking["control_set"] = convert_control_set(marking_assertion.control_set)
-    marking_definition_instance["extensions"] = {"extension-definition--3a65884d-005a-4290-8335-cb2d778a83ce": acs_marking}
+    marking_definition_instance["extensions"] = {_ACS_EXTENSION_DEFINITION_ID: acs_marking}
