@@ -42,3 +42,32 @@ You can also install the stix2-elevator from GitHub to get the latest (unstable)
 .. code-block:: bash
 
     $ pip install git+https://github.com/oasis-open/cti-stix-elevator.git
+
+Installation Steps for ACS Data Marking Support
+-----------------------------------------------
+
+ACS data markings correspond to the common marking scheme used by the U.S. government (e.g., U, C, S, TS).
+To elevate STIX 1.x content that contains ACS data markings, it is necessary to install an additional python package
+called 'stix_edh'.
+
+Install with pip
+
+.. code-block:: bash
+
+    $ pip install stix2-elevator[acs]
+
+Installation Steps for Ignoring Data Markings Not Defined in the STIX Specification
+-----------------------------------------------------------------------------------
+
+The elevator uses the -m option to declare data marking python classes that support data markings not defined within the
+STIX specification.  See the Command Line Interface section for an example.
+
+However, the elevator must import those class definitions.  The suggested way is to create a small python wrapper script
+that imports the needed package.
+
+.. code-block:: python
+
+    import <data marking package>
+    from stix2elevator import elevate
+
+    elevate(...)
