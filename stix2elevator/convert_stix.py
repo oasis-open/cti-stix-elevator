@@ -37,12 +37,14 @@ from stix.threat_actor import ThreatActor
 from stix.ttp import TTP
 
 try:
+    # external
     from stix_edh.isa_markings import ISAMarkings
     from stix_edh.isa_markings_assertions import ISAMarkingsAssertion
     _acs_import = True
 except ImportError:
     _acs_import = False
 
+# external
 from stixmarx import navigator
 
 # internal

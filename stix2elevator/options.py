@@ -316,7 +316,7 @@ def msg_id_enabled(msg_id):
 
 # These codes are aligned with elevator_log_messages spreadsheet.
 
-# current number of messages: 173
+# current number of messages: 177
 
 CHECK_CODES = [201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213,
                214, 215, 216, 217,

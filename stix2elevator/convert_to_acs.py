@@ -2,7 +2,6 @@
 from stix2elevator.options import warn
 from stix2elevator.utils import convert_timestamp_to_string
 
-
 _ACS_EXTENSION_DEFINITION_ID = "extension-definition--3a65884d-005a-4290-8335-cb2d778a83ce"
 
 
@@ -30,9 +29,9 @@ def convert_derivative_classification(derivative_classification):
     if derivative_classification.classified_on:
         cd["classified_on"] = convert_timestamp_to_string(derivative_classification.classified_on)
     if derivative_classification.derived_from:
-        cd["dervived_from"] = str(derivative_classification.derived_from)
+        cd["derived_from"] = str(derivative_classification.derived_from)
     else:
-        warn("Required property %s is not provided for ACS data marking", 641, "classified_by")
+        warn("Required property %s is not provided for ACS data marking", 641, "derived_from")
     return cd
 
 
