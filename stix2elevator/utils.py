@@ -322,7 +322,15 @@ def encode_in_base64(s):
 
 
 def convert_to_stix_literal(s):
-    return re.sub("\-+", "-", s.replace(" ", "-").lower())
+    return re.sub("\\-+", "-", s.replace(" ", "-").lower())
+
+
+def get_environment_variable_value(name, no_value_default="ignore"):
+    value = os.getenv(name)
+    if value:
+        return value
+    else:
+        return no_value_default
 
 
 class Environment():

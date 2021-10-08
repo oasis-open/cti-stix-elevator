@@ -28,6 +28,7 @@ custom_property_prefix is provided, but the missing policy is not 'use-custom-pr
 *type* option was not given, but it defaults to true for version 2.1"                                              214     info
 Custom properties/objects/extensions are deprecated in version 2.1.  Suggest using 'use-extensions' instead        215     info
 The missing policy option of 'use-extensions' cannot be used with version 2.0. 'use-custom-properies' is suggested 216     error
+ACS data markings cannot be supported in version 2.0. --acs option is ignored.                                     217     warn
 ================================================================================================================== ====    =====
 
 
@@ -54,6 +55,8 @@ Property *property_name* of *id* is ignored, because it can't be represented in 
 New extension-definition id *id* was generated for *type*. *id*                                                                315     warn
 Custom Content *property_name* of *id* is ignored                                                                              316     warn
 Used *object_path* for extension property for *property_name*                                                                  317     warn
+Token in control set not recognized: *token*                                                                                   318     warn
+Used extensions for ACS data markings. See *id*                                                                                319     warn
 ============================================================================================================================== ====    =====
 
 
@@ -98,6 +101,7 @@ The confidence value *value* cannot be converted                                
 Location with free text address in *id* not handled yet                                                                                        433     warn
 Observed Data objects cannot refer to other external objects: *property name* in *type*"                                                       434     warn
 CIQ Address information in *id* is not representable in 2.0                                                                                    435     warn
+ACS data markings only supported when --acs option is used. See *id*                                                                           436     warn
 ============================================================================================================================================== ====    =====
 
 Multiple values are not supported in STIX 2.x
@@ -165,6 +169,8 @@ Address direction in *id* is not provided, using 'src'                          
 cisa-proprietary is only permitted when ais-consent is everyone, so it has been dropped. See *id*                                           637     warn
 Indicator *id* does not contain the information necessary to generate a pattern                                                             638     warn
 This observable *id* already is associated with cyber observables                                                                           639     warn
+Unable to determine the hash type for *hash value*                                                                                          640     warn
+Required property *property* is not provided for ACS data marking                                                                           641     warn
 =========================================================================================================================================== ====    =====
 
 STIX Elevator conversion based on assumptions

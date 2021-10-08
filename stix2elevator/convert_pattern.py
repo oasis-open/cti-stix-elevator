@@ -5,6 +5,7 @@ import re
 import sys
 
 # external
+from cybox.common.hashes import Hash
 from cybox.objects.account_object import Account
 from cybox.objects.address_object import Address
 from cybox.objects.archive_file_object import ArchiveFile
@@ -1511,21 +1512,50 @@ def convert_pdf_file_to_pattern(f):
         return create_boolean_expression("AND", and_expressions)
 
 
+def determine_hash_type(hash):
+    if getattr(hash, "simple_hash_value"):
+        hashlen = len(hash.simple_hash_value.value)
+        if hashlen == 32:
+            return Hash.TYPE_MD5
+        elif hashlen == 40:
+            return Hash.TYPE_SHA1
+        elif hashlen == 56:
+            return Hash.TYPE_SHA224
+        elif hashlen == 64:
+            return Hash.TYPE_SHA256
+        elif hashlen == 96:
+            return Hash.TYPE_SHA384
+        elif hashlen == 128:
+            return Hash.TYPE_SHA512
+        else:
+            return Hash.TYPE_OTHER
+    else:
+        if getattr(hash, "fuzzy_hash_value"):
+            return Hash.TYPE_SSDEEP
+        else:
+            warn("Unable to determine the hash type for %s", 640, hash)
+
+
 def convert_hashes_to_pattern(hashes):
+    # hash_type is used in the pattern.  The argument to stix2.HashConstant is not the same
+    # if no type given, use determine_hash_type based on the size of the hash
     hash_expressions = []
+
     for h in hashes:
+        original_hash_type = h.type_ if h.type_ else determine_hash_type(h)
         if getattr(h, "simple_hash_value"):
             hash_value = h.simple_hash_value
         else:
             hash_value = h.fuzzy_hash_value
-        if str(h.type_).startswith("SHA"):
-            hash_type = "'" + "SHA" + "-" + str(h.type_)[3:] + "'"
-        elif str(h.type_) == "SSDEEP":
-            hash_type = str(h.type_).lower()
+        original_hash_type_as_string = str(original_hash_type)
+        if original_hash_type_as_string.startswith("SHA"):
+            hash_type = "'" + "SHA" + "-" + original_hash_type_as_string[3:] + "'"
+        elif original_hash_type_as_string == "SSDEEP":
+            hash_type = original_hash_type_as_string.lower()
         else:
-            hash_type = str(h.type_)
+            hash_type = original_hash_type_as_string
         try:
-            hc = stix2.HashConstant(hash_value.value, str(h.type_))
+            hc = stix2.HashConstant(hash_value.value, original_hash_type_as_string)
         except ValueError as err:
             # don't cause exception if hash value isn't correct
             warn(err, 626)

@@ -35,6 +35,16 @@ from stix.incident import Incident
 from stix.indicator import Indicator
 from stix.threat_actor import ThreatActor
 from stix.ttp import TTP
+
+try:
+    # external
+    from stix_edh.isa_markings import ISAMarkings
+    from stix_edh.isa_markings_assertions import ISAMarkingsAssertion
+    _acs_import = True
+except ImportError:
+    _acs_import = False
+
+# external
 from stixmarx import navigator
 
 # internal
@@ -54,6 +64,7 @@ from stix2elevator.convert_pattern import (
     get_obs_from_mapping, id_in_observable_mappings,
     interatively_resolve_placeholder_refs, remove_pattern_objects
 )
+from stix2elevator.convert_to_acs import convert_edh_marking_to_acs_marking
 from stix2elevator.ids import (
     add_id_of_obs_in_characterizations, add_id_value, add_object_id_value,
     exists_id_key, exists_ids_with_no_1x_object, generate_stix2x_id,
@@ -63,17 +74,18 @@ from stix2elevator.missing_policy import (
     check_for_missing_policy, convert_to_custom_name,
     determine_container_for_missing_properties, fill_in_extension_properties,
     handle_missing_confidence_property, handle_missing_statement_properties,
-    handle_missing_string_property, handle_missing_timestamp_property, handle_missing_tool_property,
-    handle_multiple_missing_statement_properties
+    handle_missing_string_property, handle_missing_timestamp_property,
+    handle_missing_tool_property, handle_multiple_missing_statement_properties
 )
 from stix2elevator.options import error, get_option_value, info, warn
 from stix2elevator.utils import (
     add_label, add_marking_map_entry, apply_ais_markings,
     check_map_1x_markings_to_2x, convert_controlled_vocabs_to_open_vocabs,
     convert_timestamp_of_stix_object, convert_timestamp_to_string,
-    convert_to_stix_literal, identifying_info, iterpath, lookup_marking_reference,
-    map_1x_markings_to_2x, map_vocabs_to_label, operation_on_path,
-    set_tlp_reference, strftime_with_appropriate_fractional_seconds
+    convert_to_stix_literal, identifying_info, iterpath,
+    lookup_marking_reference, map_1x_markings_to_2x, map_vocabs_to_label,
+    operation_on_path, set_tlp_reference,
+    strftime_with_appropriate_fractional_seconds
 )
 from stix2elevator.vocab_mappings import (
     ATTACK_MOTIVATION_MAP, COA_LABEL_MAP, INCIDENT_LABEL_MAP,
@@ -325,16 +337,19 @@ def create_basic_object(stix2x_type, stix1x_obj, env, parent_id=None, id_used=Fa
         timestamp = strftime_with_appropriate_fractional_seconds(env.timestamp, True)
     instance["created"] = timestamp
     # may need to revisit if we handle 1.x versioning.
-    instance["modified"] = timestamp
+    if stix2x_type != "marking-definition":
+        # marking definitions cannot be changed, so they have no modified property
+        instance["modified"] = timestamp
     instance["description"] = ""
     instance["external_references"] = []
     return instance
 
 
-def convert_marking_specification(marking_specification, env, stix1x_id):
+def convert_marking_specification(marking_specification, env, stix1x_id, isa_marking, isa_marking_assertions):
     return_obj = []
 
     if marking_specification.marking_structures is not None:
+
         marking_structures = marking_specification.marking_structures
         for marking_structure in marking_structures:
 
@@ -354,9 +369,6 @@ def convert_marking_specification(marking_specification, env, stix1x_id):
                 if marking_structure.color is not None:
                     color = str(marking_structure.color).lower()
                     set_tlp_reference(marking_definition_instance, color, "id")
-
-            if "modified" in marking_definition_instance:
-                del marking_definition_instance["modified"]
 
             if isinstance(marking_structure, TLPMarkingStructure):
                 marking_definition_instance["definition_type"] = "tlp"
@@ -412,6 +424,11 @@ def convert_marking_specification(marking_specification, env, stix1x_id):
                         definition["tlp"] = str(marking_structure.not_proprietary.tlp_marking.color).lower()
                         set_tlp_reference(marking_definition_instance, definition["tlp"], "marking_ref")
                 marking_definition_instance["definition"] = definition
+            elif _acs_import and isinstance(marking_structure, ISAMarkings):
+                isa_marking = marking_structure
+            elif _acs_import and isinstance(marking_structure, ISAMarkingsAssertion):
+                isa_marking_assertions.append(marking_structure)
+
             else:
                 if marking_structure.__class__.__name__ in get_option_value("markings_allowed"):
                     warn("Could not resolve Marking Structure %s", 425, identifying_info(marking_structure))
@@ -428,7 +445,29 @@ def convert_marking_specification(marking_specification, env, stix1x_id):
                     finish_basic_object(marking_specification.id_, marking_definition_instance, env, marking_structure)
                     return_obj.append(marking_definition_instance)
 
-    return return_obj
+        if not _acs_import and get_option_value("acs"):
+            raise ImportError("stix_edh library is required for ACS data markings")
+        else:
+            if isa_marking_assertions:
+                if isa_marking:
+                    if get_option_value("acs"):
+                        for m in isa_marking_assertions:
+                            marking_definition_instance = create_basic_object("marking-definition", m, env)
+                            convert_edh_marking_to_acs_marking(marking_definition_instance, isa_marking, m)
+                            val = add_marking_map_entry(m, marking_definition_instance)
+                            if val is not None and not isinstance(val, MarkingStructure):
+                                info("Found same marking structure %s, using %s", 625, identifying_info(m), val)
+                            else:
+                                info("Created Marking Structure for %s", 212, identifying_info(m))
+                                finish_basic_object(marking_specification.id_, marking_definition_instance, env, marking_structure)
+                                warn("Used extensions for ACS data markings. See %s", 319, marking_definition_instance["id"])
+                                return_obj.append(marking_definition_instance)
+                    else:
+                        if get_option_value("spec_version") == "2.1":
+                            warn("ACS data markings only supported when --acs option is used. See %s", 436, isa_marking.identifier)
+                        else:
+                            warn("ACS data markings cannot be supported in version 2.0.", 217)
+    return return_obj, isa_marking
 
 
 def get_marking_specifications(stix1_object):
@@ -458,10 +497,16 @@ def create_marking_union(*stix1_objects):
 
 def finish_markings(instance, env, marking_specifications, temp_marking_id=None):
     object_marking_refs = []
+    isa_marking = None
+    isa_marking_assertions = []
     for marking_specification in marking_specifications:
         for marking_structure in marking_specification.marking_structures:
             if not check_map_1x_markings_to_2x(marking_structure):
-                stix2x_markings = convert_marking_specification(marking_specification, env, instance["id"])
+                stix2x_markings, ignore = convert_marking_specification(marking_specification,
+                                                                        env,
+                                                                        instance["id"],
+                                                                        isa_marking,
+                                                                        isa_marking_assertions)
                 for m in stix2x_markings:
                     if m["definition_type"] == "ais":
                         apply_ais_markings(instance, m)
@@ -475,7 +520,7 @@ def finish_markings(instance, env, marking_specifications, temp_marking_id=None)
                 stix2x_marking = map_1x_markings_to_2x(marking_structure)
                 if (instance["id"] != stix2x_marking["id"] and
                         stix2x_marking["id"] not in object_marking_refs):
-                    if stix2x_marking["definition_type"] == "ais":
+                    if "definition_type" in stix2x_marking and stix2x_marking["definition_type"] == "ais":
                         apply_ais_markings(instance, stix2x_marking)
                         object_marking_refs.append(stix2x_marking["marking_ref"])
                     else:
@@ -562,7 +607,7 @@ def finish_markings_for_relationship(instance, marking_refs, temp_marking_id=Non
         if stix2x_marking:
             if (instance["id"] != stix2x_marking["id"] and
                     stix2x_marking["id"] not in object_marking_refs):
-                if stix2x_marking["definition_type"] == "ais":
+                if "definition_type" in stix2x_marking and stix2x_marking["definition_type"] == "ais":
                     apply_ais_markings(instance, stix2x_marking)
                     object_marking_refs.append(stix2x_marking["marking_ref"])
                 else:
@@ -783,11 +828,12 @@ def fix_markings():
         for marking_ref in stix2_instance.get("object_marking_refs", []):
             if isinstance(marking_ref, MarkingStructure):
                 stix2x_marking = map_1x_markings_to_2x(marking_ref)
-                if stix2x_marking["definition_type"] == "ais":
-                    apply_ais_markings(stix2_instance, stix2x_marking)
-                    object_marking_refs.append(stix2x_marking["marking_ref"])
-                else:
-                    object_marking_refs.append(stix2x_marking["id"])
+                if marking_ref != stix2x_marking:
+                    if "definition_type" in stix2x_marking and stix2x_marking["definition_type"] == "ais":
+                        apply_ais_markings(stix2_instance, stix2x_marking)
+                        object_marking_refs.append(stix2x_marking["marking_ref"])
+                    else:
+                        object_marking_refs.append(stix2x_marking["id"])
             else:
                 object_marking_refs.append(marking_ref)
 
@@ -1063,7 +1109,7 @@ def convert_vulnerability(v, et, env):
     if v.cve_id is not None:
         vulnerability_instance["external_references"].append({"source_name": "cve", "external_id": v.cve_id})
     if v.osvdb_id is not None:
-        vulnerability_instance["external_references"].append({"source_name": "osvdb", "external_id": v.osvdb_id})
+        vulnerability_instance["external_references"].append({"source_name": "osvdb", "external_id": str(v.osvdb_id)})
 
     handle_missing_properties_of_vulnerability(vulnerability_instance, v)
 
@@ -1407,7 +1453,6 @@ def handle_missing_properties_of_incident(incident_instance, incident, env):
                                                      incident_instance["id"], is_literal=True,
                                                      mapping=_INTENDED_EFFECTS_LITERAL_MAPPING)
 
-
         fill_in_extension_properties(incident_instance, container, extension_definition_id)
 
 
@@ -1586,13 +1631,17 @@ def convert_indicator(indicator, env):
     if indicator.valid_time_positions is not None:
         for window in indicator.valid_time_positions:
             if "valid_from" not in indicator_instance:
-                if not window.start_time.value:
-                    warn("No start time for the first valid time interval is available in %s, other time intervals might be more appropriate",
+                if not window.start_time:
+                    warn("No start time for the first valid time interval is available in %s, using current time (other time intervals might be more appropriate)", # noqa
                          619, indicator_instance["id"])
-                indicator_instance["valid_from"] = \
-                    convert_timestamp_to_string(window.start_time.value, indicator_instance["created"])
-                indicator_instance["valid_until"] = \
-                    convert_timestamp_to_string(window.end_time.value, indicator_instance["created"])
+                    indicator_instance["valid_from"] = indicator_instance["created"]
+                else:
+                    indicator_instance["valid_from"] = convert_timestamp_to_string(window.start_time.value)
+                if not window.end_time:
+                    warn("No end time for the first valid time interval is available in %s, other time intervals might be more appropriate",
+                         619, indicator_instance["id"])
+                else:
+                    indicator_instance["valid_until"] = convert_timestamp_to_string(window.end_time.value)
             else:
                 warn("Only one valid time window allowed for %s in STIX 2.x - used first one",
                      507, indicator_instance["id"])
@@ -2565,15 +2614,19 @@ def convert_package(stix_package, env):
     # created_by_idref from the command line is used instead of the one from the package, if given
     if not env.created_by_ref and hasattr(stix_package.stix_header, "information_source"):
         env.created_by_ref = get_identity_from_information_source(stix_package.stix_header.information_source, env, "this_identity")
-
+    isa_marking = None
+    isa_marking_assertions = []
     # Markings are processed in the beginning for handling later for each SDO.
     for marking_specification in navigator.iterwalk(stix_package):
         if isinstance(marking_specification, MarkingSpecification):
-            stix2x_markings = convert_marking_specification(marking_specification,
-                                                            env,
-                                                            stix_package.id_)
+            stix2x_markings, isa_marking = convert_marking_specification(marking_specification,
+                                                                         env,
+                                                                         stix_package.id_,
+                                                                         isa_marking,
+                                                                         isa_marking_assertions)
             for marking in stix2x_markings:
-                if marking["definition_type"] != "ais":
+                if (("definition_type" in marking and marking["definition_type"] != "ais") or
+                        "extensions" in marking):
                     bundle_instance["objects"].append(marking)
 
     # do observables first, especially before indicators!

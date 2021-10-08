@@ -1,6 +1,18 @@
 CHANGELOG
 =========
 
+4.1.0 - 2021-10-8
+
+This release optionally handles ACS data markings (see install doc)
+
+* Other changes
+
+    - added --acs oiption for ACS data markings
+    - Fix hash_constant processing to handle defaults
+    - Handle literals in missing policy code
+    - Added time properties to incident extension
+    - Handle malware aliases
+
 4.0.2 - 2021-09-10
 
 * Changes

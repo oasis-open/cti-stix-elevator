@@ -21,6 +21,8 @@
 # import sys
 # sys.path.insert(0, os.path.abspath('.'))
 
+# Standard Library
+import datetime
 
 # -- General configuration ------------------------------------------------
 
@@ -50,7 +52,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'stix2-elevator'
-copyright = '2017, OASIS Open'
+copyright = '{}, OASIS Open'.format(datetime.date.today().year)
 author = 'OASIS Open'
 
 # The version info for the project you're documenting, acts as replacement for

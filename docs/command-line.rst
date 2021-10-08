@@ -10,6 +10,7 @@ STIX 1.x content to STIX 2.x content:
               [--missing-policy {use-extensions,use-custom-properties,add-to-description,ignore}]
               [--custom-property-prefix CUSTOM_PROPERTY_PREFIX]
               [--infrastructure]
+              [--acs]
               [--incidents]
               [--package-created-by-id PACKAGE_CREATED_BY_ID]
               [--default-timestamp DEFAULT_TIMESTAMP]
@@ -57,6 +58,10 @@ optional arguments:
   --incidents
                 Incidents will be included in the conversion.
                 Default for version 2.1 is true.
+
+  --acs
+                Process ACS data markings
+                Default is false.
 
   --package-created-by-id PACKAGE_CREATED_BY_ID
                 Use provided identifier for "created_by_ref"

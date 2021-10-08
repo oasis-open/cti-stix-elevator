@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<stix:STIX_Package 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:marking="http://data-marking.mitre.org/Marking-1"
+	xmlns:indicator="http://stix.mitre.org/Indicator-2"
+	xmlns:stixCommon="http://stix.mitre.org/common-1"
+	xmlns:stix="http://stix.mitre.org/stix-1" 
+	xmlns:stixVocabs="http://stix.mitre.org/default_vocabularies-1"
+	xmlns:xpil="urn:oasis:names:tc:ciq:xpil:3"
+	xmlns:ct="urn:oasis:names:tc:ciq:ct:3"
+	xmlns:xal="urn:oasis:names:tc:ciq:xal:3"
+	xmlns:xnal="urn:oasis:names:tc:ciq:xnal:3"
+	xmlns:xnl="urn:oasis:names:tc:ciq:xnl:3"
+	xmlns:cyboxCommon="http://cybox.mitre.org/common-2"
+	xmlns:cybox="http://cybox.mitre.org/cybox-2"
+	xmlns:cyboxVocabs="http://cybox.mitre.org/default_vocabularies-2"
+	xmlns:AddressObj="http://cybox.mitre.org/objects#AddressObject-2"
+	xmlns:EmailMessageObj="http://cybox.mitre.org/objects#EmailMessageObject-2"
+	xmlns:FileObj="http://cybox.mitre.org/objects#FileObject-2"
+	xmlns:isa="http://www.us-cert.gov/sites/default/files/STIX_Namespace/ISAMarkingsType.v2.xsd"
+	xmlns:edh2cyberMarking="http://www.us-cert.gov/sites/default/files/STIX_Namespace/ISAMarkingsType.v2.xsd"
+	xmlns:edh2cyberMarkingAssert="http://www.us-cert.gov/sites/default/files/STIX_Namespace/ISAMarkingsAssertionsType.v2.xsd"
+	xmlns:edh2="urn:edm:edh:cyber:v3"
+	xsi:schemaLocation="
+	http://data-marking.mitre.org/Marking-1 http://stix.mitre.org/XMLSchema/data_marking/1.1.1/data_marking.xsd
+	http://stix.mitre.org/Indicator-2 http://stix.mitre.org/XMLSchema/indicator/2.1.1/indicator.xsd
+	http://stix.mitre.org/common-1 http://stix.mitre.org/XMLSchema/common/1.1.1/stix_common.xsd
+	http://stix.mitre.org/stix-1 http://stix.mitre.org/XMLSchema/core/1.1.1/stix_core.xsd
+	http://stix.mitre.org/default_vocabularies-1 http://stix.mitre.org/XMLSchema/default_vocabularies/1.1.1/stix_default_vocabularies.xsd
+	urn:oasis:names:tc:ciq:xpil:3 http://stix.mitre.org/XMLSchema/external/oasis_ciq_3.0/xPIL.xsd
+	http://cybox.mitre.org/common-2 http://cybox.mitre.org/XMLSchema/common/2.1/cybox_common.xsd
+	http://cybox.mitre.org/cybox-2 http://cybox.mitre.org/XMLSchema/core/2.1/cybox_core.xsd
+	http://cybox.mitre.org/default_vocabularies-2 http://cybox.mitre.org/XMLSchema/default_vocabularies/2.1/cybox_default_vocabularies.xsd
+	http://cybox.mitre.org/objects#AddressObject-2 http://cybox.mitre.org/XMLSchema/objects/Address/2.1/Address_Object.xsd
+	http://cybox.mitre.org/objects#EmailMessageObject-2 http://cybox.mitre.org/XMLSchema/objects/Email_Message/2.1/Email_Message_Object.xsd
+	http://cybox.mitre.org/objects#FileObject-2 http://cybox.mitre.org/XMLSchema/objects/File/2.1/File_Object.xsd
+	http://www.us-cert.gov/sites/default/files/STIX_Namespace/ISAMarkingsType.v2.xsd http://www.us-cert.gov/sites/default/files/STIX_Namespace/local_ISAMarkingsType.v2.xsd
+	http://www.us-cert.gov/sites/default/files/STIX_Namespace/ISAMarkingsAssertionsType.v2.xsd http://www.us-cert.gov/sites/default/files/STIX_Namespace/local_ISAMarkingsAssertionsType.v2.xsd
+	urn:edm:edh:cyber:v3 http://www.us-cert.gov/sites/default/files/STIX_Namespace/local_SD-EDH_Profile_Cyber.v3.xsd"
+	id="regression-test-14-01"
+	version="1.1.1"
+	timestamp="9999-12-31T00:00:00Z">
+	<stix:STIX_Header>
+		<stix:Title>regression-test-14: test special characters â ü ÿ /</stix:Title>
+		<stix:Package_Intent xsi:type="stixVocabs:PackageIntentVocab-1.0">Indicators</stix:Package_Intent>
+		<stix:Package_Intent xsi:type="stixVocabs:PackageIntentVocab-1.0">Threat Report</stix:Package_Intent>
+		<stix:Description>Test special characters ç ã ì</stix:Description>
+		<stix:Handling>
+			<marking:Marking>
+				<marking:Marking_Structure xsi:type="edh2cyberMarking:ISAMarkingsType" isam_version="2.0">
+					<edh2:Identifier>isa:guide.19001.40af97be-00bf-4648-9e70-296a6a8eda08</edh2:Identifier>
+					<edh2:CreateDateTime>2014-09-30T19:00:00.00Z</edh2:CreateDateTime>
+					<edh2:ResponsibleEntity>CUST:USA.NSA ORIG:USA.USG</edh2:ResponsibleEntity>
+				</marking:Marking_Structure>
+			</marking:Marking>
+			<marking:Marking>
+				<marking:Controlled_Structure>//node()</marking:Controlled_Structure>
+				<marking:Marking_Structure xsi:type="edh2cyberMarkingAssert:ISAMarkingsAssertionType" isam_version="2.0" default_marking="true">
+				  <edh2:PolicyRef>urn:isa:policy:acs:ns:v3.0?privdefault=permit&amp;sharedefault=permit</edh2:PolicyRef>
+				  <edh2:AuthRef>urn:isa:authority:misa</edh2:AuthRef>
+				  <edh2:ControlSet>CLS:U FD:PUBREL</edh2:ControlSet>
+				  <edh2:PublicRelease>
+					<edh2:releasedBy>USA.USG</edh2:releasedBy>
+					<edh2:releasedOn>2016-07-19</edh2:releasedOn>
+				  </edh2:PublicRelease>				  
+				</marking:Marking_Structure>
+			</marking:Marking>
+		</stix:Handling>
+	</stix:STIX_Header>
+	<stix:Indicators>
+		<stix:Indicator id="isa:guide.19001.regression-test-14-01" timestamp="9999-12-31T00:00:00Z" xsi:type="indicator:IndicatorType">
+			<indicator:Type xsi:type="stixVocabs:IndicatorTypeVocab-1.1">IP Watchlist</indicator:Type>
+			<indicator:Description>This is a sample indicator description</indicator:Description>
+			<indicator:Valid_Time_Position>
+				<indicator:Start_Time precision="month">9999-12-31T00:00:00Z</indicator:Start_Time>
+				<indicator:End_Time precision="minute">9999-12-31T00:01:00Z</indicator:End_Time>
+			</indicator:Valid_Time_Position>
+			<indicator:Observable id="Obervable-regression-test-14-01">
+				<cybox:Object id="Object-regression-test-14-01">
+					<cybox:Properties xsi:type="EmailMessageObj:EmailMessageObjectType">
+						<EmailMessageObj:Header>
+							<EmailMessageObj:To>
+								<EmailMessageObj:Recipient category="e-mail">
+									<AddressObj:Address_Value>victim1@target.com</AddressObj:Address_Value>
+								</EmailMessageObj:Recipient>
+								<EmailMessageObj:Recipient category="e-mail">
+									<AddressObj:Address_Value>victim2@target.com</AddressObj:Address_Value>
+								</EmailMessageObj:Recipient>
+							</EmailMessageObj:To>
+							<EmailMessageObj:From category="e-mail">
+								<AddressObj:Address_Value>attacker@example.com</AddressObj:Address_Value>
+							</EmailMessageObj:From>
+							<EmailMessageObj:Subject>New modifications to the specification</EmailMessageObj:Subject>
+						</EmailMessageObj:Header>
+						<EmailMessageObj:Attachments>
+							<EmailMessageObj:File object_reference="file-obj-regression-test-14-01"></EmailMessageObj:File>
+						</EmailMessageObj:Attachments>
+					</cybox:Properties>
+				</cybox:Object>
+			</indicator:Observable>
+			<indicator:Confidence>
+				<stixCommon:Value xsi:type="stixVocabs:HighMediumLowVocab-1.0">Medium</stixCommon:Value>
+			</indicator:Confidence>
+			<indicator:Sightings sightings_count="9000">
+				<indicator:Sighting timestamp="9999-12-31T00:00:00Z" timestamp_precision="year"></indicator:Sighting>
+			</indicator:Sightings>
+		</stix:Indicator>
+		<stix:Indicator id="file-indicator-regression-test-14-01" timestamp="2222-12-31T00:00:00Z" xsi:type="indicator:IndicatorType">
+			<indicator:Observable id="file-ob-regression-test-14-01">
+				<cybox:Object id="file-obj-regression-test-14-01">
+					<cybox:Properties xsi:type="FileObj:FileObjectType">
+						<FileObj:File_Name appears_random="true">File Name</FileObj:File_Name>
+						<FileObj:File_Path condition="Equals">Path/to/File</FileObj:File_Path>
+						<FileObj:Size_In_Bytes>134123</FileObj:Size_In_Bytes>
+						<FileObj:Hashes>
+							<!--real hashes-->
+							<cyboxCommon:Hash>
+							<!--MD5 with no type-->
+								<cyboxCommon:Simple_Hash_Value>d41d8cd98f00b204e9800998ecf8427e</cyboxCommon:Simple_Hash_Value>
+							</cyboxCommon:Hash>
+							<cyboxCommon:Hash>
+								<!--Fuzzy_Hash_Value no type but regext known-->
+								<cyboxCommon:Type xsi:type="cyboxVocabs:HashNameVocab-1.0">SSDEEP</cyboxCommon:Type>
+								<cyboxCommon:Fuzzy_Hash_Value>cf83e1357eefb8bdf1542850d66d8007d620e4050b5715dc83f4a921d36ce9ce47d0d13c5d85f2b0ff8318d2877eec2f63b931bd47417a81a538327af927da3e</cyboxCommon:Fuzzy_Hash_Value>
+							</cyboxCommon:Hash>
+							<!--real hashes-->
+							<cyboxCommon:Hash>
+								<cyboxCommon:Type xsi:type="cyboxVocabs:HashNameVocab-1.0">MD5</cyboxCommon:Type>
+								<cyboxCommon:Simple_Hash_Value>d41d8cd98f00b204e9800998ecf8427e</cyboxCommon:Simple_Hash_Value>
+							</cyboxCommon:Hash>
+							<cyboxCommon:Hash>
+								<cyboxCommon:Type xsi:type="cyboxVocabs:HashNameVocab-1.0">SHA1</cyboxCommon:Type>
+								<cyboxCommon:Simple_Hash_Value>da39a3ee5e6b4b0d3255bfef95601890afd80709</cyboxCommon:Simple_Hash_Value>								
+							</cyboxCommon:Hash>
+							<cyboxCommon:Hash>
+								<cyboxCommon:Type xsi:type="cyboxVocabs:HashNameVocab-1.0">SHA256</cyboxCommon:Type>
+								<cyboxCommon:Simple_Hash_Value>e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855</cyboxCommon:Simple_Hash_Value>								
+							</cyboxCommon:Hash>	
+						</FileObj:Hashes>
+					</cybox:Properties>
+				</cybox:Object>
+			</indicator:Observable>
+		</stix:Indicator>
+	</stix:Indicators>
+</stix:STIX_Package>

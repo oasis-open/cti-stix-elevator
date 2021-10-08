@@ -1,0 +1,30 @@
+{
+    "id": "bundle--97aa3df0-a291-4fc5-bb9b-c042d81af64e",
+    "objects": [
+        {
+            "count": 1,
+            "created": "9999-12-31T00:00:00.000Z",
+            "id": "sighting--b4ae2b11-5030-45be-a9a7-e41d6f1c4187",
+            "modified": "9999-12-31T00:00:00.000Z",
+            "sighting_of_ref": "indicator--bceaed2d-a467-47a4-8844-45d5316798df",
+            "summary": false,
+            "type": "sighting"
+        },
+        {
+            "created": "9999-12-31T00:00:00.000Z",
+            "description": "This is a sample indicator description",
+            "id": "indicator--b950f4f0-286f-42a3-8980-5e0d711bfb74",
+            "labels": [
+                "ip-watchlist"
+            ],
+            "modified": "9999-12-31T00:00:00.000Z",
+            "pattern": "[ipv4-addr:value = '1.1.10.12'] AND [ipv4-addr:value = '1.1.1.12']",
+            "type": "indicator",
+            "valid_from": "9999-12-31T00:00:00.000000Z",
+            "valid_until": "9999-12-31T00:01:00.000000Z",
+            "x_elevator_confidence": "Medium"
+        }
+    ],
+    "spec_version": "2.0",
+    "type": "bundle"
+}
