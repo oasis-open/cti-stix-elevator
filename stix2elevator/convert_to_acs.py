@@ -167,6 +167,8 @@ def convert_edh_marking_to_acs_marking(marking_definition_instance, isa_marking,
     # name is optional
     if isa_marking.create_date_time:
         acs_marking["create_date_time"] = convert_timestamp_to_string(isa_marking.create_date_time)
+    else:
+        warn("Required property %s is not provided for ACS data marking", 641, "create_date_time")
     if isa_marking.responsible_entity:
         for entity in isa_marking.responsible_entity.value:
             responsible_entity_parts = entity.split(":")
@@ -174,6 +176,8 @@ def convert_edh_marking_to_acs_marking(marking_definition_instance, isa_marking,
                 acs_marking["responsible_entity_custodian"] = responsible_entity_parts[1]
             if responsible_entity_parts[0] == "ORIG":
                 acs_marking["responsible_entity_originator"] = responsible_entity_parts[1]
+        if "responsible_entity_custodian" not in acs_marking:
+            warn("Required property %s is not provided for ACS data marking", 641, "responsible_entity_custodian")
 
     if isa_marking.identifier:
         acs_marking["identifier"] = isa_marking.identifier
@@ -186,9 +190,10 @@ def convert_edh_marking_to_acs_marking(marking_definition_instance, isa_marking,
             acs_marking["authority_reference"].append(isa_marking.auth_ref)
         else:
             acs_marking["authority_reference"] = isa_marking.auth_ref
-
     if marking_assertion.policy_ref:
         acs_marking["policy_reference"] = marking_assertion.policy_ref
+    else:
+        warn("Required property %s is not provided for ACS data marking", 641, "policy_reference")
     if marking_assertion.original_classification:
         acs_marking["original_classification"] = convert_original_classification(marking_assertion.original_classification)
     if marking_assertion.derivative_classification:
@@ -209,4 +214,6 @@ def convert_edh_marking_to_acs_marking(marking_definition_instance, isa_marking,
             acs_marking["further_sharing"].append(convert_further_sharing(fs))
     if marking_assertion.control_set:
         acs_marking["control_set"] = convert_control_set(marking_assertion.control_set)
+    else:
+        warn("Required property %s is not provided for ACS data marking", 641, "control_set")
     marking_definition_instance["extensions"] = {_ACS_EXTENSION_DEFINITION_ID: acs_marking}
