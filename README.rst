@@ -85,6 +85,19 @@ You can also install the stix2-elevator from GitHub to get the latest
 
     $ pip install git+https://github.com/oasis-open/cti-stix-elevator.git
 
+Installation Steps for ACS Data Marking Support
+-----------------------------------------------
+
+ACS data markings correspond to the common marking scheme used by the U.S. government (e.g., U, C, S, TS).
+To elevate STIX 1.x content that contains ACS data markings, it is necessary to install an additional python package
+called 'stix_edh'.
+
+Install with pip
+
+.. code-block:: bash
+
+    $ pip install stix2-elevator[acs]
+
 Usage
 -----
 
