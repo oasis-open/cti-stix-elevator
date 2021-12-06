@@ -2489,7 +2489,7 @@ def convert_object_to_pattern(obj, obs_id):
                 if prop.custom_name:
                     if check_for_missing_policy("use-custom-properties"):
                         object_path_root = convert_to_custom_name(prop.custom_name, separator="-")
-                    else: # check_for_missing_policy("use-extensions")
+                    else:  # check_for_missing_policy("use-extensions")
                         if re.search('[A-Z]', prop.custom_name):
                             warn("Custom name %s has been converted to all lower case", 727, prop.custom_name)
                         object_path_root = prop.custom_name.lower()
@@ -2514,7 +2514,7 @@ def convert_object_to_pattern(obj, obs_id):
                 object_type_name = convert_cybox_class_name_to_object_path_root_name(prop)
                 if check_for_missing_policy("use-custom-properties"):
                     object_path_root = object_type_name
-                else: # check_for_missing_policy("use-extensions")
+                else:  # check_for_missing_policy("use-extensions")
                     extension_definition_id = get_extension_definition_id(object_type_name)
                     if extension_definition_id:
                         object_path_root = object_type_name + "extensions." + extension_definition_id
