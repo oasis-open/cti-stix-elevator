@@ -25,7 +25,7 @@
                 "ftp"
             ],
             "modified": "2015-07-31T11:24:39.090Z",
-            "pattern": "[x-elevator-fooz:ftp_command MATCHES 'fp[a-zA-Z0-9]{44}\\\\.bin']",
+            "pattern": "[x-elevator-fooz:ftp_command MATCHES 'fp[a-zA-Z0-9]{44}\\\\.bin'] AND [mutex:x_elevator_last_accessed = '2015-07-31T11:24:39.090000Z']",
             "type": "indicator",
             "valid_from": "2015-07-31T11:24:39.090000Z",
             "x_elevator_likely_impact": "Medium"
