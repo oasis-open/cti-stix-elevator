@@ -293,7 +293,8 @@ def convert_to_open_vocabs(stix2x_obj, stix2x_property_name, value, vocab_mappin
 def process_structured_text_list(text_list):
     full_text = ""
     for text_obj in text_list.sorted:
-        full_text += text_obj.value
+        if text_obj.value:
+            full_text += text_obj.value
     return full_text
 
 

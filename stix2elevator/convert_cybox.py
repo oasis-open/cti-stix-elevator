@@ -1769,7 +1769,7 @@ def convert_cybox_object20(obj1x):
         return None
     else:
         if prop.custom_properties is not None:
-            if check_for_missing_policy("use-custom-properties"):
+            if check_for_missing_policy("use-custom-properties") or check_for_missing_policy("add-to-description"):
                 for cp in prop.custom_properties.property_:
                     handle_missing_string_property(objs["0"], cp.name, cp.value, obj1x.id_, is_sco=True)
             else:
@@ -1840,13 +1840,13 @@ def convert_cybox_object21(obj1x, env):
         return None
     else:
         if prop.custom_properties is not None:
-            if check_for_missing_policy("use-custom-properties") or check_for_missing_policy("use-extensions"):
+            if not check_for_missing_policy("ignore"):
                 if isinstance(prop, Custom):
                     # new object type - extensions just has extension_type, properties are at top-level
                     for cp in prop.custom_properties.property_:
                         handle_missing_string_property(objs[0], cp.name, cp.value, obj1x.id_, is_sco=True)
                 else:
-                    # we assume that because this is a STIX 1.x custom property - the elevator propbably doesn't know about it,
+                    # we assume that because this is a STIX 1.x custom property - the elevator probably doesn't know about it,
                     # so custom_object=True
                     container, extension_definition_id = determine_container_for_missing_properties(objs[0]["type"],
                                                                                                     objs[0],

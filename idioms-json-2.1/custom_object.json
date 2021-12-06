@@ -21,7 +21,7 @@
                 "ftp"
             ],
             "modified": "2015-07-31T11:24:39.090Z",
-            "pattern": "[unconverted_term:example:Observable-f082e299-c98e-4928-a7a8-2a84b2eb4719]",
+            "pattern": "[unconverted_term:example:observable-c534c948-b72e-429d-877e-ce92c4a85ac3 AND unconverted_term:example:observable-2d273911-0000-4ae6-a278-35b8f88d1043]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",

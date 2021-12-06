@@ -20,6 +20,7 @@
     <stix:Indicators>
         <stix:Indicator id="example:guid-6116b44e-a7e9-41e3-a82f-000c29b241af" xmlns:indicator='http://stix.mitre.org/Indicator-2' xsi:type='indicator:IndicatorType' negate="false">
             <indicator:Type xsi:type="stixVocabs:IndicatorTypeVocab-1.1">IP Watchlist</indicator:Type>
+            <indicator:Description/>
             <indicator:Observable idref="fireeye:observable-57a43ab6-2a79-4134-8812-fef3df3616e1"/>
 		</stix:Indicator>
     </stix:Indicators>

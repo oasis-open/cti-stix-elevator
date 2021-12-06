@@ -3,12 +3,12 @@
     "objects": [
         {
             "extensions": {
-                "extension-definition--c614c969-acb7-4917-93b4-f6bde05ae556": {
+                "extension-definition--baa70fd5-8708-433f-9ea5-050681dfff4d": {
                     "extension_type": "new-sco"
                 }
             },
             "ftp_command": "fpuwe8bmsD56ns.bin",
-            "id": "fooz--6fcd8459-e491-4281-a427-1706c2e8e3f3",
+            "id": "fooz--864b5a35-c90e-40d4-8a92-3c1616b38bea",
             "type": "fooz"
         },
         {
@@ -47,7 +47,7 @@
                 "ftp"
             ],
             "modified": "2015-07-31T11:24:39.090Z",
-            "pattern": "[x-elevator-fooz:ftp_command MATCHES 'fp[a-zA-Z0-9]{44}\\\\.bin']",
+            "pattern": "[fooz:ftp_command MATCHES 'fp[a-zA-Z0-9]{44}\\\\.bin'] AND [unconverted_term:example:observable-2d273911-0000-4ae6-a278-35b8f88d1043]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
@@ -55,7 +55,7 @@
         },
         {
             "created": "2015-07-31T11:24:39.090Z",
-            "id": "relationship--c9228a00-ca02-451a-ae7e-f83556a26561",
+            "id": "relationship--a29a8c0b-086b-49ec-bc0f-5afa9ea0eea6",
             "modified": "2015-07-31T11:24:39.090Z",
             "relationship_type": "investigates",
             "source_ref": "course-of-action--3dbfccad-1fbb-4e9f-8307-f2d1a5c651cc",
@@ -66,12 +66,12 @@
         {
             "created": "2015-07-31T11:24:39.090Z",
             "first_observed": "2015-07-31T11:24:39.090Z",
-            "id": "observed-data--bd1f4059-d186-46e9-9eb4-d55c51f485d7",
+            "id": "observed-data--5352f3df-c122-4a02-a424-d7df09870e76",
             "last_observed": "2015-07-31T11:24:39.090Z",
             "modified": "2015-07-31T11:24:39.090Z",
             "number_observed": 1,
             "object_refs": [
-                "fooz--6fcd8459-e491-4281-a427-1706c2e8e3f3"
+                "fooz--864b5a35-c90e-40d4-8a92-3c1616b38bea"
             ],
             "spec_version": "2.1",
             "type": "observed-data"

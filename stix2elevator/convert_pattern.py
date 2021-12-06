@@ -2439,7 +2439,7 @@ def convert_object_to_pattern(obj, obs_id):
     related_objects = obj.related_objects
     prop = obj.properties
     expression = None
-
+    is_custom_object = False
     if prop:
         if isinstance(prop, Address):
             expression = convert_address_to_pattern(prop)
@@ -2484,9 +2484,15 @@ def convert_object_to_pattern(obj, obs_id):
             if expression:
                 expression = create_boolean_expression("AND", expression)
         elif isinstance(prop, Custom):
+            is_custom_object = True
             if check_for_missing_policy("use-custom-properties") or check_for_missing_policy("use-extensions"):
                 if prop.custom_name:
-                    object_path_root = convert_to_custom_name(prop.custom_name, separator="-")
+                    if check_for_missing_policy("use-custom-properties"):
+                        object_path_root = convert_to_custom_name(prop.custom_name, separator="-")
+                    else: # check_for_missing_policy("use-extensions")
+                        if re.search('[A-Z]', prop.custom_name):
+                            warn("Custom name %s has been converted to all lower case", 727, prop.custom_name)
+                        object_path_root = prop.custom_name.lower()
                     term = convert_custom_properties(prop.custom_properties, object_path_root, use_custom_prefix=False)
                     if expression:
                         expression = create_boolean_expression("AND", [expression, term])
@@ -2503,9 +2509,19 @@ def convert_object_to_pattern(obj, obs_id):
             if not check_for_missing_policy("ignore"):
                 expression = UnconvertedTerm(obs_id)
         # custom properties of custom objects handled above
-        if prop.custom_properties is not None:
+        if prop.custom_properties is not None and not is_custom_object:
             if check_for_missing_policy("use-custom-properties") or check_for_missing_policy("use-extensions"):
-                object_path_root = convert_cybox_class_name_to_object_path_root_name(prop)
+                object_type_name = convert_cybox_class_name_to_object_path_root_name(prop)
+                if check_for_missing_policy("use-custom-properties"):
+                    object_path_root = object_type_name
+                else: # check_for_missing_policy("use-extensions")
+                    extension_definition_id = get_extension_definition_id(object_type_name)
+                    if extension_definition_id:
+                        object_path_root = object_type_name + "extensions." + extension_definition_id
+                        warn("Used %s for extension property for %s", 317, object_path_root, object_type_name)
+                    else:
+                        object_path_root = None
+                        warn("No extension-definition was found for STIX 1 type %s", 312, object_type_name)
                 if object_path_root:
                     term = convert_custom_properties(prop.custom_properties, object_path_root)
                     if expression:
