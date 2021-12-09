@@ -32,9 +32,19 @@
                 </cybox:Properties>
             </cybox:Object>
         </cybox:Observable>
+        <cybox:Observable id="example:observable-2d273911-0000-4ae6-a278-35b8f88d1043">
+            <cybox:Object id="example:object-10df8751-9d10-4354-8d4d-f876e9bd0bd2">
+                <cybox:Properties xsi:type="MutexObj:MutexObjectType">
+                    <cyboxCommon:Custom_Properties>
+                        <cyboxCommon:Property condition="equals" name="last_accessed">2015-07-31T11:24:39.090000Z</cyboxCommon:Property>
+                    </cyboxCommon:Custom_Properties>
+                </cybox:Properties>
+            </cybox:Object>
+        </cybox:Observable>
     </stix:Observables>
     <stix:Indicators>
-        <stix:Indicator id="example:indicator-dfe2b6ad-545d-4144-b546-94c53b4f2002" timestamp="2018-09-06T16:14:38.947403+00:00" xsi:type='indicator:IndicatorType'>
+        <stix:Indicator id="example:indicator-dfe2b6ad-545d-4144-b546-94c53b4f2002"
+                        timestamp="2018-09-06T16:14:38.947403+00:00" xsi:type='indicator:IndicatorType'>
             <indicator:Observable id="example:Observable-3f02dc1f-bd1f-48f7-82da-5a163640135d">
                 <cybox:Object id="example:EmailMessage-4f0938df-a4ee-4d08-bd84-3aaa4aae5b38">
                     <cybox:Properties xsi:type="EmailMessageObj:EmailMessageObjectType">
@@ -53,7 +63,8 @@
                 </cybox:Object>
             </indicator:Observable>
         </stix:Indicator>
-        <stix:Indicator id="example:indicator-66c7e55d-5b74-42fc-8cb2-169ec592573b" timestamp="2018-09-06T16:14:38.950435+00:00" xsi:type='indicator:IndicatorType'>
+        <stix:Indicator id="example:indicator-66c7e55d-5b74-42fc-8cb2-169ec592573b"
+                        timestamp="2018-09-06T16:14:38.950435+00:00" xsi:type='indicator:IndicatorType'>
             <indicator:Observable id="example:Observable-b8d22c66-2168-4cb5-b091-4ba1d60f5d65">
                 <cybox:Observable_Composition operator="AND">
                     <cybox:Observable id="example:Observable-dfdfe176-b143-4d30-a1de-123339fef747">
@@ -77,8 +88,10 @@
                     <cybox:Observable id="example:Observable-d7aab36b-62d5-4ffb-b2c8-1b2555efe0c4">
                         <cybox:Object id="example:NetworkConnection-6ac037ca-77dc-45c8-9430-273f00c9c18a">
                             <cybox:Properties xsi:type="NetworkConnectionObj:NetworkConnectionObjectType">
-                                <NetworkConnectionObj:Destination_Socket_Address xsi:type="SocketAddressObj:SocketAddressObjectType">
-                                    <SocketAddressObj:IP_Address xsi:type="AddressObj:AddressObjectType" category="ipv4-addr">
+                                <NetworkConnectionObj:Destination_Socket_Address
+                                        xsi:type="SocketAddressObj:SocketAddressObjectType">
+                                    <SocketAddressObj:IP_Address xsi:type="AddressObj:AddressObjectType"
+                                                                 category="ipv4-addr">
                                         <AddressObj:Address_Value condition="Equals">46.123.99.25</AddressObj:Address_Value>
                                     </SocketAddressObj:IP_Address>
                                 </NetworkConnectionObj:Destination_Socket_Address>
@@ -88,13 +101,16 @@
                 </cybox:Observable_Composition>
             </indicator:Observable>
         </stix:Indicator>
-        <stix:Indicator id="example:indicator-879d387d-473c-438e-bf53-1d19aeb215d0" timestamp="2018-09-06T16:14:38.950721+00:00" xsi:type='indicator:IndicatorType'>
+        <stix:Indicator id="example:indicator-879d387d-473c-438e-bf53-1d19aeb215d0"
+                        timestamp="2018-09-06T16:14:38.950721+00:00" xsi:type='indicator:IndicatorType'>
             <indicator:Observable id="example:Observable-d2484a5f-96a3-4b26-9423-d0d7e60f4d33">
                 <cybox:Object id="example:NetworkConnection-e8115665-ad6c-494e-a421-4fdb45584166">
                     <cybox:Properties xsi:type="NetworkConnectionObj:NetworkConnectionObjectType">
                         <NetworkConnectionObj:Source_Socket_Address xsi:type="SocketAddressObj:SocketAddressObjectType">
                             <SocketAddressObj:IP_Address xsi:type="AddressObj:AddressObjectType">
-                                <AddressObj:Address_Value condition="Equals" apply_condition="ANY">10.0.0.0##comma##10.0.0.1##comma##10.0.0.2</AddressObj:Address_Value>
+                                <AddressObj:Address_Value condition="Equals" apply_condition="ANY">
+                                    10.0.0.0##comma##10.0.0.1##comma##10.0.0.2
+                                </AddressObj:Address_Value>
                             </SocketAddressObj:IP_Address>
                         </NetworkConnectionObj:Source_Socket_Address>
                     </cybox:Properties>

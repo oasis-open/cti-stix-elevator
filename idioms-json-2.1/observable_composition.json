@@ -67,6 +67,16 @@
             ],
             "spec_version": "2.1",
             "type": "observed-data"
+        },
+        {
+            "created": "2021-12-06T16:22:08.248Z",
+            "first_observed": "2021-12-06T16:22:08.248Z",
+            "id": "observed-data--2d273911-0000-4ae6-a278-35b8f88d1043",
+            "last_observed": "2021-12-06T16:22:08.248Z",
+            "modified": "2021-12-06T16:22:08.248Z",
+            "number_observed": 1,
+            "spec_version": "2.1",
+            "type": "observed-data"
         }
     ],
     "type": "bundle"

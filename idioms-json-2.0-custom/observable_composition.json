@@ -64,7 +64,22 @@
         }
       },
       "type": "observed-data"
-    }
+    },
+    {
+            "created": "2021-12-06T17:22:12.498Z",
+            "first_observed": "2021-12-06T17:22:12.498Z",
+            "id": "observed-data--2d273911-0000-4ae6-a278-35b8f88d1043",
+            "last_observed": "2021-12-06T17:22:12.498Z",
+            "modified": "2021-12-06T17:22:12.498Z",
+            "number_observed": 1,
+            "objects": {
+                "0": {
+                    "type": "mutex",
+                    "x_elevator_last_accessed": "2015-07-31T11:24:39.090000Z"
+                }
+            },
+            "type": "observed-data"
+        }
   ],
   "spec_version": "2.0",
   "type": "bundle"
