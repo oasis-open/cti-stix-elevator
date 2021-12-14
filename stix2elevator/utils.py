@@ -163,6 +163,8 @@ def lookup_marking_reference(marking_ref):
 
 
 def add_marking_map_entry(stix1x_marking, stix2x_marking):
+    global _MARKING_MAP_FROM_1_x_TO_2_x
+    global _MARKING_MAP_FROM_2_x_ID_TO_2_x
     if stix1x_marking not in _MARKING_MAP_FROM_1_x_TO_2_x:
         _MARKING_MAP_FROM_1_x_TO_2_x[stix1x_marking] = stix2x_marking
         if stix1x_marking.id_:

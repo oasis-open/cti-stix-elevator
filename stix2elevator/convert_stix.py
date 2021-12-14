@@ -455,6 +455,7 @@ def convert_marking_specification(marking_specification, env, stix1x_id, isa_mar
                         for m in isa_marking_assertions:
                             marking_definition_instance = create_basic_object("marking-definition", m, env)
                             convert_edh_marking_to_acs_marking(marking_definition_instance, isa_marking, m)
+                            val = add_marking_map_entry(isa_marking, marking_definition_instance)
                             val = add_marking_map_entry(m, marking_definition_instance)
                             if val is not None and not isinstance(val, MarkingStructure):
                                 info("Found same marking structure %s, using %s", 625, identifying_info(m), val)
@@ -509,7 +510,7 @@ def finish_markings(instance, env, marking_specifications, temp_marking_id=None)
                                                                         isa_marking,
                                                                         isa_marking_assertions)
                 for m in stix2x_markings:
-                    if m["definition_type"] == "ais":
+                    if "definition_type" in m and m["definition_type"] == "ais":
                         apply_ais_markings(instance, m)
                         object_marking_refs.append(m["marking_ref"])
                     elif instance["id"] != m["id"] and m["id"] not in object_marking_refs:
@@ -834,7 +835,8 @@ def fix_markings():
                         apply_ais_markings(stix2_instance, stix2x_marking)
                         object_marking_refs.append(stix2x_marking["marking_ref"])
                     else:
-                        object_marking_refs.append(stix2x_marking["id"])
+                        if not stix2x_marking["id"] in object_marking_refs:
+                            object_marking_refs.append(stix2x_marking["id"])
             else:
                 object_marking_refs.append(marking_ref)
 
