@@ -510,7 +510,7 @@ def finish_markings(instance, env, marking_specifications, temp_marking_id=None)
                                                                         isa_marking,
                                                                         isa_marking_assertions)
                 for m in stix2x_markings:
-                    if "definition_type" in m and m["definition_type"] == "ais":
+                    if m.get("definition_type", "") == "ais":
                         apply_ais_markings(instance, m)
                         object_marking_refs.append(m["marking_ref"])
                     elif instance["id"] != m["id"] and m["id"] not in object_marking_refs:
