@@ -69,8 +69,7 @@
                         <FileObj:Hashes>
                             <cyboxCommon:Hash>
                                 <cyboxCommon:Type xsi:type="cyboxVocabs:HashNameVocab-1.0">MD5</cyboxCommon:Type>
-                                <cyboxCommon:Simple_Hash_Value>d41d8cd98f00b204e9800998ecf8427e
-                                </cyboxCommon:Simple_Hash_Value>
+                                <cyboxCommon:Simple_Hash_Value>d41d8cd98f00b204e9800998ecf8427e</cyboxCommon:Simple_Hash_Value>
                             </cyboxCommon:Hash>
                         </FileObj:Hashes>
                     </cybox:Properties>

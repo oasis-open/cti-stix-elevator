@@ -1,17 +1,7 @@
 {
     "id": "bundle--190593d6-1861-4cfe-b212-c016fce1e248",
     "objects": [
-        {
-            "created": "2020-12-05T15:15:04.849Z",
-            "created_by_ref": "identity--21d4b9bc-4f4a-40f0-a4f7-3e65b8e9f4b4",
-            "definition": {
-                "statement": "APT1: Exposing One of China's Cyber Espionage Units (the \"APT1 Report\") is copyright 2013 by Mandiant Corporation and can be downloaded at intelreport.mandiant.com.  This XML file using the STIX standard was created by The MITRE Corporation using the content of the APT1 Report with Mandiant's permission.  Mandiant is not responsible for the content of this file."
-            },
-            "definition_type": "statement",
-            "id": "marking-definition--bd67e243-54dd-4d12-92be-16d2aa9e8fc6",
-            "type": "marking-definition"
-        },
-        {
+         {
             "created": "2020-12-05T15:15:04.849Z",
             "id": "identity--21d4b9bc-4f4a-40f0-a4f7-3e65b8e9f4b4",
             "identity_class": "unknown",
@@ -21,6 +11,16 @@
                 "marking-definition--bd67e243-54dd-4d12-92be-16d2aa9e8fc6"
             ],
             "type": "identity"
+        },
+        {
+            "created": "2020-12-05T15:15:04.849Z",
+            "created_by_ref": "identity--21d4b9bc-4f4a-40f0-a4f7-3e65b8e9f4b4",
+            "definition": {
+                "statement": "APT1: Exposing One of China's Cyber Espionage Units (the \"APT1 Report\") is copyright 2013 by Mandiant Corporation and can be downloaded at intelreport.mandiant.com.  This XML file using the STIX standard was created by The MITRE Corporation using the content of the APT1 Report with Mandiant's permission.  Mandiant is not responsible for the content of this file."
+            },
+            "definition_type": "statement",
+            "id": "marking-definition--bd67e243-54dd-4d12-92be-16d2aa9e8fc6",
+            "type": "marking-definition"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",

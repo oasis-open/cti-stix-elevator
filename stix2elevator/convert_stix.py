@@ -361,10 +361,15 @@ def convert_marking_specification(marking_specification, env, stix1x_id, isa_mar
                 # Skip empty markings or ones that use the idref approach.
                 continue
 
-            marking_definition_instance = create_basic_object("marking-definition", marking_structure, env)
-            process_information_source(marking_specification.information_source,
-                                       marking_definition_instance,
-                                       env)
+            if not check_map_1x_markings_to_2x(marking_structure):
+                marking_definition_instance = create_basic_object("marking-definition", marking_structure, env)
+                process_information_source(marking_specification.information_source,
+                                           marking_definition_instance,
+                                           env)
+            else:
+                marking_definition_instance = map_1x_markings_to_2x(marking_structure)
+                return_obj.append(marking_definition_instance)
+                continue
 
             if isinstance(marking_structure, TLPMarkingStructure):
                 if marking_structure.color is not None:
@@ -453,17 +458,17 @@ def convert_marking_specification(marking_specification, env, stix1x_id, isa_mar
                 if isa_marking:
                     if get_option_value("acs"):
                         for m in isa_marking_assertions:
-                            marking_definition_instance = create_basic_object("marking-definition", m, env)
-                            convert_edh_marking_to_acs_marking(marking_definition_instance, isa_marking, m)
-                            val = add_marking_map_entry(isa_marking, marking_definition_instance)
-                            val = add_marking_map_entry(m, marking_definition_instance)
-                            if val is not None and not isinstance(val, MarkingStructure):
-                                info("Found same marking structure %s, using %s", 625, identifying_info(m), val)
-                            else:
+                            if not check_map_1x_markings_to_2x(m):
+                                marking_definition_instance = create_basic_object("marking-definition", m, env)
+                                convert_edh_marking_to_acs_marking(marking_definition_instance, isa_marking, m)
+                                add_marking_map_entry(m, marking_definition_instance)
                                 info("Created Marking Structure for %s", 212, identifying_info(m))
                                 finish_basic_object(marking_specification.id_, marking_definition_instance, env, marking_structure)
                                 warn("Used extensions for ACS data markings. See %s", 319, marking_definition_instance["id"])
                                 return_obj.append(marking_definition_instance)
+                            else:
+                                val = map_1x_markings_to_2x(marking_structure)
+                                info("Found same marking structure %s, using %s", 625, identifying_info(m), val)
                     else:
                         if get_option_value("spec_version") == "2.1":
                             warn("ACS data markings only supported when --acs option is used. See %s", 436, isa_marking.identifier)
@@ -502,13 +507,13 @@ def finish_markings(instance, env, marking_specifications, temp_marking_id=None)
     isa_marking = None
     isa_marking_assertions = []
     for marking_specification in marking_specifications:
+        stix2x_markings, ignore = convert_marking_specification(marking_specification,
+                                                                env,
+                                                                instance["id"],
+                                                                isa_marking,
+                                                                isa_marking_assertions)
         for marking_structure in marking_specification.marking_structures:
             if not check_map_1x_markings_to_2x(marking_structure):
-                stix2x_markings, ignore = convert_marking_specification(marking_specification,
-                                                                        env,
-                                                                        instance["id"],
-                                                                        isa_marking,
-                                                                        isa_marking_assertions)
                 for m in stix2x_markings:
                     if m.get("definition_type", "") == "ais":
                         apply_ais_markings(instance, m)
@@ -540,7 +545,7 @@ def finish_markings(instance, env, marking_specifications, temp_marking_id=None)
 def finish_basic_object(old_id, instance, env, stix1x_obj, temp_marking_id=None):
     if old_id is not None:
         record_ids(old_id, instance["id"])
-    if hasattr(stix1x_obj, "related_packages") and stix1x_obj.related_packages is not None:
+    if stix1x_obj and hasattr(stix1x_obj, "related_packages") and stix1x_obj.related_packages is not None:
         for p in stix1x_obj.related_packages:
             warn("Related_Packages type in %s not supported in STIX 2.x", 402, stix1x_obj.id_)
 
@@ -838,7 +843,13 @@ def fix_markings():
                         if not stix2x_marking["id"] in object_marking_refs:
                             object_marking_refs.append(stix2x_marking["id"])
             else:
-                object_marking_refs.append(marking_ref)
+                marking_obj = lookup_marking_reference(marking_ref)
+                if marking_obj:
+                    if marking_obj.get("definition_type", "") == "ais":
+                        apply_ais_markings(stix2_instance, marking_obj)
+                    object_marking_refs.append(marking_obj["id"])
+                else:
+                    object_marking_refs.append(marking_ref)
 
         stix2_instance["object_marking_refs"] = object_marking_refs
 
@@ -2617,6 +2628,7 @@ def convert_package(stix_package, env):
     # created_by_idref from the command line is used instead of the one from the package, if given
     if not env.created_by_ref and hasattr(stix_package.stix_header, "information_source"):
         env.created_by_ref = get_identity_from_information_source(stix_package.stix_header.information_source, env, "this_identity")
+
     isa_marking = None
     isa_marking_assertions = []
     # Markings are processed in the beginning for handling later for each SDO.

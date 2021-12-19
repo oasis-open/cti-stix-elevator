@@ -1,6 +1,17 @@
 {
     "id": "bundle--190593d6-1861-4cfe-b212-c016fce1e248",
     "objects": [
+                {
+            "created": "2020-12-05T14:42:14.977Z",
+            "id": "identity--b5f13627-263a-4af9-b3eb-8f9c06778d02",
+            "modified": "2020-12-05T14:42:14.977Z",
+            "name": "MITRE",
+            "object_marking_refs": [
+                "marking-definition--02838048-8052-41b4-93da-1b879ead94e7"
+            ],
+            "spec_version": "2.1",
+            "type": "identity"
+        },
         {
             "created": "2020-12-05T14:42:14.977Z",
             "created_by_ref": "identity--b5f13627-263a-4af9-b3eb-8f9c06778d02",
@@ -11,17 +22,6 @@
             "id": "marking-definition--02838048-8052-41b4-93da-1b879ead94e7",
             "spec_version": "2.1",
             "type": "marking-definition"
-        },
-        {
-            "created": "2020-12-05T14:42:14.977Z",
-            "id": "identity--b5f13627-263a-4af9-b3eb-8f9c06778d02",
-            "modified": "2020-12-05T14:42:14.977Z",
-            "name": "MITRE",
-            "object_marking_refs": [
-                "marking-definition--02838048-8052-41b4-93da-1b879ead94e7"
-            ],
-            "spec_version": "2.1",
-            "type": "identity"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",

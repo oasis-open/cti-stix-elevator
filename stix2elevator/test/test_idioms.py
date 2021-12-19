@@ -136,30 +136,37 @@ def ignore_this_id(uuid_of_good_id, uuid_of_check_id):
 
 
 def id_2x(id):
-    return id.find("--") != -1
+    try:
+        return id.find("--") != -1
+    except AttributeError as e:
+        return False
 
 
 def test_elevator_idiom_mapping(test_file, stored_master, version, missing_policy, ignore):
-    errors = []
-    for good_path, check_path in idiom_elevator_mappings(test_file, stored_master, version, missing_policy, ignore):
-        if extension_definition_id_property(check_path) and extension_definition_id_property(good_path):
-            # use this hack to ignore differences in the extension-definition id
-            dummy_extension = "extension-definition--xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
-            check_path[0][3] = good_path[0][3] = dummy_extension
-        if id_property(check_path) and id_property(good_path):
-            if id_2x(good_path[1]) and id_2x(check_path[1]):
-                uuid_of_good_id = good_path[1].split("--")[1]
-                uuid_of_check_id = check_path[1].split("--")[1]
-                if ignore_this_id(uuid_of_good_id, uuid_of_check_id):
-                    continue
-        if good_path != check_path:
-            find_index_of_difference(good_path, check_path)
-            errors.append({"Expect": json.dumps(good_path), "Actual": json.dumps(check_path)})
+    try:
+        errors = []
+        for good_path, check_path in idiom_elevator_mappings(test_file, stored_master, version, missing_policy, ignore):
+            if extension_definition_id_property(check_path) and extension_definition_id_property(good_path):
+                # use this hack to ignore differences in the extension-definition id
+                dummy_extension = "extension-definition--xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                check_path[0][3] = good_path[0][3] = dummy_extension
+            if id_property(check_path) and id_property(good_path):
+                if id_2x(good_path[1]) and id_2x(check_path[1]):
+                    uuid_of_good_id = good_path[1].split("--")[1]
+                    uuid_of_check_id = check_path[1].split("--")[1]
+                    if ignore_this_id(uuid_of_good_id, uuid_of_check_id):
+                        continue
+            if good_path != check_path:
+                find_index_of_difference(good_path, check_path)
+                errors.append({"Expect": json.dumps(good_path), "Actual": json.dumps(check_path)})
 
-    if errors:
-        print("Number of errors: " + str(len(errors)))
-        print(json.dumps(errors, indent=4), file=sys.stderr)
-        raise AssertionError(errors)
+        if errors:
+            print("Number of errors: " + str(len(errors)))
+            print(json.dumps(errors, indent=4), file=sys.stderr)
+            raise AssertionError(errors)
+    except Exception as e:
+        raise e
+
 
 
 def pytest_generate_tests(metafunc):
