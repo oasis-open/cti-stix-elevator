@@ -518,11 +518,11 @@ def finish_markings(instance, env, marking_specifications, temp_marking_id=None)
                     if m.get("definition_type", "") == "ais":
                         apply_ais_markings(instance, m)
                         object_marking_refs.append(m["marking_ref"])
-                    elif instance["id"] != m["id"] and m["id"] not in object_marking_refs:
-                        object_marking_refs.append(m["id"])
-                        env.bundle_instance["objects"].append(m)
                     else:
-                        env.bundle_instance["objects"].append(m)
+                        if instance["id"] != m["id"] and m["id"] not in object_marking_refs:
+                            object_marking_refs.append(m["id"])
+                        if m not in env.bundle_instance["objects"]:
+                            env.bundle_instance["objects"].append(m)
             else:
                 stix2x_marking = map_1x_markings_to_2x(marking_structure)
                 if (instance["id"] != stix2x_marking["id"] and
@@ -1115,8 +1115,11 @@ def handle_missing_properties_of_vulnerability(vulnerability_instance, v):
         fill_in_extension_properties(vulnerability_instance, container, extension_definition_id)
 
 
-def convert_vulnerability(v, et, env):
-    vulnerability_instance = create_basic_object("vulnerability", v, env, et.id_)
+def convert_vulnerability(v, et, env, first):
+    vulnerability_instance = create_basic_object("vulnerability",
+                                                 v,
+                                                 env,
+                                                 et.id_ if first else None)
     if v.title is not None:
         vulnerability_instance["name"] = v.title
     process_description_and_short_description(vulnerability_instance, v)
@@ -1142,8 +1145,10 @@ def convert_exploit_target(et, env):
     else:
         new_env = env
     if et.vulnerabilities is not None:
+        first = True
         for v in et.vulnerabilities:
-            ets.append(convert_vulnerability(v, et, new_env))
+            ets.append(convert_vulnerability(v, et, new_env, first))
+            first = False
     if et.weaknesses is not None:
         for w in et.weaknesses:
             warn("ExploitTarget/Weaknesses type in %s not supported in STIX 2.x", 405, et.id_)
@@ -2642,7 +2647,8 @@ def convert_package(stix_package, env):
             for marking in stix2x_markings:
                 if (("definition_type" in marking and marking["definition_type"] != "ais") or
                         "extensions" in marking):
-                    bundle_instance["objects"].append(marking)
+                    if marking not in bundle_instance["objects"]:
+                        bundle_instance["objects"].append(marking)
 
     # do observables first, especially before indicators!
 
