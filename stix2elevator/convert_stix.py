@@ -79,7 +79,7 @@ from stix2elevator.missing_policy import (
 )
 from stix2elevator.options import error, get_option_value, info, warn
 from stix2elevator.utils import (
-    add_label, add_marking_map_entry, apply_ais_markings,
+    add_label, add_marking_map_entry, apply_ais_markings, check_for_xsi_type,
     check_map_1x_markings_to_2x, convert_controlled_vocabs_to_open_vocabs,
     convert_timestamp_of_stix_object, convert_timestamp_to_string,
     convert_to_stix_literal, identifying_info, iterpath,
@@ -1115,11 +1115,12 @@ def handle_missing_properties_of_vulnerability(vulnerability_instance, v):
         fill_in_extension_properties(vulnerability_instance, container, extension_definition_id)
 
 
-def convert_vulnerability(v, et, env, first):
+def convert_vulnerability(v, et, env, used_id):
     vulnerability_instance = create_basic_object("vulnerability",
                                                  v,
                                                  env,
-                                                 et.id_ if first else None)
+                                                 et.id_,
+                                                 used_id)
     if v.title is not None:
         vulnerability_instance["name"] = v.title
     process_description_and_short_description(vulnerability_instance, v)
@@ -1145,10 +1146,10 @@ def convert_exploit_target(et, env):
     else:
         new_env = env
     if et.vulnerabilities is not None:
-        first = True
+        used_id = False
         for v in et.vulnerabilities:
-            ets.append(convert_vulnerability(v, et, new_env, first))
-            first = False
+            ets.append(convert_vulnerability(v, et, new_env, used_id))
+            used_id = True
     if et.weaknesses is not None:
         for w in et.weaknesses:
             warn("ExploitTarget/Weaknesses type in %s not supported in STIX 2.x", 405, et.id_)
