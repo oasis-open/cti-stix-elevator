@@ -79,7 +79,7 @@ from stix2elevator.missing_policy import (
 )
 from stix2elevator.options import error, get_option_value, info, warn
 from stix2elevator.utils import (
-    add_label, add_marking_map_entry, apply_ais_markings, check_for_xsi_type,
+    add_label, add_marking_map_entry, apply_ais_markings,
     check_map_1x_markings_to_2x, convert_controlled_vocabs_to_open_vocabs,
     convert_timestamp_of_stix_object, convert_timestamp_to_string,
     convert_to_stix_literal, identifying_info, iterpath,

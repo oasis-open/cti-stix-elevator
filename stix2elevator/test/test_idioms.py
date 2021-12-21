@@ -138,7 +138,7 @@ def ignore_this_id(uuid_of_good_id, uuid_of_check_id):
 def id_2x(id):
     try:
         return id.find("--") != -1
-    except AttributeError as e:
+    except AttributeError:
         return False
 
 
