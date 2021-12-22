@@ -204,7 +204,7 @@ The ``published property`` is required for STIX 2.x Report *id*, using the creat
 The confidence value in *value* assumed to be a value on a scale between 0 and 100                                                          723     warn
 The confidence value in *value* has been converted to an integer so it is valid in STIX 2.1                                                 724     warn
 port number is assumed to be a destination port                                                                                             725     warn
-``Not in use``                                                                                                                              726     warn
+"*stix1_id* already used, generated new id *stix2_id                                                                                        726     warn
 Custom property name *property* has been converted to all lower case                                                                        727     warn
 The is_family property of malware instance *id* is assumed to be true                                                                       728     info
 Included parent markings for Relationship *id* and Location *id*                                                                            729     info

@@ -163,6 +163,8 @@ def lookup_marking_reference(marking_ref):
 
 
 def add_marking_map_entry(stix1x_marking, stix2x_marking):
+    global _MARKING_MAP_FROM_1_x_TO_2_x
+    global _MARKING_MAP_FROM_2_x_ID_TO_2_x
     if stix1x_marking not in _MARKING_MAP_FROM_1_x_TO_2_x:
         _MARKING_MAP_FROM_1_x_TO_2_x[stix1x_marking] = stix2x_marking
         if stix1x_marking.id_:
@@ -181,6 +183,7 @@ def clear_1x_markings_map():
 
 def apply_ais_markings(stix2x_instance, stix2x_marking):
     instance_labels = stix2x_instance.get("labels", []) + stix2x_marking.get("labels", [])
+    # if it is an identity object (when the instance is the creator of the marking)
     if instance_labels and stix2x_marking["created_by_ref"] == stix2x_instance["id"]:
         stix2x_instance["labels"] = instance_labels
         stix2x_instance["created_by_ref"] = stix2x_instance["id"]

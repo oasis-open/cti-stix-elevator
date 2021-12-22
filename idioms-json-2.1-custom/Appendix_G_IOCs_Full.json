@@ -2,17 +2,6 @@
     "id": "bundle--190593d6-1861-4cfe-b212-c016fce1e248",
     "objects": [
         {
-            "created": "2018-10-02T14:17:39.107Z",
-            "created_by_ref": "identity--a1ee09fe-d0b1-4cc9-98fb-cf8debf08989",
-            "definition": {
-                "statement": "APT1: Exposing One of China's Cyber Espionage Units (the \"APT1 Report\") is copyright 2013 by Mandiant Corporation and can be downloaded at intelreport.mandiant.com.  This XML file using the STIX standard was created by The MITRE Corporation using the content of the APT1 Report with Mandiant's permission.  Mandiant is not responsible for the content of this file."
-            },
-            "definition_type": "statement",
-            "id": "marking-definition--3304e586-10c0-4c7e-99da-fff530da7636",
-            "spec_version": "2.1",
-            "type": "marking-definition"
-        },
-        {
             "created": "2018-10-02T14:17:39.106Z",
             "id": "identity--a1ee09fe-d0b1-4cc9-98fb-cf8debf08989",
             "modified": "2018-10-02T14:17:39.106Z",
@@ -22,6 +11,17 @@
             ],
             "spec_version": "2.1",
             "type": "identity"
+        },
+        {
+            "created": "2018-10-02T14:17:39.107Z",
+            "created_by_ref": "identity--a1ee09fe-d0b1-4cc9-98fb-cf8debf08989",
+            "definition": {
+                "statement": "APT1: Exposing One of China's Cyber Espionage Units (the \"APT1 Report\") is copyright 2013 by Mandiant Corporation and can be downloaded at intelreport.mandiant.com.  This XML file using the STIX standard was created by The MITRE Corporation using the content of the APT1 Report with Mandiant's permission.  Mandiant is not responsible for the content of this file."
+            },
+            "definition_type": "statement",
+            "id": "marking-definition--3304e586-10c0-4c7e-99da-fff530da7636",
+            "spec_version": "2.1",
+            "type": "marking-definition"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",

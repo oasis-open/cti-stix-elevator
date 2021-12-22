@@ -61,6 +61,8 @@ def generate_stix2x_id(stix2x_so_name, stix12_id=None, id_used=False):
     if not stix12_id or id_used:
         new_id = stix2x_so_name + "--" + str(uuid.uuid4())
         add_ids_with_no_1x_object(new_id)
+        if id_used and stix12_id:
+            warn("%s already used, generated new id %s", 726, stix12_id, new_id)
         return new_id
     else:
         # this works for all versions of UUID

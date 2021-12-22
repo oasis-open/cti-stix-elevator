@@ -136,7 +136,10 @@ def ignore_this_id(uuid_of_good_id, uuid_of_check_id):
 
 
 def id_2x(id):
-    return id.find("--") != -1
+    try:
+        return id.find("--") != -1
+    except AttributeError:
+        return False
 
 
 def test_elevator_idiom_mapping(test_file, stored_master, version, missing_policy, ignore):

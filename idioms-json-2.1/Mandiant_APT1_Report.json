@@ -1,6 +1,17 @@
 {
     "id": "bundle--e33ffe07-2f4c-48d8-b0af-ee2619d765cf",
     "objects": [
+         {
+            "created": "2020-05-31T14:46:46.924Z",
+            "id": "identity--a957579f-7388-4553-af4e-3aa044c52444",
+            "modified": "2020-05-31T14:46:46.924Z",
+            "name": "MITRE",
+            "object_marking_refs": [
+                "marking-definition--e6759cc7-4b44-4cb4-a1d5-ca16671f451e"
+            ],
+            "spec_version": "2.1",
+            "type": "identity"
+        },
         {
             "created": "2020-05-31T14:46:46.924Z",
             "created_by_ref": "identity--a957579f-7388-4553-af4e-3aa044c52444",
@@ -11,17 +22,6 @@
             "id": "marking-definition--e6759cc7-4b44-4cb4-a1d5-ca16671f451e",
             "spec_version": "2.1",
             "type": "marking-definition"
-        },
-        {
-            "created": "2020-05-31T14:46:46.924Z",
-            "id": "identity--a957579f-7388-4553-af4e-3aa044c52444",
-            "modified": "2020-05-31T14:46:46.924Z",
-            "name": "MITRE",
-            "object_marking_refs": [
-                "marking-definition--e6759cc7-4b44-4cb4-a1d5-ca16671f451e"
-            ],
-            "spec_version": "2.1",
-            "type": "identity"
         },
         {
             "administrative_area": "Pudong New Area",
