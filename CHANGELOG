@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+4.1.2 - 2021-12-22
+
+    - Improved processing of ACS data markings
+    - Handle multiple Vulnerabilites in an Exploit-Target correctly
+
 4.1.1 - 2021-12-09
 
 Minor fixes to handle an empty STIX 1.x description tag, and improved processing of extensions in patterns.
