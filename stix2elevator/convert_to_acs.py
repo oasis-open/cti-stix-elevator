@@ -1,4 +1,8 @@
+import re
+
 # internal
+import uuid
+
 from stix2elevator.options import warn
 from stix2elevator.utils import convert_timestamp_to_string
 
@@ -161,6 +165,29 @@ def convert_control_set(control_set):
     return cs
 
 
+_ISA_IDENTIFIER_PREFIX = "isa:guide.19001.ACS3-"
+
+_UUID_RE = "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+
+_UUID_PATTERN = re.compile("(" + _UUID_RE + ")")
+
+_ISA_IDENTIFIER_PATTERN = re.compile(_ISA_IDENTIFIER_PREFIX + _UUID_RE)
+
+
+def convert_isa_identifier(identifier):
+    # do we need to consider case?
+    if re.match(_ISA_IDENTIFIER_PATTERN, identifier):
+        return identifier
+    else:
+        m = re.search(_UUID_PATTERN, identifier)
+        if m:
+            return _ISA_IDENTIFIER_PREFIX + m.group(0)
+        else:
+            new_identifier = _ISA_IDENTIFIER_PREFIX + str(uuid.uuid4())
+            warn("ACS identifier %s contains no UUID, creating one %s", 643, identifier, new_identifier)
+            return new_identifier
+
+
 def convert_edh_marking_to_acs_marking(marking_definition_instance, isa_marking, marking_assertion):
     acs_marking = {"extension_type": "property-extension"}
     # name is optional
@@ -179,7 +206,7 @@ def convert_edh_marking_to_acs_marking(marking_definition_instance, isa_marking,
             warn("Required property %s is not provided for ACS data marking", 641, "responsible_entity_custodian")
 
     if isa_marking.identifier:
-        acs_marking["identifier"] = isa_marking.identifier
+        acs_marking["identifier"] = convert_isa_identifier(isa_marking.identifier)
 
     # both auth_ref properties in the XML schema are minOccurs="0" maxOccurs="1"
     if marking_assertion.auth_ref:
