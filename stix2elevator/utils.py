@@ -354,3 +354,16 @@ class Environment():
             self.created_by_ref = created_by_ref
         if timestamp:
             self.timestamp = timestamp
+
+
+def is_a_idref_obj(stix1x_obj):
+    return hasattr(stix1x_obj, "idref") and stix1x_obj.idref
+
+
+def check_for_xsi_type(stix1x_obj):
+    if (hasattr(stix1x_obj, "original_binding_class") and
+            not is_a_idref_obj(stix1x_obj) and
+                stix1x_obj.original_binding_class.__class__.__name__.find("Base") != -1):
+        warn("%s was created without the xsi:type attribute.  Some content might be missing",
+             642,
+             stix1x_obj.id_ if hasattr(stix1x_obj, "id_") else stix1x_obj)
