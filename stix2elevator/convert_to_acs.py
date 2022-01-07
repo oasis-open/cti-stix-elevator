@@ -117,7 +117,9 @@ def convert_access_privilege(access_privilege):
 def convert_further_sharing(further_sharing):
     fs = {}
     if further_sharing.sharing_scope:
-        fs["sharing_scope"] = further_sharing.sharing_scope
+        fs["sharing_scope"] = list()
+        for ss in further_sharing.sharing_scope:
+            fs["sharing_scope"].append(str(ss))
     else:
         warn("Required property %s is not provided for ACS data marking", 641, "sharing_scope")
     if further_sharing.rule_effect:
