@@ -193,7 +193,7 @@ def convert_edh_marking_to_acs_marking(marking_definition_instance, isa_marking,
 
     if isa_marking.identifier:
         identifier = isa_marking.identifier
-        if re.match(_ISA_IDENTIFIER_PATTERN, identifier):
+        if not re.match(_ISA_IDENTIFIER_PATTERN, identifier):
             warn("ACS identifier %s is not valid", 643, identifier)
         acs_marking["identifier"] = identifier
 
