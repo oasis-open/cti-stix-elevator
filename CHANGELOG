@@ -1,5 +1,10 @@
 CHANGELOG
 =========
+4.1.3 - 2022-01-11
+
+    ACS Data Marking issues
+    - Incorporate change to package dependency stix-edh
+    - Warn if ACS indetifier is invalid
 
 4.1.2 - 2021-12-22
 

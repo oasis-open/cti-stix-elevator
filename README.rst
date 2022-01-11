@@ -133,7 +133,7 @@ STIX 1.x content to STIX 2.x content:
               file
 
 
-stix2-elevator v4.1.2
+stix2-elevator v4.1.3
 
 positional arguments:
 
