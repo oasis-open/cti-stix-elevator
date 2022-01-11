@@ -171,6 +171,8 @@ Indicator *id* does not contain the information necessary to generate a pattern 
 This observable *id* already is associated with cyber observables                                                                           639     warn
 Unable to determine the hash type for *hash value*                                                                                          640     warn
 Required property *property* is not provided for ACS data marking                                                                           641     warn
+*id* was created without the xsi:type attribute.  Some content might be missing                                                             642     warn
+ACS identifier *identifier* is not valid                                                                                                    643     warn
 =========================================================================================================================================== ====    =====
 
 STIX Elevator conversion based on assumptions

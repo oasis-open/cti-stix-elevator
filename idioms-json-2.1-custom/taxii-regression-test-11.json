@@ -40,7 +40,9 @@
                     "further_sharing": [
                         {
                             "rule_effect": "permit",
-                            "sharing_scope": "USA.USG"
+                            "sharing_scope": [
+                                "USA.USG"
+                            ]
                         }
                     ],
                     "identifier": "isa:guide.19001.40af97be-00bf-4648-9e70-296a6a8eda01",

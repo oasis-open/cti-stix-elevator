@@ -1,3 +1,6 @@
+# Standard Library
+import re
+
 # internal
 from stix2elevator.options import warn
 from stix2elevator.utils import convert_timestamp_to_string
@@ -117,7 +120,9 @@ def convert_access_privilege(access_privilege):
 def convert_further_sharing(further_sharing):
     fs = {}
     if further_sharing.sharing_scope:
-        fs["sharing_scope"] = further_sharing.sharing_scope
+        fs["sharing_scope"] = list()
+        for ss in further_sharing.sharing_scope:
+            fs["sharing_scope"].append(str(ss))
     else:
         warn("Required property %s is not provided for ACS data marking", 641, "sharing_scope")
     if further_sharing.rule_effect:
@@ -161,6 +166,13 @@ def convert_control_set(control_set):
     return cs
 
 
+_ISA_IDENTIFIER_PREFIX = "isa:guide.19001.ACS3-"
+
+_UUID_RE = "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+
+_ISA_IDENTIFIER_PATTERN = re.compile(_ISA_IDENTIFIER_PREFIX + _UUID_RE)
+
+
 def convert_edh_marking_to_acs_marking(marking_definition_instance, isa_marking, marking_assertion):
     acs_marking = {"extension_type": "property-extension"}
     # name is optional
@@ -179,7 +191,10 @@ def convert_edh_marking_to_acs_marking(marking_definition_instance, isa_marking,
             warn("Required property %s is not provided for ACS data marking", 641, "responsible_entity_custodian")
 
     if isa_marking.identifier:
-        acs_marking["identifier"] = isa_marking.identifier
+        identifier = isa_marking.identifier
+        if not re.match(_ISA_IDENTIFIER_PATTERN, identifier):
+            warn("ACS identifier %s is not valid", 643, identifier)
+        acs_marking["identifier"] = identifier
 
     # both auth_ref properties in the XML schema are minOccurs="0" maxOccurs="1"
     if marking_assertion.auth_ref:
