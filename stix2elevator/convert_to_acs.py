@@ -1,8 +1,7 @@
+# Standard Library
 import re
 
 # internal
-import uuid
-
 from stix2elevator.options import warn
 from stix2elevator.utils import convert_timestamp_to_string
 

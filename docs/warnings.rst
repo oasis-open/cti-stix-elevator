@@ -172,7 +172,7 @@ This observable *id* already is associated with cyber observables               
 Unable to determine the hash type for *hash value*                                                                                          640     warn
 Required property *property* is not provided for ACS data marking                                                                           641     warn
 *id* was created without the xsi:type attribute.  Some content might be missing                                                             642     warn
-ACS identifier %s contains no UUID, creating one *acs_identifier*                                                                           643     warn
+ACS identifier *identifier* is not valid                                                                                                    643     warn
 =========================================================================================================================================== ====    =====
 
 STIX Elevator conversion based on assumptions
