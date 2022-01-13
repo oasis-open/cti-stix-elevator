@@ -331,7 +331,9 @@ def create_basic_object(stix2x_type, stix1x_obj, env, parent_id=None, id_used=Fa
         instance["spec_version"] = "2.1"
     instance["id"] = generate_stix2x_id(stix2x_type, stix1x_obj.id_ if (stix1x_obj and
                                                                         hasattr(stix1x_obj, "id_") and
-                                                                        stix1x_obj.id_) else parent_id, id_used)
+                                                                        stix1x_obj.id_) \
+                                                                    else parent_id,
+                                        id_used)
     if stix1x_obj:
         timestamp = convert_timestamp_of_stix_object(stix1x_obj, env.timestamp, True)
     else:
@@ -570,36 +572,47 @@ def handle_sightings_observables(related_observables, env):
     return refs
 
 
-def process_information_source_for_sighting(sighting, sighting_instance, env):
-    if sighting.source:
-        information_source = sighting.source
+def process_information_source_for_sighting(source, env):
+    if source:
+        information_source = source
         if information_source.identity is not None:
-            sighting_instance["where_sighted_refs"] = [get_identity_ref(information_source.identity, env, created_by_ref_source="this_identity")]
-            if information_source.description:
-                process_description_and_short_description(sighting_instance, sighting)
-            if information_source.references:
-                for ref in information_source.references:
-                    sighting_instance["external_references"].append({"url": ref})
-            if information_source.roles:
-                handle_missing_string_property(sighting_instance, "information_source_roles", information_source.roles,
-                                               True, is_literal=True)
-            if information_source.tools:
-                for tool in information_source.tools:
-                    handle_missing_tool_property(sighting_instance, tool)
+            return [get_identity_ref(information_source.identity, env, created_by_ref_source="this_identity")]
+            # if information_source.description:
+            #     process_description_and_short_description(sighting_instance, sighting)
+            # if information_source.references:
+            #     for ref in information_source.references:
+            #         sighting_instance["external_references"].append({"url": ref})
+            # if information_source.roles:
+            #     handle_missing_string_property(sighting_instance, "information_source_roles", information_source.roles,
+            #                                    True, is_literal=True)
+            # if information_source.tools:
+            #     for tool in information_source.tools:
+            #         handle_missing_tool_property(sighting_instance, tool)
 
 
-def handle_sighting(sighting, sighted_object_id, env):
+def handle_sighting(sighting, sighted_object_id, sightings_count, env,
+                    first_seen=None, last_seen=None, summary=False,
+                    sources_refs=None, observable_refs=None):
     sighting_instance = create_basic_object("sighting", sighting, env)
-    sighting_instance["count"] = 1
+    sighting_instance["count"] = sightings_count
     sighting_instance["created_by_ref"] = env.created_by_ref
     sighting_instance["sighting_of_ref"] = sighted_object_id
-    process_description_and_short_description(sighting_instance, sighting)
-    if sighting.related_observables:
-        sighting_instance["observed_data_refs"] = handle_sightings_observables(sighting.related_observables, env)
-    if sighting.source:
-        process_information_source_for_sighting(sighting, sighting_instance, env)
-    # assumption is that the observation is a singular, not a summary of observations
-    sighting_instance["summary"] = False
+    if sighting:
+        if sighting.source:
+            sighting_instance["where_sighted_refs"] = process_information_source_for_sighting(sighting.source, env)
+        if sighting.related_observables:
+            sighting_instance["observed_data_refs"] = handle_sightings_observables(sighting.related_observables, env)
+    else:
+        if first_seen:
+            sighting_instance["first_seen"] = first_seen
+        if last_seen:
+            sighting_instance["last_seen"] = last_seen
+        if summary:
+            sighting_instance["summary"] = True
+        if sources_refs:
+            sighting_instance["where_sighted_refs"] = sources_refs
+        if observable_refs:
+            sighting_instance["observed_data_refs"] = observable_refs
     finish_basic_object(None, sighting_instance, env, sighting)
     return sighting_instance
 
@@ -1618,6 +1631,66 @@ def negate_indicator(indicator):
     return hasattr(indicator, "negate") and indicator.negate
 
 
+def find_first_seen_sighting(sightings):
+    earlist_date = sightings[0].timestamp
+    for s in sightings:
+        if s.timestamp <= earlist_date:
+            earlist_date = s.timestamp
+    return earlist_date
+
+
+def find_last_seen_sighting(sightings):
+    last_date = sightings[0].timestamp
+    for s in sightings:
+        if s.timestamp <= last_date:
+            last_date = s.timestamp
+    return last_date
+
+
+def convert_sightings(sightings, indicator_instance, env):
+    if not hasattr(sightings, "sightings_count"):
+        for s in sightings:
+            env.bundle_instance["objects"].append(handle_sighting(s,
+                                                                  indicator_instance["id"],
+                                                                  1,
+                                                                  env))
+    elif sightings.sightings_count == 1 and len(sightings) == 1:
+        env.bundle_instance["objects"].append(handle_sighting(sightings[0],
+                                                              indicator_instance["id"],
+                                                              sightings.sightings_count,
+                                                              env))
+    elif sightings.sightings_count != 1 and len(sightings) == 1:
+        env.bundle_instance["objects"].append(handle_sighting(sightings[0],
+                                                              indicator_instance["id"],
+                                                              sightings.sightings_count,
+                                                              env,
+                                                              summary=True))
+    else:
+        first_seen = find_first_seen_sighting(sightings)
+        last_seen = find_last_seen_sighting(sightings) if sightings.sightings_count == len(sightings) else None
+        source_refs = []
+        observable_refs = []
+        for s in sightings:
+            if s.related_observables:
+                observable_refs.extend(handle_sightings_observables(s.related_observables, env))
+            if s.source:
+                source_refs.extend(process_information_source_for_sighting(s.source, env))
+        if sightings.sightings_count > len(sightings):
+            warn("Number of sightings given is larger that sightings_count in %s", 0, indicator_instance["id"])
+        else:
+            process_description_and_short_description(sighting_instance, s)
+            env.bundle_instance["objects"].append(handle_sighting(None,
+                                                                  indicator_instance["id"],
+                                                                  len(sightings) if sightings.sightings_count == 1 else sightings.sightings_count,
+                                                                  sightings.sightings_count,
+                                                                  env,
+                                                                  first_seen=first_seen,
+                                                                  last_seen=last_seen,
+                                                                  summary=True,
+                                                                  source_refs=source_refs,
+                                                                  observable_refs=observable_refs))
+
+
 def handle_missing_properties_of_indicator(indicator_instance, indicator):
     container, extension_definition_id = determine_container_for_missing_properties("indicator",
                                                                                     indicator_instance)
@@ -1710,8 +1783,7 @@ correctly in STIX 2.x - please check this pattern",
     indicator_markings = create_marking_union(indicator)
     # process information source before any relationships
     if indicator.sightings:
-        for s in indicator.sightings:
-            env.bundle_instance["objects"].append(handle_sighting(s, indicator_instance["id"], env))
+        convert_sightings(indicator.sightings, indicator_instance, env)
     if indicator.suggested_coas is not None:
         warn("Using %s for the %s of %s", 718, "investigates", "suggested COAs", indicator.id_)
         handle_relationship_from_refs(indicator.suggested_coas, indicator_instance["id"], env,
