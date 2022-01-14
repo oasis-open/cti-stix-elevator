@@ -592,25 +592,27 @@ def process_information_source_for_sighting(source, env):
 
 def handle_sighting(sighting, sighted_object_id, sightings_count, env,
                     first_seen=None, last_seen=None, summary=False,
-                    sources_refs=None, observable_refs=None):
+                    source_refs=None, observable_refs=None):
     sighting_instance = create_basic_object("sighting", sighting, env)
     sighting_instance["count"] = sightings_count
     sighting_instance["created_by_ref"] = env.created_by_ref
     sighting_instance["sighting_of_ref"] = sighted_object_id
+    if summary:
+        sighting_instance["summary"] = True
     if sighting:
         if sighting.source:
             sighting_instance["where_sighted_refs"] = process_information_source_for_sighting(sighting.source, env)
         if sighting.related_observables:
             sighting_instance["observed_data_refs"] = handle_sightings_observables(sighting.related_observables, env)
+        add_confidence_to_object(sighting_instance, sighting.confidence)
     else:
         if first_seen:
             sighting_instance["first_seen"] = first_seen
         if last_seen:
             sighting_instance["last_seen"] = last_seen
-        if summary:
-            sighting_instance["summary"] = True
-        if sources_refs:
-            sighting_instance["where_sighted_refs"] = sources_refs
+
+        if source_refs:
+            sighting_instance["where_sighted_refs"] = source_refs
         if observable_refs:
             sighting_instance["observed_data_refs"] = observable_refs
     finish_basic_object(None, sighting_instance, env, sighting)
@@ -1634,7 +1636,11 @@ def negate_indicator(indicator):
 def find_first_seen_sighting(sightings):
     earlist_date = sightings[0].timestamp
     for s in sightings:
-        if s.timestamp <= earlist_date:
+        if earlist_date:
+            if s.timestamp:
+                if s.timestamp <= earlist_date:
+                    earlist_date = s.timestamp
+        else:
             earlist_date = s.timestamp
     return earlist_date
 
@@ -1642,13 +1648,17 @@ def find_first_seen_sighting(sightings):
 def find_last_seen_sighting(sightings):
     last_date = sightings[0].timestamp
     for s in sightings:
-        if s.timestamp <= last_date:
+        if last_date:
+            if s.timestamp:
+                if s.timestamp >= last_date:
+                    last_date = s.timestamp
+        else:
             last_date = s.timestamp
     return last_date
 
 
 def convert_sightings(sightings, indicator_instance, env):
-    if not hasattr(sightings, "sightings_count"):
+    if not sightings.sightings_count:
         for s in sightings:
             env.bundle_instance["objects"].append(handle_sighting(s,
                                                                   indicator_instance["id"],
@@ -1675,17 +1685,15 @@ def convert_sightings(sightings, indicator_instance, env):
                 observable_refs.extend(handle_sightings_observables(s.related_observables, env))
             if s.source:
                 source_refs.extend(process_information_source_for_sighting(s.source, env))
-        if sightings.sightings_count > len(sightings):
-            warn("Number of sightings given is larger that sightings_count in %s", 0, indicator_instance["id"])
-        else:
-            process_description_and_short_description(sighting_instance, s)
+        if sightings.sightings_count and sightings.sightings_count < len(sightings):
+            warn("Number of sightings given is larger than sightings_count in %s", 730, indicator_instance["id"])
+            # process_description_and_short_description(sighting_instance, s)
             env.bundle_instance["objects"].append(handle_sighting(None,
                                                                   indicator_instance["id"],
                                                                   len(sightings) if sightings.sightings_count == 1 else sightings.sightings_count,
-                                                                  sightings.sightings_count,
                                                                   env,
-                                                                  first_seen=first_seen,
-                                                                  last_seen=last_seen,
+                                                                  first_seen=convert_timestamp_to_string(first_seen) if first_seen else None,
+                                                                  last_seen=convert_timestamp_to_string(last_seen) if last_seen else None,
                                                                   summary=True,
                                                                   source_refs=source_refs,
                                                                   observable_refs=observable_refs))

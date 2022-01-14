@@ -210,6 +210,7 @@ port number is assumed to be a destination port                                 
 Custom property name *property* has been converted to all lower case                                                                        727     warn
 The is_family property of malware instance *id* is assumed to be true                                                                       728     info
 Included parent markings for Relationship *id* and Location *id*                                                                            729     info
+Number of sightings given is larger than sightings_count in *id*                                                                            730     warn
 =========================================================================================================================================== ====    =====
 
 STIX elevator currently doesn't process this content

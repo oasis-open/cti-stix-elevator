@@ -1,11 +1,13 @@
 <stix:STIX_Package
 	xmlns:URIObj="http://cybox.mitre.org/objects#URIObject-2"
 	xmlns:indicator="http://stix.mitre.org/Indicator-2"
-	xmlns:cyboxCommon="http://cybox.mitre.org/common-2"
+    xmlns:stixVocabs="http://stix.mitre.org/default_vocabularies-1"
 	xmlns:stix="http://stix.mitre.org/stix-1"
 	xmlns:stixCommon="http://stix.mitre.org/common-1"
 	xmlns:cybox="http://cybox.mitre.org/cybox-2"
 	xmlns:example="http://example.com"
+    xmlns:PacketObj="http://cybox.mitre.org/objects#PacketObject-2"
+    xmlns:AddressObject="http://cybox.mitre.org/objects#AddressObject-2"
 	xmlns:xlink="http://www.w3.org/1999/xlink"
 	xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
 	xmlns:xs="http://www.w3.org/2001/XMLSchema"
@@ -13,7 +15,7 @@
 	 id="example:Package-99d2a5bf-7cf2-4e90-a402-ed1b08a5bcc5" version="1.2">
     <stix:Indicators>
         <stix:Indicator id="example:indicator-6737ec19-c598-4c15-929c-3a94fc1d5951" timestamp="2020-03-12T15:49:11.512807+00:00" xsi:type='indicator:IndicatorType'>
-            <indicator:Title>Malicious site hosting downloader</indicator:Title>
+            <indicator:Title>no sightings_count, 1 sightings</indicator:Title>
             <indicator:Observable id="example:Observable-2a64c3d7-271a-4125-89cd-c84c6534fd85">
                 <cybox:Object id="example:URI-157e60b4-184d-4705-966e-616f3d2f6e33">
                     <cybox:Properties xsi:type="URIObj:URIObjectType">
@@ -29,6 +31,127 @@
                         </stixCommon:Identity>
                     </indicator:Source>
                 </indicator:Sighting>
+            </indicator:Sightings>
+        </stix:Indicator>
+        <stix:Indicator id="example:indicator-114cf2d4-0cc4-4eac-87b7-d8d0a822220b" timestamp="2020-03-12T15:49:11.512807+00:00" xsi:type='indicator:IndicatorType'>
+            <indicator:Title>no sightings_count, multiple sightings</indicator:Title>
+            <indicator:Observable id="example:Observable-715d541d-ee08-4758-915f-c182dbf5b76c">
+                <cybox:Object id="example:URI-a991d752-3b1d-4104-a772-4a2a15118815">
+                    <cybox:Properties xsi:type="URIObj:URIObjectType">
+                        <URIObj:Value>http://foo.bar/1234</URIObj:Value>
+                    </cybox:Properties>
+                </cybox:Object>
+            </indicator:Observable>
+            <indicator:Sightings>
+                <indicator:Sighting timestamp="2020-03-12T15:49:11.516590+00:00">
+                    <indicator:Confidence>
+				        <stixCommon:Value xsi:type="stixVocabs:HighMediumLowVocab-1.0">Medium</stixCommon:Value>
+			        </indicator:Confidence>
+                </indicator:Sighting>
+                <indicator:Sighting timestamp="2020-04-30T12:16:11.516590+00:00">
+                    <indicator:Confidence>
+				        <stixCommon:Value xsi:type="stixVocabs:HighMediumLowVocab-1.0">Low</stixCommon:Value>
+			        </indicator:Confidence>
+                </indicator:Sighting>
+            </indicator:Sightings>
+        </stix:Indicator>
+        <stix:Indicator id="example:indicator-9e5536d8-fe90-4c36-a84a-7e975654f481" timestamp="2020-03-12T15:49:11.512807+00:00" xsi:type='indicator:IndicatorType'>
+            <indicator:Title>sightings_count = 1, 1 sighting</indicator:Title>
+            <indicator:Observable id="example:Observable-9f114618-8bff-4cfe-82c6-10faef9ba422">
+                <cybox:Object id="example:URI-c856a92a-910b-4e15-b07a-e3da370b46f6">
+                    <cybox:Properties xsi:type="URIObj:URIObjectType">
+                        <URIObj:Value>http://bar.foo/7890</URIObj:Value>
+                    </cybox:Properties>
+                </cybox:Object>
+            </indicator:Observable>
+            <indicator:Sightings sightings_count="1">
+                <indicator:Sighting timestamp="2021-05-30T00:00:00.516590+00:00">
+                    <indicator:Related_Observables>
+                        <indicator:Related_Observable>
+                            <stixCommon:Observable idref="example:Observable-86c60cc1-43a9-40c1-a174-df75ac518423"/>
+                        </indicator:Related_Observable>
+                    </indicator:Related_Observables>
+                     <indicator:Source>
+                        <stixCommon:Identity>
+                            <stixCommon:Name>Joe Smith</stixCommon:Name>
+                        </stixCommon:Identity>
+                    </indicator:Source>
+                </indicator:Sighting>
+            </indicator:Sightings>
+        </stix:Indicator>
+        <stix:Indicator id="example:indicator-856bf7b8-00db-4aa9-9ee4-ce786fad6573" timestamp="2020-03-12T15:49:11.512807+00:00" xsi:type='indicator:IndicatorType'>
+            <indicator:Title>sightings_count > 1, 1 sighting</indicator:Title>
+            <indicator:Observable id="example:observable-86c60cc1-43a9-40c1-a174-df75ac518423">
+                <cybox:Object id="example:NetworkPacket-4b508a52-8c60-4a6a-99a9-548f77a02aa0">
+                    <cybox:Properties xsi:type="PacketObj:NetworkPacketObjectType">
+                        <PacketObj:Internet_Layer>
+                            <PacketObj:ICMPv4>
+                                <PacketObj:ICMPv4_Header>
+                                    <PacketObj:Type>08</PacketObj:Type>
+                                    <PacketObj:Code>00</PacketObj:Code>
+                                    <PacketObj:Checksum>97c02164528d</PacketObj:Checksum>
+                                </PacketObj:ICMPv4_Header>
+                            </PacketObj:ICMPv4>
+                        </PacketObj:Internet_Layer>
+                    </cybox:Properties>
+                </cybox:Object>
+            </indicator:Observable>
+            <indicator:Sightings sightings_count="10">
+                <indicator:Sighting timestamp="2020-03-12T15:49:11.516590+00:00">
+                    <indicator:Source>
+                        <stixCommon:Identity>
+                            <stixCommon:Name>Dick Clark</stixCommon:Name>
+                        </stixCommon:Identity>
+                    </indicator:Source>
+                </indicator:Sighting>
+            </indicator:Sightings>
+        </stix:Indicator>
+        <stix:Indicator id="example:indicator-34898bbd-d0a8-46c3-a1ca-bceb0029315c" timestamp="2020-03-12T15:49:11.512807+00:00" xsi:type='indicator:IndicatorType'>
+            <indicator:Title>sightings_count > 1 (4), more than 1 sighting (4)</indicator:Title>
+            <indicator:Observable  id="example:Observable-7d2b317d-3260-4006-8adf-451e162a055f">
+                <cybox:Object id="example:Object-5eaa1271-42c7-4bda-98cf-08bf9329f545">
+                    <cybox:Properties xsi:type="AddressObject:AddressObjectType" category="ipv4-addr">
+                        <AddressObject:Address_Value condition="Equals">10.0.0.0</AddressObject:Address_Value>
+                    </cybox:Properties>
+                </cybox:Object>
+            </indicator:Observable>
+            <indicator:Sightings sightings_count="4">
+                <indicator:Sighting timestamp="2020-02-28T10:49:11.516590+00:00"/>
+                <indicator:Sighting timestamp="2020-02-28T16:49:11.516590+00:00"/>
+                <indicator:Sighting timestamp="2020-02-28T17:49:11.516590+00:00"/>
+                <indicator:Sighting timestamp="2020-02-28T18:49:11.516590+00:00"/>
+            </indicator:Sightings>
+        </stix:Indicator>
+        <stix:Indicator id="example:indicator-71866c5e-4cfc-4bdf-934b-eed878590a63" timestamp="2020-03-12T15:49:11.512807+00:00" xsi:type='indicator:IndicatorType'>
+            <indicator:Title>sightings_count > 1 (3), more than 1 sighting (4)</indicator:Title>
+            <indicator:Observable  id="example:Observable-f00c078c-7b0f-4606-9400-ad77b88854dd">
+                <cybox:Object id="example:Object-f180736a-edcc-4b7c-abe8-e37f19c83a1c">
+                    <cybox:Properties xsi:type="AddressObject:AddressObjectType" category="ipv4-addr">
+                        <AddressObject:Address_Value condition="Equals">20.0.0.1</AddressObject:Address_Value>
+                    </cybox:Properties>
+                </cybox:Object>
+            </indicator:Observable>
+            <indicator:Sightings sightings_count="3">
+                <indicator:Sighting timestamp="2016-12-23T10:49:11.516590+00:00"/>
+                <indicator:Sighting timestamp="2016-12-23T16:49:11.516590+00:00"/>
+                <indicator:Sighting timestamp="2016-12-23T17:49:11.516590+00:00"/>
+                <indicator:Sighting timestamp="2016-12-23T18:49:11.516590+00:00"/>
+            </indicator:Sightings>
+        </stix:Indicator>
+        <stix:Indicator id="example:indicator-17457bf0-91e4-4f29-8106-b5e821f3e9e4" timestamp="2020-03-12T15:49:11.512807+00:00" xsi:type='indicator:IndicatorType'>
+            <indicator:Title>sightings_count > 1 (5), more than 1 sighting (4)</indicator:Title>
+            <indicator:Observable  id="example:Observable-056355a9-7b46-4798-92da-8a308d39f463">
+                <cybox:Object id="example:Object-e702ba0a-a267-4f08-8841-f971de2096b6">
+                    <cybox:Properties xsi:type="AddressObject:AddressObjectType" category="ipv4-addr">
+                        <AddressObject:Address_Value condition="Equals">255.0.0.1</AddressObject:Address_Value>
+                    </cybox:Properties>
+                </cybox:Object>
+            </indicator:Observable>
+            <indicator:Sightings sightings_count="5">
+                <indicator:Sighting timestamp="2017-10-10T10:49:11.516590+00:00"/>
+                <indicator:Sighting timestamp="2017-10-10T16:49:11.516590+00:00"/>
+                <indicator:Sighting timestamp="2017-10-10T17:49:11.516590+00:00"/>
+                <indicator:Sighting timestamp="2017-10-10T18:49:11.516590+00:00"/>
             </indicator:Sightings>
         </stix:Indicator>
     </stix:Indicators>
