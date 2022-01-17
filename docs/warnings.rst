@@ -173,6 +173,7 @@ Unable to determine the hash type for *hash value*                              
 Required property *property* is not provided for ACS data marking                                                                           641     warn
 *id* was created without the xsi:type attribute.  Some content might be missing                                                             642     warn
 ACS identifier *identifier* is not valid                                                                                                    643     warn
+Observable object from pattern cannot be an observed_data_ref of a sighting. See *id*                                                       644     warn
 =========================================================================================================================================== ====    =====
 
 STIX Elevator conversion based on assumptions
@@ -210,7 +211,7 @@ port number is assumed to be a destination port                                 
 Custom property name *property* has been converted to all lower case                                                                        727     warn
 The is_family property of malware instance *id* is assumed to be true                                                                       728     info
 Included parent markings for Relationship *id* and Location *id*                                                                            729     info
-Number of sightings given is larger than sightings_count in *id*                                                                            730     warn
+Number of sightings given is different than sightings_count in *id*                                                                         730     warn
 =========================================================================================================================================== ====    =====
 
 STIX elevator currently doesn't process this content

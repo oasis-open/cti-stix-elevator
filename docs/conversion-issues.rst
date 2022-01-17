@@ -295,4 +295,6 @@ In this case, the one STIX 1.x Sighting object will be converted to one STIX 2.x
 - sightings_count present, any number of sightings (the default case)
 
 In this case, all STIX 1.x Sighting object will be converted to one STIX 2.x Sighting object, with a count from the sightings_count property, and will be marked as a summary object.
-The first_seen and last_seen timestamps will be derived from the timestamp of the Sightings, and all observables and sources id references will be collected in the observed_data_refs and where_sighted_refs STIX 2.x properties
+The first_seen and last_seen timestamps will be derived from the timestamp of the Sightings,
+and all observables and sources id references will be collected in the observed_data_refs and where_sighted_refs STIX 2.x properties.
+If the number of sightings provided does not agree with the sightings_count a warning message is given.

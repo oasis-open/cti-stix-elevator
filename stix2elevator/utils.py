@@ -13,6 +13,23 @@ from stix2validator.validator import FileValidationResults
 # internal
 from stix2elevator.options import info, warn
 
+def find_string_in_list_case_insensitive(item, l):
+    if item:
+        item_as_lower = item.lower()
+        for s in l:
+            if item_as_lower == s.lower():
+                return True
+    return False
+
+
+def find_key_in_dict_case_insensitive(item, d):
+    if item:
+        item_as_lower = item.lower()
+        for s in d.keys():
+            if item_as_lower == s.lower():
+                return True
+    return False
+
 
 def id_property(path):
     name = path[0][-1]
