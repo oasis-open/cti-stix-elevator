@@ -2028,7 +2028,7 @@ def convert_socket_address_to_pattern(sock_add, direction):
     if sock_add.hostname is not None:
         if sock_add.ip_address is not None:
             warn("Only one of the properties: Hostname and IP_Address is allowed.  Dropping Hostname %s",
-                 647,
+                 645,
                  sock_add.hostname.hostname_value),
         elif sock_add.hostname.is_domain_name and sock_add.hostname.hostname_value is not None:
             expressions.append(
