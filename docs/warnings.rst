@@ -102,6 +102,8 @@ Location with free text address in *id* not handled yet                         
 Observed Data objects cannot refer to other external objects: *property name* in *type*"                                                       434     warn
 CIQ Address information in *id* is not representable in 2.0                                                                                    435     warn
 ACS data markings only supported when --acs option is used. See *id*                                                                           436     warn
+Required property *property_name* is not populated on *id*                                                                                     437     warn
+A placeholder was generated for required property *property_name* of *id*                                                                      438     warn
 ============================================================================================================================================== ====    =====
 
 Multiple values are not supported in STIX 2.x
