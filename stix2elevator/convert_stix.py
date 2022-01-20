@@ -904,12 +904,13 @@ def add_relationships_to_reports(bundle_instance):
 
 
 def handle_missing_required_property(property_name, instance):
-        if get_option_value("ignore_required_properties"):
-            warn("Required property '%s' is not populated on %s", 437, property_name, instance["id"])
-        else:
-            warn("A placeholder was generated for required property '%s' of %s", 438, property_name, instance["id"])
+    if get_option_value("ignore_required_properties"):
+        warn("Required property '%s' is not populated on %s", 437, property_name, instance["id"])
+    else:
+        warn("A placeholder was generated for required property '%s' of %s", 438, property_name, instance["id"])
 
 # confidence
+
 
 def add_confidence_to_object(instance, confidence):
     if confidence is not None and confidence.value is not None:
@@ -1093,7 +1094,6 @@ def create_required_name_from_external_references(sdo_instance, type_of_obj, usa
         created_name = "Placeholder for name property in " + sdo_instance["id"]
     warn("A placeholder was generated for required property '%s' of %s", 438, "name", sdo_instance["id"])
     return created_name
-
 
 
 def process_et_properties(sdo_instance, et, env):
