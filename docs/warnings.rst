@@ -175,6 +175,7 @@ Unable to determine the hash type for *hash value*                              
 Required property *property* is not provided for ACS data marking                                                                           641     warn
 *id* was created without the xsi:type attribute.  Some content might be missing                                                             642     warn
 ACS identifier *identifier* is not valid                                                                                                    643     warn
+Only one of the properties: Hostname and IP_Address  is allowed.  Dropping Hostname *name*                                                  647     warn
 =========================================================================================================================================== ====    =====
 
 STIX Elevator conversion based on assumptions
