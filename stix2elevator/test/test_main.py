@@ -38,7 +38,8 @@ def setup_options():
               file_=None, incidents=False, missing_policy=get_environment_variable_value("MISSING_POLICY"),
               custom_property_prefix="elevator", infrastructure=False, package_created_by_id=None,
               default_timestamp=None, validator_args="--strict-types", enabled=None, silent=False,
-              message_log_directory=None, output_directory=None, markings_allowed="", acs=False),
+              message_log_directory=None, output_directory=None, markings_allowed="", acs=False,
+              ignore_required_properties=False),
 ])
 def test_setup_options(opts):
     options.ALL_OPTIONS = None  # To make sure we can set it again
