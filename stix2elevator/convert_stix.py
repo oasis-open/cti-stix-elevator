@@ -1680,15 +1680,7 @@ def find_first_seen_sighting(sightings):
 
 
 def find_last_seen_sighting(sightings):
-    last_date = sightings[0].timestamp
-    for s in sightings:
-        if last_date:
-            if s.timestamp:
-                if s.timestamp >= last_date:
-                    last_date = s.timestamp
-        else:
-            last_date = s.timestamp
-    return last_date
+    return max(sightings, key=attrgetter("timestamp")).timestamp
 
 
 def convert_sightings(sightings, indicator_instance, env):
