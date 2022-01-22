@@ -269,7 +269,7 @@ Sightings
 Sightings in STIX 2.x are modelled differently than Sighting in STIX 1.x.  In STIX 1.x, Sightings were not top-level
 objects, but part of Indicators.  This had several implications.  First, the only thing that could be “sighted”
 was an Indicator.  Also, the count property related to Sightings is not a property on an individual Sighting object,
-but basically a property of the enclosing Indicator.
+but a property of the enclosing Indicator.
 
 STIX 2.x models a Sighting as a top-level object.  This enables the “sighting” of other types of objects, beyond
 Indicators, e.g., sighting of a Threat Actor.  Additionally, Sightings are modelled as a STIX relationship,
