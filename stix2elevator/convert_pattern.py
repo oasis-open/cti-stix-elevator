@@ -2765,8 +2765,7 @@ def remove_pattern_objects(bundle_instance):
         for obj in bundle_instance["objects"]:
             if obj["type"] == "sighting" and "observed_data_refs" in obj:
                 for ref in obj["observed_data_refs"]:
-                    if exists_id_of_obs_in_sightings(ref):
-                        if ref in all_new_ids_with_patterns:
+                    if exists_id_of_obs_in_sightings(ref) and ref in all_new_ids_with_patterns:
                             warn("Observable object from pattern cannot be an observed_data_ref of a sighting. See %s",
                                  644,
                                  obj["id"])
