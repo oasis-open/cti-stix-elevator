@@ -1668,15 +1668,7 @@ def negate_indicator(indicator):
 
 
 def find_first_seen_sighting(sightings):
-    earlist_date = sightings[0].timestamp
-    for s in sightings:
-        if earlist_date:
-            if s.timestamp:
-                if s.timestamp <= earlist_date:
-                    earlist_date = s.timestamp
-        else:
-            earlist_date = s.timestamp
-    return earlist_date
+    return min(sightings, key=attrgetter("timestamp")).timestamp
 
 
 def find_last_seen_sighting(sightings):
