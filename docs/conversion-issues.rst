@@ -266,7 +266,7 @@ specification.
 Sightings
 ---------
 
-Sightings in STIX 1.x are modelled differently than Sighting in STIX 1.x.  In STIX 1.x, Sightings were not top-level
+Sightings in STIX 2.x are modelled differently than Sighting in STIX 1.x.  In STIX 1.x, Sightings were not top-level
 objects, but part of Indicators.  This had several implications.  First, the only thing that could be “sighted”
 was an Indicator.  Also, the count property related to Sightings is not a property on an individual Sighting object,
 but basically a property of the enclosing Indicator.
