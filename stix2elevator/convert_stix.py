@@ -4,6 +4,7 @@ from datetime import datetime
 # external
 from cybox.core import Observable
 from lxml import etree
+from operator import attrgetter
 import pycountry
 import stix
 from stix.campaign import Campaign
