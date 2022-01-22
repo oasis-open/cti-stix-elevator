@@ -50,7 +50,8 @@ from stix2elevator.common import (
 )
 from stix2elevator.convert_cybox import split_into_requests_and_responses
 from stix2elevator.ids import (
-    add_id_value, exists_id_of_obs_in_characterizations, exists_object_id_key,
+    add_id_value, exists_id_of_obs_in_characterizations,
+    exists_id_of_obs_in_sightings, exists_object_id_key,
     get_id_value
 )
 from stix2elevator.missing_policy import (
@@ -59,7 +60,7 @@ from stix2elevator.missing_policy import (
 )
 from stix2elevator.options import error, get_option_value, info, warn
 from stix2elevator.utils import (
-    encode_in_base64, identifying_info, map_vocabs_to_label
+    encode_in_base64, find_key_in_dict_case_insensitive, identifying_info, map_vocabs_to_label
 )
 from stix2elevator.vocab_mappings import WINDOWS_PEBINARY
 
@@ -715,7 +716,7 @@ def add_to_pattern_cache(key, pattern):
 
 
 def id_in_pattern_cache(id_):
-    return id_ in _PATTERN_CACHE
+    return find_key_in_dict_case_insensitive(id_, _PATTERN_CACHE)
 
 
 def get_pattern_from_cache(id_):
@@ -749,7 +750,7 @@ def add_to_observable_mappings(obs):
 
 
 def id_in_observable_mappings(id_):
-    return id_ in _OBSERVABLE_MAPPINGS
+    return find_key_in_dict_case_insensitive(id_, _OBSERVABLE_MAPPINGS)
 
 
 def get_obs_from_mapping(id_):
@@ -2749,7 +2750,8 @@ def remove_pattern_objects(bundle_instance):
 
         remaining_objects = []
         for obj in bundle_instance["objects"]:
-            if obj["type"] != "observed-data" or obj["id"] not in all_new_ids_with_patterns and not exists_id_of_obs_in_characterizations(obj["id"]):
+            if obj["type"] != "observed-data" or obj["id"] not in all_new_ids_with_patterns \
+                    and not exists_id_of_obs_in_characterizations(obj["id"]):
                 remaining_objects.append(obj)
             elif exists_id_of_obs_in_characterizations(obj["id"]):
                 warn("%s is used as a characteristic in an infrastructure object, therefore it is not included as an observed_data instance", 419,
@@ -2760,6 +2762,13 @@ def remove_pattern_objects(bundle_instance):
                 if "object_refs" in obj:
                     obj_ids_to_delete.extend(obj["object_refs"])
                 obj_ids_to_delete.append(obj["id"])
+        for obj in bundle_instance["objects"]:
+            if obj["type"] == "sighting" and "observed_data_refs" in obj:
+                for ref in obj["observed_data_refs"]:
+                    if exists_id_of_obs_in_sightings(ref) and ref in all_new_ids_with_patterns:
+                            warn("Observable object from pattern cannot be an observed_data_ref of a sighting. See %s",
+                                 644,
+                                 obj["id"])
         new_remaining_objects = []
         for obj in remaining_objects:
             if obj["type"] == "relationship" and "source_ref" in obj and "target_ref" in obj:

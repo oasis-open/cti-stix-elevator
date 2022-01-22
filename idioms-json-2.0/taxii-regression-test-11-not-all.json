@@ -45,12 +45,12 @@
             "type": "vulnerability"
         },
         {
-            "count": 1,
+            "count": 9000,
             "created": "9999-12-31T00:00:00.000Z",
             "id": "sighting--0d56920d-e0b1-4eb6-9ec7-5e2213805ba6",
             "modified": "9999-12-31T00:00:00.000Z",
             "sighting_of_ref": "indicator--820269aa-8d0a-4bcd-ac3a-a6cd376d4f2f",
-            "summary": false,
+            "summary": true,
             "type": "sighting"
         },
         {

@@ -51,7 +51,7 @@
             "type": "marking-definition"
         },
         {
-            "count": 1,
+            "count": 9000,
             "created": "9999-12-31T00:00:00.000Z",
             "id": "sighting--b4ae2b11-5030-45be-a9a7-e41d6f1c4187",
             "modified": "9999-12-31T00:00:00.000Z",
@@ -60,7 +60,7 @@
             ],
             "sighting_of_ref": "indicator--bceaed2d-a467-47a4-8844-45d5316798df",
             "spec_version": "2.1",
-            "summary": false,
+            "summary": true,
             "type": "sighting"
         },
         {

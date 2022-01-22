@@ -109,7 +109,7 @@
             "type": "vulnerability"
         },
         {
-            "count": 1,
+            "count": 9000,
             "created": "9999-12-31T00:00:00.000Z",
             "id": "sighting--e61f9dfd-2844-415e-b9ff-5c8a432320ea",
             "modified": "9999-12-31T00:00:00.000Z",
@@ -118,7 +118,7 @@
             ],
             "sighting_of_ref": "indicator--c5f30926-dc89-4dab-9e22-728c2a459b15",
             "spec_version": "2.1",
-            "summary": false,
+            "summary": true,
             "type": "sighting"
         },
         {
