@@ -227,7 +227,7 @@ def exists_id_of_obs_in_sightings(id):
 
 def add_id_of_obs_in_sightings(id):
     global _ID_OF_OBSERVABLES_IN_SIGHTINGS
-    if not exists_id_of_obs_in_characterizations(id):
+    if not exists_id_of_obs_in_sightings(id):
         _ID_OF_OBSERVABLES_IN_SIGHTINGS.append(id)
 
 
