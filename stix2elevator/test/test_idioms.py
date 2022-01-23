@@ -141,6 +141,9 @@ def id_2x(id):
     except AttributeError:
         return False
 
+def name_property(path):
+    return "name" == path[0][-1]
+
 
 def test_elevator_idiom_mapping(test_file, stored_master, version, missing_policy, ignore):
     errors = []
@@ -155,6 +158,10 @@ def test_elevator_idiom_mapping(test_file, stored_master, version, missing_polic
                 uuid_of_check_id = check_path[1].split("--")[1]
                 if ignore_this_id(uuid_of_good_id, uuid_of_check_id):
                     continue
+        # handle placeholders for required fields
+        if name_property(check_path) and name_property(good_path):
+            if good_path[1].startswith("Placeholder for") and check_path[1].startswith("Placeholder for"):
+                continue
         if good_path != check_path:
             find_index_of_difference(good_path, check_path)
             errors.append({"Expect": json.dumps(good_path), "Actual": json.dumps(check_path)})
