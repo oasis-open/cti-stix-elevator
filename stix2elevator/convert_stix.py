@@ -907,6 +907,7 @@ def handle_missing_required_property(property_name, instance):
     if get_option_value("ignore_required_properties"):
         warn("Required property '%s' is not populated on %s", 437, property_name, instance["id"])
     else:
+        instance[property_name] = "Placeholder for " + property_name + " property in " + instance["id"]
         warn("A placeholder was generated for required property '%s' of %s", 438, property_name, instance["id"])
 
 # confidence
