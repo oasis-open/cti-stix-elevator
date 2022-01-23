@@ -1358,7 +1358,7 @@ def handle_missing_properties_of_ciq_instance(identity_instance, ciq):
         fill_in_extension_properties(identity_instance, container, extension_definition_id)
 
 
-def convert_identity(identity, env, created_by_ref_source, parent_id=None, temp_marking_id=None):
+def convert_identity(identity, env, created_by_ref_source, parent_id=None, temp_marking_id=None, victim=False):
     identity_instance = create_basic_object("identity", identity, env, parent_id)
     identity_instance["sectors"] = []
     spec_version = get_option_value("spec_version")
@@ -1402,7 +1402,7 @@ def convert_identity(identity, env, created_by_ref_source, parent_id=None, temp_
         new_env = env
     elif created_by_ref_source == "parent":
         new_env = env.newEnv(created_by_ref=parent_id)
-    if "name" not in identity_instance:
+    if "name" not in identity_instance and not victim:
         handle_missing_required_property("name", identity_instance)
     finish_basic_object(identity.id_,
                         identity_instance,
@@ -2399,13 +2399,16 @@ def convert_identity_for_victim_target(identity, ttp, env, ttp_generated):
         identity_instance = convert_identity(identity,
                                              env,
                                              created_by_ref_source="from_env",
-                                             parent_id=ttp.id_ if not ttp_generated else None)
+                                             parent_id=ttp.id_ if not ttp_generated else None,
+                                             victim=True)
     else:
         identity_instance = create_basic_object("identity", None, env, ttp.id_)
         identity_instance["identity_class"] = "unknown"
         identity_markings = create_marking_union(ttp)
     env.bundle_instance["objects"].append(identity_instance)
     process_ttp_properties(identity_instance, ttp, env, False, marking_refs=identity_markings)
+    if "name" not in identity_instance:
+        handle_missing_required_property("name", identity_instance)
     finish_basic_object(ttp.id_, identity_instance, env, ttp)
     return identity_instance
 
