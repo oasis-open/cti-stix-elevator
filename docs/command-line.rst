@@ -22,11 +22,12 @@ STIX 1.x content to STIX 2.x content:
               [--log-level {DEBUG,INFO,WARN,ERROR,CRITICAL}]
               [-m MARKINGS_ALLOWED]
               [-p {no_policy,strict_policy}]
-              [-v {2.0,2.1}] [-r]
+              [-v {2.0,2.1}]
+              [-r]
               file
 
 
-stix2-elevator v4.1.3
+stix2-elevator v4.1.4
 
 positional arguments:
 
@@ -127,7 +128,7 @@ optional arguments:
   -v {2.0,2.1}, --version {2.0,2.1}
                The version of stix 2 to be produced. The default is 2.1
 
- -r, --ignore-required-properties
+  -r, --ignore-required-properties
                         Do not provide missing required properties
 
 
