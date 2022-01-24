@@ -8,12 +8,6 @@
                 "ntos"
             ],
             "created": "2020-02-24T16:07:27.201Z",
-            "extensions": {
-                "extension-definition--5efa53f9-cf17-4867-bb4f-4cd2ac055e7c": {
-                    "extension_type": "property-extension",
-                    "title": "Zeus"
-                }
-            },
             "id": "malware--2479ea4e-90d9-45e2-bca6-2445cd9b25a0",
             "is_family": false,
             "modified": "2020-02-24T16:07:27.201Z",

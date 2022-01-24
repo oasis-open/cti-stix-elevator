@@ -136,6 +136,7 @@
             "first_seen": "2015-05-15T09:00:00.000Z",
             "id": "infrastructure--87b4fa0c-aec4-4384-a554-a14a2be27e2f",
             "modified": "2015-05-15T09:00:00.000Z",
+            "name": "Placeholder for name property in infrastructure--87b4fa0c-aec4-4384-a554-a14a2be27e2f",
             "object_marking_refs": [
                 "marking-definition--44307ea0-3215-4da6-8ada-431a45c0ba60"
             ],
@@ -1080,6 +1081,7 @@
                 "hop-point-accessors"
             ],
             "modified": "2015-05-15T09:00:00.000Z",
+            "name": "Placeholder for name property in infrastructure--a35bc05a-247d-49a9-b954-c5c7344c55cc",
             "object_marking_refs": [
                 "marking-definition--44307ea0-3215-4da6-8ada-431a45c0ba60"
             ],

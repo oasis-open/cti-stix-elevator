@@ -11,6 +11,7 @@
             ],
             "id": "vulnerability--0d9a952d-aca5-4134-b399-5760a3ab2392",
             "modified": "2019-08-23T13:10:55.465Z",
+            "name": "Reference to cve:CVE-2015-2808",
             "type": "vulnerability"
         },
         {

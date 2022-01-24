@@ -147,7 +147,8 @@ class ElevatorOptions(object):
                  validator_args="--strict-types", enabled=None, disabled=None,
                  silent=False, message_log_directory=None,
                  policy="no_policy", output_directory=None, log_level="INFO",
-                 markings_allowed="", spec_version="2.1", acs=False):
+                 markings_allowed="", spec_version="2.1", acs=False,
+                 ignore_required_properties=False):
 
         if cmd_args is not None:
             if hasattr(cmd_args, "file_"):
@@ -160,6 +161,7 @@ class ElevatorOptions(object):
             self.package_created_by_id = cmd_args.package_created_by_id
             self.default_timestamp = cmd_args.default_timestamp
             self.validator_args = cmd_args.validator_args
+            self.ignore_required_properties = cmd_args.ignore_required_properties
 
             self.enabled = cmd_args.enabled
             self.disabled = cmd_args.disabled
@@ -182,6 +184,7 @@ class ElevatorOptions(object):
             self.package_created_by_id = package_created_by_id
             self.default_timestamp = default_timestamp
             self.validator_args = validator_args
+            self.ignore_required_properties = ignore_required_properties
 
             self.enabled = enabled
             self.disabled = disabled
@@ -326,7 +329,7 @@ CHECK_CODES = [201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213,
 
                401, 402, 403, 404, 405, 406, 407, 408, 409, 410, 411, 412, 413,
                414, 415, 416, 417, 418, 419, 420, 421, 422, 423, 424, 425, 426,
-               427, 428, 429, 430, 431, 432, 433, 434, 435, 436,
+               427, 428, 429, 430, 431, 432, 433, 434, 435, 436, 437, 438,
 
                501, 502, 503, 504, 505, 506, 507, 508, 509, 510, 511, 512,
 

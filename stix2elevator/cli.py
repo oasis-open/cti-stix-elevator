@@ -190,6 +190,16 @@ def _get_arg_parser(is_script=True):
         action="store",
         default="2.1"
     )
+
+    parser.add_argument(
+        "-r",
+        "--ignore-required-properties",
+        help="Do not provide missing required properties",
+        dest="ignore_required_properties",
+        action="store_true",
+        default=False
+    )
+
     return parser
 
 

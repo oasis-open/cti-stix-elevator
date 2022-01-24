@@ -953,7 +953,15 @@ def add_relationships_to_reports(bundle_instance):
             rep["object_refs"] = rels_to_include
 
 
+def handle_missing_required_property(property_name, instance):
+    if get_option_value("ignore_required_properties"):
+        warn("Required property '%s' is not populated on %s", 437, property_name, instance["id"])
+    else:
+        instance[property_name] = "Placeholder for " + property_name + " property in " + instance["id"]
+        warn("A placeholder was generated for required property '%s' of %s", 438, property_name, instance["id"])
+
 # confidence
+
 
 def add_confidence_to_object(instance, confidence):
     if confidence is not None and confidence.value is not None:
@@ -981,7 +989,12 @@ def handle_missing_properties_of_campaign(campaign_instance, camp):
 def convert_campaign(camp, env):
     campaign_instance = create_basic_object("campaign", camp, env)
     process_description_and_short_description(campaign_instance, camp)
-    campaign_instance["name"] = camp.title
+
+    if camp.title is not None:
+        campaign_instance["name"] = camp.title
+    else:
+        handle_missing_required_property("name", campaign_instance)
+
     if camp.names is not None:
         campaign_instance["aliases"] = []
         for name in camp.names:
@@ -989,6 +1002,7 @@ def convert_campaign(camp, env):
                 campaign_instance["aliases"].append(name)
             else:
                 campaign_instance["aliases"].append(name.value)
+
     handle_missing_properties_of_campaign(campaign_instance, camp)
     if "created_by_ref" in campaign_instance:
         new_env = env.newEnv(timestamp=campaign_instance["created"], created_by_ref=campaign_instance["created_by_ref"])
@@ -1090,7 +1104,11 @@ def convert_course_of_action(coa, env):
     coa_instance = create_basic_object("course-of-action", coa, env)
     new_env = env.newEnv(timestamp=coa_instance["created"])
     process_description_and_short_description(coa_instance, coa)
-    coa_instance["name"] = coa.title
+
+    if coa.title is not None:
+        coa_instance["name"] = coa.title
+    else:
+        handle_missing_required_property("name", coa_instance)
 
     if coa.type_:
         convert_controlled_vocabs_to_open_vocabs(coa_instance, "labels", [coa.type_], COA_LABEL_MAP, False)
@@ -1115,6 +1133,20 @@ def convert_course_of_action(coa, env):
 # exploit target
 
 
+def create_required_name_from_external_references(sdo_instance, type_of_obj, usable_source_names):
+    if sdo_instance["type"] == type_of_obj and "external_references" in sdo_instance:
+        created_name = "Reference to "
+        for er in sdo_instance["external_references"]:
+            if er["source_name"] in usable_source_names:
+                if created_name != "Reference to ":
+                    created_name += ", "
+                created_name += er["source_name"] + ":" + er["external_id"]
+    if created_name == "Reference to ":
+        created_name = "Placeholder for name property in " + sdo_instance["id"]
+    warn("A placeholder was generated for required property '%s' of %s", 438, "name", sdo_instance["id"])
+    return created_name
+
+
 def process_et_properties(sdo_instance, et, env):
     process_description_and_short_description(sdo_instance, et, True)
     if "name" in sdo_instance:
@@ -1123,6 +1155,10 @@ def process_et_properties(sdo_instance, et, env):
         handle_missing_string_property(sdo_instance, "title", et.title, False)
     elif et.title is not None:
         sdo_instance["name"] = et.title
+    elif get_option_value("ignore_required_properties"):
+        warn("Required property '%s' is not populated on %s", 437, "name", sdo_instance["id"])
+    else:
+        sdo_instance["name"] = create_required_name_from_external_references(sdo_instance, "vulnerability", ["cve", "osvdb"])
     new_env = env.newEnv(timestamp=sdo_instance["created"])
     new_env.add_to_env(created_by_ref=process_information_source(et.information_source, sdo_instance, new_env))
     if et.potential_coas is not None:
@@ -1171,8 +1207,10 @@ def convert_vulnerability(v, et, env, used_id):
                                                  env,
                                                  et.id_,
                                                  used_id)
+
     if v.title is not None:
         vulnerability_instance["name"] = v.title
+
     process_description_and_short_description(vulnerability_instance, v)
     if v.cve_id is not None:
         vulnerability_instance["external_references"].append({"source_name": "cve", "external_id": v.cve_id})
@@ -1370,7 +1408,7 @@ def handle_missing_properties_of_ciq_instance(identity_instance, ciq):
         fill_in_extension_properties(identity_instance, container, extension_definition_id)
 
 
-def convert_identity(identity, env, created_by_ref_source, parent_id=None, temp_marking_id=None):
+def convert_identity(identity, env, created_by_ref_source, parent_id=None, temp_marking_id=None, victim=False):
     identity_instance = create_basic_object("identity", identity, env, parent_id)
     identity_instance["sectors"] = []
     spec_version = get_option_value("spec_version")
@@ -1414,6 +1452,8 @@ def convert_identity(identity, env, created_by_ref_source, parent_id=None, temp_
         new_env = env
     elif created_by_ref_source == "parent":
         new_env = env.newEnv(created_by_ref=parent_id)
+    if "name" not in identity_instance and not victim:
+        handle_missing_required_property("name", identity_instance)
     finish_basic_object(identity.id_,
                         identity_instance,
                         new_env,
@@ -1536,6 +1576,8 @@ def convert_incident(incident, env):
     process_description_and_short_description(incident_instance, incident)
     if incident.title is not None:
         incident_instance["name"] = incident.title
+    else:
+        handle_missing_required_property("name", incident_instance)
     if incident.external_ids is not None:
         for ex_id in incident.external_ids:
             incident_instance["external_references"].append(
@@ -1747,6 +1789,7 @@ def convert_indicator(indicator, env):
                                              INDICATOR_LABEL_MAP, False, required=spec_version == "2.0")
     if indicator.title is not None:
         indicator_instance["name"] = indicator.title
+
     if indicator.alternative_id is not None:
         for alt_id in indicator.alternative_id:
             indicator_instance["external_references"].append({"source_name": "alternative_id", "external_id": alt_id})
@@ -1954,6 +1997,7 @@ def convert_observed_data(obs, env, keep_scos=True):
     info("'first_observed' and 'last_observed' data not available directly on %s - using timestamp", 901, obs.id_)
     observed_data_instance["first_observed"] = observed_data_instance["created"]
     observed_data_instance["last_observed"] = observed_data_instance["created"]
+    # TODO: only use the count if no actual sightings are present
     observed_data_instance["number_observed"] = 1 if obs.sighting_count is None else obs.sighting_count
     # TODO: created_by
     finish_basic_object(obs.id_, observed_data_instance, env, obs)
@@ -2068,6 +2112,8 @@ def convert_report(report, env):
         # process information source before any relationships
         if report.header.title is not None:
             report_instance["name"] = report.header.title
+        else:
+            handle_missing_required_property("name", report_instance)
         spec_version = get_option_value("spec_version")
         convert_controlled_vocabs_to_open_vocabs(report_instance,
                                                  "labels" if spec_version == "2.0" else "report_types",
@@ -2142,6 +2188,8 @@ def convert_threat_actor(threat_actor, env):
         aliases = convert_party_name(threat_actor.identity._specification.party_name, threat_actor_instance, False)
         if aliases and get_option_value("spec_version") == "2.1":
             threat_actor_instance["aliases"] = aliases
+    if "name" not in threat_actor_instance:
+        handle_missing_required_property("name", threat_actor_instance)
     if threat_actor.intended_effects is not None:
         threat_actor_instance["goals"] = list()
         for g in threat_actor.intended_effects:
@@ -2202,7 +2250,7 @@ def handle_missing_properties_of_ttp(sdo_instance, ttp):
         if hasattr(ttp, "title"):
             if "name" not in sdo_instance or sdo_instance["name"] is None:
                 sdo_instance["name"] = ttp.title
-            else:
+            if ttp.title != sdo_instance["name"]:
                 handle_missing_string_property(container, "title", ttp.title, sdo_instance["id"], False)
 
         fill_in_extension_properties(sdo_instance, container, extension_definition_id)
@@ -2250,11 +2298,19 @@ def process_ttp_properties(sdo_instance, ttp, env, kill_chains_in_sdo=True, mark
 
 def convert_attack_pattern(ap, ttp, env, ttp_id_used):
     attack_pattern_instance = create_basic_object("attack-pattern", ap, env, ttp.id_, not ttp_id_used)
-    if ap.title is not None:
-        attack_pattern_instance["name"] = ap.title
-    process_description_and_short_description(attack_pattern_instance, ap)
     if ap.capec_id is not None:
         attack_pattern_instance["external_references"] = [{"source_name": "capec", "external_id": ap.capec_id}]
+    if ap.title is not None:
+        attack_pattern_instance["name"] = ap.title
+    elif ttp.title is not None:
+        attack_pattern_instance["name"] = ttp.title
+    elif get_option_value("ignore_required_properties"):
+        warn("Required property '%s' is not populated on %s", 437, "name", attack_pattern_instance["id"])
+    else:
+        attack_pattern_instance["name"] = create_required_name_from_external_references(attack_pattern_instance,
+                                                                                        "attack-pattern",
+                                                                                        ["capec"])
+    process_description_and_short_description(attack_pattern_instance, ap)
     ap_markings = create_marking_union(ap)
     process_ttp_properties(attack_pattern_instance, ttp, env, marking_refs=ap_markings)
     finish_basic_object(ttp.id_, attack_pattern_instance, env, ttp)
@@ -2376,6 +2432,10 @@ def convert_tool(tool, ttp, env, first_one):
             handle_missing_string_property(tool_instance, "title", tool.title)
     elif tool.title is not None:
         tool_instance["name"] = tool.title
+    elif ttp.title is not None:
+        tool_instance["name"] = ttp.title
+    else:
+        handle_missing_required_property("name", tool_instance)
     process_description_and_short_description(tool_instance, tool)
     handle_missing_properties_of_tool(tool_instance, tool)
     spec_version = get_option_value("spec_version")
@@ -2396,6 +2456,10 @@ def convert_infrastructure(infra, ttp, env, first_one):
     infrastructure_instance = create_basic_object("infrastructure", infra, env, parent_id=ttp.id_, id_used=not first_one)
     if infra.title is not None:
         infrastructure_instance["name"] = infra.title
+    elif ttp.title is not None:
+        infrastructure_instance["name"] = ttp.title
+    else:
+        handle_missing_required_property("name", infrastructure_instance)
     process_description_and_short_description(infrastructure_instance, infra)
     convert_controlled_vocabs_to_open_vocabs(infrastructure_instance,
                                              "labels" if get_option_value("spec_version") == "2.0" else "infrastructure_types",
@@ -2438,13 +2502,16 @@ def convert_identity_for_victim_target(identity, ttp, env, ttp_generated):
         identity_instance = convert_identity(identity,
                                              env,
                                              created_by_ref_source="from_env",
-                                             parent_id=ttp.id_ if not ttp_generated else None)
+                                             parent_id=ttp.id_ if not ttp_generated else None,
+                                             victim=True)
     else:
         identity_instance = create_basic_object("identity", None, env, ttp.id_)
         identity_instance["identity_class"] = "unknown"
         identity_markings = create_marking_union(ttp)
     env.bundle_instance["objects"].append(identity_instance)
     process_ttp_properties(identity_instance, ttp, env, False, marking_refs=identity_markings)
+    if "name" not in identity_instance:
+        handle_missing_required_property("name", identity_instance)
     finish_basic_object(ttp.id_, identity_instance, env, ttp)
     return identity_instance
 

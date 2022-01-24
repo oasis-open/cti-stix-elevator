@@ -13,8 +13,7 @@
             "modified": "2020-02-24T16:07:27.201Z",
             "name": "Zeus",
             "spec_version": "2.1",
-            "type": "malware",
-            "x_elevator_title": "Zeus"
+            "type": "malware"
         },
         {
             "created": "2020-02-24T16:07:27.203Z",
