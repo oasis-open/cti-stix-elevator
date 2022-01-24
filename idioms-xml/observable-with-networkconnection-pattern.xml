@@ -6,6 +6,7 @@
     xmlns:AddressObj="http://cybox.mitre.org/objects#AddressObject-2"
     xmlns:PortObj="http://cybox.mitre.org/objects#PortObject-2"
     xmlns:SocketAddressObj="http://cybox.mitre.org/objects#SocketAddressObject-1"
+    xmlns:HostnameObj="http://cybox.mitre.org/objects#HostnameObject-1"
     xmlns:NetworkConnectionObj="http://cybox.mitre.org/objects#NetworkConnectionObject-2"
     xmlns:example="http://example.com/"
     xsi:schemaLocation="
@@ -34,9 +35,9 @@
                             </SocketAddressObj:Port>
                         </NetworkConnectionObj:Destination_Socket_Address>
                         <NetworkConnectionObj:Source_Socket_Address>
-                            <SocketAddressObj:IP_Address>
-                                <AddressObj:Address_Value datatype="string" condition="equals">198.49.168.11</AddressObj:Address_Value>
-                            </SocketAddressObj:IP_Address>
+                            <SocketAddressObj:Hostname is_domain_name="true">
+                                <HostnameObj:Hostname_Value>example.com</HostnameObj:Hostname_Value>
+                            </SocketAddressObj:Hostname>
                             <SocketAddressObj:Port>
                                 <PortObj:Port_Value condition="Equals">5255</PortObj:Port_Value>
                             </SocketAddressObj:Port>

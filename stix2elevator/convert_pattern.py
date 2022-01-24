@@ -2011,6 +2011,8 @@ def convert_socket_address_to_pattern(sock_add, direction):
                 create_term("network-traffic:protocols[*]",
                             sock_add.port.layer4_protocol.condition,
                             make_constant(sock_add.port.layer4_protocol.value.lower())))
+    # there is only one STIX 2.1 property for both ip_address and hostname
+    # prefer ip_address, if both provided, hostname will appear as a custom property, if possible
     if sock_add.ip_address is not None:
         if sock_add.ip_address.address_value:
             expressions.append(
@@ -2024,18 +2026,22 @@ def convert_socket_address_to_pattern(sock_add, direction):
             else:
                 expressions.append(new_pattern.collapse_reference(
                     ObjectPathForElevator.make_object_path("network-traffic:" + direction + "_ref")))
-    elif sock_add.hostname is not None:
-        if sock_add.hostname.is_domain_name and sock_add.hostname.hostname_value is not None:
+    if sock_add.hostname is not None:
+        if sock_add.ip_address is not None:
+            warn("Only one of the properties: Hostname and IP_Address is allowed.  Dropping Hostname %s",
+                 645,
+                 sock_add.hostname.hostname_value),
+        elif sock_add.hostname.is_domain_name and sock_add.hostname.hostname_value is not None:
             expressions.append(
                 create_term("network-traffic:" + direction + "_ref.value",
-                            sock_add.hostname.condition,
-                            make_constant(sock_add.hostname.hostname_value)))
+                            sock_add.hostname.hostname_value.condition,
+                            make_constant(sock_add.hostname.hostname_value.value)))
         elif (sock_add.hostname.naming_system is not None and
               any(x.value == "DNS" for x in sock_add.hostname.naming_system)):
             expressions.append(
                 create_term("network-traffic:" + direction + "_ref.value",
                             sock_add.hostname.condition,
-                            make_constant(sock_add.hostname.hostname_value)))
+                            make_constant(sock_add.hostname.hostname_value.value)))
     return expressions
 
 

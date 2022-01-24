@@ -176,6 +176,7 @@ Required property *property* is not provided for ACS data marking               
 *id* was created without the xsi:type attribute.  Some content might be missing                                                             642     warn
 ACS identifier *identifier* is not valid                                                                                                    643     warn
 Observable object from pattern cannot be an observed_data_ref of a sighting. See *id*                                                       644     warn
+Only one of the properties: Hostname and IP_Address  is allowed.  Dropping Hostname *name*                                                  645     warn
 =========================================================================================================================================== ====    =====
 
 STIX Elevator conversion based on assumptions
