@@ -25,7 +25,7 @@ from stix2elevator.convert_stix import (
 )
 from stix2elevator.ids import (
     clear_id_mapping, clear_id_of_obs_in_characterizations,
-    clear_object_id_mapping
+    clear_id_of_obs_in_sightings, clear_object_id_mapping
 )
 from stix2elevator.options import (
     get_option_value, get_validator_options, info, set_option_value,
@@ -66,6 +66,7 @@ def clear_globals():
     clear_kill_chains_phases_mapping()
     clear_observed_data_mappings()
     clear_id_of_obs_in_characterizations()
+    clear_id_of_obs_in_sightings()
     clear_directory_mappings()
     clear_location_objects()
     clear_unfinished_marked_objects()

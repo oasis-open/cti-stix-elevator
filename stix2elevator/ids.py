@@ -10,7 +10,9 @@ from stix2.canonicalization.Canonicalize import canonicalize
 
 # internal
 from stix2elevator.options import error, info, warn
-from stix2elevator.utils import map_1x_type_to_20
+from stix2elevator.utils import (find_key_in_dict_case_insensitive,
+                                 find_string_in_list_case_insensitive,
+                                 map_1x_type_to_20)
 
 
 def record_ids(stix_id, new_id):
@@ -152,7 +154,7 @@ _IDS_TO_NEW_IDS = {}
 
 
 def exists_id_key(key):
-    return key in _IDS_TO_NEW_IDS
+    return find_key_in_dict_case_insensitive(key, _IDS_TO_NEW_IDS)
 
 
 def get_id_value(key):
@@ -189,7 +191,7 @@ def clear_object_id_mapping():
 
 
 def exists_object_id_key(key):
-    return key in _IDS_TO_CYBER_OBSERVABLES
+    return find_key_in_dict_case_insensitive(key, _IDS_TO_CYBER_OBSERVABLES)
 
 
 def get_object_id_value(key):
@@ -211,6 +213,23 @@ def add_object_id_value(key, value):
     if not value:
         warn("Can not associate %s with None", 611, key)
 
+_ID_OF_OBSERVABLES_IN_SIGHTINGS = []
+
+
+def clear_id_of_obs_in_sightings():
+    global _ID_OF_OBSERVABLES_IN_SIGHTINGS
+    _ID_OF_OBSERVABLES_IN_SIGHTINGS = []
+
+
+def exists_id_of_obs_in_sightings(id):
+    return find_string_in_list_case_insensitive(id, _ID_OF_OBSERVABLES_IN_SIGHTINGS)
+
+
+def add_id_of_obs_in_sightings(id):
+    global _ID_OF_OBSERVABLES_IN_SIGHTINGS
+    if not exists_id_of_obs_in_sightings(id):
+        _ID_OF_OBSERVABLES_IN_SIGHTINGS.append(id)
+
 
 _ID_OF_OBSERVABLES_IN_CHARACTERIZATIONS = []
 
@@ -221,7 +240,7 @@ def clear_id_of_obs_in_characterizations():
 
 
 def exists_id_of_obs_in_characterizations(id):
-    return id in _ID_OF_OBSERVABLES_IN_CHARACTERIZATIONS
+    return find_string_in_list_case_insensitive(id, _ID_OF_OBSERVABLES_IN_CHARACTERIZATIONS)
 
 
 def add_id_of_obs_in_characterizations(id):

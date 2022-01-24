@@ -262,3 +262,39 @@ can be found in extension_definitions.py.  They will be more fully defined in a 
 
 Note that these extensions are not used by the predefined extension (e.g., Archive File), because those are fully defined within the
 specification.
+
+Sightings
+---------
+
+Sightings in STIX 2.x are modelled differently than Sighting in STIX 1.x.  In STIX 1.x, Sightings were not top-level
+objects, but part of Indicators.  This had several implications.  First, the only thing that could be “sighted”
+was an Indicator.  Also, the count property related to Sightings is not a property on an individual Sighting object,
+but a property of the enclosing Indicator.
+
+STIX 2.x models a Sighting as a top-level object.  This enables the “sighting” of other types of objects, beyond
+Indicators, e.g., sighting of a Threat Actor.  Additionally, Sightings are modelled as a STIX relationship,
+relating the “sighted” object and observed_data (if any).  Each Sighting has a count property, but it could be
+representing a different count of sightings then the one from STIX 1.x.  However, Sightings in STIX 2.x have the
+summary property, which indicates whether or not the Sighting represents an individual sighting or is a summary of
+many sightings.
+
+The elevator will convert STIX 1 sightings based on the following cases:
+
+- no sightings_count, any number of sightings.
+
+In this case, each STIX 1.x Sighting objects will be converted to individual STIX 2.x Sighting objects, each with a count of 1
+
+- sightings_count is 1, 1 sighting
+
+In this case, the one STIX 1.x Sighting object will be converted to one STIX 2.x Sighting object, with a count of 1
+
+- sightings_count > 1, 1 sighting
+
+In this case, the one STIX 1.x Sighting object will be converted to one STIX 2.x Sighting object, with a count from the sightings_count property, and will be marked as a summary object
+
+- sightings_count present, any number of sightings (the default case)
+
+In this case, all STIX 1.x Sighting object will be converted to one STIX 2.x Sighting object, with a count from the sightings_count property, and will be marked as a summary object.
+The first_seen and last_seen timestamps will be derived from the timestamp of the Sightings,
+and all observables and sources id references will be collected in the observed_data_refs and where_sighted_refs STIX 2.x properties.
+If the number of sightings provided does not agree with the sightings_count a warning message is given.

@@ -2,12 +2,12 @@
     "id": "bundle--4c73e8e1-6761-429d-91c1-a5b374bfa9ed",
     "objects": [
         {
-            "count": 1,
+            "count": 9000,
             "created": "9999-12-31T00:00:00.000Z",
             "id": "sighting--226e3014-b0fa-4f99-ae14-26a9fcc825c9",
             "modified": "9999-12-31T00:00:00.000Z",
             "sighting_of_ref": "indicator--948c07f1-4630-4bf2-a780-686ce553f882",
-            "summary": false,
+            "summary": true,
             "type": "sighting"
         },
         {
