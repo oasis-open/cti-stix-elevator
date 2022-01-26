@@ -2040,7 +2040,7 @@ def convert_socket_address_to_pattern(sock_add, direction):
               any(x.value == "DNS" for x in sock_add.hostname.naming_system)):
             expressions.append(
                 create_term("network-traffic:" + direction + "_ref.value",
-                            sock_add.hostname.condition,
+                            sock_add.hostname.hostname_value.condition,
                             make_constant(sock_add.hostname.hostname_value.value)))
     return expressions
 
