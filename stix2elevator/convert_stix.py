@@ -733,20 +733,20 @@ def handle_existing_ref(stix1_relationship, ref1, ref2, env, default_verb, to_di
     )
 
 
-def handle_existing_refs(ref, id, env, verb, to_direction, marking_refs):
+def handle_existing_refs(ref, id_, env, verb, to_direction, marking_refs):
     for ref_id in get_id_value(ref.item.idref):
-        handle_existing_ref(ref, ref_id, id, env, verb, to_direction, marking_refs)
+        handle_existing_ref(ref, ref_id, id_, env, verb, to_direction, marking_refs)
 
 
-def handle_relationship_ref(ref, item, id, env, default_verb, to_direction=True, marking_refs=None):
+def handle_relationship_ref(ref, item, id_, env, default_verb, to_direction=True, marking_refs=None):
     if item.idref is None:
-        handle_embedded_ref(ref, item, id, env, default_verb, to_direction, marking_refs)
+        handle_embedded_ref(ref, item, id_, env, default_verb, to_direction, marking_refs)
     elif exists_id_key(item.idref):
-        handle_existing_refs(ref, id, env, default_verb, to_direction, marking_refs)
+        handle_existing_refs(ref, id_, env, default_verb, to_direction, marking_refs)
     else:
         # a forward reference, fix later
-        source_id = id if to_direction else item.idref
-        target_id = str(item.idref) if to_direction else id
+        source_id = id_ if to_direction else item.idref
+        target_id = str(item.idref) if to_direction else id_
         rel_obj = create_relationship(source_id, target_id, env, default_verb, item, marking_refs)
         if hasattr(ref, "relationship") and ref.relationship is not None:
             rel_obj["description"] = ref.relationship.value
@@ -2266,6 +2266,9 @@ def process_ttp_properties(sdo_instance, ttp, env, kill_chains_in_sdo=True, mark
     ttp_created_by_ref = process_information_source(ttp.information_source, sdo_instance, env)
     env.add_to_env(created_by_ref=ttp_created_by_ref)
     if ttp.exploit_targets is not None:
+        warn("Exploit targets are part of STIX 1x %s.  Assuming they are related.",
+             646,
+             "TTP" + (" " + ttp.id_ if hasattr(ttp,"id_") else ""))
         handle_relationship_to_refs(ttp.exploit_targets, sdo_instance["id"], env,
                                     "targets", marking_refs=marking_refs)
     if ttp.related_ttps:
@@ -2360,9 +2363,9 @@ def convert_malware_instance(mal, ttp, env, ttp_id_used):
                      malware_instance_instance["id"],
                      malware_instance_instance["name"],
                      alias_name)
-    if mal.title is not None:
-        if "name" not in malware_instance_instance:
-            malware_instance_instance["name"] = mal.title
+    elif mal.title is not None:
+        malware_instance_instance["name"] = mal.title
+    # name is optional in STIX 2.x, so don't try to generate a placeholder
     if aliases:
         malware_instance_instance["aliases"] = aliases
     process_description_and_short_description(malware_instance_instance, mal)

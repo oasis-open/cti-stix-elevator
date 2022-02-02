@@ -167,11 +167,11 @@ In STIX 1.x, an ``id`` contained a "namespace".  This was deemed unnecessary in 
 - Kill Chains
 
     In STIX 1.x, kill chains, with their phases, were defined using the ``KillChainType``, which is found in the ``Kill_Chains`` property of
-    a ``TTP``.  These kill chains phases were refered to in the ``TTP`` and ``Indicator`` ``Kill_Chain_Phases`` properties.  In
+    a ``TTP``.  These kill chains phases were referred to in the ``TTP`` and ``Indicator`` ``Kill_Chain_Phases`` properties.  In
     STIX 2.x, kill chains and their phases are not explicitly defined, but are referenced using their common names.
 
     If the Lockheed Martin Cyber Kill Chain™ is used the ``kill_chain_name`` property must be ``lockheed-martin-cyber-kill-chain``,
-    according to the specification.
+    according to the specification and the STIX 1.x ids used should be the ones defined in  https://stix.mitre.org/language/version1.2/stix_v1.2_lmco_killchain.xml
 
 
 **STIX 1.x Properties Mapped Using STIX 2.x Relationships**
