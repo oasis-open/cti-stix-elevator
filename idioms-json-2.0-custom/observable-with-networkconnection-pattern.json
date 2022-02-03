@@ -9,9 +9,21 @@
             ],
             "modified": "2017-03-29T15:21:52.293Z",
             "name": "A Network Connection example",
-          "pattern": "[network-traffic:protocols[*] = 'ipv4' AND network-traffic:protocols[*] = 'tcp' AND network-traffic:src_port = 5255 AND network-traffic:src_ref.value = 'example.com' AND network-traffic:dst_port INVALID-CONDITION 80 AND network-traffic:dst_ref.value MATCHES '^198.49']",
+            "pattern": "[network-traffic:protocols[*] = 'ipv4' AND network-traffic:protocols[*] = 'tcp' AND network-traffic:src_port = 5255 AND network-traffic:src_ref.value = 'example.com' AND network-traffic:dst_port INVALID-CONDITION 80 AND network-traffic:dst_ref.value MATCHES '^198.49']",
             "type": "indicator",
             "valid_from": "2017-03-29T15:21:52.293788Z"
+        },
+        {
+            "created": "2022-01-26T14:20:09.453Z",
+            "id": "indicator--a9000990-7075-49c0-b789-3dc34f0a6f27",
+            "labels": [
+                "unknown"
+            ],
+            "modified": "2022-01-26T14:20:09.453Z",
+            "name": "A Network Connection example",
+            "pattern": "[network-traffic:src_ref.value = 'another_example.com']",
+            "type": "indicator",
+            "valid_from": "2022-01-26T14:20:09.453Z"
         }
     ],
     "spec_version": "2.0",

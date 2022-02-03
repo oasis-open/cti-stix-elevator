@@ -45,6 +45,25 @@
                     </cybox:Properties>
                 </cybox:Object>
             </indicator:Observable>
-            </stix:Indicator>
+        </stix:Indicator>
+        <stix:Indicator xsi:type="indicator:IndicatorType" id="example:Indicator-a9000990-7075-49c0-b789-3dc34f0a6f27">
+            <indicator:Title>A Network Connection example</indicator:Title>
+            <indicator:Observable id="example:Observable-ef1c249f-94c1-4159-be25-9849be93d68c">
+                <cybox:Description>
+                    This Observable specifies an example pattern written against a Network Connection Object,
+                    specifically the Layer 3 and 4 Protocols and Destination Socket IP Address and Port.
+                </cybox:Description>
+                <cybox:Object id="example:Object-4fb853bf-52af-484e-aff9-696ce401537b">
+                    <cybox:Properties xsi:type="NetworkConnectionObj:NetworkConnectionObjectType">
+                        <NetworkConnectionObj:Source_Socket_Address>
+                            <SocketAddressObj:Hostname>
+                                <HostnameObj:Hostname_Value condition="Equals">another_example.com</HostnameObj:Hostname_Value>
+                                <HostnameObj:Naming_System>DNS</HostnameObj:Naming_System>
+                            </SocketAddressObj:Hostname>
+                        </NetworkConnectionObj:Source_Socket_Address>
+                    </cybox:Properties>
+                </cybox:Object>
+            </indicator:Observable>
+        </stix:Indicator>
     </stix:Indicators>
 </stix:STIX_Package>
