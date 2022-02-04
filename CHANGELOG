@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+4.1.5 - 2022-02-04
+
+    - Additional fix for Hostname in SocketAddress in pattern
+
 4.1.4 - 2022-01-24
 
     - Handle required properties
