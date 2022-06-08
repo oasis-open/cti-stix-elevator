@@ -221,8 +221,9 @@ class ElevatorOptions(object):
         if disabled:
             self._disabled = _convert_to_int_list(disabled)
             self._disabled = [x for x in self._disabled if x in CHECK_CODES]
-            for x in self._disabled:
-                remove_silent(x, self._enabled)
+            if hasattr(self, "__enabled"):
+                for x in self._disabled:
+                    remove_silent(x, self._enabled)
         else:
             self._disabled = []
 
@@ -243,8 +244,9 @@ class ElevatorOptions(object):
         if enabled:
             self._enabled = _convert_to_int_list(enabled)
             self._enabled = [x for x in self._enabled if x in CHECK_CODES]
-            for x in self._enabled:
-                remove_silent(x, self._disabled)
+            if hasattr(self, "__disabled"):
+                for x in self._enabled:
+                    remove_silent(x, self._disabled)
         else:
             self._enabled = copy.deepcopy(CHECK_CODES)
 
