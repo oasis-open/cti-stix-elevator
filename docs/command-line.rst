@@ -84,14 +84,13 @@ optional arguments:
 
   -e ENABLED, --enable ENABLED
                 A comma-separated list of the stix2-elevator messages
-                to enable. If the --disable option is not used, no
-                other messages will be shown.
+                to enable. Not to be used with --disable.
 
                 Example: --enable 250
 
   -d DISABLED, --disable DISABLED
                 A comma-separated list of the stix2-elevator messages
-                to disable.
+                to disable. Not to be used with --enable.
 
                 Example: --disable 212,220
 
@@ -135,5 +134,10 @@ optional arguments:
 Refer to the :ref:`warning_messages` section for all stix2-elevator messages. Use the
 associated code number to ``--enable`` or ``--disable`` a message. By default, the
 stix2-elevator displays all messages.
+
+The --enable and --disable arguments cannot be used at the same time.  When a message code is not specified in the --enable
+option it will not be displayed.  When a message code is not specified in the --disable
+option it will be displayed.  If the number of messages codes to be both enable and disable are both large, it is sufficient
+to just specify the shorter one.
 
 Note: disabling the message does not disable any functionality.

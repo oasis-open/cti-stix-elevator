@@ -29,6 +29,7 @@ custom_property_prefix is provided, but the missing policy is not 'use-custom-pr
 Custom properties/objects/extensions are deprecated in version 2.1.  Suggest using 'use-extensions' instead        215     info
 The missing policy option of 'use-extensions' cannot be used with version 2.0. 'use-custom-properies' is suggested 216     error
 ACS data markings cannot be supported in version 2.0. --acs option is ignored.                                     217     warn
+Only one of the options --enable and --disable can be used                                                         218     error
 ================================================================================================================== ====    =====
 
 

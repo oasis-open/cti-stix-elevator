@@ -3,6 +3,7 @@ import copy
 import logging
 import os
 import shlex
+import sys
 
 # external
 from stix2validator.scripts import stix2_validator
@@ -210,20 +211,9 @@ class ElevatorOptions(object):
 
     @disabled.setter
     def disabled(self, disabled):
-        def remove_silent(item, elements):
-            try:
-                elements.remove(item)
-            except ValueError:
-                pass  # suppress exception if value is not present
-        # Convert string of comma-separated checks to a list,
-        # and convert check code numbers to names. By default no messages are
-        # disabled.
         if disabled:
             self._disabled = _convert_to_int_list(disabled)
             self._disabled = [x for x in self._disabled if x in CHECK_CODES]
-            if hasattr(self, "__enabled"):
-                for x in self._disabled:
-                    remove_silent(x, self._enabled)
         else:
             self._disabled = []
 
@@ -233,22 +223,11 @@ class ElevatorOptions(object):
 
     @enabled.setter
     def enabled(self, enabled):
-        def remove_silent(item, elements):
-            try:
-                elements.remove(item)
-            except ValueError:
-                pass  # suppress exception if value is not present
-        # Convert string of comma-separated checks to a list,
-        # and convert check code numbers to names. By default all messages are
-        # enabled.
         if enabled:
             self._enabled = _convert_to_int_list(enabled)
             self._enabled = [x for x in self._enabled if x in CHECK_CODES]
-            if hasattr(self, "__disabled"):
-                for x in self._enabled:
-                    remove_silent(x, self._disabled)
         else:
-            self._enabled = copy.deepcopy(CHECK_CODES)
+            self._enabled = []
 
 
 def initialize_options(options=None):
@@ -260,6 +239,10 @@ def initialize_options(options=None):
             ALL_OPTIONS = ElevatorOptions(**options)
         else:
             ALL_OPTIONS = ElevatorOptions(options)
+
+        if ALL_OPTIONS.disabled and ALL_OPTIONS.enabled:
+            error("Only one of the options --enable and --disable can be used", 218)
+            return False
 
         if ALL_OPTIONS.silent and ALL_OPTIONS.message_log_directory:
             info("Both console and output log have disabled messages.", 209)
@@ -286,6 +269,7 @@ def initialize_options(options=None):
         if ALL_OPTIONS.acs and ALL_OPTIONS.spec_version == "2.0":
             warn("ACS data markings cannot be supported in version 2.0. --acs option is ignored.", 217)
             ALL_OPTIONS.acs = False
+    return True
 
 
 def get_validator_options():
@@ -313,10 +297,12 @@ def msg_id_enabled(msg_id):
     if get_option_value("silent"):
         return False
 
-    if not get_option_value("disabled"):
+    if get_option_value("disabled"):
+        return not (msg_id in get_option_value("disabled"))
+    elif get_option_value("enabled"):
         return msg_id in get_option_value("enabled")
     else:
-        return not (msg_id in get_option_value("disabled"))
+        return True
 
 
 # These codes are aligned with elevator_log_messages spreadsheet.
