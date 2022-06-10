@@ -191,14 +191,13 @@ optional arguments:
 
   -e ENABLED, --enable ENABLED
                 A comma-separated list of the stix2-elevator messages
-                to enable. If the --disable option is not used, no
-                other messages will be shown.
+                to enable. Not to be used with --disable.
 
                 Example: --enable 250
 
   -d DISABLED, --disable DISABLED
                 A comma-separated list of the stix2-elevator messages
-                to disable.
+                to disable. Not to be used with --enable.
 
                 Example: --disable 212,220
 
