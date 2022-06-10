@@ -68,6 +68,7 @@ def test_setup_options_with_enabled(opts):
     assert get_option_value("log_level") == "DEBUG"
     assert get_option_value("enabled") == [212, 901]
 
+
 @pytest.mark.parametrize("opts", [
     Namespace(policy="no_policy", spec_version=get_environment_variable_value('VERSION'), log_level="DEBUG", enabled="212,901",
               file_=None, incidents=False, missing_policy=get_environment_variable_value("MISSING_POLICY"),

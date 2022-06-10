@@ -10,9 +10,10 @@ from stix2.canonicalization.Canonicalize import canonicalize
 
 # internal
 from stix2elevator.options import error, info, warn
-from stix2elevator.utils import (find_key_in_dict_case_insensitive,
-                                 find_string_in_list_case_insensitive,
-                                 map_1x_type_to_20)
+from stix2elevator.utils import (
+    find_key_in_dict_case_insensitive, find_string_in_list_case_insensitive,
+    map_1x_type_to_20
+)
 
 
 def record_ids(stix_id, new_id):
@@ -212,6 +213,7 @@ def add_object_id_value(key, value):
         _IDS_TO_CYBER_OBSERVABLES[key] = value
     if not value:
         warn("Can not associate %s with None", 611, key)
+
 
 _ID_OF_OBSERVABLES_IN_SIGHTINGS = []
 

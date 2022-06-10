@@ -141,6 +141,7 @@ def id_2x(id):
     except AttributeError:
         return False
 
+
 def name_property(path):
     return "name" == path[0][-1]
 

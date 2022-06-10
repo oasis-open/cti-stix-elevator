@@ -51,8 +51,7 @@ from stix2elevator.common import (
 from stix2elevator.convert_cybox import split_into_requests_and_responses
 from stix2elevator.ids import (
     add_id_value, exists_id_of_obs_in_characterizations,
-    exists_id_of_obs_in_sightings, exists_object_id_key,
-    get_id_value
+    exists_id_of_obs_in_sightings, exists_object_id_key, get_id_value
 )
 from stix2elevator.missing_policy import (
     check_for_missing_policy, convert_to_custom_name,
@@ -60,7 +59,8 @@ from stix2elevator.missing_policy import (
 )
 from stix2elevator.options import error, get_option_value, info, warn
 from stix2elevator.utils import (
-    encode_in_base64, find_key_in_dict_case_insensitive, identifying_info, map_vocabs_to_label
+    encode_in_base64, find_key_in_dict_case_insensitive, identifying_info,
+    map_vocabs_to_label
 )
 from stix2elevator.vocab_mappings import WINDOWS_PEBINARY
 
@@ -2772,9 +2772,9 @@ def remove_pattern_objects(bundle_instance):
             if obj["type"] == "sighting" and "observed_data_refs" in obj:
                 for ref in obj["observed_data_refs"]:
                     if exists_id_of_obs_in_sightings(ref) and ref in all_new_ids_with_patterns:
-                            warn("Observable object from pattern cannot be an observed_data_ref of a sighting. See %s",
-                                 644,
-                                 obj["id"])
+                        warn("Observable object from pattern cannot be an observed_data_ref of a sighting. See %s",
+                             644,
+                             obj["id"])
         new_remaining_objects = []
         for obj in remaining_objects:
             if obj["type"] == "relationship" and "source_ref" in obj and "target_ref" in obj:

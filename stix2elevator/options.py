@@ -1,9 +1,7 @@
 # Standard Library
-import copy
 import logging
 import os
 import shlex
-import sys
 
 # external
 from stix2validator.scripts import stix2_validator
