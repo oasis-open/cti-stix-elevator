@@ -1,10 +1,10 @@
 # Standard Library
 from datetime import datetime
+from operator import attrgetter
 
 # external
 from cybox.core import Observable
 from lxml import etree
-from operator import attrgetter
 import pycountry
 import stix
 from stix.campaign import Campaign
@@ -67,9 +67,10 @@ from stix2elevator.convert_pattern import (
 )
 from stix2elevator.convert_to_acs import convert_edh_marking_to_acs_marking
 from stix2elevator.ids import (
-    add_id_of_obs_in_characterizations, add_id_of_obs_in_sightings, add_id_value, add_object_id_value,
-    exists_id_key, exists_ids_with_no_1x_object, generate_stix2x_id,
-    get_id_value, get_id_values, get_type_from_id, is_stix1x_id, record_ids
+    add_id_of_obs_in_characterizations, add_id_of_obs_in_sightings,
+    add_id_value, add_object_id_value, exists_id_key,
+    exists_ids_with_no_1x_object, generate_stix2x_id, get_id_value,
+    get_id_values, get_type_from_id, is_stix1x_id, record_ids
 )
 from stix2elevator.missing_policy import (
     check_for_missing_policy, convert_to_custom_name,
@@ -83,10 +84,10 @@ from stix2elevator.utils import (
     add_label, add_marking_map_entry, apply_ais_markings,
     check_map_1x_markings_to_2x, convert_controlled_vocabs_to_open_vocabs,
     convert_timestamp_of_stix_object, convert_timestamp_to_string,
-    convert_to_stix_literal, find_key_in_dict_case_insensitive, identifying_info, iterpath,
-    lookup_marking_reference, map_1x_markings_to_2x, map_vocabs_to_label,
-    operation_on_path, set_tlp_reference,
-    strftime_with_appropriate_fractional_seconds
+    convert_to_stix_literal, find_key_in_dict_case_insensitive,
+    identifying_info, iterpath, lookup_marking_reference,
+    map_1x_markings_to_2x, map_vocabs_to_label, operation_on_path,
+    set_tlp_reference, strftime_with_appropriate_fractional_seconds
 )
 from stix2elevator.vocab_mappings import (
     ATTACK_MOTIVATION_MAP, COA_LABEL_MAP, INCIDENT_LABEL_MAP,
@@ -359,10 +360,8 @@ def create_basic_object(stix2x_type, stix1x_obj, env, parent_id=None, id_used=Fa
     instance = {"type": stix2x_type}
     if get_option_value("spec_version") == "2.1":
         instance["spec_version"] = "2.1"
-    instance["id"] = generate_stix2x_id(stix2x_type, stix1x_obj.id_ if (stix1x_obj and
-                                                                        hasattr(stix1x_obj, "id_") and
-                                                                        stix1x_obj.id_) \
-                                                                    else parent_id,
+    instance["id"] = generate_stix2x_id(stix2x_type,
+                                        stix1x_obj.id_ if (stix1x_obj and hasattr(stix1x_obj, "id_") and stix1x_obj.id_) else parent_id,
                                         id_used)
     if stix1x_obj:
         timestamp = convert_timestamp_of_stix_object(stix1x_obj, env.timestamp, True)
@@ -2268,7 +2267,7 @@ def process_ttp_properties(sdo_instance, ttp, env, kill_chains_in_sdo=True, mark
     if ttp.exploit_targets is not None:
         warn("Exploit targets are part of STIX 1x %s.  Assuming they are related.",
              646,
-             "TTP" + (" " + ttp.id_ if hasattr(ttp,"id_") else ""))
+             "TTP" + (" " + ttp.id_ if hasattr(ttp, "id_") else ""))
         handle_relationship_to_refs(ttp.exploit_targets, sdo_instance["id"], env,
                                     "targets", marking_refs=marking_refs)
     if ttp.related_ttps:

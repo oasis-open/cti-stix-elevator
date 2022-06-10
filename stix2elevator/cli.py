@@ -115,8 +115,7 @@ def _get_arg_parser(is_script=True):
         "-e",
         "--enable",
         help="A comma-separated list of the stix2-elevator messages to enable. "
-             "If the --disable option is not used, no other messages will be "
-             "shown. \n\nExample: stix2_elevator.py <file> --enable 250",
+             "Not to be used with --disable. \n\nExample: stix2_elevator.py <file> --enable 250",
         dest="enabled",
         default=None
     )
@@ -125,7 +124,7 @@ def _get_arg_parser(is_script=True):
         "-d",
         "--disable",
         help="A comma-separated list of the stix2-elevator messages to disable. \n\n"
-             "Example: stix2_elevator.py <file> --disable 212,220",
+             "Not to be used with --enable. \n\nExample: stix2_elevator.py <file> --disable 212,220",
         dest="disabled",
         default=None
     )
@@ -208,10 +207,12 @@ def main():
     elevator_parser = _get_arg_parser()
     elevator_args = elevator_parser.parse_args()
     sys.setrecursionlimit(3000)
-    initialize_options(options=elevator_args)
-    result = elevate(elevator_args.file_)
-    if result:
-        sys.stdout.write(result + "\n")
+    if initialize_options(options=elevator_args):
+        result = elevate(elevator_args.file_)
+        if result:
+            sys.stdout.write(result + "\n")
+        else:
+            sys.exit(1)
     else:
         sys.exit(1)
 

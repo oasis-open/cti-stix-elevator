@@ -13,10 +13,11 @@ from stix2validator.validator import FileValidationResults
 # internal
 from stix2elevator.options import info, warn
 
-def find_string_in_list_case_insensitive(item, l):
+
+def find_string_in_list_case_insensitive(item, ls):
     if item:
         item_as_lower = item.lower()
-        for s in l:
+        for s in ls:
             if item_as_lower == s.lower():
                 return True
     return False
