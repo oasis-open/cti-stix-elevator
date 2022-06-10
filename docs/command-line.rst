@@ -137,7 +137,7 @@ stix2-elevator displays all messages.
 
 The --enable and --disable arguments cannot be used at the same time.  When a message code is not specified in the --enable
 option it will not be displayed.  When a message code is not specified in the --disable
-option it will be displayed.  If the number of messages codes to be both enable and disable are both large, it is sufficient
+option it will be displayed.  If the number of messages codes to be both enabled and disabled are both large, it is sufficient
 to just specify the shorter one.
 
 Note: disabling the message does not disable any functionality.
