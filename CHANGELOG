@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+4.1.6 - 2022-06-10
+
+    - fix functionality for --enable and --disable options
+
 4.1.5 - 2022-02-04
 
     - Additional fix for Hostname in SocketAddress in pattern
