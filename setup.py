@@ -88,7 +88,7 @@ setup(
             'sphinx-prompt',
         ],
         "acs": [
-            'stix-edh>=1.0.2',
+            'stix-edh>=1.0.3',
         ]
     },
 )
