@@ -1992,11 +1992,17 @@ def convert_port_to_pattern(prop):
         warn("port number is assumed to be a destination port", 725)
         expressions.append(
             create_term("network-traffic:dst_port", prop.port_value.condition, make_constant(prop.port_value.value)))
+
     if prop.layer4_protocol:
-        expressions.append(
-            create_term("network-traffic:protocols[*]", prop.layer4_protocol.condition,
-                        make_constant(prop.layer4_protocol.value)))
-    return create_boolean_expression("AND", expressions)
+        if prop.layer4_protocol.value is not None:
+            expressions.append(
+                create_term("network-traffic:protocols[*]", prop.layer4_protocol.condition,
+                            make_constant(prop.layer4_protocol.value)))
+
+    if len(expressions) > 1:
+        return create_boolean_expression("AND", expressions)
+    else:
+        return(expressions[0])
 
 
 def convert_socket_address_to_pattern(sock_add, direction):
