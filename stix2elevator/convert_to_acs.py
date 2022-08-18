@@ -204,7 +204,7 @@ def convert_edh_marking_to_acs_marking(marking_definition_instance, isa_marking,
             if acs_marking["authority_reference"]:
                 acs_marking["authority_reference"].append(isa_marking.auth_ref)
         else:
-            acs_marking["authority_reference"] = isa_marking.auth_ref
+            acs_marking["authority_reference"] = [isa_marking.auth_ref]
     if marking_assertion.policy_ref:
         acs_marking["policy_reference"] = marking_assertion.policy_ref
     else:
