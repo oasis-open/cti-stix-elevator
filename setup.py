@@ -35,8 +35,6 @@ setup(
     url='https://oasis-open.github.io/cti-documentation/',
     author='OASIS Cyber Threat Intelligence Technical Committee',
     author_email='cti-users@lists.oasis-open.org',
-    maintainer='Rich Piazza',
-    maintainer_email='rpiazza@mitre.org',
     packages=find_packages(exclude=['*.test', '*.test.*']),
     python_requires='>=3.6',
     install_requires=[
