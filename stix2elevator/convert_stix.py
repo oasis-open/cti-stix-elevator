@@ -2932,11 +2932,14 @@ def convert_package(stix_package, env):
     finalize_bundle(env)
 
     # capture info in stix header, if any.  Must take place after finalize_bundle
-    if stix_header_contains_extra_information(stix_package.stix_header):
-        if stix_package.version == "1.2" and not any(obj["type"] == "report" for obj in bundle_instance["objects"]):
-            bundle_instance["objects"].append(create_object_for_package_header(stix_package.stix_header, env, "report"))
+    if not check_for_missing_policy("ignore"):
+        if stix_header_contains_extra_information(stix_package.stix_header):
+            if stix_package.version == "1.2" and not any(obj["type"] == "report" for obj in bundle_instance["objects"]):
+                bundle_instance["objects"].append(create_object_for_package_header(stix_package.stix_header, env, "report"))
+            else:
+                bundle_instance["objects"].append(create_object_for_package_header(stix_package.stix_header, env, "grouping"))
         else:
-            bundle_instance["objects"].append(create_object_for_package_header(stix_package.stix_header, env, "grouping"))
+            info("The STIX package header contained no extra information that needed to be generated in STIX 2.x", 219)
     else:
-        info("The STIX package header contained no extra information that needed to be generated in STIX 2.x", 219)
+        warn("Any extra STIX package header properties are ignored", 320)
     return bundle_instance
