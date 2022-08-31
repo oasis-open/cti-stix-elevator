@@ -104,6 +104,28 @@
             ],
             "spec_version": "2.1",
             "type": "observed-data"
+        },
+        {
+            "context": "header_information",
+            "created": "2022-08-28T21:05:52.986Z",
+            "description": "IOCAware Auto-Generated STIX IOC Document for VirusShare_5d8129be965fab8115eca34fc84bd7f0",
+            "id": "report--b0cdc64a-0686-4745-a102-ca46d3031524",
+            "modified": "2022-08-28T21:05:52.986Z",
+            "object_refs": [
+                "process--d98ee3f1-d918-4f74-b1d5-2269f64670bf",
+                "network-traffic--1066d67f-8803-504b-abfc-aeb0ca539978",
+                "ipv4-addr--96d215a5-eb23-527a-ae22-9507313d32ca",
+                "user-account--4c042077-1456-5191-94a6-0e90b7bd9b05",
+                "process--a1f4e3f7-3663-479d-9c05-c68b4c688819",
+                "process--7f7d679c-1bca-496d-98c9-c93ccfbdd089",
+                "indicator--6116b44e-a7e9-11e3-a82f-000c29b241af",
+                "indicator--6116cf88-a7e9-11e3-a82f-000c29b241af",
+                "indicator--6116d730-a7e9-11e3-a82f-000c29b241af",
+                "indicator--6116dcbc-a7e9-11e3-a82f-000c29b241af",
+                "observed-data--65492fbc-5d48-49bf-83b8-33c965e36066"
+            ],
+            "spec_version": "2.1",
+            "type": "report"
         }
     ],
     "type": "bundle"

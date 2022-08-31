@@ -1,12 +1,12 @@
 {
-    "id": "bundle--7ba26ac8-b74b-4b17-8fef-147765b7f1c2",
+    "id": "bundle--8a82dbef-0e59-4998-ad4b-6e3e0aba2f31",
     "objects": [
         {
             "administrative_area": "US-DC",
             "country": "US",
             "created": "2020-11-23T14:26:05.000Z",
-            "created_by_ref": "identity--3de38a57-8cfe-48ee-907a-691476722cf2",
-            "id": "location--6985f13c-56be-4ccb-80f9-facfa0567ebd",
+            "created_by_ref": "identity--93d338e3-a133-490e-a154-beb3adeae465",
+            "id": "location--542bedd6-0074-40f9-91d5-fe461d09cdb6",
             "modified": "2020-11-23T14:26:05.000Z",
             "object_marking_refs": [
                 "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
@@ -16,22 +16,22 @@
         },
         {
             "created": "2020-11-23T14:26:05.000Z",
-            "created_by_ref": "identity--3de38a57-8cfe-48ee-907a-691476722cf2",
-            "id": "relationship--1977ba91-5168-4f9e-a76e-100364d50974",
+            "created_by_ref": "identity--93d338e3-a133-490e-a154-beb3adeae465",
+            "id": "relationship--cd8486ef-afbf-4241-aeea-8f083ad48397",
             "modified": "2020-11-23T14:26:05.000Z",
             "object_marking_refs": [
                 "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
             ],
             "relationship_type": "located-at",
-            "source_ref": "identity--3de38a57-8cfe-48ee-907a-691476722cf2",
+            "source_ref": "identity--93d338e3-a133-490e-a154-beb3adeae465",
             "spec_version": "2.1",
-            "target_ref": "location--6985f13c-56be-4ccb-80f9-facfa0567ebd",
+            "target_ref": "location--542bedd6-0074-40f9-91d5-fe461d09cdb6",
             "type": "relationship"
         },
         {
             "created": "2020-11-23T14:26:05.000Z",
-            "created_by_ref": "identity--3de38a57-8cfe-48ee-907a-691476722cf2",
-            "id": "identity--3de38a57-8cfe-48ee-907a-691476722cf2",
+            "created_by_ref": "identity--93d338e3-a133-490e-a154-beb3adeae465",
+            "id": "identity--93d338e3-a133-490e-a154-beb3adeae465",
             "identity_class": "organization",
             "labels": [
                 "ais-consent-everyone-cisa-proprietary"
@@ -50,8 +50,8 @@
         {
             "count": 1,
             "created": "2018-03-13T20:42:24.000Z",
-            "created_by_ref": "identity--3de38a57-8cfe-48ee-907a-691476722cf2",
-            "id": "sighting--c4bb5556-d70e-46ae-9a1c-c74458a4c8b3",
+            "created_by_ref": "identity--93d338e3-a133-490e-a154-beb3adeae465",
+            "id": "sighting--8df9e652-f451-4a6b-96a7-ad11ea810608",
             "modified": "2018-03-13T20:42:24.000Z",
             "object_marking_refs": [
                 "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
@@ -62,7 +62,7 @@
         },
         {
             "created": "2020-11-23T19:26:05.255Z",
-            "created_by_ref": "identity--3de38a57-8cfe-48ee-907a-691476722cf2",
+            "created_by_ref": "identity--93d338e3-a133-490e-a154-beb3adeae465",
             "description": "This is the E-Mail indicator",
             "id": "indicator--a35dbed6-9b9c-442e-aaff-4aeeb88a43ef",
             "indicator_types": [
@@ -83,6 +83,26 @@
             "spec_version": "2.1",
             "type": "indicator",
             "valid_from": "2020-11-23T19:26:05.255205Z"
+        },
+        {
+            "context": "header_information",
+            "created": "2020-11-23T14:26:05.000Z",
+            "description": "This is the package overview",
+            "id": "grouping--47a4fc1f-a6be-446b-bc21-40dacb07e440",
+            "modified": "2020-11-23T14:26:05.000Z",
+            "name": "Package Title",
+            "object_refs": [
+                "location--542bedd6-0074-40f9-91d5-fe461d09cdb6",
+                "relationship--cd8486ef-afbf-4241-aeea-8f083ad48397",
+                "identity--93d338e3-a133-490e-a154-beb3adeae465",
+                "sighting--8df9e652-f451-4a6b-96a7-ad11ea810608",
+                "indicator--a35dbed6-9b9c-442e-aaff-4aeeb88a43ef"
+            ],
+            "spec_version": "2.1",
+            "type": "grouping",
+            "x_elevator_package_intents": [
+                "Indicators"
+            ]
         }
     ],
     "type": "bundle"

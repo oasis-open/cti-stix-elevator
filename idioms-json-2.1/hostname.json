@@ -5,8 +5,8 @@
             "administrative_area": "US-OR",
             "country": "US",
             "created": "2021-08-06T14:04:41.000Z",
-            "created_by_ref": "identity--46216bb5-5865-43c7-8260-7265a8e4c04f",
-            "id": "location--325d4495-a020-47e1-91f1-6a6eefe8f748",
+            "created_by_ref": "identity--a454ee6c-6323-41c9-bc76-3fe17b554c0f",
+            "id": "location--1a9c31a2-3c9d-41ff-a981-9fe1f8b48933",
             "modified": "2021-08-06T14:04:41.000Z",
             "object_marking_refs": [
                 "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
@@ -16,22 +16,22 @@
         },
         {
             "created": "2021-08-06T14:04:41.000Z",
-            "created_by_ref": "identity--46216bb5-5865-43c7-8260-7265a8e4c04f",
-            "id": "relationship--882e14e4-38b0-47d5-82d4-9692df219a23",
+            "created_by_ref": "identity--a454ee6c-6323-41c9-bc76-3fe17b554c0f",
+            "id": "relationship--e90d972e-5c49-444f-a686-4e7529376265",
             "modified": "2021-08-06T14:04:41.000Z",
             "object_marking_refs": [
                 "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
             ],
             "relationship_type": "located-at",
-            "source_ref": "identity--46216bb5-5865-43c7-8260-7265a8e4c04f",
+            "source_ref": "identity--a454ee6c-6323-41c9-bc76-3fe17b554c0f",
             "spec_version": "2.1",
-            "target_ref": "location--325d4495-a020-47e1-91f1-6a6eefe8f748",
+            "target_ref": "location--1a9c31a2-3c9d-41ff-a981-9fe1f8b48933",
             "type": "relationship"
         },
         {
             "created": "2021-08-06T14:04:41.000Z",
-            "created_by_ref": "identity--46216bb5-5865-43c7-8260-7265a8e4c04f",
-            "id": "identity--46216bb5-5865-43c7-8260-7265a8e4c04f",
+            "created_by_ref": "identity--a454ee6c-6323-41c9-bc76-3fe17b554c0f",
+            "id": "identity--a454ee6c-6323-41c9-bc76-3fe17b554c0f",
             "identity_class": "organization",
             "labels": [
                 "ais-consent-everyone"
@@ -49,7 +49,7 @@
         },
         {
             "created": "2021-08-06T14:04:41.000Z",
-            "created_by_ref": "identity--46216bb5-5865-43c7-8260-7265a8e4c04f",
+            "created_by_ref": "identity--a454ee6c-6323-41c9-bc76-3fe17b554c0f",
             "description": "Socket Address123",
             "id": "indicator--5ea04c59-d106-4e2a-a15c-293066fc3187",
             "indicator_types": [
@@ -65,7 +65,7 @@
         },
         {
             "created": "2021-08-06T14:04:41.000Z",
-            "created_by_ref": "identity--46216bb5-5865-43c7-8260-7265a8e4c04f",
+            "created_by_ref": "identity--a454ee6c-6323-41c9-bc76-3fe17b554c0f",
             "description": "Socket Address",
             "id": "indicator--f04fe75a-4717-4b2a-85ad-9adf248b1c3e",
             "indicator_types": [
@@ -80,6 +80,23 @@
             "spec_version": "2.1",
             "type": "indicator",
             "valid_from": "2021-08-06T14:04:41.000000Z"
+        },
+        {
+            "context": "header_information",
+            "created": "2021-08-06T14:04:41.000Z",
+            "description": "\n\nPACKAGE_INTENTS:\nIndicators",
+            "id": "grouping--7864cc64-e96b-4472-81a7-4600006d1a4a",
+            "modified": "2021-08-06T14:04:41.000Z",
+            "name": "NCCIC:STIX_Package-75d3aca8-3a82-46fc-8965-c0d1958c9790",
+            "object_refs": [
+                "location--1a9c31a2-3c9d-41ff-a981-9fe1f8b48933",
+                "relationship--e90d972e-5c49-444f-a686-4e7529376265",
+                "identity--a454ee6c-6323-41c9-bc76-3fe17b554c0f",
+                "indicator--5ea04c59-d106-4e2a-a15c-293066fc3187",
+                "indicator--f04fe75a-4717-4b2a-85ad-9adf248b1c3e"
+            ],
+            "spec_version": "2.1",
+            "type": "grouping"
         }
     ],
     "type": "bundle"

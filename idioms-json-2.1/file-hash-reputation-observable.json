@@ -29,11 +29,11 @@
             "type": "file"
         },
         {
-            "created": "2020-03-28T13:38:15.459Z",
-            "first_observed": "2020-03-28T13:38:15.459Z",
+            "created": "2022-08-31T15:22:48.359Z",
+            "first_observed": "2022-08-31T15:22:48.359Z",
             "id": "observed-data--14975dea-86cd-4211-a5f8-9c2e4daab69a",
-            "last_observed": "2020-03-28T13:38:15.459Z",
-            "modified": "2020-03-28T13:38:15.459Z",
+            "last_observed": "2022-08-31T15:22:48.359Z",
+            "modified": "2022-08-31T15:22:48.359Z",
             "number_observed": 1,
             "object_refs": [
                 "file--cab91fba-2bb2-5e32-89ed-68d5f3f33415"
@@ -42,17 +42,33 @@
             "type": "observed-data"
         },
         {
-            "created": "2020-03-29T10:43:39.850Z",
-            "first_observed": "2020-03-29T10:43:39.850Z",
-            "id": "observed-data--14975dea-86cd-4211-a5f8-9c2e4daab69a",
-            "last_observed": "2020-03-29T10:43:39.850Z",
-            "modified": "2020-03-29T10:43:39.850Z",
+            "created": "2022-08-31T15:22:48.359Z",
+            "first_observed": "2022-08-31T15:22:48.359Z",
+            "id": "observed-data--a8770cfa-7921-43a5-b145-cf168aa3b019",
+            "last_observed": "2022-08-31T15:22:48.359Z",
+            "modified": "2022-08-31T15:22:48.359Z",
             "number_observed": 1,
             "object_refs": [
                 "file--4d6ae3bb-46a6-524f-8b33-ace41d113a7c"
             ],
             "spec_version": "2.1",
             "type": "observed-data"
+        },
+        {
+            "context": "header_information",
+            "created": "2022-08-31T15:22:48.359Z",
+            "description": "\n\nPACKAGE_INTENTS:\nIndicators - Malware Artifacts",
+            "id": "report--163cc93a-92fd-4ea4-bc1e-26615441528a",
+            "modified": "2022-08-31T15:22:48.359Z",
+            "name": "File Hash Reputation Service Results",
+            "object_refs": [
+                "file--cab91fba-2bb2-5e32-89ed-68d5f3f33415",
+                "file--4d6ae3bb-46a6-524f-8b33-ace41d113a7c",
+                "observed-data--14975dea-86cd-4211-a5f8-9c2e4daab69a",
+                "observed-data--a8770cfa-7921-43a5-b145-cf168aa3b019"
+            ],
+            "spec_version": "2.1",
+            "type": "report"
         }
     ],
     "type": "bundle"

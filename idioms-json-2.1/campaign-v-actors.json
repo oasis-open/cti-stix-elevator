@@ -4,10 +4,10 @@
         {
             "administrative_area": "US-DC",
             "country": "US",
-            "created": "2021-09-09T14:54:32.130Z",
-            "created_by_ref": "identity--48f09726-ea62-466d-a8cb-87ef64d28e41",
-            "id": "location--b621758f-7f70-46a0-8795-0b0e16b25b87",
-            "modified": "2021-09-09T14:54:32.130Z",
+            "created": "2022-08-31T15:22:48.013Z",
+            "created_by_ref": "identity--046aeaa8-b984-4664-a50b-0dc6f0c6aa8b",
+            "id": "location--f01a6042-bfdf-4360-b0e7-b80e5bcd4ac4",
+            "modified": "2022-08-31T15:22:48.013Z",
             "object_marking_refs": [
                 "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
             ],
@@ -15,28 +15,28 @@
             "type": "location"
         },
         {
-            "created": "2021-09-09T14:54:32.130Z",
-            "created_by_ref": "identity--48f09726-ea62-466d-a8cb-87ef64d28e41",
-            "id": "relationship--a5bef8e8-c608-487f-89c8-b3adba6178a6",
-            "modified": "2021-09-09T14:54:32.130Z",
+            "created": "2022-08-31T15:22:48.013Z",
+            "created_by_ref": "identity--046aeaa8-b984-4664-a50b-0dc6f0c6aa8b",
+            "id": "relationship--1cc0fb0b-8074-47e1-b874-1b23ff235974",
+            "modified": "2022-08-31T15:22:48.013Z",
             "object_marking_refs": [
                 "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
             ],
             "relationship_type": "located-at",
-            "source_ref": "identity--48f09726-ea62-466d-a8cb-87ef64d28e41",
+            "source_ref": "identity--046aeaa8-b984-4664-a50b-0dc6f0c6aa8b",
             "spec_version": "2.1",
-            "target_ref": "location--b621758f-7f70-46a0-8795-0b0e16b25b87",
+            "target_ref": "location--f01a6042-bfdf-4360-b0e7-b80e5bcd4ac4",
             "type": "relationship"
         },
         {
-            "created": "2021-09-09T14:54:32.130Z",
-            "created_by_ref": "identity--48f09726-ea62-466d-a8cb-87ef64d28e41",
-            "id": "identity--48f09726-ea62-466d-a8cb-87ef64d28e41",
+            "created": "2022-08-31T15:22:48.013Z",
+            "created_by_ref": "identity--046aeaa8-b984-4664-a50b-0dc6f0c6aa8b",
+            "id": "identity--046aeaa8-b984-4664-a50b-0dc6f0c6aa8b",
             "identity_class": "organization",
             "labels": [
                 "ais-consent-usg"
             ],
-            "modified": "2021-09-09T14:54:32.130Z",
+            "modified": "2022-08-31T15:22:48.013Z",
             "name": "ACME CORP",
             "object_marking_refs": [
                 "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
@@ -100,7 +100,7 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
-            "id": "relationship--c9aa2e64-0604-4af4-935c-98c5f308a5fb",
+            "id": "relationship--1dbb7789-9af8-49f7-ac97-223c3d4a74f4",
             "modified": "2014-08-08T15:50:10.983Z",
             "object_marking_refs": [
                 "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
@@ -113,7 +113,7 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
-            "id": "relationship--c5eb86bd-d9d8-43e2-87ea-e37e1cf6d30e",
+            "id": "relationship--cb2a0c8f-73de-4b90-adb7-64539bb1abef",
             "modified": "2014-08-08T15:50:10.983Z",
             "object_marking_refs": [
                 "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
@@ -126,7 +126,7 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
-            "id": "relationship--d6eb79ac-6b33-422c-bbde-4cbaa88e6d2a",
+            "id": "relationship--e00521e2-49c3-465b-91d0-6aa33a876510",
             "modified": "2014-08-08T15:50:10.983Z",
             "object_marking_refs": [
                 "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
@@ -139,7 +139,7 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
-            "id": "relationship--7ccca7bd-35ff-443d-bd4a-9810f4de1101",
+            "id": "relationship--f797e7ec-da68-456e-8c82-053013b29b06",
             "modified": "2014-08-08T15:50:10.983Z",
             "object_marking_refs": [
                 "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
@@ -152,7 +152,7 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
-            "id": "relationship--a6a488f9-2b35-4128-9cdb-a3e7eb8e2da2",
+            "id": "relationship--1d6e416f-768d-4708-83dd-d542d338b09c",
             "modified": "2014-08-08T15:50:10.983Z",
             "object_marking_refs": [
                 "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
@@ -162,6 +162,29 @@
             "spec_version": "2.1",
             "target_ref": "threat-actor--56f3f0db-b5d5-431c-ae56-c18f02caf500",
             "type": "relationship"
+        },
+        {
+            "context": "header_information",
+            "created": "2022-08-31T15:22:48.013Z",
+            "description": "\n\nPACKAGE_INTENTS:\nIndicators,\nThreat Report",
+            "id": "report--c40658fb-7332-4e0e-95c2-ead0e8c72ac3",
+            "modified": "2022-08-31T15:22:48.013Z",
+            "name": "regression-test-08-Elevator02",
+            "object_refs": [
+                "location--f01a6042-bfdf-4360-b0e7-b80e5bcd4ac4",
+                "relationship--1cc0fb0b-8074-47e1-b874-1b23ff235974",
+                "identity--046aeaa8-b984-4664-a50b-0dc6f0c6aa8b",
+                "identity--2d1c6ab3-5e4e-48ac-a32b-f0c01c2836a8",
+                "threat-actor--56f3f0db-b5d5-431c-ae56-c18f02caf500",
+                "campaign--e5268b6e-4931-42f1-b379-87f48eb41b1e",
+                "relationship--1dbb7789-9af8-49f7-ac97-223c3d4a74f4",
+                "relationship--cb2a0c8f-73de-4b90-adb7-64539bb1abef",
+                "relationship--e00521e2-49c3-465b-91d0-6aa33a876510",
+                "relationship--f797e7ec-da68-456e-8c82-053013b29b06",
+                "relationship--1d6e416f-768d-4708-83dd-d542d338b09c"
+            ],
+            "spec_version": "2.1",
+            "type": "report"
         }
     ],
     "type": "bundle"

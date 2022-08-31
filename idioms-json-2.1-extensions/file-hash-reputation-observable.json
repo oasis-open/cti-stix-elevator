@@ -29,11 +29,11 @@
             "type": "file"
         },
         {
-            "created": "2020-12-30T16:02:49.703Z",
-            "first_observed": "2020-12-30T16:02:49.703Z",
+            "created": "2022-08-30T14:12:44.007Z",
+            "first_observed": "2022-08-30T14:12:44.007Z",
             "id": "observed-data--14975dea-86cd-4211-a5f8-9c2e4daab69a",
-            "last_observed": "2020-12-30T16:02:49.703Z",
-            "modified": "2020-12-30T16:02:49.703Z",
+            "last_observed": "2022-08-30T14:12:44.007Z",
+            "modified": "2022-08-30T14:12:44.007Z",
             "number_observed": 1,
             "object_refs": [
                 "file--cab91fba-2bb2-5e32-89ed-68d5f3f33415"
@@ -42,17 +42,40 @@
             "type": "observed-data"
         },
         {
-            "created": "2020-12-30T16:02:49.703Z",
-            "first_observed": "2020-12-30T16:02:49.703Z",
+            "created": "2022-08-30T14:12:44.007Z",
+            "first_observed": "2022-08-30T14:12:44.007Z",
             "id": "observed-data--a8770cfa-7921-43a5-b145-cf168aa3b019",
-            "last_observed": "2020-12-30T16:02:49.703Z",
-            "modified": "2020-12-30T16:02:49.703Z",
+            "last_observed": "2022-08-30T14:12:44.007Z",
+            "modified": "2022-08-30T14:12:44.007Z",
             "number_observed": 1,
             "object_refs": [
                 "file--4d6ae3bb-46a6-524f-8b33-ace41d113a7c"
             ],
             "spec_version": "2.1",
             "type": "observed-data"
+        },
+        {
+            "context": "header_information",
+            "created": "2022-08-30T14:12:44.007Z",
+            "extensions": {
+                "extension-definition--faebed16-db10-4824-8538-62d9cd38b117": {
+                    "extension_type": "property-extension",
+                    "package_intents": [
+                        "Indicators - Malware Artifacts"
+                    ]
+                }
+            },
+            "id": "report--df6e4fd8-761b-40ac-ad36-b6c9e63402a1",
+            "modified": "2022-08-30T14:12:44.007Z",
+            "name": "File Hash Reputation Service Results",
+            "object_refs": [
+                "file--cab91fba-2bb2-5e32-89ed-68d5f3f33415",
+                "file--4d6ae3bb-46a6-524f-8b33-ace41d113a7c",
+                "observed-data--14975dea-86cd-4211-a5f8-9c2e4daab69a",
+                "observed-data--a8770cfa-7921-43a5-b145-cf168aa3b019"
+            ],
+            "spec_version": "2.1",
+            "type": "report"
         }
     ],
     "type": "bundle"

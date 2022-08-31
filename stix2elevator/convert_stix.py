@@ -73,7 +73,7 @@ from stix2elevator.ids import (
     get_id_values, get_type_from_id, is_stix1x_id, record_ids
 )
 from stix2elevator.missing_policy import (
-    check_for_missing_policy, convert_to_custom_name,
+    add_string_property_to_description, check_for_missing_policy, convert_to_custom_name,
     determine_container_for_missing_properties, fill_in_extension_properties,
     handle_missing_confidence_property, handle_missing_statement_properties,
     handle_missing_string_property, handle_missing_timestamp_property,
@@ -300,31 +300,37 @@ def process_structured_text_list(text_list):
     return full_text
 
 
+def process_short_description(so, short_property, short_property_name, parent_info):
+    short_description_as_text = str(short_property)
+    if short_description_as_text:
+        info("The Short_Description property in %s is not supported in STIX 2.x.", 310, so["id"])
+        if not check_for_missing_policy("ignore"):
+            info("The text in the %s property was appended to the description property of %s", 301,
+                 short_property_name, so["id"])
+            if parent_info and so["description"]:
+                so["description"] += "\nPARENT_" + short_property_name.upper() + ": \n" + short_description_as_text
+            else:
+                so["description"] += short_description_as_text
+        else:
+            warn("Missing property '%s' of %s is ignored", 307, short_property_name, so["id"])
+
+
 def process_description_and_short_description(so, entity, parent_info=False):
-    if hasattr(entity, "descriptions") and entity.descriptions is not None:
+    if hasattr(entity, "descriptions") and len(entity.descriptions) != 0:
         description_as_text = str(process_structured_text_list(entity.descriptions))
         if description_as_text:
             if parent_info and so["description"]:
                 so["description"] += "\nPARENT_DESCRIPTION: \n" + description_as_text
             else:
                 so["description"] += description_as_text
-
     # could be short_description or description (in STIX 1.1.1)
     # seems like in STIX 2.x - description and descriptionS are both populated with the same content
     elif hasattr(entity, "description") and entity.description is not None:
         so["description"] += str(entity.description.value)
     if hasattr(entity, "short_description") and entity.short_description is not None:
-        short_description_as_text = str(entity.short_description)
-        if short_description_as_text:
-            info("The Short_Description property in %s is not supported in STIX 2.x.", 310, so["id"])
-            if not check_for_missing_policy("ignore"):
-                info("The text was appended to the description property of %s", 301, so["id"])
-                if parent_info and so["description"]:
-                    so["description"] += "\nPARENT_SHORT_DESCRIPTION: \n" + short_description_as_text
-                else:
-                    so["description"] += short_description_as_text
-            else:
-                warn("Missing property 'short_description' of %s is ignored", 307, so["id"])
+        process_short_description(so, entity.short_description, "short_description", parent_info)
+    elif hasattr(entity, "short_descriptions") and len(entity.short_descriptions) != 0:
+        process_short_description(so, process_structured_text_list(entity.short_descriptions), "short_descriptions", parent_info)
 
 
 def process_description_and_short_description_of_sighting(sighting, indicator_id):
@@ -356,7 +362,7 @@ def process_description_and_short_description_of_sighting(sighting, indicator_id
     return description_for_sighting
 
 
-def create_basic_object(stix2x_type, stix1x_obj, env, parent_id=None, id_used=False):
+def create_basic_object(stix2x_type, stix1x_obj, env, parent_id=None, id_used=False, prime_properties=True):
     instance = {"type": stix2x_type}
     if get_option_value("spec_version") == "2.1":
         instance["spec_version"] = "2.1"
@@ -373,7 +379,8 @@ def create_basic_object(stix2x_type, stix1x_obj, env, parent_id=None, id_used=Fa
         # marking definitions cannot be changed, so they have no modified property
         instance["modified"] = timestamp
     instance["description"] = ""
-    instance["external_references"] = []
+    if prime_properties:
+        instance["external_references"] = []
     return instance
 
 
@@ -1096,7 +1103,7 @@ def handle_missing_properties_of_course_of_action(coa_instance, coa):
         handle_missing_statement_properties(container, coa.cost, "cost", coa_instance["id"], is_literal=True)
         handle_missing_statement_properties(container, coa.efficacy, "efficacy", coa_instance["id"], is_literal=True)
 
-    fill_in_extension_properties(coa_instance, container, extension_definition_id)
+        fill_in_extension_properties(coa_instance, container, extension_definition_id)
 
 
 def convert_course_of_action(coa, env):
@@ -2786,6 +2793,42 @@ def get_identity_from_information_source(information_source, env, created_by_ref
     return None
 
 
+def handle_missing_properties_of_stix_header(sdo_instance, stix_package_header, stix_type):
+    container, extension_definition_id = determine_container_for_missing_properties(stix_type,
+                                                                                    sdo_instance)
+    if container is not None:
+        if stix_package_header.package_intents:
+            handle_missing_string_property(container, "package_intents", stix_package_header.package_intents, sdo_instance["id"],
+                                           True)
+        fill_in_extension_properties(sdo_instance, container, extension_definition_id)
+
+
+def create_object_for_package_header(stix_package_header, env, type):
+    sdo_instance = create_basic_object(type, None, env, prime_properties=False)
+    sdo_instance["context"] = "header_information"
+    if hasattr(stix_package_header, "title") and stix_package_header.title is not None:
+        sdo_instance["name"] = stix_package_header.title
+    process_description_and_short_description(sdo_instance, stix_package_header)
+    handle_missing_properties_of_stix_header(sdo_instance,
+                                             stix_package_header,
+                                             type)
+    sdo_instance["object_refs"] = [ x["id"] for x in env.bundle_instance["objects"]]
+    if "description" in sdo_instance and sdo_instance["description"] == "":
+        del sdo_instance["description"]
+    return sdo_instance
+
+
+def stix_header_contains_extra_information(stix_header):
+    return stix_header and \
+           ((hasattr(stix_header, "title") and stix_header.title is not None) or
+            (hasattr(stix_header, "package_intents") and stix_header.package_intents is not None and
+             len(stix_header.package_intents) != 0) or
+            (hasattr(stix_header, "descriptions") and len(stix_header.descriptions) != 0) or
+            (hasattr(stix_header, "description") and stix_header.description is not None) or
+            (hasattr(stix_header, "short_descriptions") and len(stix_header.short_descriptions) != 0) or
+            (hasattr(stix_header, "short_description") and stix_header.short_description is not None))
+
+
 def convert_package(stix_package, env):
     bundle_instance = {"type": "bundle"}
     bundle_instance["id"] = generate_stix2x_id("bundle", stix_package.id_)
@@ -2887,4 +2930,13 @@ def convert_package(stix_package, env):
             convert_ttp(ttp, env)
 
     finalize_bundle(env)
+
+    # capture info in stix header, if any.  Must take place after finalize_bundle
+    if stix_header_contains_extra_information(stix_package.stix_header):
+        if stix_package.version == "1.2" and not any(obj["type"] == "report" for obj in bundle_instance["objects"]):
+            bundle_instance["objects"].append(create_object_for_package_header(stix_package.stix_header, env, "report"))
+        else:
+            bundle_instance["objects"].append(create_object_for_package_header(stix_package.stix_header, env, "grouping"))
+    else:
+        info("The STIX package header contained no extra information that needed to be generated in STIX 2.x", 219)
     return bundle_instance

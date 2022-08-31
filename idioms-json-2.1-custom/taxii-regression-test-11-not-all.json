@@ -178,6 +178,31 @@
             "spec_version": "2.1",
             "target_ref": "indicator--a15048de-41b7-4dec-8fb1-d844ac1d9955",
             "type": "relationship"
+        },
+        {
+            "context": "header_information",
+            "created": "9999-12-31T00:00:00.000Z",
+            "description": "Test of FDAIS and FOUO.  Confirm that the following string is auto-sanitized, in this text field - Regression_Test_11. Confirm the string with which it is replaced matches the sanitized ID for the package.",
+            "id": "grouping--505781c4-3fc7-401d-ae0d-d76ced090311",
+            "modified": "9999-12-31T00:00:00.000Z",
+            "name": "regression-test-11",
+            "object_refs": [
+                "marking-definition--1116dace-8a29-4bc2-8b52-c7d62f8d872a",
+                "course-of-action--24eb250c-343e-4315-8496-9fc9a622a77d",
+                "vulnerability--52fdb803-8764-44fd-86f4-271d7e8df69e",
+                "vulnerability--508f6a7d-fed9-490d-ba01-1ec518c1a96a",
+                "sighting--37426753-1f6e-4b65-a9e9-cdd23ed4cf7c",
+                "indicator--9e169262-cd01-4e41-8724-8fca8fe73d2e",
+                "relationship--92604137-9a49-4a94-8784-4d9d3b75cb76",
+                "relationship--1f970e2b-f4e5-4978-b0ae-b1524cdf756d",
+                "relationship--42f9262f-db4b-46a2-a8da-e51cf9373f8d"
+            ],
+            "spec_version": "2.1",
+            "type": "grouping",
+            "x_elevator_package_intents": [
+                "Indicators",
+                "Threat Report"
+            ]
         }
     ],
     "type": "bundle"
