@@ -1,19 +1,19 @@
 {
-    "id": "bundle--97aa3df0-a291-4fc5-bb9b-c042d81af64e",
+    "id": "bundle--0a92db4a-f6c9-41a4-a079-cf5a03d6f2c7",
     "objects": [
         {
             "count": 9000,
             "created": "9999-12-31T00:00:00.000Z",
-            "id": "sighting--b4ae2b11-5030-45be-a9a7-e41d6f1c4187",
+            "id": "sighting--bb4d61b2-794d-46d6-81fa-ba0464d968a0",
             "modified": "9999-12-31T00:00:00.000Z",
-            "sighting_of_ref": "indicator--bceaed2d-a467-47a4-8844-45d5316798df",
+            "sighting_of_ref": "indicator--ebf249c7-1946-4326-a5c3-166686ce10c5",
             "summary": true,
             "type": "sighting"
         },
         {
             "created": "9999-12-31T00:00:00.000Z",
             "description": "This is a sample indicator description\n\nCONFIDENCE: Medium",
-            "id": "indicator--bceaed2d-a467-47a4-8844-45d5316798df",
+            "id": "indicator--ebf249c7-1946-4326-a5c3-166686ce10c5",
             "labels": [
                 "ip-watchlist"
             ],
@@ -22,6 +22,19 @@
             "type": "indicator",
             "valid_from": "9999-12-31T00:00:00.000000Z",
             "valid_until": "9999-12-31T00:01:00.000000Z"
+        },
+        {
+            "context": "header_information",
+            "created": "9999-12-31T00:00:00.000Z",
+            "description": "Test of FD Pubrel. \n\nPACKAGE_INTENTS:\nIndicators,\nThreat Report",
+            "id": "grouping--cd1ba861-bbf8-45ab-838f-1e3c85a742b5",
+            "modified": "9999-12-31T00:00:00.000Z",
+            "name": "regression-test-13",
+            "object_refs": [
+                "sighting--bb4d61b2-794d-46d6-81fa-ba0464d968a0",
+                "indicator--ebf249c7-1946-4326-a5c3-166686ce10c5"
+            ],
+            "type": "grouping"
         }
     ],
     "spec_version": "2.0",

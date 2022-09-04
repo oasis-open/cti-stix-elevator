@@ -1,19 +1,19 @@
 {
-    "id": "bundle--4c73e8e1-6761-429d-91c1-a5b374bfa9ed",
+    "id": "bundle--30dd07c3-3852-481c-9746-2775f9844d27",
     "objects": [
         {
             "count": 9000,
             "created": "9999-12-31T00:00:00.000Z",
-            "id": "sighting--226e3014-b0fa-4f99-ae14-26a9fcc825c9",
+            "id": "sighting--a19b807a-8e82-4439-9d23-c7c5644aa13f",
             "modified": "9999-12-31T00:00:00.000Z",
-            "sighting_of_ref": "indicator--948c07f1-4630-4bf2-a780-686ce553f882",
+            "sighting_of_ref": "indicator--2722b827-5e0c-4ca1-9bd8-8f3b94f85245",
             "summary": true,
             "type": "sighting"
         },
         {
             "created": "9999-12-31T00:00:00.000Z",
             "description": "This is a sample indicator description",
-            "id": "indicator--0f235cb3-d2f5-4020-bf1c-d0072b6e0230",
+            "id": "indicator--2722b827-5e0c-4ca1-9bd8-8f3b94f85245",
             "labels": [
                 "ip-watchlist"
             ],
@@ -26,7 +26,7 @@
         },
         {
             "created": "2222-12-31T00:00:00.000Z",
-            "id": "indicator--c9f431d6-124a-44d2-8d16-25ea9fcc0fa0",
+            "id": "indicator--db9b6ba0-e441-4eda-b949-a04d384e14ba",
             "labels": [
                 "unknown"
             ],
@@ -34,6 +34,24 @@
             "pattern": "[(file:hashes.MD5 = 'd41d8cd98f00b204e9800998ecf8427e' OR file:hashes.ssdeep = 'cf83e1357eefb8bdf1542850d66d8007d620e4050b5715dc83f4a921d36ce9ce47d0d13c5d85f2b0ff8318d2877eec2f63b931bd47417a81a538327af927da3e' OR file:hashes.MD5 = 'd41d8cd98f00b204e9800998ecf8427e' OR file:hashes.'SHA-1' = 'da39a3ee5e6b4b0d3255bfef95601890afd80709' OR file:hashes.'SHA-256' = 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855') AND (file:name = 'File Name' AND file:parent_directory_ref.path = 'Path/to/File') AND file:size = 134123]",
             "type": "indicator",
             "valid_from": "2222-12-31T00:00:00.000000Z"
+        },
+        {
+            "context": "header_information",
+            "created": "9999-12-31T00:00:00.000Z",
+            "description": "Test special characters ç ã ì",
+            "id": "grouping--6c80ddc2-04a3-48f5-afb7-72202e96816f",
+            "modified": "9999-12-31T00:00:00.000Z",
+            "name": "regression-test-14: test special characters â ü ÿ /",
+            "object_refs": [
+                "sighting--a19b807a-8e82-4439-9d23-c7c5644aa13f",
+                "indicator--2722b827-5e0c-4ca1-9bd8-8f3b94f85245",
+                "indicator--db9b6ba0-e441-4eda-b949-a04d384e14ba"
+            ],
+            "type": "grouping",
+            "x_elevator_package_intents": [
+                "Indicators",
+                "Threat Report"
+            ]
         }
     ],
     "spec_version": "2.0",

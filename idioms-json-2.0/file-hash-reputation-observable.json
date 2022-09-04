@@ -2,11 +2,11 @@
     "id": "bundle--bc2955f8-f1bb-4f02-b2ed-339d7daf6d75",
     "objects": [
         {
-            "created": "2020-03-28T16:04:24.846Z",
-            "first_observed": "2020-03-28T16:04:24.846Z",
+            "created": "2022-09-02T13:29:15.932Z",
+            "first_observed": "2022-09-02T13:29:15.932Z",
             "id": "observed-data--14975dea-86cd-4211-a5f8-9c2e4daab69a",
-            "last_observed": "2020-03-28T16:04:24.846Z",
-            "modified": "2020-03-28T16:04:24.846Z",
+            "last_observed": "2022-09-02T13:29:15.932Z",
+            "modified": "2022-09-02T13:29:15.932Z",
             "number_observed": 1,
             "objects": {
                 "0": {
@@ -24,11 +24,11 @@
             "type": "observed-data"
         },
         {
-            "created": "2020-03-29T09:39:01.815Z",
-            "first_observed": "2020-03-29T09:39:01.815Z",
-            "id": "observed-data--14975dea-86cd-4211-a5f8-9c2e4daab69a",
-            "last_observed": "2020-03-29T09:39:01.815Z",
-            "modified": "2020-03-29T09:39:01.815Z",
+            "created": "2022-09-02T13:29:15.932Z",
+            "first_observed": "2022-09-02T13:29:15.932Z",
+            "id": "observed-data--a8770cfa-7921-43a5-b145-cf168aa3b019",
+            "last_observed": "2022-09-02T13:29:15.932Z",
+            "modified": "2022-09-02T13:29:15.932Z",
             "number_observed": 1,
             "objects": {
                 "0": {
@@ -47,6 +47,19 @@
                 }
             },
             "type": "observed-data"
+        },
+        {
+            "context": "header_information",
+            "created": "2022-09-02T13:29:15.932Z",
+            "description": "\n\nPACKAGE_INTENTS:\nIndicators - Malware Artifacts",
+            "id": "report--7654b8d8-d6c5-41ce-942e-64dae05590c7",
+            "modified": "2022-09-02T13:29:15.932Z",
+            "name": "File Hash Reputation Service Results",
+            "object_refs": [
+                "observed-data--14975dea-86cd-4211-a5f8-9c2e4daab69a",
+                "observed-data--a8770cfa-7921-43a5-b145-cf168aa3b019"
+            ],
+            "type": "report"
         }
     ],
     "spec_version": "2.0",

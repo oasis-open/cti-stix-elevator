@@ -1,10 +1,10 @@
 {
-    "id": "bundle--95e2b600-1fe9-4489-a6c5-e63323b219d0",
+    "id": "bundle--a1ecc136-1c58-46ef-b13c-be0237041208",
     "objects": [
         {
             "created": "9999-12-31T00:00:00.000Z",
-	        "created_by_ref": "identity--7c57ab9b-53b3-4691-9528-ba9ae1f479f0",
-            "id": "identity--7c57ab9b-53b3-4691-9528-ba9ae1f479f0",
+            "created_by_ref": "identity--27903cf2-a534-49fc-a509-c8e04131b956",
+            "id": "identity--27903cf2-a534-49fc-a509-c8e04131b956",
             "identity_class": "organization",
             "labels": [
                 "ais-consent-everyone"
@@ -21,7 +21,7 @@
         },
         {
             "created": "2016-03-29T20:52:52.716Z",
-	        "created_by_ref": "identity--7c57ab9b-53b3-4691-9528-ba9ae1f479f0",
+            "created_by_ref": "identity--27903cf2-a534-49fc-a509-c8e04131b956",
             "description": "Send Device for forensic analysis",
             "id": "course-of-action--e9f31688-d744-48f4-9320-e6a9bd136f44",
             "modified": "2016-03-29T20:52:52.716Z",
@@ -33,7 +33,7 @@
         },
         {
             "created": "2016-03-29T20:52:52.716Z",
-	        "created_by_ref": "identity--7c57ab9b-53b3-4691-9528-ba9ae1f479f0",
+            "created_by_ref": "identity--27903cf2-a534-49fc-a509-c8e04131b956",
             "id": "indicator--0c277b59-f5a9-4530-8861-82588719ec0c",
             "kill_chain_phases": [
                 {
@@ -54,8 +54,8 @@
         },
         {
             "created": "2016-03-29T20:52:52.716Z",
-	        "created_by_ref": "identity--7c57ab9b-53b3-4691-9528-ba9ae1f479f0",
-            "id": "relationship--51824c97-69d5-4e6c-a9a5-9efec1032da4",
+            "created_by_ref": "identity--27903cf2-a534-49fc-a509-c8e04131b956",
+            "id": "relationship--789df148-7ff6-449f-8ce2-94ee8772e5c2",
             "modified": "2016-03-29T20:52:52.716Z",
             "object_marking_refs": [
                 "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
@@ -64,6 +64,20 @@
             "source_ref": "course-of-action--e9f31688-d744-48f4-9320-e6a9bd136f44",
             "target_ref": "indicator--0c277b59-f5a9-4530-8861-82588719ec0c",
             "type": "relationship"
+        },
+        {
+            "context": "header_information",
+            "created": "9999-12-31T00:00:00.000Z",
+            "description": "\n\nPACKAGE_INTENTS:\nThreat Report,\nIndicators,\nIndicators - Endpoint Characteristics,\nCourses of Action",
+            "id": "grouping--63776f90-2b26-475b-b6cc-d90a7891e0b7",
+            "modified": "9999-12-31T00:00:00.000Z",
+            "object_refs": [
+                "identity--27903cf2-a534-49fc-a509-c8e04131b956",
+                "course-of-action--e9f31688-d744-48f4-9320-e6a9bd136f44",
+                "indicator--0c277b59-f5a9-4530-8861-82588719ec0c",
+                "relationship--789df148-7ff6-449f-8ce2-94ee8772e5c2"
+            ],
+            "type": "grouping"
         }
     ],
     "spec_version": "2.0",

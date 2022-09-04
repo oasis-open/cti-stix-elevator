@@ -2,14 +2,14 @@
     "id": "bundle--81810123-b298-40f6-a4e7-186efcd07670",
     "objects": [
         {
-            "created": "2021-09-09T16:24:08.868Z",
-            "created_by_ref": "identity--c3cdffa6-c173-4208-95d3-67a4958ca4da",
-            "id": "identity--c3cdffa6-c173-4208-95d3-67a4958ca4da",
+            "created": "2022-09-02T15:09:21.518Z",
+            "created_by_ref": "identity--7602f82e-e785-4c8e-9c9d-8bddc85ef976",
+            "id": "identity--7602f82e-e785-4c8e-9c9d-8bddc85ef976",
             "identity_class": "organization",
             "labels": [
                 "ais-consent-usg"
             ],
-            "modified": "2021-09-09T16:24:08.868Z",
+            "modified": "2022-09-02T15:09:21.518Z",
             "name": "ACME CORP",
             "object_marking_refs": [
                 "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
@@ -78,7 +78,7 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
-            "id": "relationship--f405bb7a-65be-4008-a6cd-41152987aa5e",
+            "id": "relationship--de741549-6967-4b4a-a695-942c7202c409",
             "modified": "2014-08-08T15:50:10.983Z",
             "object_marking_refs": [
                 "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
@@ -90,7 +90,7 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
-            "id": "relationship--31835b63-06a0-426a-a572-ae58372c7b6b",
+            "id": "relationship--886e9dcc-9186-4455-aed7-2ac9e306de2f",
             "modified": "2014-08-08T15:50:10.983Z",
             "object_marking_refs": [
                 "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
@@ -102,7 +102,7 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
-            "id": "relationship--49accbe2-553d-4b7c-b5b6-ee494abbd296",
+            "id": "relationship--1063bf16-262e-4137-bc2e-6367d62b94b5",
             "modified": "2014-08-08T15:50:10.983Z",
             "object_marking_refs": [
                 "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
@@ -114,7 +114,7 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
-            "id": "relationship--6b4c7b6a-55e9-4e54-ba2f-194fddbb814b",
+            "id": "relationship--77ae9d57-a204-493e-ba1d-cf7f6467a1d2",
             "modified": "2014-08-08T15:50:10.983Z",
             "object_marking_refs": [
                 "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
@@ -126,7 +126,7 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
-            "id": "relationship--c08beb53-1ccd-4175-a8bf-b5ada3851801",
+            "id": "relationship--4c019f61-1cef-4126-a966-3bf601cbc498",
             "modified": "2014-08-08T15:50:10.983Z",
             "object_marking_refs": [
                 "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
@@ -135,6 +135,29 @@
             "source_ref": "campaign--e5268b6e-4931-42f1-b379-87f48eb41b1e",
             "target_ref": "threat-actor--56f3f0db-b5d5-431c-ae56-c18f02caf500",
             "type": "relationship"
+        },
+        {
+            "context": "header_information",
+            "created": "2022-09-02T15:09:21.518Z",
+            "id": "report--de5ff6ff-bbb8-43b8-8c77-8b6621e578b5",
+            "modified": "2022-09-02T15:09:21.518Z",
+            "name": "regression-test-08-Elevator02",
+            "object_refs": [
+                "identity--7602f82e-e785-4c8e-9c9d-8bddc85ef976",
+                "identity--2d1c6ab3-5e4e-48ac-a32b-f0c01c2836a8",
+                "threat-actor--56f3f0db-b5d5-431c-ae56-c18f02caf500",
+                "campaign--e5268b6e-4931-42f1-b379-87f48eb41b1e",
+                "relationship--de741549-6967-4b4a-a695-942c7202c409",
+                "relationship--886e9dcc-9186-4455-aed7-2ac9e306de2f",
+                "relationship--1063bf16-262e-4137-bc2e-6367d62b94b5",
+                "relationship--77ae9d57-a204-493e-ba1d-cf7f6467a1d2",
+                "relationship--4c019f61-1cef-4126-a966-3bf601cbc498"
+            ],
+            "type": "report",
+            "x_elevator_package_intents": [
+                "Indicators",
+                "Threat Report"
+            ]
         }
     ],
     "spec_version": "2.0",

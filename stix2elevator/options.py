@@ -264,6 +264,7 @@ def initialize_options(options=None):
         if ALL_OPTIONS.missing_policy == "use-extensions" and ALL_OPTIONS.spec_version == "2.0":
             error("The missing policy option of 'use-extensions' cannot be used with version 2.0. 'use-custom-properies' is suggested", 216)
 
+        # acs markings need extensions-definitions, which do not exist in 2.0
         if ALL_OPTIONS.acs and ALL_OPTIONS.spec_version == "2.0":
             warn("ACS data markings cannot be supported in version 2.0. --acs option is ignored.", 217)
             ALL_OPTIONS.acs = False
@@ -305,7 +306,7 @@ def msg_id_enabled(msg_id):
 
 # These codes are aligned with elevator_log_messages spreadsheet.
 
-# current number of messages: 177
+# current number of messages: 188
 
 CHECK_CODES = [201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213,
                214, 215, 216, 217, 218, 219,

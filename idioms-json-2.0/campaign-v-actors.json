@@ -2,14 +2,14 @@
     "id": "bundle--81810123-b298-40f6-a4e7-186efcd07670",
     "objects": [
         {
-            "created": "2021-09-09T14:56:30.500Z",
-            "created_by_ref": "identity--c071610a-e8c2-4d6d-b78e-4ed1f3785e30",
-            "id": "identity--c071610a-e8c2-4d6d-b78e-4ed1f3785e30",
+            "created": "2022-09-02T13:29:15.543Z",
+            "created_by_ref": "identity--8766661a-83ad-43ea-91db-631ecaea0d55",
+            "id": "identity--8766661a-83ad-43ea-91db-631ecaea0d55",
             "identity_class": "organization",
             "labels": [
                 "ais-consent-usg"
             ],
-            "modified": "2021-09-09T14:56:30.500Z",
+            "modified": "2022-09-02T13:29:15.543Z",
             "name": "ACME CORP",
             "object_marking_refs": [
                 "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
@@ -72,7 +72,7 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
-            "id": "relationship--9d055459-75f1-4eee-9e39-f382b3200073",
+            "id": "relationship--4d15936f-5852-470b-9c62-98ed0ad8406b",
             "modified": "2014-08-08T15:50:10.983Z",
             "object_marking_refs": [
                 "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
@@ -84,7 +84,7 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
-            "id": "relationship--31e5e881-6016-44f0-8bb6-cd857d12b30b",
+            "id": "relationship--0606caec-f353-4c76-975d-915fcd6ab5e5",
             "modified": "2014-08-08T15:50:10.983Z",
             "object_marking_refs": [
                 "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
@@ -96,7 +96,7 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
-            "id": "relationship--4787941b-1f2b-4219-a8b1-c766d501ed91",
+            "id": "relationship--0d4a6bcd-1eaa-464c-a813-5be174b8e324",
             "modified": "2014-08-08T15:50:10.983Z",
             "object_marking_refs": [
                 "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
@@ -108,7 +108,7 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
-            "id": "relationship--3eea4c1f-b72b-4d0d-9631-fdcd7e6dce1c",
+            "id": "relationship--f43f28c8-4504-484b-af3f-483af0e7568d",
             "modified": "2014-08-08T15:50:10.983Z",
             "object_marking_refs": [
                 "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
@@ -120,7 +120,7 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
-            "id": "relationship--d151bff4-fbe4-422e-b186-516e0503d959",
+            "id": "relationship--07ebcd74-1f63-4c26-a6ac-d72644d992d7",
             "modified": "2014-08-08T15:50:10.983Z",
             "object_marking_refs": [
                 "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
@@ -129,6 +129,26 @@
             "source_ref": "campaign--e5268b6e-4931-42f1-b379-87f48eb41b1e",
             "target_ref": "threat-actor--56f3f0db-b5d5-431c-ae56-c18f02caf500",
             "type": "relationship"
+        },
+        {
+            "context": "header_information",
+            "created": "2022-09-02T13:29:15.543Z",
+            "description": "\n\nPACKAGE_INTENTS:\nIndicators,\nThreat Report",
+            "id": "report--26542e95-13ab-4ac6-9d4e-60377521666d",
+            "modified": "2022-09-02T13:29:15.543Z",
+            "name": "regression-test-08-Elevator02",
+            "object_refs": [
+                "identity--8766661a-83ad-43ea-91db-631ecaea0d55",
+                "identity--2d1c6ab3-5e4e-48ac-a32b-f0c01c2836a8",
+                "threat-actor--56f3f0db-b5d5-431c-ae56-c18f02caf500",
+                "campaign--e5268b6e-4931-42f1-b379-87f48eb41b1e",
+                "relationship--4d15936f-5852-470b-9c62-98ed0ad8406b",
+                "relationship--0606caec-f353-4c76-975d-915fcd6ab5e5",
+                "relationship--0d4a6bcd-1eaa-464c-a813-5be174b8e324",
+                "relationship--f43f28c8-4504-484b-af3f-483af0e7568d",
+                "relationship--07ebcd74-1f63-4c26-a6ac-d72644d992d7"
+            ],
+            "type": "report"
         }
     ],
     "spec_version": "2.0",

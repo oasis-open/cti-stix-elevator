@@ -1,10 +1,10 @@
 {
-    "id": "bundle--42ad7e43-2769-4247-8044-b2bd6f4f09d6",
+    "id": "bundle--2faed96f-3e7a-4355-a0fe-3ca418c6ac1b",
     "objects": [
         {
             "created": "2020-11-23T14:26:05.000Z",
-            "created_by_ref": "identity--23e29b58-0111-4357-b81e-75461892d683",
-            "id": "identity--23e29b58-0111-4357-b81e-75461892d683",
+            "created_by_ref": "identity--fbf69b6c-0c8f-4fd9-a49b-fb83d71da44c",
+            "id": "identity--fbf69b6c-0c8f-4fd9-a49b-fb83d71da44c",
             "identity_class": "organization",
             "labels": [
                 "ais-consent-everyone-cisa-proprietary"
@@ -22,8 +22,8 @@
         {
             "count": 1,
             "created": "2018-03-13T20:42:24.000Z",
-            "created_by_ref": "identity--23e29b58-0111-4357-b81e-75461892d683",
-            "id": "sighting--cb3af25a-a814-4f8d-b72d-3ba86c744adc",
+            "created_by_ref": "identity--fbf69b6c-0c8f-4fd9-a49b-fb83d71da44c",
+            "id": "sighting--e57ff869-5b93-40bf-b995-1baf692712b0",
             "modified": "2018-03-13T20:42:24.000Z",
             "object_marking_refs": [
                 "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
@@ -33,7 +33,7 @@
         },
         {
             "created": "2020-11-23T19:26:05.255Z",
-            "created_by_ref": "identity--23e29b58-0111-4357-b81e-75461892d683",
+            "created_by_ref": "identity--fbf69b6c-0c8f-4fd9-a49b-fb83d71da44c",
             "description": "This is the E-Mail indicator",
             "id": "indicator--a35dbed6-9b9c-442e-aaff-4aeeb88a43ef",
             "kill_chain_phases": [
@@ -52,6 +52,20 @@
             "pattern": "[file:hashes.MD5 = 'd41d8cd98f00b204e9800998ecf8427e' AND (file:name = 'TheFileName.exe' AND file:parent_directory_ref.path = '/usr/local/bin/') AND file:size = 123456]",
             "type": "indicator",
             "valid_from": "2020-11-23T19:26:05.255205Z"
+        },
+        {
+            "context": "header_information",
+            "created": "2020-11-23T14:26:05.000Z",
+            "description": "This is the package overview\n\nPACKAGE_INTENTS:\nIndicators",
+            "id": "grouping--0a7a494c-56f4-494f-ae40-bd6b50051172",
+            "modified": "2020-11-23T14:26:05.000Z",
+            "name": "Package Title",
+            "object_refs": [
+                "identity--fbf69b6c-0c8f-4fd9-a49b-fb83d71da44c",
+                "sighting--e57ff869-5b93-40bf-b995-1baf692712b0",
+                "indicator--a35dbed6-9b9c-442e-aaff-4aeeb88a43ef"
+            ],
+            "type": "grouping"
         }
     ],
     "spec_version": "2.0",
