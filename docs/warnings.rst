@@ -59,7 +59,7 @@ Custom Content *property_name* of *id* is ignored                               
 Used *object_path* for extension property for *property_name*                                                                  317     warn
 Token in control set not recognized: *token*                                                                                   318     warn
 Used extensions for ACS data markings. See *id*                                                                                319     warn
-Any extra STIX package header properties are ignore                                                                            320     warn
+Any extra STIX package header properties are ignored                                                                           320     warn
 ============================================================================================================================== ====    =====
 
 

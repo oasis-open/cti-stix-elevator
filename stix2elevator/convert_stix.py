@@ -73,7 +73,7 @@ from stix2elevator.ids import (
     get_id_values, get_type_from_id, is_stix1x_id, record_ids
 )
 from stix2elevator.missing_policy import (
-    add_string_property_to_description, check_for_missing_policy, convert_to_custom_name,
+    check_for_missing_policy, convert_to_custom_name,
     determine_container_for_missing_properties, fill_in_extension_properties,
     handle_missing_confidence_property, handle_missing_statement_properties,
     handle_missing_string_property, handle_missing_timestamp_property,
@@ -2803,30 +2803,30 @@ def handle_missing_properties_of_stix_header(sdo_instance, stix_package_header, 
         fill_in_extension_properties(sdo_instance, container, extension_definition_id)
 
 
-def create_object_for_package_header(stix_package_header, env, type):
-    sdo_instance = create_basic_object(type, None, env, prime_properties=False)
+def create_object_for_package_header(stix_package_header, env, type_of_obj):
+    sdo_instance = create_basic_object(type_of_obj, None, env, prime_properties=False)
     sdo_instance["context"] = "header_information"
     if hasattr(stix_package_header, "title") and stix_package_header.title is not None:
         sdo_instance["name"] = stix_package_header.title
     process_description_and_short_description(sdo_instance, stix_package_header)
     handle_missing_properties_of_stix_header(sdo_instance,
                                              stix_package_header,
-                                             type)
-    sdo_instance["object_refs"] = [ x["id"] for x in env.bundle_instance["objects"]]
+                                             type_of_obj)
+    sdo_instance["object_refs"] = [x["id"] for x in env.bundle_instance["objects"]]
     if "description" in sdo_instance and sdo_instance["description"] == "":
         del sdo_instance["description"]
     return sdo_instance
 
 
 def stix_header_contains_extra_information(stix_header):
-    return stix_header and \
-           ((hasattr(stix_header, "title") and stix_header.title is not None) or
-            (hasattr(stix_header, "package_intents") and stix_header.package_intents is not None and
-             len(stix_header.package_intents) != 0) or
-            (hasattr(stix_header, "descriptions") and len(stix_header.descriptions) != 0) or
-            (hasattr(stix_header, "description") and stix_header.description is not None) or
-            (hasattr(stix_header, "short_descriptions") and len(stix_header.short_descriptions) != 0) or
-            (hasattr(stix_header, "short_description") and stix_header.short_description is not None))
+    return (stix_header and
+            ((hasattr(stix_header, "title") and stix_header.title is not None) or
+             (hasattr(stix_header, "package_intents") and stix_header.package_intents is not None and
+              len(stix_header.package_intents) != 0) or
+             (hasattr(stix_header, "descriptions") and len(stix_header.descriptions) != 0) or
+             (hasattr(stix_header, "description") and stix_header.description is not None) or
+             (hasattr(stix_header, "short_descriptions") and len(stix_header.short_descriptions) != 0) or
+             (hasattr(stix_header, "short_description") and stix_header.short_description is not None)))
 
 
 def convert_package(stix_package, env):
