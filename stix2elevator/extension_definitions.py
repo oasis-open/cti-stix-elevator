@@ -107,7 +107,7 @@ EXTENSION_DEFINITION_FOR_STIX_1_X = {
         "type": "extension-definition",
         "spec_version": "2.1",
         "name": "Extension to support STIX 1.x STIX Header",
-        "description": "This schema adds one properties to a STIX object",
+        "description": "This schema adds one property to a STIX object",
         "created": "2022-08-27T00:00:00.000000Z",
         "modified": "2022-08-27T00:00:00.000000Z",
         "created_by_ref": MITRE_IDENTITY_OBJECT["id"],
