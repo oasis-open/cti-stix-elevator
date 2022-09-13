@@ -1,19 +1,19 @@
 {
-    "id": "bundle--30dd07c3-3852-481c-9746-2775f9844d27",
+    "id": "bundle--83485a08-3cb0-4e68-a139-40ae3858afb4",
     "objects": [
         {
             "count": 9000,
             "created": "9999-12-31T00:00:00.000Z",
-            "id": "sighting--a19b807a-8e82-4439-9d23-c7c5644aa13f",
+            "id": "sighting--d5218ced-d238-47c9-8e12-b858dc2d7065",
             "modified": "9999-12-31T00:00:00.000Z",
-            "sighting_of_ref": "indicator--2722b827-5e0c-4ca1-9bd8-8f3b94f85245",
+            "sighting_of_ref": "indicator--268bfb77-0cff-47f0-8fc3-e3612983b5fe",
             "summary": true,
             "type": "sighting"
         },
         {
             "created": "9999-12-31T00:00:00.000Z",
             "description": "This is a sample indicator description",
-            "id": "indicator--2722b827-5e0c-4ca1-9bd8-8f3b94f85245",
+            "id": "indicator--268bfb77-0cff-47f0-8fc3-e3612983b5fe",
             "labels": [
                 "ip-watchlist"
             ],
@@ -26,7 +26,7 @@
         },
         {
             "created": "2222-12-31T00:00:00.000Z",
-            "id": "indicator--db9b6ba0-e441-4eda-b949-a04d384e14ba",
+            "id": "indicator--c4a3d6f7-acc9-4560-b2ee-70027409ddc3",
             "labels": [
                 "unknown"
             ],
@@ -39,15 +39,16 @@
             "context": "header_information",
             "created": "9999-12-31T00:00:00.000Z",
             "description": "Test special characters ç ã ì",
-            "id": "grouping--6c80ddc2-04a3-48f5-afb7-72202e96816f",
+            "id": "report--8add1081-af65-458e-96ac-caa943177dbd",
             "modified": "9999-12-31T00:00:00.000Z",
             "name": "regression-test-14: test special characters â ü ÿ /",
             "object_refs": [
-                "sighting--a19b807a-8e82-4439-9d23-c7c5644aa13f",
-                "indicator--2722b827-5e0c-4ca1-9bd8-8f3b94f85245",
-                "indicator--db9b6ba0-e441-4eda-b949-a04d384e14ba"
+                "sighting--d5218ced-d238-47c9-8e12-b858dc2d7065",
+                "indicator--268bfb77-0cff-47f0-8fc3-e3612983b5fe",
+                "indicator--c4a3d6f7-acc9-4560-b2ee-70027409ddc3"
             ],
-            "type": "grouping",
+            "published": "2022-09-12T14:59:36.617Z",
+            "type": "report",
             "x_elevator_package_intents": [
                 "Indicators",
                 "Threat Report"

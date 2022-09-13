@@ -2,11 +2,11 @@
     "id": "bundle--6116aed6-a7e9-11e3-a82f-000c29b241af",
     "objects": [
         {
-            "created": "2022-09-02T15:09:23.792Z",
-            "first_observed": "2022-09-02T15:09:23.792Z",
+            "created": "2022-09-12T14:59:36.184Z",
+            "first_observed": "2022-09-12T14:59:36.184Z",
             "id": "observed-data--42f1ec7e-2a32-4ff7-84a7-fbcb6288c8c9",
-            "last_observed": "2022-09-02T15:09:23.792Z",
-            "modified": "2022-09-02T15:09:23.792Z",
+            "last_observed": "2022-09-12T14:59:36.184Z",
+            "modified": "2022-09-12T14:59:36.184Z",
             "number_observed": 1,
             "objects": {
                 "0": {
@@ -36,11 +36,11 @@
             "type": "observed-data"
         },
         {
-            "created": "2022-09-02T15:09:23.792Z",
-            "first_observed": "2022-09-02T15:09:23.792Z",
+            "created": "2022-09-12T14:59:36.184Z",
+            "first_observed": "2022-09-12T14:59:36.184Z",
             "id": "observed-data--a9579acb-62fb-4c4f-9af3-5571c0600edc",
-            "last_observed": "2022-09-02T15:09:23.792Z",
-            "modified": "2022-09-02T15:09:23.792Z",
+            "last_observed": "2022-09-12T14:59:36.184Z",
+            "modified": "2022-09-12T14:59:36.184Z",
             "number_observed": 1,
             "objects": {
                 "0": {
@@ -58,11 +58,11 @@
             "type": "observed-data"
         },
         {
-            "created": "2022-09-02T15:09:23.792Z",
-            "first_observed": "2022-09-02T15:09:23.792Z",
+            "created": "2022-09-12T14:59:36.184Z",
+            "first_observed": "2022-09-12T14:59:36.184Z",
             "id": "observed-data--4b3b859b-d682-47e7-8e27-fbadca8e3b72",
-            "last_observed": "2022-09-02T15:09:23.792Z",
-            "modified": "2022-09-02T15:09:23.792Z",
+            "last_observed": "2022-09-12T14:59:36.184Z",
+            "modified": "2022-09-12T14:59:36.184Z",
             "number_observed": 1,
             "objects": {
                 "0": {
@@ -74,15 +74,16 @@
         },
         {
             "context": "header_information",
-            "created": "2022-09-02T15:09:23.792Z",
+            "created": "2022-09-12T14:59:36.184Z",
             "description": "IOCAware Auto-Generated STIX IOC Document for VirusShare_5d8129be965fab8115eca34fc84bd7f0",
-            "id": "report--2a0c63ca-db3b-44d4-a7de-ba9aa50f150c",
-            "modified": "2022-09-02T15:09:23.792Z",
+            "id": "report--4f11a395-aa6c-41b7-9adb-119ed49350a4",
+            "modified": "2022-09-12T14:59:36.184Z",
             "object_refs": [
                 "observed-data--42f1ec7e-2a32-4ff7-84a7-fbcb6288c8c9",
                 "observed-data--a9579acb-62fb-4c4f-9af3-5571c0600edc",
                 "observed-data--4b3b859b-d682-47e7-8e27-fbadca8e3b72"
             ],
+            "published": "2022-09-12T14:59:36.185Z",
             "type": "report"
         }
     ],

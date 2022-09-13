@@ -1,10 +1,10 @@
 {
-    "id": "bundle--86c7edce-8650-4b2a-88f5-4059ce0a2f11",
+    "id": "bundle--169f6a8e-ab70-4776-8ef2-a267455b00d8",
     "objects": [
         {
             "created": "2020-11-23T14:26:05.000Z",
-            "created_by_ref": "identity--e31f9922-3e74-4c55-8adc-d9f228541e55",
-            "id": "identity--e31f9922-3e74-4c55-8adc-d9f228541e55",
+            "created_by_ref": "identity--43b246e7-1b50-4756-a075-6577dfacb1a8",
+            "id": "identity--43b246e7-1b50-4756-a075-6577dfacb1a8",
             "identity_class": "organization",
             "labels": [
                 "ais-consent-everyone-cisa-proprietary"
@@ -22,8 +22,8 @@
         {
             "count": 1,
             "created": "2018-03-13T20:42:24.000Z",
-            "created_by_ref": "identity--e31f9922-3e74-4c55-8adc-d9f228541e55",
-            "id": "sighting--99322cfe-3145-4975-8133-166c4c2fcc2a",
+            "created_by_ref": "identity--43b246e7-1b50-4756-a075-6577dfacb1a8",
+            "id": "sighting--1e8ad0fb-8822-4b9b-be24-8ef36986559e",
             "modified": "2018-03-13T20:42:24.000Z",
             "object_marking_refs": [
                 "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
@@ -33,7 +33,7 @@
         },
         {
             "created": "2020-11-23T19:26:05.255Z",
-            "created_by_ref": "identity--e31f9922-3e74-4c55-8adc-d9f228541e55",
+            "created_by_ref": "identity--43b246e7-1b50-4756-a075-6577dfacb1a8",
             "description": "This is the E-Mail indicator",
             "id": "indicator--a35dbed6-9b9c-442e-aaff-4aeeb88a43ef",
             "kill_chain_phases": [
@@ -57,15 +57,16 @@
             "context": "header_information",
             "created": "2020-11-23T14:26:05.000Z",
             "description": "This is the package overview",
-            "id": "grouping--a8160bff-a333-4ea0-95c2-1ba6dd2896f9",
+            "id": "report--22ed36e0-949e-40d2-81ea-906dbe255c43",
             "modified": "2020-11-23T14:26:05.000Z",
             "name": "Package Title",
             "object_refs": [
-                "identity--e31f9922-3e74-4c55-8adc-d9f228541e55",
-                "sighting--99322cfe-3145-4975-8133-166c4c2fcc2a",
+                "identity--43b246e7-1b50-4756-a075-6577dfacb1a8",
+                "sighting--1e8ad0fb-8822-4b9b-be24-8ef36986559e",
                 "indicator--a35dbed6-9b9c-442e-aaff-4aeeb88a43ef"
             ],
-            "type": "grouping",
+            "published": "2022-09-12T14:59:34.960Z",
+            "type": "report",
             "x_elevator_package_intents": [
                 "Indicators"
             ]

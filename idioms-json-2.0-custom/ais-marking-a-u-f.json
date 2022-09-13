@@ -3,8 +3,8 @@
     "objects": [
         {
             "created": "2020-12-31T00:00:00.000Z",
-            "created_by_ref": "identity--4bcee536-61b2-48b4-9223-4cda28d47ae5",
-            "id": "identity--4bcee536-61b2-48b4-9223-4cda28d47ae5",
+            "created_by_ref": "identity--c5a2d5b7-3752-46bf-9fd5-daff6b43a359",
+            "id": "identity--c5a2d5b7-3752-46bf-9fd5-daff6b43a359",
             "identity_class": "organization",
             "labels": [
                 "ais-consent-usg"
@@ -21,7 +21,7 @@
         },
         {
             "created": "2016-03-29T20:52:52.716Z",
-            "created_by_ref": "identity--4bcee536-61b2-48b4-9223-4cda28d47ae5",
+            "created_by_ref": "identity--c5a2d5b7-3752-46bf-9fd5-daff6b43a359",
             "id": "indicator--45eee277-2d76-4079-91d0-0061a443bac6",
             "labels": [
                 "unknown"
@@ -37,13 +37,14 @@
         {
             "context": "header_information",
             "created": "2020-12-31T00:00:00.000Z",
-            "id": "grouping--dba09002-0783-474f-8b86-730fc706254b",
+            "id": "report--dbcaa3d2-33ad-4b7b-b5c0-3de296791d0f",
             "modified": "2020-12-31T00:00:00.000Z",
             "object_refs": [
-                "identity--4bcee536-61b2-48b4-9223-4cda28d47ae5",
+                "identity--c5a2d5b7-3752-46bf-9fd5-daff6b43a359",
                 "indicator--45eee277-2d76-4079-91d0-0061a443bac6"
             ],
-            "type": "grouping",
+            "published": "2022-09-12T15:13:09.333Z",
+            "type": "report",
             "x_elevator_package_intents": [
                 "Threat Report",
                 "Indicators",

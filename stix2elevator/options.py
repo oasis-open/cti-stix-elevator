@@ -147,7 +147,7 @@ class ElevatorOptions(object):
                  silent=False, message_log_directory=None,
                  policy="no_policy", output_directory=None, log_level="INFO",
                  markings_allowed="", spec_version="2.1", acs=False,
-                 ignore_required_properties=False):
+                 ignore_required_properties=False, header_object_type="report"):
 
         if cmd_args is not None:
             if hasattr(cmd_args, "file_"):
@@ -161,6 +161,7 @@ class ElevatorOptions(object):
             self.default_timestamp = cmd_args.default_timestamp
             self.validator_args = cmd_args.validator_args
             self.ignore_required_properties = cmd_args.ignore_required_properties
+            self.header_object_type = cmd_args.header_object_type
 
             self.enabled = cmd_args.enabled
             self.disabled = cmd_args.disabled
@@ -184,6 +185,7 @@ class ElevatorOptions(object):
             self.default_timestamp = default_timestamp
             self.validator_args = validator_args
             self.ignore_required_properties = ignore_required_properties
+            self.header_object_type = header_object_type
 
             self.enabled = enabled
             self.disabled = disabled

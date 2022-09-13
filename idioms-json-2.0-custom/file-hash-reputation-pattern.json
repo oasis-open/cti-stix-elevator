@@ -2,37 +2,38 @@
     "id": "bundle--bc2955f8-f1bb-4f02-b2ed-339d7daf6d75",
     "objects": [
         {
-            "created": "2022-09-02T15:14:10.342Z",
+            "created": "2022-09-12T14:59:34.554Z",
             "id": "indicator--6116b44e-a7e9-41e3-a82f-000c29b241af",
             "labels": [
                 "ip-watchlist"
             ],
-            "modified": "2022-09-02T15:14:10.342Z",
+            "modified": "2022-09-12T14:59:34.554Z",
             "pattern": "[file:hashes.'SHA-256' = 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855' AND (file:extensions.'raster-image-ext'.image_height = 45 AND file:extensions.'raster-image-ext'.image_width = 45)]",
             "type": "indicator",
-            "valid_from": "2022-09-02T15:14:10.342Z"
+            "valid_from": "2022-09-12T14:59:34.554Z"
         },
         {
-            "created": "2022-09-02T15:14:10.342Z",
+            "created": "2022-09-12T14:59:34.554Z",
             "id": "indicator--b1f1ce62-63c6-448c-bdc7-9ead04826ad2",
             "labels": [
                 "ip-watchlist"
             ],
-            "modified": "2022-09-02T15:14:10.342Z",
+            "modified": "2022-09-12T14:59:34.554Z",
             "pattern": "[file:extensions.'pdf-ext'.version = 4.5 AND file:extensions.'pdf-ext'.document_info_dict.CreationDate = t'2015-07-20T19:52:13.853585Z' AND file:extensions.'pdf-ext'.document_info_dict.Subject = 'Fudge' AND file:extensions.'pdf-ext'.pdfid0 = 'DFCE52BD827ECF765649852119D']",
             "type": "indicator",
-            "valid_from": "2022-09-02T15:14:10.342Z"
+            "valid_from": "2022-09-12T14:59:34.554Z"
         },
         {
             "context": "header_information",
-            "created": "2022-09-02T15:14:10.342Z",
-            "id": "report--c9cf3a07-4a40-4243-be27-06de9736b79a",
-            "modified": "2022-09-02T15:14:10.342Z",
+            "created": "2022-09-12T14:59:34.554Z",
+            "id": "report--5ddfab0b-8c95-403e-a2d3-c7510cdb0a40",
+            "modified": "2022-09-12T14:59:34.554Z",
             "name": "File Hash Reputation Service Results",
             "object_refs": [
                 "indicator--6116b44e-a7e9-41e3-a82f-000c29b241af",
                 "indicator--b1f1ce62-63c6-448c-bdc7-9ead04826ad2"
             ],
+            "published": "2022-09-12T14:59:34.556Z",
             "type": "report",
             "x_elevator_package_intents": [
                 "Indicators - Malware Artifacts"

@@ -2,14 +2,14 @@
     "id": "bundle--81810123-b298-40f6-a4e7-186efcd07670",
     "objects": [
         {
-            "created": "2022-09-02T15:09:21.518Z",
-            "created_by_ref": "identity--7602f82e-e785-4c8e-9c9d-8bddc85ef976",
-            "id": "identity--7602f82e-e785-4c8e-9c9d-8bddc85ef976",
+            "created": "2022-09-12T14:59:34.099Z",
+            "created_by_ref": "identity--99b3fd65-9393-42e8-baf6-3075d9f3bf02",
+            "id": "identity--99b3fd65-9393-42e8-baf6-3075d9f3bf02",
             "identity_class": "organization",
             "labels": [
                 "ais-consent-usg"
             ],
-            "modified": "2022-09-02T15:09:21.518Z",
+            "modified": "2022-09-12T14:59:34.099Z",
             "name": "ACME CORP",
             "object_marking_refs": [
                 "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
@@ -78,7 +78,7 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
-            "id": "relationship--de741549-6967-4b4a-a695-942c7202c409",
+            "id": "relationship--12635606-0e38-4a76-9c26-ad8a69e43005",
             "modified": "2014-08-08T15:50:10.983Z",
             "object_marking_refs": [
                 "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
@@ -90,7 +90,7 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
-            "id": "relationship--886e9dcc-9186-4455-aed7-2ac9e306de2f",
+            "id": "relationship--fb16da1e-d79f-409a-97b9-424af61988c3",
             "modified": "2014-08-08T15:50:10.983Z",
             "object_marking_refs": [
                 "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
@@ -102,7 +102,7 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
-            "id": "relationship--1063bf16-262e-4137-bc2e-6367d62b94b5",
+            "id": "relationship--435ae8d9-9d40-4a2a-8a8f-b0f8671648b0",
             "modified": "2014-08-08T15:50:10.983Z",
             "object_marking_refs": [
                 "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
@@ -114,7 +114,7 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
-            "id": "relationship--77ae9d57-a204-493e-ba1d-cf7f6467a1d2",
+            "id": "relationship--d7678d44-b698-4e09-b108-9311f90a7398",
             "modified": "2014-08-08T15:50:10.983Z",
             "object_marking_refs": [
                 "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
@@ -126,7 +126,7 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
-            "id": "relationship--4c019f61-1cef-4126-a966-3bf601cbc498",
+            "id": "relationship--d90d5db8-e6b9-4d5d-b449-7775438a876e",
             "modified": "2014-08-08T15:50:10.983Z",
             "object_marking_refs": [
                 "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
@@ -138,21 +138,22 @@
         },
         {
             "context": "header_information",
-            "created": "2022-09-02T15:09:21.518Z",
-            "id": "report--de5ff6ff-bbb8-43b8-8c77-8b6621e578b5",
-            "modified": "2022-09-02T15:09:21.518Z",
+            "created": "2022-09-12T14:59:34.099Z",
+            "id": "report--4e2fa6ba-822c-445a-95c1-b3e93cf9bd9b",
+            "modified": "2022-09-12T14:59:34.099Z",
             "name": "regression-test-08-Elevator02",
             "object_refs": [
-                "identity--7602f82e-e785-4c8e-9c9d-8bddc85ef976",
+                "identity--99b3fd65-9393-42e8-baf6-3075d9f3bf02",
                 "identity--2d1c6ab3-5e4e-48ac-a32b-f0c01c2836a8",
                 "threat-actor--56f3f0db-b5d5-431c-ae56-c18f02caf500",
                 "campaign--e5268b6e-4931-42f1-b379-87f48eb41b1e",
-                "relationship--de741549-6967-4b4a-a695-942c7202c409",
-                "relationship--886e9dcc-9186-4455-aed7-2ac9e306de2f",
-                "relationship--1063bf16-262e-4137-bc2e-6367d62b94b5",
-                "relationship--77ae9d57-a204-493e-ba1d-cf7f6467a1d2",
-                "relationship--4c019f61-1cef-4126-a966-3bf601cbc498"
+                "relationship--12635606-0e38-4a76-9c26-ad8a69e43005",
+                "relationship--fb16da1e-d79f-409a-97b9-424af61988c3",
+                "relationship--435ae8d9-9d40-4a2a-8a8f-b0f8671648b0",
+                "relationship--d7678d44-b698-4e09-b108-9311f90a7398",
+                "relationship--d90d5db8-e6b9-4d5d-b449-7775438a876e"
             ],
+            "published": "2022-09-12T14:59:34.102Z",
             "type": "report",
             "x_elevator_package_intents": [
                 "Indicators",

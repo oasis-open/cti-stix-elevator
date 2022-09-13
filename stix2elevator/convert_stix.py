@@ -2813,6 +2813,8 @@ def create_object_for_package_header(stix_package_header, env, type_of_obj):
                                              stix_package_header,
                                              type_of_obj)
     sdo_instance["object_refs"] = [x["id"] for x in env.bundle_instance["objects"]]
+    if type_of_obj == "report":
+        sdo_instance["published"] = strftime_with_appropriate_fractional_seconds(datetime.now(), True)
     if "description" in sdo_instance and sdo_instance["description"] == "":
         del sdo_instance["description"]
     return sdo_instance
@@ -2934,10 +2936,8 @@ def convert_package(stix_package, env):
     # capture info in stix header, if any.  Must take place after finalize_bundle
     if not check_for_missing_policy("ignore"):
         if stix_header_contains_extra_information(stix_package.stix_header):
-            if stix_package.version == "1.2" and not any(obj["type"] == "report" for obj in bundle_instance["objects"]):
-                bundle_instance["objects"].append(create_object_for_package_header(stix_package.stix_header, env, "report"))
-            else:
-                bundle_instance["objects"].append(create_object_for_package_header(stix_package.stix_header, env, "grouping"))
+            header_object_type = get_option_value("header_object_type")
+            bundle_instance["objects"].append(create_object_for_package_header(stix_package.stix_header, env, header_object_type))
         else:
             info("The STIX package header contained no extra information that needed to be generated in STIX 2.x", 219)
     else:
