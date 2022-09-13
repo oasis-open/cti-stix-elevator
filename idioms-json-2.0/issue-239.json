@@ -1,10 +1,10 @@
 {
-    "id": "bundle--2faed96f-3e7a-4355-a0fe-3ca418c6ac1b",
+    "id": "bundle--7a6a2f23-4344-4d4a-8b59-ff7922d4dd19",
     "objects": [
         {
             "created": "2020-11-23T14:26:05.000Z",
-            "created_by_ref": "identity--fbf69b6c-0c8f-4fd9-a49b-fb83d71da44c",
-            "id": "identity--fbf69b6c-0c8f-4fd9-a49b-fb83d71da44c",
+            "created_by_ref": "identity--0c96e802-de0f-4f2c-9ad3-0a67aedda24c",
+            "id": "identity--0c96e802-de0f-4f2c-9ad3-0a67aedda24c",
             "identity_class": "organization",
             "labels": [
                 "ais-consent-everyone-cisa-proprietary"
@@ -22,8 +22,8 @@
         {
             "count": 1,
             "created": "2018-03-13T20:42:24.000Z",
-            "created_by_ref": "identity--fbf69b6c-0c8f-4fd9-a49b-fb83d71da44c",
-            "id": "sighting--e57ff869-5b93-40bf-b995-1baf692712b0",
+            "created_by_ref": "identity--0c96e802-de0f-4f2c-9ad3-0a67aedda24c",
+            "id": "sighting--606ca3aa-8bd9-4773-b0e1-5aa3b46be8a1",
             "modified": "2018-03-13T20:42:24.000Z",
             "object_marking_refs": [
                 "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
@@ -33,7 +33,7 @@
         },
         {
             "created": "2020-11-23T19:26:05.255Z",
-            "created_by_ref": "identity--fbf69b6c-0c8f-4fd9-a49b-fb83d71da44c",
+            "created_by_ref": "identity--0c96e802-de0f-4f2c-9ad3-0a67aedda24c",
             "description": "This is the E-Mail indicator",
             "id": "indicator--a35dbed6-9b9c-442e-aaff-4aeeb88a43ef",
             "kill_chain_phases": [
@@ -57,15 +57,16 @@
             "context": "header_information",
             "created": "2020-11-23T14:26:05.000Z",
             "description": "This is the package overview\n\nPACKAGE_INTENTS:\nIndicators",
-            "id": "grouping--0a7a494c-56f4-494f-ae40-bd6b50051172",
+            "id": "report--99da9d67-355c-492e-924d-7f31ffe501ca",
             "modified": "2020-11-23T14:26:05.000Z",
             "name": "Package Title",
             "object_refs": [
-                "identity--fbf69b6c-0c8f-4fd9-a49b-fb83d71da44c",
-                "sighting--e57ff869-5b93-40bf-b995-1baf692712b0",
+                "identity--0c96e802-de0f-4f2c-9ad3-0a67aedda24c",
+                "sighting--606ca3aa-8bd9-4773-b0e1-5aa3b46be8a1",
                 "indicator--a35dbed6-9b9c-442e-aaff-4aeeb88a43ef"
             ],
-            "type": "grouping"
+            "published": "2022-09-13T12:03:31.116Z",
+            "type": "report"
         }
     ],
     "spec_version": "2.0",

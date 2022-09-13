@@ -2,11 +2,11 @@
     "id": "bundle--bc2955f8-f1bb-4f02-b2ed-339d7daf6d75",
     "objects": [
         {
-            "created": "2022-09-02T13:29:15.932Z",
-            "first_observed": "2022-09-02T13:29:15.932Z",
+            "created": "2022-09-13T12:03:30.349Z",
+            "first_observed": "2022-09-13T12:03:30.349Z",
             "id": "observed-data--14975dea-86cd-4211-a5f8-9c2e4daab69a",
-            "last_observed": "2022-09-02T13:29:15.932Z",
-            "modified": "2022-09-02T13:29:15.932Z",
+            "last_observed": "2022-09-13T12:03:30.349Z",
+            "modified": "2022-09-13T12:03:30.349Z",
             "number_observed": 1,
             "objects": {
                 "0": {
@@ -24,11 +24,11 @@
             "type": "observed-data"
         },
         {
-            "created": "2022-09-02T13:29:15.932Z",
-            "first_observed": "2022-09-02T13:29:15.932Z",
+            "created": "2022-09-13T12:03:30.349Z",
+            "first_observed": "2022-09-13T12:03:30.349Z",
             "id": "observed-data--a8770cfa-7921-43a5-b145-cf168aa3b019",
-            "last_observed": "2022-09-02T13:29:15.932Z",
-            "modified": "2022-09-02T13:29:15.932Z",
+            "last_observed": "2022-09-13T12:03:30.349Z",
+            "modified": "2022-09-13T12:03:30.349Z",
             "number_observed": 1,
             "objects": {
                 "0": {
@@ -50,15 +50,16 @@
         },
         {
             "context": "header_information",
-            "created": "2022-09-02T13:29:15.932Z",
+            "created": "2022-09-13T12:03:30.349Z",
             "description": "\n\nPACKAGE_INTENTS:\nIndicators - Malware Artifacts",
-            "id": "report--7654b8d8-d6c5-41ce-942e-64dae05590c7",
-            "modified": "2022-09-02T13:29:15.932Z",
+            "id": "report--7d32e647-406b-4584-b138-21674a5d1b5c",
+            "modified": "2022-09-13T12:03:30.349Z",
             "name": "File Hash Reputation Service Results",
             "object_refs": [
                 "observed-data--14975dea-86cd-4211-a5f8-9c2e4daab69a",
                 "observed-data--a8770cfa-7921-43a5-b145-cf168aa3b019"
             ],
+            "published": "2022-09-13T12:03:30.350Z",
             "type": "report"
         }
     ],

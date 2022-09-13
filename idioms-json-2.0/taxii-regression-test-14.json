@@ -1,19 +1,19 @@
 {
-    "id": "bundle--ee765722-ad09-44cf-839f-79271b130d50",
+    "id": "bundle--29c34311-34ab-430f-b82b-18c4dee14d28",
     "objects": [
         {
             "count": 9000,
             "created": "9999-12-31T00:00:00.000Z",
-            "id": "sighting--497b58bb-dde7-414f-9681-65d6bd410589",
+            "id": "sighting--e2778661-54ee-4aba-8852-4bd55dc87103",
             "modified": "9999-12-31T00:00:00.000Z",
-            "sighting_of_ref": "indicator--8a03a35c-59c2-458a-8f35-3626dd78c546",
+            "sighting_of_ref": "indicator--d9493c93-ce65-43bf-bb6f-15ef42693306",
             "summary": true,
             "type": "sighting"
         },
         {
             "created": "9999-12-31T00:00:00.000Z",
             "description": "This is a sample indicator description\n\nCONFIDENCE: Medium",
-            "id": "indicator--8a03a35c-59c2-458a-8f35-3626dd78c546",
+            "id": "indicator--d9493c93-ce65-43bf-bb6f-15ef42693306",
             "labels": [
                 "ip-watchlist"
             ],
@@ -25,7 +25,7 @@
         },
         {
             "created": "2222-12-31T00:00:00.000Z",
-            "id": "indicator--bab5b7ed-7d9a-4f60-a24f-365ed651ca39",
+            "id": "indicator--8595c532-c63d-46d3-8988-9fa70e332bf7",
             "labels": [
                 "unknown"
             ],
@@ -38,15 +38,16 @@
             "context": "header_information",
             "created": "9999-12-31T00:00:00.000Z",
             "description": "Test special characters ç ã ì\n\nPACKAGE_INTENTS:\nIndicators,\nThreat Report",
-            "id": "grouping--bacfb119-f5ae-4799-9a7a-ba6def5139d7",
+            "id": "report--1b2a746d-67d9-4fc0-b5b4-40bc11c13cda",
             "modified": "9999-12-31T00:00:00.000Z",
             "name": "regression-test-14: test special characters â ü ÿ /",
             "object_refs": [
-                "sighting--497b58bb-dde7-414f-9681-65d6bd410589",
-                "indicator--8a03a35c-59c2-458a-8f35-3626dd78c546",
-                "indicator--bab5b7ed-7d9a-4f60-a24f-365ed651ca39"
+                "sighting--e2778661-54ee-4aba-8852-4bd55dc87103",
+                "indicator--d9493c93-ce65-43bf-bb6f-15ef42693306",
+                "indicator--8595c532-c63d-46d3-8988-9fa70e332bf7"
             ],
-            "type": "grouping"
+            "published": "2022-09-13T12:03:33.663Z",
+            "type": "report"
         }
     ],
     "spec_version": "2.0",

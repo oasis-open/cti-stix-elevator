@@ -16,14 +16,15 @@
         },
         {
             "context": "header_information",
-            "created": "2022-09-02T13:47:08.776Z",
+            "created": "2022-09-13T12:03:30.514Z",
             "description": "\n\nPACKAGE_INTENTS:\nIndicators - Malware Artifacts",
-            "id": "report--86e59c21-0e0a-42f9-bd13-affaa0789d4d",
-            "modified": "2022-09-02T13:47:08.776Z",
+            "id": "report--b18135e0-97a6-4d6b-9d91-62a4bbec10ce",
+            "modified": "2022-09-13T12:03:30.514Z",
             "name": "File Hash Reputation Service Results",
             "object_refs": [
                 "indicator--14975dea-86cd-4211-a5f8-9c2e4daab69a"
             ],
+            "published": "2022-09-13T12:03:30.516Z",
             "type": "report"
         }
     ],

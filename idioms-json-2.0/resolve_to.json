@@ -2,15 +2,15 @@
     "id": "bundle--6116aed6-a7e9-11e3-a82f-000c29b241af",
     "objects": [
         {
-            "created": "2022-09-02T13:29:17.687Z",
+            "created": "2022-09-13T11:55:14.840Z",
             "id": "indicator--6116b44e-a7e9-11e3-a82f-000c29b241af",
             "labels": [
                 "unknown"
             ],
-            "modified": "2022-09-02T13:29:17.687Z",
+            "modified": "2022-09-13T11:55:14.840Z",
             "pattern": "[domain-name:value = 'microsoftb.byinter.net' AND domain-name:resolves_to_refs[*].value = '202.65.222.45']",
             "type": "indicator",
-            "valid_from": "2022-09-02T13:29:17.687Z"
+            "valid_from": "2022-09-13T11:55:14.840Z"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
@@ -26,14 +26,15 @@
         },
         {
             "context": "header_information",
-            "created": "2022-09-02T13:29:17.687Z",
+            "created": "2022-09-13T11:55:14.840Z",
             "description": "IOCAware Auto-Generated STIX IOC Document for VirusShare_5d8129be965fab8115eca34fc84bd7f0",
-            "id": "report--6cec675e-c105-4727-b92c-8590f17039b9",
-            "modified": "2022-09-02T13:29:17.687Z",
+            "id": "report--7fc88fc4-8bd3-4655-9c75-230a7042cbd8",
+            "modified": "2022-09-13T11:55:14.840Z",
             "object_refs": [
                 "indicator--6116b44e-a7e9-11e3-a82f-000c29b241af",
                 "indicator--74ffca2c-5152-4f44-b8ee-bc89aaf2493b"
             ],
+            "published": "2022-09-13T11:55:14.842Z",
             "type": "report"
         }
     ],

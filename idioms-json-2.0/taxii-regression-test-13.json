@@ -1,19 +1,19 @@
 {
-    "id": "bundle--0a92db4a-f6c9-41a4-a079-cf5a03d6f2c7",
+    "id": "bundle--4542db1c-73ce-4c1c-81c0-4c4943edb317",
     "objects": [
         {
             "count": 9000,
             "created": "9999-12-31T00:00:00.000Z",
-            "id": "sighting--bb4d61b2-794d-46d6-81fa-ba0464d968a0",
+            "id": "sighting--768d3667-fcf8-4591-ae00-64364fd69eae",
             "modified": "9999-12-31T00:00:00.000Z",
-            "sighting_of_ref": "indicator--ebf249c7-1946-4326-a5c3-166686ce10c5",
+            "sighting_of_ref": "indicator--4a84b183-5762-4922-aca5-8e789f373651",
             "summary": true,
             "type": "sighting"
         },
         {
             "created": "9999-12-31T00:00:00.000Z",
             "description": "This is a sample indicator description\n\nCONFIDENCE: Medium",
-            "id": "indicator--ebf249c7-1946-4326-a5c3-166686ce10c5",
+            "id": "indicator--4a84b183-5762-4922-aca5-8e789f373651",
             "labels": [
                 "ip-watchlist"
             ],
@@ -27,14 +27,15 @@
             "context": "header_information",
             "created": "9999-12-31T00:00:00.000Z",
             "description": "Test of FD Pubrel. \n\nPACKAGE_INTENTS:\nIndicators,\nThreat Report",
-            "id": "grouping--cd1ba861-bbf8-45ab-838f-1e3c85a742b5",
+            "id": "report--68434b1c-2975-4970-9266-26b471779db7",
             "modified": "9999-12-31T00:00:00.000Z",
             "name": "regression-test-13",
             "object_refs": [
-                "sighting--bb4d61b2-794d-46d6-81fa-ba0464d968a0",
-                "indicator--ebf249c7-1946-4326-a5c3-166686ce10c5"
+                "sighting--768d3667-fcf8-4591-ae00-64364fd69eae",
+                "indicator--4a84b183-5762-4922-aca5-8e789f373651"
             ],
-            "type": "grouping"
+            "published": "2022-09-13T12:03:33.598Z",
+            "type": "report"
         }
     ],
     "spec_version": "2.0",

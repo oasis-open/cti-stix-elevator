@@ -2,14 +2,14 @@
     "id": "bundle--81810123-b298-40f6-a4e7-186efcd07670",
     "objects": [
         {
-            "created": "2022-09-02T13:29:15.543Z",
-            "created_by_ref": "identity--8766661a-83ad-43ea-91db-631ecaea0d55",
-            "id": "identity--8766661a-83ad-43ea-91db-631ecaea0d55",
+            "created": "2022-09-13T12:03:29.688Z",
+            "created_by_ref": "identity--57487a81-3c58-4372-a6bc-0b17004f7574",
+            "id": "identity--57487a81-3c58-4372-a6bc-0b17004f7574",
             "identity_class": "organization",
             "labels": [
                 "ais-consent-usg"
             ],
-            "modified": "2022-09-02T13:29:15.543Z",
+            "modified": "2022-09-13T12:03:29.688Z",
             "name": "ACME CORP",
             "object_marking_refs": [
                 "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
@@ -72,7 +72,7 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
-            "id": "relationship--4d15936f-5852-470b-9c62-98ed0ad8406b",
+            "id": "relationship--48820520-b033-4a28-8c95-3e41e85c00bf",
             "modified": "2014-08-08T15:50:10.983Z",
             "object_marking_refs": [
                 "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
@@ -84,7 +84,7 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
-            "id": "relationship--0606caec-f353-4c76-975d-915fcd6ab5e5",
+            "id": "relationship--f6276957-0503-4e05-91e7-53d25b4f0898",
             "modified": "2014-08-08T15:50:10.983Z",
             "object_marking_refs": [
                 "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
@@ -96,7 +96,7 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
-            "id": "relationship--0d4a6bcd-1eaa-464c-a813-5be174b8e324",
+            "id": "relationship--aa75836f-b40a-4117-be13-fd1c5cbb11d0",
             "modified": "2014-08-08T15:50:10.983Z",
             "object_marking_refs": [
                 "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
@@ -108,7 +108,7 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
-            "id": "relationship--f43f28c8-4504-484b-af3f-483af0e7568d",
+            "id": "relationship--791a93ce-4726-4a83-99d4-bafcb015baa1",
             "modified": "2014-08-08T15:50:10.983Z",
             "object_marking_refs": [
                 "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
@@ -120,7 +120,7 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
-            "id": "relationship--07ebcd74-1f63-4c26-a6ac-d72644d992d7",
+            "id": "relationship--457e4df5-2852-4f77-bee4-8d77db2be81c",
             "modified": "2014-08-08T15:50:10.983Z",
             "object_marking_refs": [
                 "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
@@ -132,22 +132,23 @@
         },
         {
             "context": "header_information",
-            "created": "2022-09-02T13:29:15.543Z",
+            "created": "2022-09-13T12:03:29.688Z",
             "description": "\n\nPACKAGE_INTENTS:\nIndicators,\nThreat Report",
-            "id": "report--26542e95-13ab-4ac6-9d4e-60377521666d",
-            "modified": "2022-09-02T13:29:15.543Z",
+            "id": "report--eb25c367-aaea-48b3-9daa-fe96504e5bc3",
+            "modified": "2022-09-13T12:03:29.688Z",
             "name": "regression-test-08-Elevator02",
             "object_refs": [
-                "identity--8766661a-83ad-43ea-91db-631ecaea0d55",
+                "identity--57487a81-3c58-4372-a6bc-0b17004f7574",
                 "identity--2d1c6ab3-5e4e-48ac-a32b-f0c01c2836a8",
                 "threat-actor--56f3f0db-b5d5-431c-ae56-c18f02caf500",
                 "campaign--e5268b6e-4931-42f1-b379-87f48eb41b1e",
-                "relationship--4d15936f-5852-470b-9c62-98ed0ad8406b",
-                "relationship--0606caec-f353-4c76-975d-915fcd6ab5e5",
-                "relationship--0d4a6bcd-1eaa-464c-a813-5be174b8e324",
-                "relationship--f43f28c8-4504-484b-af3f-483af0e7568d",
-                "relationship--07ebcd74-1f63-4c26-a6ac-d72644d992d7"
+                "relationship--48820520-b033-4a28-8c95-3e41e85c00bf",
+                "relationship--f6276957-0503-4e05-91e7-53d25b4f0898",
+                "relationship--aa75836f-b40a-4117-be13-fd1c5cbb11d0",
+                "relationship--791a93ce-4726-4a83-99d4-bafcb015baa1",
+                "relationship--457e4df5-2852-4f77-bee4-8d77db2be81c"
             ],
+            "published": "2022-09-13T12:03:29.693Z",
             "type": "report"
         }
     ],
