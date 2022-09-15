@@ -29,11 +29,11 @@
             "type": "file"
         },
         {
-            "created": "2022-08-30T14:12:44.007Z",
-            "first_observed": "2022-08-30T14:12:44.007Z",
+            "created": "2022-09-15T15:50:11.099Z",
+            "first_observed": "2022-09-15T15:50:11.099Z",
             "id": "observed-data--14975dea-86cd-4211-a5f8-9c2e4daab69a",
-            "last_observed": "2022-08-30T14:12:44.007Z",
-            "modified": "2022-08-30T14:12:44.007Z",
+            "last_observed": "2022-09-15T15:50:11.099Z",
+            "modified": "2022-09-15T15:50:11.099Z",
             "number_observed": 1,
             "object_refs": [
                 "file--cab91fba-2bb2-5e32-89ed-68d5f3f33415"
@@ -42,11 +42,11 @@
             "type": "observed-data"
         },
         {
-            "created": "2022-08-30T14:12:44.007Z",
-            "first_observed": "2022-08-30T14:12:44.007Z",
+            "created": "2022-09-15T15:50:11.099Z",
+            "first_observed": "2022-09-15T15:50:11.099Z",
             "id": "observed-data--a8770cfa-7921-43a5-b145-cf168aa3b019",
-            "last_observed": "2022-08-30T14:12:44.007Z",
-            "modified": "2022-08-30T14:12:44.007Z",
+            "last_observed": "2022-09-15T15:50:11.099Z",
+            "modified": "2022-09-15T15:50:11.099Z",
             "number_observed": 1,
             "object_refs": [
                 "file--4d6ae3bb-46a6-524f-8b33-ace41d113a7c"
@@ -56,7 +56,7 @@
         },
         {
             "context": "header_information",
-            "created": "2022-08-30T14:12:44.007Z",
+            "created": "2022-09-15T15:50:11.099Z",
             "extensions": {
                 "extension-definition--faebed16-db10-4824-8538-62d9cd38b117": {
                     "extension_type": "property-extension",
@@ -65,8 +65,8 @@
                     ]
                 }
             },
-            "id": "report--df6e4fd8-761b-40ac-ad36-b6c9e63402a1",
-            "modified": "2022-08-30T14:12:44.007Z",
+            "id": "report--9289f441-cc4d-4590-a2a8-615fad906b8d",
+            "modified": "2022-09-15T15:50:11.099Z",
             "name": "File Hash Reputation Service Results",
             "object_refs": [
                 "file--cab91fba-2bb2-5e32-89ed-68d5f3f33415",
@@ -74,6 +74,7 @@
                 "observed-data--14975dea-86cd-4211-a5f8-9c2e4daab69a",
                 "observed-data--a8770cfa-7921-43a5-b145-cf168aa3b019"
             ],
+            "published": "2022-09-15T15:50:11.100Z",
             "spec_version": "2.1",
             "type": "report"
         }

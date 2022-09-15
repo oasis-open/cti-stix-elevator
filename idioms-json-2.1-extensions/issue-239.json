@@ -1,12 +1,12 @@
 {
-    "id": "bundle--c68b686a-63c6-4e77-93aa-fa43cd2b40f7",
+    "id": "bundle--72a188b4-3f5a-4313-9491-f0973b102329",
     "objects": [
         {
             "administrative_area": "US-DC",
             "country": "US",
             "created": "2020-11-23T14:26:05.000Z",
-            "created_by_ref": "identity--5ab99ea7-1cee-4117-871a-31113e751c9c",
-            "id": "location--4eaa1c67-da64-40aa-9740-2ff9b9e4873a",
+            "created_by_ref": "identity--0c81618c-acf4-4b66-bcdb-db3be82e48ec",
+            "id": "location--3b11f33b-7533-484b-9a83-d9cef6edf80c",
             "modified": "2020-11-23T14:26:05.000Z",
             "object_marking_refs": [
                 "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
@@ -16,22 +16,22 @@
         },
         {
             "created": "2020-11-23T14:26:05.000Z",
-            "created_by_ref": "identity--5ab99ea7-1cee-4117-871a-31113e751c9c",
-            "id": "relationship--06cc8c7b-2c91-4ffd-a758-c0a1e6fed4df",
+            "created_by_ref": "identity--0c81618c-acf4-4b66-bcdb-db3be82e48ec",
+            "id": "relationship--bebc8144-92c5-48c0-aac8-c3a1bd885588",
             "modified": "2020-11-23T14:26:05.000Z",
             "object_marking_refs": [
                 "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
             ],
             "relationship_type": "located-at",
-            "source_ref": "identity--5ab99ea7-1cee-4117-871a-31113e751c9c",
+            "source_ref": "identity--0c81618c-acf4-4b66-bcdb-db3be82e48ec",
             "spec_version": "2.1",
-            "target_ref": "location--4eaa1c67-da64-40aa-9740-2ff9b9e4873a",
+            "target_ref": "location--3b11f33b-7533-484b-9a83-d9cef6edf80c",
             "type": "relationship"
         },
         {
             "created": "2020-11-23T14:26:05.000Z",
-            "created_by_ref": "identity--5ab99ea7-1cee-4117-871a-31113e751c9c",
-            "id": "identity--5ab99ea7-1cee-4117-871a-31113e751c9c",
+            "created_by_ref": "identity--0c81618c-acf4-4b66-bcdb-db3be82e48ec",
+            "id": "identity--0c81618c-acf4-4b66-bcdb-db3be82e48ec",
             "identity_class": "organization",
             "labels": [
                 "ais-consent-everyone-cisa-proprietary"
@@ -50,8 +50,8 @@
         {
             "count": 1,
             "created": "2018-03-13T20:42:24.000Z",
-            "created_by_ref": "identity--5ab99ea7-1cee-4117-871a-31113e751c9c",
-            "id": "sighting--aec390de-c42f-464e-91c1-42786e10537c",
+            "created_by_ref": "identity--0c81618c-acf4-4b66-bcdb-db3be82e48ec",
+            "id": "sighting--4d666e3f-4ad8-4903-8c0a-f1916322d7a6",
             "modified": "2018-03-13T20:42:24.000Z",
             "object_marking_refs": [
                 "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
@@ -62,7 +62,7 @@
         },
         {
             "created": "2020-11-23T19:26:05.255Z",
-            "created_by_ref": "identity--5ab99ea7-1cee-4117-871a-31113e751c9c",
+            "created_by_ref": "identity--0c81618c-acf4-4b66-bcdb-db3be82e48ec",
             "description": "This is the E-Mail indicator",
             "id": "indicator--a35dbed6-9b9c-442e-aaff-4aeeb88a43ef",
             "indicator_types": [
@@ -89,25 +89,26 @@
             "created": "2020-11-23T14:26:05.000Z",
             "description": "This is the package overview",
             "extensions": {
-                "extension-definition--1db7034e-6002-43ea-902d-56ff9fccd2e3": {
+                "extension-definition--faebed16-db10-4824-8538-62d9cd38b117": {
                     "extension_type": "property-extension",
                     "package_intents": [
                         "Indicators"
                     ]
                 }
             },
-            "id": "grouping--b1ea86fb-f7f6-4ac8-9d59-3dd6daeef186",
+            "id": "report--9b442a67-7654-42e5-b647-183a36182378",
             "modified": "2020-11-23T14:26:05.000Z",
             "name": "Package Title",
             "object_refs": [
-                "location--4eaa1c67-da64-40aa-9740-2ff9b9e4873a",
-                "relationship--06cc8c7b-2c91-4ffd-a758-c0a1e6fed4df",
-                "identity--5ab99ea7-1cee-4117-871a-31113e751c9c",
-                "sighting--aec390de-c42f-464e-91c1-42786e10537c",
+                "location--3b11f33b-7533-484b-9a83-d9cef6edf80c",
+                "relationship--bebc8144-92c5-48c0-aac8-c3a1bd885588",
+                "identity--0c81618c-acf4-4b66-bcdb-db3be82e48ec",
+                "sighting--4d666e3f-4ad8-4903-8c0a-f1916322d7a6",
                 "indicator--a35dbed6-9b9c-442e-aaff-4aeeb88a43ef"
             ],
+            "published": "2022-09-15T15:50:11.534Z",
             "spec_version": "2.1",
-            "type": "grouping"
+            "type": "report"
         }
     ],
     "type": "bundle"

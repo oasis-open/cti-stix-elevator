@@ -4,10 +4,10 @@
         {
             "administrative_area": "US-DC",
             "country": "US",
-            "created": "2022-08-30T14:12:43.534Z",
-            "created_by_ref": "identity--be20e1bf-7131-4e29-a0d4-fee8783e166b",
-            "id": "location--ec379f41-0712-4fa4-bcbb-27ffe9929b35",
-            "modified": "2022-08-30T14:12:43.534Z",
+            "created": "2022-09-15T15:50:10.747Z",
+            "created_by_ref": "identity--83e2fb0a-5463-4fb6-8395-82f37bce1a73",
+            "id": "location--327ea6e3-2954-4d84-b84f-1bc45f1bd4ef",
+            "modified": "2022-09-15T15:50:10.747Z",
             "object_marking_refs": [
                 "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
             ],
@@ -15,28 +15,28 @@
             "type": "location"
         },
         {
-            "created": "2022-08-30T14:12:43.534Z",
-            "created_by_ref": "identity--be20e1bf-7131-4e29-a0d4-fee8783e166b",
-            "id": "relationship--f65c5694-cf82-4053-bc1e-f41c38a05630",
-            "modified": "2022-08-30T14:12:43.534Z",
+            "created": "2022-09-15T15:50:10.747Z",
+            "created_by_ref": "identity--83e2fb0a-5463-4fb6-8395-82f37bce1a73",
+            "id": "relationship--dcea2d17-1ebc-4846-86b4-2b9b9c3fff5a",
+            "modified": "2022-09-15T15:50:10.747Z",
             "object_marking_refs": [
                 "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
             ],
             "relationship_type": "located-at",
-            "source_ref": "identity--be20e1bf-7131-4e29-a0d4-fee8783e166b",
+            "source_ref": "identity--83e2fb0a-5463-4fb6-8395-82f37bce1a73",
             "spec_version": "2.1",
-            "target_ref": "location--ec379f41-0712-4fa4-bcbb-27ffe9929b35",
+            "target_ref": "location--327ea6e3-2954-4d84-b84f-1bc45f1bd4ef",
             "type": "relationship"
         },
         {
-            "created": "2022-08-30T14:12:43.534Z",
-            "created_by_ref": "identity--be20e1bf-7131-4e29-a0d4-fee8783e166b",
-            "id": "identity--be20e1bf-7131-4e29-a0d4-fee8783e166b",
+            "created": "2022-09-15T15:50:10.747Z",
+            "created_by_ref": "identity--83e2fb0a-5463-4fb6-8395-82f37bce1a73",
+            "id": "identity--83e2fb0a-5463-4fb6-8395-82f37bce1a73",
             "identity_class": "organization",
             "labels": [
                 "ais-consent-usg"
             ],
-            "modified": "2022-08-30T14:12:43.534Z",
+            "modified": "2022-09-15T15:50:10.747Z",
             "name": "ACME CORP",
             "object_marking_refs": [
                 "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
@@ -116,7 +116,7 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
-            "id": "relationship--047ce777-f0b7-468d-aaeb-ed9612c36203",
+            "id": "relationship--141118db-7186-4d69-b555-9f36fd4b2a07",
             "modified": "2014-08-08T15:50:10.983Z",
             "object_marking_refs": [
                 "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
@@ -129,7 +129,7 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
-            "id": "relationship--06897890-a851-454c-b44c-5f0ecfff3e1c",
+            "id": "relationship--f2d39da0-5079-457d-a347-7213a51e3b57",
             "modified": "2014-08-08T15:50:10.983Z",
             "object_marking_refs": [
                 "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
@@ -142,7 +142,7 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
-            "id": "relationship--88e7ed54-bc28-489a-9687-1923e3cebcdc",
+            "id": "relationship--47d5a677-c667-4457-aaf4-1a00fd20c439",
             "modified": "2014-08-08T15:50:10.983Z",
             "object_marking_refs": [
                 "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
@@ -155,7 +155,7 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
-            "id": "relationship--6e440ef0-ae4d-475a-8af7-1fcdf8a29528",
+            "id": "relationship--97e61559-4779-4f79-95fc-292e834a279b",
             "modified": "2014-08-08T15:50:10.983Z",
             "object_marking_refs": [
                 "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
@@ -168,7 +168,7 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
-            "id": "relationship--48b92142-7e96-4de3-a8ec-e3da782e037f",
+            "id": "relationship--12d87df6-661a-45c1-bc72-c06e2b7435dd",
             "modified": "2014-08-08T15:50:10.983Z",
             "object_marking_refs": [
                 "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
@@ -181,7 +181,8 @@
         },
         {
             "context": "header_information",
-            "created": "2022-08-30T14:12:43.534Z",
+            "created": "2022-09-15T15:50:10.747Z",
+            "description": "Foo\nBar\nFred\nBarney",
             "extensions": {
                 "extension-definition--faebed16-db10-4824-8538-62d9cd38b117": {
                     "extension_type": "property-extension",
@@ -191,22 +192,23 @@
                     ]
                 }
             },
-            "id": "report--feba3144-6bc0-4274-ba71-8c50342a0af5",
-            "modified": "2022-08-30T14:12:43.534Z",
+            "id": "report--e884fee2-4f9c-4078-af05-e04b4f7537f7",
+            "modified": "2022-09-15T15:50:10.747Z",
             "name": "regression-test-08-Elevator02",
             "object_refs": [
-                "location--ec379f41-0712-4fa4-bcbb-27ffe9929b35",
-                "relationship--f65c5694-cf82-4053-bc1e-f41c38a05630",
-                "identity--be20e1bf-7131-4e29-a0d4-fee8783e166b",
+                "location--327ea6e3-2954-4d84-b84f-1bc45f1bd4ef",
+                "relationship--dcea2d17-1ebc-4846-86b4-2b9b9c3fff5a",
+                "identity--83e2fb0a-5463-4fb6-8395-82f37bce1a73",
                 "identity--2d1c6ab3-5e4e-48ac-a32b-f0c01c2836a8",
                 "threat-actor--56f3f0db-b5d5-431c-ae56-c18f02caf500",
                 "campaign--e5268b6e-4931-42f1-b379-87f48eb41b1e",
-                "relationship--047ce777-f0b7-468d-aaeb-ed9612c36203",
-                "relationship--06897890-a851-454c-b44c-5f0ecfff3e1c",
-                "relationship--88e7ed54-bc28-489a-9687-1923e3cebcdc",
-                "relationship--6e440ef0-ae4d-475a-8af7-1fcdf8a29528",
-                "relationship--48b92142-7e96-4de3-a8ec-e3da782e037f"
+                "relationship--141118db-7186-4d69-b555-9f36fd4b2a07",
+                "relationship--f2d39da0-5079-457d-a347-7213a51e3b57",
+                "relationship--47d5a677-c667-4457-aaf4-1a00fd20c439",
+                "relationship--97e61559-4779-4f79-95fc-292e834a279b",
+                "relationship--12d87df6-661a-45c1-bc72-c06e2b7435dd"
             ],
+            "published": "2022-09-15T15:50:10.751Z",
             "spec_version": "2.1",
             "type": "report"
         }

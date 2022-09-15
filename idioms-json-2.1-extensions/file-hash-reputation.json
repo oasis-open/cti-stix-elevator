@@ -18,7 +18,7 @@
         },
         {
             "context": "header_information",
-            "created": "2022-08-30T14:12:44.086Z",
+            "created": "2022-09-15T15:50:11.173Z",
             "extensions": {
                 "extension-definition--faebed16-db10-4824-8538-62d9cd38b117": {
                     "extension_type": "property-extension",
@@ -27,12 +27,13 @@
                     ]
                 }
             },
-            "id": "report--715aac1c-8cd5-44e2-8892-6fb87de73618",
-            "modified": "2022-08-30T14:12:44.086Z",
+            "id": "report--96ec52b2-80da-486f-af21-fcb39370651c",
+            "modified": "2022-09-15T15:50:11.173Z",
             "name": "File Hash Reputation Service Results",
             "object_refs": [
                 "indicator--14975dea-86cd-4211-a5f8-9c2e4daab69a"
             ],
+            "published": "2022-09-15T15:50:11.174Z",
             "spec_version": "2.1",
             "type": "report"
         }
