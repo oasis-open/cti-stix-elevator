@@ -2,42 +2,43 @@
     "id": "bundle--bc2955f8-f1bb-4f02-b2ed-339d7daf6d75",
     "objects": [
         {
-            "created": "2022-08-31T15:22:48.389Z",
+            "created": "2022-09-13T12:58:03.276Z",
             "id": "indicator--6116b44e-a7e9-41e3-a82f-000c29b241af",
             "indicator_types": [
                 "ip-watchlist"
             ],
-            "modified": "2022-08-31T15:22:48.389Z",
+            "modified": "2022-09-13T12:58:03.276Z",
             "pattern": "[file:hashes.'SHA-256' = 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855' AND (file:extensions.'raster-image-ext'.image_height = 45 AND file:extensions.'raster-image-ext'.image_width = 45)]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
-            "valid_from": "2022-08-31T15:22:48.389Z"
+            "valid_from": "2022-09-13T12:58:03.276Z"
         },
         {
-            "created": "2022-08-31T15:22:48.389Z",
+            "created": "2022-09-13T12:58:03.276Z",
             "id": "indicator--b1f1ce62-63c6-448c-bdc7-9ead04826ad2",
             "indicator_types": [
                 "ip-watchlist"
             ],
-            "modified": "2022-08-31T15:22:48.389Z",
+            "modified": "2022-09-13T12:58:03.276Z",
             "pattern": "[file:extensions.'pdf-ext'.version = 4.5 AND file:extensions.'pdf-ext'.document_info_dict.CreationDate = t'2015-07-20T19:52:13.853585Z' AND file:extensions.'pdf-ext'.document_info_dict.Subject = 'Fudge' AND file:extensions.'pdf-ext'.pdfid0 = 'DFCE52BD827ECF765649852119D']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
-            "valid_from": "2022-08-31T15:22:48.389Z"
+            "valid_from": "2022-09-13T12:58:03.276Z"
         },
         {
             "context": "header_information",
-            "created": "2022-08-31T15:22:48.389Z",
+            "created": "2022-09-13T12:58:03.276Z",
             "description": "\n\nPACKAGE_INTENTS:\nIndicators - Malware Artifacts",
-            "id": "report--14d334f6-d76d-4a54-bb7d-58be28523363",
-            "modified": "2022-08-31T15:22:48.389Z",
+            "id": "report--e35318fb-793f-49ee-b949-b11ad228e40b",
+            "modified": "2022-09-13T12:58:03.276Z",
             "name": "File Hash Reputation Service Results",
             "object_refs": [
                 "indicator--6116b44e-a7e9-41e3-a82f-000c29b241af",
                 "indicator--b1f1ce62-63c6-448c-bdc7-9ead04826ad2"
             ],
+            "published": "2022-09-13T12:58:03.279Z",
             "spec_version": "2.1",
             "type": "report"
         }

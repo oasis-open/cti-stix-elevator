@@ -29,11 +29,11 @@
             "type": "file"
         },
         {
-            "created": "2022-08-31T15:22:48.359Z",
-            "first_observed": "2022-08-31T15:22:48.359Z",
+            "created": "2022-09-13T12:58:03.236Z",
+            "first_observed": "2022-09-13T12:58:03.236Z",
             "id": "observed-data--14975dea-86cd-4211-a5f8-9c2e4daab69a",
-            "last_observed": "2022-08-31T15:22:48.359Z",
-            "modified": "2022-08-31T15:22:48.359Z",
+            "last_observed": "2022-09-13T12:58:03.236Z",
+            "modified": "2022-09-13T12:58:03.236Z",
             "number_observed": 1,
             "object_refs": [
                 "file--cab91fba-2bb2-5e32-89ed-68d5f3f33415"
@@ -42,11 +42,11 @@
             "type": "observed-data"
         },
         {
-            "created": "2022-08-31T15:22:48.359Z",
-            "first_observed": "2022-08-31T15:22:48.359Z",
+            "created": "2022-09-13T12:58:03.236Z",
+            "first_observed": "2022-09-13T12:58:03.236Z",
             "id": "observed-data--a8770cfa-7921-43a5-b145-cf168aa3b019",
-            "last_observed": "2022-08-31T15:22:48.359Z",
-            "modified": "2022-08-31T15:22:48.359Z",
+            "last_observed": "2022-09-13T12:58:03.236Z",
+            "modified": "2022-09-13T12:58:03.236Z",
             "number_observed": 1,
             "object_refs": [
                 "file--4d6ae3bb-46a6-524f-8b33-ace41d113a7c"
@@ -56,10 +56,10 @@
         },
         {
             "context": "header_information",
-            "created": "2022-08-31T15:22:48.359Z",
+            "created": "2022-09-13T12:58:03.236Z",
             "description": "\n\nPACKAGE_INTENTS:\nIndicators - Malware Artifacts",
-            "id": "report--163cc93a-92fd-4ea4-bc1e-26615441528a",
-            "modified": "2022-08-31T15:22:48.359Z",
+            "id": "report--fb44da81-21bf-4cb4-aef7-c15e3b6d6761",
+            "modified": "2022-09-13T12:58:03.236Z",
             "name": "File Hash Reputation Service Results",
             "object_refs": [
                 "file--cab91fba-2bb2-5e32-89ed-68d5f3f33415",
@@ -67,6 +67,7 @@
                 "observed-data--14975dea-86cd-4211-a5f8-9c2e4daab69a",
                 "observed-data--a8770cfa-7921-43a5-b145-cf168aa3b019"
             ],
+            "published": "2022-09-13T12:58:03.237Z",
             "spec_version": "2.1",
             "type": "report"
         }

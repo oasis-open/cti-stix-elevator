@@ -139,6 +139,7 @@
         {
             "context": "header_information",
             "created": "2022-09-12T14:59:34.099Z",
+            "description": "Foo\nBar\nFred\nBarney",
             "id": "report--4e2fa6ba-822c-445a-95c1-b3e93cf9bd9b",
             "modified": "2022-09-12T14:59:34.099Z",
             "name": "regression-test-08-Elevator02",

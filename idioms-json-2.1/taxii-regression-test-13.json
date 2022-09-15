@@ -1,5 +1,5 @@
 {
-    "id": "bundle--c89bd182-59ea-47be-9220-9b755c095b68",
+    "id": "bundle--bfa7e858-58da-46a3-a882-87563c6b723b",
     "objects": [
         {
             "created": "9999-12-31T00:00:00.000Z",
@@ -46,19 +46,19 @@
                     "responsible_entity_originator": "USA.USG"
                 }
             },
-            "id": "marking-definition--0daf195b-a374-4679-bfa6-7cac25694b47",
+            "id": "marking-definition--6360cb7a-6ea1-4d7f-b1c9-46a94f8213f1",
             "spec_version": "2.1",
             "type": "marking-definition"
         },
         {
             "count": 9000,
             "created": "9999-12-31T00:00:00.000Z",
-            "id": "sighting--094229d4-81c0-4e7e-8de4-b38137f736e0",
+            "id": "sighting--5472076e-e1e9-4e0e-bcd5-6a9c0d6ad020",
             "modified": "9999-12-31T00:00:00.000Z",
             "object_marking_refs": [
-                "marking-definition--0daf195b-a374-4679-bfa6-7cac25694b47"
+                "marking-definition--6360cb7a-6ea1-4d7f-b1c9-46a94f8213f1"
             ],
-            "sighting_of_ref": "indicator--4b9290c3-0b22-48a0-9533-99886e253e0c",
+            "sighting_of_ref": "indicator--50c4702c-bf23-46c5-a76c-02ec5c67a166",
             "spec_version": "2.1",
             "summary": true,
             "type": "sighting"
@@ -67,13 +67,13 @@
             "confidence": 50,
             "created": "9999-12-31T00:00:00.000Z",
             "description": "This is a sample indicator description",
-            "id": "indicator--4b9290c3-0b22-48a0-9533-99886e253e0c",
+            "id": "indicator--50c4702c-bf23-46c5-a76c-02ec5c67a166",
             "indicator_types": [
                 "ip-watchlist"
             ],
             "modified": "9999-12-31T00:00:00.000Z",
             "object_marking_refs": [
-                "marking-definition--0daf195b-a374-4679-bfa6-7cac25694b47"
+                "marking-definition--6360cb7a-6ea1-4d7f-b1c9-46a94f8213f1"
             ],
             "pattern": "[ipv4-addr:value = '1.1.10.12'] AND [ipv4-addr:value = '1.1.1.12']",
             "pattern_type": "stix",
@@ -86,16 +86,17 @@
             "context": "header_information",
             "created": "9999-12-31T00:00:00.000Z",
             "description": "Test of FD Pubrel. \n\nPACKAGE_INTENTS:\nIndicators,\nThreat Report",
-            "id": "grouping--656919c6-d2f6-4c42-8c50-9d44eafe9a0e",
+            "id": "report--98517a40-2d8e-4f52-a877-a4c926edc713",
             "modified": "9999-12-31T00:00:00.000Z",
             "name": "regression-test-13",
             "object_refs": [
-                "marking-definition--0daf195b-a374-4679-bfa6-7cac25694b47",
-                "sighting--094229d4-81c0-4e7e-8de4-b38137f736e0",
-                "indicator--4b9290c3-0b22-48a0-9533-99886e253e0c"
+                "marking-definition--6360cb7a-6ea1-4d7f-b1c9-46a94f8213f1",
+                "sighting--5472076e-e1e9-4e0e-bcd5-6a9c0d6ad020",
+                "indicator--50c4702c-bf23-46c5-a76c-02ec5c67a166"
             ],
+            "published": "2022-09-13T12:58:05.456Z",
             "spec_version": "2.1",
-            "type": "grouping"
+            "type": "report"
         }
     ],
     "type": "bundle"

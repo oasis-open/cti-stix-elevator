@@ -1,12 +1,12 @@
 {
-    "id": "bundle--47680abd-56cb-4f04-803a-e3ffd5905aa9",
+    "id": "bundle--7fadea14-3871-44b7-8246-b8ea24f3faa7",
     "objects": [
         {
             "administrative_area": "US-DC",
             "country": "US",
             "created": "9999-12-31T00:00:00.000Z",
-            "created_by_ref": "identity--53d1e07d-429f-4c6f-9814-e00d5904986e",
-            "id": "location--943ce669-7a02-41c4-a35e-0865bc9f95cf",
+            "created_by_ref": "identity--a5f64560-18d9-4759-9ccd-cfbb684e2378",
+            "id": "location--7888a352-48b2-4f70-bb23-260cbeb28427",
             "modified": "9999-12-31T00:00:00.000Z",
             "object_marking_refs": [
                 "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
@@ -16,22 +16,22 @@
         },
         {
             "created": "9999-12-31T00:00:00.000Z",
-            "created_by_ref": "identity--53d1e07d-429f-4c6f-9814-e00d5904986e",
-            "id": "relationship--7207f4a2-f65c-46e3-842d-e12eb13350d2",
+            "created_by_ref": "identity--a5f64560-18d9-4759-9ccd-cfbb684e2378",
+            "id": "relationship--309533c9-d837-4804-b7ca-28b6bda1c402",
             "modified": "9999-12-31T00:00:00.000Z",
             "object_marking_refs": [
                 "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
             ],
             "relationship_type": "located-at",
-            "source_ref": "identity--53d1e07d-429f-4c6f-9814-e00d5904986e",
+            "source_ref": "identity--a5f64560-18d9-4759-9ccd-cfbb684e2378",
             "spec_version": "2.1",
-            "target_ref": "location--943ce669-7a02-41c4-a35e-0865bc9f95cf",
+            "target_ref": "location--7888a352-48b2-4f70-bb23-260cbeb28427",
             "type": "relationship"
         },
         {
             "created": "9999-12-31T00:00:00.000Z",
-            "created_by_ref": "identity--53d1e07d-429f-4c6f-9814-e00d5904986e",
-            "id": "identity--53d1e07d-429f-4c6f-9814-e00d5904986e",
+            "created_by_ref": "identity--a5f64560-18d9-4759-9ccd-cfbb684e2378",
+            "id": "identity--a5f64560-18d9-4759-9ccd-cfbb684e2378",
             "identity_class": "organization",
             "labels": [
                 "ais-consent-everyone"
@@ -49,7 +49,7 @@
         },
         {
             "created": "2016-03-29T20:52:52.716Z",
-            "created_by_ref": "identity--53d1e07d-429f-4c6f-9814-e00d5904986e",
+            "created_by_ref": "identity--a5f64560-18d9-4759-9ccd-cfbb684e2378",
             "description": "Send Device for forensic analysis",
             "id": "course-of-action--e9f31688-d744-48f4-9320-e6a9bd136f44",
             "modified": "2016-03-29T20:52:52.716Z",
@@ -62,7 +62,7 @@
         },
         {
             "created": "2016-03-29T20:52:52.716Z",
-            "created_by_ref": "identity--53d1e07d-429f-4c6f-9814-e00d5904986e",
+            "created_by_ref": "identity--a5f64560-18d9-4759-9ccd-cfbb684e2378",
             "id": "indicator--0c277b59-f5a9-4530-8861-82588719ec0c",
             "kill_chain_phases": [
                 {
@@ -82,8 +82,8 @@
         },
         {
             "created": "2016-03-29T20:52:52.716Z",
-            "created_by_ref": "identity--53d1e07d-429f-4c6f-9814-e00d5904986e",
-            "id": "relationship--2843b621-6770-4942-bc81-9244d71e212b",
+            "created_by_ref": "identity--a5f64560-18d9-4759-9ccd-cfbb684e2378",
+            "id": "relationship--f0751511-6a0d-4255-aeb0-532a4ae20eff",
             "modified": "2016-03-29T20:52:52.716Z",
             "object_marking_refs": [
                 "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
@@ -98,18 +98,19 @@
             "context": "header_information",
             "created": "9999-12-31T00:00:00.000Z",
             "description": "\n\nPACKAGE_INTENTS:\nThreat Report,\nIndicators,\nIndicators - Endpoint Characteristics,\nCourses of Action",
-            "id": "grouping--de26204b-4845-47f1-a962-081117e5df96",
+            "id": "report--b75cbbe1-beee-4974-a303-da9fc40db69e",
             "modified": "9999-12-31T00:00:00.000Z",
             "object_refs": [
-                "location--943ce669-7a02-41c4-a35e-0865bc9f95cf",
-                "relationship--7207f4a2-f65c-46e3-842d-e12eb13350d2",
-                "identity--53d1e07d-429f-4c6f-9814-e00d5904986e",
+                "location--7888a352-48b2-4f70-bb23-260cbeb28427",
+                "relationship--309533c9-d837-4804-b7ca-28b6bda1c402",
+                "identity--a5f64560-18d9-4759-9ccd-cfbb684e2378",
                 "course-of-action--e9f31688-d744-48f4-9320-e6a9bd136f44",
                 "indicator--0c277b59-f5a9-4530-8861-82588719ec0c",
-                "relationship--2843b621-6770-4942-bc81-9244d71e212b"
+                "relationship--f0751511-6a0d-4255-aeb0-532a4ae20eff"
             ],
+            "published": "2022-09-13T12:58:02.538Z",
             "spec_version": "2.1",
-            "type": "grouping"
+            "type": "report"
         }
     ],
     "type": "bundle"

@@ -1,5 +1,5 @@
 {
-    "id": "bundle--57107114-b815-4b68-a5e0-77ad18f18808",
+    "id": "bundle--d05293d0-eb73-4763-90b0-3fe48a1ec8e4",
     "objects": [
         {
             "created": "9999-12-31T00:00:00.000Z",
@@ -49,18 +49,18 @@
                     "responsible_entity_originator": "USA.USG"
                 }
             },
-            "id": "marking-definition--ad5628ea-16de-4525-813f-9bcf44d8b216",
+            "id": "marking-definition--15221db6-0f3a-4c8c-b49f-42d11af57f45",
             "spec_version": "2.1",
             "type": "marking-definition"
         },
         {
             "created": "9999-12-31T00:00:00.000Z",
             "description": "This is the description of a CISA defensive measure",
-            "id": "course-of-action--4cf0161f-a90b-49e2-a71c-44d7a4173ed6",
+            "id": "course-of-action--890806a4-cf06-43c0-92f9-1a6f7ec882c1",
             "modified": "9999-12-31T00:00:00.000Z",
             "name": "This is the title of the CISA defensive measure",
             "object_marking_refs": [
-                "marking-definition--ad5628ea-16de-4525-813f-9bcf44d8b216"
+                "marking-definition--15221db6-0f3a-4c8c-b49f-42d11af57f45"
             ],
             "spec_version": "2.1",
             "type": "course-of-action"
@@ -78,11 +78,11 @@
                     "source_name": "osvdb"
                 }
             ],
-            "id": "vulnerability--118d0e07-b54c-4fb6-b5a4-74371eecc619",
+            "id": "vulnerability--c7ba082e-787e-4f30-b5d0-68270d0ccb36",
             "modified": "9999-12-31T00:00:00.000Z",
             "name": "Title of a vulnerability containing an ID that needs to be sanitized.  Regression_Test-et-11.  And now another one that doesn't exist elsewhere isa:guide.19001.123.456 and one with a different namespace Another-01",
             "object_marking_refs": [
-                "marking-definition--ad5628ea-16de-4525-813f-9bcf44d8b216"
+                "marking-definition--15221db6-0f3a-4c8c-b49f-42d11af57f45"
             ],
             "spec_version": "2.1",
             "type": "vulnerability"
@@ -99,11 +99,11 @@
                     "source_name": "osvdb"
                 }
             ],
-            "id": "vulnerability--1a71bfca-b63f-4862-b122-88ee538547a6",
+            "id": "vulnerability--fca749c3-d918-4e36-a378-be9b7c988d19",
             "modified": "9999-12-31T00:00:00.000Z",
             "name": "Doesn't have one",
             "object_marking_refs": [
-                "marking-definition--ad5628ea-16de-4525-813f-9bcf44d8b216"
+                "marking-definition--15221db6-0f3a-4c8c-b49f-42d11af57f45"
             ],
             "spec_version": "2.1",
             "type": "vulnerability"
@@ -111,12 +111,12 @@
         {
             "count": 9000,
             "created": "9999-12-31T00:00:00.000Z",
-            "id": "sighting--9717420d-63ef-40e4-ae93-4182d4f05f10",
+            "id": "sighting--cf467060-9546-400c-b211-ee52e9052d4d",
             "modified": "9999-12-31T00:00:00.000Z",
             "object_marking_refs": [
-                "marking-definition--ad5628ea-16de-4525-813f-9bcf44d8b216"
+                "marking-definition--15221db6-0f3a-4c8c-b49f-42d11af57f45"
             ],
-            "sighting_of_ref": "indicator--6e9f838d-8a85-4ce2-9302-a7e7af208165",
+            "sighting_of_ref": "indicator--b2277381-291b-4b05-a18e-540b65b56949",
             "spec_version": "2.1",
             "summary": true,
             "type": "sighting"
@@ -125,13 +125,13 @@
             "confidence": 50,
             "created": "9999-12-31T00:00:00.000Z",
             "description": "This is a sample indicator description",
-            "id": "indicator--6e9f838d-8a85-4ce2-9302-a7e7af208165",
+            "id": "indicator--b2277381-291b-4b05-a18e-540b65b56949",
             "indicator_types": [
                 "ip-watchlist"
             ],
             "modified": "9999-12-31T00:00:00.000Z",
             "object_marking_refs": [
-                "marking-definition--ad5628ea-16de-4525-813f-9bcf44d8b216"
+                "marking-definition--15221db6-0f3a-4c8c-b49f-42d11af57f45"
             ],
             "pattern": "[ipv4-addr:value = '1.1.10.1'] AND [ipv4-addr:value = '1.1.1.1']",
             "pattern_type": "stix",
@@ -142,63 +142,64 @@
         },
         {
             "created": "9999-12-31T00:00:00.000Z",
-            "id": "relationship--0c9a6e29-aaf1-4785-aba9-b9a23aa43ebb",
+            "id": "relationship--534c282b-59fc-47c0-b98d-2bf34df9b76a",
             "modified": "9999-12-31T00:00:00.000Z",
             "object_marking_refs": [
-                "marking-definition--ad5628ea-16de-4525-813f-9bcf44d8b216"
+                "marking-definition--15221db6-0f3a-4c8c-b49f-42d11af57f45"
             ],
             "relationship_type": "mitigates",
-            "source_ref": "course-of-action--4cf0161f-a90b-49e2-a71c-44d7a4173ed6",
+            "source_ref": "course-of-action--890806a4-cf06-43c0-92f9-1a6f7ec882c1",
             "spec_version": "2.1",
-            "target_ref": "vulnerability--118d0e07-b54c-4fb6-b5a4-74371eecc619",
+            "target_ref": "vulnerability--c7ba082e-787e-4f30-b5d0-68270d0ccb36",
             "type": "relationship"
         },
         {
             "created": "9999-12-31T00:00:00.000Z",
-            "id": "relationship--c586ac61-3ef6-45b6-b3af-64296098db92",
+            "id": "relationship--7287c55d-1372-4dbc-86b5-fc65a5358426",
             "modified": "9999-12-31T00:00:00.000Z",
             "object_marking_refs": [
-                "marking-definition--ad5628ea-16de-4525-813f-9bcf44d8b216"
+                "marking-definition--15221db6-0f3a-4c8c-b49f-42d11af57f45"
             ],
             "relationship_type": "mitigates",
-            "source_ref": "course-of-action--4cf0161f-a90b-49e2-a71c-44d7a4173ed6",
+            "source_ref": "course-of-action--890806a4-cf06-43c0-92f9-1a6f7ec882c1",
             "spec_version": "2.1",
-            "target_ref": "vulnerability--1a71bfca-b63f-4862-b122-88ee538547a6",
+            "target_ref": "vulnerability--fca749c3-d918-4e36-a378-be9b7c988d19",
             "type": "relationship"
         },
         {
             "created": "9999-12-31T00:00:00.000Z",
-            "id": "relationship--9bc4c653-8c26-4c40-b43d-a21e9315527a",
+            "id": "relationship--79235fd2-b947-474a-9808-6318ead2eb89",
             "modified": "9999-12-31T00:00:00.000Z",
             "object_marking_refs": [
-                "marking-definition--ad5628ea-16de-4525-813f-9bcf44d8b216"
+                "marking-definition--15221db6-0f3a-4c8c-b49f-42d11af57f45"
             ],
             "relationship_type": "investigates",
-            "source_ref": "course-of-action--4cf0161f-a90b-49e2-a71c-44d7a4173ed6",
+            "source_ref": "course-of-action--890806a4-cf06-43c0-92f9-1a6f7ec882c1",
             "spec_version": "2.1",
-            "target_ref": "indicator--6e9f838d-8a85-4ce2-9302-a7e7af208165",
+            "target_ref": "indicator--b2277381-291b-4b05-a18e-540b65b56949",
             "type": "relationship"
         },
         {
             "context": "header_information",
             "created": "9999-12-31T00:00:00.000Z",
             "description": "Test of FDAIS and FOUO.  Confirm that the following string is auto-sanitized, in this text field - Regression_Test_11. Confirm the string with which it is replaced matches the sanitized ID for the package.\n\nPACKAGE_INTENTS:\nIndicators,\nThreat Report",
-            "id": "grouping--65975a66-cde9-4b8e-b367-548154203670",
+            "id": "report--56301bc2-ccf3-41d8-994f-8f205ad26a00",
             "modified": "9999-12-31T00:00:00.000Z",
             "name": "regression-test-11",
             "object_refs": [
-                "marking-definition--ad5628ea-16de-4525-813f-9bcf44d8b216",
-                "course-of-action--4cf0161f-a90b-49e2-a71c-44d7a4173ed6",
-                "vulnerability--118d0e07-b54c-4fb6-b5a4-74371eecc619",
-                "vulnerability--1a71bfca-b63f-4862-b122-88ee538547a6",
-                "sighting--9717420d-63ef-40e4-ae93-4182d4f05f10",
-                "indicator--6e9f838d-8a85-4ce2-9302-a7e7af208165",
-                "relationship--0c9a6e29-aaf1-4785-aba9-b9a23aa43ebb",
-                "relationship--c586ac61-3ef6-45b6-b3af-64296098db92",
-                "relationship--9bc4c653-8c26-4c40-b43d-a21e9315527a"
+                "marking-definition--15221db6-0f3a-4c8c-b49f-42d11af57f45",
+                "course-of-action--890806a4-cf06-43c0-92f9-1a6f7ec882c1",
+                "vulnerability--c7ba082e-787e-4f30-b5d0-68270d0ccb36",
+                "vulnerability--fca749c3-d918-4e36-a378-be9b7c988d19",
+                "sighting--cf467060-9546-400c-b211-ee52e9052d4d",
+                "indicator--b2277381-291b-4b05-a18e-540b65b56949",
+                "relationship--534c282b-59fc-47c0-b98d-2bf34df9b76a",
+                "relationship--7287c55d-1372-4dbc-86b5-fc65a5358426",
+                "relationship--79235fd2-b947-474a-9808-6318ead2eb89"
             ],
+            "published": "2022-09-13T12:58:05.310Z",
             "spec_version": "2.1",
-            "type": "grouping"
+            "type": "report"
         }
     ],
     "type": "bundle"

@@ -1,12 +1,12 @@
 {
-    "id": "bundle--9fde5624-1cda-480c-9c5c-026503afc7ce",
+    "id": "bundle--b27b9685-64e8-42c2-a19a-57c629a50256",
     "objects": [
         {
             "administrative_area": "US-DC",
             "country": "US",
             "created": "2020-11-23T14:26:05.000Z",
-            "created_by_ref": "identity--284cf05d-94b3-47d4-b7da-d37d7bc12c43",
-            "id": "location--beb38725-a985-4102-b38f-5b64341ad703",
+            "created_by_ref": "identity--b900ad7d-e31e-40ad-b8ba-e898d7ea046a",
+            "id": "location--58fd7890-b3c5-48a1-acfd-d1be03736aff",
             "modified": "2020-11-23T14:26:05.000Z",
             "object_marking_refs": [
                 "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
@@ -16,22 +16,22 @@
         },
         {
             "created": "2020-11-23T14:26:05.000Z",
-            "created_by_ref": "identity--284cf05d-94b3-47d4-b7da-d37d7bc12c43",
-            "id": "relationship--afca6441-3de4-4c97-b7d1-6fda7f85ac9e",
+            "created_by_ref": "identity--b900ad7d-e31e-40ad-b8ba-e898d7ea046a",
+            "id": "relationship--61afeb8b-cbe0-4e51-839a-8415d700a048",
             "modified": "2020-11-23T14:26:05.000Z",
             "object_marking_refs": [
                 "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
             ],
             "relationship_type": "located-at",
-            "source_ref": "identity--284cf05d-94b3-47d4-b7da-d37d7bc12c43",
+            "source_ref": "identity--b900ad7d-e31e-40ad-b8ba-e898d7ea046a",
             "spec_version": "2.1",
-            "target_ref": "location--beb38725-a985-4102-b38f-5b64341ad703",
+            "target_ref": "location--58fd7890-b3c5-48a1-acfd-d1be03736aff",
             "type": "relationship"
         },
         {
             "created": "2020-11-23T14:26:05.000Z",
-            "created_by_ref": "identity--284cf05d-94b3-47d4-b7da-d37d7bc12c43",
-            "id": "identity--284cf05d-94b3-47d4-b7da-d37d7bc12c43",
+            "created_by_ref": "identity--b900ad7d-e31e-40ad-b8ba-e898d7ea046a",
+            "id": "identity--b900ad7d-e31e-40ad-b8ba-e898d7ea046a",
             "identity_class": "organization",
             "labels": [
                 "ais-consent-everyone-cisa-proprietary"
@@ -50,8 +50,8 @@
         {
             "count": 1,
             "created": "2018-03-13T20:42:24.000Z",
-            "created_by_ref": "identity--284cf05d-94b3-47d4-b7da-d37d7bc12c43",
-            "id": "sighting--d494c752-1b46-4a6f-b53e-83709036cfb6",
+            "created_by_ref": "identity--b900ad7d-e31e-40ad-b8ba-e898d7ea046a",
+            "id": "sighting--3f094bc4-b462-485c-90c7-e704c8d38245",
             "modified": "2018-03-13T20:42:24.000Z",
             "object_marking_refs": [
                 "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
@@ -62,7 +62,7 @@
         },
         {
             "created": "2020-11-23T19:26:05.255Z",
-            "created_by_ref": "identity--284cf05d-94b3-47d4-b7da-d37d7bc12c43",
+            "created_by_ref": "identity--b900ad7d-e31e-40ad-b8ba-e898d7ea046a",
             "description": "This is the E-Mail indicator",
             "id": "indicator--a35dbed6-9b9c-442e-aaff-4aeeb88a43ef",
             "indicator_types": [
@@ -88,18 +88,19 @@
             "context": "header_information",
             "created": "2020-11-23T14:26:05.000Z",
             "description": "This is the package overview\n\nPACKAGE_INTENTS:\nIndicators",
-            "id": "grouping--405e9493-a4db-4910-a509-7e54076d8c5a",
+            "id": "report--f1bcf49d-d4fc-4689-b716-d8cb447ac991",
             "modified": "2020-11-23T14:26:05.000Z",
             "name": "Package Title",
             "object_refs": [
-                "location--beb38725-a985-4102-b38f-5b64341ad703",
-                "relationship--afca6441-3de4-4c97-b7d1-6fda7f85ac9e",
-                "identity--284cf05d-94b3-47d4-b7da-d37d7bc12c43",
-                "sighting--d494c752-1b46-4a6f-b53e-83709036cfb6",
+                "location--58fd7890-b3c5-48a1-acfd-d1be03736aff",
+                "relationship--61afeb8b-cbe0-4e51-839a-8415d700a048",
+                "identity--b900ad7d-e31e-40ad-b8ba-e898d7ea046a",
+                "sighting--3f094bc4-b462-485c-90c7-e704c8d38245",
                 "indicator--a35dbed6-9b9c-442e-aaff-4aeeb88a43ef"
             ],
+            "published": "2022-09-13T12:58:04.061Z",
             "spec_version": "2.1",
-            "type": "grouping"
+            "type": "report"
         }
     ],
     "type": "bundle"

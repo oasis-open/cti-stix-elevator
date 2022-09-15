@@ -293,11 +293,8 @@ def convert_to_open_vocabs(stix2x_obj, stix2x_property_name, value, vocab_mappin
 
 
 def process_structured_text_list(text_list):
-    full_text = ""
-    for text_obj in text_list.sorted:
-        if text_obj.value:
-            full_text += text_obj.value
-    return full_text
+    removed_empties = filter(lambda x: x.value, text_list.sorted)
+    return "\n".join([text_obj.value for text_obj in removed_empties])
 
 
 def process_short_description(so, short_property, short_property_name, parent_info):
@@ -327,11 +324,14 @@ def process_description_and_short_description(so, entity, parent_info=False):
     # seems like in STIX 2.x - description and descriptionS are both populated with the same content
     elif hasattr(entity, "description") and entity.description is not None:
         so["description"] += str(entity.description.value)
-    if hasattr(entity, "short_description") and entity.short_description is not None:
-        process_short_description(so, entity.short_description, "short_description", parent_info)
-    elif hasattr(entity, "short_descriptions") and len(entity.short_descriptions) != 0:
+    if hasattr(entity, "short_descriptions") and len(entity.short_descriptions) != 0:
+        if so["description"]:
+            so["description"] += "\n"
         process_short_description(so, process_structured_text_list(entity.short_descriptions), "short_descriptions", parent_info)
-
+    elif hasattr(entity, "short_description") and entity.short_description is not None:
+        if so["description"]:
+            so["description"] += "\n"
+        process_short_description(so, entity.short_description, "short_description", parent_info)
 
 def process_description_and_short_description_of_sighting(sighting, indicator_id):
     description_for_sighting = ""
