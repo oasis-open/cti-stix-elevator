@@ -3,7 +3,7 @@
     "objects": [
         {
             "child_refs": [
-                "process--c1f29e69-ff1c-424d-b6cb-0c7ce9201aab"
+                "process--303a1882-b289-4dae-988c-213d1d1bd8fb"
             ],
             "command_line": "bash some.sh",
             "created_time": "2010-12-09T20:17:34.934295Z",
@@ -13,11 +13,11 @@
                     "window_title": "Some Title"
                 }
             },
-            "id": "process--0c1d1fdd-5dcd-4544-a847-aa04495f65fa",
+            "id": "process--25837e2e-3537-4980-9a67-430b3f71040a",
             "opened_connection_refs": [
                 "network-traffic--1066d67f-8803-504b-abfc-aeb0ca539978"
             ],
-            "parent_ref": "process--273c584d-c09c-4f14-b6b6-0d53613d8f88",
+            "parent_ref": "process--bcfff4d3-2b31-4215-9fa6-2361966dcbe5",
             "pid": 1700,
             "type": "process"
         },
@@ -38,92 +38,93 @@
             "user_id": "admin"
         },
         {
-            "id": "process--c1f29e69-ff1c-424d-b6cb-0c7ce9201aab",
+            "id": "process--303a1882-b289-4dae-988c-213d1d1bd8fb",
             "pid": 4567,
             "type": "process"
         },
         {
-            "id": "process--273c584d-c09c-4f14-b6b6-0d53613d8f88",
+            "id": "process--bcfff4d3-2b31-4215-9fa6-2361966dcbe5",
             "pid": 1616,
             "type": "process"
         },
         {
-            "created": "2022-08-31T14:47:30.019Z",
+            "created": "2022-09-15T12:54:27.788Z",
             "id": "indicator--6116b44e-a7e9-11e3-a82f-000c29b241af",
-            "modified": "2022-08-31T14:47:30.019Z",
+            "modified": "2022-09-15T12:54:27.788Z",
             "pattern": "[(file:hashes.MD5 = '5d8129be965fab8115eca34fc84bd7f0' OR file:hashes.'SHA-1' = '2b999e7db890cc77f0098a091de756a1803a3c2b' OR file:hashes.'SHA-256' = '2c5dd8a64437cb2dd4b6747139c61d2d7f53ab3ddedbf22df3cb01bae170715b' OR file:hashes.ssdeep = '768:mvAFYk0IOqi7RKW1RD1ZCrm82+AnbaAOdoOKL70ehP:cDIOqctz2rBmbZoa71hP') AND file:name = 'VirusShare_5d8129be965fab8115eca34fc84bd7f0' AND file:size = 40654 AND (((file:extensions.'windows-pebinary-ext'.sections[*].name = '.rdata' AND file:extensions.'windows-pebinary-ext'.sections[*].x_elevator_entropy_min < 10.0 AND file:extensions.'windows-pebinary-ext'.sections[*].entropy = 7.74202363178) AND (file:extensions.'windows-pebinary-ext'.sections[*].name = '.data' AND file:extensions.'windows-pebinary-ext'.sections[*].entropy = 7.89204688601) AND (file:extensions.'windows-pebinary-ext'.sections[*].name = '.upx' AND file:extensions.'windows-pebinary-ext'.sections[*].entropy = 7.31815613066)) AND file:extensions.'windows-pebinary-ext'.x_elevator_imports[*] = 'GetProcAddress')]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
-            "valid_from": "2022-08-31T14:47:30.019Z"
+            "valid_from": "2022-09-15T12:54:27.788Z"
         },
         {
-            "created": "2022-08-31T14:47:30.019Z",
+            "created": "2022-09-15T12:54:27.788Z",
             "id": "indicator--6116cf88-a7e9-11e3-a82f-000c29b241af",
-            "modified": "2022-08-31T14:47:30.019Z",
+            "modified": "2022-09-15T12:54:27.788Z",
             "pattern": "[(file:hashes.MD5 = 'd41d8cd98f00b204e9800998ecf8427e' OR file:hashes.'SHA-1' = 'da39a3ee5e6b4b0d3255bfef95601890afd80709' OR file:hashes.'SHA-256' = 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855') AND file:name = 'autoexec.bat' AND file:size = 0]",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
-            "valid_from": "2022-08-31T14:47:30.019Z"
+            "valid_from": "2022-09-15T12:54:27.788Z"
         },
         {
-            "created": "2022-08-31T14:47:30.019Z",
+            "created": "2022-09-15T12:54:27.788Z",
             "id": "indicator--6116d730-a7e9-11e3-a82f-000c29b241af",
-            "modified": "2022-08-31T14:47:30.019Z",
+            "modified": "2022-09-15T12:54:27.788Z",
             "pattern": "[process:pid = 1700 AND process:parent_ref.pid = 1616 AND process:creator_user_ref.user_id = 'admin' AND process:created = t'2010-12-09T20:17:34.934295Z' AND process:command_line = 'bash some.sh' AND (process:x_elevator_argument_list[*] = '--p' AND process:x_elevator_argument_list[*] = 'some_file.txt') AND process:environment_variables[*].PROXY = '123.456.0.1' AND process:child_refs[*].pid = 4567 AND process:opened_connection_refs[*].dst_ref.value = '198.49.123.10' AND process:extensions.'windows-process-ext'.window_title = 'Some Title']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
-            "valid_from": "2022-08-31T14:47:30.019Z"
+            "valid_from": "2022-09-15T12:54:27.788Z"
         },
         {
-            "created": "2022-08-31T14:47:30.019Z",
+            "created": "2022-09-15T12:54:27.788Z",
             "id": "indicator--6116dcbc-a7e9-11e3-a82f-000c29b241af",
-            "modified": "2022-08-31T14:47:30.019Z",
+            "modified": "2022-09-15T12:54:27.788Z",
             "pattern": "[windows-registry-key:key = 'HKEY_CURRENT_USER\\\\Software\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Explorer\\\\User Shell Folders'] AND [windows-registry-key:key = 'HKEY_CURRENT_USER\\\\Software\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Explorer\\\\Shell Folders'] AND [windows-registry-key:key = 'HKEY_LOCAL_MACHINE\\\\Software\\\\Microsoft\\\\Tracing'] AND [windows-registry-key:key = 'HKEY_LOCAL_MACHINE\\\\Software\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Explorer\\\\User Shell Folders'] AND [windows-registry-key:key = 'Software\\\\Microsoft\\\\Windows NT\\\\CurrentVersion\\\\Winlogon'] AND [windows-registry-key:key = 'HKEY_LOCAL_MACHINE\\\\Software\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Explorer\\\\Shell Folders'] AND [windows-registry-key:key = 'Software\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Explorer\\\\User Shell Folders'] AND [windows-registry-key:key = 'Software\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Explorer\\\\Shell Folders'] AND [windows-registry-key:key = 'Software\\\\Microsoft\\\\windows\\\\CurrentVersion\\\\Internet Settings'] AND [windows-registry-key:key = 'Software\\\\Microsoft\\\\windows\\\\CurrentVersion\\\\Internet Settings\\\\Connections'] AND [windows-registry-key:key = 'HKEY_CURRENT_CONFIG\\\\Software\\\\Microsoft\\\\windows\\\\CurrentVersion\\\\Internet Settings'] AND [windows-registry-key:key = 'Software\\\\Microsoft\\\\SystemCertificates\\\\MY'] AND [windows-registry-key:key = 'HKEY_LOCAL_MACHINE\\\\System\\\\CurrentControlSet\\\\Services\\\\Tcpip\\\\Parameters']",
             "pattern_type": "stix",
             "spec_version": "2.1",
             "type": "indicator",
-            "valid_from": "2022-08-31T14:47:30.019Z"
+            "valid_from": "2022-09-15T12:54:27.788Z"
         },
         {
-            "created": "2022-08-31T14:47:30.019Z",
-            "first_observed": "2022-08-31T14:47:30.019Z",
+            "created": "2022-09-15T12:54:27.788Z",
+            "first_observed": "2022-09-15T12:54:27.788Z",
             "id": "observed-data--65492fbc-5d48-49bf-83b8-33c965e36066",
-            "last_observed": "2022-08-31T14:47:30.019Z",
-            "modified": "2022-08-31T14:47:30.019Z",
+            "last_observed": "2022-09-15T12:54:27.788Z",
+            "modified": "2022-09-15T12:54:27.788Z",
             "number_observed": 1,
             "object_refs": [
-                "process--0c1d1fdd-5dcd-4544-a847-aa04495f65fa",
+                "process--25837e2e-3537-4980-9a67-430b3f71040a",
                 "network-traffic--1066d67f-8803-504b-abfc-aeb0ca539978",
                 "ipv4-addr--96d215a5-eb23-527a-ae22-9507313d32ca",
                 "user-account--4c042077-1456-5191-94a6-0e90b7bd9b05",
-                "process--c1f29e69-ff1c-424d-b6cb-0c7ce9201aab",
-                "process--273c584d-c09c-4f14-b6b6-0d53613d8f88"
+                "process--303a1882-b289-4dae-988c-213d1d1bd8fb",
+                "process--bcfff4d3-2b31-4215-9fa6-2361966dcbe5"
             ],
             "spec_version": "2.1",
             "type": "observed-data"
         },
         {
             "context": "header_information",
-            "created": "2022-08-31T14:47:30.019Z",
+            "created": "2022-09-15T12:54:27.788Z",
             "description": "IOCAware Auto-Generated STIX IOC Document for VirusShare_5d8129be965fab8115eca34fc84bd7f0",
-            "id": "report--15403dcf-bda0-4db4-a9a1-ef0f1c5df577",
-            "modified": "2022-08-31T14:47:30.019Z",
+            "id": "report--3009f9c2-af59-4cb6-99f3-665bc4f7ff51",
+            "modified": "2022-09-15T12:54:27.788Z",
             "object_refs": [
-                "process--0c1d1fdd-5dcd-4544-a847-aa04495f65fa",
+                "process--25837e2e-3537-4980-9a67-430b3f71040a",
                 "network-traffic--1066d67f-8803-504b-abfc-aeb0ca539978",
                 "ipv4-addr--96d215a5-eb23-527a-ae22-9507313d32ca",
                 "user-account--4c042077-1456-5191-94a6-0e90b7bd9b05",
-                "process--c1f29e69-ff1c-424d-b6cb-0c7ce9201aab",
-                "process--273c584d-c09c-4f14-b6b6-0d53613d8f88",
+                "process--303a1882-b289-4dae-988c-213d1d1bd8fb",
+                "process--bcfff4d3-2b31-4215-9fa6-2361966dcbe5",
                 "indicator--6116b44e-a7e9-11e3-a82f-000c29b241af",
                 "indicator--6116cf88-a7e9-11e3-a82f-000c29b241af",
                 "indicator--6116d730-a7e9-11e3-a82f-000c29b241af",
                 "indicator--6116dcbc-a7e9-11e3-a82f-000c29b241af",
                 "observed-data--65492fbc-5d48-49bf-83b8-33c965e36066"
             ],
+            "published": "2022-09-15T12:54:27.798Z",
             "spec_version": "2.1",
             "type": "report"
         }

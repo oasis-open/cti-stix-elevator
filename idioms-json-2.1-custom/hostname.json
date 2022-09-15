@@ -5,8 +5,8 @@
             "administrative_area": "US-OR",
             "country": "US",
             "created": "2021-08-06T14:04:41.000Z",
-            "created_by_ref": "identity--fc81a7d6-3fee-4501-9883-f28049825a35",
-            "id": "location--e147ffdc-c919-4153-841a-0d7f0cb3b6ff",
+            "created_by_ref": "identity--780286aa-dddb-4781-8b99-a09fab77a062",
+            "id": "location--7df091d1-80ea-48b3-9653-cb80f1309607",
             "modified": "2021-08-06T14:04:41.000Z",
             "object_marking_refs": [
                 "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
@@ -16,22 +16,22 @@
         },
         {
             "created": "2021-08-06T14:04:41.000Z",
-            "created_by_ref": "identity--fc81a7d6-3fee-4501-9883-f28049825a35",
-            "id": "relationship--18b02da6-cc50-4eca-beb6-8049901a209f",
+            "created_by_ref": "identity--780286aa-dddb-4781-8b99-a09fab77a062",
+            "id": "relationship--2c12dc05-bc41-42ef-a670-7c2ade610354",
             "modified": "2021-08-06T14:04:41.000Z",
             "object_marking_refs": [
                 "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
             ],
             "relationship_type": "located-at",
-            "source_ref": "identity--fc81a7d6-3fee-4501-9883-f28049825a35",
+            "source_ref": "identity--780286aa-dddb-4781-8b99-a09fab77a062",
             "spec_version": "2.1",
-            "target_ref": "location--e147ffdc-c919-4153-841a-0d7f0cb3b6ff",
+            "target_ref": "location--7df091d1-80ea-48b3-9653-cb80f1309607",
             "type": "relationship"
         },
         {
             "created": "2021-08-06T14:04:41.000Z",
-            "created_by_ref": "identity--fc81a7d6-3fee-4501-9883-f28049825a35",
-            "id": "identity--fc81a7d6-3fee-4501-9883-f28049825a35",
+            "created_by_ref": "identity--780286aa-dddb-4781-8b99-a09fab77a062",
+            "id": "identity--780286aa-dddb-4781-8b99-a09fab77a062",
             "identity_class": "organization",
             "labels": [
                 "ais-consent-everyone"
@@ -49,7 +49,7 @@
         },
         {
             "created": "2021-08-06T14:04:41.000Z",
-            "created_by_ref": "identity--fc81a7d6-3fee-4501-9883-f28049825a35",
+            "created_by_ref": "identity--780286aa-dddb-4781-8b99-a09fab77a062",
             "description": "Socket Address123",
             "id": "indicator--5ea04c59-d106-4e2a-a15c-293066fc3187",
             "indicator_types": [
@@ -65,7 +65,7 @@
         },
         {
             "created": "2021-08-06T14:04:41.000Z",
-            "created_by_ref": "identity--fc81a7d6-3fee-4501-9883-f28049825a35",
+            "created_by_ref": "identity--780286aa-dddb-4781-8b99-a09fab77a062",
             "description": "Socket Address",
             "id": "indicator--f04fe75a-4717-4b2a-85ad-9adf248b1c3e",
             "indicator_types": [
@@ -84,18 +84,19 @@
         {
             "context": "header_information",
             "created": "2021-08-06T14:04:41.000Z",
-            "id": "grouping--728eb626-7da4-4ec3-9708-a0b2ba3796f1",
+            "id": "report--1ae03ebd-b9c5-456a-94c1-77c84a8a3551",
             "modified": "2021-08-06T14:04:41.000Z",
             "name": "NCCIC:STIX_Package-75d3aca8-3a82-46fc-8965-c0d1958c9790",
             "object_refs": [
-                "location--e147ffdc-c919-4153-841a-0d7f0cb3b6ff",
-                "relationship--18b02da6-cc50-4eca-beb6-8049901a209f",
-                "identity--fc81a7d6-3fee-4501-9883-f28049825a35",
+                "location--7df091d1-80ea-48b3-9653-cb80f1309607",
+                "relationship--2c12dc05-bc41-42ef-a670-7c2ade610354",
+                "identity--780286aa-dddb-4781-8b99-a09fab77a062",
                 "indicator--5ea04c59-d106-4e2a-a15c-293066fc3187",
                 "indicator--f04fe75a-4717-4b2a-85ad-9adf248b1c3e"
             ],
+            "published": "2022-09-15T12:13:22.289Z",
             "spec_version": "2.1",
-            "type": "grouping",
+            "type": "report",
             "x_elevator_package_intents": [
                 "Indicators"
             ]

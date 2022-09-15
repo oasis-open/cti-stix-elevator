@@ -18,13 +18,14 @@
         },
         {
             "context": "header_information",
-            "created": "2022-08-29T12:14:39.309Z",
-            "id": "report--f490208c-c89e-43b7-9c71-9f423e84f736",
-            "modified": "2022-08-29T12:14:39.309Z",
+            "created": "2022-09-15T12:13:22.227Z",
+            "id": "report--7e4406b7-84a0-4a5b-8b57-07c5f35ae36e",
+            "modified": "2022-09-15T12:13:22.227Z",
             "name": "File Hash Reputation Service Results",
             "object_refs": [
                 "indicator--14975dea-86cd-4211-a5f8-9c2e4daab69a"
             ],
+            "published": "2022-09-15T12:13:22.229Z",
             "spec_version": "2.1",
             "type": "report",
             "x_elevator_package_intents": [

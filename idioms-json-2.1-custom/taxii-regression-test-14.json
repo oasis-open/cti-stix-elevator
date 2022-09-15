@@ -1,5 +1,5 @@
 {
-    "id": "bundle--4c73e8e1-6761-429d-91c1-a5b374bfa9ed",
+    "id": "bundle--e70610e0-3da2-4c60-98f4-5af3947e01a8",
     "objects": [
         {
             "created": "9999-12-31T00:00:00.000Z",
@@ -26,19 +26,19 @@
                     "responsible_entity_originator": "USA.USG"
                 }
             },
-            "id": "marking-definition--4ee541f1-8fb0-42ac-aa6d-905ed7f348ca",
+            "id": "marking-definition--626ab462-132b-4f8e-b47a-c780f0a17f25",
             "spec_version": "2.1",
             "type": "marking-definition"
         },
         {
             "count": 9000,
             "created": "9999-12-31T00:00:00.000Z",
-            "id": "sighting--226e3014-b0fa-4f99-ae14-26a9fcc825c9",
+            "id": "sighting--16d48c85-1404-4260-ae2f-0ac71e752b5b",
             "modified": "9999-12-31T00:00:00.000Z",
             "object_marking_refs": [
-                "marking-definition--4ee541f1-8fb0-42ac-aa6d-905ed7f348ca"
+                "marking-definition--626ab462-132b-4f8e-b47a-c780f0a17f25"
             ],
-            "sighting_of_ref": "indicator--948c07f1-4630-4bf2-a780-686ce553f882",
+            "sighting_of_ref": "indicator--4e3b1aac-3481-493a-9dca-c0cc80ad5822",
             "spec_version": "2.1",
             "summary": true,
             "type": "sighting"
@@ -47,13 +47,13 @@
             "confidence": 50,
             "created": "9999-12-31T00:00:00.000Z",
             "description": "This is a sample indicator description",
-            "id": "indicator--948c07f1-4630-4bf2-a780-686ce553f882",
+            "id": "indicator--4e3b1aac-3481-493a-9dca-c0cc80ad5822",
             "indicator_types": [
                 "ip-watchlist"
             ],
             "modified": "9999-12-31T00:00:00.000Z",
             "object_marking_refs": [
-                "marking-definition--4ee541f1-8fb0-42ac-aa6d-905ed7f348ca"
+                "marking-definition--626ab462-132b-4f8e-b47a-c780f0a17f25"
             ],
             "pattern": "[(email-message:subject = 'New modifications to the specification' AND email-message:from_ref.value = 'attacker@example.com' AND (email-message:to_refs[*].value = 'victim1@target.com' OR email-message:to_refs[*].value = 'victim2@target.com')) AND ((email-message:body_multipart[*].body_raw_ref.hashes.MD5 = 'd41d8cd98f00b204e9800998ecf8427e' OR email-message:body_multipart[*].body_raw_ref.hashes.ssdeep = 'cf83e1357eefb8bdf1542850d66d8007d620e4050b5715dc83f4a921d36ce9ce47d0d13c5d85f2b0ff8318d2877eec2f63b931bd47417a81a538327af927da3e' OR email-message:body_multipart[*].body_raw_ref.hashes.MD5 = 'd41d8cd98f00b204e9800998ecf8427e' OR email-message:body_multipart[*].body_raw_ref.hashes.'SHA-1' = 'da39a3ee5e6b4b0d3255bfef95601890afd80709' OR email-message:body_multipart[*].body_raw_ref.hashes.'SHA-256' = 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855') AND (email-message:body_multipart[*].body_raw_ref.name = 'File Name' AND email-message:body_multipart[*].body_raw_ref.parent_directory_ref.path = 'Path/to/File') AND email-message:body_multipart[*].body_raw_ref.size = 134123)]",
             "pattern_type": "stix",
@@ -64,10 +64,10 @@
         },
         {
             "created": "2222-12-31T00:00:00.000Z",
-            "id": "indicator--c9f431d6-124a-44d2-8d16-25ea9fcc0fa0",
+            "id": "indicator--6e6aad38-ed37-4f3f-aa3e-a400cf925e74",
             "modified": "2222-12-31T00:00:00.000Z",
             "object_marking_refs": [
-                "marking-definition--4ee541f1-8fb0-42ac-aa6d-905ed7f348ca"
+                "marking-definition--626ab462-132b-4f8e-b47a-c780f0a17f25"
             ],
             "pattern": "[(file:hashes.MD5 = 'd41d8cd98f00b204e9800998ecf8427e' OR file:hashes.ssdeep = 'cf83e1357eefb8bdf1542850d66d8007d620e4050b5715dc83f4a921d36ce9ce47d0d13c5d85f2b0ff8318d2877eec2f63b931bd47417a81a538327af927da3e' OR file:hashes.MD5 = 'd41d8cd98f00b204e9800998ecf8427e' OR file:hashes.'SHA-1' = 'da39a3ee5e6b4b0d3255bfef95601890afd80709' OR file:hashes.'SHA-256' = 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855') AND (file:name = 'File Name' AND file:parent_directory_ref.path = 'Path/to/File') AND file:size = 134123]",
             "pattern_type": "stix",
@@ -79,17 +79,18 @@
             "context": "header_information",
             "created": "9999-12-31T00:00:00.000Z",
             "description": "Test special characters ç ã ì",
-            "id": "grouping--cc9542e7-2d90-444c-b705-23676ed81be3",
+            "id": "report--a84bf115-1aec-4432-9a1f-fdbc8f901713",
             "modified": "9999-12-31T00:00:00.000Z",
             "name": "regression-test-14: test special characters â ü ÿ /",
             "object_refs": [
-                "marking-definition--1a56c148-ee59-47cd-878d-f22c945ac63a",
-                "sighting--0d792551-e7c7-422f-95ad-91656ab3a445",
-                "indicator--8ff519b5-571d-46cb-845b-5d85f9dbee5e",
-                "indicator--a6c4116c-be96-4fe4-b689-3e32b36bd0a5"
+                "marking-definition--626ab462-132b-4f8e-b47a-c780f0a17f25",
+                "sighting--16d48c85-1404-4260-ae2f-0ac71e752b5b",
+                "indicator--4e3b1aac-3481-493a-9dca-c0cc80ad5822",
+                "indicator--6e6aad38-ed37-4f3f-aa3e-a400cf925e74"
             ],
+            "published": "2022-09-15T12:13:24.111Z",
             "spec_version": "2.1",
-            "type": "grouping",
+            "type": "report",
             "x_elevator_package_intents": [
                 "Indicators",
                 "Threat Report"

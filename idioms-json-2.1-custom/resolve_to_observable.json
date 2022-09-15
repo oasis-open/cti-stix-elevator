@@ -29,11 +29,11 @@
             "value": "202.65.220.64"
         },
         {
-            "created": "2022-08-31T13:50:22.696Z",
-            "first_observed": "2022-08-31T13:50:22.696Z",
+            "created": "2022-09-15T12:13:23.741Z",
+            "first_observed": "2022-09-15T12:13:23.741Z",
             "id": "observed-data--42f1ec7e-2a32-4ff7-84a7-fbcb6288c8c9",
-            "last_observed": "2022-08-31T13:50:22.696Z",
-            "modified": "2022-08-31T13:50:22.696Z",
+            "last_observed": "2022-09-15T12:13:23.741Z",
+            "modified": "2022-09-15T12:13:23.741Z",
             "number_observed": 1,
             "object_refs": [
                 "domain-name--3fa3b1c7-15bb-58a8-80ed-5c50c5c7baee"
@@ -42,11 +42,11 @@
             "type": "observed-data"
         },
         {
-            "created": "2022-08-31T13:50:22.696Z",
-            "first_observed": "2022-08-31T13:50:22.696Z",
+            "created": "2022-09-15T12:13:23.741Z",
+            "first_observed": "2022-09-15T12:13:23.741Z",
             "id": "observed-data--a9579acb-62fb-4c4f-9af3-5571c0600edc",
-            "last_observed": "2022-08-31T13:50:22.696Z",
-            "modified": "2022-08-31T13:50:22.696Z",
+            "last_observed": "2022-09-15T12:13:23.741Z",
+            "modified": "2022-09-15T12:13:23.741Z",
             "number_observed": 1,
             "object_refs": [
                 "ipv4-addr--5a1e46bb-e014-52cf-a97e-3e781684636e",
@@ -56,11 +56,11 @@
             "type": "observed-data"
         },
         {
-            "created": "2022-08-31T13:50:22.696Z",
-            "first_observed": "2022-08-31T13:50:22.696Z",
+            "created": "2022-09-15T12:13:23.741Z",
+            "first_observed": "2022-09-15T12:13:23.741Z",
             "id": "observed-data--4b3b859b-d682-47e7-8e27-fbadca8e3b72",
-            "last_observed": "2022-08-31T13:50:22.696Z",
-            "modified": "2022-08-31T13:50:22.696Z",
+            "last_observed": "2022-09-15T12:13:23.741Z",
+            "modified": "2022-09-15T12:13:23.741Z",
             "number_observed": 1,
             "object_refs": [
                 "ipv4-addr--499a5781-4ce8-50d0-a0cc-0ef61787204c"
@@ -70,10 +70,10 @@
         },
         {
             "context": "header_information",
-            "created": "2022-08-31T13:50:22.696Z",
+            "created": "2022-09-15T12:13:23.741Z",
             "description": "IOCAware Auto-Generated STIX IOC Document for VirusShare_5d8129be965fab8115eca34fc84bd7f0",
-            "id": "report--d0c7bf29-3a5f-44f6-9c56-bd5a20cf6f1b",
-            "modified": "2022-08-31T13:50:22.696Z",
+            "id": "report--b3b5a805-cd66-480c-83ec-eb5d1d7d519c",
+            "modified": "2022-09-15T12:13:23.741Z",
             "object_refs": [
                 "domain-name--3fa3b1c7-15bb-58a8-80ed-5c50c5c7baee",
                 "ipv4-addr--5a1e46bb-e014-52cf-a97e-3e781684636e",
@@ -83,6 +83,7 @@
                 "observed-data--a9579acb-62fb-4c4f-9af3-5571c0600edc",
                 "observed-data--4b3b859b-d682-47e7-8e27-fbadca8e3b72"
             ],
+            "published": "2022-09-15T12:13:23.742Z",
             "spec_version": "2.1",
             "type": "report"
         }
