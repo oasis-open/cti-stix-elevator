@@ -39,7 +39,7 @@ def setup_options():
               custom_property_prefix="elevator", infrastructure=False, package_created_by_id=None,
               default_timestamp=None, validator_args="--strict-types", enabled=None, silent=False,
               message_log_directory=None, output_directory=None, markings_allowed="", acs=False,
-              ignore_required_properties=False),
+              ignore_required_properties=False, header_object_type="report"),
 ])
 def test_setup_options_with_disabled(opts):
     options.ALL_OPTIONS = None  # To make sure we can set it again
@@ -58,7 +58,7 @@ def test_setup_options_with_disabled(opts):
               custom_property_prefix="elevator", infrastructure=False, package_created_by_id=None,
               default_timestamp=None, validator_args="--strict-types", disabled=None, silent=False,
               message_log_directory=None, output_directory=None, markings_allowed="", acs=False,
-              ignore_required_properties=False),
+              ignore_required_properties=False, header_object_type="report"),
 ])
 def test_setup_options_with_enabled(opts):
     options.ALL_OPTIONS = None  # To make sure we can set it again
@@ -75,7 +75,7 @@ def test_setup_options_with_enabled(opts):
               custom_property_prefix="elevator", infrastructure=False, package_created_by_id=None,
               default_timestamp=None, validator_args="--strict-types", disabled="902", silent=False,
               message_log_directory=None, output_directory=None, markings_allowed="", acs=False,
-              ignore_required_properties=False),
+              ignore_required_properties=False, header_object_type="report"),
 ])
 def test_setup_options_with_enabled_and_disabled(opts):
     options.ALL_OPTIONS = None  # To make sure we can set it again
