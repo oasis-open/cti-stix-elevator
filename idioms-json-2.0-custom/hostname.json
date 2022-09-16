@@ -2,36 +2,9 @@
     "id": "bundle--75d3aca8-3a82-46fc-8965-c0d1958c9790",
     "objects": [
         {
-            "administrative_area": "US-OR",
-            "country": "US",
             "created": "2021-08-06T14:04:41.000Z",
-            "created_by_ref": "identity--82cc1043-a60a-4371-87e1-479a4e712430",
-            "id": "location--e5d3b24a-d3f6-44e5-8e13-aff4a8c348b2",
-            "modified": "2021-08-06T14:04:41.000Z",
-            "object_marking_refs": [
-                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
-            ],
-            "spec_version": "2.1",
-            "type": "location"
-        },
-        {
-            "created": "2021-08-06T14:04:41.000Z",
-            "created_by_ref": "identity--82cc1043-a60a-4371-87e1-479a4e712430",
-            "id": "relationship--181ca246-2c60-4f1e-9489-00670e5fab32",
-            "modified": "2021-08-06T14:04:41.000Z",
-            "object_marking_refs": [
-                "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
-            ],
-            "relationship_type": "located-at",
-            "source_ref": "identity--82cc1043-a60a-4371-87e1-479a4e712430",
-            "spec_version": "2.1",
-            "target_ref": "location--e5d3b24a-d3f6-44e5-8e13-aff4a8c348b2",
-            "type": "relationship"
-        },
-        {
-            "created": "2021-08-06T14:04:41.000Z",
-            "created_by_ref": "identity--82cc1043-a60a-4371-87e1-479a4e712430",
-            "id": "identity--82cc1043-a60a-4371-87e1-479a4e712430",
+            "created_by_ref": "identity--fa9e6dae-baf1-42bb-8c2c-b582cb0ae604",
+            "id": "identity--fa9e6dae-baf1-42bb-8c2c-b582cb0ae604",
             "identity_class": "organization",
             "labels": [
                 "ais-consent-everyone"
@@ -44,31 +17,29 @@
             "sectors": [
                 "transportation"
             ],
-            "spec_version": "2.1",
             "type": "identity"
         },
         {
             "created": "2021-08-06T14:04:41.000Z",
-            "created_by_ref": "identity--82cc1043-a60a-4371-87e1-479a4e712430",
+            "created_by_ref": "identity--fa9e6dae-baf1-42bb-8c2c-b582cb0ae604",
             "description": "Socket Address123",
             "id": "indicator--5ea04c59-d106-4e2a-a15c-293066fc3187",
-            "indicator_types": [
+            "labels": [
                 "ip-watchlist"
             ],
             "modified": "2021-08-06T14:04:41.000Z",
             "object_marking_refs": [
                 "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
             ],
-            "spec_version": "2.1",
             "type": "indicator",
             "valid_from": "2021-08-06T14:04:41.000000Z"
         },
         {
             "created": "2021-08-06T14:04:41.000Z",
-            "created_by_ref": "identity--82cc1043-a60a-4371-87e1-479a4e712430",
+            "created_by_ref": "identity--fa9e6dae-baf1-42bb-8c2c-b582cb0ae604",
             "description": "Socket Address",
             "id": "indicator--f04fe75a-4717-4b2a-85ad-9adf248b1c3e",
-            "indicator_types": [
+            "labels": [
                 "ip-watchlist"
             ],
             "modified": "2021-08-06T14:04:41.000Z",
@@ -76,29 +47,27 @@
                 "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
             ],
             "pattern": "[domain-name:value = 'mini99.wikipedia.org']",
-            "pattern_type": "stix",
-            "spec_version": "2.1",
             "type": "indicator",
             "valid_from": "2021-08-06T14:04:41.000000Z"
         },
         {
             "context": "header_information",
             "created": "2021-08-06T14:04:41.000Z",
-            "description": "\n\nPACKAGE_INTENTS:\nIndicators",
-            "id": "report--186b051b-0d52-4d8e-a828-74bd3fd7ec58",
+            "id": "report--b9879910-5e2b-49f8-931c-ca2bb914e6ec",
             "modified": "2021-08-06T14:04:41.000Z",
             "name": "NCCIC:STIX_Package-75d3aca8-3a82-46fc-8965-c0d1958c9790",
             "object_refs": [
-                "location--e5d3b24a-d3f6-44e5-8e13-aff4a8c348b2",
-                "relationship--181ca246-2c60-4f1e-9489-00670e5fab32",
-                "identity--82cc1043-a60a-4371-87e1-479a4e712430",
+                "identity--fa9e6dae-baf1-42bb-8c2c-b582cb0ae604",
                 "indicator--5ea04c59-d106-4e2a-a15c-293066fc3187",
                 "indicator--f04fe75a-4717-4b2a-85ad-9adf248b1c3e"
             ],
-            "published": "2022-09-13T16:39:01.630Z",
-            "spec_version": "2.1",
-            "type": "report"
+            "published": "2022-09-16T11:19:27.082Z",
+            "type": "report",
+            "x_elevator_package_intents": [
+                "Indicators"
+            ]
         }
     ],
+    "spec_version": "2.0",
     "type": "bundle"
 }

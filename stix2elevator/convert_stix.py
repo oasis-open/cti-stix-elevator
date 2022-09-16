@@ -333,6 +333,7 @@ def process_description_and_short_description(so, entity, parent_info=False):
             so["description"] += "\n"
         process_short_description(so, entity.short_description, "short_description", parent_info)
 
+
 def process_description_and_short_description_of_sighting(sighting, indicator_id):
     description_for_sighting = ""
     if hasattr(sighting, "descriptions") and sighting.descriptions is not None:
