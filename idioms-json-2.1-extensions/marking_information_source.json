@@ -68,16 +68,7 @@
             "valid_until": "2013-02-01T09:30:47.000000Z"
         },
         {
-            "context": "header_information",
             "created": "2014-05-08T09:00:00.000Z",
-            "extensions": {
-                "extension-definition--faebed16-db10-4824-8538-62d9cd38b117": {
-                    "extension_type": "property-extension",
-                    "package_intents": [
-                        "Indicators - Watchlist"
-                    ]
-                }
-            },
             "id": "report--2a33d4b0-8e7a-4a43-baf0-547d97ad9866",
             "modified": "2014-05-08T09:00:00.000Z",
             "name": "Silver Gray Owl",
@@ -88,6 +79,9 @@
                 "indicator--a8fceb40-86b5-4fcb-b879-ed093e82d2e5"
             ],
             "published": "2022-09-15T15:50:12.213Z",
+            "report_types": [
+                "indicator-watchlist"
+            ],
             "spec_version": "2.1",
             "type": "report"
         }

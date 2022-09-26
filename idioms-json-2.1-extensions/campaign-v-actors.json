@@ -180,18 +180,8 @@
             "type": "relationship"
         },
         {
-            "context": "header_information",
             "created": "2022-09-15T15:50:10.747Z",
             "description": "Foo\nBar\nFred\nBarney",
-            "extensions": {
-                "extension-definition--faebed16-db10-4824-8538-62d9cd38b117": {
-                    "extension_type": "property-extension",
-                    "package_intents": [
-                        "Indicators",
-                        "Threat Report"
-                    ]
-                }
-            },
             "id": "report--e884fee2-4f9c-4078-af05-e04b4f7537f7",
             "modified": "2022-09-15T15:50:10.747Z",
             "name": "regression-test-08-Elevator02",
@@ -209,6 +199,10 @@
                 "relationship--12d87df6-661a-45c1-bc72-c06e2b7435dd"
             ],
             "published": "2022-09-15T15:50:10.751Z",
+            "report_types": [
+                "indicator",
+                "threat-report"
+            ],
             "spec_version": "2.1",
             "type": "report"
         }

@@ -85,17 +85,8 @@
             "valid_from": "2020-11-23T19:26:05.255205Z"
         },
         {
-            "context": "header_information",
             "created": "2020-11-23T14:26:05.000Z",
             "description": "This is the package overview",
-            "extensions": {
-                "extension-definition--faebed16-db10-4824-8538-62d9cd38b117": {
-                    "extension_type": "property-extension",
-                    "package_intents": [
-                        "Indicators"
-                    ]
-                }
-            },
             "id": "report--9b442a67-7654-42e5-b647-183a36182378",
             "modified": "2020-11-23T14:26:05.000Z",
             "name": "Package Title",
@@ -107,6 +98,9 @@
                 "indicator--a35dbed6-9b9c-442e-aaff-4aeeb88a43ef"
             ],
             "published": "2022-09-15T15:50:11.534Z",
+            "report_types": [
+                "indicator"
+            ],
             "spec_version": "2.1",
             "type": "report"
         }

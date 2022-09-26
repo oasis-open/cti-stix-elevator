@@ -83,18 +83,8 @@
             "valid_until": "9999-12-31T00:01:00.000000Z"
         },
         {
-            "context": "header_information",
             "created": "9999-12-31T00:00:00.000Z",
             "description": "Test of FD Pubrel. ",
-            "extensions": {
-                "extension-definition--faebed16-db10-4824-8538-62d9cd38b117": {
-                    "extension_type": "property-extension",
-                    "package_intents": [
-                        "Indicators",
-                        "Threat Report"
-                    ]
-                }
-            },
             "id": "report--6af44599-fc81-43f1-9e19-640f61ff3b46",
             "modified": "9999-12-31T00:00:00.000Z",
             "name": "regression-test-13",
@@ -104,6 +94,10 @@
                 "indicator--3577f4d8-9e4e-4968-a688-1625bf9a8043"
             ],
             "published": "2022-09-15T15:50:12.954Z",
+            "report_types": [
+                "indicator",
+                "threat-report"
+            ],
             "spec_version": "2.1",
             "type": "report"
         }

@@ -82,16 +82,7 @@
             "valid_from": "2021-08-06T14:04:41.000000Z"
         },
         {
-            "context": "header_information",
             "created": "2021-08-06T14:04:41.000Z",
-            "extensions": {
-                "extension-definition--faebed16-db10-4824-8538-62d9cd38b117": {
-                    "extension_type": "property-extension",
-                    "package_intents": [
-                        "Indicators"
-                    ]
-                }
-            },
             "id": "report--4f4b9d39-4458-453d-942a-f9a291408185",
             "modified": "2021-08-06T14:04:41.000Z",
             "name": "NCCIC:STIX_Package-75d3aca8-3a82-46fc-8965-c0d1958c9790",
@@ -103,6 +94,9 @@
                 "indicator--f04fe75a-4717-4b2a-85ad-9adf248b1c3e"
             ],
             "published": "2022-09-15T15:50:11.233Z",
+            "report_types": [
+                "indicator"
+            ],
             "spec_version": "2.1",
             "type": "report"
         }

@@ -62,19 +62,7 @@
             "valid_from": "2016-03-29T20:52:52.716000Z"
         },
         {
-            "context": "header_information",
             "created": "2020-12-31T00:00:00.000Z",
-            "extensions": {
-                "extension-definition--faebed16-db10-4824-8538-62d9cd38b117": {
-                    "extension_type": "property-extension",
-                    "package_intents": [
-                        "Threat Report",
-                        "Indicators",
-                        "Indicators - Endpoint Characteristics",
-                        "Courses of Action"
-                    ]
-                }
-            },
             "id": "report--eb0a1c05-6972-4d55-93c3-fd31daa1135b",
             "modified": "2020-12-31T00:00:00.000Z",
             "object_refs": [
@@ -84,6 +72,12 @@
                 "indicator--45eee277-2d76-4079-91d0-0061a443bac6"
             ],
             "published": "2022-09-15T16:30:00.474Z",
+            "report_types": [
+                "threat-report",
+                "indicator",
+                "indicator-endpoint-characteristics",
+                "courses-of-action"
+            ],
             "spec_version": "2.1",
             "type": "report"
         }
