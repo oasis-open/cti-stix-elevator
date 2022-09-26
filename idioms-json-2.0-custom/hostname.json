@@ -51,9 +51,11 @@
             "valid_from": "2021-08-06T14:04:41.000000Z"
         },
         {
-            "context": "header_information",
             "created": "2021-08-06T14:04:41.000Z",
             "id": "report--b9879910-5e2b-49f8-931c-ca2bb914e6ec",
+            "labels": [
+                "indicator"
+            ],
             "modified": "2021-08-06T14:04:41.000Z",
             "name": "NCCIC:STIX_Package-75d3aca8-3a82-46fc-8965-c0d1958c9790",
             "object_refs": [
@@ -62,10 +64,7 @@
                 "indicator--f04fe75a-4717-4b2a-85ad-9adf248b1c3e"
             ],
             "published": "2022-09-16T11:19:27.082Z",
-            "type": "report",
-            "x_elevator_package_intents": [
-                "Indicators"
-            ]
+            "type": "report"
         }
     ],
     "spec_version": "2.0",

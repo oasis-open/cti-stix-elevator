@@ -54,10 +54,12 @@
             "valid_from": "2020-11-23T19:26:05.255205Z"
         },
         {
-            "context": "header_information",
             "created": "2020-11-23T14:26:05.000Z",
             "description": "This is the package overview",
             "id": "report--22ed36e0-949e-40d2-81ea-906dbe255c43",
+            "labels": [
+                "indicator"
+            ],
             "modified": "2020-11-23T14:26:05.000Z",
             "name": "Package Title",
             "object_refs": [
@@ -66,10 +68,7 @@
                 "indicator--a35dbed6-9b9c-442e-aaff-4aeeb88a43ef"
             ],
             "published": "2022-09-12T14:59:34.960Z",
-            "type": "report",
-            "x_elevator_package_intents": [
-                "Indicators"
-            ]
+            "type": "report"
         }
     ],
     "spec_version": "2.0",

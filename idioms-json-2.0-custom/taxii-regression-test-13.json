@@ -25,10 +25,13 @@
             "x_elevator_confidence": "Medium"
         },
         {
-            "context": "header_information",
             "created": "9999-12-31T00:00:00.000Z",
             "description": "Test of FD Pubrel. ",
             "id": "report--bf3d6190-f471-42a4-ae0e-1ff732e09985",
+            "labels": [
+                "indicator",
+                "threat-report"
+            ],
             "modified": "9999-12-31T00:00:00.000Z",
             "name": "regression-test-13",
             "object_refs": [
@@ -36,11 +39,7 @@
                 "indicator--745e1cd9-4ed7-4862-b07a-9dcc59570141"
             ],
             "published": "2022-09-12T14:59:36.582Z",
-            "type": "report",
-            "x_elevator_package_intents": [
-                "Indicators",
-                "Threat Report"
-            ]
+            "type": "report"
         }
     ],
     "spec_version": "2.0",

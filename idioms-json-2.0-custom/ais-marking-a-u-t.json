@@ -35,22 +35,21 @@
             "valid_from": "2016-03-29T20:52:52.716000Z"
         },
         {
-            "context": "header_information",
             "created": "2020-12-31T00:00:00.000Z",
             "id": "report--8e4c94e3-04e6-4fa8-af4b-06de19c8f577",
+            "labels": [
+                "threat-report",
+                "indicator",
+                "indicator-endpoint-characteristics",
+                "courses-of-action"
+            ],
             "modified": "2020-12-31T00:00:00.000Z",
             "object_refs": [
                 "identity--993bf121-c399-4c4f-bd60-4c7c6e0326b3",
                 "indicator--45eee277-2d76-4079-91d0-0061a443bac6"
             ],
             "published": "2022-09-12T15:13:09.359Z",
-            "type": "report",
-            "x_elevator_package_intents": [
-                "Threat Report",
-                "Indicators",
-                "Indicators - Endpoint Characteristics",
-                "Courses of Action"
-            ]
+            "type": "report"
         }
     ],
     "spec_version": "2.0",

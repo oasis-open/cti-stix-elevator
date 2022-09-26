@@ -38,9 +38,11 @@
             "x_elevator_confidence": "High"
         },
         {
-            "context": "header_information",
             "created": "2014-05-08T09:00:00.000Z",
             "id": "report--e53649c7-8362-405c-9158-7e4c01af4bcb",
+            "labels": [
+                "indicator-watchlist"
+            ],
             "modified": "2014-05-08T09:00:00.000Z",
             "name": "Silver Gray Owl",
             "object_refs": [
@@ -48,10 +50,7 @@
                 "indicator--93bee00f-a1cb-4e2a-84e5-6d11a37f3662"
             ],
             "published": "2022-09-12T14:59:35.530Z",
-            "type": "report",
-            "x_elevator_package_intents": [
-                "Indicators - Watchlist"
-            ]
+            "type": "report"
         }
     ],
     "spec_version": "2.0",

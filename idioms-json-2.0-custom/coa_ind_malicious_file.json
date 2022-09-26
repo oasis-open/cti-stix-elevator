@@ -66,9 +66,14 @@
             "type": "relationship"
         },
         {
-            "context": "header_information",
             "created": "9999-12-31T00:00:00.000Z",
             "id": "report--99cd62a2-a762-46d2-9305-4fa5d89c43fe",
+            "labels": [
+                "threat-report",
+                "indicator",
+                "indicator-endpoint-characteristics",
+                "courses-of-action"
+            ],
             "modified": "9999-12-31T00:00:00.000Z",
             "object_refs": [
                 "identity--3e006f10-d8a8-4c9a-8cb3-953bf5014433",
@@ -77,13 +82,7 @@
                 "relationship--254077cd-5f8d-44e3-9f6c-81d23b6e269f"
             ],
             "published": "2022-09-12T14:59:34.155Z",
-            "type": "report",
-            "x_elevator_package_intents": [
-                "Threat Report",
-                "Indicators",
-                "Indicators - Endpoint Characteristics",
-                "Courses of Action"
-            ]
+            "type": "report"
         }
     ],
     "spec_version": "2.0",
