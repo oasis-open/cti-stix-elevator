@@ -25,10 +25,12 @@
             "valid_from": "2015-05-15T09:00:00.000000Z"
         },
         {
-            "context": "header_information",
             "created": "2022-09-13T11:55:14.840Z",
             "description": "IOCAware Auto-Generated STIX IOC Document for VirusShare_5d8129be965fab8115eca34fc84bd7f0",
             "id": "report--7fc88fc4-8bd3-4655-9c75-230a7042cbd8",
+            "labels": [
+                "unknown"
+            ],
             "modified": "2022-09-13T11:55:14.840Z",
             "object_refs": [
                 "indicator--6116b44e-a7e9-11e3-a82f-000c29b241af",

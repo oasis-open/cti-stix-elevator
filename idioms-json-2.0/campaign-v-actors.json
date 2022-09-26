@@ -131,10 +131,13 @@
             "type": "relationship"
         },
         {
-            "context": "header_information",
             "created": "2022-09-13T12:03:29.688Z",
-            "description": "Foo\nBar\nFred\nBarney\n\nPACKAGE_INTENTS:\nIndicators,\nThreat Report",
+            "description": "Foo\nBar\nFred\nBarney",
             "id": "report--eb25c367-aaea-48b3-9daa-fe96504e5bc3",
+            "labels": [
+                "indicator",
+                "threat-report"
+            ],
             "modified": "2022-09-13T12:03:29.688Z",
             "name": "regression-test-08-Elevator02",
             "object_refs": [

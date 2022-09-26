@@ -49,10 +49,11 @@
             "type": "observed-data"
         },
         {
-            "context": "header_information",
             "created": "2022-09-13T12:03:30.349Z",
-            "description": "\n\nPACKAGE_INTENTS:\nIndicators - Malware Artifacts",
             "id": "report--7d32e647-406b-4584-b138-21674a5d1b5c",
+            "labels": [
+                "indicator-malware-artifacts"
+            ],
             "modified": "2022-09-13T12:03:30.349Z",
             "name": "File Hash Reputation Service Results",
             "object_refs": [

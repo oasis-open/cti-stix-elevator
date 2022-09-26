@@ -35,10 +35,13 @@
             "valid_from": "2222-12-31T00:00:00.000000Z"
         },
         {
-            "context": "header_information",
             "created": "9999-12-31T00:00:00.000Z",
-            "description": "Test special characters ç ã ì\n\nPACKAGE_INTENTS:\nIndicators,\nThreat Report",
+            "description": "Test special characters ç ã ì",
             "id": "report--1b2a746d-67d9-4fc0-b5b4-40bc11c13cda",
+            "labels": [
+                "indicator",
+                "threat-report"
+            ],
             "modified": "9999-12-31T00:00:00.000Z",
             "name": "regression-test-14: test special characters â ü ÿ /",
             "object_refs": [

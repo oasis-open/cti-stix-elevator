@@ -24,10 +24,13 @@
             "valid_until": "9999-12-31T00:01:00.000000Z"
         },
         {
-            "context": "header_information",
             "created": "9999-12-31T00:00:00.000Z",
-            "description": "Test of FD Pubrel. \n\nPACKAGE_INTENTS:\nIndicators,\nThreat Report",
+            "description": "Test of FD Pubrel. ",
             "id": "report--68434b1c-2975-4970-9266-26b471779db7",
+            "labels": [
+                "indicator",
+                "threat-report"
+            ],
             "modified": "9999-12-31T00:00:00.000Z",
             "name": "regression-test-13",
             "object_refs": [

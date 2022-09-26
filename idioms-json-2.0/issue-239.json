@@ -54,10 +54,12 @@
             "valid_from": "2020-11-23T19:26:05.255205Z"
         },
         {
-            "context": "header_information",
             "created": "2020-11-23T14:26:05.000Z",
-            "description": "This is the package overview\n\nPACKAGE_INTENTS:\nIndicators",
+            "description": "This is the package overview",
             "id": "report--99da9d67-355c-492e-924d-7f31ffe501ca",
+            "labels": [
+                "indicator"
+            ],
             "modified": "2020-11-23T14:26:05.000Z",
             "name": "Package Title",
             "object_refs": [

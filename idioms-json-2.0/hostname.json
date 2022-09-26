@@ -51,10 +51,11 @@
             "valid_from": "2021-08-06T14:04:41.000000Z"
         },
         {
-            "context": "header_information",
             "created": "2021-08-06T14:04:41.000Z",
-            "description": "\n\nPACKAGE_INTENTS:\nIndicators",
             "id": "report--d859102c-6482-4a6c-ade7-039ec29e68b5",
+            "labels": [
+                "indicator"
+            ],
             "modified": "2021-08-06T14:04:41.000Z",
             "name": "NCCIC:STIX_Package-75d3aca8-3a82-46fc-8965-c0d1958c9790",
             "object_refs": [

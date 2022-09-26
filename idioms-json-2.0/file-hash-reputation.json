@@ -15,10 +15,11 @@
             "valid_from": "2015-07-20T19:52:13.853585Z"
         },
         {
-            "context": "header_information",
             "created": "2022-09-13T12:03:30.514Z",
-            "description": "\n\nPACKAGE_INTENTS:\nIndicators - Malware Artifacts",
             "id": "report--b18135e0-97a6-4d6b-9d91-62a4bbec10ce",
+            "labels": [
+                "indicator-malware-artifacts"
+            ],
             "modified": "2022-09-13T12:03:30.514Z",
             "name": "File Hash Reputation Service Results",
             "object_refs": [

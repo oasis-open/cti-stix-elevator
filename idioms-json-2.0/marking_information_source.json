@@ -37,10 +37,11 @@
             "valid_until": "2013-02-01T09:30:47.000000Z"
         },
         {
-            "context": "header_information",
             "created": "2014-05-08T09:00:00.000Z",
-            "description": "\n\nPACKAGE_INTENTS:\nIndicators - Watchlist",
             "id": "report--c645a139-eadd-4507-8c70-70fc17a1b73a",
+            "labels": [
+                "indicator-watchlist"
+            ],
             "modified": "2014-05-08T09:00:00.000Z",
             "name": "Silver Gray Owl",
             "object_refs": [

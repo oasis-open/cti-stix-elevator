@@ -24,10 +24,11 @@
             "valid_from": "2022-09-13T12:03:30.457Z"
         },
         {
-            "context": "header_information",
             "created": "2022-09-13T12:03:30.457Z",
-            "description": "\n\nPACKAGE_INTENTS:\nIndicators - Malware Artifacts",
             "id": "report--f90b6bf4-e6c7-44b3-ba2d-357ddbb5a8ce",
+            "labels": [
+                "indicator-malware-artifacts"
+            ],
             "modified": "2022-09-13T12:03:30.457Z",
             "name": "File Hash Reputation Service Results",
             "object_refs": [
