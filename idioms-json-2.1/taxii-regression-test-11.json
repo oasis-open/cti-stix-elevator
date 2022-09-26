@@ -182,9 +182,8 @@
             "type": "relationship"
         },
         {
-            "context": "header_information",
             "created": "9999-12-31T00:00:00.000Z",
-            "description": "Test of FDAIS and FOUO.  Confirm that the following string is auto-sanitized, in this text field - Regression_Test_11. Confirm the string with which it is replaced matches the sanitized ID for the package.\n\nPACKAGE_INTENTS:\nIndicators,\nThreat Report",
+            "description": "Test of FDAIS and FOUO.  Confirm that the following string is auto-sanitized, in this text field - Regression_Test_11. Confirm the string with which it is replaced matches the sanitized ID for the package.",
             "id": "report--9fc469e3-4e44-4181-bfc0-01b22b67f736",
             "modified": "9999-12-31T00:00:00.000Z",
             "name": "regression-test-11",
@@ -200,6 +199,10 @@
                 "relationship--1cd1248c-26a0-4db3-92d0-3a44ebf2119b"
             ],
             "published": "2022-09-13T12:58:05.405Z",
+            "report_types": [
+                "indicator",
+                "threat-report"
+            ],
             "spec_version": "2.1",
             "type": "report"
         }

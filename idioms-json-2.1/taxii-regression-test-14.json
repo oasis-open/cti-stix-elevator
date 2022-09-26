@@ -76,9 +76,8 @@
             "valid_from": "2222-12-31T00:00:00.000000Z"
         },
         {
-            "context": "header_information",
             "created": "9999-12-31T00:00:00.000Z",
-            "description": "Test special characters ç ã ì\n\nPACKAGE_INTENTS:\nIndicators,\nThreat Report",
+            "description": "Test special characters ç ã ì",
             "id": "report--52caef6f-118f-4e6c-a915-f1c2f19422f0",
             "modified": "9999-12-31T00:00:00.000Z",
             "name": "regression-test-14: test special characters â ü ÿ /",
@@ -89,6 +88,10 @@
                 "indicator--7c153acf-0f9e-45d4-9163-d1618b8eaa9c"
             ],
             "published": "2022-09-13T12:58:05.496Z",
+            "report_types": [
+                "indicator",
+                "threat-report"
+            ],
             "spec_version": "2.1",
             "type": "report"
         }

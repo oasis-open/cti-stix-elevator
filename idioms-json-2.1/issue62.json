@@ -106,7 +106,6 @@
             "type": "observed-data"
         },
         {
-            "context": "header_information",
             "created": "2022-09-13T12:58:04.332Z",
             "description": "IOCAware Auto-Generated STIX IOC Document for VirusShare_5d8129be965fab8115eca34fc84bd7f0",
             "id": "report--dbe28e9e-e12a-4a90-9fd6-548186e23296",

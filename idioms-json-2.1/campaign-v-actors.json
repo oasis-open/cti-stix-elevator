@@ -164,9 +164,8 @@
             "type": "relationship"
         },
         {
-            "context": "header_information",
             "created": "2022-09-13T12:58:02.116Z",
-            "description": "Foo\nBar\nFred\nBarney\n\nPACKAGE_INTENTS:\nIndicators,\nThreat Report",
+            "description": "Foo\nBar\nFred\nBarney",
             "id": "report--fd8c6760-88ef-4537-9e37-68ef5afe3afd",
             "modified": "2022-09-13T12:58:02.116Z",
             "name": "regression-test-08-Elevator02",
@@ -184,6 +183,10 @@
                 "relationship--7b56c3c2-d0ff-4044-91e7-d4f71d89713e"
             ],
             "published": "2022-09-13T12:58:02.120Z",
+            "report_types": [
+                "indicator",
+                "threat-report"
+            ],
             "spec_version": "2.1",
             "type": "report"
         }

@@ -28,9 +28,7 @@
             "valid_from": "2022-09-13T12:58:03.276Z"
         },
         {
-            "context": "header_information",
             "created": "2022-09-13T12:58:03.276Z",
-            "description": "\n\nPACKAGE_INTENTS:\nIndicators - Malware Artifacts",
             "id": "report--e35318fb-793f-49ee-b949-b11ad228e40b",
             "modified": "2022-09-13T12:58:03.276Z",
             "name": "File Hash Reputation Service Results",
@@ -39,6 +37,9 @@
                 "indicator--b1f1ce62-63c6-448c-bdc7-9ead04826ad2"
             ],
             "published": "2022-09-13T12:58:03.279Z",
+            "report_types": [
+                "indicator-malware-artifacts"
+            ],
             "spec_version": "2.1",
             "type": "report"
         }
