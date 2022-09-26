@@ -96,15 +96,17 @@ def convert_controlled_vocabs_to_open_vocabs(new_obj, new_property_name, old_voc
             new_obj[new_property_name] = ["unknown"]
         warn("No STIX 1.x vocab value given for %s, using 'unknown'", 509, new_property_name)
     else:
-        new_obj[new_property_name] = []
+        values = []
         for t in old_vocabs:
-            if new_obj[new_property_name] is None or not only_one:
+            if values is None or not only_one:
                 if isinstance(t, (str, bytes)):
-                    new_obj[new_property_name].append(map_vocabs_to_label(t, vocab_mapping))
+                    values.append(map_vocabs_to_label(t, vocab_mapping))
                 else:
-                    new_obj[new_property_name].append(map_vocabs_to_label(str(t.value), vocab_mapping))
+                    values.append(map_vocabs_to_label(str(t.value), vocab_mapping))
             else:
                 warn("Only one %s allowed in STIX 2.0 - used first one", 510, new_property_name)
+        if values:
+            new_obj[new_property_name] = values
 
 
 def strftime_with_appropriate_fractional_seconds(timestamp, milliseconds_only):

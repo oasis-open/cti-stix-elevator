@@ -2806,13 +2806,22 @@ def handle_missing_properties_of_stix_header(sdo_instance, stix_package_header, 
 
 def create_object_for_package_header(stix_package_header, env, type_of_obj):
     sdo_instance = create_basic_object(type_of_obj, None, env, prime_properties=False)
-    sdo_instance["context"] = "header_information"
     if hasattr(stix_package_header, "title") and stix_package_header.title is not None:
         sdo_instance["name"] = stix_package_header.title
     process_description_and_short_description(sdo_instance, stix_package_header)
-    handle_missing_properties_of_stix_header(sdo_instance,
-                                             stix_package_header,
-                                             type_of_obj)
+    if type_of_obj == 'report':
+        spec_version = get_option_value("spec_version")
+        convert_controlled_vocabs_to_open_vocabs(sdo_instance,
+                                                 "labels" if spec_version == "2.0" else "report_types",
+                                                 stix_package_header.package_intents,
+                                                 REPORT_LABELS_MAP,
+                                                 False,
+                                                 required=spec_version == "2.0")
+    else:
+        sdo_instance["context"] = "header_information"
+        handle_missing_properties_of_stix_header(sdo_instance,
+                                                 stix_package_header,
+                                                 type_of_obj)
     sdo_instance["object_refs"] = [x["id"] for x in env.bundle_instance["objects"]]
     if type_of_obj == "report":
         sdo_instance["published"] = strftime_with_appropriate_fractional_seconds(datetime.now(), True)

@@ -83,7 +83,6 @@
             "valid_until": "9999-12-31T00:01:00.000000Z"
         },
         {
-            "context": "header_information",
             "created": "9999-12-31T00:00:00.000Z",
             "description": "Test of FD Pubrel. ",
             "id": "report--60a32d93-54f7-4c47-aabe-d508fc9214b1",
@@ -95,12 +94,12 @@
                 "indicator--d5055aba-3490-4bbf-ad41-7041ceadb0b9"
             ],
             "published": "2022-09-15T12:13:24.027Z",
+            "report_types": [
+                "indicator",
+                "threat-report"
+            ],
             "spec_version": "2.1",
-            "type": "report",
-            "x_elevator_package_intents": [
-                "Indicators",
-                "Threat Report"
-            ]
+            "type": "report"
         }
     ],
     "type": "bundle"

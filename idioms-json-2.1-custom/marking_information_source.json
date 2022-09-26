@@ -68,7 +68,6 @@
             "valid_until": "2013-02-01T09:30:47.000000Z"
         },
         {
-            "context": "header_information",
             "created": "2014-05-08T09:00:00.000Z",
             "id": "report--cb84eb6c-6e7c-48f0-ac02-1a3561e16d91",
             "modified": "2014-05-08T09:00:00.000Z",
@@ -80,11 +79,11 @@
                 "indicator--8ec768ff-5341-4328-b063-72b813f1437d"
             ],
             "published": "2022-09-15T12:13:23.155Z",
+            "report_types": [
+                "indicator-watchlist"
+            ],
             "spec_version": "2.1",
-            "type": "report",
-            "x_elevator_package_intents": [
-                "Indicators - Watchlist"
-            ]
+            "type": "report"
         }
     ],
     "type": "bundle"

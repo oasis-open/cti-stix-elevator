@@ -85,7 +85,6 @@
             "valid_from": "2020-11-23T19:26:05.255205Z"
         },
         {
-            "context": "header_information",
             "created": "2020-11-23T14:26:05.000Z",
             "description": "This is the package overview",
             "id": "report--13acb1b3-e293-475c-8739-51ecefe47926",
@@ -99,11 +98,11 @@
                 "indicator--a35dbed6-9b9c-442e-aaff-4aeeb88a43ef"
             ],
             "published": "2022-09-15T12:13:22.600Z",
+            "report_types": [
+                "indicator"
+            ],
             "spec_version": "2.1",
-            "type": "report",
-            "x_elevator_package_intents": [
-                "Indicators"
-            ]
+            "type": "report"
         }
     ],
     "type": "bundle"

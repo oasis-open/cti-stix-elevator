@@ -170,7 +170,6 @@
             "type": "relationship"
         },
         {
-            "context": "header_information",
             "created": "2022-09-15T12:13:21.811Z",
             "description": "Foo\nBar\nFred\nBarney",
             "id": "report--15631da7-3766-4ebc-ae4c-1eb5910c9dc3",
@@ -190,12 +189,12 @@
                 "relationship--9d662b1b-3e5c-48bf-9ce7-0e65b42a312f"
             ],
             "published": "2022-09-15T12:13:21.814Z",
+            "report_types": [
+                "indicator",
+                "threat-report"
+            ],
             "spec_version": "2.1",
-            "type": "report",
-            "x_elevator_package_intents": [
-                "Indicators",
-                "Threat Report"
-            ]
+            "type": "report"
         }
     ],
     "type": "bundle"

@@ -55,7 +55,6 @@
             "type": "observed-data"
         },
         {
-            "context": "header_information",
             "created": "2022-09-15T12:13:22.158Z",
             "id": "report--aa3a6678-250f-41a4-bbe9-79347c92cbcb",
             "modified": "2022-09-15T12:13:22.158Z",
@@ -67,11 +66,11 @@
                 "observed-data--a8770cfa-7921-43a5-b145-cf168aa3b019"
             ],
             "published": "2022-09-15T12:13:22.159Z",
+            "report_types": [
+                "indicator-malware-artifacts"
+            ],
             "spec_version": "2.1",
-            "type": "report",
-            "x_elevator_package_intents": [
-                "Indicators - Malware Artifacts"
-            ]
+            "type": "report"
         }
     ],
     "type": "bundle"
