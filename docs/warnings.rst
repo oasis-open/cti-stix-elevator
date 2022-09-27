@@ -31,6 +31,7 @@ The missing policy option of 'use-extensions' cannot be used with version 2.0. '
 ACS data markings cannot be supported in version 2.0. --acs option is ignored.                                     217     warn
 Only one of the options --enable and --disable can be used                                                         218     error
 The STIX package header contained no extra information that needed to be generated in STIX 2.x                     219     info
+*id* was created to store the extra STIX package header information                                                220     info
 ================================================================================================================== ====    =====
 
 

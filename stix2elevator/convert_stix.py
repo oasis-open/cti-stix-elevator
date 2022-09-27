@@ -2827,6 +2827,7 @@ def create_object_for_package_header(stix_package_header, env, type_of_obj):
         sdo_instance["published"] = strftime_with_appropriate_fractional_seconds(datetime.now(), True)
     if "description" in sdo_instance and sdo_instance["description"] == "":
         del sdo_instance["description"]
+    info("%s was created to store the extra STIX package header information", 220, sdo_instance["id"])
     return sdo_instance
 
 
