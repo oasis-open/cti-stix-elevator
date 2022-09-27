@@ -15,6 +15,21 @@
             "spec_version": "2.1",
             "type": "indicator",
             "valid_from": "2015-07-20T19:52:13.853585Z"
+        },
+        {
+            "created": "2022-09-15T15:50:11.173Z",
+            "id": "report--96ec52b2-80da-486f-af21-fcb39370651c",
+            "modified": "2022-09-15T15:50:11.173Z",
+            "name": "File Hash Reputation Service Results",
+            "object_refs": [
+                "indicator--14975dea-86cd-4211-a5f8-9c2e4daab69a"
+            ],
+            "published": "2022-09-15T15:50:11.174Z",
+            "report_types": [
+                "indicator-malware-artifacts"
+            ],
+            "spec_version": "2.1",
+            "type": "report"
         }
     ],
     "type": "bundle"

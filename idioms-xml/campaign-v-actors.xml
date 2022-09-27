@@ -28,7 +28,11 @@
 		<stix:Title>regression-test-08-Elevator02</stix:Title>
 		<stix:Package_Intent xsi:type="stixVocabs:PackageIntentVocab-1.0">Indicators</stix:Package_Intent>
 		<stix:Package_Intent xsi:type="stixVocabs:PackageIntentVocab-1.0">Threat Report</stix:Package_Intent>
-		<stix:Handling>
+		<stix:Description>Foo</stix:Description>
+        <stix:Description>Bar</stix:Description>
+        <stix:Short_Description>Fred</stix:Short_Description>
+        <stix:Short_Description>Barney</stix:Short_Description>
+        <stix:Handling>
 			<marking:Marking>
 				<marking:Controlled_Structure>//node() | //@*</marking:Controlled_Structure>
 				<marking:Marking_Structure xsi:type="AIS:AISMarkingStructure">

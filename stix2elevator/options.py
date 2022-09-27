@@ -147,7 +147,7 @@ class ElevatorOptions(object):
                  silent=False, message_log_directory=None,
                  policy="no_policy", output_directory=None, log_level="INFO",
                  markings_allowed="", spec_version="2.1", acs=False,
-                 ignore_required_properties=False):
+                 ignore_required_properties=False, header_object_type="report"):
 
         if cmd_args is not None:
             if hasattr(cmd_args, "file_"):
@@ -161,6 +161,7 @@ class ElevatorOptions(object):
             self.default_timestamp = cmd_args.default_timestamp
             self.validator_args = cmd_args.validator_args
             self.ignore_required_properties = cmd_args.ignore_required_properties
+            self.header_object_type = cmd_args.header_object_type
 
             self.enabled = cmd_args.enabled
             self.disabled = cmd_args.disabled
@@ -184,6 +185,7 @@ class ElevatorOptions(object):
             self.default_timestamp = default_timestamp
             self.validator_args = validator_args
             self.ignore_required_properties = ignore_required_properties
+            self.header_object_type = header_object_type
 
             self.enabled = enabled
             self.disabled = disabled
@@ -264,6 +266,7 @@ def initialize_options(options=None):
         if ALL_OPTIONS.missing_policy == "use-extensions" and ALL_OPTIONS.spec_version == "2.0":
             error("The missing policy option of 'use-extensions' cannot be used with version 2.0. 'use-custom-properies' is suggested", 216)
 
+        # acs markings need extensions-definitions, which do not exist in 2.0
         if ALL_OPTIONS.acs and ALL_OPTIONS.spec_version == "2.0":
             warn("ACS data markings cannot be supported in version 2.0. --acs option is ignored.", 217)
             ALL_OPTIONS.acs = False
@@ -305,13 +308,13 @@ def msg_id_enabled(msg_id):
 
 # These codes are aligned with elevator_log_messages spreadsheet.
 
-# current number of messages: 177
+# current number of messages: 189
 
 CHECK_CODES = [201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213,
-               214, 215, 216, 217,
+               214, 215, 216, 217, 218, 219, 220,
 
                301, 302, 303, 304, 305, 306, 307, 308, 309, 310, 311, 312, 313,
-               314, 315, 316, 317, 318, 319,
+               314, 315, 316, 317, 318, 319, 320,
 
                401, 402, 403, 404, 405, 406, 407, 408, 409, 410, 411, 412, 413,
                414, 415, 416, 417, 418, 419, 420, 421, 422, 423, 424, 425, 426,

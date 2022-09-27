@@ -53,6 +53,16 @@ def _get_arg_parser(is_script=True):
     )
 
     parser.add_argument(
+        "--header-object-type",
+        help="What STIX 2 type to use to store extra information from the STIX 1 package header."
+             "The default is 'report'.",
+        choices=["report", "grouping"],
+        dest="header_object_type",
+        action="store",
+        default="report"
+    )
+
+    parser.add_argument(
         "--custom-property-prefix",
         help="Prefix to use for custom property names when missing policy is 'use-custom-properties'. The default is 'elevator'.",
         dest="custom_property_prefix",

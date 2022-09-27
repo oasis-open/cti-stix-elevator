@@ -5,8 +5,8 @@
             "administrative_area": "US-DC",
             "country": "US",
             "created": "2020-12-31T00:00:00.000Z",
-            "created_by_ref": "identity--8562f668-6fc6-4538-8168-a3e61b44a055",
-            "id": "location--286ee34b-6d30-491f-bb4e-5ae9b19f0c8f",
+            "created_by_ref": "identity--c2d60a3c-7444-4df8-a9c1-742b2082d34e",
+            "id": "location--ae470fc3-b715-463e-b109-ab05f8e87f8c",
             "modified": "2020-12-31T00:00:00.000Z",
             "object_marking_refs": [
                 "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
@@ -16,22 +16,22 @@
         },
         {
             "created": "2020-12-31T00:00:00.000Z",
-            "created_by_ref": "identity--8562f668-6fc6-4538-8168-a3e61b44a055",
-            "id": "relationship--c9fce876-5ec2-4d54-aca1-bd3457b8e3ab",
+            "created_by_ref": "identity--c2d60a3c-7444-4df8-a9c1-742b2082d34e",
+            "id": "relationship--bb024da8-d54c-45ae-ab04-476f9e964270",
             "modified": "2020-12-31T00:00:00.000Z",
             "object_marking_refs": [
                 "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
             ],
             "relationship_type": "located-at",
-            "source_ref": "identity--8562f668-6fc6-4538-8168-a3e61b44a055",
+            "source_ref": "identity--c2d60a3c-7444-4df8-a9c1-742b2082d34e",
             "spec_version": "2.1",
-            "target_ref": "location--286ee34b-6d30-491f-bb4e-5ae9b19f0c8f",
+            "target_ref": "location--ae470fc3-b715-463e-b109-ab05f8e87f8c",
             "type": "relationship"
         },
         {
             "created": "2020-12-31T00:00:00.000Z",
-            "created_by_ref": "identity--8562f668-6fc6-4538-8168-a3e61b44a055",
-            "id": "identity--8562f668-6fc6-4538-8168-a3e61b44a055",
+            "created_by_ref": "identity--c2d60a3c-7444-4df8-a9c1-742b2082d34e",
+            "id": "identity--c2d60a3c-7444-4df8-a9c1-742b2082d34e",
             "identity_class": "organization",
             "labels": [
                 "ais-consent-none"
@@ -49,7 +49,7 @@
         },
         {
             "created": "2016-03-29T20:52:52.716Z",
-            "created_by_ref": "identity--8562f668-6fc6-4538-8168-a3e61b44a055",
+            "created_by_ref": "identity--c2d60a3c-7444-4df8-a9c1-742b2082d34e",
             "id": "indicator--45eee277-2d76-4079-91d0-0061a443bac6",
             "modified": "2016-03-29T20:52:52.716Z",
             "object_marking_refs": [
@@ -60,6 +60,26 @@
             "spec_version": "2.1",
             "type": "indicator",
             "valid_from": "2016-03-29T20:52:52.716000Z"
+        },
+        {
+            "created": "2020-12-31T00:00:00.000Z",
+            "id": "report--fd3b3d0c-62ee-46a9-94e1-58d5100eeb43",
+            "modified": "2020-12-31T00:00:00.000Z",
+            "object_refs": [
+                "location--ae470fc3-b715-463e-b109-ab05f8e87f8c",
+                "relationship--bb024da8-d54c-45ae-ab04-476f9e964270",
+                "identity--c2d60a3c-7444-4df8-a9c1-742b2082d34e",
+                "indicator--45eee277-2d76-4079-91d0-0061a443bac6"
+            ],
+            "published": "2022-09-15T16:10:39.739Z",
+            "report_types": [
+                "threat-report",
+                "indicator",
+                "indicator-endpoint-characteristics",
+                "courses-of-action"
+            ],
+            "spec_version": "2.1",
+            "type": "report"
         }
     ],
     "type": "bundle"

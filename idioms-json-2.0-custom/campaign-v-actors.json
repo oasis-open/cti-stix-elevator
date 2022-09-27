@@ -2,14 +2,14 @@
     "id": "bundle--81810123-b298-40f6-a4e7-186efcd07670",
     "objects": [
         {
-            "created": "2021-09-09T16:24:08.868Z",
-            "created_by_ref": "identity--c3cdffa6-c173-4208-95d3-67a4958ca4da",
-            "id": "identity--c3cdffa6-c173-4208-95d3-67a4958ca4da",
+            "created": "2022-09-12T14:59:34.099Z",
+            "created_by_ref": "identity--99b3fd65-9393-42e8-baf6-3075d9f3bf02",
+            "id": "identity--99b3fd65-9393-42e8-baf6-3075d9f3bf02",
             "identity_class": "organization",
             "labels": [
                 "ais-consent-usg"
             ],
-            "modified": "2021-09-09T16:24:08.868Z",
+            "modified": "2022-09-12T14:59:34.099Z",
             "name": "ACME CORP",
             "object_marking_refs": [
                 "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
@@ -78,7 +78,7 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
-            "id": "relationship--f405bb7a-65be-4008-a6cd-41152987aa5e",
+            "id": "relationship--12635606-0e38-4a76-9c26-ad8a69e43005",
             "modified": "2014-08-08T15:50:10.983Z",
             "object_marking_refs": [
                 "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
@@ -90,7 +90,7 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
-            "id": "relationship--31835b63-06a0-426a-a572-ae58372c7b6b",
+            "id": "relationship--fb16da1e-d79f-409a-97b9-424af61988c3",
             "modified": "2014-08-08T15:50:10.983Z",
             "object_marking_refs": [
                 "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
@@ -102,7 +102,7 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
-            "id": "relationship--49accbe2-553d-4b7c-b5b6-ee494abbd296",
+            "id": "relationship--435ae8d9-9d40-4a2a-8a8f-b0f8671648b0",
             "modified": "2014-08-08T15:50:10.983Z",
             "object_marking_refs": [
                 "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
@@ -114,7 +114,7 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
-            "id": "relationship--6b4c7b6a-55e9-4e54-ba2f-194fddbb814b",
+            "id": "relationship--d7678d44-b698-4e09-b108-9311f90a7398",
             "modified": "2014-08-08T15:50:10.983Z",
             "object_marking_refs": [
                 "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
@@ -126,7 +126,7 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
-            "id": "relationship--c08beb53-1ccd-4175-a8bf-b5ada3851801",
+            "id": "relationship--d90d5db8-e6b9-4d5d-b449-7775438a876e",
             "modified": "2014-08-08T15:50:10.983Z",
             "object_marking_refs": [
                 "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
@@ -135,6 +135,30 @@
             "source_ref": "campaign--e5268b6e-4931-42f1-b379-87f48eb41b1e",
             "target_ref": "threat-actor--56f3f0db-b5d5-431c-ae56-c18f02caf500",
             "type": "relationship"
+        },
+        {
+            "created": "2022-09-12T14:59:34.099Z",
+            "description": "Foo\nBar\nFred\nBarney",
+            "id": "report--4e2fa6ba-822c-445a-95c1-b3e93cf9bd9b",
+            "labels": [
+                "indicator",
+                "threat-report"
+            ],
+            "modified": "2022-09-12T14:59:34.099Z",
+            "name": "regression-test-08-Elevator02",
+            "object_refs": [
+                "identity--99b3fd65-9393-42e8-baf6-3075d9f3bf02",
+                "identity--2d1c6ab3-5e4e-48ac-a32b-f0c01c2836a8",
+                "threat-actor--56f3f0db-b5d5-431c-ae56-c18f02caf500",
+                "campaign--e5268b6e-4931-42f1-b379-87f48eb41b1e",
+                "relationship--12635606-0e38-4a76-9c26-ad8a69e43005",
+                "relationship--fb16da1e-d79f-409a-97b9-424af61988c3",
+                "relationship--435ae8d9-9d40-4a2a-8a8f-b0f8671648b0",
+                "relationship--d7678d44-b698-4e09-b108-9311f90a7398",
+                "relationship--d90d5db8-e6b9-4d5d-b449-7775438a876e"
+            ],
+            "published": "2022-09-12T14:59:34.102Z",
+            "type": "report"
         }
     ],
     "spec_version": "2.0",

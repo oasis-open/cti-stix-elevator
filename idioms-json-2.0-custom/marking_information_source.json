@@ -3,8 +3,8 @@
     "objects": [
         {
             "created": "2014-05-08T09:00:00.000Z",
-            "created_by_ref": "identity--94463bad-2ff1-45f0-a575-c296e4aaf572",
-            "id": "identity--94463bad-2ff1-45f0-a575-c296e4aaf572",
+            "created_by_ref": "identity--a7c52e81-4525-4b87-a7b3-3f7d40cb8e24",
+            "id": "identity--a7c52e81-4525-4b87-a7b3-3f7d40cb8e24",
             "identity_class": "organization",
             "labels": [
                 "ais-consent-everyone"
@@ -22,7 +22,7 @@
         {
             "created": "2015-05-15T09:00:00.000Z",
             "description": "This is a cyber threat indicator for instances of US-China_Q14 phishing attempts.",
-            "id": "indicator--1025f24f-fe4f-4c11-8512-1fd4d7620022",
+            "id": "indicator--93bee00f-a1cb-4e2a-84e5-6d11a37f3662",
             "labels": [
                 "malicious-email"
             ],
@@ -36,6 +36,21 @@
             "valid_from": "2012-12-01T09:30:47.000000Z",
             "valid_until": "2013-02-01T09:30:47.000000Z",
             "x_elevator_confidence": "High"
+        },
+        {
+            "created": "2014-05-08T09:00:00.000Z",
+            "id": "report--e53649c7-8362-405c-9158-7e4c01af4bcb",
+            "labels": [
+                "indicator-watchlist"
+            ],
+            "modified": "2014-05-08T09:00:00.000Z",
+            "name": "Silver Gray Owl",
+            "object_refs": [
+                "identity--a7c52e81-4525-4b87-a7b3-3f7d40cb8e24",
+                "indicator--93bee00f-a1cb-4e2a-84e5-6d11a37f3662"
+            ],
+            "published": "2022-09-12T14:59:35.530Z",
+            "type": "report"
         }
     ],
     "spec_version": "2.0",

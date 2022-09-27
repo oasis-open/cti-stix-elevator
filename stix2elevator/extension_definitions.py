@@ -102,6 +102,22 @@ EXTENSION_DEFINITION_FOR_STIX_1_X = {
         "version": "1.0.0",
         "extension_types": ["property-extension"]
     },
+    "grouping": {
+        "id": "extension-definition--1db7034e-6002-43ea-902d-56ff9fccd2e3",
+        "type": "extension-definition",
+        "spec_version": "2.1",
+        "name": "Extension to support STIX 1.x STIX Header",
+        "description": "This schema adds one property to a STIX object",
+        "created": "2022-08-27T00:00:00.000000Z",
+        "modified": "2022-08-27T00:00:00.000000Z",
+        "created_by_ref": MITRE_IDENTITY_OBJECT["id"],
+        "object_marking_refs": [
+            MITRE_COPYRIGHT_STATEMENT_DATA_MARKING["id"]
+        ],
+        "schema": "https://github.com/mitre/cti/extension-definitions/stix-1-stix-header/",
+        "version": "1.0.0",
+        "extension_types": ["property-extension"]
+    },
     "icmp-header": {
         "id": "extension-definition--6f6973cb-70be-40cb-b1ac-15ed78cebe56",
         "type": "extension-definition",
@@ -243,6 +259,22 @@ EXTENSION_DEFINITION_FOR_STIX_1_X = {
             MITRE_COPYRIGHT_STATEMENT_DATA_MARKING["id"]
         ],
         "schema": "https://github.com/mitre/cti/extension-definitions/stix-1-network-socket/",
+        "version": "1.0.0",
+        "extension_types": ["property-extension"]
+    },
+    "report": {
+        "id": "extension-definition--faebed16-db10-4824-8538-62d9cd38b117",
+        "type": "extension-definition",
+        "spec_version": "2.1",
+        "name": "Extension to support STIX 1.x STIX Header",
+        "description": "This schema adds one property to a STIX object",
+        "created": "2022-08-27T00:00:00.000000Z",
+        "modified": "2022-08-27T00:00:00.000000Z",
+        "created_by_ref": MITRE_IDENTITY_OBJECT["id"],
+        "object_marking_refs": [
+            MITRE_COPYRIGHT_STATEMENT_DATA_MARKING["id"]
+        ],
+        "schema": "https://github.com/mitre/cti/extension-definitions/stix-1-stix-header/",
         "version": "1.0.0",
         "extension_types": ["property-extension"]
     },

@@ -30,6 +30,8 @@ Custom properties/objects/extensions are deprecated in version 2.1.  Suggest usi
 The missing policy option of 'use-extensions' cannot be used with version 2.0. 'use-custom-properies' is suggested 216     error
 ACS data markings cannot be supported in version 2.0. --acs option is ignored.                                     217     warn
 Only one of the options --enable and --disable can be used                                                         218     error
+The STIX package header contained no extra information that needed to be generated in STIX 2.x                     219     info
+*id* was created to store the extra STIX package header information                                                220     info
 ================================================================================================================== ====    =====
 
 
@@ -58,6 +60,7 @@ Custom Content *property_name* of *id* is ignored                               
 Used *object_path* for extension property for *property_name*                                                                  317     warn
 Token in control set not recognized: *token*                                                                                   318     warn
 Used extensions for ACS data markings. See *id*                                                                                319     warn
+Any extra STIX package header properties are ignored                                                                           320     warn
 ============================================================================================================================== ====    =====
 
 

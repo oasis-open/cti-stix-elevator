@@ -29,11 +29,11 @@
             "type": "file"
         },
         {
-            "created": "2020-05-31T15:10:25.602Z",
-            "first_observed": "2020-05-31T15:10:25.602Z",
+            "created": "2022-09-15T12:13:22.158Z",
+            "first_observed": "2022-09-15T12:13:22.158Z",
             "id": "observed-data--14975dea-86cd-4211-a5f8-9c2e4daab69a",
-            "last_observed": "2020-05-31T15:10:25.602Z",
-            "modified": "2020-05-31T15:10:25.602Z",
+            "last_observed": "2022-09-15T12:13:22.158Z",
+            "modified": "2022-09-15T12:13:22.158Z",
             "number_observed": 1,
             "object_refs": [
                 "file--cab91fba-2bb2-5e32-89ed-68d5f3f33415"
@@ -42,17 +42,35 @@
             "type": "observed-data"
         },
         {
-            "created": "2020-05-31T15:10:25.602Z",
-            "first_observed": "2020-05-31T15:10:25.602Z",
+            "created": "2022-09-15T12:13:22.158Z",
+            "first_observed": "2022-09-15T12:13:22.158Z",
             "id": "observed-data--a8770cfa-7921-43a5-b145-cf168aa3b019",
-            "last_observed": "2020-05-31T15:10:25.602Z",
-            "modified": "2020-05-31T15:10:25.602Z",
+            "last_observed": "2022-09-15T12:13:22.158Z",
+            "modified": "2022-09-15T12:13:22.158Z",
             "number_observed": 1,
             "object_refs": [
                 "file--4d6ae3bb-46a6-524f-8b33-ace41d113a7c"
             ],
             "spec_version": "2.1",
             "type": "observed-data"
+        },
+        {
+            "created": "2022-09-15T12:13:22.158Z",
+            "id": "report--aa3a6678-250f-41a4-bbe9-79347c92cbcb",
+            "modified": "2022-09-15T12:13:22.158Z",
+            "name": "File Hash Reputation Service Results",
+            "object_refs": [
+                "file--cab91fba-2bb2-5e32-89ed-68d5f3f33415",
+                "file--4d6ae3bb-46a6-524f-8b33-ace41d113a7c",
+                "observed-data--14975dea-86cd-4211-a5f8-9c2e4daab69a",
+                "observed-data--a8770cfa-7921-43a5-b145-cf168aa3b019"
+            ],
+            "published": "2022-09-15T12:13:22.159Z",
+            "report_types": [
+                "indicator-malware-artifacts"
+            ],
+            "spec_version": "2.1",
+            "type": "report"
         }
     ],
     "type": "bundle"

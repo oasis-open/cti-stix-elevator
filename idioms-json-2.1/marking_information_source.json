@@ -5,8 +5,8 @@
             "administrative_area": "US-NY",
             "country": "US",
             "created": "2014-05-08T09:00:00.000Z",
-            "created_by_ref": "identity--94463bad-2ff1-45f0-a575-c296e4aaf572",
-            "id": "location--78bfcf3a-7907-4187-8a15-074c260bdbee",
+            "created_by_ref": "identity--4a630319-deb6-420c-8c15-a19516409393",
+            "id": "location--003cd890-7d3e-40fa-aab7-a3e8cfadf97f",
             "modified": "2014-05-08T09:00:00.000Z",
             "object_marking_refs": [
                 "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
@@ -16,22 +16,22 @@
         },
         {
             "created": "2014-05-08T09:00:00.000Z",
-            "created_by_ref": "identity--94463bad-2ff1-45f0-a575-c296e4aaf572",
-            "id": "relationship--d8874595-fea4-4136-b64d-feb56d4cad17",
+            "created_by_ref": "identity--4a630319-deb6-420c-8c15-a19516409393",
+            "id": "relationship--36b4b4de-22c3-4d50-b948-5711fcf305a0",
             "modified": "2014-05-08T09:00:00.000Z",
             "object_marking_refs": [
                 "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
             ],
             "relationship_type": "located-at",
-            "source_ref": "identity--94463bad-2ff1-45f0-a575-c296e4aaf572",
+            "source_ref": "identity--4a630319-deb6-420c-8c15-a19516409393",
             "spec_version": "2.1",
-            "target_ref": "location--78bfcf3a-7907-4187-8a15-074c260bdbee",
+            "target_ref": "location--003cd890-7d3e-40fa-aab7-a3e8cfadf97f",
             "type": "relationship"
         },
         {
             "created": "2014-05-08T09:00:00.000Z",
-            "created_by_ref": "identity--94463bad-2ff1-45f0-a575-c296e4aaf572",
-            "id": "identity--94463bad-2ff1-45f0-a575-c296e4aaf572",
+            "created_by_ref": "identity--4a630319-deb6-420c-8c15-a19516409393",
+            "id": "identity--4a630319-deb6-420c-8c15-a19516409393",
             "identity_class": "organization",
             "labels": [
                 "ais-consent-everyone"
@@ -51,7 +51,7 @@
             "confidence": 85,
             "created": "2015-05-15T09:00:00.000Z",
             "description": "This is a cyber threat indicator for instances of US-China_Q14 phishing attempts.",
-            "id": "indicator--262f78ba-287d-4f74-933c-769a266fdd20",
+            "id": "indicator--5712e9fc-977f-4958-99a4-3700c5a131dd",
             "indicator_types": [
                 "malicious-email"
             ],
@@ -66,6 +66,24 @@
             "type": "indicator",
             "valid_from": "2012-12-01T09:30:47.000000Z",
             "valid_until": "2013-02-01T09:30:47.000000Z"
+        },
+        {
+            "created": "2014-05-08T09:00:00.000Z",
+            "id": "report--53a0ddca-816c-44af-9da6-92fcf26992d8",
+            "modified": "2014-05-08T09:00:00.000Z",
+            "name": "Silver Gray Owl",
+            "object_refs": [
+                "location--003cd890-7d3e-40fa-aab7-a3e8cfadf97f",
+                "relationship--36b4b4de-22c3-4d50-b948-5711fcf305a0",
+                "identity--4a630319-deb6-420c-8c15-a19516409393",
+                "indicator--5712e9fc-977f-4958-99a4-3700c5a131dd"
+            ],
+            "published": "2022-09-13T12:58:04.587Z",
+            "report_types": [
+                "indicator-watchlist"
+            ],
+            "spec_version": "2.1",
+            "type": "report"
         }
     ],
     "type": "bundle"

@@ -1,12 +1,12 @@
 {
-    "id": "bundle--769a7cac-c00a-4ef9-ac4e-c3493acd5856",
+    "id": "bundle--21976b14-38af-4551-8e02-6e0454b9ecc8",
     "objects": [
         {
             "administrative_area": "US-DC",
             "country": "US",
             "created": "9999-12-31T00:00:00.000Z",
-            "created_by_ref": "identity--007a335e-26b2-4fec-af20-9e61bb1ffc19",
-            "id": "location--271e4cbc-b78f-43da-ab90-6f90cafa605e",
+            "created_by_ref": "identity--c8fe89cf-ffd5-4bbd-b616-519bdb3c9683",
+            "id": "location--3422a45b-3126-44a6-921e-c2326e8c20b2",
             "modified": "9999-12-31T00:00:00.000Z",
             "object_marking_refs": [
                 "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
@@ -16,22 +16,22 @@
         },
         {
             "created": "9999-12-31T00:00:00.000Z",
-            "created_by_ref": "identity--007a335e-26b2-4fec-af20-9e61bb1ffc19",
-            "id": "relationship--d4d13323-7ed7-4fe5-86ed-294770d40004",
+            "created_by_ref": "identity--c8fe89cf-ffd5-4bbd-b616-519bdb3c9683",
+            "id": "relationship--7f793d36-7924-4f69-a2d8-8be1ae6b151b",
             "modified": "9999-12-31T00:00:00.000Z",
             "object_marking_refs": [
                 "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
             ],
             "relationship_type": "located-at",
-            "source_ref": "identity--007a335e-26b2-4fec-af20-9e61bb1ffc19",
+            "source_ref": "identity--c8fe89cf-ffd5-4bbd-b616-519bdb3c9683",
             "spec_version": "2.1",
-            "target_ref": "location--271e4cbc-b78f-43da-ab90-6f90cafa605e",
+            "target_ref": "location--3422a45b-3126-44a6-921e-c2326e8c20b2",
             "type": "relationship"
         },
         {
             "created": "9999-12-31T00:00:00.000Z",
-            "created_by_ref": "identity--007a335e-26b2-4fec-af20-9e61bb1ffc19",
-            "id": "identity--007a335e-26b2-4fec-af20-9e61bb1ffc19",
+            "created_by_ref": "identity--c8fe89cf-ffd5-4bbd-b616-519bdb3c9683",
+            "id": "identity--c8fe89cf-ffd5-4bbd-b616-519bdb3c9683",
             "identity_class": "organization",
             "labels": [
                 "ais-consent-everyone"
@@ -49,7 +49,7 @@
         },
         {
             "created": "2016-03-29T20:52:52.716Z",
-            "created_by_ref": "identity--007a335e-26b2-4fec-af20-9e61bb1ffc19",
+            "created_by_ref": "identity--c8fe89cf-ffd5-4bbd-b616-519bdb3c9683",
             "description": "Send Device for forensic analysis",
             "id": "course-of-action--e9f31688-d744-48f4-9320-e6a9bd136f44",
             "modified": "2016-03-29T20:52:52.716Z",
@@ -62,7 +62,7 @@
         },
         {
             "created": "2016-03-29T20:52:52.716Z",
-            "created_by_ref": "identity--007a335e-26b2-4fec-af20-9e61bb1ffc19",
+            "created_by_ref": "identity--c8fe89cf-ffd5-4bbd-b616-519bdb3c9683",
             "id": "indicator--0c277b59-f5a9-4530-8861-82588719ec0c",
             "kill_chain_phases": [
                 {
@@ -82,8 +82,8 @@
         },
         {
             "created": "2016-03-29T20:52:52.716Z",
-            "created_by_ref": "identity--007a335e-26b2-4fec-af20-9e61bb1ffc19",
-            "id": "relationship--a85593d5-13e1-44af-9a4c-657749566254",
+            "created_by_ref": "identity--c8fe89cf-ffd5-4bbd-b616-519bdb3c9683",
+            "id": "relationship--6475dbef-96f1-4cd2-97a8-a58a01c2a274",
             "modified": "2016-03-29T20:52:52.716Z",
             "object_marking_refs": [
                 "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
@@ -93,6 +93,28 @@
             "spec_version": "2.1",
             "target_ref": "indicator--0c277b59-f5a9-4530-8861-82588719ec0c",
             "type": "relationship"
+        },
+        {
+            "created": "9999-12-31T00:00:00.000Z",
+            "id": "report--d6cf3b05-f77b-48ae-be14-77b291177568",
+            "modified": "9999-12-31T00:00:00.000Z",
+            "object_refs": [
+                "location--3422a45b-3126-44a6-921e-c2326e8c20b2",
+                "relationship--7f793d36-7924-4f69-a2d8-8be1ae6b151b",
+                "identity--c8fe89cf-ffd5-4bbd-b616-519bdb3c9683",
+                "course-of-action--e9f31688-d744-48f4-9320-e6a9bd136f44",
+                "indicator--0c277b59-f5a9-4530-8861-82588719ec0c",
+                "relationship--6475dbef-96f1-4cd2-97a8-a58a01c2a274"
+            ],
+            "published": "2022-09-15T12:13:21.875Z",
+            "report_types": [
+                "threat-report",
+                "indicator",
+                "indicator-endpoint-characteristics",
+                "courses-of-action"
+            ],
+            "spec_version": "2.1",
+            "type": "report"
         }
     ],
     "type": "bundle"

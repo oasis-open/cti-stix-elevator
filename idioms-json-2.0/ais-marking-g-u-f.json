@@ -3,8 +3,8 @@
     "objects": [
         {
             "created": "2020-12-31T00:00:00.000Z",
-            "created_by_ref": "identity--1109be5e-31b3-4bc3-8107-c8cc0cfe95fe",
-            "id": "identity--1109be5e-31b3-4bc3-8107-c8cc0cfe95fe",
+            "created_by_ref": "identity--6a2662c6-b411-4997-b691-17dda6731250",
+            "id": "identity--6a2662c6-b411-4997-b691-17dda6731250",
             "identity_class": "organization",
             "labels": [
                 "ais-consent-usg"
@@ -21,7 +21,7 @@
         },
         {
             "created": "2016-03-29T20:52:52.716Z",
-            "created_by_ref": "identity--1109be5e-31b3-4bc3-8107-c8cc0cfe95fe",
+            "created_by_ref": "identity--6a2662c6-b411-4997-b691-17dda6731250",
             "id": "indicator--45eee277-2d76-4079-91d0-0061a443bac6",
             "labels": [
                 "unknown"
@@ -33,6 +33,23 @@
             "pattern": "[file:hashes.MD5 = 'd41d8cd98f00b204e9800998ecf8427e']",
             "type": "indicator",
             "valid_from": "2016-03-29T20:52:52.716000Z"
+        },
+        {
+            "created": "2020-12-31T00:00:00.000Z",
+            "id": "report--a2ab9a3a-84c2-45fd-be69-1a028c6d197e",
+            "labels": [
+                "threat-report",
+                "indicator",
+                "indicator-endpoint-characteristics",
+                "courses-of-action"
+            ],
+            "modified": "2020-12-31T00:00:00.000Z",
+            "object_refs": [
+                "identity--6a2662c6-b411-4997-b691-17dda6731250",
+                "indicator--45eee277-2d76-4079-91d0-0061a443bac6"
+            ],
+            "published": "2022-09-13T12:44:14.337Z",
+            "type": "report"
         }
     ],
     "spec_version": "2.0",
