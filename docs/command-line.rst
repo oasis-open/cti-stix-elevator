@@ -8,6 +8,7 @@ STIX 1.x content to STIX 2.x content:
 
     usage: stix2_elevator [-h]
               [--missing-policy {use-extensions,use-custom-properties,add-to-description,ignore}]
+              [--header-object-type {report,grouping}]
               [--custom-property-prefix CUSTOM_PROPERTY_PREFIX]
               [--infrastructure]
               [--acs]
@@ -46,6 +47,11 @@ optional arguments:
                 Policy for including STIX 1.x content that cannot be
                 represented directly in STIX 2.x. The default is 'add-
                 to-description'.
+
+  --header-object-type {report,grouping}
+                What STIX 2 type to use to store extra information
+                from the STIX 1 package header.The default is
+                'report'.
 
   --custom-property-prefix CUSTOM_PROPERTY_PREFIX
                 Prefix to use for custom property names when missing

@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+4.1.7 - 2022-09-28
+
+    - A report or grouping is created to store the extra STIX package header information
+
 4.1.6 - 2022-06-10
 
     - fix functionality for --enable and --disable options
