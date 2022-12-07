@@ -37,12 +37,15 @@ def idiom_elevator_mappings(before_file_path, stored_json, version, missing_poli
     """Test fresh conversion from XML to JSON matches stored JSON samples."""
     print("Checking - " + before_file_path)
     print("With Master - " + stored_json["id"])
+    validator_args = "--version " + version
+    if missing_policy == "use-extensions":
+        validator_args += " -s extensions-definition-schemas"
 
     initialize_options(options={"spec_version": version,
                                 "missing_policy": missing_policy,
                                 "log_level": "WARN",
                                 "incidents": True,
-                                "validator_args": "--version " + version})
+                                "validator_args": validator_args})
     if not get_option_value("policy") == "no_policy":
         print("'no_policy' is the default for testing")
     set_option_value("policy", "no_policy")
