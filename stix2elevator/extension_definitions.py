@@ -77,12 +77,12 @@ EXTENSION_DEFINITION_FOR_STIX_1_X = {
         "name": "Extension to support STIX 1.x Courses of Action",
         "description": "This schema adds two properties to a STIX object",
         "created": "2020-12-22T00:00:00.000000Z",
-        "modified": "2020-12-22T00:00:00.000000Z",
+        "modified": "2022-12-12T00:00:00.000000Z",
         "created_by_ref": MITRE_IDENTITY_OBJECT["id"],
         "object_marking_refs": [
             MITRE_COPYRIGHT_STATEMENT_DATA_MARKING["id"]
         ],
-        "schema": "https://github.com/mitre/cti/extension-definitions/stix-1-course-of-action/",
+        "schema": "https://github.com/oasis-open/cti-stix-common-objects/tree/main/extension-definition-specifications/stix-1x",
         "version": "1.0.0",
         "extension_types": ["property-extension"]
     },
@@ -173,12 +173,12 @@ EXTENSION_DEFINITION_FOR_STIX_1_X = {
         "name": "Extension to support STIX 1.x Incident",
         "description": "This schema adds STIX 1.x Incident properties not present in the STIX 2.1 Incident stub object",
         "created": "2020-12-22T00:00:00.000000Z",
-        "modified": "2020-12-22T00:00:00.000000Z",
+        "modified": "2022-11-22T00:00:00.000000Z",
         "created_by_ref": MITRE_IDENTITY_OBJECT["id"],
         "object_marking_refs": [
             MITRE_COPYRIGHT_STATEMENT_DATA_MARKING["id"]
         ],
-        "schema": "https://github.com/oasis-open/cti-stix-common-objects/blob/elevator-extensions/extension-definition-specifications/stix1x-incident/stix1x-incident.json",  # noqa
+        "schema": "https://github.com/oasis-open/cti-stix-common-objects/tree/main/extension-definition-specifications/stix-1x",  # noqa
         "version": "1.0.0",
         "extension_types": ["property-extension"]
     },
@@ -189,12 +189,12 @@ EXTENSION_DEFINITION_FOR_STIX_1_X = {
         "name": "Extension to support STIX 1.x Indicators",
         "description": "This schema adds two properties to a STIX object",
         "created": "2020-12-22T00:00:00.000000Z",
-        "modified": "2020-12-22T00:00:00.000000Z",
+        "modified": "2022-11-22T00:00:00.000000Z",
         "created_by_ref": MITRE_IDENTITY_OBJECT["id"],
         "object_marking_refs": [
             MITRE_COPYRIGHT_STATEMENT_DATA_MARKING["id"]
         ],
-        "schema": "https://github.com/mitre/cti/extension-definitions/stix-1-indicator/",
+        "schema": "https://github.com/oasis-open/cti-stix-common-objects/tree/main/extension-definition-specifications/stix-1x",
         "version": "1.0.0",
         "extension_types": ["property-extension"]
     },

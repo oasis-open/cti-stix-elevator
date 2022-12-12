@@ -88,7 +88,7 @@ def add_string_property_as_extension_property(container, property_name, property
                 container[property_name] = convert_to_stix_literal(prop_values_as_string)
         else:
             container[property_name] = prop_values_as_string
-    warn("Used extension property for %s", 313, property_name + (" of " + sdo_id if sdo_id else ""))
+    warn("Used an extension property for %s", 313, property_name + (" of " + sdo_id if sdo_id else ""))
 
 
 def handle_missing_string_property(container, property_name, property_value, sdo_id, is_list=False, is_sco=False, is_literal=False, mapping={}):
@@ -142,7 +142,7 @@ def add_confidence_property_as_extension_property(container, confidence, id, par
         container[prefix + "confidence"] = str(confidence.value)
     if confidence.description is not None:
         container[prefix + "confidence_description"] = str(confidence.description)
-    warn("Used extensions properties for Confidence type content of %s", 313, id)
+    warn("Used an extensions properties for Confidence type content of %s", 313, id)
 
 
 def handle_missing_confidence_property(container, confidence, id, parent_property_name=None):

@@ -1086,7 +1086,7 @@ def handle_missing_objective_property(container, objective, id):
                 warn("Used custom property for objective of %s", 308, id)
             elif check_for_missing_policy("use-extensions"):
                 container["objective"] = " ".join(all_text)
-                warn("Used an extension for objective of %s", 311, id)
+                warn("Used an extension property for %s of %s", 313, id, "objective")
             if objective.applicability_confidence:
                 handle_missing_confidence_property(container, objective.applicability_confidence, id, "objective")
 
