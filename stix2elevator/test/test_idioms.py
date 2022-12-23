@@ -39,7 +39,7 @@ def idiom_elevator_mappings(before_file_path, stored_json, version, missing_poli
     print("With Master - " + stored_json["id"])
     validator_args = "--version " + version
     if missing_policy == "use-extensions":
-        validator_args += " -s extensions-definition-schemas"
+        validator_args += " -s extension-definition-schemas"
 
     initialize_options(options={"spec_version": version,
                                 "missing_policy": missing_policy,
