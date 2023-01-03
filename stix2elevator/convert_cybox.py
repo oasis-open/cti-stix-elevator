@@ -724,6 +724,7 @@ _EMAIL_ADDITIONAL_HEADERS_PROPERTIES = {
     "User-Agent:": "user_agent",
     "Boundary": "boundary",
     "X-Priority": "x_priority",
+    "X_Originating_IP": "x_orginating_ip",
     "X-Mailer": "x_mailer"
 }
 
