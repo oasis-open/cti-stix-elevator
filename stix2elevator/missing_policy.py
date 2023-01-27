@@ -233,7 +233,6 @@ def statement_type_as_extension_properties(container, statement, property_name, 
     if statement.confidence:
         add_confidence_property_as_extension_property(map, statement.confidence, property_name, id)
     if statement.value:
-        converted_value = None
         value_as_string = str(statement.value)
         if is_literal:
             if value_as_string in mapping:
