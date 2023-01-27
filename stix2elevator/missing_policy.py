@@ -232,8 +232,8 @@ def statement_type_as_extension_properties(container, statement, property_name, 
         info("Source property in STIX 1.x statement is not handled, yet.", 815)
     if statement.confidence:
         add_confidence_property_as_extension_property(map, statement.confidence, property_name, id)
-    converted_value = None
     if statement.value:
+        converted_value = None
         value_as_string = str(statement.value)
         if is_literal:
             if value_as_string in mapping:
@@ -242,13 +242,10 @@ def statement_type_as_extension_properties(container, statement, property_name, 
                 converted_value = convert_to_stix_literal(value_as_string)
         else:
             converted_value = value_as_string
-    if map:
         if converted_value:
             map["value"] = converted_value
+    if not map == dict():
         container[property_name] = [map] if is_list else map
-    else:
-        if converted_value:
-            container[property_name] = [converted_value] if is_list else converted_value
 
 
 def handle_missing_statement_properties(container, statement, property_name, id, is_list=False, is_literal=True, mapping=None):

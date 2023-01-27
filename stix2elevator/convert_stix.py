@@ -1393,19 +1393,22 @@ def convert_ciq_addresses2_1(ciq_info_addresses, identity_instance, env, created
             add_unfinished_marked_object(location)
 
 
-def handle_missing_properties_of_ciq_instance(identity_instance, ciq):
+def handle_missing_properties_of_ciq_instance(identity_instance, ciq, spec_version):
     container, extension_definition_id = determine_container_for_missing_properties("identity-ciq", identity_instance)
 
     if container is not None:
         if ciq.roles:
-            handle_missing_string_property(container,
-                                           "information_source_roles",
-                                           ciq.roles,
-                                           identity_instance["id"],
-                                           True)
-            warn("Roles is not a property of an identity (%s).  Perhaps the roles are associated with a related Threat Actor",
-                 428,
-                 identity_instance["id"])
+            if spec_version == "2.0":
+                handle_missing_string_property(container,
+                                               "information_source_roles",
+                                               ciq.roles,
+                                               identity_instance["id"],
+                                               True)
+                warn("Roles is not a property of an identity in 2.0 (%s).  Perhaps the roles are associated with a related Threat Actor",
+                     428,
+                     identity_instance["id"])
+            else:
+                identity_instance["roles"] = ciq.roles
         if ciq._specification.free_text_lines:
             lines = ""
             for line in ciq._specification.free_text_lines:
@@ -1424,7 +1427,8 @@ def convert_identity(identity, env, created_by_ref_source, parent_id=None, temp_
     if identity.name is not None:
         identity_instance["name"] = identity.name
     if isinstance(identity, CIQIdentity3_0Instance):
-        handle_missing_properties_of_ciq_instance(identity_instance, identity)
+        handle_missing_properties_of_ciq_instance(identity_instance, identity, spec_version)
+        # The spec seems to imply that roles can be specified without using CIQ, but this appears not to be true
         # convert_controlled_vocabs_to_open_vocabs(identity_instance, "roles", identity.roles, ROLES_MAP, False)
         ciq_info = identity._specification
         if ciq_info.party_name:

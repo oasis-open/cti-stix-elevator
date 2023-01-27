@@ -3,12 +3,16 @@
     "objects": [
         {
             "extensions": {
+                "extension-definition--6f6973cb-70be-40cb-b1ac-15ed78cebe56": {
+                    "checksum": "97c02164528d",
+                    "extension_type": "property-extension"
+                },
                 "icmp-ext": {
                     "icmp_code_hex": "00",
                     "icmp_type_hex": "08"
                 }
             },
-            "id": "network-traffic--ba91908d-c347-5d7d-8446-5e1c6f0a4d8d",
+            "id": "network-traffic--8ef22721-8c32-5c85-81f9-cdfe162d1e72",
             "protocols": [
                 "icmp"
             ],
@@ -22,7 +26,7 @@
             "modified": "2020-12-30T16:03:21.869Z",
             "number_observed": 1,
             "object_refs": [
-                "network-traffic--ba91908d-c347-5d7d-8446-5e1c6f0a4d8d"
+                "network-traffic--8ef22721-8c32-5c85-81f9-cdfe162d1e72"
             ],
             "spec_version": "2.1",
             "type": "observed-data"

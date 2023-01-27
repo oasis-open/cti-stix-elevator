@@ -84,12 +84,12 @@
             "object_marking_refs": [
                 "marking-definition--85daa1d8-c895-4d75-92fb-dabb3f8648fe"
             ],
-            "spec_version": "2.1",
-            "type": "identity",
-            "x_elevator_information_source_roles": [
+            "roles": [
                 "Nation-State",
                 "Military"
-            ]
+            ],
+            "spec_version": "2.1",
+            "type": "identity"
         },
         {
             "aliases": [
@@ -210,11 +210,11 @@
             "object_marking_refs": [
                 "marking-definition--85daa1d8-c895-4d75-92fb-dabb3f8648fe"
             ],
-            "spec_version": "2.1",
-            "type": "identity",
-            "x_elevator_information_source_roles": [
+            "roles": [
                 "Research and Development"
-            ]
+            ],
+            "spec_version": "2.1",
+            "type": "identity"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
@@ -443,12 +443,11 @@
             "name": "Communist Part of China",
             "object_marking_refs": [
                 "marking-definition--85daa1d8-c895-4d75-92fb-dabb3f8648fe"
+            ],"roles": [
+                "Nation-State"
             ],
             "spec_version": "2.1",
-            "type": "identity",
-            "x_elevator_information_source_roles": [
-                "Nation-State"
-            ]
+            "type": "identity"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
@@ -487,11 +486,11 @@
             "object_marking_refs": [
                 "marking-definition--85daa1d8-c895-4d75-92fb-dabb3f8648fe"
             ],
-            "spec_version": "2.1",
-            "type": "identity",
-            "x_elevator_information_source_roles": [
+            "roles": [
                 "State-influenced Commercial Entity"
-            ]
+            ],
+            "spec_version": "2.1",
+            "type": "identity"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",

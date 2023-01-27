@@ -97,7 +97,7 @@ No pattern term was created from *id*                                           
 Could not resolve Marking Structure *id*                                                                                                       425     warn
 MAEC content in *id* cannot be represented in STIX 2.x                                                                                         426     warn
 The *relationship name* relationship involving *id* is not explicitly supported in STIX 2.x                                                    427     warn
-``roles`` is not a property of a 2.x identity (*id*).  Perhaps the roles are associated with a related Threat Actor                            428     warn
+``roles`` is not a property of a 2.0 identity (*id*).  Perhaps the roles are associated with a related Threat Actor                            428     warn
 ``HTTPServerResponse`` type is not supported in STIX 2.x                                                                                       429     warn
 The confidence value *value* is not found on one of the confidence scales from the specification. No confidence can be inferred                430     warn
 The confidence value *value* is not between 0 and 100, which is required for STIX 2.1. No confidence can be inferred                           431     warn

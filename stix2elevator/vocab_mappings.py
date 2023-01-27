@@ -75,7 +75,10 @@ MALWARE_LABELS_MAP = \
 
 ROLES_MAP = \
     {
-
+        "Initial Author": "initial-author",
+        "Content Enhancer/Refiner": "content-enhancer-refiner",
+        "Aggregator": "aggregator",
+        "Transformer/Translator": "transformer-translator"
     }
 
 SECTORS_MAP = \

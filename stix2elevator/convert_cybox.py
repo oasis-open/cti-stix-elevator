@@ -1451,14 +1451,21 @@ def convert_http_session(session):
                     return [cybox_traffic]
 
 
-def handle_missing_properties_of_icmp_extension(icmp_header, imcp_extension):
+def handle_missing_properties_of_icmp_extension(icmp_header, imcp_extension, cybox_traffic):
     if icmp_header is not None:
         if icmp_header.checksum:
             if not check_for_missing_policy("use-extensions"):
-                handle_missing_string_property(imcp_extension, "checksum", icmp_header.checksum, None, is_sco=True)
+                handle_missing_string_property(imcp_extension, "checksum_hex", icmp_header.checksum, None, is_sco=True)
             else:
-                warn("Property checksum %s is ignored, because it can't be represented using the extensions policy",
-                     314, icmp_header.checksum)
+                extension_definition_id = get_extension_definition_id("icmp-header")
+                if not extension_definition_id:
+                    warn("No extension-definition was found for STIX 1 type icmp-header", 312)
+                else:
+                    extensions_dict = cybox_traffic["extensions"]
+                    if extension_definition_id not in extensions_dict:
+                        extensions_dict[extension_definition_id] = dict()
+                    extensions_dict[extension_definition_id]["checksum_hex"] = str(icmp_header.checksum)
+                    extensions_dict[extension_definition_id]["extension_type"] = "property-extension"
 
 
 def create_icmp_extension(icmp_header, imcp_extension, cybox_traffic):
@@ -1466,7 +1473,7 @@ def create_icmp_extension(icmp_header, imcp_extension, cybox_traffic):
         imcp_extension["icmp_type_hex"] = icmp_header.type_.value
     if icmp_header.code:
         imcp_extension["icmp_code_hex"] = icmp_header.code.value
-    handle_missing_properties_of_icmp_extension(icmp_header, imcp_extension)
+    handle_missing_properties_of_icmp_extension(icmp_header, imcp_extension, cybox_traffic)
     return imcp_extension
 
 
