@@ -14,7 +14,7 @@
             "icmp-ext": {
               "icmp_code_hex": "00",
               "icmp_type_hex": "08",
-              "x_elevator_checksum": "97c02164528d"
+              "x_elevator_checksum_hex": "97c02164528d"
             }
           },
           "protocols": [

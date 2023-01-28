@@ -1202,7 +1202,7 @@
         {
             "created": "2015-05-15T09:00:00.000Z",
             "created_by_ref": "identity--a957579f-7388-4553-af4e-3aa044c52444",
-            "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html><body>\n\t\t\t\t\t\t\t\t<p>Windows password hash dumper.</P>\n\t\t\t\t\t\t\t\t<p>http://www.foofus.net/fizzgig/fgdump/</P>\n\t\t\t\t\t\t</body></html>\n\nINTENDED_EFFECT:Unauthorized Access: Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. \n\nTITLE:\n\tPrivilege Escalation",
+            "description": "<!DOCTYPE html>\n\t\t\t\t\t\t<html><body>\n\t\t\t\t\t\t\t\t<p>Windows password hash dumper.</P>\n\t\t\t\t\t\t\t\t<p>http://www.foofus.net/fizzgig/fgdump/</P>\n\t\t\t\t\t\t</body></html>\n\nVENDOR:\n\tunknown\n\nINTENDED_EFFECT:Unauthorized Access: Escalating privileges involves acquiring items (most\n\t\t\t\toften usernames and passwords) that will allow access to more resources within\n\t\t\t\tthe network. \n\nTITLE:\n\tPrivilege Escalation",
             "id": "tool--b00120c5-6374-4179-a668-93f146da503a",
             "kill_chain_phases": [
                 {
