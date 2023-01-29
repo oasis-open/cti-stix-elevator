@@ -229,9 +229,9 @@ def get_identity(identity, env, created_by_ref_source, temp_marking_id=None):
     if not env.get_identity_called:
         # On some occasions excessive recursion may add identity objects that are not needed
         new_env = env.newEnv(get_identity_called=True)
-        ident20 = convert_identity(identity, new_env, created_by_ref_source, temp_marking_id=temp_marking_id)
-        env.bundle_instance["objects"].append(ident20)
-        return ident20["id"]
+        ident_instance = convert_identity(identity, new_env, created_by_ref_source, temp_marking_id=temp_marking_id)
+        env.bundle_instance["objects"].append(ident_instance)
+        return ident_instance["id"]
 
 
 def get_identity_ref(identity, env, created_by_ref_source, temp_marking_id=None):
@@ -251,8 +251,8 @@ def handle_missing_properties_of_information_source(so, information_source):
     container, extension_definition_id = determine_container_for_missing_properties("information_source", so)
 
     if container is not None:
-        if information_source.roles:
-            handle_missing_string_property(container, "information_source_roles", information_source.roles, so["id"],
+        if information_source.roles and get_option_value("spec_version") == "2.0":
+            handle_missing_string_property(container, "roles", information_source.roles, so["id"],
                                            True, is_literal=True)
         if information_source.tools:
             for tool in information_source.tools:
@@ -261,27 +261,48 @@ def handle_missing_properties_of_information_source(so, information_source):
 
 
 def process_information_source(information_source, so, env, temp_marking_id=None):
+    identity_instance = None
     if information_source:
         if information_source.identity is not None:
             if information_source.identity.idref:
-                so["created_by_ref"] = information_source.identity.idref
+                identity_ref = information_source.identity.idref
             else:
-                so["created_by_ref"] = get_identity(information_source.identity,
-                                                    env,
-                                                    "this_identity",
-                                                    temp_marking_id)
+                identity_ref = get_identity(information_source.identity,
+                                            env,
+                                            "this_identity",
+                                            temp_marking_id)
+            if not env.created_by_ref:
+                env.created_by_ref = identity_ref
         else:
-            so["created_by_ref"] = env.created_by_ref
-
+            identity_instance = create_basic_object("identity", None, env)
+            identity_ref = identity_instance["id"]
+            if "name" not in identity_instance:
+                identity_instance["name"] = "not provided"
+            finish_basic_object(None,
+                                identity_instance,
+                                env,
+                                identity_instance,
+                                temp_marking_id=temp_marking_id)
+            env.bundle_instance["objects"].append(identity_instance)
+        so["created_by_ref"] = identity_ref
         if so == env.bundle_instance:
             warn("Information Source on %s is not representable in STIX 2.x", 401, so["id"])
         else:
-            if information_source.description:
-                process_description_and_short_description(so, information_source)
-            if information_source.references:
-                for ref in information_source.references:
-                    so["external_references"].append({"source_name": "unknown", "url": ref})
-            handle_missing_properties_of_information_source(so, information_source)
+            if identity_instance:
+                if information_source.description:
+                    process_description_and_short_description(identity_instance, information_source)
+                if information_source.references:
+                    for ref in information_source.references:
+                        identity_instance["external_references"].append({"source_name": "unknown", "url": ref})
+                if information_source.roles and get_option_value("spec_version") == "2.1":
+                    identity_instance["roles"] = [str(r) for r in information_source.roles]
+                handle_missing_properties_of_information_source(identity_instance, information_source)
+        if information_source.contributing_sources:
+            info("Information Source property Contributing_Sources in %s is not handled, yet.", 815, so["id"])
+        if information_source.time:
+            info("Information Source property Time in %s is not handled, yet.", 815, so["id"])
+        if information_source.tools:
+            info("Information Source property Tools in %s is not handled, yet.", 815, so["id"])
 
     else:
         so["created_by_ref"] = env.created_by_ref
@@ -2813,6 +2834,8 @@ def create_object_for_package_header(stix_package_header, env, type_of_obj):
     if hasattr(stix_package_header, "title") and stix_package_header.title is not None:
         sdo_instance["name"] = stix_package_header.title
     process_description_and_short_description(sdo_instance, stix_package_header)
+    if env.created_by_ref:
+        sdo_instance["created_by_ref"] = env.created_by_ref
     if type_of_obj == 'report':
         spec_version = get_option_value("spec_version")
         convert_controlled_vocabs_to_open_vocabs(sdo_instance,

@@ -236,7 +236,7 @@ CybOX object *object* not handled yet                                           
 Email *property* not handled yet                                                                                                            806  warn
 ``file:extended_properties:windows_pebinary_ext:optional_header`` is not implemented yet                                                    807  warn
 *object* found in *id* cannot be converted to a pattern, yet.                                                                               808  warn
-Related Objects of cyber observables for *id* are not handled yet. ``Not currently in use.``                                                809  warn
+``Not in use``                                                                                                                              809  warn
 Negation of *id* is not handled yet                                                                                                         810  warn
 Custom object with no name cannot be handled yet                                                                                            811  warn
 Condition *condition* on a hive property not handled.                                                                                       812  warn

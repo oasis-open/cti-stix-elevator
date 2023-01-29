@@ -63,6 +63,7 @@
         },
         {
             "created": "2020-12-31T00:00:00.000Z",
+            "created_by_ref": "identity--45042075-5502-4257-97ac-64a7c25337ce",
             "id": "report--2a5b8cd8-bc44-4271-8ea0-c84e7e53598c",
             "modified": "2020-12-31T00:00:00.000Z",
             "object_refs": [
