@@ -49,6 +49,27 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
+            "created_by_ref": "identity--2f02796e-77f1-4f75-89f2-8e6f3224fff6",
+            "description": "Fred",
+            "external_references": [
+                {
+                    "source_name": "unknown",
+                    "url": "http://foo.com/bar"
+                }
+            ],
+            "id": "identity--598daac6-3957-44da-8d9c-76315ae068c7",
+            "modified": "2014-08-08T15:50:10.983Z",
+            "name": "not provided",
+            "roles": [
+                "Aggregator",
+                "Initial Author"
+            ],
+            "spec_version": "2.1",
+            "type": "identity"
+        },
+        {
+            "created": "2014-08-08T15:50:10.983Z",
+            "created_by_ref": "identity--598daac6-3957-44da-8d9c-76315ae068c7",
             "description": "\n\nTARGETED_INFORMATION:\nInformation Assets - Financial Data",
             "id": "identity--2d1c6ab3-5e4e-48ac-a32b-f0c01c2836a8",
             "identity_class": "unknown",
@@ -62,6 +83,7 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
+            "created_by_ref": "identity--598daac6-3957-44da-8d9c-76315ae068c7",
             "goals": [
                 "Theft",
                 "Theft - Theft of Proprietary Information"
@@ -82,13 +104,7 @@
                 "NewsBeef"
             ],
             "created": "2014-08-08T15:50:10.983Z",
-            "description": "Fred\n\nINFORMATION_SOURCE_ROLES:\nAggregator,\nInitial Author",
-            "external_references": [
-                {
-                    "source_name": "unknown",
-                    "url": "http://foo.com/bar"
-                }
-            ],
+            "created_by_ref": "identity--78cef5d1-b4d4-49ee-b173-211d7b7763e1",
             "id": "campaign--e5268b6e-4931-42f1-b379-87f48eb41b1e",
             "modified": "2014-08-08T15:50:10.983Z",
             "name": "Compromise of ATM Machines",
@@ -100,6 +116,7 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
+            "created_by_ref": "identity--598daac6-3957-44da-8d9c-76315ae068c7",
             "id": "relationship--e41cbdc2-0e04-4e15-adfb-f49586195fe0",
             "modified": "2014-08-08T15:50:10.983Z",
             "object_marking_refs": [
@@ -113,6 +130,7 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
+            "created_by_ref": "identity--598daac6-3957-44da-8d9c-76315ae068c7",
             "id": "relationship--4bf6433b-fb11-4a54-a9fb-24dc8910d94a",
             "modified": "2014-08-08T15:50:10.983Z",
             "object_marking_refs": [
@@ -126,6 +144,7 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
+            "created_by_ref": "identity--598daac6-3957-44da-8d9c-76315ae068c7",
             "id": "relationship--729cae34-5226-4a4a-aaee-826f5c22834c",
             "modified": "2014-08-08T15:50:10.983Z",
             "object_marking_refs": [
@@ -139,6 +158,7 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
+            "created_by_ref": "identity--598daac6-3957-44da-8d9c-76315ae068c7",
             "id": "relationship--4f575cd0-cf7b-4d19-958a-6ad865d7fa4c",
             "modified": "2014-08-08T15:50:10.983Z",
             "object_marking_refs": [
@@ -152,6 +172,7 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
+            "created_by_ref": "identity--598daac6-3957-44da-8d9c-76315ae068c7",
             "id": "relationship--7b56c3c2-d0ff-4044-91e7-d4f71d89713e",
             "modified": "2014-08-08T15:50:10.983Z",
             "object_marking_refs": [
@@ -165,6 +186,7 @@
         },
         {
             "created": "2022-09-13T12:58:02.116Z",
+            "created_by_ref": "identity--78cef5d1-b4d4-49ee-b173-211d7b7763e1",
             "description": "Foo\nBar\nFred\nBarney",
             "id": "report--fd8c6760-88ef-4537-9e37-68ef5afe3afd",
             "modified": "2022-09-13T12:58:02.116Z",
@@ -173,6 +195,7 @@
                 "location--24174d90-f803-4389-baf0-33ea39ef6d02",
                 "relationship--06cba803-b56e-40ee-a7db-d0a16ebc240a",
                 "identity--78cef5d1-b4d4-49ee-b173-211d7b7763e1",
+                "identity--598daac6-3957-44da-8d9c-76315ae068c7",
                 "identity--2d1c6ab3-5e4e-48ac-a32b-f0c01c2836a8",
                 "threat-actor--56f3f0db-b5d5-431c-ae56-c18f02caf500",
                 "campaign--e5268b6e-4931-42f1-b379-87f48eb41b1e",

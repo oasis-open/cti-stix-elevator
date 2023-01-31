@@ -50,6 +50,7 @@
         {
             "confidence": 85,
             "created": "2015-05-15T09:00:00.000Z",
+            "created_by_ref": "identity--4a630319-deb6-420c-8c15-a19516409393",
             "description": "This is a cyber threat indicator for instances of US-China_Q14 phishing attempts.",
             "id": "indicator--5712e9fc-977f-4958-99a4-3700c5a131dd",
             "indicator_types": [
@@ -69,6 +70,7 @@
         },
         {
             "created": "2014-05-08T09:00:00.000Z",
+            "created_by_ref": "identity--4a630319-deb6-420c-8c15-a19516409393",
             "id": "report--53a0ddca-816c-44af-9da6-92fcf26992d8",
             "modified": "2014-05-08T09:00:00.000Z",
             "name": "Silver Gray Owl",

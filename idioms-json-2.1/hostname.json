@@ -83,6 +83,7 @@
         },
         {
             "created": "2021-08-06T14:04:41.000Z",
+            "created_by_ref": "identity--c57e281e-8348-4911-9c51-9fab4a1b56c0",
             "id": "report--114a124e-b240-42e0-a84f-84d2932aca52",
             "modified": "2021-08-06T14:04:41.000Z",
             "name": "NCCIC:STIX_Package-75d3aca8-3a82-46fc-8965-c0d1958c9790",
