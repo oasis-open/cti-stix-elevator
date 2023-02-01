@@ -50,6 +50,7 @@
         {
             "confidence": 85,
             "created": "2015-05-15T09:00:00.000Z",
+            "created_by_ref": "identity--94463bad-2ff1-45f0-a575-c296e4aaf572",
             "description": "This is a cyber threat indicator for instances of US-China_Q14 phishing attempts.",
             "id": "indicator--262f78ba-287d-4f74-933c-769a266fdd20",
             "indicator_types": [

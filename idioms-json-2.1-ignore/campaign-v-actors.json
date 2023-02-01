@@ -49,6 +49,27 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
+            "created_by_ref": "identity--0b13fca3-6398-4f59-8357-209abb93ff90",
+            "description": "Fred",
+            "external_references": [
+                {
+                    "source_name": "unknown",
+                    "url": "http://foo.com/bar"
+                }
+            ],
+            "id": "identity--7a16f71b-83db-40e5-9a00-cfa96ad0834e",
+            "modified": "2014-08-08T15:50:10.983Z",
+            "name": "not provided",
+            "roles": [
+                "Aggregator",
+                "Initial Author"
+            ],
+            "spec_version": "2.1",
+            "type": "identity"
+        },
+        {
+            "created": "2014-08-08T15:50:10.983Z",
+            "created_by_ref": "identity--7a16f71b-83db-40e5-9a00-cfa96ad0834e",
             "id": "identity--2d1c6ab3-5e4e-48ac-a32b-f0c01c2836a8",
             "identity_class": "unknown",
             "modified": "2014-08-08T15:50:10.983Z",
@@ -61,6 +82,7 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
+            "created_by_ref": "identity--7a16f71b-83db-40e5-9a00-cfa96ad0834e",
             "goals": [
                 "Theft",
                 "Theft - Theft of Proprietary Information"
@@ -81,13 +103,7 @@
                 "NewsBeef"
             ],
             "created": "2014-08-08T15:50:10.983Z",
-            "description": "Fred",
-            "external_references": [
-                {
-                    "source_name": "unknown",
-                    "url": "http://foo.com/bar"
-                }
-            ],
+            "created_by_ref": "identity--dffab7d6-00f6-4a30-8b84-8c0f38bff5d7",
             "id": "campaign--e5268b6e-4931-42f1-b379-87f48eb41b1e",
             "modified": "2014-08-08T15:50:10.983Z",
             "name": "Compromise of ATM Machines",
@@ -99,6 +115,7 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
+            "created_by_ref": "identity--7a16f71b-83db-40e5-9a00-cfa96ad0834e",
             "id": "relationship--de1506fe-c2f3-4be5-9a45-4e02c3d6cda2",
             "modified": "2014-08-08T15:50:10.983Z",
             "object_marking_refs": [
@@ -112,6 +129,7 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
+            "created_by_ref": "identity--7a16f71b-83db-40e5-9a00-cfa96ad0834e",
             "id": "relationship--f184d121-5fdb-4d21-a62b-da6c55b6d021",
             "modified": "2014-08-08T15:50:10.983Z",
             "object_marking_refs": [
@@ -125,6 +143,7 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
+            "created_by_ref": "identity--7a16f71b-83db-40e5-9a00-cfa96ad0834e",
             "id": "relationship--6e6154da-4fd3-46e7-8a0c-7b97c9f78eba",
             "modified": "2014-08-08T15:50:10.983Z",
             "object_marking_refs": [
@@ -138,6 +157,7 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
+            "created_by_ref": "identity--7a16f71b-83db-40e5-9a00-cfa96ad0834e",
             "id": "relationship--864c5b06-f235-4fe6-bea3-a17d041f4055",
             "modified": "2014-08-08T15:50:10.983Z",
             "object_marking_refs": [
@@ -151,6 +171,7 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
+            "created_by_ref": "identity--7a16f71b-83db-40e5-9a00-cfa96ad0834e",
             "id": "relationship--a2e4c968-a43d-46c9-b76d-31b5239ce796",
             "modified": "2014-08-08T15:50:10.983Z",
             "object_marking_refs": [
