@@ -67,6 +67,7 @@
         },
         {
             "created": "9999-12-31T00:00:00.000Z",
+            "created_by_ref": "identity--3e006f10-d8a8-4c9a-8cb3-953bf5014433",
             "id": "report--99cd62a2-a762-46d2-9305-4fa5d89c43fe",
             "labels": [
                 "threat-report",
