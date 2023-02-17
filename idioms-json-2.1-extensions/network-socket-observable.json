@@ -3,6 +3,10 @@
     "objects": [
         {
             "extensions": {
+                "extension-definition--005e229c-fffc-42b0-a912-84671ab2829d": {
+                    "extension_type": "property-extension",
+                    "local_address": "198.51.100.2"
+                },
                 "socket-ext": {
                     "address_family": "AF_INET",
                     "is_listening": true,

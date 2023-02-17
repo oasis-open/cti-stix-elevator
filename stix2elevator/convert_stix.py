@@ -247,7 +247,8 @@ def get_identity_ref(identity, env, created_by_ref_source, temp_marking_id=None)
 
 
 def handle_missing_properties_of_information_source(so, information_source):
-    # handle missing properties
+    # This will never create any extensions, since roles are a property in STIX 2.1
+    # if information_source.tools is every captured, this code can be used to create the extension
     container, extension_definition_id = determine_container_for_missing_properties("information_source", so)
 
     if container is not None:
@@ -256,7 +257,7 @@ def handle_missing_properties_of_information_source(so, information_source):
                                            True, is_literal=True)
         if information_source.tools:
             for tool in information_source.tools:
-                handle_missing_tool_property(container, tool)
+                warn("Missing property 'tool' %s is ignored", 307, ("of" + so["id"] if "id" in so else ""))
         fill_in_extension_properties(so, container, extension_definition_id)
 
 
@@ -301,9 +302,6 @@ def process_information_source(information_source, so, env, temp_marking_id=None
             info("Information Source property Contributing_Sources in %s is not handled, yet.", 815, so["id"])
         if information_source.time:
             info("Information Source property Time in %s is not handled, yet.", 815, so["id"])
-        if information_source.tools:
-            info("Information Source property Tools in %s is not handled, yet.", 815, so["id"])
-
     else:
         so["created_by_ref"] = env.created_by_ref
     return so["created_by_ref"]
@@ -2272,8 +2270,8 @@ def determine_ttp_relationship_type_and_direction(source_type, target_type, rela
         return "related-to", True
 
 
-def handle_missing_properties_of_ttp(sdo_instance, ttp):
-    container, extension_definition_id = determine_container_for_missing_properties(sdo_instance["type"],
+def handle_missing_properties_of_ttp(sdo_instance, ttp, type_of_ttp):
+    container, extension_definition_id = determine_container_for_missing_properties(sdo_instance["type"] if not type_of_ttp else type_of_ttp,
                                                                                     sdo_instance)
     if container is not None:
         handle_multiple_missing_statement_properties(container, ttp.intended_effects, "intended_effects",
@@ -2288,7 +2286,7 @@ def handle_missing_properties_of_ttp(sdo_instance, ttp):
         fill_in_extension_properties(sdo_instance, container, extension_definition_id)
 
 
-def process_ttp_properties(sdo_instance, ttp, env, kill_chains_in_sdo=True, marking_refs=None):
+def process_ttp_properties(sdo_instance, ttp, env, kill_chains_in_sdo=True, marking_refs=None, type_of_ttp=None):
     process_description_and_short_description(sdo_instance, ttp, True)
 
     # only populate kill chain phases if that is a property of the sdo_instance type, as indicated by kill_chains_in_sdo
@@ -2328,7 +2326,7 @@ def process_ttp_properties(sdo_instance, ttp, env, kill_chains_in_sdo=True, mark
     if hasattr(ttp, "related_packages") and ttp.related_packages is not None:
         for p in ttp.related_packages:
             warn("Related_Packages type in %s not supported in STIX 2.x", 402, ttp.id_)
-    handle_missing_properties_of_ttp(sdo_instance, ttp)
+    handle_missing_properties_of_ttp(sdo_instance, ttp, type_of_ttp)
 
 
 def convert_attack_pattern(ap, ttp, env, ttp_id_used):
@@ -2531,10 +2529,10 @@ def convert_resources(resources, ttp, env, generated_ttps):
     return resources_generated
 
 
-def convert_identity_for_victim_target(identity, ttp, env, ttp_generated):
-    if identity:
-        identity_markings = create_marking_union(identity)
-        identity_instance = convert_identity(identity,
+def convert_identity_for_victim_target(victim_targeting, ttp, env, ttp_generated):
+    if victim_targeting.identity:
+        identity_markings = create_marking_union(victim_targeting.identity)
+        identity_instance = convert_identity(victim_targeting.identity,
                                              env,
                                              created_by_ref_source="from_env",
                                              parent_id=ttp.id_ if not ttp_generated else None,
@@ -2544,7 +2542,8 @@ def convert_identity_for_victim_target(identity, ttp, env, ttp_generated):
         identity_instance["identity_class"] = "unknown"
         identity_markings = create_marking_union(ttp)
     env.bundle_instance["objects"].append(identity_instance)
-    process_ttp_properties(identity_instance, ttp, env, False, marking_refs=identity_markings)
+    process_ttp_properties(identity_instance, ttp, env, False, marking_refs=identity_markings, type_of_ttp="victim")
+    handle_missing_properties_of_victim_target(identity_instance, victim_targeting)
     if "name" not in identity_instance:
         handle_missing_required_property("name", identity_instance)
     finish_basic_object(ttp.id_, identity_instance, env, ttp)
@@ -2552,7 +2551,7 @@ def convert_identity_for_victim_target(identity, ttp, env, ttp_generated):
 
 
 def handle_missing_properties_of_victim_target(identity_instance, victim_targeting):
-    container, extension_definition_id = determine_container_for_missing_properties("identity",
+    container, extension_definition_id = determine_container_for_missing_properties("victim",
                                                                                     identity_instance)
 
     if container is not None:
@@ -2570,9 +2569,8 @@ def handle_missing_properties_of_victim_target(identity_instance, victim_targeti
 
 
 def convert_victim_targeting(victim_targeting, ttp, env, ttps_generated):
-    identity_instance = convert_identity_for_victim_target(victim_targeting.identity, ttp, env, ttps_generated)
+    identity_instance = convert_identity_for_victim_target(victim_targeting, ttp, env, ttps_generated)
     info("%s generated an identity associated with a victim", 713, ttp.id_)
-    handle_missing_properties_of_victim_target(identity_instance, victim_targeting)
 
     if ttps_generated:
         marking_refs = create_marking_union(ttp, victim_targeting.identity)

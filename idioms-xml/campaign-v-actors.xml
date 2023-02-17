@@ -7,6 +7,7 @@
     xmlns:marking="http://data-marking.mitre.org/Marking-1"
     xmlns:stixVocabs="http://stix.mitre.org/default_vocabularies-1"
     xmlns:stix="http://stix.mitre.org/stix-1"
+    xmlns:cyboxCommon="http://cybox.mitre.org/common-2"
     xmlns:AIS="http://www.us-cert.gov/STIXMarkingStructure#AISConsentMarking-2"
     xmlns:stix-ciq="http://stix.mitre.org/extensions/Identity#CIQIdentity3.0-1"
     xmlns:xpil="urn:oasis:names:tc:ciq:xpil:3"
