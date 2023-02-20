@@ -21,7 +21,7 @@
     version="1.2"
     >
     <stix:TTPs>
-        <stix:TTP xsi:type="ttp:TTPType" id="example:ttp-4fde045a-b25f-f035-e8d0-29c9d5130cd9" timestamp="2014-05-08T09:00:00.000000Z">
+        <stix:TTP xsi:type="ttp:TTPType" id="example:ttp-4fde045a-b25f-4035-88d0-29c9d5130cd9" timestamp="2014-05-08T09:00:00.000000Z">
             <ttp:Title>Victim Targeting: Customer PII and Financial Data</ttp:Title>
             <ttp:Victim_Targeting xsi:type="ttp:VictimTargetingType">
                 <ttp:Targeted_Information xsi:type="stixVocabs:InformationTypeVocab-1.0">Information Assets - Customer PII</ttp:Targeted_Information>
@@ -30,12 +30,13 @@
         </stix:TTP>
     </stix:TTPs>
     <stix:Campaigns>
-        <stix:Campaign xsi:type="campaign:CampaignType" id="example:campaign-c831ab93-ff84-9cda-2bd8-b094004da969" timestamp="2014-05-08T09:00:00.000000Z">
-            <campaign:Title>Operation Alpha</campaign:Title> 
+        <stix:Campaign xsi:type="campaign:CampaignType" id="example:campaign-c831ab93-ff84-4cda-8bd8-b094004da969" timestamp="2014-05-08T09:00:00.000000Z">
+            <campaign:Title>Operation Alpha</campaign:Title>
+            <campaign:Status>Ongoing</campaign:Status>
             <campaign:Related_TTPs>
                 <campaign:Related_TTP>
                     <stixCommon:Relationship>Targets</stixCommon:Relationship>
-                    <stixCommon:TTP xsi:type="ttp:TTPType" idref="example:ttp-4fde045a-b25f-f035-e8d0-29c9d5130cd9"/>    
+                    <stixCommon:TTP xsi:type="ttp:TTPType" idref="example:ttp-4fde045a-b25f-4035-88d0-29c9d5130cd9"/>
                 </campaign:Related_TTP>
             </campaign:Related_TTPs>
         </stix:Campaign>

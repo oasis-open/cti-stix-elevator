@@ -212,6 +212,13 @@ REPORT_LABELS_MAP = \
         "Malware Samples": "malware-samples",
     }
 
+CAMPAIGN_STATUS_MAP = \
+    {
+        "Future": "future",
+        "Historic": "historic",
+        "Ongoing": "ongoing"
+    }
+
 # CybOX
 
 WINDOWS_PEBINARY = \

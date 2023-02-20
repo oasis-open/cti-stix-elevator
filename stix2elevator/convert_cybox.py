@@ -1572,7 +1572,7 @@ def convert_network_socket(socket):
 
     cybox_traffic["extensions"] = {"socket-ext": socket_extension}
     generate_sco_id_for_2_1(cybox_traffic, socket.parent.id_)
-    handle_missing_properties_of_network_socket(socket, cybox_traffic)
+    handle_missing_properties_of_network_socket(socket, cybox_traffic if check_for_missing_policy("use-extensions") else socket_extension)
     return cybox_traffic
 
 

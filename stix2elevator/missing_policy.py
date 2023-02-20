@@ -39,6 +39,14 @@ def remove_custom_name(name, separator="_"):
     return name[len(prefix):]
 
 
+def do_vocab_mapping(prop_values_as_string, mapping):
+    if prop_values_as_string in mapping:
+        # conversion in mapping
+        return mapping[prop_values_as_string]
+    else:
+        return convert_to_stix_literal(prop_values_as_string)
+
+
 def add_string_property_to_description(sdo_instance, property_name, property_value, is_list=False):
     if is_list:
         if property_name.endswith("_refs"):
@@ -55,39 +63,40 @@ def add_string_property_to_description(sdo_instance, property_name, property_val
     warn("Appended %s to description of %s", 302, property_name, sdo_instance["id"])
 
 
-def add_string_property_as_custom_property(sdo_instance, property_name, property_value, is_list=False):
+def add_string_property_as_custom_property(sdo_instance, property_name, property_value, is_list, is_literal, mapping):
     if is_list:
-        property_values = list()
-        for v in property_value:
-            property_values.append(str(v))
-        sdo_instance[convert_to_custom_name(property_name)] = property_values
+        if is_literal:
+            property_values = list()
+            for v in property_value:
+                prop_value_as_string = str(v)
+                property_values.append(do_vocab_mapping(prop_value_as_string, mapping))
+            sdo_instance[convert_to_custom_name(property_name)] = property_values
+        else:
+            sdo_instance[convert_to_custom_name(property_name)] = [str(v) for v in property_value]
     else:
-        sdo_instance[convert_to_custom_name(property_name)] = str(property_value)
+        prop_value_as_string = str(property_value)
+        if is_literal:
+            sdo_instance[convert_to_custom_name(property_name)] = do_vocab_mapping(prop_value_as_string, mapping)
+        else:
+            sdo_instance[convert_to_custom_name(property_name)] = prop_value_as_string
     warn("Used custom property for %s", 308, property_name + (" of " + sdo_instance["id"] if "id" in sdo_instance else ""))
 
 
 def add_string_property_as_extension_property(container, property_name, property_value, sdo_id, is_list=False, is_literal=False, mapping={}):
     if is_list:
         if is_literal:
-            container[property_name] = []
+            container[property_name] = list()
             for v in property_value:
-                v_as_string = str(v)
-                if v_as_string in mapping:
-                    # conversion in mapping
-                    container[property_name].append(mapping[v_as_string])
-                else:
-                    container[property_name].append(convert_to_stix_literal(v_as_string))
+                prop_value_as_string = str(v)
+                container[property_name].append(do_vocab_mapping(prop_value_as_string, mapping))
         else:
             container[property_name] = [str(v) for v in property_value]
     else:
-        prop_values_as_string = str(property_value)
+        prop_value_as_string = str(property_value)
         if is_literal:
-            if prop_values_as_string in mapping:
-                container[property_name] = mapping[prop_values_as_string]
-            else:
-                container[property_name] = convert_to_stix_literal(prop_values_as_string)
+            container[property_name] = do_vocab_mapping(prop_value_as_string, mapping)
         else:
-            container[property_name] = prop_values_as_string
+            container[property_name] = prop_value_as_string
     warn("Used an extension property for %s", 313, property_name + (" of " + sdo_id if sdo_id else ""))
 
 
@@ -100,7 +109,7 @@ def handle_missing_string_property(container, property_name, property_value, sdo
             else:
                 add_string_property_to_description(container, property_name, property_value, is_list)
         elif check_for_missing_policy("use-custom-properties"):
-            add_string_property_as_custom_property(container, property_name, property_value, is_list)
+            add_string_property_as_custom_property(container, property_name, property_value, is_list, is_literal, mapping)
         elif check_for_missing_policy("use-extensions"):
             add_string_property_as_extension_property(container, property_name, property_value, sdo_id, is_list, is_literal, mapping)
         else:

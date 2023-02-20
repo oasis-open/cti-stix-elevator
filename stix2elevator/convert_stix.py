@@ -90,7 +90,7 @@ from stix2elevator.utils import (
     set_tlp_reference, strftime_with_appropriate_fractional_seconds
 )
 from stix2elevator.vocab_mappings import (
-    ATTACK_MOTIVATION_MAP, COA_LABEL_MAP, INCIDENT_LABEL_MAP,
+    ATTACK_MOTIVATION_MAP, CAMPAIGN_STATUS_MAP, COA_LABEL_MAP, INCIDENT_LABEL_MAP,
     INDICATOR_LABEL_MAP, INFRASTRUCTURE_LABELS_MAP, MALWARE_LABELS_MAP,
     REPORT_LABELS_MAP, SECTORS_MAP, THREAT_ACTOR_LABEL_MAP,
     THREAT_ACTOR_SOPHISTICATION_MAP, TOOL_LABELS_MAP
@@ -248,7 +248,7 @@ def get_identity_ref(identity, env, created_by_ref_source, temp_marking_id=None)
 
 def handle_missing_properties_of_information_source(so, information_source):
     # This will never create any extensions, since roles are a property in STIX 2.1
-    # if information_source.tools is every captured, this code can be used to create the extension
+    # if information_source.tools is ever captured, this code can be used to create the extension
     container, extension_definition_id = determine_container_for_missing_properties("information_source", so)
 
     if container is not None:
@@ -1001,8 +1001,11 @@ def handle_missing_properties_of_campaign(campaign_instance, camp):
 
     if container is not None:
         handle_multiple_missing_statement_properties(container, camp.intended_effects, "intended_effects",
-                                                     campaign_instance["id"], is_literal=True)
-        handle_missing_string_property(container, "status", camp.status, campaign_instance["id"])
+                                                     campaign_instance["id"],
+                                                     is_literal=True, mapping = _INTENDED_EFFECTS_LITERAL_MAPPING)
+        handle_missing_string_property(container, "status", camp.status,
+                                       campaign_instance["id"],
+                                       is_literal=True, mapping=CAMPAIGN_STATUS_MAP)
 
         if get_option_value("spec_version") == "2.0":
             handle_missing_confidence_property(container, camp.confidence, campaign_instance["id"])
