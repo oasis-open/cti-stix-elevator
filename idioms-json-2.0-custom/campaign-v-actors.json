@@ -34,8 +34,8 @@
             "name": "not provided",
             "type": "identity",
             "x_elevator_roles": [
-                "Aggregator",
-                "Initial Author"
+                "aggregator",
+                "initial-author"
             ]
         },
         {

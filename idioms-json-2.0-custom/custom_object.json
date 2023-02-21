@@ -24,7 +24,7 @@
             },
             "x_elevator_objective": "Block outbound traffic",
             "x_elevator_objective_confidence": "High",
-            "x_elevator_stage": "Response"
+            "x_elevator_stage": "response"
         },
         {
             "created": "2015-07-31T11:24:39.090Z",
