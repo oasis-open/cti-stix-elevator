@@ -35,8 +35,11 @@ def convert_to_custom_name(name, separator="_"):
 
 
 def remove_custom_name(name, separator="_"):
-    prefix = "x" + separator + get_option_value("custom_property_prefix") + separator
-    return name[len(prefix):]
+    if name.startswith("x"):
+        prefix = "x" + separator + get_option_value("custom_property_prefix") + separator
+        return name[len(prefix):]
+    else:
+        return name
 
 
 def do_vocab_mapping(prop_values_as_string, mapping):
