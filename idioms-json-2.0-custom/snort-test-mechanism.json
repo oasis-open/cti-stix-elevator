@@ -12,7 +12,8 @@
             "id": "vulnerability--e77c1e36-5b43-4c5c-b8cb-7b36035f2b90",
             "modified": "2014-06-20T15:16:56.986Z",
             "name": "Heartbleed",
-            "type": "vulnerability"
+            "type": "vulnerability",
+            "x_elevator_published_datetime": "2013-09-18T00:00:00.000000Z"
         },
         {
             "created": "2014-06-20T15:16:56.987Z",
