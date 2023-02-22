@@ -25,7 +25,7 @@ EXTENSION_DEFINITION_FOR_STIX_1_X = {
         "name": "Extension to support STIX 1.x/CybOX 2.1 archive-file",
         "description": "This schema adds STIX 1.x/CybOX 2.1 archive-file properties not present in the STIX 2.1 archive-file object", # noqa
         "created": "2020-12-22T00:00:00.000000Z",
-        "modified": "2022-12-12T00:00:00.000000Z",
+        "modified": "2022-12-22T00:00:00.000000Z",
         "created_by_ref": _MITRE_IDENTITY_OBJECT["id"],
         "object_marking_refs": [
             _MITRE_COPYRIGHT_STATEMENT_DATA_MARKING_ID
@@ -41,7 +41,7 @@ EXTENSION_DEFINITION_FOR_STIX_1_X = {
         "name": "Extension to support STIX 1.x Attack Pattern",
         "description": "This schema adds STIX 1.x TTP properties not present in the STIX 2.1 Attack Pattern object",  # noqa
         "created": "2020-12-22T00:00:00.000000Z",
-        "modified": "2022-12-12T00:00:00.000000Z",
+        "modified": "2022-12-22T00:00:00.000000Z",
         "created_by_ref": _MITRE_IDENTITY_OBJECT["id"],
         "object_marking_refs": [
             _MITRE_COPYRIGHT_STATEMENT_DATA_MARKING_ID
@@ -57,7 +57,7 @@ EXTENSION_DEFINITION_FOR_STIX_1_X = {
         "name": "Extension to support STIX 1.x Campaigns",
         "description": "This schema adds STIX 1.x Campaign properties not present in the STIX 2.1 Campaign object",
         "created": "2020-12-22T00:00:00.000000Z",
-        "modified": "2022-12-12T00:00:00.000000Z",
+        "modified": "2022-12-22T00:00:00.000000Z",
         "created_by_ref": _MITRE_IDENTITY_OBJECT["id"],
         "object_marking_refs": [
             _MITRE_COPYRIGHT_STATEMENT_DATA_MARKING_ID
@@ -73,7 +73,7 @@ EXTENSION_DEFINITION_FOR_STIX_1_X = {
         "name": "Extension to support STIX 1.x Courses of Action",
         "description": "This schema adds STIX 1.x Courses of Action properties not present in the STIX 2.1 COA object",
         "created": "2020-12-22T00:00:00.000000Z",
-        "modified": "2022-12-12T00:00:00.000000Z",
+        "modified": "2022-12-22T00:00:00.000000Z",
         "created_by_ref": _MITRE_IDENTITY_OBJECT["id"],
         "object_marking_refs": [
             _MITRE_COPYRIGHT_STATEMENT_DATA_MARKING_ID
@@ -89,7 +89,7 @@ EXTENSION_DEFINITION_FOR_STIX_1_X = {
         "name": "Extension to support STIX 1.x/CybOX 2.1 email-message",
         "description": "This schema adds STIX 1.x/CybOX 2.1 Email Messages properties not present in the STIX 2.1 Email Message object", # noqa
         "created": "2020-12-22T00:00:00.000000Z",
-        "modified": "2022-12-12T00:00:00.000000Z",
+        "modified": "2022-12-22T00:00:00.000000Z",
         "created_by_ref": _MITRE_IDENTITY_OBJECT["id"],
         "object_marking_refs": [
             _MITRE_COPYRIGHT_STATEMENT_DATA_MARKING_ID
@@ -105,7 +105,7 @@ EXTENSION_DEFINITION_FOR_STIX_1_X = {
         "name": "Extension to support STIX 1.x/CybOX 2.1 Network Packet ICMP IPV4 properties",
         "description": "This schema adds STIX 1.x/CybOX 2.1 Network Packet ICMP IPV4 properties in the STIX 2.x Network Traffic object", # noqa
         "created": "2020-12-22T00:00:00.000000Z",
-        "modified": "2022-12-12T00:00:00.000000Z",
+        "modified": "2022-12-22T00:00:00.000000Z",
         "created_by_ref": _MITRE_IDENTITY_OBJECT["id"],
         "object_marking_refs": [
             _MITRE_COPYRIGHT_STATEMENT_DATA_MARKING_ID
@@ -121,7 +121,7 @@ EXTENSION_DEFINITION_FOR_STIX_1_X = {
         "name": "Extension to support STIX 1.x Victim Targeting",
         "description": "This schema adds STIX 1.x Victim Targeting properties not present in the STIX 2.1 Identity object",  # noqa
         "created": "2020-12-22T00:00:00.000000Z",
-        "modified": "2022-12-12T00:00:00.000000Z",
+        "modified": "2022-12-22T00:00:00.000000Z",
         "created_by_ref": _MITRE_IDENTITY_OBJECT["id"],
         "object_marking_refs": [
             _MITRE_COPYRIGHT_STATEMENT_DATA_MARKING_ID
@@ -137,7 +137,7 @@ EXTENSION_DEFINITION_FOR_STIX_1_X = {
         "name": "Extension to support STIX 1.x CIQ Identities",
         "description": "This schema adds STIX 1.x CIQ Identity properties not present in the STIX 2.1 Identity object",
         "created": "2020-12-22T00:00:00.000000Z",
-        "modified": "2022-12-12T00:00:00.000000Z",
+        "modified": "2022-12-22T00:00:00.000000Z",
         "created_by_ref": _MITRE_IDENTITY_OBJECT["id"],
         "object_marking_refs": [
             _MITRE_COPYRIGHT_STATEMENT_DATA_MARKING_ID
@@ -153,7 +153,7 @@ EXTENSION_DEFINITION_FOR_STIX_1_X = {
         "name": "Extension to support STIX 1.x Incident",
         "description": "This schema adds STIX 1.x Incident properties not present in the STIX 2.1 Incident stub object",
         "created": "2020-12-22T00:00:00.000000Z",
-        "modified": "2022-11-22T00:00:00.000000Z",
+        "modified": "2022-12-22T00:00:00.000000Z",
         "created_by_ref": _MITRE_IDENTITY_OBJECT["id"],
         "object_marking_refs": [
             _MITRE_COPYRIGHT_STATEMENT_DATA_MARKING_ID
@@ -169,7 +169,7 @@ EXTENSION_DEFINITION_FOR_STIX_1_X = {
         "name": "Extension to support STIX 1.x Indicators",
         "description": "This schema adds STIX 1.x Indicator properties not present in the STIX 2.1 Indicator object",
         "created": "2020-12-22T00:00:00.000000Z",
-        "modified": "2022-12-12T00:00:00.000000Z",
+        "modified": "2022-12-22T00:00:00.000000Z",
         "created_by_ref": _MITRE_IDENTITY_OBJECT["id"],
         "object_marking_refs": [
             _MITRE_COPYRIGHT_STATEMENT_DATA_MARKING_ID
@@ -185,7 +185,7 @@ EXTENSION_DEFINITION_FOR_STIX_1_X = {
         "name": "Extension to support STIX 1.x Infrastucture",
         "description": "This schema adds STIX 1.x TTP properties not present in the STIX 2.1 Infrastucture object",  # noqa
         "created": "2020-12-22T00:00:00.000000Z",
-        "modified": "2022-12-12T00:00:00.000000Z",
+        "modified": "2022-12-22T00:00:00.000000Z",
         "created_by_ref": _MITRE_IDENTITY_OBJECT["id"],
         "object_marking_refs": [
             _MITRE_COPYRIGHT_STATEMENT_DATA_MARKING_ID
@@ -201,7 +201,7 @@ EXTENSION_DEFINITION_FOR_STIX_1_X = {
         "name": "Extension to support STIX 1.x Malware Instances",
         "description": "This schema adds STIX 1.x TTP properties not present in the STIX 2.1 Malware object",  # noqa
         "created": "2020-12-22T00:00:00.000000Z",
-        "modified": "2022-12-12T00:00:00.000000Z",
+        "modified": "2022-12-22T00:00:00.000000Z",
         "created_by_ref": _MITRE_IDENTITY_OBJECT["id"],
         "object_marking_refs": [
             _MITRE_COPYRIGHT_STATEMENT_DATA_MARKING_ID
@@ -233,7 +233,7 @@ EXTENSION_DEFINITION_FOR_STIX_1_X = {
         "name": "Extension to support STIX 1.x Threat Actors",
         "description": "This schema adds STIX 1.x Threat Actor properties not present in the STIX 2.1 Threat Actor object",  # noqa
         "created": "2020-12-22T00:00:00.000000Z",
-        "modified": "2022-12-12T00:00:00.000000Z",
+        "modified": "2022-12-22T00:00:00.000000Z",
         "created_by_ref": _MITRE_IDENTITY_OBJECT["id"],
         "object_marking_refs": [
             _MITRE_COPYRIGHT_STATEMENT_DATA_MARKING_ID
@@ -249,7 +249,7 @@ EXTENSION_DEFINITION_FOR_STIX_1_X = {
         "name": "Extension to support STIX 1.x Tools",
         "description": "This schema adds STIX 1.x Tool properties not present in the STIX 2.1 Tool object",  # noqa
         "created": "2020-12-22T00:00:00.000000Z",
-        "modified": "2022-12-12T00:00:00.000000Z",
+        "modified": "2022-12-22T00:00:00.000000Z",
         "created_by_ref": _MITRE_IDENTITY_OBJECT["id"],
         "object_marking_refs": [
             _MITRE_COPYRIGHT_STATEMENT_DATA_MARKING_ID
@@ -265,7 +265,7 @@ EXTENSION_DEFINITION_FOR_STIX_1_X = {
         "name": "Extension to support STIX 1.x Vulnerabilities",
         "description": "This schema adds two properties to a STIX object",
         "created": "2020-12-22T00:00:00.000000Z",
-        "modified": "2022-12-12T00:00:00.000000Z",
+        "modified": "2022-12-22T00:00:00.000000Z",
         "created_by_ref": _MITRE_IDENTITY_OBJECT["id"],
         "object_marking_refs": [
             _MITRE_COPYRIGHT_STATEMENT_DATA_MARKING_ID
