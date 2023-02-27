@@ -1530,27 +1530,20 @@ def handle_missing_properties_of_network_socket(socket, cybox_traffic):
         sco_id = cybox_traffic["id"] if "id" in cybox_traffic else None
         if socket.domain:
             if get_option_value("spec_version") == "2.0":
-                cybox_traffic["extensions"]["socket-ext"]["protocol_family"] = socket.domain
+                cybox_traffic["protocol_family"] = str(socket.domain)
             else:
                 handle_missing_string_property(container, "protocol_family", socket.domain, sco_id, is_sco=True)
-        # these should probably be refs to SCOs
-        if socket.local_address:
-            handle_missing_string_property(container,
-                                           "local_address",
-                                           compose_socket_address(socket.local_address),
-                                           sco_id,
-                                           is_sco=True)
-        if socket.remote_address:
-            handle_missing_string_property(container,
-                                           "remote_address",
-                                           compose_socket_address(socket.remote_address),
-                                           sco_id,
-                                           is_sco=True)
         fill_in_extension_properties(cybox_traffic, container, extension_definition_id)
 
 
-def convert_network_socket(socket):
+def convert_network_socket(socket, env=None):
+    spec_version = get_option_value("spec_version")
     cybox_traffic = create_base_sco("network-traffic", socket)
+    if spec_version == "2.0":
+        objs = {"0": cybox_traffic}
+    else:
+        objs = [cybox_traffic]
+
     if socket.protocol:
         cybox_traffic["protocols"] = [socket.protocol.value.lower()]
     socket_extension = {}
@@ -1571,9 +1564,15 @@ def convert_network_socket(socket):
         socket_extension["socket_descriptor"] = socket.socket_descriptor
 
     cybox_traffic["extensions"] = {"socket-ext": socket_extension}
+    index = 1
+    if socket.local_address:
+        index = convert_socket_address_1(socket.local_address, cybox_traffic, objs, spec_version, index, "dst", env)
+    if socket.remote_address:
+
+        convert_socket_address_1(socket.local_address, cybox_traffic, objs, spec_version, index, "src", env)
     generate_sco_id_for_2_1(cybox_traffic, socket.parent.id_)
     handle_missing_properties_of_network_socket(socket, cybox_traffic if check_for_missing_policy("use-extensions") else socket_extension)
-    return cybox_traffic
+    return objs
 
 
 def convert_socket_address(sock_add_1x, env=None):
@@ -1768,7 +1767,7 @@ def convert_cybox_object20(obj1x):
     elif isinstance(prop, NetworkPacket):
         objs["0"] = convert_network_packet(prop)
     elif isinstance(prop, NetworkSocket):
-        objs["0"] = convert_network_socket(prop)
+        objs = convert_network_socket(prop)
     elif isinstance(prop, X509Certificate):
         objs["0"] = convert_x509_certificate(prop)
     elif isinstance(prop, SocketAddress):
@@ -1842,7 +1841,7 @@ def convert_cybox_object21(obj1x, env):
     elif isinstance(prop, NetworkPacket):
         objs = [convert_network_packet(prop)]
     elif isinstance(prop, NetworkSocket):
-        objs = [convert_network_socket(prop)]
+        objs = convert_network_socket(prop, env)
     elif isinstance(prop, X509Certificate):
         objs = [convert_x509_certificate(prop)]
     elif isinstance(prop, SocketAddress):

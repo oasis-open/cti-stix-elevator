@@ -10,6 +10,7 @@
       "number_observed": 1,
       "objects": {
         "0": {
+          "dst_ref": "1",
           "extensions": {
             "socket-ext": {
               "address_family": "AF_INET",
@@ -17,13 +18,17 @@
               "options": {
                 "IP_MULTICAST_LOOP": 1
               },
-              "x_elevator_local_address": "198.51.100.2"
+              "protocol_family": "PF_APPLETALK"
             }
           },
           "protocols": [
             "tcp"
           ],
           "type": "network-traffic"
+        },
+        "1": {
+          "type": "ipv4-addr",
+          "value": "198.51.100.2"
         }
       },
       "type": "observed-data"

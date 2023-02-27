@@ -2,10 +2,11 @@
     "id": "bundle--8005dcb9-398c-4f61-b44c-18133199d145",
     "objects": [
         {
+            "dst_ref": "ipv4-addr--9cf4a8ec-7640-5f40-a006-79942896168b",
             "extensions": {
                 "extension-definition--005e229c-fffc-42b0-a912-84671ab2829d": {
                     "extension_type": "property-extension",
-                    "local_address": "198.51.100.2"
+                    "protocol_family": "PF_APPLETALK"
                 },
                 "socket-ext": {
                     "address_family": "AF_INET",
@@ -15,21 +16,27 @@
                     }
                 }
             },
-            "id": "network-traffic--d8301f41-2ed7-599a-9851-02c19eeaca42",
+            "id": "network-traffic--cdd05437-18e8-56e2-ab08-b474ca75b370",
             "protocols": [
                 "tcp"
             ],
             "type": "network-traffic"
         },
         {
-            "created": "2020-12-30T16:03:22.369Z",
-            "first_observed": "2020-12-30T16:03:22.369Z",
+            "id": "ipv4-addr--9cf4a8ec-7640-5f40-a006-79942896168b",
+            "type": "ipv4-addr",
+            "value": "198.51.100.2"
+        },
+        {
+            "created": "2023-02-27T15:16:09.444Z",
+            "first_observed": "2023-02-27T15:16:09.444Z",
             "id": "observed-data--175e561f-3ced-4cf7-8a17-654ca651ff97",
-            "last_observed": "2020-12-30T16:03:22.369Z",
-            "modified": "2020-12-30T16:03:22.369Z",
+            "last_observed": "2023-02-27T15:16:09.444Z",
+            "modified": "2023-02-27T15:16:09.444Z",
             "number_observed": 1,
             "object_refs": [
-                "network-traffic--d8301f41-2ed7-599a-9851-02c19eeaca42"
+                "network-traffic--cdd05437-18e8-56e2-ab08-b474ca75b370",
+                "ipv4-addr--9cf4a8ec-7640-5f40-a006-79942896168b"
             ],
             "spec_version": "2.1",
             "type": "observed-data"
