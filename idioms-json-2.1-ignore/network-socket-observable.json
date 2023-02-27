@@ -2,6 +2,7 @@
     "id": "bundle--8005dcb9-398c-4f61-b44c-18133199d145",
     "objects": [
         {
+            "dst_ref": "ipv4-addr--9cf4a8ec-7640-5f40-a006-79942896168b",
             "extensions": {
                 "socket-ext": {
                     "address_family": "AF_INET",
@@ -11,21 +12,27 @@
                     }
                 }
             },
-            "id": "network-traffic--d8301f41-2ed7-599a-9851-02c19eeaca42",
+            "id": "network-traffic--cdd05437-18e8-56e2-ab08-b474ca75b370",
             "protocols": [
                 "tcp"
             ],
             "type": "network-traffic"
         },
         {
-            "created": "2021-04-27T21:09:06.718Z",
-            "first_observed": "2021-04-27T21:09:06.718Z",
+            "id": "ipv4-addr--9cf4a8ec-7640-5f40-a006-79942896168b",
+            "type": "ipv4-addr",
+            "value": "198.51.100.2"
+        },
+        {
+            "created": "2023-02-27T16:28:24.006Z",
+            "first_observed": "2023-02-27T16:28:24.006Z",
             "id": "observed-data--175e561f-3ced-4cf7-8a17-654ca651ff97",
-            "last_observed": "2021-04-27T21:09:06.718Z",
-            "modified": "2021-04-27T21:09:06.718Z",
+            "last_observed": "2023-02-27T16:28:24.006Z",
+            "modified": "2023-02-27T16:28:24.006Z",
             "number_observed": 1,
             "object_refs": [
-                "network-traffic--d8301f41-2ed7-599a-9851-02c19eeaca42"
+                "network-traffic--cdd05437-18e8-56e2-ab08-b474ca75b370",
+                "ipv4-addr--9cf4a8ec-7640-5f40-a006-79942896168b"
             ],
             "spec_version": "2.1",
             "type": "observed-data"
