@@ -51,9 +51,9 @@ Missing property *property_name* of *id* is ignored                             
 Used custom property for *property_name* of *id*                                                                               308     warn
 Missing property *property_name* of *id* is ignored, because there is no description property                                  309     warn
 The Short_Description property in *id* is not supported in STIX 2.x.                                                           310     info
-Used an extension for objective of *id*                                                                                        311     warn
+``Not in use``                                                                                                                 311     warn
 No extension-definition was found for STIX 1 type *type* in *id*                                                               312     warn
-Used extension property for *property_name* of *id*                                                                            313     warn
+Used an extension property for *property_name* of *id*                                                                         313     warn
 Property *property_name* of *id* is ignored, because it can't be represented in an extension                                   314     warn
 New extension-definition id *id* was generated for *type*. *id*                                                                315     warn
 Custom Content *property_name* of *id* is ignored                                                                              316     warn
@@ -97,7 +97,7 @@ No pattern term was created from *id*                                           
 Could not resolve Marking Structure *id*                                                                                                       425     warn
 MAEC content in *id* cannot be represented in STIX 2.x                                                                                         426     warn
 The *relationship name* relationship involving *id* is not explicitly supported in STIX 2.x                                                    427     warn
-``roles`` is not a property of a 2.x identity (*id*).  Perhaps the roles are associated with a related Threat Actor                            428     warn
+``roles`` is not a property of a 2.0 identity (*id*).  Perhaps the roles are associated with a related Threat Actor                            428     warn
 ``HTTPServerResponse`` type is not supported in STIX 2.x                                                                                       429     warn
 The confidence value *value* is not found on one of the confidence scales from the specification. No confidence can be inferred                430     warn
 The confidence value *value* is not between 0 and 100, which is required for STIX 2.1. No confidence can be inferred                           431     warn
@@ -236,7 +236,7 @@ CybOX object *object* not handled yet                                           
 Email *property* not handled yet                                                                                                            806  warn
 ``file:extended_properties:windows_pebinary_ext:optional_header`` is not implemented yet                                                    807  warn
 *object* found in *id* cannot be converted to a pattern, yet.                                                                               808  warn
-Related Objects of cyber observables for *id* are not handled yet. ``Not currently in use.``                                                809  warn
+``Not in use``                                                                                                                              809  warn
 Negation of *id* is not handled yet                                                                                                         810  warn
 Custom object with no name cannot be handled yet                                                                                            811  warn
 Condition *condition* on a hive property not handled.                                                                                       812  warn

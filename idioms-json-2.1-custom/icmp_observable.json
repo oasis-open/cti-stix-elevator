@@ -6,10 +6,10 @@
                 "icmp-ext": {
                     "icmp_code_hex": "00",
                     "icmp_type_hex": "08",
-                    "x_elevator_checksum": "97c02164528d"
+                    "x_elevator_checksum_hex": "97c02164528d"
                 }
             },
-            "id": "network-traffic--efcc1043-9c92-5351-b57f-e80702999f39",
+            "id": "network-traffic--45f40cb7-7956-5cf6-9075-18fcaf17156d",
             "protocols": [
                 "icmp"
             ],
@@ -23,7 +23,7 @@
             "modified": "2019-08-21T11:06:25.214Z",
             "number_observed": 1,
             "object_refs": [
-                "network-traffic--efcc1043-9c92-5351-b57f-e80702999f39"
+                "network-traffic--45f40cb7-7956-5cf6-9075-18fcaf17156d"
             ],
             "spec_version": "2.1",
             "type": "observed-data"

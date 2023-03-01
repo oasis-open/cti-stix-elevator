@@ -1,40 +1,36 @@
-MITRE_COPYRIGHT_STATEMENT_DATA_MARKING = {
-    "created": "2020-12-22T00:00:00.000000Z",
-    "definition": {
-        "statement": "Copyright 2020 - The MITRE Corporation, Inc."
-    },
-    "definition_type": "statement",
-    "id": "marking-definition--3cd55916-d34b-4747-a8e0-dedec14b711b",
-    "spec_version": "2.1",
-    "type": "marking-definition"
-}
+# object found in STIX common object repository
+_MITRE_COPYRIGHT_STATEMENT_DATA_MARKING_ID = "marking-definition--3cd55916-d34b-4747-a8e0-dedec14b711b"
 
-MITRE_IDENTITY_OBJECT = {
+
+_MITRE_IDENTITY_OBJECT = {
     "created": "2020-12-22T00:00:00.000000Z",
     "id": "identity--659e8342-f720-4d0d-b193-6a04fdfbb401",
     "modified": "2020-12-22T00:00:00.000000Z",
     "name": "MITRE",
     "object_marking_refs": [
-        MITRE_COPYRIGHT_STATEMENT_DATA_MARKING["id"]
+        _MITRE_COPYRIGHT_STATEMENT_DATA_MARKING_ID
     ],
     "spec_version": "2.1",
     "type": "identity"
 }
+
+_EXTENSION_SCHEMA_URL = "https://github.com/oasis-open/cti-stix-common-objects/tree/main/extension-definition-specifications/stix-1x" # noqa
+
 
 EXTENSION_DEFINITION_FOR_STIX_1_X = {
     "archive-file": {
         "id": "extension-definition--db4b5429-6927-4d0c-a194-4695f05c629a",
         "type": "extension-definition",
         "spec_version": "2.1",
-        "name": "Extension to support STIX 1.x archive-file",
-        "description": "This schema adds two properties to a STIX object",
+        "name": "Extension to support STIX 1.x/CybOX 2.1 archive-file",
+        "description": "This schema adds STIX 1.x/CybOX 2.1 archive-file properties not present in the STIX 2.1 archive-file object", # noqa
         "created": "2020-12-22T00:00:00.000000Z",
-        "modified": "2020-12-22T00:00:00.000000Z",
-        "created_by_ref": MITRE_IDENTITY_OBJECT["id"],
+        "modified": "2022-12-22T00:00:00.000000Z",
+        "created_by_ref": _MITRE_IDENTITY_OBJECT["id"],
         "object_marking_refs": [
-            MITRE_COPYRIGHT_STATEMENT_DATA_MARKING["id"]
+            _MITRE_COPYRIGHT_STATEMENT_DATA_MARKING_ID
         ],
-        "schema": "https://github.com/mitre/cti/extension-definitions/stix-1-archive-file/",
+        "schema": _EXTENSION_SCHEMA_URL,
         "version": "1.0.0",
         "extension_types": ["property-extension"]
     },
@@ -43,14 +39,14 @@ EXTENSION_DEFINITION_FOR_STIX_1_X = {
         "type": "extension-definition",
         "spec_version": "2.1",
         "name": "Extension to support STIX 1.x Attack Pattern",
-        "description": "This schema adds two properties to a STIX object",
+        "description": "This schema adds STIX 1.x TTP properties not present in the STIX 2.1 Attack Pattern object",  # noqa
         "created": "2020-12-22T00:00:00.000000Z",
-        "modified": "2020-12-22T00:00:00.000000Z",
-        "created_by_ref": MITRE_IDENTITY_OBJECT["id"],
+        "modified": "2022-12-22T00:00:00.000000Z",
+        "created_by_ref": _MITRE_IDENTITY_OBJECT["id"],
         "object_marking_refs": [
-            MITRE_COPYRIGHT_STATEMENT_DATA_MARKING["id"]
+            _MITRE_COPYRIGHT_STATEMENT_DATA_MARKING_ID
         ],
-        "schema": "https://github.com/mitre/cti/extension-definitions/stix-1-attack-pattern/",
+        "schema": _EXTENSION_SCHEMA_URL,
         "version": "1.0.0",
         "extension_types": ["property-extension"]
     },
@@ -59,14 +55,14 @@ EXTENSION_DEFINITION_FOR_STIX_1_X = {
         "type": "extension-definition",
         "spec_version": "2.1",
         "name": "Extension to support STIX 1.x Campaigns",
-        "description": "This schema adds two properties to a STIX object",
+        "description": "This schema adds STIX 1.x Campaign properties not present in the STIX 2.1 Campaign object",
         "created": "2020-12-22T00:00:00.000000Z",
-        "modified": "2020-12-22T00:00:00.000000Z",
-        "created_by_ref": MITRE_IDENTITY_OBJECT["id"],
+        "modified": "2022-12-22T00:00:00.000000Z",
+        "created_by_ref": _MITRE_IDENTITY_OBJECT["id"],
         "object_marking_refs": [
-            MITRE_COPYRIGHT_STATEMENT_DATA_MARKING["id"]
+            _MITRE_COPYRIGHT_STATEMENT_DATA_MARKING_ID
         ],
-        "schema": "https://github.com/mitre/cti/extension-definitions/stix-1-campaign/",
+        "schema": _EXTENSION_SCHEMA_URL,
         "version": "1.0.0",
         "extension_types": ["property-extension"]
     },
@@ -75,14 +71,14 @@ EXTENSION_DEFINITION_FOR_STIX_1_X = {
         "type": "extension-definition",
         "spec_version": "2.1",
         "name": "Extension to support STIX 1.x Courses of Action",
-        "description": "This schema adds two properties to a STIX object",
+        "description": "This schema adds STIX 1.x Courses of Action properties not present in the STIX 2.1 COA object",
         "created": "2020-12-22T00:00:00.000000Z",
-        "modified": "2020-12-22T00:00:00.000000Z",
-        "created_by_ref": MITRE_IDENTITY_OBJECT["id"],
+        "modified": "2022-12-22T00:00:00.000000Z",
+        "created_by_ref": _MITRE_IDENTITY_OBJECT["id"],
         "object_marking_refs": [
-            MITRE_COPYRIGHT_STATEMENT_DATA_MARKING["id"]
+            _MITRE_COPYRIGHT_STATEMENT_DATA_MARKING_ID
         ],
-        "schema": "https://github.com/mitre/cti/extension-definitions/stix-1-course-of-action/",
+        "schema": _EXTENSION_SCHEMA_URL,
         "version": "1.0.0",
         "extension_types": ["property-extension"]
     },
@@ -90,31 +86,15 @@ EXTENSION_DEFINITION_FOR_STIX_1_X = {
         "id": "extension-definition--0d4dda28-1b6c-446a-be85-38b9d9cd297c",
         "type": "extension-definition",
         "spec_version": "2.1",
-        "name": "Extension to support STIX 1.x email-message",
-        "description": "This schema adds two properties to a STIX object",
+        "name": "Extension to support STIX 1.x/CybOX 2.1 email-message",
+        "description": "This schema adds STIX 1.x/CybOX 2.1 Email Messages properties not present in the STIX 2.1 Email Message object", # noqa
         "created": "2020-12-22T00:00:00.000000Z",
-        "modified": "2020-12-22T00:00:00.000000Z",
-        "created_by_ref": MITRE_IDENTITY_OBJECT["id"],
+        "modified": "2022-12-22T00:00:00.000000Z",
+        "created_by_ref": _MITRE_IDENTITY_OBJECT["id"],
         "object_marking_refs": [
-            MITRE_COPYRIGHT_STATEMENT_DATA_MARKING["id"]
+            _MITRE_COPYRIGHT_STATEMENT_DATA_MARKING_ID
         ],
-        "schema": "https://github.com/mitre/cti/extension-definitions/stix-1-email-message/",
-        "version": "1.0.0",
-        "extension_types": ["property-extension"]
-    },
-    "grouping": {
-        "id": "extension-definition--1db7034e-6002-43ea-902d-56ff9fccd2e3",
-        "type": "extension-definition",
-        "spec_version": "2.1",
-        "name": "Extension to support STIX 1.x STIX Header",
-        "description": "This schema adds one property to a STIX object",
-        "created": "2022-08-27T00:00:00.000000Z",
-        "modified": "2022-08-27T00:00:00.000000Z",
-        "created_by_ref": MITRE_IDENTITY_OBJECT["id"],
-        "object_marking_refs": [
-            MITRE_COPYRIGHT_STATEMENT_DATA_MARKING["id"]
-        ],
-        "schema": "https://github.com/mitre/cti/extension-definitions/stix-1-stix-header/",
+        "schema": _EXTENSION_SCHEMA_URL,
         "version": "1.0.0",
         "extension_types": ["property-extension"]
     },
@@ -122,31 +102,31 @@ EXTENSION_DEFINITION_FOR_STIX_1_X = {
         "id": "extension-definition--6f6973cb-70be-40cb-b1ac-15ed78cebe56",
         "type": "extension-definition",
         "spec_version": "2.1",
-        "name": "Extension to support STIX 1.x Malware Instances",
-        "description": "This schema adds two properties to a STIX object",
+        "name": "Extension to support STIX 1.x/CybOX 2.1 Network Packet ICMP IPV4 properties",
+        "description": "This schema adds STIX 1.x/CybOX 2.1 Network Packet ICMP IPV4 properties in the STIX 2.x Network Traffic object", # noqa
         "created": "2020-12-22T00:00:00.000000Z",
-        "modified": "2020-12-22T00:00:00.000000Z",
-        "created_by_ref": MITRE_IDENTITY_OBJECT["id"],
+        "modified": "2022-12-22T00:00:00.000000Z",
+        "created_by_ref": _MITRE_IDENTITY_OBJECT["id"],
         "object_marking_refs": [
-            MITRE_COPYRIGHT_STATEMENT_DATA_MARKING["id"]
+            _MITRE_COPYRIGHT_STATEMENT_DATA_MARKING_ID
         ],
-        "schema": "https://github.com/mitre/cti/extension-definitions/stix-1-icmp-header/",
+        "schema": _EXTENSION_SCHEMA_URL,
         "version": "1.0.0",
         "extension_types": ["property-extension"]
     },
-    "identity": {
+    "victim": {
         "id": "extension-definition--8f0b8ed7-c7ad-4650-babe-c4c45cac4a0b",
         "type": "extension-definition",
         "spec_version": "2.1",
-        "name": "Extension to support STIX 1.x Identities",
-        "description": "This schema adds two properties to a STIX object",
+        "name": "Extension to support STIX 1.x Victim Targeting",
+        "description": "This schema adds STIX 1.x Victim Targeting properties not present in the STIX 2.1 Identity object",  # noqa
         "created": "2020-12-22T00:00:00.000000Z",
-        "modified": "2020-12-22T00:00:00.000000Z",
-        "created_by_ref": MITRE_IDENTITY_OBJECT["id"],
+        "modified": "2022-12-22T00:00:00.000000Z",
+        "created_by_ref": _MITRE_IDENTITY_OBJECT["id"],
         "object_marking_refs": [
-            MITRE_COPYRIGHT_STATEMENT_DATA_MARKING["id"]
+            _MITRE_COPYRIGHT_STATEMENT_DATA_MARKING_ID
         ],
-        "schema": "https://https://github.com/mitre/cti/extension-definitions/stix-1-identity/",
+        "schema": _EXTENSION_SCHEMA_URL,
         "version": "1.0.0",
         "extension_types": ["property-extension"]
     },
@@ -155,14 +135,14 @@ EXTENSION_DEFINITION_FOR_STIX_1_X = {
         "type": "extension-definition",
         "spec_version": "2.1",
         "name": "Extension to support STIX 1.x CIQ Identities",
-        "description": "This schema adds two properties to a STIX object",
+        "description": "This schema adds STIX 1.x CIQ Identity properties not present in the STIX 2.1 Identity object",
         "created": "2020-12-22T00:00:00.000000Z",
-        "modified": "2020-12-22T00:00:00.000000Z",
-        "created_by_ref": MITRE_IDENTITY_OBJECT["id"],
+        "modified": "2022-12-22T00:00:00.000000Z",
+        "created_by_ref": _MITRE_IDENTITY_OBJECT["id"],
         "object_marking_refs": [
-            MITRE_COPYRIGHT_STATEMENT_DATA_MARKING["id"]
+            _MITRE_COPYRIGHT_STATEMENT_DATA_MARKING_ID
         ],
-        "schema": "https://github.com/mitre/cti/extension-definitions/stix-1-identity-ciq/",
+        "schema": _EXTENSION_SCHEMA_URL,
         "version": "1.0.0",
         "extension_types": ["property-extension"]
     },
@@ -173,12 +153,12 @@ EXTENSION_DEFINITION_FOR_STIX_1_X = {
         "name": "Extension to support STIX 1.x Incident",
         "description": "This schema adds STIX 1.x Incident properties not present in the STIX 2.1 Incident stub object",
         "created": "2020-12-22T00:00:00.000000Z",
-        "modified": "2020-12-22T00:00:00.000000Z",
-        "created_by_ref": MITRE_IDENTITY_OBJECT["id"],
+        "modified": "2022-12-22T00:00:00.000000Z",
+        "created_by_ref": _MITRE_IDENTITY_OBJECT["id"],
         "object_marking_refs": [
-            MITRE_COPYRIGHT_STATEMENT_DATA_MARKING["id"]
+            _MITRE_COPYRIGHT_STATEMENT_DATA_MARKING_ID
         ],
-        "schema": "https://github.com/oasis-open/cti-stix-common-objects/blob/elevator-extensions/extension-definition-specifications/stix1x-incident/stix1x-incident.json",  # noqa
+        "schema": _EXTENSION_SCHEMA_URL,  # noqa
         "version": "1.0.0",
         "extension_types": ["property-extension"]
     },
@@ -187,30 +167,14 @@ EXTENSION_DEFINITION_FOR_STIX_1_X = {
         "type": "extension-definition",
         "spec_version": "2.1",
         "name": "Extension to support STIX 1.x Indicators",
-        "description": "This schema adds two properties to a STIX object",
+        "description": "This schema adds STIX 1.x Indicator properties not present in the STIX 2.1 Indicator object",
         "created": "2020-12-22T00:00:00.000000Z",
-        "modified": "2020-12-22T00:00:00.000000Z",
-        "created_by_ref": MITRE_IDENTITY_OBJECT["id"],
+        "modified": "2022-12-22T00:00:00.000000Z",
+        "created_by_ref": _MITRE_IDENTITY_OBJECT["id"],
         "object_marking_refs": [
-            MITRE_COPYRIGHT_STATEMENT_DATA_MARKING["id"]
+            _MITRE_COPYRIGHT_STATEMENT_DATA_MARKING_ID
         ],
-        "schema": "https://github.com/mitre/cti/extension-definitions/stix-1-indicator/",
-        "version": "1.0.0",
-        "extension_types": ["property-extension"]
-    },
-    "information_source": {
-        "id": "extension-definition--58c914a2-0b19-4f62-8221-0af0b542e130",
-        "type": "extension-definition",
-        "spec_version": "2.1",
-        "name": "Extension to support STIX 1.x information_source",
-        "description": "This schema adds two properties to a STIX object",
-        "created": "2020-12-22T00:00:00.000000Z",
-        "modified": "2020-12-22T00:00:00.000000Z",
-        "created_by_ref": MITRE_IDENTITY_OBJECT["id"],
-        "object_marking_refs": [
-            MITRE_COPYRIGHT_STATEMENT_DATA_MARKING["id"]
-        ],
-        "schema": "https://github.com/mitre/cti/extension-definitions/stix-1-information-source/",
+        "schema": _EXTENSION_SCHEMA_URL,
         "version": "1.0.0",
         "extension_types": ["property-extension"]
     },
@@ -219,14 +183,14 @@ EXTENSION_DEFINITION_FOR_STIX_1_X = {
         "type": "extension-definition",
         "spec_version": "2.1",
         "name": "Extension to support STIX 1.x Infrastucture",
-        "description": "This schema adds two properties to a STIX object",
+        "description": "This schema adds STIX 1.x TTP properties not present in the STIX 2.1 Infrastucture object",  # noqa
         "created": "2020-12-22T00:00:00.000000Z",
-        "modified": "2020-12-22T00:00:00.000000Z",
-        "created_by_ref": MITRE_IDENTITY_OBJECT["id"],
+        "modified": "2022-12-22T00:00:00.000000Z",
+        "created_by_ref": _MITRE_IDENTITY_OBJECT["id"],
         "object_marking_refs": [
-            MITRE_COPYRIGHT_STATEMENT_DATA_MARKING["id"]
+            _MITRE_COPYRIGHT_STATEMENT_DATA_MARKING_ID
         ],
-        "schema": "https://github.com/mitre/cti/extension-definitions/stix-1-infrastucture/",
+        "schema": _EXTENSION_SCHEMA_URL,
         "version": "1.0.0",
         "extension_types": ["property-extension"]
     },
@@ -235,14 +199,14 @@ EXTENSION_DEFINITION_FOR_STIX_1_X = {
         "type": "extension-definition",
         "spec_version": "2.1",
         "name": "Extension to support STIX 1.x Malware Instances",
-        "description": "This schema adds two properties to a STIX object",
+        "description": "This schema adds STIX 1.x TTP properties not present in the STIX 2.1 Malware object",  # noqa
         "created": "2020-12-22T00:00:00.000000Z",
-        "modified": "2020-12-22T00:00:00.000000Z",
-        "created_by_ref": MITRE_IDENTITY_OBJECT["id"],
+        "modified": "2022-12-22T00:00:00.000000Z",
+        "created_by_ref": _MITRE_IDENTITY_OBJECT["id"],
         "object_marking_refs": [
-            MITRE_COPYRIGHT_STATEMENT_DATA_MARKING["id"]
+            _MITRE_COPYRIGHT_STATEMENT_DATA_MARKING_ID
         ],
-        "schema": "https://github.com/mitre/cti/extension-definitions/stix-1-malware/",
+        "schema": _EXTENSION_SCHEMA_URL,
         "version": "1.0.0",
         "extension_types": ["property-extension"]
     },
@@ -250,31 +214,15 @@ EXTENSION_DEFINITION_FOR_STIX_1_X = {
         "id": "extension-definition--005e229c-fffc-42b0-a912-84671ab2829d",
         "type": "extension-definition",
         "spec_version": "2.1",
-        "name": "Extension to support STIX 1.x Malware Instances",
-        "description": "This schema adds two properties to a STIX object",
+        "name": "Extension to support STIX 1.x/CybOX 2.1 Network Sockets",
+        "description": "This schema adds STIX 1.x/CybOX 2.1 Network Sockets properties not present in the STIX 2.1 Network Traffic object", # noqa
         "created": "2020-12-22T00:00:00.000000Z",
         "modified": "2020-12-22T00:00:00.000000Z",
-        "created_by_ref": MITRE_IDENTITY_OBJECT["id"],
+        "created_by_ref": _MITRE_IDENTITY_OBJECT["id"],
         "object_marking_refs": [
-            MITRE_COPYRIGHT_STATEMENT_DATA_MARKING["id"]
+            _MITRE_COPYRIGHT_STATEMENT_DATA_MARKING_ID
         ],
-        "schema": "https://github.com/mitre/cti/extension-definitions/stix-1-network-socket/",
-        "version": "1.0.0",
-        "extension_types": ["property-extension"]
-    },
-    "report": {
-        "id": "extension-definition--faebed16-db10-4824-8538-62d9cd38b117",
-        "type": "extension-definition",
-        "spec_version": "2.1",
-        "name": "Extension to support STIX 1.x STIX Header",
-        "description": "This schema adds one property to a STIX object",
-        "created": "2022-08-27T00:00:00.000000Z",
-        "modified": "2022-08-27T00:00:00.000000Z",
-        "created_by_ref": MITRE_IDENTITY_OBJECT["id"],
-        "object_marking_refs": [
-            MITRE_COPYRIGHT_STATEMENT_DATA_MARKING["id"]
-        ],
-        "schema": "https://github.com/mitre/cti/extension-definitions/stix-1-stix-header/",
+        "schema": _EXTENSION_SCHEMA_URL,
         "version": "1.0.0",
         "extension_types": ["property-extension"]
     },
@@ -283,14 +231,14 @@ EXTENSION_DEFINITION_FOR_STIX_1_X = {
         "type": "extension-definition",
         "spec_version": "2.1",
         "name": "Extension to support STIX 1.x Threat Actors",
-        "description": "This schema adds two properties to a STIX object",
+        "description": "This schema adds STIX 1.x Threat Actor properties not present in the STIX 2.1 Threat Actor object",  # noqa
         "created": "2020-12-22T00:00:00.000000Z",
-        "modified": "2020-12-22T00:00:00.000000Z",
-        "created_by_ref": MITRE_IDENTITY_OBJECT["id"],
+        "modified": "2022-12-22T00:00:00.000000Z",
+        "created_by_ref": _MITRE_IDENTITY_OBJECT["id"],
         "object_marking_refs": [
-            MITRE_COPYRIGHT_STATEMENT_DATA_MARKING["id"]
+            _MITRE_COPYRIGHT_STATEMENT_DATA_MARKING_ID
         ],
-        "schema": "https://github.com/mitre/cti/extension-definitions/stix-1-threat-actor/",
+        "schema": _EXTENSION_SCHEMA_URL,
         "version": "1.0.0",
         "extension_types": ["property-extension"]
     },
@@ -299,14 +247,14 @@ EXTENSION_DEFINITION_FOR_STIX_1_X = {
         "type": "extension-definition",
         "spec_version": "2.1",
         "name": "Extension to support STIX 1.x Tools",
-        "description": "This schema adds two properties to a STIX object",
+        "description": "This schema adds STIX 1.x Tool properties not present in the STIX 2.1 Tool object",  # noqa
         "created": "2020-12-22T00:00:00.000000Z",
-        "modified": "2020-12-22T00:00:00.000000Z",
-        "created_by_ref": MITRE_IDENTITY_OBJECT["id"],
+        "modified": "2022-12-22T00:00:00.000000Z",
+        "created_by_ref": _MITRE_IDENTITY_OBJECT["id"],
         "object_marking_refs": [
-            MITRE_COPYRIGHT_STATEMENT_DATA_MARKING["id"]
+            _MITRE_COPYRIGHT_STATEMENT_DATA_MARKING_ID
         ],
-        "schema": "https://github.com/mitre/cti/extension-definitions/stix-1-tool/",
+        "schema": _EXTENSION_SCHEMA_URL,
         "version": "1.0.0",
         "extension_types": ["property-extension"]
     },
@@ -317,12 +265,12 @@ EXTENSION_DEFINITION_FOR_STIX_1_X = {
         "name": "Extension to support STIX 1.x Vulnerabilities",
         "description": "This schema adds two properties to a STIX object",
         "created": "2020-12-22T00:00:00.000000Z",
-        "modified": "2020-12-22T00:00:00.000000Z",
-        "created_by_ref": MITRE_IDENTITY_OBJECT["id"],
+        "modified": "2022-12-22T00:00:00.000000Z",
+        "created_by_ref": _MITRE_IDENTITY_OBJECT["id"],
         "object_marking_refs": [
-            MITRE_COPYRIGHT_STATEMENT_DATA_MARKING["id"]
+            _MITRE_COPYRIGHT_STATEMENT_DATA_MARKING_ID
         ],
-        "schema": "https://github.com/mitre/cti/extension-definitions/stix-1-vulnerabilities/",
+        "schema": _EXTENSION_SCHEMA_URL,
         "version": "1.0.0",
         "extension_types": ["property-extension"]
     }

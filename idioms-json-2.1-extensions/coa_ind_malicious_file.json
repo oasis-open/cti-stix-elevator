@@ -96,6 +96,7 @@
         },
         {
             "created": "9999-12-31T00:00:00.000Z",
+            "created_by_ref": "identity--7d096896-8c88-41b4-a689-e8104a172064",
             "id": "report--2ea914b4-bb03-43e4-80ad-270dfd257beb",
             "modified": "9999-12-31T00:00:00.000Z",
             "object_refs": [

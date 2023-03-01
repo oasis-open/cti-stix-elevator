@@ -21,6 +21,22 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
+            "created_by_ref": "identity--fab3a857-80eb-4ecc-8440-d9228083e47f",
+            "description": "Fred\n\nROLES:\nAggregator,\nInitial Author",
+            "external_references": [
+                {
+                    "source_name": "unknown",
+                    "url": "http://foo.com/bar"
+                }
+            ],
+            "id": "identity--e3ae6a4c-adc3-420e-be2e-7497827cdc01",
+            "modified": "2014-08-08T15:50:10.983Z",
+            "name": "not provided",
+            "type": "identity"
+        },
+        {
+            "created": "2014-08-08T15:50:10.983Z",
+            "created_by_ref": "identity--fab3a857-80eb-4ecc-8440-d9228083e47f",
             "description": "\n\nTARGETED_INFORMATION:\nInformation Assets - Financial Data",
             "id": "identity--2d1c6ab3-5e4e-48ac-a32b-f0c01c2836a8",
             "identity_class": "unknown",
@@ -33,6 +49,7 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
+            "created_by_ref": "identity--fab3a857-80eb-4ecc-8440-d9228083e47f",
             "goals": [
                 "Theft",
                 "Theft - Theft of Proprietary Information"
@@ -55,13 +72,7 @@
                 "NewsBeef"
             ],
             "created": "2014-08-08T15:50:10.983Z",
-            "description": "Fred\n\nINFORMATION_SOURCE_ROLES:\nAggregator,\nInitial Author",
-            "external_references": [
-                {
-                    "source_name": "unknown",
-                    "url": "http://foo.com/bar"
-                }
-            ],
+            "created_by_ref": "identity--57487a81-3c58-4372-a6bc-0b17004f7574",
             "id": "campaign--e5268b6e-4931-42f1-b379-87f48eb41b1e",
             "modified": "2014-08-08T15:50:10.983Z",
             "name": "Compromise of ATM Machines",
@@ -72,6 +83,7 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
+            "created_by_ref": "identity--fab3a857-80eb-4ecc-8440-d9228083e47f",
             "id": "relationship--48820520-b033-4a28-8c95-3e41e85c00bf",
             "modified": "2014-08-08T15:50:10.983Z",
             "object_marking_refs": [
@@ -84,6 +96,7 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
+            "created_by_ref": "identity--fab3a857-80eb-4ecc-8440-d9228083e47f",
             "id": "relationship--f6276957-0503-4e05-91e7-53d25b4f0898",
             "modified": "2014-08-08T15:50:10.983Z",
             "object_marking_refs": [
@@ -96,6 +109,7 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
+            "created_by_ref": "identity--fab3a857-80eb-4ecc-8440-d9228083e47f",
             "id": "relationship--aa75836f-b40a-4117-be13-fd1c5cbb11d0",
             "modified": "2014-08-08T15:50:10.983Z",
             "object_marking_refs": [
@@ -108,6 +122,7 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
+            "created_by_ref": "identity--fab3a857-80eb-4ecc-8440-d9228083e47f",
             "id": "relationship--791a93ce-4726-4a83-99d4-bafcb015baa1",
             "modified": "2014-08-08T15:50:10.983Z",
             "object_marking_refs": [
@@ -120,6 +135,7 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
+            "created_by_ref": "identity--fab3a857-80eb-4ecc-8440-d9228083e47f",
             "id": "relationship--457e4df5-2852-4f77-bee4-8d77db2be81c",
             "modified": "2014-08-08T15:50:10.983Z",
             "object_marking_refs": [
@@ -132,6 +148,7 @@
         },
         {
             "created": "2022-09-13T12:03:29.688Z",
+            "created_by_ref": "identity--57487a81-3c58-4372-a6bc-0b17004f7574",
             "description": "Foo\nBar\nFred\nBarney",
             "id": "report--eb25c367-aaea-48b3-9daa-fe96504e5bc3",
             "labels": [
@@ -142,6 +159,7 @@
             "name": "regression-test-08-Elevator02",
             "object_refs": [
                 "identity--57487a81-3c58-4372-a6bc-0b17004f7574",
+                "identity--fab3a857-80eb-4ecc-8440-d9228083e47f",
                 "identity--2d1c6ab3-5e4e-48ac-a32b-f0c01c2836a8",
                 "threat-actor--56f3f0db-b5d5-431c-ae56-c18f02caf500",
                 "campaign--e5268b6e-4931-42f1-b379-87f48eb41b1e",

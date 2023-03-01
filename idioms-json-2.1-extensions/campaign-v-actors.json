@@ -49,6 +49,27 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
+            "created_by_ref": "identity--83e2fb0a-5463-4fb6-8395-82f37bce1a73",
+            "description": "Fred",
+            "external_references": [
+                {
+                    "source_name": "unknown",
+                    "url": "http://foo.com/bar"
+                }
+            ],
+            "id": "identity--1ecc2f42-1a71-4f6e-8b4e-12e0f67d8af5",
+            "modified": "2014-08-08T15:50:10.983Z",
+            "name": "not provided",
+            "roles": [
+                "Aggregator",
+                "Initial Author"
+            ],
+            "spec_version": "2.1",
+            "type": "identity"
+        },
+        {
+            "created": "2014-08-08T15:50:10.983Z",
+            "created_by_ref": "identity--1ecc2f42-1a71-4f6e-8b4e-12e0f67d8af5",
             "extensions": {
                 "extension-definition--8f0b8ed7-c7ad-4650-babe-c4c45cac4a0b": {
                     "extension_type": "property-extension",
@@ -69,6 +90,7 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
+            "created_by_ref": "identity--1ecc2f42-1a71-4f6e-8b4e-12e0f67d8af5",
             "goals": [
                 "Theft",
                 "Theft - Theft of Proprietary Information"
@@ -89,22 +111,7 @@
                 "NewsBeef"
             ],
             "created": "2014-08-08T15:50:10.983Z",
-            "description": "Fred",
-            "extensions": {
-                "extension-definition--58c914a2-0b19-4f62-8221-0af0b542e130": {
-                    "extension_type": "property-extension",
-                    "information_source_roles": [
-                        "aggregator",
-                        "initial-author"
-                    ]
-                }
-            },
-            "external_references": [
-                {
-                    "source_name": "unknown",
-                    "url": "http://foo.com/bar"
-                }
-            ],
+            "created_by_ref": "identity--1ecc2f42-1a71-4f6e-8b4e-12e0f67d8af5",
             "id": "campaign--e5268b6e-4931-42f1-b379-87f48eb41b1e",
             "modified": "2014-08-08T15:50:10.983Z",
             "name": "Compromise of ATM Machines",
@@ -116,6 +123,7 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
+            "created_by_ref": "identity--1ecc2f42-1a71-4f6e-8b4e-12e0f67d8af5",
             "id": "relationship--141118db-7186-4d69-b555-9f36fd4b2a07",
             "modified": "2014-08-08T15:50:10.983Z",
             "object_marking_refs": [
@@ -129,6 +137,7 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
+            "created_by_ref": "identity--1ecc2f42-1a71-4f6e-8b4e-12e0f67d8af5",
             "id": "relationship--f2d39da0-5079-457d-a347-7213a51e3b57",
             "modified": "2014-08-08T15:50:10.983Z",
             "object_marking_refs": [
@@ -142,6 +151,7 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
+            "created_by_ref": "identity--1ecc2f42-1a71-4f6e-8b4e-12e0f67d8af5",
             "id": "relationship--47d5a677-c667-4457-aaf4-1a00fd20c439",
             "modified": "2014-08-08T15:50:10.983Z",
             "object_marking_refs": [
@@ -155,6 +165,7 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
+            "created_by_ref": "identity--1ecc2f42-1a71-4f6e-8b4e-12e0f67d8af5",
             "id": "relationship--97e61559-4779-4f79-95fc-292e834a279b",
             "modified": "2014-08-08T15:50:10.983Z",
             "object_marking_refs": [
@@ -168,6 +179,7 @@
         },
         {
             "created": "2014-08-08T15:50:10.983Z",
+            "created_by_ref": "identity--1ecc2f42-1a71-4f6e-8b4e-12e0f67d8af5",
             "id": "relationship--12d87df6-661a-45c1-bc72-c06e2b7435dd",
             "modified": "2014-08-08T15:50:10.983Z",
             "object_marking_refs": [
@@ -181,6 +193,7 @@
         },
         {
             "created": "2022-09-15T15:50:10.747Z",
+            "created_by_ref": "identity--83e2fb0a-5463-4fb6-8395-82f37bce1a73",
             "description": "Foo\nBar\nFred\nBarney",
             "id": "report--e884fee2-4f9c-4078-af05-e04b4f7537f7",
             "modified": "2022-09-15T15:50:10.747Z",
@@ -189,6 +202,7 @@
                 "location--327ea6e3-2954-4d84-b84f-1bc45f1bd4ef",
                 "relationship--dcea2d17-1ebc-4846-86b4-2b9b9c3fff5a",
                 "identity--83e2fb0a-5463-4fb6-8395-82f37bce1a73",
+                "identity--1ecc2f42-1a71-4f6e-8b4e-12e0f67d8af5",
                 "identity--2d1c6ab3-5e4e-48ac-a32b-f0c01c2836a8",
                 "threat-actor--56f3f0db-b5d5-431c-ae56-c18f02caf500",
                 "campaign--e5268b6e-4931-42f1-b379-87f48eb41b1e",

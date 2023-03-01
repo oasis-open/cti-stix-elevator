@@ -77,21 +77,16 @@
         {
             "created": "2015-05-15T09:00:00.000Z",
             "created_by_ref": "identity--8358a1c8-6005-4cdc-9436-4fbdc9957f30",
-            "extensions": {
-                "extension-definition--ec1760d6-6e8a-4a13-8237-574e5bbcc785": {
-                    "extension_type": "property-extension",
-                    "information_source_roles": [
-                        "Nation-State",
-                        "Military"
-                    ]
-                }
-            },
             "id": "identity--7def5fe6-7449-44cb-9fc5-a584272faa21",
             "identity_class": "organization",
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "People's Liberation Army",
             "object_marking_refs": [
                 "marking-definition--44307ea0-3215-4da6-8ada-431a45c0ba60"
+            ],
+            "roles": [
+                "Nation-State",
+                "Military"
             ],
             "spec_version": "2.1",
             "type": "identity"
@@ -208,20 +203,15 @@
         {
             "created": "2015-05-15T09:00:00.000Z",
             "created_by_ref": "identity--8358a1c8-6005-4cdc-9436-4fbdc9957f30",
-            "extensions": {
-                "extension-definition--ec1760d6-6e8a-4a13-8237-574e5bbcc785": {
-                    "extension_type": "property-extension",
-                    "information_source_roles": [
-                        "Research and Development"
-                    ]
-                }
-            },
             "id": "identity--e5c3f314-d520-43c5-9aa3-e6b788a2a14c",
             "identity_class": "individual",
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "SuperHard",
             "object_marking_refs": [
                 "marking-definition--44307ea0-3215-4da6-8ada-431a45c0ba60"
+            ],
+            "roles": [
+                "Research and Development"
             ],
             "spec_version": "2.1",
             "type": "identity"
@@ -447,20 +437,15 @@
         {
             "created": "2015-05-15T09:00:00.000Z",
             "created_by_ref": "identity--8358a1c8-6005-4cdc-9436-4fbdc9957f30",
-            "extensions": {
-                "extension-definition--ec1760d6-6e8a-4a13-8237-574e5bbcc785": {
-                    "extension_type": "property-extension",
-                    "information_source_roles": [
-                        "Nation-State"
-                    ]
-                }
-            },
             "id": "identity--f5ad16c7-1192-4e04-8012-8fdf330a33a8",
             "identity_class": "organization",
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "Communist Part of China",
             "object_marking_refs": [
                 "marking-definition--44307ea0-3215-4da6-8ada-431a45c0ba60"
+            ],
+            "roles": [
+                "Nation-State"
             ],
             "spec_version": "2.1",
             "type": "identity"
@@ -495,20 +480,15 @@
         {
             "created": "2015-05-15T09:00:00.000Z",
             "created_by_ref": "identity--8358a1c8-6005-4cdc-9436-4fbdc9957f30",
-            "extensions": {
-                "extension-definition--ec1760d6-6e8a-4a13-8237-574e5bbcc785": {
-                    "extension_type": "property-extension",
-                    "information_source_roles": [
-                        "State-influenced Commercial Entity"
-                    ]
-                }
-            },
             "id": "identity--167beca0-d700-427a-81f2-702a92ab1f34",
             "identity_class": "organization",
             "modified": "2015-05-15T09:00:00.000Z",
             "name": "China Telecom",
             "object_marking_refs": [
                 "marking-definition--44307ea0-3215-4da6-8ada-431a45c0ba60"
+            ],
+            "roles": [
+                "State-influenced Commercial Entity"
             ],
             "spec_version": "2.1",
             "type": "identity"
@@ -1324,7 +1304,8 @@
                             "value": "unauthorized-access"
                         }
                     ],
-                    "title": "Privilege Escalation"
+                    "title": "Privilege Escalation",
+                    "vendor": "unknown"
                 }
             },
             "id": "tool--73a316da-41a6-45ca-8229-ec255522f177",

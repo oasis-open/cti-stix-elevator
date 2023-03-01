@@ -3,6 +3,14 @@
     "objects": [
         {
             "created": "2015-07-31T11:24:39.090Z",
+            "id": "identity--d61bf54b-09b1-4417-8c96-659ca6f1a3b2",
+            "modified": "2015-07-31T11:24:39.090Z",
+            "name": "not provided",
+            "type": "identity"
+        },
+        {
+            "created": "2015-07-31T11:24:39.090Z",
+            "created_by_ref": "identity--d61bf54b-09b1-4417-8c96-659ca6f1a3b2",
             "description": "\n\nSTAGE:\n\tResponse\n\nOBJECTIVE: Block outbound traffic\n\nOBJECTIVE CONFIDENCE: High\n\nIMPACT:Medium: Some description about the indicator.",
             "id": "course-of-action--3dbfccad-1fbb-4e9f-8307-f2d1a5c651cc",
             "labels": [
@@ -14,6 +22,7 @@
         },
         {
             "created": "2015-07-31T11:24:39.090Z",
+            "created_by_ref": "identity--d61bf54b-09b1-4417-8c96-659ca6f1a3b2",
             "description": "\n\nLIKELY_IMPACT:Medium",
             "id": "indicator--2cb76e88-2734-4a6c-a28c-52ae05f627be",
             "labels": [
@@ -26,6 +35,7 @@
         },
         {
             "created": "2015-07-31T11:24:39.090Z",
+            "created_by_ref": "identity--d61bf54b-09b1-4417-8c96-659ca6f1a3b2",
             "id": "relationship--573863e0-8550-4e48-a82e-396551a49a16",
             "modified": "2015-07-31T11:24:39.090Z",
             "relationship_type": "investigates",

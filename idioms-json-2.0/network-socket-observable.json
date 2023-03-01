@@ -1,33 +1,39 @@
 {
-  "id": "bundle--8005dcb9-398c-4f61-b44c-18133199d145",
-  "objects": [
-    {
-      "created": "2018-07-24T16:07:55.291Z",
-      "first_observed": "2018-07-24T16:07:55.291Z",
-      "id": "observed-data--175e561f-3ced-4cf7-8a17-654ca651ff97",
-      "last_observed": "2018-07-24T16:07:55.291Z",
-      "modified": "2018-07-24T16:07:55.291Z",
-      "number_observed": 1,
-      "objects": {
-        "0": {
-          "extensions": {
-            "socket-ext": {
-              "address_family": "AF_INET",
-              "is_listening": true,
-              "options": {
-                "IP_MULTICAST_LOOP": 1
-              }
-            }
-          },
-          "protocols": [
-            "tcp"
-          ],
-          "type": "network-traffic"
+    "id": "bundle--8005dcb9-398c-4f61-b44c-18133199d145",
+    "objects": [
+        {
+            "created": "2023-02-27T14:29:03.770Z",
+            "first_observed": "2023-02-27T14:29:03.770Z",
+            "id": "observed-data--175e561f-3ced-4cf7-8a17-654ca651ff97",
+            "last_observed": "2023-02-27T14:29:03.770Z",
+            "modified": "2023-02-27T14:29:03.770Z",
+            "number_observed": 1,
+            "objects": {
+                "0": {
+                    "dst_ref": "1",
+                    "extensions": {
+                        "socket-ext": {
+                            "address_family": "AF_INET",
+                            "is_listening": true,
+                            "options": {
+                                "IP_MULTICAST_LOOP": 1
+                            },
+                            "protocol_family": "PF_APPLETALK"
+                        }
+                    },
+                    "protocols": [
+                        "tcp"
+                    ],
+                    "type": "network-traffic"
+                },
+                "1": {
+                    "type": "ipv4-addr",
+                    "value": "198.51.100.2"
+                }
+            },
+            "type": "observed-data"
         }
-      },
-      "type": "observed-data"
-    }
-  ],
-  "spec_version": "2.0",
-  "type": "bundle"
+    ],
+    "spec_version": "2.0",
+    "type": "bundle"
 }

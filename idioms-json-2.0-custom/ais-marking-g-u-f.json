@@ -36,6 +36,7 @@
         },
         {
             "created": "2020-12-31T00:00:00.000Z",
+            "created_by_ref": "identity--2a2bf390-b7bb-4ff3-94cf-dfa77db35ad9",
             "id": "report--f7e257d6-3e10-4453-a844-b69e64568356",
             "labels": [
                 "threat-report",

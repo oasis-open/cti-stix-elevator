@@ -7,6 +7,7 @@
     xmlns:marking="http://data-marking.mitre.org/Marking-1"
     xmlns:stixVocabs="http://stix.mitre.org/default_vocabularies-1"
     xmlns:stix="http://stix.mitre.org/stix-1"
+    xmlns:cyboxCommon="http://cybox.mitre.org/common-2"
     xmlns:AIS="http://www.us-cert.gov/STIXMarkingStructure#AISConsentMarking-2"
     xmlns:stix-ciq="http://stix.mitre.org/extensions/Identity#CIQIdentity3.0-1"
     xmlns:xpil="urn:oasis:names:tc:ciq:xpil:3"
@@ -16,7 +17,6 @@
 	xmlns:xnl="urn:oasis:names:tc:ciq:xnl:3"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="
-
     http://stix.mitre.org/Campaign-1 http://stix.mitre.org/XMLSchema/campaign/1.2/campaign.xsd
     http://stix.mitre.org/TTP-1 http://stix.mitre.org/XMLSchema/ttp/1.2/ttp.xsd
     http://stix.mitre.org/ThreatActor-1 http://stix.mitre.org/XMLSchema/threat_actor/1.2/threat_actor.xsd

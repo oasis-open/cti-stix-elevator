@@ -3,6 +3,15 @@
     "objects": [
         {
             "created": "2015-07-31T11:24:39.090Z",
+            "id": "identity--dfea062d-0e09-4cef-9178-909003f8d965",
+            "modified": "2015-07-31T11:24:39.090Z",
+            "name": "not provided",
+            "spec_version": "2.1",
+            "type": "identity"
+        },
+        {
+            "created": "2015-07-31T11:24:39.090Z",
+            "created_by_ref": "identity--dfea062d-0e09-4cef-9178-909003f8d965",
             "id": "course-of-action--3dbfccad-1fbb-4e9f-8307-f2d1a5c651cc",
             "labels": [
                 "perimeter-blocking"
@@ -14,6 +23,7 @@
         },
         {
             "created": "2015-07-31T11:24:39.090Z",
+            "created_by_ref": "identity--dfea062d-0e09-4cef-9178-909003f8d965",
             "id": "indicator--2cb76e88-2734-4a6c-a28c-52ae05f627be",
             "indicator_types": [
                 "ftp"
@@ -27,6 +37,7 @@
         },
         {
             "created": "2015-07-31T11:24:39.090Z",
+            "created_by_ref": "identity--dfea062d-0e09-4cef-9178-909003f8d965",
             "id": "relationship--f7871811-ec77-4f70-8a51-315c3f15f67e",
             "modified": "2015-07-31T11:24:39.090Z",
             "relationship_type": "investigates",

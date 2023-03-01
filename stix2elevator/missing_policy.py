@@ -35,8 +35,19 @@ def convert_to_custom_name(name, separator="_"):
 
 
 def remove_custom_name(name, separator="_"):
-    prefix = "x" + separator + get_option_value("custom_property_prefix") + separator
-    return name[len(prefix):]
+    if name.startswith("x"):
+        prefix = "x" + separator + get_option_value("custom_property_prefix") + separator
+        return name[len(prefix):]
+    else:
+        return name
+
+
+def do_vocab_mapping(prop_values_as_string, mapping):
+    if prop_values_as_string in mapping:
+        # conversion in mapping
+        return mapping[prop_values_as_string]
+    else:
+        return convert_to_stix_literal(prop_values_as_string)
 
 
 def add_string_property_to_description(sdo_instance, property_name, property_value, is_list=False):
@@ -55,40 +66,41 @@ def add_string_property_to_description(sdo_instance, property_name, property_val
     warn("Appended %s to description of %s", 302, property_name, sdo_instance["id"])
 
 
-def add_string_property_as_custom_property(sdo_instance, property_name, property_value, is_list=False):
+def add_string_property_as_custom_property(sdo_instance, property_name, property_value, is_list, is_literal, mapping):
     if is_list:
-        property_values = list()
-        for v in property_value:
-            property_values.append(str(v))
-        sdo_instance[convert_to_custom_name(property_name)] = property_values
+        if is_literal:
+            property_values = list()
+            for v in property_value:
+                prop_value_as_string = str(v)
+                property_values.append(do_vocab_mapping(prop_value_as_string, mapping))
+            sdo_instance[convert_to_custom_name(property_name)] = property_values
+        else:
+            sdo_instance[convert_to_custom_name(property_name)] = [str(v) for v in property_value]
     else:
-        sdo_instance[convert_to_custom_name(property_name)] = str(property_value)
+        prop_value_as_string = str(property_value)
+        if is_literal:
+            sdo_instance[convert_to_custom_name(property_name)] = do_vocab_mapping(prop_value_as_string, mapping)
+        else:
+            sdo_instance[convert_to_custom_name(property_name)] = prop_value_as_string
     warn("Used custom property for %s", 308, property_name + (" of " + sdo_instance["id"] if "id" in sdo_instance else ""))
 
 
 def add_string_property_as_extension_property(container, property_name, property_value, sdo_id, is_list=False, is_literal=False, mapping={}):
     if is_list:
         if is_literal:
-            container[property_name] = []
+            container[property_name] = list()
             for v in property_value:
-                v_as_string = str(v)
-                if v_as_string in mapping:
-                    # conversion in mapping
-                    container[property_name].append(mapping[v_as_string])
-                else:
-                    container[property_name].append(convert_to_stix_literal(v_as_string))
+                prop_value_as_string = str(v)
+                container[property_name].append(do_vocab_mapping(prop_value_as_string, mapping))
         else:
             container[property_name] = [str(v) for v in property_value]
     else:
-        prop_values_as_string = str(property_value)
+        prop_value_as_string = str(property_value)
         if is_literal:
-            if prop_values_as_string in mapping:
-                container[property_name] = mapping[prop_values_as_string]
-            else:
-                container[property_name] = convert_to_stix_literal(prop_values_as_string)
+            container[property_name] = do_vocab_mapping(prop_value_as_string, mapping)
         else:
-            container[property_name] = prop_values_as_string
-    warn("Used extension property for %s", 313, property_name + (" of " + sdo_id if sdo_id else ""))
+            container[property_name] = prop_value_as_string
+    warn("Used an extension property for %s", 313, property_name + (" of " + sdo_id if sdo_id else ""))
 
 
 def handle_missing_string_property(container, property_name, property_value, sdo_id, is_list=False, is_sco=False, is_literal=False, mapping={}):
@@ -100,7 +112,7 @@ def handle_missing_string_property(container, property_name, property_value, sdo
             else:
                 add_string_property_to_description(container, property_name, property_value, is_list)
         elif check_for_missing_policy("use-custom-properties"):
-            add_string_property_as_custom_property(container, property_name, property_value, is_list)
+            add_string_property_as_custom_property(container, property_name, property_value, is_list, is_literal, mapping)
         elif check_for_missing_policy("use-extensions"):
             add_string_property_as_extension_property(container, property_name, property_value, sdo_id, is_list, is_literal, mapping)
         else:
@@ -142,7 +154,7 @@ def add_confidence_property_as_extension_property(container, confidence, id, par
         container[prefix + "confidence"] = str(confidence.value)
     if confidence.description is not None:
         container[prefix + "confidence_description"] = str(confidence.description)
-    warn("Used extensions properties for Confidence type content of %s", 313, id)
+    warn("Used an extensions properties for Confidence type content of %s", 313, id)
 
 
 def handle_missing_confidence_property(container, confidence, id, parent_property_name=None):
@@ -232,7 +244,6 @@ def statement_type_as_extension_properties(container, statement, property_name, 
         info("Source property in STIX 1.x statement is not handled, yet.", 815)
     if statement.confidence:
         add_confidence_property_as_extension_property(map, statement.confidence, property_name, id)
-    converted_value = None
     if statement.value:
         value_as_string = str(statement.value)
         if is_literal:
@@ -242,13 +253,10 @@ def statement_type_as_extension_properties(container, statement, property_name, 
                 converted_value = convert_to_stix_literal(value_as_string)
         else:
             converted_value = value_as_string
-    if map:
         if converted_value:
             map["value"] = converted_value
+    if not map == dict():
         container[property_name] = [map] if is_list else map
-    else:
-        if converted_value:
-            container[property_name] = [converted_value] if is_list else converted_value
 
 
 def handle_missing_statement_properties(container, statement, property_name, id, is_list=False, is_literal=True, mapping=None):
