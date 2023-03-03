@@ -724,6 +724,7 @@ _EMAIL_ADDITIONAL_HEADERS_PROPERTIES = {
     "User-Agent:": "user_agent",
     "Boundary": "boundary",
     "X-Priority": "x_priority",
+    "X_Originating_IP": "x_orginating_ip",
     "X-Mailer": "x_mailer"
 }
 
@@ -1450,14 +1451,21 @@ def convert_http_session(session):
                     return [cybox_traffic]
 
 
-def handle_missing_properties_of_icmp_extension(icmp_header, imcp_extension):
+def handle_missing_properties_of_icmp_extension(icmp_header, imcp_extension, cybox_traffic):
     if icmp_header is not None:
         if icmp_header.checksum:
             if not check_for_missing_policy("use-extensions"):
-                handle_missing_string_property(imcp_extension, "checksum", icmp_header.checksum, None, is_sco=True)
+                handle_missing_string_property(imcp_extension, "checksum_hex", icmp_header.checksum, None, is_sco=True)
             else:
-                warn("Property checksum %s is ignored, because it can't be represented using the extensions policy",
-                     314, icmp_header.checksum)
+                extension_definition_id = get_extension_definition_id("icmp-header")
+                if not extension_definition_id:
+                    warn("No extension-definition was found for STIX 1 type icmp-header", 312)
+                else:
+                    extensions_dict = cybox_traffic["extensions"]
+                    if extension_definition_id not in extensions_dict:
+                        extensions_dict[extension_definition_id] = dict()
+                    extensions_dict[extension_definition_id]["checksum_hex"] = str(icmp_header.checksum)
+                    extensions_dict[extension_definition_id]["extension_type"] = "property-extension"
 
 
 def create_icmp_extension(icmp_header, imcp_extension, cybox_traffic):
@@ -1465,7 +1473,7 @@ def create_icmp_extension(icmp_header, imcp_extension, cybox_traffic):
         imcp_extension["icmp_type_hex"] = icmp_header.type_.value
     if icmp_header.code:
         imcp_extension["icmp_code_hex"] = icmp_header.code.value
-    handle_missing_properties_of_icmp_extension(icmp_header, imcp_extension)
+    handle_missing_properties_of_icmp_extension(icmp_header, imcp_extension, cybox_traffic)
     return imcp_extension
 
 
@@ -1504,32 +1512,38 @@ def convert_socket_options(options):
     return socket_options
 
 
-def handle_missing_properties_of_network_socket(socket, socket_extension, cybox_traffic):
-    sco_id = cybox_traffic["id"] if "id" in cybox_traffic else None
-    if socket.domain:
-        if get_option_value("spec_version") == "2.0":
-            cybox_traffic["extensions"]["socket-ext"]["protocol_family"] = socket.domain
-        else:
-            handle_missing_string_property(socket_extension, "protocol_family", socket.domain, sco_id, is_sco=True)
+def compose_socket_address(soc_add):
+    if soc_add.ip_address:
+        address_value = soc_add.ip_address
+    elif soc_add.hostname:
+        address_value = soc_add.hostname
+    else:
+        address_value = ""
+    if soc_add.port:
+        address_value += ":" + soc_add.port
+    return address_value
 
-    if socket.local_address:
-        if not check_for_missing_policy("use-extensions"):
-            handle_missing_string_property(socket_extension, "local_address", socket.local_address.ip_address, sco_id, is_sco=True)
-        else:
-            warn(
-                "Property local_address %s is ignored, because it can't be represented using the extensions policy",
-                314, socket.local_address)
-    if socket.remote_address:
-        if not check_for_missing_policy("use-extensions"):
-            handle_missing_string_property(socket_extension, "remote_address", socket.remote_address.ip_address, sco_id, is_sco=True)
-        else:
-            warn(
-                "Property remote_address %s is ignored, because it can't be represented using the extensions policy",
-                314, socket.remote_address)
+def handle_missing_properties_of_network_socket(socket, cybox_traffic):
+    container, extension_definition_id = determine_container_for_missing_properties("network-socket", cybox_traffic)
+
+    if container is not None:
+        sco_id = cybox_traffic["id"] if "id" in cybox_traffic else None
+        if socket.domain:
+            if get_option_value("spec_version") == "2.0":
+                cybox_traffic["protocol_family"] = str(socket.domain)
+            else:
+                handle_missing_string_property(container, "protocol_family", socket.domain, sco_id, is_sco=True)
+        fill_in_extension_properties(cybox_traffic, container, extension_definition_id)
 
 
-def convert_network_socket(socket):
+def convert_network_socket(socket, env=None):
+    spec_version = get_option_value("spec_version")
     cybox_traffic = create_base_sco("network-traffic", socket)
+    if spec_version == "2.0":
+        objs = {"0": cybox_traffic}
+    else:
+        objs = [cybox_traffic]
+
     if socket.protocol:
         cybox_traffic["protocols"] = [socket.protocol.value.lower()]
     socket_extension = {}
@@ -1550,9 +1564,15 @@ def convert_network_socket(socket):
         socket_extension["socket_descriptor"] = socket.socket_descriptor
 
     cybox_traffic["extensions"] = {"socket-ext": socket_extension}
+    index = 1
+    if socket.local_address:
+        index = convert_socket_address_1(socket.local_address, cybox_traffic, objs, spec_version, index, "dst", env)
+    if socket.remote_address:
+
+        convert_socket_address_1(socket.local_address, cybox_traffic, objs, spec_version, index, "src", env)
     generate_sco_id_for_2_1(cybox_traffic, socket.parent.id_)
-    handle_missing_properties_of_network_socket(socket, socket_extension, cybox_traffic)
-    return cybox_traffic
+    handle_missing_properties_of_network_socket(socket, cybox_traffic if check_for_missing_policy("use-extensions") else socket_extension)
+    return objs
 
 
 def convert_socket_address(sock_add_1x, env=None):
@@ -1747,7 +1767,7 @@ def convert_cybox_object20(obj1x):
     elif isinstance(prop, NetworkPacket):
         objs["0"] = convert_network_packet(prop)
     elif isinstance(prop, NetworkSocket):
-        objs["0"] = convert_network_socket(prop)
+        objs = convert_network_socket(prop)
     elif isinstance(prop, X509Certificate):
         objs["0"] = convert_x509_certificate(prop)
     elif isinstance(prop, SocketAddress):
@@ -1821,7 +1841,7 @@ def convert_cybox_object21(obj1x, env):
     elif isinstance(prop, NetworkPacket):
         objs = [convert_network_packet(prop)]
     elif isinstance(prop, NetworkSocket):
-        objs = [convert_network_socket(prop)]
+        objs = convert_network_socket(prop, env)
     elif isinstance(prop, X509Certificate):
         objs = [convert_x509_certificate(prop)]
     elif isinstance(prop, SocketAddress):

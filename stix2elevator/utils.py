@@ -88,7 +88,7 @@ def map_vocabs_to_label(t, vocab_map):
         return canonicalize_label(t)
 
 
-def convert_controlled_vocabs_to_open_vocabs(new_obj, new_property_name, old_vocabs, vocab_mapping, only_one, required=True):
+def convert_controlled_vocabs_to_open_vocabs(new_obj, new_property_name, old_vocabs, vocab_mapping, only_one, required=True, add=False):
     if not old_vocabs and required:
         if only_one:
             new_obj[new_property_name] = "unknown"
@@ -96,7 +96,10 @@ def convert_controlled_vocabs_to_open_vocabs(new_obj, new_property_name, old_voc
             new_obj[new_property_name] = ["unknown"]
         warn("No STIX 1.x vocab value given for %s, using 'unknown'", 509, new_property_name)
     else:
-        values = []
+        if add:
+            values = new_obj[new_property_name]
+        else:
+            values = []
         for t in old_vocabs:
             if values is None or not only_one:
                 if isinstance(t, (str, bytes)):

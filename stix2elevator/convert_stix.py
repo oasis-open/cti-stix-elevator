@@ -90,7 +90,7 @@ from stix2elevator.utils import (
     set_tlp_reference, strftime_with_appropriate_fractional_seconds
 )
 from stix2elevator.vocab_mappings import (
-    ATTACK_MOTIVATION_MAP, COA_LABEL_MAP, INCIDENT_LABEL_MAP,
+    ATTACK_MOTIVATION_MAP, CAMPAIGN_STATUS_MAP, COA_LABEL_MAP, INCIDENT_LABEL_MAP,
     INDICATOR_LABEL_MAP, INFRASTRUCTURE_LABELS_MAP, MALWARE_LABELS_MAP,
     REPORT_LABELS_MAP, SECTORS_MAP, THREAT_ACTOR_LABEL_MAP,
     THREAT_ACTOR_SOPHISTICATION_MAP, TOOL_LABELS_MAP
@@ -229,9 +229,9 @@ def get_identity(identity, env, created_by_ref_source, temp_marking_id=None):
     if not env.get_identity_called:
         # On some occasions excessive recursion may add identity objects that are not needed
         new_env = env.newEnv(get_identity_called=True)
-        ident20 = convert_identity(identity, new_env, created_by_ref_source, temp_marking_id=temp_marking_id)
-        env.bundle_instance["objects"].append(ident20)
-        return ident20["id"]
+        ident_instance = convert_identity(identity, new_env, created_by_ref_source, temp_marking_id=temp_marking_id)
+        env.bundle_instance["objects"].append(ident_instance)
+        return ident_instance["id"]
 
 
 def get_identity_ref(identity, env, created_by_ref_source, temp_marking_id=None):
@@ -247,42 +247,61 @@ def get_identity_ref(identity, env, created_by_ref_source, temp_marking_id=None)
 
 
 def handle_missing_properties_of_information_source(so, information_source):
-    # handle missing properties
+    # This will never create any extensions, since roles are a property in STIX 2.1
+    # if information_source.tools is ever captured, this code can be used to create the extension
     container, extension_definition_id = determine_container_for_missing_properties("information_source", so)
 
     if container is not None:
-        if information_source.roles:
-            handle_missing_string_property(container, "information_source_roles", information_source.roles, so["id"],
+        if information_source.roles and get_option_value("spec_version") == "2.0":
+            handle_missing_string_property(container, "roles", information_source.roles, so["id"],
                                            True, is_literal=True)
         if information_source.tools:
             for tool in information_source.tools:
-                handle_missing_tool_property(container, tool)
+                warn("Missing property 'tool' %s is ignored", 307, ("of" + so["id"] if "id" in so else ""))
         fill_in_extension_properties(so, container, extension_definition_id)
 
 
 def process_information_source(information_source, so, env, temp_marking_id=None):
+    identity_instance = None
     if information_source:
         if information_source.identity is not None:
             if information_source.identity.idref:
-                so["created_by_ref"] = information_source.identity.idref
+                identity_ref = information_source.identity.idref
             else:
-                so["created_by_ref"] = get_identity(information_source.identity,
-                                                    env,
-                                                    "this_identity",
-                                                    temp_marking_id)
+                identity_ref = get_identity(information_source.identity,
+                                            env,
+                                            "this_identity",
+                                            temp_marking_id)
+            if not env.created_by_ref:
+                env.created_by_ref = identity_ref
         else:
-            so["created_by_ref"] = env.created_by_ref
-
+            identity_instance = create_basic_object("identity", None, env)
+            identity_ref = identity_instance["id"]
+            if "name" not in identity_instance:
+                identity_instance["name"] = "not provided"
+            finish_basic_object(None,
+                                identity_instance,
+                                env,
+                                identity_instance,
+                                temp_marking_id=temp_marking_id)
+            env.bundle_instance["objects"].append(identity_instance)
+        so["created_by_ref"] = identity_ref
         if so == env.bundle_instance:
             warn("Information Source on %s is not representable in STIX 2.x", 401, so["id"])
         else:
-            if information_source.description:
-                process_description_and_short_description(so, information_source)
-            if information_source.references:
-                for ref in information_source.references:
-                    so["external_references"].append({"source_name": "unknown", "url": ref})
-            handle_missing_properties_of_information_source(so, information_source)
-
+            if identity_instance:
+                if information_source.description:
+                    process_description_and_short_description(identity_instance, information_source)
+                if information_source.references:
+                    for ref in information_source.references:
+                        identity_instance["external_references"].append({"source_name": "unknown", "url": ref})
+                if information_source.roles and get_option_value("spec_version") == "2.1":
+                    identity_instance["roles"] = [str(r) for r in information_source.roles]
+                handle_missing_properties_of_information_source(identity_instance, information_source)
+        if information_source.contributing_sources:
+            info("Information Source property Contributing_Sources in %s is not handled, yet.", 815, so["id"])
+        if information_source.time:
+            info("Information Source property Time in %s is not handled, yet.", 815, so["id"])
     else:
         so["created_by_ref"] = env.created_by_ref
     return so["created_by_ref"]
@@ -982,8 +1001,11 @@ def handle_missing_properties_of_campaign(campaign_instance, camp):
 
     if container is not None:
         handle_multiple_missing_statement_properties(container, camp.intended_effects, "intended_effects",
-                                                     campaign_instance["id"], is_literal=True)
-        handle_missing_string_property(container, "status", camp.status, campaign_instance["id"])
+                                                     campaign_instance["id"],
+                                                     is_literal=True, mapping = _INTENDED_EFFECTS_LITERAL_MAPPING)
+        handle_missing_string_property(container, "status", camp.status,
+                                       campaign_instance["id"],
+                                       is_literal=True, mapping=CAMPAIGN_STATUS_MAP)
 
         if get_option_value("spec_version") == "2.0":
             handle_missing_confidence_property(container, camp.confidence, campaign_instance["id"])
@@ -1086,7 +1108,7 @@ def handle_missing_objective_property(container, objective, id):
                 warn("Used custom property for objective of %s", 308, id)
             elif check_for_missing_policy("use-extensions"):
                 container["objective"] = " ".join(all_text)
-                warn("Used an extension for objective of %s", 311, id)
+                warn("Used an extension property for %s of %s", 313, id, "objective")
             if objective.applicability_confidence:
                 handle_missing_confidence_property(container, objective.applicability_confidence, id, "objective")
 
@@ -1393,19 +1415,22 @@ def convert_ciq_addresses2_1(ciq_info_addresses, identity_instance, env, created
             add_unfinished_marked_object(location)
 
 
-def handle_missing_properties_of_ciq_instance(identity_instance, ciq):
+def handle_missing_properties_of_ciq_instance(identity_instance, ciq, spec_version):
     container, extension_definition_id = determine_container_for_missing_properties("identity-ciq", identity_instance)
 
     if container is not None:
         if ciq.roles:
-            handle_missing_string_property(container,
-                                           "information_source_roles",
-                                           ciq.roles,
-                                           identity_instance["id"],
-                                           True)
-            warn("Roles is not a property of an identity (%s).  Perhaps the roles are associated with a related Threat Actor",
-                 428,
-                 identity_instance["id"])
+            if spec_version == "2.0":
+                handle_missing_string_property(container,
+                                               "information_source_roles",
+                                               ciq.roles,
+                                               identity_instance["id"],
+                                               True)
+                warn("Roles is not a property of an identity in 2.0 (%s).  Perhaps the roles are associated with a related Threat Actor",
+                     428,
+                     identity_instance["id"])
+            else:
+                identity_instance["roles"] = ciq.roles
         if ciq._specification.free_text_lines:
             lines = ""
             for line in ciq._specification.free_text_lines:
@@ -1424,7 +1449,8 @@ def convert_identity(identity, env, created_by_ref_source, parent_id=None, temp_
     if identity.name is not None:
         identity_instance["name"] = identity.name
     if isinstance(identity, CIQIdentity3_0Instance):
-        handle_missing_properties_of_ciq_instance(identity_instance, identity)
+        handle_missing_properties_of_ciq_instance(identity_instance, identity, spec_version)
+        # The spec seems to imply that roles can be specified without using CIQ, but this appears not to be true
         # convert_controlled_vocabs_to_open_vocabs(identity_instance, "roles", identity.roles, ROLES_MAP, False)
         ciq_info = identity._specification
         if ciq_info.party_name:
@@ -2247,8 +2273,8 @@ def determine_ttp_relationship_type_and_direction(source_type, target_type, rela
         return "related-to", True
 
 
-def handle_missing_properties_of_ttp(sdo_instance, ttp):
-    container, extension_definition_id = determine_container_for_missing_properties(sdo_instance["type"],
+def handle_missing_properties_of_ttp(sdo_instance, ttp, type_of_ttp):
+    container, extension_definition_id = determine_container_for_missing_properties(sdo_instance["type"] if not type_of_ttp else type_of_ttp,
                                                                                     sdo_instance)
     if container is not None:
         handle_multiple_missing_statement_properties(container, ttp.intended_effects, "intended_effects",
@@ -2263,7 +2289,7 @@ def handle_missing_properties_of_ttp(sdo_instance, ttp):
         fill_in_extension_properties(sdo_instance, container, extension_definition_id)
 
 
-def process_ttp_properties(sdo_instance, ttp, env, kill_chains_in_sdo=True, marking_refs=None):
+def process_ttp_properties(sdo_instance, ttp, env, kill_chains_in_sdo=True, marking_refs=None, type_of_ttp=None):
     process_description_and_short_description(sdo_instance, ttp, True)
 
     # only populate kill chain phases if that is a property of the sdo_instance type, as indicated by kill_chains_in_sdo
@@ -2303,7 +2329,7 @@ def process_ttp_properties(sdo_instance, ttp, env, kill_chains_in_sdo=True, mark
     if hasattr(ttp, "related_packages") and ttp.related_packages is not None:
         for p in ttp.related_packages:
             warn("Related_Packages type in %s not supported in STIX 2.x", 402, ttp.id_)
-    handle_missing_properties_of_ttp(sdo_instance, ttp)
+    handle_missing_properties_of_ttp(sdo_instance, ttp, type_of_ttp)
 
 
 def convert_attack_pattern(ap, ttp, env, ttp_id_used):
@@ -2506,10 +2532,10 @@ def convert_resources(resources, ttp, env, generated_ttps):
     return resources_generated
 
 
-def convert_identity_for_victim_target(identity, ttp, env, ttp_generated):
-    if identity:
-        identity_markings = create_marking_union(identity)
-        identity_instance = convert_identity(identity,
+def convert_identity_for_victim_target(victim_targeting, ttp, env, ttp_generated):
+    if victim_targeting.identity:
+        identity_markings = create_marking_union(victim_targeting.identity)
+        identity_instance = convert_identity(victim_targeting.identity,
                                              env,
                                              created_by_ref_source="from_env",
                                              parent_id=ttp.id_ if not ttp_generated else None,
@@ -2519,7 +2545,8 @@ def convert_identity_for_victim_target(identity, ttp, env, ttp_generated):
         identity_instance["identity_class"] = "unknown"
         identity_markings = create_marking_union(ttp)
     env.bundle_instance["objects"].append(identity_instance)
-    process_ttp_properties(identity_instance, ttp, env, False, marking_refs=identity_markings)
+    process_ttp_properties(identity_instance, ttp, env, False, marking_refs=identity_markings, type_of_ttp="victim")
+    handle_missing_properties_of_victim_target(identity_instance, victim_targeting)
     if "name" not in identity_instance:
         handle_missing_required_property("name", identity_instance)
     finish_basic_object(ttp.id_, identity_instance, env, ttp)
@@ -2527,7 +2554,7 @@ def convert_identity_for_victim_target(identity, ttp, env, ttp_generated):
 
 
 def handle_missing_properties_of_victim_target(identity_instance, victim_targeting):
-    container, extension_definition_id = determine_container_for_missing_properties("identity",
+    container, extension_definition_id = determine_container_for_missing_properties("victim",
                                                                                     identity_instance)
 
     if container is not None:
@@ -2545,9 +2572,8 @@ def handle_missing_properties_of_victim_target(identity_instance, victim_targeti
 
 
 def convert_victim_targeting(victim_targeting, ttp, env, ttps_generated):
-    identity_instance = convert_identity_for_victim_target(victim_targeting.identity, ttp, env, ttps_generated)
+    identity_instance = convert_identity_for_victim_target(victim_targeting, ttp, env, ttps_generated)
     info("%s generated an identity associated with a victim", 713, ttp.id_)
-    handle_missing_properties_of_victim_target(identity_instance, victim_targeting)
 
     if ttps_generated:
         marking_refs = create_marking_union(ttp, victim_targeting.identity)
@@ -2809,6 +2835,8 @@ def create_object_for_package_header(stix_package_header, env, type_of_obj):
     if hasattr(stix_package_header, "title") and stix_package_header.title is not None:
         sdo_instance["name"] = stix_package_header.title
     process_description_and_short_description(sdo_instance, stix_package_header)
+    if env.created_by_ref:
+        sdo_instance["created_by_ref"] = env.created_by_ref
     if type_of_obj == 'report':
         spec_version = get_option_value("spec_version")
         convert_controlled_vocabs_to_open_vocabs(sdo_instance,

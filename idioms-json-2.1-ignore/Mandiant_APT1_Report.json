@@ -84,6 +84,10 @@
             "object_marking_refs": [
                 "marking-definition--cc7295e1-3601-4589-82b8-510d91eb9a09"
             ],
+            "roles": [
+                "Nation-State",
+                "Military"
+            ],
             "spec_version": "2.1",
             "type": "identity"
         },
@@ -205,6 +209,9 @@
             "name": "SuperHard",
             "object_marking_refs": [
                 "marking-definition--cc7295e1-3601-4589-82b8-510d91eb9a09"
+            ],
+            "roles": [
+                "Research and Development"
             ],
             "spec_version": "2.1",
             "type": "identity"
@@ -437,6 +444,9 @@
             "object_marking_refs": [
                 "marking-definition--cc7295e1-3601-4589-82b8-510d91eb9a09"
             ],
+            "roles": [
+                "Nation-State"
+            ],
             "spec_version": "2.1",
             "type": "identity"
         },
@@ -476,6 +486,9 @@
             "name": "China Telecom",
             "object_marking_refs": [
                 "marking-definition--cc7295e1-3601-4589-82b8-510d91eb9a09"
+            ],
+            "roles": [
+                "State-influenced Commercial Entity"
             ],
             "spec_version": "2.1",
             "type": "identity"

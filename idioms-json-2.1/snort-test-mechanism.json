@@ -3,6 +3,7 @@
   "objects": [
     {
       "created": "2017-01-27T13:49:54.310Z",
+      "description": "\n\nPUBLISHED_DATETIME:\n\t2013-09-18T00:00:00.000000Z",
       "external_references": [
         {
           "external_id": "CVE-2013-3893",

@@ -166,9 +166,9 @@ def convert_control_set(control_set):
     return cs
 
 
-_ISA_IDENTIFIER_PREFIX = "isa:guide.19001.ACS3-"
+_ISA_IDENTIFIER_PREFIX = "^[iI][sS][aA]:[gG][uU][iI][dD][eE]\\.(19001|999191)\\.([0-9a-zA-z]+-)?"
 
-_UUID_RE = "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+_UUID_RE = "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
 
 _ISA_IDENTIFIER_PATTERN = re.compile(_ISA_IDENTIFIER_PREFIX + _UUID_RE)
 

@@ -124,17 +124,37 @@ def step_observable_data(observed_data):
     return scos
 
 
-def step_to_extensions(stix_object):
-    custom_properties = []
+def determine_extension_name(stix_object):
+    if ("extensions" in stix_object and
+        "archive-ext" in stix_object["extensions"] and
+        "version" in stix_object["extensions"]["archive-ext"]):
+        # handle special case, where version is in archive-ext in 2.0, but not in 2.1
+        return "archive-file"
+    obj_type = stix_object["type"]
     for key in stix_object.keys():
         if key.startswith("x_"):
-            custom_properties.append(key)
-    container, extension_definition_id = determine_container_for_missing_properties(stix_object["type"],
+            if key in ["x_elevator_targeted_information", "x_elevator_targeted_system"]:
+                return "victim"
+    return obj_type
+
+
+def step_to_extensions(stix_object):
+    custom_properties = {}
+    for key in stix_object.keys():
+        if key.startswith("x_"):
+            custom_properties[key] = stix_object
+        elif ("extensions" in stix_object and
+              "archive-ext" in stix_object["extensions"] and
+              "version" in stix_object["extensions"]["archive-ext"]):
+            # handle special case, where version is in archive-ext in 2.0, but not in 2.1
+            custom_properties["version"] = stix_object["extensions"]["archive-ext"]
+            break
+    container, extension_definition_id = determine_container_for_missing_properties(determine_extension_name(stix_object),
                                                                                     stix_object)
     if container is not None:
-        for key in custom_properties:
-            key_value = stix_object[key]
-            stix_object.pop(key)
+        for key, location in custom_properties.items():
+            key_value = location[key]
+            location.pop(key)
             container[remove_custom_name(key)] = key_value
         fill_in_extension_properties(stix_object, container, extension_definition_id)
 
@@ -227,6 +247,11 @@ def step_object(stix_object):
     for stix21_obj in stix21_objs:
         step_confidence_property(stix21_obj)
         if contains_custom_properties(stix21_obj):
+            step_to_extensions(stix21_obj)
+        elif (stix21_obj["type"] == "file" and "extensions" in stix21_obj and
+                 "archive-ext" in stix21_obj["extensions"] and
+                 "version" in stix21_obj["extensions"]["archive-ext"]):
+            # handle special case, where version is in archive-ext in 2.0, but not in 2.1
             step_to_extensions(stix21_obj)
     return stix21_objs
 

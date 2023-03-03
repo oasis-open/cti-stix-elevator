@@ -654,7 +654,8 @@
                     "value": "Unauthorized Access"
                 }
             ],
-            "x_elevator_title": "Privilege Escalation"
+            "x_elevator_title": "Privilege Escalation",
+            "x_elevator_vendor": "unknown"
         },
         {
             "created": "2015-05-15T09:00:00.000Z",

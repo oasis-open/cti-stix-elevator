@@ -75,7 +75,10 @@ MALWARE_LABELS_MAP = \
 
 ROLES_MAP = \
     {
-
+        "Initial Author": "initial-author",
+        "Content Enhancer/Refiner": "content-enhancer-refiner",
+        "Aggregator": "aggregator",
+        "Transformer/Translator": "transformer-translator"
     }
 
 SECTORS_MAP = \
@@ -207,6 +210,13 @@ REPORT_LABELS_MAP = \
         "Observations": "observations",
         "Observations - Email": "observations-email",
         "Malware Samples": "malware-samples",
+    }
+
+CAMPAIGN_STATUS_MAP = \
+    {
+        "Future": "future",
+        "Historic": "historic",
+        "Ongoing": "ongoing"
     }
 
 # CybOX

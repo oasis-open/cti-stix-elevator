@@ -3,6 +3,12 @@
     "objects": [
         {
             "created": "2014-06-20T15:16:56.986Z",
+            "extensions": {
+                "extension-definition--ac577b78-8356-41e0-bc5a-2cd3e5c17b2c": {
+                    "extension_type": "property-extension",
+                    "published_datetime": "2013-09-18T00:00:00.000000Z"
+                }
+            },
             "external_references": [
                 {
                     "external_id": "CVE-2013-3893",

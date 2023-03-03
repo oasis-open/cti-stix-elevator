@@ -5,8 +5,12 @@
             "created": "2021-04-16T12:26:18.622Z",
             "extensions": {
                 "extension-definition--a46b18de-0b41-4a95-9d2d-67a360f2d859": {
-                    "cost": "low",
-                    "efficacy": "high",
+                    "cost": {
+                        "value": "low"
+                    },
+                    "efficacy": {
+                        "value": "high"
+                    },
                     "extension_type": "property-extension",
                     "impact": {
                         "description": "This IP address is not used for legitimate hosting so there should be no operational impact.",

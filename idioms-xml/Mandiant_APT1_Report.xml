@@ -886,6 +886,7 @@
 				</ttp:Tool>
 				<ttp:Tool>
 					<cyboxCommon:Name>fgdump</cyboxCommon:Name>
+					<cyboxCommon:Vendor>unknown</cyboxCommon:Vendor>
 					<cyboxCommon:Description structuring_format="HTML5"><![CDATA[<!DOCTYPE html>
 						<html><body>
 								<p>Windows password hash dumper.</P>

@@ -21,6 +21,7 @@
         },
         {
             "created": "2015-05-15T09:00:00.000Z",
+            "created_by_ref": "identity--330f78d6-c2e7-4204-85bd-804bafb3c7c5",
             "description": "This is a cyber threat indicator for instances of US-China_Q14 phishing attempts.\n\nCONFIDENCE: High",
             "id": "indicator--62f0709b-5cb7-4dce-9ee1-aab27d0dd191",
             "labels": [
@@ -38,6 +39,7 @@
         },
         {
             "created": "2014-05-08T09:00:00.000Z",
+            "created_by_ref": "identity--330f78d6-c2e7-4204-85bd-804bafb3c7c5",
             "id": "report--c645a139-eadd-4507-8c70-70fc17a1b73a",
             "labels": [
                 "indicator-watchlist"

@@ -19,7 +19,7 @@
             "x_elevator_objective": "Block communication between the PIVY agents and the C2 Server",
             "x_elevator_objective_confidence": "High",
             "x_elevator_parameter_expression": "ipv4-addr:value = '10.10.10.10'",
-            "x_elevator_stage": "Response"
+            "x_elevator_stage": "response"
         }
     ],
     "spec_version": "2.0",

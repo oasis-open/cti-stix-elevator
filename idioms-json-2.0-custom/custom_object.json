@@ -3,6 +3,14 @@
     "objects": [
         {
             "created": "2015-07-31T11:24:39.090Z",
+            "id": "identity--12e8fa05-9995-4fa8-b7ff-979d355ab26a",
+            "modified": "2015-07-31T11:24:39.090Z",
+            "name": "not provided",
+            "type": "identity"
+        },
+        {
+            "created": "2015-07-31T11:24:39.090Z",
+            "created_by_ref": "identity--12e8fa05-9995-4fa8-b7ff-979d355ab26a",
             "id": "course-of-action--3dbfccad-1fbb-4e9f-8307-f2d1a5c651cc",
             "labels": [
                 "perimeter-blocking"
@@ -16,10 +24,11 @@
             },
             "x_elevator_objective": "Block outbound traffic",
             "x_elevator_objective_confidence": "High",
-            "x_elevator_stage": "Response"
+            "x_elevator_stage": "response"
         },
         {
             "created": "2015-07-31T11:24:39.090Z",
+            "created_by_ref": "identity--12e8fa05-9995-4fa8-b7ff-979d355ab26a",
             "id": "indicator--2cb76e88-2734-4a6c-a28c-52ae05f627be",
             "labels": [
                 "ftp"
@@ -32,6 +41,7 @@
         },
         {
             "created": "2015-07-31T11:24:39.090Z",
+            "created_by_ref": "identity--12e8fa05-9995-4fa8-b7ff-979d355ab26a",
             "id": "relationship--b7e4e7c3-36b6-4e93-bc47-e6e65fc21168",
             "modified": "2015-07-31T11:24:39.090Z",
             "relationship_type": "investigates",
