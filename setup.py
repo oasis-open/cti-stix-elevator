@@ -36,7 +36,7 @@ setup(
     author='OASIS Cyber Threat Intelligence Technical Committee',
     author_email='cti-users@lists.oasis-open.org',
     packages=find_packages(exclude=['*.test', '*.test.*']),
-    python_requires='>=3.7',
+    python_requires='>=3.8',
     install_requires=[
         'maec',
         'netaddr',
@@ -55,10 +55,11 @@ setup(
     },
     classifiers=[
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
         'Programming Language :: Python :: 3.10',
+        'Programming Language :: Python :: 3.11',
+        'Programming Language :: Python :: 3.12',
         'Development Status :: 2 - Pre-Alpha',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: BSD License',
